@@ -132,7 +132,7 @@ void Repo_Warehouse_Initializer::Receive_Warehouse_Location(char * warehouse){
          this->warehouse_path[i] = warehouse[i];
      }
 
-     this->warehouse_path[string_size];
+     this->warehouse_path[string_size] = '\0';
 }
 
 void Repo_Warehouse_Initializer::Determine_Current_Directory(){
@@ -160,8 +160,6 @@ void Repo_Warehouse_Initializer::Determine_Current_Directory(){
 
 void Repo_Warehouse_Initializer::Construct_Header_Files_Directory(){
 
-     char * header_directory = nullptr;
-
      char header_directory_folder_name [] = "PROJECT.HEADER.FILES";
 
      size_t warehouse_path_size = strlen(this->warehouse_path);
@@ -177,7 +175,7 @@ void Repo_Warehouse_Initializer::Construct_Header_Files_Directory(){
 
      int index = 0;
 
-     for(int i=0;i<warehouse_path_size;i++){
+     for(size_t i=0;i<warehouse_path_size;i++){
 
          this->Headers_Directory[index] = this->warehouse_path[i];
 
@@ -188,7 +186,7 @@ void Repo_Warehouse_Initializer::Construct_Header_Files_Directory(){
 
      index++;
 
-     for(int i=0;i<head_folder_size;i++){
+     for(size_t i=0;i<head_folder_size;i++){
 
          this->Headers_Directory[index] = header_directory_folder_name[i];
 
@@ -247,7 +245,7 @@ void Repo_Warehouse_Initializer::Determine_Header_Paths(int dir_num){
 
             header_file_name = new char [5*header_name_size];
 
-            for(int i=0;i<5*header_name_size;i++){
+            for(size_t i=0;i<5*header_name_size;i++){
 
                 header_file_name[i] = '\0';
             }
@@ -336,8 +334,6 @@ void Repo_Warehouse_Initializer::Copy_Header_Files_To_Project_Headers_Location()
 
 void Repo_Warehouse_Initializer::Construct_Object_Files_Directory(){
 
-     char * header_directory = nullptr;
-
      char object_directory_folder_name [] = "PROJECT.OBJECT.FILES";
 
      size_t warehouse_path_size = strlen(this->warehouse_path);
@@ -350,7 +346,7 @@ void Repo_Warehouse_Initializer::Construct_Object_Files_Directory(){
 
      int index = 0;
 
-     for(int i=0;i<warehouse_path_size;i++){
+     for(size_t i=0;i<warehouse_path_size;i++){
 
          this->Object_Files_Directory[index] = this->warehouse_path[i];
 
@@ -361,7 +357,7 @@ void Repo_Warehouse_Initializer::Construct_Object_Files_Directory(){
 
      index++;
 
-     for(int i=0;i<object_folder_size;i++){
+     for(size_t i=0;i<object_folder_size;i++){
 
          this->Object_Files_Directory[index] = object_directory_folder_name[i];
 

@@ -11,14 +11,14 @@ int main(int argc, char ** argv){
 
     if(argc < 2){
 
-       std::cout << "\n usage: Compiler_Script_Writer.exe <warehouse_path>";
+       std::cout << "\n usage: Compiler_Script_Writer.exe <repo dir> <warehouse_path>";
 
        exit(0);
     }
 
     Compiler_Script_Writer Script_Writer;
 
-    Script_Writer.Build_Compiler_Script(argv[1]);
+    Script_Writer.Build_Compiler_Script(argv[1],argv[2]);
 
     std::cout << "\n The project compiler script has been constructed";
 

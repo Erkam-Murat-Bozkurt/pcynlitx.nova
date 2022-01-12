@@ -112,12 +112,12 @@ void Project_Directory_Lister::Determine_Project_File_List(){
 
          this->Directory_List[i] = new char [5*string_size];
 
-         for(int k=0;k<5*string_size;k++){
+         for(size_t k=0;k<5*string_size;k++){
 
              this->Directory_List[i][k] = '\0';
          }
 
-         for(int k=0;k<string_size;k++){
+         for(size_t k=0;k<string_size;k++){
 
              this->Directory_List[i][k] = dir_string[k];
          }
@@ -192,8 +192,6 @@ void Project_Directory_Lister::Extract_Source_File_Directories(){
                 }
 
                 this->Source_File_Directory_List[source_folder_index][directory_name_size] = '\0';
-
-                this->Source_File_Directory_List[source_folder_index];
 
                 source_folder_index++;
              }

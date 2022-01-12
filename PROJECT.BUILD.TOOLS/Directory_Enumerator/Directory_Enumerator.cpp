@@ -122,8 +122,6 @@ void Directory_Enumerator::Determine_Sub_Directory_Number(char * Directory_Path)
 
      this->Determine_Search_Path(dir_path,&search_path);
 
-     int valid_handle_number = 0;
-
      // Find the first file in the directory.
 
      hFind = FindFirstFile(search_path,&ffd);
@@ -412,13 +410,7 @@ void Directory_Enumerator::List_Files_On_Directory(char * dir_path){
 
      TCHAR * search_path = nullptr;
 
-     char current_dir [] = ".";
-
-     char upper_dir [] = "..";
-
      this->Determine_Search_Path(dir_path,&search_path);
-
-     int valid_handle_number = 0;
 
      // Find the first file in the directory.
 
@@ -441,7 +433,6 @@ void Directory_Enumerator::List_Files_On_Directory(char * dir_path){
                else{
 
                  this->File_Number++;
-
               }
             };
      }

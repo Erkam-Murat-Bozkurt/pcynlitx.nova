@@ -225,7 +225,7 @@ void Make_File_Builder::Find_Class_Name(char * Class_Directory){
 
             header_file_name = new char [5*header_name_size];
 
-            for(int i=0;i<5*header_name_size;i++){
+            for(size_t i=0;i<5*header_name_size;i++){
 
                 header_file_name[i] = '\0';
             }
@@ -369,8 +369,6 @@ void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Di
 
      char Include_Character [] = "-I";
 
-     char Directory_Character [] = {'\\','\0'};
-
      char include_word [] = "-include";
 
      char Space_Character [] = {' ','\0'};
@@ -507,7 +505,7 @@ void Make_File_Builder::Determine_Included_Header_Files_Number(){
 
             if(this->Include_Line_Determiner(this->String_Line)){
 
-               for(int i=0;i<this->String_Line.length();i++){
+               for(size_t i=0;i<this->String_Line.length();i++){
 
                    if(this->String_Line[i] == '\"'){
 
@@ -515,7 +513,7 @@ void Make_File_Builder::Determine_Included_Header_Files_Number(){
 
                       int double_quotes_numner = 0;
 
-                      for(int k = 0;k<this->String_Line.length();k++){
+                      for(size_t k = 0;k<this->String_Line.length();k++){
 
                           if(this->String_Line[k] == '\"'){
 
@@ -561,7 +559,7 @@ void Make_File_Builder::Read_Include_File_Names(){
 
             if(this->Include_Line_Determiner(this->String_Line)){
 
-                for(int i=0;i<this->String_Line.length();i++){
+                for(size_t i=0;i<this->String_Line.length();i++){
 
                     if(this->String_Line[i] == '\"'){
 
@@ -609,15 +607,15 @@ bool Make_File_Builder::Include_Line_Determiner(std::string String_Line){
 
      char Include_Word [] = {'i','n','c','l','u','d','e','\0'};
 
-     int Include_Word_Character_Size = strlen(Include_Word);
+     size_t Include_Word_Character_Size = strlen(Include_Word);
 
-     for(int i=0;i<String_Line.length();i++){
+     for(size_t i=0;i<String_Line.length();i++){
 
          if(String_Line[i] == Include_Word[0]){
 
             this->Include_Line_Condition = true;
 
-            for(int k=0;k<Include_Word_Character_Size;k++){
+            for(size_t k=0;k<Include_Word_Character_Size;k++){
 
                if(String_Line[i+k] != Include_Word[k]){
 
@@ -648,7 +646,7 @@ void Make_File_Builder::Determine_Dependency_Code_Line(){
 
      size_t Included_Header_Files_Name_Size = 0;
 
-     for(size_t i=0;i<this->Included_Header_Files_Number;i++){
+     for(int i=0;i<this->Included_Header_Files_Number;i++){
 
         Included_Header_Files_Name_Size = Included_Header_Files_Name_Size +
 

@@ -60,7 +60,7 @@ void Auto_MakeFile_Builder::Clear_Dynamic_Memory(){
 
             delete [] this->repo_obj_dir;
 
-            this->repo_obj_dir;
+            this->repo_obj_dir = nullptr;
          }
      }
 }

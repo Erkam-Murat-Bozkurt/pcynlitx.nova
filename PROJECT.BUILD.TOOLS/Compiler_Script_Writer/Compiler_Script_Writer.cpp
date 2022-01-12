@@ -161,7 +161,7 @@ void Compiler_Script_Writer::Determine_Header_Paths(int dir_num){
 
                       = new char [5*header_name_size];
 
-            for(int i=0;i<5*header_name_size;i++){
+            for(size_t i=0;i<5*header_name_size;i++){
 
                 this->Compiler_Data_Pointer[dir_num].header_file_name[i] = '\0';
             }
@@ -387,7 +387,7 @@ bool Compiler_Script_Writer::Include_Line_Determiner(std::string String_Line){
 
             this->Include_Line_Condition = true;
 
-            for(int k=0;k<Include_Word_Character_Size;k++){
+            for(size_t k=0;k<Include_Word_Character_Size;k++){
 
                if(String_Line[i+k] != Include_Word[k]){
 
@@ -409,8 +409,6 @@ void Compiler_Script_Writer::Determine_Warehouse_Paths(char * warehouse_path){
      size_t warehouse_path_size = strlen(warehouse_path);
 
      char script_path_add [] = "Compiler_Script.ps1";
-
-     char change_dir [] = "cd ";
 
      char headers_location_add [] = "PROJECT.HEADER.FILES";
 
