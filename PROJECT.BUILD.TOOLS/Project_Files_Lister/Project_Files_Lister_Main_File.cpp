@@ -3,18 +3,18 @@
 
 #include <iostream>
 #include <cstring>
-#include "Project_Directory_Lister.h"
+#include "Project_Files_Lister.h"
 #include "DirectoryOperations.h"
 
 void Place_String(char ** Pointer, char * String);
 
 int main(int argc, char ** argv){
 
-    if(argc < 2){
+    if(argc < 3){
 
        std::cout << "\n\n";
 
-       std::cout << " usage: <exe file> <repo directory>";
+       std::cout << " usage: <exe file> <repo directory> <Warehouse path>";
 
        std::cout << "\n\n";
 
@@ -32,11 +32,11 @@ int main(int argc, char ** argv){
        std::cout << "\n\n";
     }
 
-    Project_Directory_Lister Dir_Lister;
+    Project_Files_Lister Dir_Lister;
 
-    Dir_Lister.Receive_Repo_Directory(argv[1]);
+    Dir_Lister.Determine_Project_File_List(argv[1],argv[2]);
 
-    Dir_Lister.Determine_Project_File_List();
+    //Dir_Lister.Determine_Project_File_List();
 
     int project_dir_num = Dir_Lister.Get_SourceFile_Directory_Number();
 
