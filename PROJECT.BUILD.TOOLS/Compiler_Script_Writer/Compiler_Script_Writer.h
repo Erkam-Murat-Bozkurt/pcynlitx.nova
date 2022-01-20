@@ -13,10 +13,11 @@
 #include <fcntl.h>
 #include <windows.h>
 #include <string>
-#include "Project_Directory_Lister.h"
+#include "Project_Files_Lister.h"
 #include "ClassNameReader.h"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
+#include "Directory_Enumerator.h"
 
 struct Compiler_Data
 {
@@ -49,7 +50,7 @@ protected:
  void Construct_Path(char ** pointer, char * string, char * warehouse_path);
  ClassNameReader Cls_Name_Reader;
  DirectoryOperations DirectoryManager;
- Project_Directory_Lister Dir_Lister;
+ Project_Files_Lister Dir_Lister;
  Cpp_FileOperations FileManager;
  Directory_Enumerator Enumerator;
  StringOperator StringManager;

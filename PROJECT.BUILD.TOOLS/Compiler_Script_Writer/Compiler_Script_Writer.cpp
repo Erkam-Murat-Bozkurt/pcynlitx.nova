@@ -1,7 +1,5 @@
 
 
-
-
 #include "Compiler_Script_Writer.h"
 
 Compiler_Script_Writer::Compiler_Script_Writer(){
@@ -81,13 +79,11 @@ void Compiler_Script_Writer::Clear_Dynamic_Memory(){
 
 void Compiler_Script_Writer::Build_Compiler_Script(char * repo_dir, char * warehouse_path){
 
-     this->Dir_Lister.Receive_Repo_Directory(repo_dir);
-
-     this->Dir_Lister.Determine_Project_File_List();
+     this->Dir_Lister.Determine_Git_Repo_Info(repo_dir,warehouse_path);
 
      this->project_dir_num
 
-            = this->Dir_Lister.Get_SourceFile_Directory_Number();
+            = this->Dir_Lister.Get_Git_Repo_Directory_Number();
 
      if(this->project_dir_num > 0){
 
@@ -122,14 +118,13 @@ void Compiler_Script_Writer::Build_Compiler_Script(char * repo_dir, char * wareh
 
         this->Write_The_Script(warehouse_path);
      }
-
 }
 
 void Compiler_Script_Writer::Determine_Header_File_Paths(){
 
      for(int i=0;i<this->project_dir_num;i++){
 
-        char * directory = this->Dir_Lister.Get_Source_File_Directory(i);
+        char * directory = this->Dir_Lister.Get_Git_Repo_Directory(i);
 
         this->DirectoryManager.ChangeDirectory(directory);
 
