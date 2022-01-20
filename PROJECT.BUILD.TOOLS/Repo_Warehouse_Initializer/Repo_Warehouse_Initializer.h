@@ -11,7 +11,8 @@
 #include <iostream>
 #include <fcntl.h>
 #include <windows.h>
-#include "Project_Directory_Lister.h"
+#include "Project_Files_Lister.h"
+#include "Directory_Enumerator.h"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
 
@@ -35,7 +36,7 @@ protected:
  void Copy_Header_Files_To_Project_Headers_Location();
  void Clear_Dynamic_Memory();
  DirectoryOperations DirectoryManager;
- Project_Directory_Lister Dir_Lister;
+ Project_Files_Lister Dir_Lister;
  Cpp_FileOperations FileManager;
  Directory_Enumerator Enumerator;
  StringOperator StringManager;

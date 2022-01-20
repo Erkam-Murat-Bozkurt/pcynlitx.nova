@@ -40,6 +40,8 @@ Make_File_Builder::Make_File_Builder(){
 
    this->Dependency_Code_Line = nullptr;
 
+   this->Header_File_Directory = nullptr;
+
    this->Included_Header_Files_Number = 0;
 }
 
@@ -54,6 +56,7 @@ Make_File_Builder::~Make_File_Builder(){
        this->Clear_Dynamic_Memory();
    }
 }
+
 
 void Make_File_Builder::Clear_Dynamic_Memory(){
 
@@ -114,19 +117,95 @@ void Make_File_Builder::Clear_Dynamic_Memory(){
 
             this->Dependency_Code_Line = nullptr;
          }
+
+         if(this->Header_File_Path != nullptr){
+
+            delete [] this->Header_File_Path;
+
+            this->Header_File_Path = nullptr;
+         }
+
+         if(this->Header_File_Directory != nullptr){
+
+            delete [] this->Header_File_Directory;
+
+            this->Header_File_Directory = nullptr;
+         }
      }
 }
 
 
-void Make_File_Builder::Build_MakeFile(char * Class_Directory, char * Head_Dir, char * obj_dir){
 
-     this->Find_Class_Name(Class_Directory);
+void Make_File_Builder::Receive_Header_File_Path(char * header_path){
+
+     size_t header_path_size = strlen(header_path);
+
+     this->Header_File_Path = new char [5*header_path_size];
+
+     for(size_t i=0;i<header_path_size;i++){
+
+         this->Header_File_Path[i] = header_path[i];
+     }
+
+     this->Header_File_Path[header_path_size] = '\0';
+}
+
+void Make_File_Builder::Determine_Header_File_Directory(char operating_sis){
+
+     size_t header_path_size = strlen(this->Header_File_Path);
+
+     this->Header_File_Directory = new char [5*header_path_size];
+
+     size_t directory_size = header_path_size;
+
+     for(size_t i=header_path_size;i>0;i--){
+
+         if(operating_sis == 'w'){
+
+            if(this->Header_File_Path[i] == '\\'){
+
+                break;
+            }
+            else{
+
+                directory_size--;
+            }
+         }
+
+         if(operating_sis == 'l'){
+
+            if(this->Header_File_Path[i] == '/'){
+
+                break;
+            }
+            else{
+
+                directory_size--;
+            }
+         }
+     }
+
+     for(size_t i=0;i<directory_size;i++){
+
+          this->Header_File_Directory[i] = this->Header_File_Path[i];
+     }
+
+     this->Header_File_Directory[directory_size] = '\0';
+}
+
+
+
+void Make_File_Builder::Build_MakeFile(char * Head_Dir, char * obj_dir){
+
+     this->Determine_Header_File_Directory('w');
+
+     this->Find_Class_Name(this->Header_File_Directory);
 
      this->Determine_Included_Header_Files_Number();
 
      this->Read_Include_File_Names();
 
-     this->Determine_Compiler_System_Command(Class_Directory);
+     this->Determine_Compiler_System_Command(this->Header_File_Directory);
 
      this->Determine_Dependency_Code_Line();
 
@@ -150,7 +229,7 @@ void Make_File_Builder::Build_MakeFile(char * Class_Directory, char * Head_Dir, 
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("CURRENT_LOCATION=");
+     this->FileManager.WriteToFile("SOURCE_LOCATION=");
 
      this->FileManager.WriteToFile(Current_Directory);
 
@@ -203,104 +282,7 @@ void Make_File_Builder::Find_Class_Name(char * Class_Directory){
 
      this->DirectoryManager.ChangeDirectory(Class_Directory);
 
-     this->Enumerator.List_Files_On_Directory(Class_Directory);
-
-     int file_num = this->Enumerator.Get_File_Number();
-
-     char **  file_list = this->Enumerator.Get_File_List();
-
-     char header_add [] = ".h";
-
-     char * header_file_name = nullptr;
-
-     bool is_header_file_determined = false;
-
-     for(int k=0;k<file_num;k++){
-
-         bool is_header = this->StringManager.CheckStringInclusion(file_list[k],header_add);
-
-         if(is_header){
-
-            size_t header_name_size = strlen(file_list[k]);
-
-            header_file_name = new char [5*header_name_size];
-
-            for(size_t i=0;i<5*header_name_size;i++){
-
-                header_file_name[i] = '\0';
-            }
-
-            for(size_t j=0;j<header_name_size;j++){
-
-                header_file_name[j] = file_list[k][j];
-            }
-
-            header_file_name[header_name_size] = '\0';
-
-            is_header_file_determined = true;
-
-            break;
-          }
-      }
-
-
-      if(!is_header_file_determined){
-
-          std::cout << "\n There is no any header file in that location.";
-
-          std::cout << "\n\n";
-
-          exit(EXIT_FAILURE);
-      }
-
-
-      size_t Directory_Name_Size = strlen(Class_Directory);
-
-      this->Header_File_Path =  new char [5*Directory_Name_Size];
-
-      int index_counter = 0;
-
-      for(size_t i=0;i<Directory_Name_Size;i++){
-
-          this->Header_File_Path[index_counter] = Class_Directory[i];
-
-          index_counter++;
-      }
-
-      this->Header_File_Path[index_counter] = '\\';
-
-      index_counter++;
-
-      size_t header_name_size = strlen(header_file_name);
-
-      for(size_t i=0;i<header_name_size;i++){
-
-         this->Header_File_Path[index_counter] =
-
-         header_file_name[i];
-
-         index_counter++;
-      }
-
-      this->Header_File_Path[index_counter] = '\0';
-
-
-      delete [] header_file_name;
-
       this->NameReader.ReadClassName(this->Header_File_Path);
-
-      bool class_dec_syn_error = this->NameReader.GetClassSyntaxErrorStatus();
-
-      if(class_dec_syn_error){
-
-         std::cout << "\n there is syntax error in " << this->Header_File_Path
-
-         << " header file decleration";
-
-         std::cout << "\n\n";
-
-         exit(EXIT_FAILURE);
-      }
 
       char * class_name = this->NameReader.getClassName();
 
@@ -317,50 +299,83 @@ void Make_File_Builder::Find_Class_Name(char * Class_Directory){
 
       this->NameReader.Clear_Dynamic_Memory();
 
-     int Class_Name_Size = strlen(this->Class_Name);
+     size_t Class_Name_Size = strlen(this->Class_Name);
 
      this->Class_Header_File_Name = new char [5*Class_Name_Size];
 
-     for(int i=0;i<Class_Name_Size;i++){
+     int index = 0;
 
-         this->Class_Header_File_Name[i] = this->Class_Name[i];
+     for(size_t i=0;i<Class_Name_Size;i++){
+
+         this->Class_Header_File_Name[index] = this->Class_Name[i];
+
+         index++;
      }
 
-     this->Class_Header_File_Name[Class_Name_Size] = '.';
+     this->Class_Header_File_Name[index] = '.';
 
-     this->Class_Header_File_Name[Class_Name_Size+1] = 'h';
+     index++;
 
-     this->Class_Header_File_Name[Class_Name_Size+2] = '\0';
+     this->Class_Header_File_Name[index] = 'h';
+
+     index++;
+
+     this->Class_Header_File_Name[index] = '\0';
 
      this->Class_Object_File_Name = new char [5*Class_Name_Size];
 
+     index = 0;
+
      for(int i=0;i<Class_Name_Size;i++){
 
-         this->Class_Object_File_Name[i] = this->Class_Name[i];
+         this->Class_Object_File_Name[index] = this->Class_Name[i];
+
+         index++;
      }
 
-     this->Class_Object_File_Name[Class_Name_Size] = '.';
+     this->Class_Object_File_Name[index] = '.';
+
+     index++;
 
      this->Class_Object_File_Name[Class_Name_Size+1] = 'o';
 
+     index++;
+
      this->Class_Object_File_Name[Class_Name_Size+2] = '\0';
+
+     index++;
+
+
+
+     index = 0;
 
      this->Class_Source_File_Name = new char [5*Class_Name_Size];
 
      for(int i=0;i<Class_Name_Size;i++){
 
-         this->Class_Source_File_Name[i] = this->Class_Name[i];
+         this->Class_Source_File_Name[index] = this->Class_Name[i];
+
+         index++;
      }
 
-     this->Class_Source_File_Name[Class_Name_Size] = '.';
+     this->Class_Source_File_Name[index] = '.';
 
-     this->Class_Source_File_Name[Class_Name_Size+1] = 'c';
+     index++;
 
-     this->Class_Source_File_Name[Class_Name_Size+2] = 'p';
+     this->Class_Source_File_Name[index] = 'c';
 
-     this->Class_Source_File_Name[Class_Name_Size+3] = 'p';
+     index++;
 
-     this->Class_Source_File_Name[Class_Name_Size+4] = '\0';
+     this->Class_Source_File_Name[index] = 'p';
+
+     index++;
+
+     this->Class_Source_File_Name[index] = 'p';
+
+     index++;
+
+     this->Class_Source_File_Name[index] = '\0';
+
 }
 
 void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Directory){
@@ -375,7 +390,7 @@ void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Di
 
      char Headers_Location [] ="$(HEADERS_LOCATION)";
 
-     char Current_Location [] ="$(CURRENT_LOCATION)";
+     char Source_Location [] ="$(SOURCE_LOCATION)";
 
      char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
 
@@ -407,7 +422,6 @@ void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Di
                                     + Included_Header_Files_Name_Size;
 
 
-
      this->Compiler_System_Command = new char [10*compiler_command_size];
 
      char slash [] = "\\";
@@ -433,10 +447,14 @@ void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Di
 
      this->Place_Information(&this->Compiler_System_Command,Include_Character,&index_counter);
 
-     this->Place_Information(&this->Compiler_System_Command,Current_Location,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,Source_Location,&index_counter);
 
      this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
+
+     this->Place_Information(&this->Compiler_System_Command,Source_Location,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
 
      this->Place_Information(&this->Compiler_System_Command,this->Class_Source_File_Name,&index_counter);
 
@@ -449,7 +467,17 @@ void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Di
 
      this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
 
+
      this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,include_word,&index_counter);
+
+
+     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,Source_Location,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
 
      this->Place_Information(&this->Compiler_System_Command,this->Class_Header_File_Name,&index_counter);
 
@@ -547,7 +575,7 @@ void Make_File_Builder::Read_Include_File_Names(){
 
      this->Included_Header_Files = new char * [5*this->Included_Header_Files_Number];
 
-     this->FileManager.SetFilePath(this->Class_Header_File_Name);
+     this->FileManager.SetFilePath(this->Header_File_Path);
 
      this->FileManager.FileOpen(Rf);
 

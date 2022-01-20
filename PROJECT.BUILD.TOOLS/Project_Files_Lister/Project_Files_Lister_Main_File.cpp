@@ -34,18 +34,30 @@ int main(int argc, char ** argv){
 
     Project_Files_Lister Dir_Lister;
 
-    Dir_Lister.Determine_Project_File_List(argv[1],argv[2]);
+    Dir_Lister.Determine_Git_Repo_Info(argv[1],argv[2]);
 
     //Dir_Lister.Determine_Project_File_List();
 
-    int project_dir_num = Dir_Lister.Get_SourceFile_Directory_Number();
+    int project_dir_num = Dir_Lister.Get_Git_Repo_Directory_Number();
 
     for(int i=0;i<project_dir_num;i++){
 
-       std::cout << "\n ";
+       std::cout << "\n\n";
 
-       std::cout << Dir_Lister.Get_Source_File_Directory(i);
+       std::cout << "\n RECORD NUMBER: " << i;
+
+       std::cout << "\n Directory Path:";
+
+       std::cout << Dir_Lister.Get_Git_Repo_Directory(i);
+
+       std::cout << "\n Header File Path:";
+
+       std::cout << Dir_Lister.Get_Git_Repo_Header_File_Path(i);
     }
+
+    std::cout << "\n Press eny key..";
+
+    std::cin.get();
 
     std::cout << "\n\n";
 

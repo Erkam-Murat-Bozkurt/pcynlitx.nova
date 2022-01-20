@@ -60,7 +60,14 @@ bool Header_File_Determiner::Is_Header(char * file_path){
 
      char header_add_hpp [] = ".hpp";
 
+     char source_file_ext [] = ".cpp";
+
      this->is_header_file = false;
+
+     if(this->StringManager.CheckStringInclusion(file_path,source_file_ext)){
+
+        return this->is_header_file;
+     }
 
      this->is_header_file = this->StringManager.CheckStringInclusion(file_path,header_add_h);
 

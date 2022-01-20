@@ -1,5 +1,5 @@
 
-
+// Header decleraiton
 
 #ifndef HEADER_FILE_DETERMINER_H
 #define HEADER_FILE_DETERMINER_H

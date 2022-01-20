@@ -91,8 +91,6 @@ void Repo_Warehouse_Initializer::Clear_Dynamic_Memory(){
 
 void Repo_Warehouse_Initializer::Build_Project_Warehouse(char * repo_dir, char * warehouse){
 
-     this->Dir_Lister.Receive_Repo_Directory(repo_dir);
-
      this->Receive_Warehouse_Location(warehouse);
 
      this->Determine_Current_Directory();
@@ -106,11 +104,11 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(char * repo_dir, char *
 
      this->DirectoryManager.ChangeDirectory(this->current_directory);
 
-     this->Dir_Lister.Determine_Project_File_List();
+     this->Dir_Lister.Determine_Git_Repo_Info(repo_dir,warehouse);
 
      this->project_dir_num
 
-            = this->Dir_Lister.Get_SourceFile_Directory_Number();
+            = this->Dir_Lister.Get_Git_Repo_Directory_Number();
 
      this->Construct_Header_Files_Directory();
 
@@ -213,7 +211,7 @@ void Repo_Warehouse_Initializer::Determine_Header_File_Paths(){
 
      for(int i=0;i<this->project_dir_num;i++){
 
-        char * directory = this->Dir_Lister.Get_Source_File_Directory(i);
+        char * directory = this->Dir_Lister.Get_Git_Repo_Directory(i);
 
         this->DirectoryManager.ChangeDirectory(directory);
 

@@ -13,6 +13,7 @@
 #include <string>
 #include <fcntl.h>
 #include <windows.h>
+#include "Header_File_Determiner.h"
 #include "ClassNameReader.h"
 #include "ClassSyntaxControl.h"
 #include "Cpp_FileOperations.h"
@@ -26,9 +27,11 @@ public:
  Make_File_Builder();
  Make_File_Builder(const Make_File_Builder & orig);
  virtual ~Make_File_Builder();
- void Build_MakeFile(char * Class_Directory, char * Head_Dir, char * obj_dir);
+ void Receive_Header_File_Path(char * header_path);
+ void Build_MakeFile(char * Head_Dir, char * obj_dir);
  void Clear_Dynamic_Memory();
 private:
+ void Determine_Header_File_Directory(char operating_sis);
  void Determine_Dependency_Code_Line();
  void Place_Information(char ** Pointer, char * Information, int * index_counter);
  void Find_Class_Name(char * class_directory);
@@ -42,9 +45,11 @@ private:
  Directory_Enumerator Enumerator;
  StringOperator StringManager;
  ClassNameReader NameReader;
+ Header_File_Determiner Header_Determiner;
  std::string String_Line;
  char * Dependency_Code_Line;
  char * Header_File_Path;
+ char * Header_File_Directory;
  char * Class_Name;
  char * Class_Source_File_Name;
  char * Class_Header_File_Name;

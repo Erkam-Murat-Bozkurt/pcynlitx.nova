@@ -67,19 +67,25 @@ void Auto_MakeFile_Builder::Clear_Dynamic_Memory(){
 
 void Auto_MakeFile_Builder::Build_Make_Files(){
 
-     this->Dir_Lister.Receive_Repo_Directory(this->Repo_Dir);
+     // Determination of the directories recorded on the git repo
 
-     this->Dir_Lister.Determine_Project_File_List();
+     this->File_Lister.Determine_Git_Repo_Info(this->Repo_Dir,this->Warehouse_Path);
+
+     // Determination of the
 
      this->Determine_Project_Directories();
 
-     int dir_num = this->Dir_Lister.Get_SourceFile_Directory_Number();
+     int dir_num = this->File_Lister.Get_Git_Repo_Directory_Number();
 
      for(int i=0;i<dir_num;i++){
 
-         this->Mk_Builder.Build_MakeFile(this->Dir_Lister.Get_Source_File_Directory(i),
+         this->File_Lister.Get_Git_Repo_Directory(i);
 
-         this->repo_head_dir,this->repo_obj_dir);
+         char * header_path = this->File_Lister.Get_Git_Repo_Header_File_Path(i);
+
+         this->Mk_Builder.Receive_Header_File_Path(header_path);
+
+         this->Mk_Builder.Build_MakeFile(this->repo_head_dir,this->repo_obj_dir);
      }
 }
 

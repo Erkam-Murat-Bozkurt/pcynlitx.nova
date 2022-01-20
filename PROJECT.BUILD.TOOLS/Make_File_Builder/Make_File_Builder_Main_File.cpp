@@ -9,24 +9,20 @@ int main(int argc, char ** argv){
 
     Make_File_Builder File_Builder;
 
-    if(argc < 2){
+    if(argc < 3){
 
-       std::cout << "\n The usage: Make_File_Builder.exe <Headers Location>";
+       std::cout << "\n The usage: Make_File_Builder.exe <Header File Path> ";
+
+       std::cout << "<Proj. Headers Location> <Proj. Object Location>";
 
        std::cout << "\n\n";
 
        exit(0);
     }
 
-    size_t Headers_Location_String_Size = strlen(argv[1]);
+    File_Builder.Receive_Header_File_Path(argv[1]);
 
-    char * Header_Files_Location  = new char [10*Headers_Location_String_Size];
-
-    Place_String(&Header_Files_Location,argv[1]);
-
-    File_Builder.Build_MakeFile(Header_Files_Location);
-
-    delete [] Header_Files_Location;
+    File_Builder.Build_MakeFile(argv[2],argv[3]);
 
     return 0;
 }

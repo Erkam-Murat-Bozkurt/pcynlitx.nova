@@ -13,7 +13,7 @@
 #include <iostream>
 #include <fcntl.h>
 #include <windows.h>
-#include "Project_Directory_Lister.h"
+#include "Project_Files_Lister.h"
 #include "Make_File_Builder.h"
 
 class Auto_MakeFile_Builder
@@ -30,7 +30,7 @@ protected:
  void Write_Make_Files();
  void Clear_Dynamic_Memory();
  void Construct_Path(char ** pointer, char * string, char * warehouse_path);
- Project_Directory_Lister Dir_Lister;
+ Project_Files_Lister File_Lister;
  Make_File_Builder Mk_Builder;
  char * Warehouse_Path;
  char * Repo_Dir;
