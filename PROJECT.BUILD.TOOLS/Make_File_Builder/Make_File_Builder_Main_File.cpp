@@ -13,16 +13,14 @@ int main(int argc, char ** argv){
 
        std::cout << "\n The usage: Make_File_Builder.exe <Header File Path> ";
 
-       std::cout << "<Proj. Headers Location> <Proj. Object Location>";
+       std::cout << "<Proj. Warehouse Location>";
 
        std::cout << "\n\n";
 
        exit(0);
     }
 
-    File_Builder.Receive_Header_File_Path(argv[1]);
-
-    File_Builder.Build_MakeFile(argv[2],argv[3]);
+    File_Builder.Build_MakeFile(argv[1],argv[2],argv[3]);
 
     return 0;
 }

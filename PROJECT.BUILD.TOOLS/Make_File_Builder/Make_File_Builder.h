@@ -27,11 +27,15 @@ public:
  Make_File_Builder();
  Make_File_Builder(const Make_File_Builder & orig);
  virtual ~Make_File_Builder();
- void Receive_Header_File_Path(char * header_path);
- void Build_MakeFile(char * Head_Dir, char * obj_dir);
+ void Build_MakeFile(char * repo_dir, char * header_path,char * warehouse_path);
  void Clear_Dynamic_Memory();
 private:
+ void Receive_Git_Header_File_Path(char * header_path);
+ void Determine_Header_File_Exact_Path(char operating_sis);
+ void Receive_Warehouse_Path(char * warehouse_path);
+ void Receive_Repo_Directory(char * repo_dir);
  void Determine_Header_File_Directory(char operating_sis);
+ void Determine_Make_File_Name();
  void Determine_Dependency_Code_Line();
  void Place_Information(char ** Pointer, char * Information, int * index_counter);
  void Find_Class_Name(char * class_directory);
@@ -40,6 +44,8 @@ private:
  void Read_Include_File_Names();
  void Determine_Compiler_System_Command(char * Include_Directory_Location);
  bool Include_Line_Determiner(std::string String_Line);
+ void Determine_Warehouse_Header_Dir(char operating_sis);
+ void Determine_Warehouse_Object_Dir(char operating_sis);
  Cpp_FileOperations FileManager;
  DirectoryOperations DirectoryManager;
  Directory_Enumerator Enumerator;
@@ -47,8 +53,15 @@ private:
  ClassNameReader NameReader;
  Header_File_Determiner Header_Determiner;
  std::string String_Line;
+ char * git_header_dir;
+ char * repo_dir;
+ char * warehouse_head_dir;
+ char * warehouse_obj_dir;
+ char * warehouse_path;
+ char * Make_File_Name;
  char * Dependency_Code_Line;
- char * Header_File_Path;
+ char * Git_Header_File_Path;
+ char * Header_File_Exact_Path;
  char * Header_File_Directory;
  char * Class_Name;
  char * Class_Source_File_Name;

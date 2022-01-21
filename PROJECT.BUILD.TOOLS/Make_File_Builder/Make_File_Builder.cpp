@@ -42,6 +42,22 @@ Make_File_Builder::Make_File_Builder(){
 
    this->Header_File_Directory = nullptr;
 
+   this->Git_Header_File_Path = nullptr;
+
+   this->Header_File_Exact_Path = nullptr;
+
+   this->Make_File_Name = nullptr;
+
+   this->warehouse_path = nullptr;
+
+   this->warehouse_head_dir = nullptr;
+
+   this->warehouse_obj_dir = nullptr;
+
+   this->repo_dir = nullptr;
+
+   this->git_header_dir = nullptr;
+
    this->Included_Header_Files_Number = 0;
 }
 
@@ -118,11 +134,11 @@ void Make_File_Builder::Clear_Dynamic_Memory(){
             this->Dependency_Code_Line = nullptr;
          }
 
-         if(this->Header_File_Path != nullptr){
+         if(this->Git_Header_File_Path != nullptr){
 
-            delete [] this->Header_File_Path;
+            delete [] this->Git_Header_File_Path;
 
-            this->Header_File_Path = nullptr;
+            this->Git_Header_File_Path = nullptr;
          }
 
          if(this->Header_File_Directory != nullptr){
@@ -131,73 +147,360 @@ void Make_File_Builder::Clear_Dynamic_Memory(){
 
             this->Header_File_Directory = nullptr;
          }
+
+         if(this->Make_File_Name != nullptr){
+
+            delete [] this->Make_File_Name;
+
+            this->Make_File_Name = nullptr;
+         }
+
+         if(this->warehouse_path != nullptr){
+
+            delete [] this->warehouse_path;
+
+            this->warehouse_path = nullptr;
+         }
+
+         if(this->warehouse_head_dir != nullptr){
+
+            delete [] this->warehouse_head_dir;
+
+            this->warehouse_head_dir = nullptr;
+         }
+
+         if(this->warehouse_obj_dir != nullptr){
+
+            delete [] this->warehouse_obj_dir;
+
+            this->warehouse_obj_dir = nullptr;
+         }
+
+         if(this->repo_dir != nullptr){
+
+            delete [] this->repo_dir;
+
+            this->repo_dir = nullptr;
+         }
+
+
+         if(this->git_header_dir != nullptr){
+
+            delete [] this->git_header_dir;
+
+            this->git_header_dir = nullptr;
+          }
+
+         if(this->Header_File_Exact_Path != nullptr){
+
+             delete [] this->Header_File_Exact_Path;
+
+             this->Header_File_Exact_Path = nullptr;
+         }
      }
 }
 
+void Make_File_Builder::Receive_Repo_Directory(char * repo_dir){
 
+      size_t repo_dir_size = strlen(repo_dir);
 
-void Make_File_Builder::Receive_Header_File_Path(char * header_path){
+      this->repo_dir = new char [5*repo_dir_size];
+
+      for(size_t i=0;i<repo_dir_size;i++){
+
+          this->repo_dir[i] = repo_dir[i];
+      }
+
+      this->repo_dir[repo_dir_size] = '\0';
+}
+
+void Make_File_Builder::Receive_Git_Header_File_Path(char * header_path){
 
      size_t header_path_size = strlen(header_path);
 
-     this->Header_File_Path = new char [5*header_path_size];
+     this->Git_Header_File_Path = new char [5*header_path_size];
 
      for(size_t i=0;i<header_path_size;i++){
 
-         this->Header_File_Path[i] = header_path[i];
+         this->Git_Header_File_Path[i] = header_path[i];
      }
 
-     this->Header_File_Path[header_path_size] = '\0';
+     this->Git_Header_File_Path[header_path_size] = '\0';
+}
+
+void Make_File_Builder::Receive_Warehouse_Path(char * warehouse_path){
+
+     size_t warehouse_path_size = strlen(warehouse_path);
+
+     this->warehouse_path = new char [5*warehouse_path_size];
+
+     for(size_t i=0;i<warehouse_path_size;i++){
+
+         this->warehouse_path[i] = warehouse_path[i];
+     }
+
+     this->warehouse_path[warehouse_path_size] = '\0';
+}
+
+void Make_File_Builder::Determine_Warehouse_Header_Dir(char operating_sis){
+
+     char header_directory [] = "PROJECT.HEADER.FILES";
+
+     size_t warehouse_path_size = strlen(this->warehouse_path);
+
+     size_t head_dir_size = strlen(header_directory);
+
+     size_t path_size = warehouse_path_size + head_dir_size;
+
+     this->warehouse_head_dir = new char [5*path_size];
+
+     int index = 0;
+
+     for(size_t i=0;i<warehouse_path_size;i++){
+
+        this->warehouse_head_dir[index] = this->warehouse_path[i];
+
+        index++;
+     }
+
+     if(operating_sis == 'w'){
+
+        if(this->warehouse_head_dir[warehouse_path_size-1] != '\\'){
+
+           this->warehouse_head_dir[index] = '\\';
+
+           index++;
+        }
+     }
+
+     if(operating_sis == 'l'){
+
+         if(this->warehouse_head_dir[warehouse_path_size-1] != '/'){
+
+            this->warehouse_head_dir[index] = '/';
+
+            index++;
+         }
+     }
+
+     for(size_t i=0;i<head_dir_size;i++){
+
+         this->warehouse_head_dir[index] = header_directory[i];
+
+         index++;
+     }
+
+     this->warehouse_head_dir[index] = '\0';
+}
+
+void Make_File_Builder::Determine_Warehouse_Object_Dir(char operating_sis){
+
+     char object_directory [] = "PROJECT.OBJECT.FILES";
+
+     size_t warehouse_path_size = strlen(this->warehouse_path);
+
+     size_t object_dir_size = strlen(object_directory);
+
+     size_t path_size = warehouse_path_size + object_dir_size;
+
+     this->warehouse_obj_dir = new char [5*path_size];
+
+     int index = 0;
+
+     for(size_t i=0;i<warehouse_path_size;i++){
+
+         this->warehouse_obj_dir[index] = this->warehouse_path[i];
+
+         index++;
+     }
+
+     if(operating_sis == 'w'){
+
+        if(this->warehouse_path[warehouse_path_size-1] != '\\'){
+
+           this->warehouse_obj_dir[index] = '\\';
+
+           index++;
+        }
+     }
+
+     if(operating_sis == 'l'){
+
+        if(this->warehouse_path[warehouse_path_size-1] != '/'){
+
+            this->warehouse_head_dir[index] = '/';
+
+            index++;
+        }
+     }
+
+     for(size_t i=0;i<object_dir_size;i++){
+
+         this->warehouse_obj_dir[index] = object_directory[i];
+
+         index++;
+     }
+
+     this->warehouse_obj_dir[index] = '\0';
 }
 
 void Make_File_Builder::Determine_Header_File_Directory(char operating_sis){
 
-     size_t header_path_size = strlen(this->Header_File_Path);
+     size_t git_header_path_size = strlen(this->Git_Header_File_Path);
 
-     this->Header_File_Directory = new char [5*header_path_size];
+     char * git_header_dir = new char [5*git_header_path_size];
 
-     size_t directory_size = header_path_size;
+     size_t directory_size = git_header_path_size;
 
-     for(size_t i=header_path_size;i>0;i--){
+     for(size_t i=git_header_path_size;i>0;i--){
 
          if(operating_sis == 'w'){
 
-            if(this->Header_File_Path[i] == '\\'){
+             if(this->Git_Header_File_Path[i] == '\\'){
 
                 break;
-            }
-            else{
+             }
+             else{
 
-                directory_size--;
-            }
+                 directory_size--;
+             }
          }
 
          if(operating_sis == 'l'){
 
-            if(this->Header_File_Path[i] == '/'){
+             if(this->Git_Header_File_Path[i] == '/'){
 
                 break;
-            }
-            else{
+              }
+               else{
 
-                directory_size--;
-            }
-         }
+                 directory_size--;
+              }
+          }
      }
+
+     this->git_header_dir = new char [5*directory_size];
 
      for(size_t i=0;i<directory_size;i++){
 
-          this->Header_File_Directory[i] = this->Header_File_Path[i];
+          this->git_header_dir[i] = this->Git_Header_File_Path[i];
      }
 
-     this->Header_File_Directory[directory_size] = '\0';
+     this->git_header_dir[directory_size] = '\0';
+
+     size_t repo_dir_size = strlen(this->repo_dir);
+
+     size_t git_header_dir_size = strlen(this->git_header_dir);
+
+     size_t header_dir_size = repo_dir_size + git_header_dir_size;
+
+     this->Header_File_Directory = new char [5*header_dir_size];
+
+     int index = 0;
+
+     for(size_t i=0;i<repo_dir_size;i++){
+
+         this->Header_File_Directory[index] = this->repo_dir[i];
+
+         index++;
+     }
+
+     if(operating_sis == 'w'){
+
+        if(this->repo_dir[repo_dir_size -1] != '\\'){
+
+           this->Header_File_Directory[index] = '\\';
+
+           index++;
+        }
+      }
+
+     if(operating_sis == 'l'){
+
+        if(this->repo_dir[repo_dir_size -1] != '/'){
+
+           this->Header_File_Directory[index] = '/';
+
+           index++;
+        }
+      }
+
+      for(size_t i=0;i<git_header_dir_size;i++){
+
+         this->Header_File_Directory[index] = this->git_header_dir[i];
+
+         index++;
+     }
+
+     this->Header_File_Directory[index] = '\0';
+}
+
+void Make_File_Builder::Determine_Header_File_Exact_Path(char operating_sis){
+
+     size_t git_header_path_size = strlen(this->Git_Header_File_Path);
+
+     size_t repo_dir_size = strlen(this->repo_dir);
+
+     size_t exact_path_size = git_header_path_size + repo_dir_size;
+
+     this->Header_File_Exact_Path = new char [5*exact_path_size];
+
+     int index = 0;
+
+     for(size_t i=0;i<repo_dir_size;i++){
+
+         this->Header_File_Exact_Path[index] = this->repo_dir[i];
+
+         index++;
+     }
+
+
+     if(operating_sis == 'w'){
+
+        if(this->repo_dir[repo_dir_size -1] != '\\'){
+
+           this->Header_File_Exact_Path[index] = '\\';
+
+           index++;
+         }
+      }
+
+      if(operating_sis == 'l'){
+
+         if(this->repo_dir[repo_dir_size -1] != '/'){
+
+            this->Header_File_Exact_Path[index] = '/';
+
+            index++;
+          }
+      }
+
+      for(size_t i=0;i<git_header_path_size;i++){
+
+          this->Header_File_Exact_Path[index] = this->Git_Header_File_Path[i];
+
+          index++;
+      }
+
+      this->Header_File_Exact_Path[index] = '\0';
 }
 
 
+void Make_File_Builder::Build_MakeFile(char * repo_dir, char * Header_Path, char * warehouse_path){
 
-void Make_File_Builder::Build_MakeFile(char * Head_Dir, char * obj_dir){
+     this->Receive_Repo_Directory(repo_dir);
+
+     this->Receive_Git_Header_File_Path(Header_Path);
+
+     this->Receive_Warehouse_Path(warehouse_path);
+
+     this->Determine_Warehouse_Header_Dir('w');
+
+     this->Determine_Warehouse_Object_Dir('w');
 
      this->Determine_Header_File_Directory('w');
+
+     this->Determine_Header_File_Exact_Path('w');
 
      this->Find_Class_Name(this->Header_File_Directory);
 
@@ -209,7 +512,9 @@ void Make_File_Builder::Build_MakeFile(char * Head_Dir, char * obj_dir){
 
      this->Determine_Dependency_Code_Line();
 
-     this->FileManager.SetFilePath("auto_make_file.make");
+     this->Determine_Make_File_Name();
+
+     this->FileManager.SetFilePath(this->Make_File_Name);
 
      this->FileManager.FileOpen(RWCf);
 
@@ -217,21 +522,27 @@ void Make_File_Builder::Build_MakeFile(char * Head_Dir, char * obj_dir){
 
      this->FileManager.WriteToFile("HEADERS_LOCATION=");
 
-     this->FileManager.WriteToFile(Head_Dir);
+     this->FileManager.WriteToFile(this->warehouse_head_dir);
 
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("OBJECTS_LOCATION=");
 
-     this->FileManager.WriteToFile(obj_dir);
+     this->FileManager.WriteToFile(this->warehouse_obj_dir);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("REPO_DIRECTORY=");
+
+     this->FileManager.WriteToFile(this->repo_dir);
 
      char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("SOURCE_LOCATION=");
+     this->FileManager.WriteToFile("SOURCE_LOCATION=$(REPO_DIRECTORY)\\");
 
-     this->FileManager.WriteToFile(Current_Directory);
+     this->FileManager.WriteToFile(this->git_header_dir);
 
      char PathSpecifier [] = {'v','p','a','t','h',' ','%','\0'};
 
@@ -282,7 +593,7 @@ void Make_File_Builder::Find_Class_Name(char * Class_Directory){
 
      this->DirectoryManager.ChangeDirectory(Class_Directory);
 
-      this->NameReader.ReadClassName(this->Header_File_Path);
+      this->NameReader.ReadClassName(this->Header_File_Exact_Path);
 
       char * class_name = this->NameReader.getClassName();
 
@@ -378,6 +689,37 @@ void Make_File_Builder::Find_Class_Name(char * Class_Directory){
 
 }
 
+void Make_File_Builder::Determine_Make_File_Name(){
+
+     char make_file_extention [] = ".make";
+
+     size_t class_name_size = strlen(this->Class_Name);
+
+     size_t extention_size = strlen(make_file_extention);
+
+     size_t file_name_size = class_name_size + extention_size;
+
+     this->Make_File_Name = new char [5*file_name_size];
+
+     int index = 0;
+
+     for(size_t i=0;i<class_name_size;i++){
+
+         this->Make_File_Name[index] = this->Class_Name[i];
+
+         index++;
+     }
+
+     for(size_t i=0;i<extention_size;i++){
+
+         this->Make_File_Name[index] = make_file_extention[i];
+
+         index++;
+     }
+
+     this->Make_File_Name[index] = '\0';
+}
+
 void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Directory){
 
      char compiler_input_command [] = "g++ -Wall -c -std=c++17";
@@ -451,6 +793,14 @@ void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Di
 
      this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
+     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+
 
      this->Place_Information(&this->Compiler_System_Command,Source_Location,&index_counter);
 
@@ -481,6 +831,15 @@ void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Di
 
      this->Place_Information(&this->Compiler_System_Command,this->Class_Header_File_Name,&index_counter);
 
+
+     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
+
      this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
 
@@ -490,19 +849,17 @@ void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Di
 
      for(int i=0;i<this->Included_Header_Files_Number;i++){
 
-         this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-
          this->Place_Information(&this->Compiler_System_Command,include_word,&index_counter);
 
          this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
          this->Place_Information(&this->Compiler_System_Command,this->Included_Header_Files[i],&index_counter);
 
-         this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-
          sizer++;
 
-         if(((sizer >= 3) && (i!=(this->Included_Header_Files_Number -1)))){
+         if(((sizer >= 2) && (i!=(this->Included_Header_Files_Number -1)))){
+
+            this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
             this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
 
@@ -521,7 +878,7 @@ void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Di
 
 void Make_File_Builder::Determine_Included_Header_Files_Number(){
 
-     this->FileManager.SetFilePath(this->Header_File_Path);
+     this->FileManager.SetFilePath(this->Header_File_Exact_Path);
 
      this->FileManager.FileOpen(Rf);
 
@@ -575,7 +932,7 @@ void Make_File_Builder::Read_Include_File_Names(){
 
      this->Included_Header_Files = new char * [5*this->Included_Header_Files_Number];
 
-     this->FileManager.SetFilePath(this->Header_File_Path);
+     this->FileManager.SetFilePath(this->Header_File_Exact_Path);
 
      this->FileManager.FileOpen(Rf);
 

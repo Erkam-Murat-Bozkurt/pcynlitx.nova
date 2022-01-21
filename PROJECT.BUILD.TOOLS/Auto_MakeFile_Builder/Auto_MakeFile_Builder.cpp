@@ -79,13 +79,9 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
 
      for(int i=0;i<dir_num;i++){
 
-         this->File_Lister.Get_Git_Repo_Directory(i);
-
          char * header_path = this->File_Lister.Get_Git_Repo_Header_File_Path(i);
 
-         this->Mk_Builder.Receive_Header_File_Path(header_path);
-
-         this->Mk_Builder.Build_MakeFile(this->repo_head_dir,this->repo_obj_dir);
+         this->Mk_Builder.Build_MakeFile(header_path,this->Warehouse_Path);
      }
 }
 
