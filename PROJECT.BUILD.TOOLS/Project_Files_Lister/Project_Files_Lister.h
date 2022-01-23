@@ -23,7 +23,9 @@ public:
  int     Get_Git_Repo_Directory_Number();
  char *  Get_Git_Repo_Directory(int i);
  char *  Get_Git_Repo_Header_File_Path(int num);
+char * Get_Header_Exact_Path(int num);
 protected:
+ void Determine_Source_File_Name();
  void Receive_Warehouse_Directory(char * repo_dir);
  void Receive_Repo_Directory(char * repo_dir);
  void Determine_Source_Directory_Number();
@@ -32,6 +34,7 @@ protected:
  void Determine_Repo_List_File_Size();
  void List_Files_in_Repo();
  void Read_Repo_List_File();
+ void Construct_Git_Header_Path(char ** pointer, char * string_line);
  void Place_String(char ** pointer, std::string string_line);
  void Construct_Header_File_Path(char ** pointer, char * string_line, char operating_sis);
  void Construct_Directory_Path(char ** pointer, char * string_line, char operating_sis);
@@ -41,6 +44,7 @@ protected:
  StringOperator StringManager;
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
+ char ** git_header_file_path;
  char ** Source_File_Directory_List;
  char ** Header_File_Path_List;
  char ** File_List_Content;

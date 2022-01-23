@@ -183,7 +183,6 @@ void Make_File_Builder::Clear_Dynamic_Memory(){
             this->repo_dir = nullptr;
          }
 
-
          if(this->git_header_dir != nullptr){
 
             delete [] this->git_header_dir;
@@ -212,6 +211,11 @@ void Make_File_Builder::Receive_Repo_Directory(char * repo_dir){
       }
 
       this->repo_dir[repo_dir_size] = '\0';
+
+      if(this->repo_dir[repo_dir_size-1] == '\\'){
+
+         this->repo_dir[repo_dir_size-1] = '\0';
+      }
 }
 
 void Make_File_Builder::Receive_Git_Header_File_Path(char * header_path){
@@ -346,48 +350,6 @@ void Make_File_Builder::Determine_Warehouse_Object_Dir(char operating_sis){
 
 void Make_File_Builder::Determine_Header_File_Directory(char operating_sis){
 
-     size_t git_header_path_size = strlen(this->Git_Header_File_Path);
-
-     char * git_header_dir = new char [5*git_header_path_size];
-
-     size_t directory_size = git_header_path_size;
-
-     for(size_t i=git_header_path_size;i>0;i--){
-
-         if(operating_sis == 'w'){
-
-             if(this->Git_Header_File_Path[i] == '\\'){
-
-                break;
-             }
-             else{
-
-                 directory_size--;
-             }
-         }
-
-         if(operating_sis == 'l'){
-
-             if(this->Git_Header_File_Path[i] == '/'){
-
-                break;
-              }
-               else{
-
-                 directory_size--;
-              }
-          }
-     }
-
-     this->git_header_dir = new char [5*directory_size];
-
-     for(size_t i=0;i<directory_size;i++){
-
-          this->git_header_dir[i] = this->Git_Header_File_Path[i];
-     }
-
-     this->git_header_dir[directory_size] = '\0';
-
      size_t repo_dir_size = strlen(this->repo_dir);
 
      size_t git_header_dir_size = strlen(this->git_header_dir);
@@ -413,7 +375,7 @@ void Make_File_Builder::Determine_Header_File_Directory(char operating_sis){
 
            index++;
         }
-      }
+     }
 
      if(operating_sis == 'l'){
 
@@ -454,7 +416,6 @@ void Make_File_Builder::Determine_Header_File_Exact_Path(char operating_sis){
          index++;
      }
 
-
      if(operating_sis == 'w'){
 
         if(this->repo_dir[repo_dir_size -1] != '\\'){
@@ -485,18 +446,64 @@ void Make_File_Builder::Determine_Header_File_Exact_Path(char operating_sis){
       this->Header_File_Exact_Path[index] = '\0';
 }
 
+void Make_File_Builder::Determine_Git_Header_File_Directory(char operating_sis){
 
-void Make_File_Builder::Build_MakeFile(char * repo_dir, char * Header_Path, char * warehouse_path){
+     size_t git_header_path_size = strlen(this->Git_Header_File_Path);
+
+     this->git_header_dir = new char [5*git_header_path_size];
+
+     size_t header_dir_size = git_header_path_size;
+
+
+     for(size_t i=git_header_path_size;i>0;i--){
+
+          if(this->Git_Header_File_Path[i] == '/'){
+
+              break;
+          }
+          else{
+
+                header_dir_size--;
+          }
+      }
+
+     if(operating_sis == 'w'){
+
+        for(size_t i=0;i<header_dir_size;i++){
+
+            this->git_header_dir[i] = this->Git_Header_File_Path[i];
+
+            if(this->git_header_dir[i] == '/'){
+
+               this->git_header_dir[i] = '\\';
+            }
+        }
+     }
+
+     if(operating_sis == 'l'){
+
+       for(size_t i=0;i<header_dir_size;i++){
+
+           this->git_header_dir[i] = this->Git_Header_File_Path[i];
+       }
+     }
+
+     this->git_header_dir[header_dir_size] = '\0';
+}
+
+void Make_File_Builder::Build_MakeFile(char * repo_dir, char * Git_Header_Path, char * warehouse_path){
 
      this->Receive_Repo_Directory(repo_dir);
 
-     this->Receive_Git_Header_File_Path(Header_Path);
+     this->Receive_Git_Header_File_Path(Git_Header_Path);
 
      this->Receive_Warehouse_Path(warehouse_path);
 
      this->Determine_Warehouse_Header_Dir('w');
 
      this->Determine_Warehouse_Object_Dir('w');
+
+     this->Determine_Git_Header_File_Directory('w');
 
      this->Determine_Header_File_Directory('w');
 
@@ -513,6 +520,8 @@ void Make_File_Builder::Build_MakeFile(char * repo_dir, char * Header_Path, char
      this->Determine_Dependency_Code_Line();
 
      this->Determine_Make_File_Name();
+
+     this->DirectoryManager.ChangeDirectory(this->Header_File_Directory);
 
      this->FileManager.SetFilePath(this->Make_File_Name);
 

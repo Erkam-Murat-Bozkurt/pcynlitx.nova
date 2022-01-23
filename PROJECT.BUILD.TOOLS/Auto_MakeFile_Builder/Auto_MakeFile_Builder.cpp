@@ -81,7 +81,9 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
 
          char * header_path = this->File_Lister.Get_Git_Repo_Header_File_Path(i);
 
-         this->Mk_Builder.Build_MakeFile(header_path,this->Warehouse_Path);
+         this->Mk_Builder.Clear_Dynamic_Memory();
+
+         this->Mk_Builder.Build_MakeFile(this->Repo_Dir,header_path,this->Warehouse_Path);
      }
 }
 

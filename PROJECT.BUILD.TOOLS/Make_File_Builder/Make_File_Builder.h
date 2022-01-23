@@ -18,8 +18,6 @@
 #include "ClassSyntaxControl.h"
 #include "Cpp_FileOperations.h"
 #include "DirectoryOperations.h"
-#include "Directory_Enumerator.h"
-#include "CharOperator.h"
 
 class Make_File_Builder
 {
@@ -46,10 +44,9 @@ private:
  bool Include_Line_Determiner(std::string String_Line);
  void Determine_Warehouse_Header_Dir(char operating_sis);
  void Determine_Warehouse_Object_Dir(char operating_sis);
+ void Determine_Git_Header_File_Directory(char operating_sis);
  Cpp_FileOperations FileManager;
  DirectoryOperations DirectoryManager;
- Directory_Enumerator Enumerator;
- StringOperator StringManager;
  ClassNameReader NameReader;
  Header_File_Determiner Header_Determiner;
  std::string String_Line;
@@ -68,8 +65,6 @@ private:
  char * Class_Header_File_Name;
  char * Class_Object_File_Name;
  char * Compiler_System_Command;
- char * Header_File_Copy_Command;
- char * Object_File_Move_Command;
  char ** Included_Header_Files;
  int  Included_Header_Files_Number;
  bool Include_Line_Condition;
