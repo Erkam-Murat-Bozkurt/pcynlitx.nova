@@ -23,9 +23,11 @@ public:
  int     Get_Git_Repo_Directory_Number();
  char *  Get_Git_Repo_Directory(int i);
  char *  Get_Git_Repo_Header_File_Path(int num);
-char * Get_Header_Exact_Path(int num);
+ char *  Get_Header_Exact_Path(int num);
+ char *  Get_Source_File_Path(int num);
 protected:
  void Determine_Source_File_Name();
+ void Determine_Header_File_Name();
  void Receive_Warehouse_Directory(char * repo_dir);
  void Receive_Repo_Directory(char * repo_dir);
  void Determine_Source_Directory_Number();
