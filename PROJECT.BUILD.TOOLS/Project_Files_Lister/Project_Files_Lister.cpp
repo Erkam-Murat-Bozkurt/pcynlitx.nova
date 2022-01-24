@@ -3,8 +3,6 @@
 
 Project_Files_Lister::Project_Files_Lister(){
 
-    this->Source_File_Directory_List = nullptr;
-
     this->Source_File_Directory_Number = 0;
 
     this->Repo_Dir = nullptr;
@@ -21,16 +19,12 @@ Project_Files_Lister::Project_Files_Lister(){
 
     this->git_listing_command = nullptr;
 
-    this->Header_File_Path_List = nullptr;
-
-    this->git_header_file_path = nullptr;
 }
 
 Project_Files_Lister::Project_Files_Lister(const Project_Files_Lister & orig){
 
 
 }
-
 
 Project_Files_Lister::~Project_Files_Lister(){
 
@@ -46,15 +40,6 @@ void Project_Files_Lister::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         for(int k=0;k<this->Source_File_Directory_Number;k++){
-
-            delete [] this->Source_File_Directory_List[k];
-         }
-
-         delete [] this->Source_File_Directory_List;
-
-         this->Source_File_Directory_List = nullptr;
-
          if(this->Repo_Dir != nullptr){
 
             delete [] this->Repo_Dir;
@@ -69,44 +54,50 @@ void Project_Files_Lister::Clear_Dynamic_Memory(){
             this->Warehouse = nullptr;
          }
 
-         if(this->git_file_list_path != nullptr){
-
-            delete [] this->git_file_list_path;
-
-            this->git_file_list_path = nullptr;
-         }
-
          if(this->git_listing_command != nullptr){
 
-             delete [] this->git_listing_command;
+            delete [] this->git_listing_command;
 
-             this->git_listing_command = nullptr;
-         }
+            this->git_listing_command = nullptr;
+          }
 
-         if(this->Header_File_Path_List != nullptr){
 
-            for(int i=0;i<this->Source_File_Directory_Number;i++){
+          if(this->Data_Pointer != nullptr){
 
-                delete [] this->Header_File_Path_List[i];
+             for(int i=0;i<5*this->Source_File_Directory_Number;i++){
 
-                this->Header_File_Path_List[i] = nullptr;
-            }
+                 if(this->Data_Pointer[i].git_header_file_path != nullptr){
 
-            delete [] this->Header_File_Path_List;
-         }
+                    delete [] this->Data_Pointer[i].git_header_file_path;
 
-         if(this->git_header_file_path != nullptr){
+                    this->Data_Pointer[i].git_header_file_path = nullptr;
+                  }
 
-            for(int i=0;i<this->Source_File_Directory_Number;i++){
+                  if(this->Data_Pointer[i].Source_File_Directory != nullptr){
 
-                delete [] this->git_header_file_path[i];
+                     delete [] this->Data_Pointer[i].Source_File_Directory;
 
-                this->git_header_file_path[i] = nullptr;
-            }
+                     this->Data_Pointer[i].Source_File_Directory = nullptr;
+                  }
 
-            delete [] this->git_header_file_path;
-         }
-     }
+                  if(this->Data_Pointer[i].Header_File_Path != nullptr){
+
+                     delete [] this->Data_Pointer[i].Header_File_Path;
+
+                     this->Data_Pointer[i].Header_File_Path = nullptr;
+                  }
+
+                  if(this->Data_Pointer[i].Source_File_Name != nullptr){
+
+                     delete [] this->Data_Pointer[i].Source_File_Name;
+
+                     this->Data_Pointer[i].Source_File_Name = nullptr;
+                  }
+              }
+
+              delete [] this->Data_Pointer;
+          }
+       }
 }
 
 void Project_Files_Lister::Receive_Repo_Directory(char * repo_dir){
@@ -124,8 +115,6 @@ void Project_Files_Lister::Receive_Repo_Directory(char * repo_dir){
 
      this->Repo_Dir[repo_dir_size] = '\0';
 }
-
-
 
 void Project_Files_Lister::Receive_Warehouse_Directory(char * warehouse){
 
@@ -309,17 +298,17 @@ void Project_Files_Lister::Determine_Source_Directory_Number(){
 
 void Project_Files_Lister::Determine_Source_Directory_Data(){
 
-     this->Source_File_Directory_List = new char * [5*this->Source_File_Directory_Number];
-
-     this->Header_File_Path_List = new char * [5*this->Source_File_Directory_Number];
-
-     this->git_header_file_path = new char * [5*this->Source_File_Directory_Number];
+     this->Data_Pointer = new Source_Data [5*this->Source_File_Directory_Number];
 
      for(int i=0;i<5*this->Source_File_Directory_Number;i++){
 
-          this->Source_File_Directory_List[i] = nullptr;
+          this->Data_Pointer[i].Source_File_Directory = nullptr;
 
-          this->Header_File_Path_List[i] = nullptr;
+          this->Data_Pointer[i].Header_File_Path = nullptr;
+
+          this->Data_Pointer[i].git_header_file_path = nullptr;
+
+          this->Data_Pointer[i].Source_File_Name = nullptr;
      }
 
      int index_counter = 0;
@@ -328,21 +317,34 @@ void Project_Files_Lister::Determine_Source_Directory_Data(){
 
           bool is_header_file = this->Header_Determiner.Is_Header(this->File_List_Content[i]);
 
+          bool is_source_file = this->Source_Determiner.Is_Source_File(this->File_List_Content[i]);
+
+          // The header file and source file must be the same directory
+
           if(is_header_file){
 
              this->Header_Determiner.Determine_Header_File_Directory(this->File_List_Content[i]);
 
-             char * source_directory = this->Header_Determiner.Get_Header_Directory();
+             char * directory = this->Header_Determiner.Get_Header_Directory();
 
-             // The header file and source file must be the same directory
+             this->Construct_Directory_Path(&(this->Data_Pointer[index_counter].Source_File_Directory),directory,'w');
 
-             this->Construct_Directory_Path(&(this->Source_File_Directory_List[index_counter]),source_directory,'w');
+             this->Construct_Header_File_Path(&(this->Data_Pointer[index_counter].Header_File_Path),this->File_List_Content[i],'w');
 
-             this->Construct_Header_File_Path(&(this->Header_File_Path_List[index_counter]),this->File_List_Content[i],'w');
-
-             this->Construct_Git_Header_Path(&(this->git_header_file_path[index_counter]),this->File_List_Content[i]);
+             this->Construct_Git_Header_Path(&(this->Data_Pointer[index_counter].git_header_file_path),this->File_List_Content[i]);
 
              index_counter++;
+          }
+          else{
+
+              if(is_source_file){
+
+                 this->Source_Determiner.Determine_Source_File_Name(this->File_List_Content[i],'w');
+
+                 char * source_file_name = this->Source_Determiner.Get_Source_File_Name();
+
+                 this->Construct_Source_File_Name(&(this->Data_Pointer[index_counter].Source_File_Name),source_file_name);
+              }
           }
      }
 }
@@ -488,6 +490,31 @@ void Project_Files_Lister::Construct_Directory_Path(char ** pointer, char * stri
      (*pointer)[index] = '\0';
 }
 
+void Project_Files_Lister::Construct_Source_File_Name(char ** pointer, char * string_line){
+
+     size_t string_size = strlen(string_line);
+
+     int index = 0;
+
+     *pointer = new char [5*string_size];
+
+     for(size_t i=0;i<string_size;i++){
+
+        if(string_line[i] == '.'){
+
+          break;
+        }
+        else{
+
+          (*pointer)[index] = string_line[i];
+
+           index++;
+        }
+     }
+
+     (*pointer)[index] = '\0';
+}
+
 void Project_Files_Lister::Construct_Git_Header_Path(char ** pointer, char * string_line){
 
      size_t string_size = strlen(string_line);
@@ -510,15 +537,20 @@ int Project_Files_Lister::Get_Git_Repo_Directory_Number(){
 
 char * Project_Files_Lister::Get_Git_Repo_Directory(int num){
 
-       return this->Source_File_Directory_List[num];
+       return this->Data_Pointer[num].Source_File_Directory;
 }
 
 char * Project_Files_Lister::Get_Git_Repo_Header_File_Path(int num){
 
-      return this->git_header_file_path[num];
+      return this->Data_Pointer[num].git_header_file_path;
 }
 
 char * Project_Files_Lister::Get_Header_Exact_Path(int num){
 
-       return this->Header_File_Path_List[num];
+       return this->Data_Pointer[num].Header_File_Path;
+}
+
+char * Project_Files_Lister::Get_Source_File_Name(int num){
+
+       return this->Data_Pointer[num].Source_File_Name;
 }

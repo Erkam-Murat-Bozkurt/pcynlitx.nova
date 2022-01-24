@@ -186,33 +186,16 @@ void Source_File_Determiner::Determine_Source_File_Name(char * path, char operat
 
      size_t dir_size = file_path_size;
 
-     if(operating_sis == 'w'){
 
-        for(size_t i=file_path_size;i>0;i--){
+     for(size_t i=file_path_size;i>0;i--){
 
-          if(path[i] == '\\'){
+        if(path[i] == '/'){
 
-             break;
-          }
-          else{
+          break;
+        }
+        else{
 
-              dir_size--;
-          }
-       }
-     }
-
-     if(operating_sis == 'l'){
-
-        for(size_t i=file_path_size;i>0;i--){
-
-           if(path[i] == '/'){
-
-              break;
-           }
-           else{
-
-                dir_size--;
-            }
+            dir_size--;
         }
      }
 

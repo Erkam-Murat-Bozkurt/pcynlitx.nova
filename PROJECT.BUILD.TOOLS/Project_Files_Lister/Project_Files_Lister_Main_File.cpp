@@ -46,13 +46,24 @@ int main(int argc, char ** argv){
 
        std::cout << "\n RECORD NUMBER: " << i;
 
-       std::cout << "\n Directory Path:";
+       std::cout << "\n";
+
+       std::cout << " Directory Path:";
 
        std::cout << Dir_Lister.Get_Git_Repo_Directory(i);
 
-       std::cout << "\n Header File Path:";
+       std::cout << "\n";
+
+       std::cout << " Header File Path:";
 
        std::cout << Dir_Lister.Get_Git_Repo_Header_File_Path(i);
+
+       if(Dir_Lister.Get_Source_File_Name(i) != nullptr){
+
+          std::cout << "\n";
+
+          std::cout << " Source File name:" << Dir_Lister.Get_Source_File_Name(i);
+       }
     }
 
     std::cout << "\n Press eny key..";

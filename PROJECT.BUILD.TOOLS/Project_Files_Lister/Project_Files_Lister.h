@@ -8,10 +8,19 @@
 #include <cstdio>
 #include <iostream>
 #include "Header_File_Determiner.h"
+#include "Source_File_Determiner.h"
 #include "StringOperator.h"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
 
+struct Source_Data {
+
+  char * git_header_file_path;
+  char * Source_File_Directory;
+  char * Header_File_Path;
+  char * Source_File_Name;
+
+};
 
 class Project_Files_Lister
 {
@@ -24,7 +33,7 @@ public:
  char *  Get_Git_Repo_Directory(int i);
  char *  Get_Git_Repo_Header_File_Path(int num);
  char *  Get_Header_Exact_Path(int num);
- char *  Get_Source_File_Path(int num);
+ char *  Get_Source_File_Name(int num);
 protected:
  void Determine_Source_File_Name();
  void Determine_Header_File_Name();
@@ -40,15 +49,15 @@ protected:
  void Place_String(char ** pointer, std::string string_line);
  void Construct_Header_File_Path(char ** pointer, char * string_line, char operating_sis);
  void Construct_Directory_Path(char ** pointer, char * string_line, char operating_sis);
+ void Construct_Source_File_Name(char ** pointer, char * string_line);
  void Determine_Git_File_List_Path();
  void Determine_Git_Listing_Command();
  Header_File_Determiner Header_Determiner;
+ Source_File_Determiner Source_Determiner;
  StringOperator StringManager;
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
- char ** git_header_file_path;
- char ** Source_File_Directory_List;
- char ** Header_File_Path_List;
+ Source_Data * Data_Pointer;
  char ** File_List_Content;
  char * Warehouse;
  char * git_file_list_path;
