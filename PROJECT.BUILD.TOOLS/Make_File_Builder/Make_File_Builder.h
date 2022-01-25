@@ -14,8 +14,6 @@
 #include <fcntl.h>
 #include <windows.h>
 #include "Header_File_Determiner.h"
-#include "ClassNameReader.h"
-#include "ClassSyntaxControl.h"
 #include "Cpp_FileOperations.h"
 #include "DirectoryOperations.h"
 
@@ -25,6 +23,8 @@ public:
  Make_File_Builder();
  Make_File_Builder(const Make_File_Builder & orig);
  virtual ~Make_File_Builder();
+ void Receive_Source_File_Name(char * source_file_name);
+ void Receive_Header_File_Name_With_Its_Extention(char * header_file_name);
  void Build_MakeFile(char * repo_dir, char * header_path,char * warehouse_path);
  void Clear_Dynamic_Memory();
 private:
@@ -36,7 +36,7 @@ private:
  void Determine_Make_File_Name();
  void Determine_Dependency_Code_Line();
  void Place_Information(char ** Pointer, char * Information, int * index_counter);
- void Find_Class_Name(char * class_directory);
+ void Find_File_Names_With_Extention();
  void Determine_Included_Header_Files_Number();
  void Determine_Object_File_Names();
  void Read_Include_File_Names();
@@ -47,7 +47,6 @@ private:
  void Determine_Git_Header_File_Directory(char operating_sis);
  Cpp_FileOperations FileManager;
  DirectoryOperations DirectoryManager;
- ClassNameReader NameReader;
  Header_File_Determiner Header_Determiner;
  std::string String_Line;
  char * git_header_dir;
@@ -60,10 +59,10 @@ private:
  char * Git_Header_File_Path;
  char * Header_File_Exact_Path;
  char * Header_File_Directory;
- char * Class_Name;
- char * Class_Source_File_Name;
- char * Class_Header_File_Name;
- char * Class_Object_File_Name;
+ char * Source_File_Name;
+ char * Header_File_Name_With_Ext;
+ char * Source_File_Name_With_Ext;
+ char * Object_File_Name;
  char * Compiler_System_Command;
  char ** Included_Header_Files;
  int  Included_Header_Files_Number;

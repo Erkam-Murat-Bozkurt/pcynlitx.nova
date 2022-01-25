@@ -28,13 +28,11 @@ Make_File_Builder::Make_File_Builder(){
 
    this->Compiler_System_Command = nullptr;
 
-   this->Class_Name = nullptr;
+   this->Header_File_Name_With_Ext = nullptr;
 
-   this->Class_Header_File_Name = nullptr;
+   this->Object_File_Name = nullptr;
 
-   this->Class_Object_File_Name = nullptr;
-
-   this->Class_Source_File_Name = nullptr;
+   this->Source_File_Name_With_Ext = nullptr;
 
    this->Included_Header_Files = nullptr;
 
@@ -45,6 +43,8 @@ Make_File_Builder::Make_File_Builder(){
    this->Git_Header_File_Path = nullptr;
 
    this->Header_File_Exact_Path = nullptr;
+
+   this->Source_File_Name = nullptr;
 
    this->Make_File_Name = nullptr;
 
@@ -80,32 +80,18 @@ void Make_File_Builder::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         if(this->Class_Name != nullptr){
+         if(this->Source_File_Name_With_Ext != nullptr){
 
-            delete [] this->Class_Name;
+            delete [] this->Source_File_Name_With_Ext;
 
-            this->Class_Name = nullptr;
+            this->Source_File_Name_With_Ext = nullptr;
          }
 
-         if(this->Class_Header_File_Name != nullptr){
+         if(this->Object_File_Name != nullptr){
 
-            delete [] this->Class_Header_File_Name;
+            delete [] this->Object_File_Name;
 
-            this->Class_Header_File_Name = nullptr;
-         }
-
-         if(this->Class_Source_File_Name != nullptr){
-
-            delete [] this->Class_Source_File_Name;
-
-            this->Class_Source_File_Name = nullptr;
-         }
-
-         if(this->Class_Object_File_Name != nullptr){
-
-            delete [] this->Class_Object_File_Name;
-
-            this->Class_Object_File_Name = nullptr;
+            this->Object_File_Name = nullptr;
          }
 
          if(this->Compiler_System_Command != nullptr){
@@ -196,6 +182,21 @@ void Make_File_Builder::Clear_Dynamic_Memory(){
 
              this->Header_File_Exact_Path = nullptr;
          }
+
+         if(this->Source_File_Name != nullptr){
+
+             delete [] this->Source_File_Name;
+
+             this->Source_File_Name = nullptr;
+         }
+
+
+         if(this->Header_File_Name_With_Ext != nullptr){
+
+            delete [] this->Header_File_Name_With_Ext;
+
+            this->Header_File_Name_With_Ext = nullptr;
+          }
      }
 }
 
@@ -244,6 +245,34 @@ void Make_File_Builder::Receive_Warehouse_Path(char * warehouse_path){
      }
 
      this->warehouse_path[warehouse_path_size] = '\0';
+}
+
+void Make_File_Builder::Receive_Source_File_Name(char * Source_File_Name){
+
+     size_t source_file_name_size = strlen(Source_File_Name);
+
+     this->Source_File_Name = new char [5*source_file_name_size];
+
+     for(size_t i=0;i<source_file_name_size;i++){
+
+         this->Source_File_Name[i] = Source_File_Name[i];
+     }
+
+     this->Source_File_Name[source_file_name_size] = '\0';
+}
+
+void Make_File_Builder::Receive_Header_File_Name_With_Its_Extention(char * Header_File_Name){
+
+     size_t header_file_name_size = strlen(Header_File_Name);
+
+     this->Header_File_Name_With_Ext = new char [5*header_file_name_size];
+
+     for(size_t i=0;i<header_file_name_size;i++){
+
+         this->Header_File_Name_With_Ext[i] = Header_File_Name[i];
+     }
+
+     this->Header_File_Name_With_Ext[header_file_name_size] = '\0';
 }
 
 void Make_File_Builder::Determine_Warehouse_Header_Dir(char operating_sis){
@@ -491,7 +520,7 @@ void Make_File_Builder::Determine_Git_Header_File_Directory(char operating_sis){
      this->git_header_dir[header_dir_size] = '\0';
 }
 
-void Make_File_Builder::Build_MakeFile(char * repo_dir, char * Git_Header_Path, char * warehouse_path){
+void Make_File_Builder::Build_MakeFile(char * repo_dir, char * warehouse_path, char * Git_Header_Path){
 
      this->Receive_Repo_Directory(repo_dir);
 
@@ -509,7 +538,11 @@ void Make_File_Builder::Build_MakeFile(char * repo_dir, char * Git_Header_Path, 
 
      this->Determine_Header_File_Exact_Path('w');
 
-     this->Find_Class_Name(this->Header_File_Directory);
+
+     this->DirectoryManager.ChangeDirectory(this->Header_File_Directory);
+
+
+     this->Find_File_Names_With_Extention();
 
      this->Determine_Included_Header_Files_Number();
 
@@ -598,103 +631,61 @@ void Make_File_Builder::Build_MakeFile(char * repo_dir, char * Git_Header_Path, 
      this->FileManager.FileClose();
 }
 
-void Make_File_Builder::Find_Class_Name(char * Class_Directory){
+void Make_File_Builder::Find_File_Names_With_Extention(){
 
-     this->DirectoryManager.ChangeDirectory(Class_Directory);
+     size_t Source_File_Name_Size = strlen(this->Source_File_Name);
 
-      this->NameReader.ReadClassName(this->Header_File_Exact_Path);
-
-      char * class_name = this->NameReader.getClassName();
-
-      size_t class_name_size = strlen(class_name);
-
-      this->Class_Name = new char [5*class_name_size];
-
-      for(size_t i=0;i<class_name_size;i++){
-
-          this->Class_Name[i] = class_name[i];
-      }
-
-      this->Class_Name[class_name_size] = '\0';
-
-      this->NameReader.Clear_Dynamic_Memory();
-
-     size_t Class_Name_Size = strlen(this->Class_Name);
-
-     this->Class_Header_File_Name = new char [5*Class_Name_Size];
+     this->Object_File_Name = new char [5*Source_File_Name_Size];
 
      int index = 0;
 
-     for(size_t i=0;i<Class_Name_Size;i++){
+     for(int i=0;i<Source_File_Name_Size;i++){
 
-         this->Class_Header_File_Name[index] = this->Class_Name[i];
-
-         index++;
-     }
-
-     this->Class_Header_File_Name[index] = '.';
-
-     index++;
-
-     this->Class_Header_File_Name[index] = 'h';
-
-     index++;
-
-     this->Class_Header_File_Name[index] = '\0';
-
-     this->Class_Object_File_Name = new char [5*Class_Name_Size];
-
-     index = 0;
-
-     for(int i=0;i<Class_Name_Size;i++){
-
-         this->Class_Object_File_Name[index] = this->Class_Name[i];
+         this->Object_File_Name[index] = this->Source_File_Name[i];
 
          index++;
      }
 
-     this->Class_Object_File_Name[index] = '.';
+     this->Object_File_Name[index] = '.';
 
      index++;
 
-     this->Class_Object_File_Name[Class_Name_Size+1] = 'o';
+     this->Object_File_Name[Source_File_Name_Size+1] = 'o';
 
      index++;
 
-     this->Class_Object_File_Name[Class_Name_Size+2] = '\0';
-
-     index++;
+     this->Object_File_Name[Source_File_Name_Size+2] = '\0';
 
 
 
      index = 0;
 
-     this->Class_Source_File_Name = new char [5*Class_Name_Size];
+     this->Source_File_Name_With_Ext = new char [5*Source_File_Name_Size];
 
-     for(int i=0;i<Class_Name_Size;i++){
+     for(int i=0;i<Source_File_Name_Size;i++){
 
-         this->Class_Source_File_Name[index] = this->Class_Name[i];
+         this->Source_File_Name_With_Ext[index] = this->Source_File_Name[i];
 
          index++;
      }
 
-     this->Class_Source_File_Name[index] = '.';
+     this->Source_File_Name_With_Ext[index] = '.';
 
      index++;
 
-     this->Class_Source_File_Name[index] = 'c';
+     this->Source_File_Name_With_Ext[index] = 'c';
 
      index++;
 
-     this->Class_Source_File_Name[index] = 'p';
+     this->Source_File_Name_With_Ext[index] = 'p';
 
      index++;
 
-     this->Class_Source_File_Name[index] = 'p';
+     this->Source_File_Name_With_Ext[index] = 'p';
 
      index++;
 
-     this->Class_Source_File_Name[index] = '\0';
+     this->Source_File_Name_With_Ext[index] = '\0';
 
 }
 
@@ -702,7 +693,7 @@ void Make_File_Builder::Determine_Make_File_Name(){
 
      char make_file_extention [] = ".make";
 
-     size_t class_name_size = strlen(this->Class_Name);
+     size_t class_name_size = strlen(this->Source_File_Name);
 
      size_t extention_size = strlen(make_file_extention);
 
@@ -714,7 +705,7 @@ void Make_File_Builder::Determine_Make_File_Name(){
 
      for(size_t i=0;i<class_name_size;i++){
 
-         this->Make_File_Name[index] = this->Class_Name[i];
+         this->Make_File_Name[index] = this->Source_File_Name[i];
 
          index++;
      }
@@ -747,9 +738,9 @@ void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Di
 
      size_t Include_Directory_Name_Size = strlen(Header_Files_Directory);
 
-     size_t Source_File_Name_Size = strlen(this->Class_Source_File_Name);
+     size_t Source_File_Name_Size = strlen(this->Source_File_Name_With_Ext);
 
-     size_t Header_File_Name_Size = strlen(this->Class_Header_File_Name);
+     size_t Header_File_Name_Size = strlen(this->Source_File_Name_With_Ext);
 
      size_t Current_Directory_Name_Size = strlen(Current_Directory);
 
@@ -815,7 +806,7 @@ void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Di
 
      this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
 
-     this->Place_Information(&this->Compiler_System_Command,this->Class_Source_File_Name,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,this->Source_File_Name_With_Ext,&index_counter);
 
      this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
@@ -838,7 +829,7 @@ void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Di
 
      this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
 
-     this->Place_Information(&this->Compiler_System_Command,this->Class_Header_File_Name,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,this->Header_File_Name_With_Ext,&index_counter);
 
 
      this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
@@ -919,7 +910,7 @@ void Make_File_Builder::Determine_Included_Header_Files_Number(){
 
                          std::cout << "\n There is a syntax error in ";
 
-                         std::cout << this->Class_Header_File_Name << " decleration..";
+                         std::cout << this->Header_File_Name_With_Ext << " decleration..";
 
                          std::cout << "\n\n Please check decleraiton ..";
 
@@ -1032,11 +1023,11 @@ void Make_File_Builder::Determine_Dependency_Code_Line(){
 
      char space [] = " ";
 
-     size_t Object_File_Name_Size = strlen(this->Class_Object_File_Name);
+     size_t Object_File_Name_Size = strlen(this->Object_File_Name);
 
-     size_t Header_File_Name_Size = strlen(this->Class_Header_File_Name);
+     size_t Header_File_Name_Size = strlen(this->Header_File_Name_With_Ext);
 
-     size_t Source_File_Name_Size = strlen(this->Class_Source_File_Name);
+     size_t Source_File_Name_Size = strlen(this->Source_File_Name_With_Ext);
 
      size_t Included_Header_Files_Name_Size = 0;
 
@@ -1055,16 +1046,6 @@ void Make_File_Builder::Determine_Dependency_Code_Line(){
 
      int index_counter = 0;
 
-     this->Place_Information(&this->Dependency_Code_Line,this->Class_Object_File_Name,&index_counter);
-
-     this->Place_Information(&this->Dependency_Code_Line,double_quotes,&index_counter);
-
-     this->Place_Information(&this->Dependency_Code_Line,this->Class_Source_File_Name,&index_counter);
-
-     this->Place_Information(&this->Dependency_Code_Line,space,&index_counter);
-
-     this->Place_Information(&this->Dependency_Code_Line,this->Class_Header_File_Name,&index_counter);
-
      int  sizer = 0;
 
      char slash [] = "\\";
@@ -1072,6 +1053,26 @@ void Make_File_Builder::Determine_Dependency_Code_Line(){
      char new_line [] = "\n";
 
      char tab [] = "\t";
+
+     this->Place_Information(&this->Dependency_Code_Line,this->Object_File_Name,&index_counter);
+
+     this->Place_Information(&this->Dependency_Code_Line,double_quotes,&index_counter);
+
+     this->Place_Information(&this->Dependency_Code_Line,this->Source_File_Name_With_Ext,&index_counter);
+
+     this->Place_Information(&this->Dependency_Code_Line,space,&index_counter);
+
+     this->Place_Information(&this->Dependency_Code_Line,this->Header_File_Name_With_Ext,&index_counter);
+
+     this->Place_Information(&this->Dependency_Code_Line,space,&index_counter);
+
+     this->Place_Information(&this->Dependency_Code_Line,slash,&index_counter);
+
+     this->Place_Information(&this->Dependency_Code_Line,new_line,&index_counter);
+
+     this->Place_Information(&this->Dependency_Code_Line,tab,&index_counter);
+
+
 
      for(int i=0;i<this->Included_Header_Files_Number;i++){
 
@@ -1081,7 +1082,9 @@ void Make_File_Builder::Determine_Dependency_Code_Line(){
 
          sizer++;
 
-         if(((sizer >= 3) && (i!=(this->Included_Header_Files_Number -1)))){
+         if(((sizer >= 2) && (i!=(this->Included_Header_Files_Number -1)))){
+
+            this->Place_Information(&this->Dependency_Code_Line,space,&index_counter);
 
             this->Place_Information(&this->Dependency_Code_Line,slash,&index_counter);
 

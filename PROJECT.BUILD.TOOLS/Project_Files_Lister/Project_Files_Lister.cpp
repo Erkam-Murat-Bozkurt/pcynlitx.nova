@@ -93,6 +93,13 @@ void Project_Files_Lister::Clear_Dynamic_Memory(){
 
                      this->Data_Pointer[i].Source_File_Name = nullptr;
                   }
+
+                  if(this->Data_Pointer[i].Header_Name_With_Ext != nullptr){
+
+                     delete [] this->Data_Pointer[i].Header_Name_With_Ext;
+
+                     this->Data_Pointer[i].Header_Name_With_Ext = nullptr;
+                  }
               }
 
               delete [] this->Data_Pointer;
@@ -309,6 +316,8 @@ void Project_Files_Lister::Determine_Source_Directory_Data(){
           this->Data_Pointer[i].git_header_file_path = nullptr;
 
           this->Data_Pointer[i].Source_File_Name = nullptr;
+
+          this->Data_Pointer[i].Header_Name_With_Ext = nullptr;
      }
 
      int index_counter = 0;
@@ -332,6 +341,10 @@ void Project_Files_Lister::Determine_Source_Directory_Data(){
              this->Construct_Header_File_Path(&(this->Data_Pointer[index_counter].Header_File_Path),this->File_List_Content[i],'w');
 
              this->Construct_Git_Header_Path(&(this->Data_Pointer[index_counter].git_header_file_path),this->File_List_Content[i]);
+
+             this->Construct_Header_Name_With_File_Extention(&(this->Data_Pointer[index_counter].Header_Name_With_Ext),
+
+                    this->File_List_Content[i]);
 
              index_counter++;
           }
@@ -529,6 +542,43 @@ void Project_Files_Lister::Construct_Git_Header_Path(char ** pointer, char * str
      (*pointer)[string_size] = '\0';
 }
 
+void Project_Files_Lister::Construct_Header_Name_With_File_Extention(char ** pointer,
+
+     char * string_line){
+
+     size_t file_path_size = strlen(string_line);
+
+     size_t file_size = 0;
+
+     for(size_t i=file_path_size;i>0;i--){
+
+         if(string_line[i] == '/'){
+
+            break;
+         }
+         else{
+
+              file_size++;
+         }
+     }
+
+
+     *pointer = new char [5*file_size];
+
+     int index = 0;
+
+     size_t start_point = file_path_size - file_size+1;
+
+     for(size_t i=start_point;i<file_path_size;i++){
+
+         (*pointer)[index] = string_line[i];
+
+         index++;
+     }
+
+     (*pointer)[index] = '\0';
+}
+
 
 int Project_Files_Lister::Get_Git_Repo_Directory_Number(){
 
@@ -553,4 +603,9 @@ char * Project_Files_Lister::Get_Header_Exact_Path(int num){
 char * Project_Files_Lister::Get_Source_File_Name(int num){
 
        return this->Data_Pointer[num].Source_File_Name;
+}
+
+char * Project_Files_Lister::Get_Header_File_Name_With_Extention(int num){
+
+       return this->Data_Pointer[num].Header_Name_With_Ext;
 }
