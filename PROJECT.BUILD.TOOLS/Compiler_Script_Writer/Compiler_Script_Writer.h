@@ -25,8 +25,9 @@ struct Compiler_Data
   char * header_file_name;
   char * object_file_name;
   char * object_file_path;
-  char * class_name;
-  char * class_directory;
+  char * source_file_name;
+  char * source_file_dir;
+  char * make_file_name;
   int compile_oder;
   int dependency;
 };
@@ -39,14 +40,15 @@ public:
  virtual ~Compiler_Script_Writer();
  void Build_Compiler_Script(char * repo_dir, char * warehouse_path);
 protected:
- void Determine_Header_File_Paths();
- void Determine_Header_Paths(int dir_num);
+ void Determine_Script_Information();
+ void Determine_Source_File_Compilation_Information(int dir_num, char operating_sis);
  void Determine_Header_Files_Inclusion_Number();
  void Determine_Compiler_Order();
  void Write_The_Script(char * warehouse_path);
  void Clear_Dynamic_Memory();
  bool Include_Line_Determiner(std::string String_Line);
  void Determine_Warehouse_Paths(char * paths);
+ void Determine_Make_File_Names();
  void Construct_Path(char ** pointer, char * string, char * warehouse_path);
  ClassNameReader Cls_Name_Reader;
  DirectoryOperations DirectoryManager;
@@ -56,9 +58,10 @@ protected:
  StringOperator StringManager;
  std::string String_Line;
  bool Include_Line_Condition;
- int  project_dir_num;
+ int project_dir_num;
  int Included_Header_Files_Number;
  Compiler_Data * Compiler_Data_Pointer;
+ char * project_repo_dir;
  char * script_path;
  char * headers_locations;
  char * object_files_location;

@@ -38,7 +38,7 @@ int main(int argc, char ** argv){
 
     //Dir_Lister.Determine_Project_File_List();
 
-    int project_dir_num = Dir_Lister.Get_Git_Repo_Directory_Number();
+    int project_dir_num = Dir_Lister.Get_Make_Data_Number();
 
     for(int i=0;i<project_dir_num;i++){
 
@@ -50,26 +50,24 @@ int main(int argc, char ** argv){
 
        std::cout << " Directory Path:";
 
-       std::cout << Dir_Lister.Get_Git_Repo_Directory(i);
+       std::cout << Dir_Lister.Get_Make_Directory(i);
 
        std::cout << "\n";
 
        std::cout << " Header File Path:";
 
-       std::cout << Dir_Lister.Get_Git_Repo_Header_File_Path(i);
+       std::cout << Dir_Lister.Get_Make_Header_File_Path(i);
 
        std::cout << "\n";
 
        std::cout << " Header File Name:";
 
-       std::cout << Dir_Lister.Get_Header_File_Name_With_Extention(i);
+       std::cout << Dir_Lister.Get_Make_Header_File_Name_With_Extention(i);
 
-       if(Dir_Lister.Get_Source_File_Name(i) != nullptr){
+       std::cout << "\n";
 
-          std::cout << "\n";
+       std::cout << " Source File name:" << Dir_Lister.Get_Make_Source_File_Name(i);
 
-          std::cout << " Source File name:" << Dir_Lister.Get_Source_File_Name(i);
-       }
     }
 
     std::cout << "\n Press eny key..";

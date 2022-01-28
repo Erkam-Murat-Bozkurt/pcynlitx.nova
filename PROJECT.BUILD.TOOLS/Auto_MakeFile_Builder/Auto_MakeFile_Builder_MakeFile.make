@@ -12,10 +12,13 @@ CHAR_OPS=D:\pcynlitx.build\BASIC.TOOLS\CharOperator
 FILE_OPRS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
 CLASS_NAME=D:\pcynlitx.build\BASIC.TOOLS\ClassNameReader
 CLASS_SYNTAX=D:\pcynlitx.build\BASIC.TOOLS\ClassSyntaxControl
+SOURCE_DETR=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Source_File_Determiner
+
 
 
 VPATH = $(DIR_LIST) $(DIR_ENUM) $(REPO_DET) $(DIR_TREE) $(DIR_OPS) \
-$(STRING_OPS) $(CHAR_OPS) $(FILE_OPRS) $(MAKE_BLD) $(CLASS_NAME) $(CLASS_SYNTAX) $(HEAD_DETER)
+	      $(STRING_OPS) $(CHAR_OPS) $(FILE_OPRS) $(MAKE_BLD) $(CLASS_NAME) \
+				$(CLASS_SYNTAX) $(HEAD_DETER) $(SOURCE_DETR)
 
 Auto_MakeFile_Builder.exe: Auto_MakeFile_Builder_Main_File.cpp Auto_MakeFile_Builder.cpp \
 	Project_Files_Lister.cpp Header_File_Determiner.cpp Directory_Enumerator.cpp Repo_Dir_Determiner.cpp \
@@ -27,17 +30,19 @@ Auto_MakeFile_Builder.exe: Auto_MakeFile_Builder_Main_File.cpp Auto_MakeFile_Bui
 	DirectoryOperations.h CharOperator.h Cpp_FileOperations.h
 
 	g++ -std=c++17 -o Auto_MakeFile_Builder.exe -I$(DIR_LIST) -I$(MAKE_BLD) -I$(DIR_ENUM) \
-	 -I$(REPO_DET) -I$(DIR_TREE) -I$(DIR_OPS) -I$(STRING_OPS) -I$(HEAD_DETER) \
+	 -I$(REPO_DET) -I$(DIR_TREE) -I$(DIR_OPS) -I$(STRING_OPS) -I$(HEAD_DETER) -I$(SOURCE_DETR) \
    -I$(CHAR_OPS) -I$(FILE_OPRS) -I$(CLASS_NAME) -I$(CLASS_SYNTAX) \
 	 -L$(DIR_LIST) -L$(MAKE_BLD) -L$(DIR_ENUM) -L$(REPO_DET) -L$(DIR_TREE) -L$(DIR_OPS) \
-	 -L$(STRING_OPS) -L$(CHAR_OPS) -L$(FILE_OPRS) -L$(CLASS_NAME) -L$(CLASS_SYNTAX) -L$(HEAD_DETER) \
+	 -L$(STRING_OPS) -L$(CHAR_OPS) -L$(FILE_OPRS) -L$(CLASS_NAME) -L$(CLASS_SYNTAX) -L$(HEAD_DETER) -L$(SOURCE_DETR) \
 		Auto_MakeFile_Builder_Main_File.cpp Auto_MakeFile_Builder.cpp $(DIR_LIST)\Project_Files_Lister.cpp \
-		$(HEAD_DETER)\Header_File_Determiner.cpp $(MAKE_BLD)\Make_File_Builder.cpp \
+		$(SOURCE_DETR)\Source_File_Determiner.cpp $(HEAD_DETER)\Header_File_Determiner.cpp \
+		$(MAKE_BLD)\Make_File_Builder.cpp \
 		$(DIR_ENUM)\Directory_Enumerator.cpp $(REPO_DET)\Repo_Dir_Determiner.cpp \
 		$(DIR_TREE)\Directory_Tree_Size_Determiner.cpp $(CLASS_NAME)\ClassNameReader.cpp \
 		$(CLASS_SYNTAX)\ClassSyntaxControl.cpp $(DIR_OPS)\DirectoryOperations.cpp $(STRING_OPS)\StringOperator.cpp \
 		$(CHAR_OPS)\CharOperator.cpp $(FILE_OPRS)\Cpp_FileOperations.cpp \
 		-include Auto_MakeFile_Builder.h -include $(DIR_LIST)\Project_Files_Lister.h \
+		-include $(SOURCE_DETR)\Source_File_Determiner.h \
 		-include $(HEAD_DETER)\Header_File_Determiner.h -include $(DIR_ENUM)\Directory_Enumerator.h \
 		-include $(REPO_DET)\Repo_Dir_Determiner.h -include $(DIR_TREE)\Directory_Tree_Size_Determiner.h \
 		-include $(CLASS_NAME)\ClassNameReader.h -include $(CLASS_SYNTAX)\ClassSyntaxControl.h \

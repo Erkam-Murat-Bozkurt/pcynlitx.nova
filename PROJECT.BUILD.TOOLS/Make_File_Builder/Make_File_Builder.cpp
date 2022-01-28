@@ -822,7 +822,6 @@ void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Di
 
      this->Place_Information(&this->Compiler_System_Command,include_word,&index_counter);
 
-
      this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
      this->Place_Information(&this->Compiler_System_Command,Source_Location,&index_counter);
@@ -854,6 +853,8 @@ void Make_File_Builder::Determine_Compiler_System_Command(char * Header_Files_Di
          this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
          this->Place_Information(&this->Compiler_System_Command,this->Included_Header_Files[i],&index_counter);
+
+         this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
          sizer++;
 

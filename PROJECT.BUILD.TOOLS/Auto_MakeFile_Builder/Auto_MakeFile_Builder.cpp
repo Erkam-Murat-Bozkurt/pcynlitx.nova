@@ -81,9 +81,20 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
 
          char * header_path = this->File_Lister.Get_Git_Repo_Header_File_Path(i);
 
-         this->Mk_Builder.Clear_Dynamic_Memory();
+         char * source_file_name = this->File_Lister.Get_Source_File_Name(i);
 
-         this->Mk_Builder.Build_MakeFile(this->Repo_Dir,header_path,this->Warehouse_Path);
+         char * header_wit_ext = this->File_Lister.Get_Header_File_Name_With_Extention(i);
+
+         if(source_file_name != nullptr){
+
+            this->Mk_Builder.Clear_Dynamic_Memory();
+
+            this->Mk_Builder.Receive_Source_File_Name(source_file_name);
+
+            this->Mk_Builder.Receive_Header_File_Name_With_Its_Extention(header_wit_ext);
+
+            this->Mk_Builder.Build_MakeFile(this->Repo_Dir,this->Warehouse_Path,header_path);
+         }
      }
 }
 

@@ -13,6 +13,8 @@ int main(int argc, char ** argv){
 
        std::cout << "\n usage: Compiler_Script_Writer.exe <repo dir> <warehouse_path>";
 
+       std::cout << "\n";
+
        exit(0);
     }
 
