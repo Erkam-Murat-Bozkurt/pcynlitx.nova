@@ -395,14 +395,12 @@ void Project_Files_Lister::Determine_Source_Directory_Data(){
 
           bool is_source_file = this->Source_Determiner.Is_Source_File(this->File_List_Content[i]);
 
-          // The header file and source file must be the same directory
-
           if(is_header_file){
 
              this->Header_Determiner.Determine_Header_File_Directory(this->File_List_Content[i]);
 
              char * directory = this->Header_Determiner.Get_Header_Directory();
-
+;
              this->Construct_Directory_Path(&(this->Data_Pointer[index_counter].Source_File_Directory),directory,'w');
 
              this->Construct_Header_File_Path(&(this->Data_Pointer[index_counter].Header_File_Path),this->File_List_Content[i],'w');
@@ -424,6 +422,9 @@ void Project_Files_Lister::Determine_Source_Directory_Data(){
                  char * source_file_name = this->Source_Determiner.Get_Source_File_Name();
 
                  this->Construct_Source_File_Name(&(this->Data_Pointer[index_counter].Source_File_Name),source_file_name);
+
+                 this->Data_Pointer[index_counter].Source_File_Name;
+
               }
           }
      }
@@ -452,17 +453,9 @@ void Project_Files_Lister::Construct_Make_Data(){
               this->Data_Pointer[i].git_header_file_path);
 
 
-
            this->Place_String(&(this->Make_Data_Pointer[this->make_data_number].Source_File_Name),
 
               this->Data_Pointer[i].Source_File_Name);
-
-
-
-           this->Place_String(&(this->Make_Data_Pointer[this->make_data_number].Source_File_Name),
-
-              this->Data_Pointer[i].Source_File_Name);
-
 
 
            this->Place_String(&(this->Make_Data_Pointer[this->make_data_number].Header_Name_With_Ext),

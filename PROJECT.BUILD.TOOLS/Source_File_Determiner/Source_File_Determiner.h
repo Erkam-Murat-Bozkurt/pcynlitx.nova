@@ -28,11 +28,18 @@ public:
  char * Get_Source_File_Name();
 protected:
  void Read_File(char * path);
+ void Determine_File_Name_Without_Ext(char * path, char operating_sis);
+ void Determine_Class_Function_Pattern(char * path);
+ char * Get_Class_Function_Pattern();
+ char * Get_File_Name_Witout_Ext();
+ void Delete_Spaces_on_String(char ** pointer);
  void Clear_Dynamic_Memory();
  StringOperator StringManager;
  Cpp_FileOperations FileManager;
  char ** File_Content;
  char *  Source_File_Name;
+ char *  Class_Function_Patern;
+ char *  File_Name_Witout_Ext;
  int     File_Content_Size;
  bool    Is_This_Source_File;
  bool Memory_Delete_Condition;

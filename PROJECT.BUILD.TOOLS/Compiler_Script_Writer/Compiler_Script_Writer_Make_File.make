@@ -19,22 +19,25 @@ VPATH = $(DIR_LIST) $(REPO_DET) $(DIR_ENUM) $(DIR_TREE) \
 				$(HEADER_DET) $(SOURCE_DETR)
 
 Compiler_Script_Writer.exe: Compiler_Script_Writer_Main_File.cpp Compiler_Script_Writer.cpp \
-	Project_Files_Lister.cpp Header_File_Determiner.cpp Repo_Dir_Determiner.cpp \
-	Directory_Enumerator.cpp Directory_Enumerator.cpp \
+	Project_Files_Lister.cpp Header_File_Determiner.cpp Source_File_Determiner.cpp \
+	Repo_Dir_Determiner.cpp Directory_Enumerator.cpp Directory_Enumerator.cpp \
 	Directory_Tree_Size_Determiner.cpp ClassNameReader.cpp ClassSyntaxControl.cpp StringOperator.cpp \
-  Cpp_FileOperations.cpp CharOperator.cpp Project_Files_Lister.h Header_File_Determiner.h  \
-	Repo_Dir_Determiner.h Directory_Enumerator.h ClassNameReader.h ClassSyntaxControl.h \
-	StringOperator.h DirectoryOperations.h CharOperator.h Cpp_FileOperations.h \
+  Cpp_FileOperations.cpp CharOperator.cpp Project_Files_Lister.h Source_File_Determiner.h \
+	Header_File_Determiner.h Repo_Dir_Determiner.h Directory_Enumerator.h   \
+	ClassNameReader.h ClassSyntaxControl.h StringOperator.h DirectoryOperations.h \
+	CharOperator.h Cpp_FileOperations.h \
 
-	g++ -std=c++17 -o Compiler_Script_Writer.exe -I$(DIR_LIST) -I$(DIR_ENUM) -I$(REPO_DET) -I$(SOURCE_DETR) \
-	 -I$(DIR_TREE) -I$(DIR_OPS) -I$(STRING_OPS) -I$(CHAR_OPS) -I$(FILE_OPRS) -I$(NAME_READER) \
-	 -I$(SYNTAX_READER) -I$(HEADER_DET) -L$(DIR_LIST) -L$(DIR_ENUM) -L$(REPO_DET) -L$(DIR_TREE) -L$(DIR_OPS) \
-	 -L$(STRING_OPS) -L$(CHAR_OPS) -L$(FILE_OPRS) -L$(NAME_READER) -L$(SYNTAX_READER) -L$(HEADER_DET) -L$(SOURCE_DETR) \
+	g++ -std=c++17 -o Compiler_Script_Writer.exe -I$(DIR_LIST) -I$(DIR_ENUM) \
+	 -I$(REPO_DET) -I$(SOURCE_DETR) -I$(DIR_TREE) -I$(DIR_OPS) \
+	 -I$(STRING_OPS) -I$(CHAR_OPS) -I$(FILE_OPRS) -I$(NAME_READER) \
+	 -I$(SYNTAX_READER) -I$(HEADER_DET) -L$(DIR_LIST) -L$(DIR_ENUM) \
+	 -L$(REPO_DET) -L$(DIR_TREE) -L$(DIR_OPS) -L$(STRING_OPS) -L$(CHAR_OPS) -L$(FILE_OPRS) \
+	 -L$(NAME_READER) -L$(SYNTAX_READER) -L$(HEADER_DET) -L$(SOURCE_DETR) \
 		Compiler_Script_Writer_Main_File.cpp Compiler_Script_Writer.cpp \
 		$(DIR_LIST)\Project_Files_Lister.cpp $(SOURCE_DETR)\Source_File_Determiner.cpp \
 		$(HEADER_DET)\Header_File_Determiner.cpp \
-		$(REPO_DET)\Repo_Dir_Determiner.cpp \
-		$(DIR_ENUM)\Directory_Enumerator.cpp $(DIR_TREE)\Directory_Tree_Size_Determiner.cpp \
+		$(REPO_DET)\Repo_Dir_Determiner.cpp $(DIR_ENUM)\Directory_Enumerator.cpp \
+		$(DIR_TREE)\Directory_Tree_Size_Determiner.cpp \
 		$(NAME_READER)\ClassNameReader.cpp $(SYNTAX_READER)\ClassSyntaxControl.cpp \
 		$(DIR_OPS)\DirectoryOperations.cpp $(STRING_OPS)\StringOperator.cpp \
 		$(CHAR_OPS)\CharOperator.cpp $(FILE_OPRS)\Cpp_FileOperations.cpp \
