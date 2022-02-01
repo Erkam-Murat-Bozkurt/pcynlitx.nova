@@ -153,19 +153,6 @@ void Compiler_Script_Writer::Determine_Source_File_Compilation_Information(int d
 
 
 
-     /*
-
-     std::cout << "\n";
-
-     std::cout << "\n this->Compiler_Data_Pointer["
-
-               << dir_num << "].header_file_path:" <<
-
-               this->Compiler_Data_Pointer[dir_num].header_file_path;
-
-      */
-
-
 
      char * src_dir = this->Dir_Lister.Get_Make_Directory(dir_num);
 
@@ -183,20 +170,6 @@ void Compiler_Script_Writer::Determine_Source_File_Compilation_Information(int d
      }
 
      this->Compiler_Data_Pointer[dir_num].source_file_dir[dir_size] = '\0';
-
-
-
-     /*
-
-     std::cout << "\n this->Compiler_Data_Pointer[" << dir_num
-
-     << "].source_file_dir:" <<
-
-     this->Compiler_Data_Pointer[dir_num].source_file_dir;
-
-     std::cin.get();
-
-     */
 
 
 
@@ -234,17 +207,6 @@ void Compiler_Script_Writer::Determine_Source_File_Compilation_Information(int d
      this->Compiler_Data_Pointer[dir_num].source_file_name[index] = '\0';
 
 
-     /*
-
-     std::cout << "\n this->Compiler_Data_Pointer[" << dir_num << "].source_file_name:" <<
-
-     this->Compiler_Data_Pointer[dir_num].source_file_name;
-
-     std::cin.get();
-
-     */
-
-
 
 
      this->Compiler_Data_Pointer[dir_num].object_file_name = new char [5*src_name_size];
@@ -267,19 +229,6 @@ void Compiler_Script_Writer::Determine_Source_File_Compilation_Information(int d
      index++;
 
      this->Compiler_Data_Pointer[dir_num].object_file_name[index] = '\0';
-
-
-     /*
-
-     std::cout << "\n this->Compiler_Data_Pointer[" << dir_num << "].object_file_name:" <<
-
-     this->Compiler_Data_Pointer[dir_num].object_file_name;
-
-     std::cin.get();
-
-     */
-
-
 
 
      this->Compiler_Data_Pointer[dir_num].object_file_path = new char[5*dir_size];
@@ -329,18 +278,6 @@ void Compiler_Script_Writer::Determine_Source_File_Compilation_Information(int d
      index++;
 
      this->Compiler_Data_Pointer[dir_num].object_file_path[index] = '\0';
-
-
-     /*
-
-     std::cout << "\n this->Compiler_Data_Pointer[" << dir_num << "].object_file_path:" <<
-
-     this->Compiler_Data_Pointer[dir_num].object_file_path;
-
-     std::cin.get();
-
-     */
-
 }
 
 
