@@ -1,5 +1,5 @@
 
-EMP_DES=D:\pcynlitx.build\BASIC.TOOLS\Empty_Descriptor_File_Builder
+EMP_DES=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Empty_Descriptor_File_Builder
 CPP_OPS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
 
 VPATH = $(CPP_OPS)
