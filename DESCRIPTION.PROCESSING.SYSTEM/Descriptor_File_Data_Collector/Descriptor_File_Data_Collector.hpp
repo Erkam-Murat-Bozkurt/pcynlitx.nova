@@ -30,6 +30,7 @@ public:
  int Get_Include_Directories_Record_Area(int index);
  int Get_Standard_Record_Area(int index);
  int Get_Debugging_Option_Record_Area(int index);
+ int Get_Warehouse_Location_Record_Area(int index);
 protected:
  void Receive_Descriptor_File_Path(char * path);
  void Determine_Standard_Record_Area();
@@ -39,11 +40,13 @@ protected:
  void Determine_Source_File_Directories_Record_Area();
  void Determine_Library_Directories_Record_Area();
  void Determine_Debugging_Option_Record_Area();
+ void Determine_Warehouse_Location_Record_Area();
  Cpp_FileOperations FileManager;
  StringOperator StringManager;
  char * Descriptor_File_Path;
  char ** File_Content;
  int File_Content_Size;
+ int Warehouse_Location_Record_Area[2];
  int Library_Names_Record_Area[2];
  int Library_Directories_Record_Area[2];
  int Source_File_Directories_Record_Area[2];

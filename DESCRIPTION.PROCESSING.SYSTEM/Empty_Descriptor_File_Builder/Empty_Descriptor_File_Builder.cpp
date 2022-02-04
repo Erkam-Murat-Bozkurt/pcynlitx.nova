@@ -85,6 +85,10 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
 
      this->WriteNewLines(new_lines);
 
+     this->FileManager.WriteToFile("[PROJECT WAREHOUSE LOCATION]:");
+
+     this->WriteNewLines(new_lines);
+
      this->FileManager.WriteToFile("[C++ STANDARD]:");
 
      this->WriteNewLines(new_lines);

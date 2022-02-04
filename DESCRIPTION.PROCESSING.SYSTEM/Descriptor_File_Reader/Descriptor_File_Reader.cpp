@@ -11,6 +11,7 @@ Descriptor_File_Reader::Descriptor_File_Reader(){
     this->Source_File_Directories = nullptr;
     this->Library_Directories = nullptr;
     this->Library_Names = nullptr;
+    this->warehouse_location = nullptr;
     this->Memory_Delete_Condition = false;
     this->debugging_option = false;
     this->include_dir_num = 0;
@@ -94,6 +95,11 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
             delete [] this->debugging;
          }
+
+         if(this->warehouse_location != nullptr){
+
+            delete [] this->warehouse_location;
+         }
      }
 }
 
@@ -101,6 +107,8 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 void Descriptor_File_Reader::Read_Descriptor_File(char * path){
 
      this->Receive_Descriptor_File_Path(path);
+
+     this->Read_Warehouse_Location();
 
      this->Read_Standard();
 
@@ -131,6 +139,64 @@ void Descriptor_File_Reader::Receive_Descriptor_File_Path(char * path){
      this->StringManager.SetFilePath(this->file_path);
 
      this->Data_Collector.Collect_Descriptor_File_Data(this->file_path);
+}
+
+
+void Descriptor_File_Reader::Read_Warehouse_Location(){
+
+     int start_line = this->Data_Collector.Get_Warehouse_Location_Record_Area(0);
+
+     int end_line   = this->Data_Collector.Get_Warehouse_Location_Record_Area(1);
+
+     int record_num = 0;
+
+     for(int i=start_line;i<end_line;i++){
+
+         char * line = this->StringManager.ReadFileLine(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            record_num++;
+         }
+
+         if(record_num > 1){
+
+            std::cout << "\n\n";
+
+            std::cout << "\n Error:";
+
+            std::cout << "\n There are multiple project warehouse declerations";
+
+            std::cout << "\n\n";
+
+            exit(0);
+         }
+     }
+
+     if(record_num == 0){
+
+        std::cout << "\n\n";
+
+        std::cout << "\n Error:";
+
+        std::cout << "\n There is no any decleration about project warehouse location";
+
+        std::cout << "\n\n";
+
+        exit(0);
+     }
+
+     for(int i=start_line;i<end_line;i++){
+
+         char * line = this->StringManager.ReadFileLine(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            this->Place_String(&(this->warehouse_location),line);
+
+            break;
+         }
+     }
 }
 
 void Descriptor_File_Reader::Read_Standard(){
@@ -177,7 +243,6 @@ void Descriptor_File_Reader::Read_Standard(){
      }
 }
 
-
 void Descriptor_File_Reader::Read_Include_Directories(){
 
      int start_line = this->Data_Collector.Get_Include_Directories_Record_Area(0);
@@ -219,9 +284,7 @@ void Descriptor_File_Reader::Read_Include_Directories(){
              }
           }
       }
-
 }
-
 
 void Descriptor_File_Reader::Read_Source_File_Directories(){
 
@@ -310,7 +373,6 @@ void Descriptor_File_Reader::Read_Library_Directories(){
      }
 }
 
-
 void Descriptor_File_Reader::Read_Library_Names(){
 
      int start_line = this->Data_Collector.Get_Library_Names_Record_Area(0);
@@ -353,7 +415,6 @@ void Descriptor_File_Reader::Read_Library_Names(){
          }
       }
 }
-
 
 void Descriptor_File_Reader::Read_Debugging_Option(){
 
@@ -398,7 +459,6 @@ void Descriptor_File_Reader::Read_Debugging_Option(){
           }
       }
 }
-
 
 void Descriptor_File_Reader::Place_String(char ** pointer, char * string){
 
@@ -446,9 +506,13 @@ char * Descriptor_File_Reader::Get_Standard(){
 
 char * Descriptor_File_Reader::Get_Debugging_Option(){
 
-    return this->debugging;
+       return this->debugging;
 }
 
+char * Descriptor_File_Reader::Get_Warehouse_location(){
+
+       return this->warehouse_location;
+}
 
 int Descriptor_File_Reader::Get_Library_Name_Number(){
 

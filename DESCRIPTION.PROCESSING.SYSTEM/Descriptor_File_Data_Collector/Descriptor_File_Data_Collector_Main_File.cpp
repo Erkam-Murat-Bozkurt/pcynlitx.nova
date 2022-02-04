@@ -18,12 +18,22 @@ int main(int argc, char ** argv){
 
        std::cout << "\n\n";
 
+       std::cout << "\n\n";
+
        exit(0);
     }
 
     Descriptor_File_Data_Collector Data_Collector;
 
     Data_Collector.Collect_Descriptor_File_Data(argv[1]);
+
+    std::cout << "\n PROJECT WAREHOUSE LOCATION:";
+
+    std::cout << "\n Standart record area start:" << Data_Collector.Get_Warehouse_Location_Record_Area(0);
+
+    std::cout << "\n Standart record area end:"   << Data_Collector.Get_Warehouse_Location_Record_Area(1);
+
+    std::cout << "\n\n";
 
 
     std::cout << "\n STANDART RECORD:";

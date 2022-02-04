@@ -29,6 +29,23 @@ int main(int argc, char ** argv){
     Des_File_Reader.Read_Descriptor_File(argv[1]);
 
 
+    std::cout << "\n WAREHOUSE LOCATION:";
+
+    if(Des_File_Reader.Get_Warehouse_location() != nullptr){
+
+       std::cout << "\n ";
+
+       std::cout << Des_File_Reader.Get_Warehouse_location();
+
+    }
+    else{
+
+        std::cout << "\n There is no standard decleration";
+    }
+
+    std::cout << "\n\n";
+
+
     std::cout << "\n STANDART RECORD:";
 
     if(Des_File_Reader.Get_Standard() != nullptr){

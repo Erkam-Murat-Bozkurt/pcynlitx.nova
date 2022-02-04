@@ -29,12 +29,14 @@ public:
  char ** Get_Include_Directories();
  char *  Get_Standard();
  char *  Get_Debugging_Option();
+ char *  Get_Warehouse_location();
  int Get_Library_Name_Number();
  int Get_Library_Directory_Number();
  int Get_Source_File_Directory_Number();
  int Get_Include_Directory_Number();
 protected:
  void Receive_Descriptor_File_Path(char * path);
+ void Read_Warehouse_Location();
  void Read_Standard();
  void Read_Include_Directories();
  void Read_Source_File_Directories();
@@ -52,6 +54,7 @@ protected:
  char * file_path;
  char * standard;
  char * debugging;
+ char * warehouse_location;
  bool debugging_option;
  char ** Include_Directories;
  char ** Source_File_Directories;

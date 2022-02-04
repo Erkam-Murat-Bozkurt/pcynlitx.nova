@@ -11,6 +11,7 @@ Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(){
       this->Include_Directories_Record_Area[i] = 0;
       this->Standard_Record_Area[i] = 0;
       this->Debugging_Option_Record_Area[i] = 0;
+      this->Warehouse_Location_Record_Area[i] = 0;
   }
 
   this->File_Content_Size = 0;
@@ -58,6 +59,8 @@ void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(char * path){
 
      this->Receive_Descriptor_File_Path(path);
 
+     this->Determine_Warehouse_Location_Record_Area();
+
      this->Determine_Standard_Record_Area();
 
      this->Determine_Include_Directories_Record_Area();
@@ -87,6 +90,22 @@ void Descriptor_File_Data_Collector::Receive_Descriptor_File_Path(char * path){
      this->StringManager.SetFilePath(this->Descriptor_File_Path);
 }
 
+void Descriptor_File_Data_Collector::Determine_Warehouse_Location_Record_Area(){
+
+     char warehouse_key [] = "[PROJECT WAREHOUSE LOCATION]";
+
+     char include_key [] = "[C++ STANDARD]";
+
+     int record_stard = 0, record_end = 0;
+
+     this->Warehouse_Location_Record_Area[0] =
+
+           this->StringManager.FindNextWordLine(warehouse_key,record_stard) + 2;
+
+     this->Warehouse_Location_Record_Area[1] =
+
+           this->StringManager.FindNextWordLine(include_key,record_end);
+}
 
 void Descriptor_File_Data_Collector::Determine_Standard_Record_Area(){
 
@@ -225,4 +244,9 @@ int Descriptor_File_Data_Collector::Get_Standard_Record_Area(int index) {
 int Descriptor_File_Data_Collector::Get_Debugging_Option_Record_Area(int index){
 
      return this->Debugging_Option_Record_Area[index];
+}
+
+int Descriptor_File_Data_Collector::Get_Warehouse_Location_Record_Area(int index){
+
+    return this->Warehouse_Location_Record_Area[index];
 }
