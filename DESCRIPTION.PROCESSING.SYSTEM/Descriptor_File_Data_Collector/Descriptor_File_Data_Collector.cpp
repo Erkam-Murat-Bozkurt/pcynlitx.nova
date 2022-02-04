@@ -35,13 +35,22 @@ Descriptor_File_Data_Collector::~Descriptor_File_Data_Collector(){
 
      this->Clear_Dynamic_Memory();
   }
-
 }
 
 
 void Descriptor_File_Data_Collector::Clear_Dynamic_Memory(){
 
+     if(!this->Memory_Delete_Condition){
 
+         this->Memory_Delete_Condition = true;
+
+         if(this->Descriptor_File_Path != nullptr){
+
+            delete [] this->Descriptor_File_Path;
+         }
+
+         this->Descriptor_File_Path = nullptr;
+     }
 }
 
 
