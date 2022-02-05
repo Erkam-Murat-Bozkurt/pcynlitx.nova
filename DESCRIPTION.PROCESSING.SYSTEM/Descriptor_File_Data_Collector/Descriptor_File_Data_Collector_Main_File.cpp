@@ -77,20 +77,11 @@ int main(int argc, char ** argv){
 
 
 
-    std::cout << "\n LIBRARY NAMES RECORD:";
+    std::cout << "\n OPTIONS RECORD:";
 
-    std::cout << "\n Library names record area start:" << Data_Collector.Get_Library_Names_Record_Area(0);
+    std::cout << "\n Debugging options record area start:" << Data_Collector.Get_Options_Record_Area(0);
 
-    std::cout << "\n Library names record area end:"   << Data_Collector.Get_Library_Names_Record_Area(1);
-
-    std::cout << "\n\n";
-
-
-    std::cout << "\n DEBUGGING OPTION RECORD:";
-
-    std::cout << "\n Debugging options record area start:" << Data_Collector.Get_Debugging_Option_Record_Area(0);
-
-    std::cout << "\n Debugging options record area end:"   << Data_Collector.Get_Debugging_Option_Record_Area(1);
+    std::cout << "\n Debugging options record area end:"   << Data_Collector.Get_Options_Record_Area(1);
 
     std::cout << "\n\n";
 

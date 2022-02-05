@@ -5,17 +5,15 @@ Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(){
 
   for(int i=0;i<2;i++){
 
-      this->Library_Names_Record_Area[i] = 0;
       this->Library_Directories_Record_Area[i] = 0;
       this->Source_File_Directories_Record_Area[i] = 0;
       this->Include_Directories_Record_Area[i] = 0;
       this->Standard_Record_Area[i] = 0;
-      this->Debugging_Option_Record_Area[i] = 0;
+      this->Options_Record_Area[i] = 0;
       this->Warehouse_Location_Record_Area[i] = 0;
   }
 
   this->File_Content_Size = 0;
-  this->Library_Names_Record_Number = 0;
   this->Library_Directories_Record_Number = 0;
   this->Source_File_Directories_Record_Number = 0;
   this->Include_Directories_Record_Number = 0;
@@ -69,9 +67,7 @@ void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(char * path){
 
      this->Determine_Library_Directories_Record_Area();
 
-     this->Determine_Library_Names_Record_Area();
-
-     this->Determine_Debugging_Option_Record_Area();
+     this->Determine_Options_Record_Area();
 }
 
 void Descriptor_File_Data_Collector::Receive_Descriptor_File_Path(char * path){
@@ -167,7 +163,7 @@ void Descriptor_File_Data_Collector::Determine_Library_Directories_Record_Area()
 
      char library_dir_key [] = "[LIBRARY DIRECTORIES]";
 
-     char library_names_key [] = "[LIBRARY NAMES]";
+     char options_key [] = "[OPTIONS]";
 
      int record_stard = 0, record_end = 0;
 
@@ -177,49 +173,25 @@ void Descriptor_File_Data_Collector::Determine_Library_Directories_Record_Area()
 
      this->Library_Directories_Record_Area[1] =
 
-              this->StringManager.FindNextWordLine(library_names_key,record_end);
+              this->StringManager.FindNextWordLine(options_key,record_end);
 }
 
-void Descriptor_File_Data_Collector::Determine_Library_Names_Record_Area(){
+void Descriptor_File_Data_Collector::Determine_Options_Record_Area(){
 
-     char library_names_key [] = "[LIBRARY NAMES]";
-
-     char debugging_key [] = "[DEBUGGING]";
-
-     int record_stard = 0, record_end = 0;
-
-     this->Library_Names_Record_Area[0]
-
-            = this->StringManager.FindNextWordLine(library_names_key,record_stard) + 2;
-
-     this->Library_Names_Record_Area[1]
-
-            = this->StringManager.FindNextWordLine(debugging_key,record_end);
-}
-
-
-void Descriptor_File_Data_Collector::Determine_Debugging_Option_Record_Area(){
-
-     char debugging_key [] = "[DEBUGGING]";
+     char options_key [] = "[OPTIONS]";
 
      char end_key [] = "[END]";
 
      int record_stard = 0, record_end = 0;
 
-     this->Debugging_Option_Record_Area[0] =
+     this->Options_Record_Area[0] =
 
-            this->StringManager.FindNextWordLine(debugging_key,record_stard) + 2;
+            this->StringManager.FindNextWordLine(options_key,record_stard) + 2;
 
-     this->Debugging_Option_Record_Area[1] =
+     this->Options_Record_Area[1] =
 
             this->StringManager.FindNextWordLine(end_key,record_end);
 }
-
-
-int Descriptor_File_Data_Collector::Get_Library_Names_Record_Area(int index) {
-
-      return this->Library_Names_Record_Area[index];
-};
 
 int Descriptor_File_Data_Collector::Get_Library_Directories_Record_Area(int index) {
 
@@ -241,9 +213,9 @@ int Descriptor_File_Data_Collector::Get_Standard_Record_Area(int index) {
       return this->Standard_Record_Area[index];
 }
 
-int Descriptor_File_Data_Collector::Get_Debugging_Option_Record_Area(int index){
+int Descriptor_File_Data_Collector::Get_Options_Record_Area(int index){
 
-     return this->Debugging_Option_Record_Area[index];
+     return this->Options_Record_Area[index];
 }
 
 int Descriptor_File_Data_Collector::Get_Warehouse_Location_Record_Area(int index){

@@ -130,34 +130,13 @@ int main(int argc, char ** argv){
     std::cout << "\n\n";
 
 
-    std::cout << "\n LIBRARY NAMES RECORD:";
+    std::cout << "\n OPTIONS RECORD: ";
 
-    int lib_names_num = Des_File_Reader.Get_Library_Name_Number();
-
-    if(lib_names_num > 0){
-
-      for(int i=0;i<lib_names_num;i++){
-
-          std::cout << "\n ";
-
-          std::cout << Des_File_Reader.Get_Library_Names()[i];
-      }
-    }
-    else{
-
-        std::cout << "\n There is no library names decleration..";
-    }
-
-    std::cout << "\n\n";
-
-
-    std::cout << "\n DEBUGGING OPTION RECORD: ";
-
-    if(Des_File_Reader.Get_Debugging_Option() != nullptr){
+    if(Des_File_Reader.Get_Options() != nullptr){
 
        std::cout << "\n ";
 
-       std::cout << Des_File_Reader.Get_Debugging_Option();
+       std::cout << Des_File_Reader.Get_Options();
     }
     else{
 

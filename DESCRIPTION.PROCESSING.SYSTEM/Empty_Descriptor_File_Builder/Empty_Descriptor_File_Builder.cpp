@@ -105,11 +105,7 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
 
      this->WriteNewLines(new_lines);
 
-     this->FileManager.WriteToFile("[LIBRARY NAMES]:");
-
-     this->WriteNewLines(new_lines);
-
-     this->FileManager.WriteToFile("[DEBUGGING]:");
+     this->FileManager.WriteToFile("[OPTIONS]:");
 
      this->WriteNewLines(new_lines);
 

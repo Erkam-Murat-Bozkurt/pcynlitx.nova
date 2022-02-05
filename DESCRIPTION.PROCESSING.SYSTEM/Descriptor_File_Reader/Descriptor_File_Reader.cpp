@@ -6,19 +6,15 @@ Descriptor_File_Reader::Descriptor_File_Reader(){
 
     this->file_path = nullptr;
     this->standard = nullptr;
-    this->debugging = nullptr;
+    this->options = nullptr;
     this->Include_Directories = nullptr;
     this->Source_File_Directories = nullptr;
     this->Library_Directories = nullptr;
-    this->Library_Names = nullptr;
     this->warehouse_location = nullptr;
     this->Memory_Delete_Condition = false;
-    this->debugging_option = false;
     this->include_dir_num = 0;
     this->source_file_dir_num = 0;
     this->lib_dir_num = 0;
-    this->lib_name_num = 0;
-
 }
 
 
@@ -71,16 +67,6 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
             }
          }
 
-         if(this->Library_Names != nullptr){
-
-            for(int i=0;i<this->lib_name_num;i++){
-
-               delete [] this->Library_Names[i];
-
-               this->Library_Names[i] = nullptr;
-            }
-         }
-
          if(this->file_path != nullptr){
 
             delete [] this->file_path;
@@ -91,9 +77,9 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
             delete [] this->standard;
          }
 
-         if(this->debugging != nullptr){
+         if(this->options != nullptr){
 
-            delete [] this->debugging;
+            delete [] this->options;
          }
 
          if(this->warehouse_location != nullptr){
@@ -118,9 +104,7 @@ void Descriptor_File_Reader::Read_Descriptor_File(char * path){
 
      this->Read_Library_Directories();
 
-     this->Read_Library_Names();
-
-     this->Read_Debugging_Option();
+     this->Read_Options();
 }
 
 void Descriptor_File_Reader::Receive_Descriptor_File_Path(char * path){
@@ -373,54 +357,11 @@ void Descriptor_File_Reader::Read_Library_Directories(){
      }
 }
 
-void Descriptor_File_Reader::Read_Library_Names(){
+void Descriptor_File_Reader::Read_Options(){
 
-     int start_line = this->Data_Collector.Get_Library_Names_Record_Area(0);
+     int start_line = this->Data_Collector.Get_Options_Record_Area(0);
 
-     int end_line  = this->Data_Collector.Get_Library_Names_Record_Area(1);
-
-     this->lib_name_num = 0;
-
-     for(int i=start_line;i<end_line;i++){
-
-         char * line = this->StringManager.ReadFileLine(i);
-
-         if(this->StringManager.CheckStringLine(line)){
-
-             this->lib_name_num++;
-         }
-      }
-
-      if(this->lib_name_num > 0){
-
-         this->Library_Names = new char * [5*this->lib_name_num];
-
-         for(int i=0;i<this->lib_name_num;i++){
-
-             this->Library_Names[i] = nullptr;
-         }
-
-         int record_index = 0;
-
-         for(int i=start_line;i<end_line;i++){
-
-             char * line = this->StringManager.ReadFileLine(i);
-
-             if(this->StringManager.CheckStringLine(line)){
-
-                this->Place_String(&(this->Library_Names[record_index]),line);
-
-                record_index++;
-             }
-         }
-      }
-}
-
-void Descriptor_File_Reader::Read_Debugging_Option(){
-
-     int start_line = this->Data_Collector.Get_Debugging_Option_Record_Area(0);
-
-     int end_line   = this->Data_Collector.Get_Debugging_Option_Record_Area(1);
+     int end_line   = this->Data_Collector.Get_Options_Record_Area(1);
 
      int record_num = 0;
 
@@ -453,7 +394,7 @@ void Descriptor_File_Reader::Read_Debugging_Option(){
 
           if(this->StringManager.CheckStringLine(line)){
 
-             this->Place_String(&(this->debugging),line);
+             this->Place_String(&(this->options),line);
 
              break;
           }
@@ -472,11 +413,6 @@ void Descriptor_File_Reader::Place_String(char ** pointer, char * string){
      }
 
      (*pointer)[string_size] = '\0';
-}
-
-char ** Descriptor_File_Reader::Get_Library_Names(){
-
-        return this->Library_Names;
 }
 
 
@@ -504,19 +440,14 @@ char * Descriptor_File_Reader::Get_Standard(){
 }
 
 
-char * Descriptor_File_Reader::Get_Debugging_Option(){
+char * Descriptor_File_Reader::Get_Options(){
 
-       return this->debugging;
+       return this->options;
 }
 
 char * Descriptor_File_Reader::Get_Warehouse_location(){
 
        return this->warehouse_location;
-}
-
-int Descriptor_File_Reader::Get_Library_Name_Number(){
-
-    return this->lib_name_num;
 }
 
 int Descriptor_File_Reader::Get_Library_Directory_Number(){
