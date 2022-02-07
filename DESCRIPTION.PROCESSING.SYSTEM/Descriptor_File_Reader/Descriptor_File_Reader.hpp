@@ -31,6 +31,7 @@ public:
  char *  Get_Standard();
  char *  Get_Options();
  char *  Get_Warehouse_location();
+ char *  Get_Root_Directory_Location();
  int Get_Library_Directory_Number();
  int Get_Source_File_Directory_Number();
  int Get_Include_Directory_Number();
@@ -38,6 +39,7 @@ public:
  int Get_Main_File_Name_Number();
 protected:
  void Receive_Descriptor_File_Path(char * path);
+ void Read_Root_Directory_Location();
  void Read_Main_File_Names();
  void Read_Executable_File_Names();
  void Read_Warehouse_Location();
@@ -58,6 +60,7 @@ protected:
  char * file_path;
  char * standard;
  char * options;
+ char * root_dir;
  char * warehouse_location;
  char ** Include_Directories;
  char ** Source_File_Directories;

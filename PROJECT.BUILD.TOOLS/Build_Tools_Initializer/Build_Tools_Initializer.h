@@ -16,7 +16,7 @@
 #include "Repo_Warehouse_Initializer.h"
 #include "Auto_MakeFile_Builder.h"
 #include "Compiler_Script_Writer.h"
-
+#include "Descriptor_File_Reader.hpp"
 
 class Build_Tools_Initializer
 {
@@ -30,6 +30,7 @@ protected:
  Repo_Warehouse_Initializer Rep_Init;
  Auto_MakeFile_Builder Mk_Builder;
  Compiler_Script_Writer Script_Writer;
+ Descriptor_File_Reader Des_Reader;
  bool Memory_Delete_Condition;
 };
 

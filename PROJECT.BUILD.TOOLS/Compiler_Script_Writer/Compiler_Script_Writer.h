@@ -14,7 +14,6 @@
 #include <windows.h>
 #include <string>
 #include "Project_Files_Lister.h"
-#include "ClassNameReader.h"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
 #include "Directory_Enumerator.h"
@@ -50,7 +49,6 @@ protected:
  void Determine_Warehouse_Paths(char * paths);
  void Determine_Make_File_Names();
  void Construct_Path(char ** pointer, char * string, char * warehouse_path);
- ClassNameReader Cls_Name_Reader;
  DirectoryOperations DirectoryManager;
  Project_Files_Lister Dir_Lister;
  Cpp_FileOperations FileManager;

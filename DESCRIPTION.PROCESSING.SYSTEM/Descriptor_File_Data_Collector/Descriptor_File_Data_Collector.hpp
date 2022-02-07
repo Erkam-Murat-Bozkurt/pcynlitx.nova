@@ -24,6 +24,7 @@ public:
  virtual ~Descriptor_File_Data_Collector();
  void Collect_Descriptor_File_Data(char * path);
  void Clear_Dynamic_Memory();
+ int Get_Record_Directory_Record_Area(int index);
  int Get_Library_Directories_Record_Area(int index);
  int Get_Source_File_Directories_Record_Area(int index);
  int Get_Include_Directories_Record_Area(int index);
@@ -32,6 +33,7 @@ public:
  int Get_Warehouse_Location_Record_Area(int index);
  int Get_Main_File_Name_Record_Area(int index);
  int Get_Executable_File_Name_Record_Area(int index);
+ int Get_Root_Directory_Record_Area(int index);
 protected:
  int FindStringPoint(char * search_word,int startPoint);
  void Receive_Descriptor_File_Path(char * path);
@@ -44,6 +46,7 @@ protected:
  void Determine_Library_Directories_Record_Area();
  void Determine_Options_Record_Area();
  void Determine_Warehouse_Location_Record_Area();
+ void Determine_Root_Directory_Record_Area();
  void Delete_Spaces_on_String(char ** pointer);
  Cpp_FileOperations FileManager;
  StringOperator StringManager;
@@ -52,6 +55,7 @@ protected:
  char ** File_Content;
  int File_Content_Size;
  int wordPosition;
+ int Root_Directory_Record_Area[2];
  int Warehouse_Location_Record_Area[2];
  int Library_Directories_Record_Area[2];
  int Source_File_Directories_Record_Area[2];

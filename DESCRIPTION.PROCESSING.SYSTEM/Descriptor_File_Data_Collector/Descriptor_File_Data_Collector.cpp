@@ -13,6 +13,7 @@ Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(){
       this->Warehouse_Location_Record_Area[i] = 0;
       this->Main_File_Name_Record_Area[i] = 0;
       this->Executable_File_Name_Area[i] = 0;
+      this->Root_Directory_Record_Area[i] = 0;
   }
 
   this->File_Content_Size = 0;
@@ -59,6 +60,8 @@ void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(char * path){
 
      this->Receive_Descriptor_File_Path(path);
 
+     this->Determine_Root_Directory_Record_Area();
+
      this->Determine_Warehouse_Location_Record_Area();
 
      this->Determine_Standard_Record_Area();
@@ -94,11 +97,28 @@ void Descriptor_File_Data_Collector::Receive_Descriptor_File_Path(char * path){
      this->FileManager.SetFilePath(this->Descriptor_File_Path);
 }
 
+void Descriptor_File_Data_Collector::Determine_Root_Directory_Record_Area(){
+
+     char root_key [] = "[PROJECTROOTDIR]";
+
+     char warehouse_key [] = "[PROJECTWAREHOUSELOCATION]";
+
+     int record_stard = 0, record_end = 0;
+
+     this->Root_Directory_Record_Area[0] =
+
+           this->FindStringPoint(root_key,record_stard) + 2;
+
+     this->Root_Directory_Record_Area[1] =
+
+           this->FindStringPoint(warehouse_key,record_end);
+}
+
 void Descriptor_File_Data_Collector::Determine_Warehouse_Location_Record_Area(){
 
      char warehouse_key [] = "[PROJECTWAREHOUSELOCATION]";
 
-     char include_key [] = "[C++STANDARD]";
+     char standard_key [] = "[C++STANDARD]";
 
      int record_stard = 0, record_end = 0;
 
@@ -108,7 +128,7 @@ void Descriptor_File_Data_Collector::Determine_Warehouse_Location_Record_Area(){
 
      this->Warehouse_Location_Record_Area[1] =
 
-           this->FindStringPoint(include_key,record_end);
+           this->FindStringPoint(standard_key,record_end);
 }
 
 void Descriptor_File_Data_Collector::Determine_Standard_Record_Area(){
@@ -300,6 +320,11 @@ void Descriptor_File_Data_Collector::Delete_Spaces_on_String(char ** pointer){
      }
 
      (*pointer)[string_size - remove_index+1] = '\0';
+}
+
+int Descriptor_File_Data_Collector::Get_Root_Directory_Record_Area(int index){
+
+    return this->Root_Directory_Record_Area[index];
 }
 
 int Descriptor_File_Data_Collector::Get_Library_Directories_Record_Area(int index) {

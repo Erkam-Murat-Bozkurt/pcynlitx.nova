@@ -3,7 +3,7 @@
 
 Descriptor_File_Reader::Descriptor_File_Reader(){
 
-
+    this->root_dir = nullptr;
     this->file_path = nullptr;
     this->standard = nullptr;
     this->options = nullptr;
@@ -69,6 +69,26 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
             }
          }
 
+         if(this->Main_File_Names != nullptr){
+
+            for(int i=0;i<this->main_file_name_num;i++){
+
+               delete [] this->Main_File_Names[i];
+
+               this->Main_File_Names[i] = nullptr;
+            }
+         }
+
+         if(this->Executable_File_Names != nullptr){
+
+            for(int i=0;i<this->exec_file_name_num;i++){
+
+               delete [] this->Executable_File_Names[i];
+
+               this->Executable_File_Names[i] = nullptr;
+            }
+         }
+
          if(this->file_path != nullptr){
 
             delete [] this->file_path;
@@ -88,6 +108,11 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
             delete [] this->warehouse_location;
          }
+
+         if(this->root_dir != nullptr){
+
+            delete [] this->root_dir;
+         }
      }
 }
 
@@ -95,6 +120,8 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 void Descriptor_File_Reader::Read_Descriptor_File(char * path){
 
      this->Receive_Descriptor_File_Path(path);
+
+     this->Read_Root_Directory_Location();
 
      this->Read_Warehouse_Location();
 
@@ -131,6 +158,63 @@ void Descriptor_File_Reader::Receive_Descriptor_File_Path(char * path){
      this->Data_Collector.Collect_Descriptor_File_Data(this->file_path);
 }
 
+
+void Descriptor_File_Reader::Read_Root_Directory_Location(){
+
+     int start_line = this->Data_Collector.Get_Root_Directory_Record_Area(0);
+
+     int end_line   = this->Data_Collector.Get_Root_Directory_Record_Area(1);
+
+     int record_num = 0;
+
+     for(int i=start_line;i<end_line;i++){
+
+         char * line = this->StringManager.ReadFileLine(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            record_num++;
+         }
+
+         if(record_num > 1){
+
+            std::cout << "\n\n";
+
+            std::cout << "\n Error:";
+
+            std::cout << "\n There are multiple project root directory declerations";
+
+            std::cout << "\n\n";
+
+            exit(0);
+         }
+     }
+
+     if(record_num == 0){
+
+        std::cout << "\n\n";
+
+        std::cout << "\n Error:";
+
+        std::cout << "\n There is no any decleration about project warehouse location";
+
+        std::cout << "\n\n";
+
+        exit(0);
+     }
+
+     for(int i=start_line;i<end_line;i++){
+
+         char * line = this->StringManager.ReadFileLine(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            this->Place_String(&(this->root_dir),line);
+
+            break;
+         }
+     }
+}
 
 void Descriptor_File_Reader::Read_Warehouse_Location(){
 
@@ -550,6 +634,11 @@ char * Descriptor_File_Reader::Get_Options(){
 char * Descriptor_File_Reader::Get_Warehouse_location(){
 
        return this->warehouse_location;
+}
+
+char * Descriptor_File_Reader::Get_Root_Directory_Location(){
+
+       return this->root_dir;
 }
 
 int Descriptor_File_Reader::Get_Library_Directory_Number(){

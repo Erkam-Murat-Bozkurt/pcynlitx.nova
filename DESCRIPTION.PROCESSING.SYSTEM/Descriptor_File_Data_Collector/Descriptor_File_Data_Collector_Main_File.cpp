@@ -27,11 +27,20 @@ int main(int argc, char ** argv){
 
     Data_Collector.Collect_Descriptor_File_Data(argv[1]);
 
+    std::cout << "\n ROOT DIRECTORY LOCATION:";
+
+    std::cout << "\n Root directory record area start:" << Data_Collector.Get_Root_Directory_Record_Area(0);
+
+    std::cout << "\n Root directory record area end:"   << Data_Collector.Get_Root_Directory_Record_Area(1);
+
+    std::cout << "\n\n";
+
+
     std::cout << "\n PROJECT WAREHOUSE LOCATION:";
 
-    std::cout << "\n Standart record area start:" << Data_Collector.Get_Warehouse_Location_Record_Area(0);
+    std::cout << "\n Warehouse record area start:" << Data_Collector.Get_Warehouse_Location_Record_Area(0);
 
-    std::cout << "\n Standart record area end:"   << Data_Collector.Get_Warehouse_Location_Record_Area(1);
+    std::cout << "\n Warehouse record area end:"   << Data_Collector.Get_Warehouse_Location_Record_Area(1);
 
     std::cout << "\n\n";
 
@@ -43,7 +52,6 @@ int main(int argc, char ** argv){
     std::cout << "\n Standart record area end:"   << Data_Collector.Get_Standard_Record_Area(1);
 
     std::cout << "\n\n";
-
 
 
     std::cout << "\n INCLUDE DIRECTORY RECORD:";
@@ -62,9 +70,6 @@ int main(int argc, char ** argv){
     std::cout << "\n Source File Directories record area end:"   << Data_Collector.Get_Source_File_Directories_Record_Area(1);
 
     std::cout << "\n\n";
-
-
-
 
 
     std::cout << "\n LIBRARY DIRECTORIES RECORD:";
