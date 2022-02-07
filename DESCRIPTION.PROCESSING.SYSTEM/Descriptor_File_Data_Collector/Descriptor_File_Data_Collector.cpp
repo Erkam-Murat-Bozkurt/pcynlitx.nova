@@ -186,7 +186,7 @@ void Descriptor_File_Data_Collector::Determine_Options_Record_Area(){
 
      char options_key [] = "[OPTIONS]";
 
-     char main_file_name_key [] = "[MAINFILENAME]";
+     char main_file_name_key [] = "[MAINFILENAMES]";
 
      int record_stard = 0, record_end = 0;
 
@@ -201,9 +201,9 @@ void Descriptor_File_Data_Collector::Determine_Options_Record_Area(){
 
 void Descriptor_File_Data_Collector::Determine_Main_File_Des_Record_Area(){
 
-     char main_file_name_key [] = "[MAINFILENAME]";
+     char main_file_name_key [] = "[MAINFILENAMES]";
 
-     char exe_file_name [] = "[EXECUTABLEFILENAME]";
+     char exe_file_name [] = "[EXECUTABLEFILENAMES]";
 
      int record_stard = 0, record_end = 0;
 
@@ -218,7 +218,7 @@ void Descriptor_File_Data_Collector::Determine_Main_File_Des_Record_Area(){
 
 void Descriptor_File_Data_Collector::Determine_Executable_File_Name_Record_Area(){
 
-     char exe_file_name [] = "[EXECUTABLEFILENAME]";
+     char exe_file_name [] = "[EXECUTABLEFILENAMES]";
 
      char end_key [] = "[END]";
 

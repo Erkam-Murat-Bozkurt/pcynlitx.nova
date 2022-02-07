@@ -26,14 +26,20 @@ public:
  char ** Get_Library_Directories();
  char ** Get_Source_File_Directories();
  char ** Get_Include_Directories();
+ char ** Get_Main_File_Names();
+ char ** Get_Exe_File_Names();
  char *  Get_Standard();
  char *  Get_Options();
  char *  Get_Warehouse_location();
  int Get_Library_Directory_Number();
  int Get_Source_File_Directory_Number();
  int Get_Include_Directory_Number();
+ int Get_Exe_File_Name_Number();
+ int Get_Main_File_Name_Number();
 protected:
  void Receive_Descriptor_File_Path(char * path);
+ void Read_Main_File_Names();
+ void Read_Executable_File_Names();
  void Read_Warehouse_Location();
  void Read_Standard();
  void Read_Include_Directories();
@@ -47,6 +53,8 @@ protected:
  int include_dir_num;
  int source_file_dir_num;
  int lib_dir_num;
+ int main_file_name_num;
+ int exec_file_name_num;
  char * file_path;
  char * standard;
  char * options;
@@ -54,6 +62,8 @@ protected:
  char ** Include_Directories;
  char ** Source_File_Directories;
  char ** Library_Directories;
+ char ** Main_File_Names;
+ char ** Executable_File_Names;
  bool Memory_Delete_Condition;
 };
 

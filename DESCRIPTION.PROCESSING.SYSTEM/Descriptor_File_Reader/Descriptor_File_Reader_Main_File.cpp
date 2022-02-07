@@ -130,6 +130,48 @@ int main(int argc, char ** argv){
     std::cout << "\n\n";
 
 
+    std::cout << "\n MAIN FILE NAMES RECORD:";
+
+    int main_file_name_num = Des_File_Reader.Get_Main_File_Name_Number();
+
+    if(main_file_name_num > 0){
+
+       for(int i=0;i<main_file_name_num;i++){
+
+           std::cout << "\n ";
+
+           std::cout << Des_File_Reader.Get_Main_File_Names()[i];
+       }
+    }
+    else{
+
+         std::cout << "\n There is no library directory decleration";
+    }
+
+    std::cout << "\n\n";
+
+
+    std::cout << "\n EXE FILE NAMES RECORD:";
+
+    int exec_file_name_num = Des_File_Reader.Get_Exe_File_Name_Number();
+
+    if(exec_file_name_num > 0){
+
+       for(int i=0;i<exec_file_name_num;i++){
+
+           std::cout << "\n ";
+
+           std::cout << Des_File_Reader.Get_Exe_File_Names()[i];
+       }
+    }
+    else{
+
+         std::cout << "\n There is no library directory decleration";
+    }
+
+    std::cout << "\n\n";
+
+
     std::cout << "\n OPTIONS RECORD: ";
 
     if(Des_File_Reader.Get_Options() != nullptr){

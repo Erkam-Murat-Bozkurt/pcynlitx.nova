@@ -11,6 +11,8 @@ Descriptor_File_Reader::Descriptor_File_Reader(){
     this->Source_File_Directories = nullptr;
     this->Library_Directories = nullptr;
     this->warehouse_location = nullptr;
+    this->Main_File_Names = nullptr;
+    this->Executable_File_Names = nullptr;
     this->Memory_Delete_Condition = false;
     this->include_dir_num = 0;
     this->source_file_dir_num = 0;
@@ -105,6 +107,10 @@ void Descriptor_File_Reader::Read_Descriptor_File(char * path){
      this->Read_Library_Directories();
 
      this->Read_Options();
+
+     this->Read_Main_File_Names();
+
+     this->Read_Executable_File_Names();
 }
 
 void Descriptor_File_Reader::Receive_Descriptor_File_Path(char * path){
@@ -380,7 +386,7 @@ void Descriptor_File_Reader::Read_Options(){
 
             std::cout << "\n Error:";
 
-            std::cout << "\n There are multiple C++ debugging option declerations";
+            std::cout << "\n There are multiple C++ options declerations";
 
             std::cout << "\n\n";
 
@@ -399,6 +405,93 @@ void Descriptor_File_Reader::Read_Options(){
              break;
           }
       }
+}
+
+void Descriptor_File_Reader::Read_Main_File_Names(){
+
+     int start_line = this->Data_Collector.Get_Main_File_Name_Record_Area(0);
+
+     int end_line  = this->Data_Collector.Get_Main_File_Name_Record_Area(1);
+
+     this->main_file_name_num = 0;
+
+     for(int i=start_line;i<end_line;i++){
+
+         char * line = this->StringManager.ReadFileLine(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+             this->main_file_name_num++;
+         }
+      }
+
+      if(this->main_file_name_num > 0){
+
+        this->Main_File_Names = new char * [5*this->main_file_name_num];
+
+        for(int i=0;i<this->main_file_name_num;i++){
+
+            this->Main_File_Names[i] = nullptr;
+        }
+
+        int record_index = 0;
+
+        for(int i=start_line;i<end_line;i++){
+
+            char * line = this->StringManager.ReadFileLine(i);
+
+            if(this->StringManager.CheckStringLine(line)){
+
+                this->Place_String(&(this->Main_File_Names[record_index]),line);
+
+                record_index++;
+            }
+          }
+       }
+}
+
+void Descriptor_File_Reader::Read_Executable_File_Names(){
+
+  int start_line = this->Data_Collector.Get_Executable_File_Name_Record_Area(0);
+
+  int end_line  = this->Data_Collector.Get_Executable_File_Name_Record_Area(1);
+
+  this->exec_file_name_num = 0;
+
+  for(int i=start_line;i<end_line;i++){
+
+      char * line = this->StringManager.ReadFileLine(i);
+
+      if(this->StringManager.CheckStringLine(line)){
+
+          this->exec_file_name_num++;
+      }
+   }
+
+   if(this->exec_file_name_num > 0){
+
+     this->Executable_File_Names = new char * [5*this->exec_file_name_num];
+
+     for(int i=0;i<this->lib_dir_num;i++){
+
+         this->Executable_File_Names[i] = nullptr;
+     }
+
+     int record_index = 0;
+
+     for(int i=start_line;i<end_line;i++){
+
+         char * line = this->StringManager.ReadFileLine(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+             this->Place_String(&(this->Executable_File_Names[record_index]),line);
+
+             record_index++;
+         }
+       }
+    }
+
 }
 
 void Descriptor_File_Reader::Place_String(char ** pointer, char * string){
@@ -433,6 +526,15 @@ char ** Descriptor_File_Reader::Get_Include_Directories(){
        return this->Include_Directories;
 }
 
+char ** Descriptor_File_Reader::Get_Main_File_Names(){
+
+      return this->Main_File_Names;
+}
+
+char ** Descriptor_File_Reader::Get_Exe_File_Names(){
+
+     return this->Executable_File_Names;
+}
 
 char * Descriptor_File_Reader::Get_Standard(){
 
@@ -463,4 +565,14 @@ int Descriptor_File_Reader::Get_Source_File_Directory_Number(){
 int Descriptor_File_Reader::Get_Include_Directory_Number(){
 
     return this->include_dir_num;
+}
+
+int Descriptor_File_Reader::Get_Main_File_Name_Number(){
+
+    return this->main_file_name_num;
+}
+
+int Descriptor_File_Reader::Get_Exe_File_Name_Number(){
+
+    return this->exec_file_name_num;
 }

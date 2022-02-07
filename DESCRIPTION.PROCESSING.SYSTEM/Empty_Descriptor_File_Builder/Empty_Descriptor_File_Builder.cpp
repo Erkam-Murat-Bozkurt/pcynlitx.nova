@@ -109,11 +109,11 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
 
      this->WriteNewLines(new_lines);
 
-     this->FileManager.WriteToFile("[MAIN FILE NAME]:");
+     this->FileManager.WriteToFile("[MAIN FILE NAMES]:");
 
      this->WriteNewLines(new_lines);
 
-     this->FileManager.WriteToFile("[EXECUTABLE FILE NAME]:");
+     this->FileManager.WriteToFile("[EXECUTABLE FILE NAMES]:");
 
      this->WriteNewLines(new_lines);
 
