@@ -24,7 +24,7 @@ public:
  Build_Tools_Initializer();
  Build_Tools_Initializer(const Build_Tools_Initializer & orig);
  virtual ~Build_Tools_Initializer();
- void Setup_Build_Tools(char * repo_dir_path, char * warehouse_path );
+ void Setup_Build_Tools(char * descriptor_file_path);
 protected:
  void Clear_Dynamic_Memory();
  Repo_Warehouse_Initializer Rep_Init;

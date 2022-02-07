@@ -22,7 +22,7 @@ int main(int argc, char ** argv){
     Build_Tools_Initializer Initializer;
 
 
-    Initializer.Setup_Build_Tools(argv[1],argv[2]);
+    Initializer.Setup_Build_Tools(argv[1]);
 
     std::cout << "\n The end of the program ..";
 

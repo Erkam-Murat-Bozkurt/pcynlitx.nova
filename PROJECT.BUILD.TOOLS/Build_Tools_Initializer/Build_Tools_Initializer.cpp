@@ -25,7 +25,13 @@ void Build_Tools_Initializer::Clear_Dynamic_Memory(){
 
 }
 
-void Build_Tools_Initializer::Setup_Build_Tools(char * repo_dir_path, char * warehouse_path){
+void Build_Tools_Initializer::Setup_Build_Tools(char * descriptor_file_path){
+
+     this->Des_Reader.Read_Descriptor_File(descriptor_file_path);
+
+     char * repo_dir_path = this->Des_Reader.Get_Root_Directory_Location();
+
+     char * warehouse_path = this->Des_Reader.Get_Warehouse_location();
 
      this->Rep_Init.Build_Project_Warehouse(repo_dir_path,warehouse_path);
 
