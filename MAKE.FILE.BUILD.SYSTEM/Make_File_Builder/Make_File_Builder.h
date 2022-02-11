@@ -13,9 +13,13 @@
 #include <string>
 #include <fcntl.h>
 #include <windows.h>
+#include "MakeFile_Data_Collector.hpp"
+#include "Descriptor_File_Reader.hpp"
+#include "Project_Files_Lister.h"
 #include "Header_File_Determiner.h"
 #include "Cpp_FileOperations.h"
 #include "DirectoryOperations.h"
+#include "IntToCharTranslater.h"
 
 class Make_File_Builder
 {
@@ -23,9 +27,9 @@ public:
  Make_File_Builder();
  Make_File_Builder(const Make_File_Builder & orig);
  virtual ~Make_File_Builder();
- void Receive_Source_File_Name(char * source_file_name);
- void Receive_Header_File_Name_With_Its_Extention(char * header_file_name);
- void Build_MakeFile(char * repo_dir, char * header_path,char * warehouse_path);
+ void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader);
+ void Receive_Git_Record_Data(Project_Files_Lister * File_Lister);
+ void Build_MakeFile(int git_index);
  void Clear_Dynamic_Memory();
 private:
  void Receive_Git_Header_File_Path(char * header_path);
@@ -45,9 +49,13 @@ private:
  void Determine_Warehouse_Header_Dir(char operating_sis);
  void Determine_Warehouse_Object_Dir(char operating_sis);
  void Determine_Git_Header_File_Directory(char operating_sis);
+ MakeFile_Data_Collector Data_Collector;
+ Descriptor_File_Reader * Des_Reader_Pointer;
+ Project_Files_Lister * File_Lister_Pointer;
  Cpp_FileOperations FileManager;
  DirectoryOperations DirectoryManager;
  Header_File_Determiner Header_Determiner;
+ IntToCharTranslater Translater;
  std::string String_Line;
  char * git_header_dir;
  char * repo_dir;

@@ -631,12 +631,12 @@ char * Descriptor_File_Reader::Get_Options(){
        return this->options;
 }
 
-char * Descriptor_File_Reader::Get_Warehouse_location(){
+char * Descriptor_File_Reader::Get_Warehouse_Location(){
 
        return this->warehouse_location;
 }
 
-char * Descriptor_File_Reader::Get_Root_Directory_Location(){
+char * Descriptor_File_Reader::Get_Repo_Directory_Location(){
 
        return this->root_dir;
 }

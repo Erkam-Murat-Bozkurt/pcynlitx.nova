@@ -30,8 +30,8 @@ public:
  char ** Get_Exe_File_Names();
  char *  Get_Standard();
  char *  Get_Options();
- char *  Get_Warehouse_location();
- char *  Get_Root_Directory_Location();
+ char *  Get_Warehouse_Location();
+ char *  Get_Repo_Directory_Location();
  int Get_Library_Directory_Number();
  int Get_Source_File_Directory_Number();
  int Get_Include_Directory_Number();

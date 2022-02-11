@@ -9,35 +9,41 @@ DIR_ENUM=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Directory_Enumerator
 HEAD_DET=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Header_File_Determiner
 FILE_LISTER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Files_Lister
 SOURCE_DETR=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Source_File_Determiner
-
+INT_TO_CHAR=D:\pcynlitx.build\BASIC.TOOLS\IntToCharTranslater
+DES_READER=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Descriptor_File_Reader
+DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Descriptor_File_Data_Collector
 
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) $(CLASS_NAME) $(SOURCE_DETR) \
-				$(CLASS_SYNTAX) $(DIR_ENUM) $(STRING_OPS) $(HEAD_DET) $(FILE_LISTER)
+				$(CLASS_SYNTAX) $(DIR_ENUM) $(STRING_OPS) $(HEAD_DET) $(FILE_LISTER) \
+				$(INT_TO_CHAR) $(DES_DATA_COL) $(DES_READER)
 
-Make_File_Builder.exe: Make_File_Builder_Main_File.cpp Make_File_Builder.cpp \
+Make_File_Builder.exe: MakeFile_Data_Collector_Main_File.cpp MakeFile_Data_Collector.cpp \
 	Project_Files_Lister.cpp Source_File_Determiner.cpp Header_File_Determiner.cpp \
 	Directory_Enumerator.cpp ClassNameReader.cpp \
 	ClassSyntaxControl.cpp DirectoryOperations.cpp \
-	CharOperator.cpp Cpp_FileOperations.cpp Make_File_Builder.h Project_Files_Lister.h \
+	CharOperator.cpp Cpp_FileOperations.cpp MakeFile_Data_Collector.hpp Project_Files_Lister.h \
 	Source_File_Determiner.h Header_File_Determiner.h Directory_Enumerator.h \
 	DirectoryOperations.h CharOperator.h Cpp_FileOperations.h
 
-	g++ -std=c++17 -g -o Make_File_Builder.exe -I$(DIR_OPS) -I$(CPP_OPS) -I$(CHAR_OPS) \
+	g++ -std=c++17 -g -o MakeFile_Data_Collector.exe -I$(DIR_OPS) -I$(CPP_OPS) -I$(CHAR_OPS) \
 	 -I$(CLASS_NAME) -I$(STRING_OPS) -I$(HEAD_DET) -I$(FILE_LISTER) -I$(SOURCE_DETR) \
-	 -I$(CLASS_SYNTAX) -I$(DIR_ENUM) -L$(DIR_ENUM) -L$(DIR_OPS) -L$(CPP_OPS) -L$(CHAR_OPS) \
-	 -L$(CLASS_NAME) -L$(CLASS_SYNTAX) -L$(STRING_OPS) -L$(HEAD_DET) -L$(FILE_LISTER) -L$(SOURCE_DETR) \
-		Make_File_Builder_Main_File.cpp Make_File_Builder.cpp $(FILE_LISTER)\Project_Files_Lister.cpp \
+	 -I$(CLASS_SYNTAX) -I$(DIR_ENUM) -I$(INT_TO_CHAR) -I$(DES_DATA_COL) -I$(DES_READER) \
+	 -L$(DIR_ENUM) -L$(DIR_OPS) -L$(CPP_OPS) -L$(CHAR_OPS) -L$(INT_TO_CHAR) -L$(DES_DATA_COL) \
+	 -L$(DES_READER) -L$(CLASS_NAME) -L$(CLASS_SYNTAX) -L$(STRING_OPS) \
+	 -L$(HEAD_DET) -L$(FILE_LISTER) -L$(SOURCE_DETR) \
+		MakeFile_Data_Collector_Main_File.cpp MakeFile_Data_Collector.cpp $(FILE_LISTER)\Project_Files_Lister.cpp \
 		$(SOURCE_DETR)\Source_File_Determiner.cpp $(DIR_ENUM)\Directory_Enumerator.cpp \
-		$(HEAD_DET)\Header_File_Determiner.cpp \
-		$(CLASS_NAME)\ClassNameReader.cpp \
+		$(DES_READER)\Descriptor_File_Reader.cpp $(DES_DATA_COL)\Descriptor_File_Data_Collector.cpp \
+		$(HEAD_DET)\Header_File_Determiner.cpp $(CLASS_NAME)\ClassNameReader.cpp \
 		$(CLASS_SYNTAX)\ClassSyntaxControl.cpp \
 		$(DIR_OPS)\DirectoryOperations.cpp $(STRING_OPS)\StringOperator.cpp \
-		$(CHAR_OPS)\CharOperator.cpp $(CPP_OPS)\Cpp_FileOperations.cpp \
-		-include Make_File_Builder.h -include $(FILE_LISTER)\Project_Files_Lister.h \
+		$(CHAR_OPS)\CharOperator.cpp $(CPP_OPS)\Cpp_FileOperations.cpp $(INT_TO_CHAR)\IntToCharTranslater.cpp \
+		-include MakeFile_Data_Collector.hpp -include $(FILE_LISTER)\Project_Files_Lister.h \
 		-include $(SOURCE_DETR)\Source_File_Determiner.h \
 		-include $(DIR_ENUM)\Directory_Enumerator.h \
 		-include $(HEAD_DET)\Header_File_Determiner.h \
 		-include $(CLASS_NAME)\ClassNameReader.h \
 		-include $(CLASS_SYNTAX)\ClassSyntaxControl.h \
 		-include $(STRING_OPS)\StringOperator.h -include $(DIR_OPS)\DirectoryOperations.h \
-	  -include $(CHAR_OPS)\CharOperator.h -include $(CPP_OPS)\Cpp_FileOperations.h
+	  -include $(CHAR_OPS)\CharOperator.h -include $(CPP_OPS)\Cpp_FileOperations.h \
+		-include $(INT_TO_CHAR)\IntToCharTranslater.h
