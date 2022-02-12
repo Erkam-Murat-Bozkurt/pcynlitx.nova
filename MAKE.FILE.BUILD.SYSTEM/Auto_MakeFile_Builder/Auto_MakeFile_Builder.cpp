@@ -35,20 +35,6 @@ void Auto_MakeFile_Builder::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         if(this->Warehouse_Path != nullptr){
-
-            delete [] this->Warehouse_Path;
-
-            this->Warehouse_Path = nullptr;
-         }
-
-         if(this->Repo_Dir != nullptr){
-
-            delete [] this->Repo_Dir;
-
-            this->Repo_Dir = nullptr;
-         }
-
          if(this->repo_head_dir != nullptr){
 
             delete [] this->repo_head_dir;
@@ -65,6 +51,18 @@ void Auto_MakeFile_Builder::Clear_Dynamic_Memory(){
      }
 }
 
+
+void Auto_MakeFile_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader){
+
+     this->Memory_Delete_Condition = false;
+
+     this->Des_Reader_Pointer = Des_Reader;
+
+     this->Warehouse_Path = this->Des_Reader_Pointer->Get_Warehouse_Location();
+
+     this->Repo_Dir = this->Des_Reader_Pointer->Get_Repo_Directory_Location();
+}
+
 void Auto_MakeFile_Builder::Build_Make_Files(){
 
      // Determination of the directories recorded on the git repo
@@ -79,55 +77,19 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
 
      for(int i=0;i<dir_num;i++){
 
-         char * header_path = this->File_Lister.Get_Git_Repo_Header_File_Path(i);
-
          char * source_file_name = this->File_Lister.Get_Source_File_Name(i);
-
-         char * header_wit_ext = this->File_Lister.Get_Header_File_Name_With_Extention(i);
 
          if(source_file_name != nullptr){
 
             this->Mk_Builder.Clear_Dynamic_Memory();
 
-            this->Mk_Builder.Receive_Source_File_Name(source_file_name);
+            this->Mk_Builder.Receive_Descriptor_File_Reader(this->Des_Reader_Pointer);
 
-            this->Mk_Builder.Receive_Header_File_Name_With_Its_Extention(header_wit_ext);
+            this->Mk_Builder.Receive_Git_Record_Data(&this->File_Lister);
 
-            this->Mk_Builder.Build_MakeFile(this->Repo_Dir,this->Warehouse_Path,header_path);
+            this->Mk_Builder.Build_MakeFile(i);
          }
      }
-}
-
-void Auto_MakeFile_Builder::Receive_Warehouse_Path(char * warehouse_path){
-
-     this->Memory_Delete_Condition = false;
-
-     size_t warehouse_path_size = strlen(warehouse_path);
-
-     this->Warehouse_Path = new char [5*warehouse_path_size];
-
-     for(size_t i=0;i<warehouse_path_size;i++){
-
-        this->Warehouse_Path[i] = warehouse_path[i];
-     }
-
-     this->Warehouse_Path[warehouse_path_size] = '\0';
-}
-
-void Auto_MakeFile_Builder::Receive_Repo_Dir_Path(char * repo_dir){
-
-     this->Memory_Delete_Condition = false;
-
-     size_t repo_dir_size = strlen(repo_dir);
-
-     this->Repo_Dir = new char [5*repo_dir_size];
-
-     for(size_t i=0;i<repo_dir_size;i++){
-
-        this->Repo_Dir[i] = repo_dir[i];
-     }
-
-     this->Repo_Dir[repo_dir_size] = '\0';
 }
 
 void Auto_MakeFile_Builder::Determine_Project_Directories(){

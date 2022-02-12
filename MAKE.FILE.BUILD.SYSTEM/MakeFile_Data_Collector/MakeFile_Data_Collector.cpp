@@ -47,6 +47,8 @@ MakeFile_Data_Collector::MakeFile_Data_Collector(){
 
    this->git_header_dir = nullptr;
 
+   this->Header_File_Exact_Path = nullptr;
+
    this->Included_Header_Files_Number = 0;
 }
 
@@ -75,6 +77,7 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
             this->Source_File_Name_With_Ext = nullptr;
          }
 
+
          if(this->Object_File_Name != nullptr){
 
             delete [] this->Object_File_Name;
@@ -99,6 +102,10 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
             }
 
             delete [] this->Included_Header_Files;
+
+            this->Included_Header_Files = nullptr;
+
+            this->Included_Header_Files_Number = 0;
          }
 
          if(this->Dependency_Code_Line != nullptr){

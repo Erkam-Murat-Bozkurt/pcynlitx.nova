@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cstring>
+#include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 
 void Place_String(char ** Pointer, char * String);
@@ -10,19 +11,20 @@ int main(int argc, char ** argv){
 
     if(argc< 2){
 
-       std::cout << "\n\n usage: <exe-file> <repo dir> <repo warehouse location>";
+       std::cout << "\n\n usage: <exe-file> <Descriptor File Path>";
 
        std::cout << "\n\n";
 
        exit(0);
     }
 
+    Descriptor_File_Reader Des_Reader;
+
+    Des_Reader.Read_Descriptor_File(argv[1]);
 
     Auto_MakeFile_Builder Make_Builder;
 
-    Make_Builder.Receive_Repo_Dir_Path(argv[1]);
-
-    Make_Builder.Receive_Warehouse_Path(argv[2]);
+    Make_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
 
     Make_Builder.Build_Make_Files();
 

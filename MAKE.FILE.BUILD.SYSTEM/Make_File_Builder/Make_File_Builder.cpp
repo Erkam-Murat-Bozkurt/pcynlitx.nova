@@ -69,10 +69,6 @@ void Make_File_Builder::Build_MakeFile(int git_index){
 
      char * Header_File_Directory = this->Data_Collector.Get_System_Header_File_Dir();
 
-     std::cout << "\n Header_File_Directory:" << Header_File_Directory;
-
-     std::cin.get();
-
      this->DirectoryManager.ChangeDirectory(Header_File_Directory);
 
      char * Make_File_Name = this->Data_Collector.Get_Make_File_Name();
@@ -87,24 +83,44 @@ void Make_File_Builder::Build_MakeFile(int git_index){
 
      char * warehouse_head_dir = this->Data_Collector.Get_Warehouse_Header_Dir();
 
-     std::cout << "\n warehouse_head_dir:" << warehouse_head_dir;
-
-     std::cin.get();
-
      this->FileManager.WriteToFile(warehouse_head_dir);
+
+     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("PROJECT_OBJECTS_LOCATION=");
+
+
+     char * warehouse_obj_dir = this->Data_Collector.Get_Warehouse_Object_Dir();
+
+     this->FileManager.WriteToFile(warehouse_obj_dir);
+
+     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("REPO_DIRECTORY=");
+
+     char * project_repo_dir = this->Data_Collector.Get_Repo_Dir();
+
+     this->FileManager.WriteToFile(project_repo_dir);
+
+     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("SOURCE_LOCATION=$(REPO_DIRECTORY)\\");
+
+     char * git_header_dir = this->Data_Collector.Get_Git_Header_File_Dir();
+
+     this->FileManager.WriteToFile(git_header_dir);
 
 
      int included_dir_num = this->Des_Reader_Pointer->Get_Include_Directory_Number();
 
-
-     std::cout << "\n included_dir_num:" << included_dir_num;
-
-     std::cin.get();
-
-
      char include_symbol [] = "EXTERNAL_INCLUDE_DIR_";
 
      char underscore [] = "_";
+
+     this->FileManager.WriteToFile("\n");
 
      for(int i=0;i<included_dir_num;i++){
 
@@ -112,16 +128,7 @@ void Make_File_Builder::Build_MakeFile(int git_index){
 
          char * included_dir = this->Des_Reader_Pointer->Get_Include_Directories()[i];
 
-         std::cout << "\n included_dir:" << included_dir;
-
-         std::cin.get();
-
-
          char * dir_index = this->Translater.Translate(i);
-
-         std::cout << "\n dir_index:" << dir_index;
-
-         std::cin.get();
 
          this->FileManager.WriteToFile(include_symbol);
 
@@ -130,45 +137,11 @@ void Make_File_Builder::Build_MakeFile(int git_index){
          this->FileManager.WriteToFile(":");
 
          this->FileManager.WriteToFile(included_dir);
-
      }
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("PROJECT_OBJECTS_LOCATION=");
-
-
-     char * warehouse_obj_dir = this->Data_Collector.Get_Warehouse_Object_Dir();
-
-     std::cout << "\n dir_index:" << warehouse_obj_dir;
-
-     std::cin.get();
-
-
-
-     this->FileManager.WriteToFile(warehouse_obj_dir);
-
-
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("REPO_DIRECTORY=");
-
-
-     char * project_repo_dir = this->Data_Collector.Get_Repo_Dir();
-
-     this->FileManager.WriteToFile(project_repo_dir);
 
      char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
 
-     this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("SOURCE_LOCATION=$(REPO_DIRECTORY)\\");
-
-
-     char * git_header_dir = this->Data_Collector.Get_Git_Header_File_Dir();
-
-     this->FileManager.WriteToFile(git_header_dir);
 
      char PathSpecifier [] = {'v','p','a','t','h',' ','%','\0'};
 
@@ -177,7 +150,6 @@ void Make_File_Builder::Build_MakeFile(int git_index){
      char object_add [] = ".o";
 
      this->FileManager.WriteToFile("\n");
-
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile(PathSpecifier);
@@ -189,22 +161,6 @@ void Make_File_Builder::Build_MakeFile(int git_index){
      this->FileManager.WriteToFile("$(PROJECT_HEADERS_LOCATION)");
 
      this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile(PathSpecifier);
-
-     this->FileManager.WriteToFile(header_add);
-
-     this->FileManager.WriteToFile(" ");
-
-     this->FileManager.WriteToFile("$(HEADERS_LOCATION)");
-
-     this->FileManager.WriteToFile("\n");
-
-
 
      this->FileManager.WriteToFile(PathSpecifier);
 
@@ -218,18 +174,36 @@ void Make_File_Builder::Build_MakeFile(int git_index){
 
      this->FileManager.WriteToFile("\n");
 
+     for(int i=0;i<included_dir_num;i++){
+
+         this->FileManager.WriteToFile("\n");
+
+         char * included_dir = this->Des_Reader_Pointer->Get_Include_Directories()[i];
+
+         char * dir_index = this->Translater.Translate(i);
+
+         this->FileManager.WriteToFile(PathSpecifier);
+
+         this->FileManager.WriteToFile(header_add);
+
+         this->FileManager.WriteToFile(" $(");
+
+         this->FileManager.WriteToFile(include_symbol);
+
+         this->FileManager.WriteToFile(dir_index);
+
+         this->FileManager.WriteToFile(")");
+
+     }
+
+     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
+
      char * Dependency_Code_Line = this->Data_Collector.Get_Dependency_Code_Line();
 
-     std::cout << "\n Dependency_Code_Line:" << Dependency_Code_Line;
-
-     std::cin.get();
-
      char * Compiler_System_Command= this->Data_Collector.Get_Compiler_System_Command();
-
-     std::cout << "\n Compiler_System_Command:" << Compiler_System_Command;
-
-     std::cin.get();
-
 
 
      this->FileManager.WriteToFile(Dependency_Code_Line);
