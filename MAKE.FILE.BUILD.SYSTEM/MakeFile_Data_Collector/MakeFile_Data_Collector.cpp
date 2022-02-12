@@ -627,6 +627,48 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(char * Header_Fi
      this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
 
+     int included_dir_num = this->Des_Reader_Pointer->Get_Include_Directory_Number();
+
+     char include_dir_symbol [] = "$(EXTERNAL_INCLUDE_DIR_";
+
+     char makro_end [] = ")";
+
+     int  sizer = 0;
+
+     for(int i=0;i<included_dir_num;i++){
+
+         char * included_dir = this->Des_Reader_Pointer->Get_Include_Directories()[i];
+
+         char * dir_index = this->Translater.Translate(i);
+
+         this->Place_Information(&this->Compiler_System_Command,Include_Character,&index_counter);
+
+         this->Place_Information(&this->Compiler_System_Command,include_dir_symbol,&index_counter);
+
+         this->Place_Information(&this->Compiler_System_Command,dir_index,&index_counter);
+
+         this->Place_Information(&this->Compiler_System_Command,makro_end,&index_counter);
+
+         this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+
+
+         if(((sizer >= 4) && (i!=(included_dir_num -1)))){
+
+            this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+
+            this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+
+            this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
+
+            this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
+
+            this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+
+            sizer = 0;
+          }
+
+     }
+
      this->Place_Information(&this->Compiler_System_Command,Source_Location,&index_counter);
 
      this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
@@ -669,7 +711,7 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(char * Header_Fi
 
      // The include commands definition
 
-     int  sizer = 0;
+     sizer = 0;
 
      for(int i=0;i<this->Included_Header_Files_Number;i++){
 
