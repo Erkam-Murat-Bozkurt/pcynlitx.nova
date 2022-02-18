@@ -134,7 +134,7 @@ void Make_File_Builder::Build_MakeFile(int git_index){
 
          this->FileManager.WriteToFile(dir_index);
 
-         this->FileManager.WriteToFile(":");
+         this->FileManager.WriteToFile("=");
 
          this->FileManager.WriteToFile(included_dir);
      }

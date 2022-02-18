@@ -25,13 +25,13 @@ public:
  virtual ~Source_File_Determiner();
  bool Is_Source_File(char * file_path);
  void Determine_Source_File_Name(char * path, char operating_sis);
+ void Determine_File_Name_Without_Ext(char * path, char operating_sis);
  char * Get_Source_File_Name();
+ char * Get_File_Name_Witout_Ext();
 protected:
  void Read_File(char * path);
- void Determine_File_Name_Without_Ext(char * path, char operating_sis);
  void Determine_Class_Function_Pattern(char * path);
  char * Get_Class_Function_Pattern();
- char * Get_File_Name_Witout_Ext();
  void Delete_Spaces_on_String(char ** pointer);
  void Clear_Dynamic_Memory();
  StringOperator StringManager;

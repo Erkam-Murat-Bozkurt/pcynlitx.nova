@@ -11,6 +11,8 @@ Header_File_Determiner::Header_File_Determiner(){
 
     this->Header_File_Directory = nullptr;
 
+    this->Header_File_Name = nullptr;
+
 }
 
 Header_File_Determiner::Header_File_Determiner(const Header_File_Determiner & orig){
@@ -48,6 +50,13 @@ void Header_File_Determiner::Clear_Dynamic_Memory(){
               delete [] this->Header_File_Directory;
 
               this->Header_File_Directory = nullptr;
+           }
+
+           if(this->Header_File_Name != nullptr){
+
+              delete [] this->Header_File_Name;
+
+              this->Header_File_Name = nullptr;
            }
        }
 }
@@ -206,7 +215,59 @@ void Header_File_Determiner::Determine_Header_File_Directory(char * path){
      this->Header_File_Directory[dir_size] = '\0';
 }
 
+void Header_File_Determiner::Determine_Header_File_Name(char * path){
+
+     if(this->Header_File_Name != nullptr){
+
+        delete [] this->Header_File_Name;
+
+        this->Header_File_Name = nullptr;
+     }
+
+     size_t file_path_size = strlen(path);
+
+     size_t dir_size = file_path_size;
+
+     for(size_t i=file_path_size;i>0;i--){
+
+          if(path[i] == '/'){
+
+             break;
+          }
+          else{
+
+              dir_size--;
+          }
+      }
+
+      size_t Header_File_Name_Size = file_path_size - dir_size;
+
+      this->Header_File_Name = new char [5*Header_File_Name_Size];
+
+      int index = 0;
+
+      for(size_t i=dir_size+1;i<file_path_size;i++){
+
+          if( path[i] == '.'){
+
+              break;
+          }
+
+          this->Header_File_Name[index] = path[i];
+
+          index++;
+      }
+
+      this->Header_File_Name[index] = '\0';
+}
+
 char * Header_File_Determiner::Get_Header_Directory(){
 
        return this->Header_File_Directory;
+}
+
+
+char * Header_File_Determiner::Get_Header_File_Name_Without_Ext(){
+
+       return this->Header_File_Name;
 }

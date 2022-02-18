@@ -557,7 +557,7 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(char * Header_Fi
 
      char Headers_Location [] ="$(PROJECT_HEADERS_LOCATION)";
 
-     char Source_Location [] ="$(PROJECT_SOURCE_LOCATION)";
+     char Source_Location [] ="$(SOURCE_LOCATION)";
 
      char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
 

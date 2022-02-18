@@ -4,71 +4,82 @@
 #include <iostream>
 #include <cstring>
 #include "Project_Files_Lister.h"
-#include "DirectoryOperations.h"
+#include "Descriptor_File_Reader.hpp"
 
 void Place_String(char ** Pointer, char * String);
 
 int main(int argc, char ** argv){
 
-    if(argc < 3){
+    if(argc < 2){
 
        std::cout << "\n\n";
 
-       std::cout << " usage: <exe file> <repo directory> <Warehouse path>";
+       std::cout << " usage: <exe file> <Descriptor File Path>";
 
        std::cout << "\n\n";
 
        exit(0);
     }
 
-    DirectoryOperations DirManager;
+    Descriptor_File_Reader Des_Reader;
 
-    int dir_change_status = DirManager.ChangeDirectory(argv[1]);
-
-    if(dir_change_status == 0){
-
-       std::cout << "\n The directory <" << argv[1] << "> does not exist";
-
-       std::cout << "\n\n";
-    }
+    Des_Reader.Read_Descriptor_File(argv[1]);
 
     Project_Files_Lister Dir_Lister;
 
-    Dir_Lister.Determine_Git_Repo_Info(argv[1],argv[2]);
+    Dir_Lister.Determine_Git_Repo_Info(&Des_Reader);
 
-    //Dir_Lister.Determine_Project_File_List();
+    int src_file_num = Dir_Lister.Get_Source_File_Number();
 
-    int project_dir_num = Dir_Lister.Get_Make_Data_Number();
+    for(int i=0;i<src_file_num;i++){
 
-    for(int i=0;i<project_dir_num;i++){
+        std::cout << "\n Source file directory (system)      :";
 
-       std::cout << "\n\n";
+        std::cout << "\n " <<  Dir_Lister.Get_Source_File_Directory(i);
 
-       std::cout << "\n RECORD NUMBER: " << i;
+        std::cout << "\n";
 
-       std::cout << "\n";
+        std::cout << "\n Source file directory (git record)  :";
 
-       std::cout << " Directory Path:";
+        std::cout << "\n " << Dir_Lister.Get_Source_File_Git_Record_Path(i);
 
-       std::cout << Dir_Lister.Get_Make_Directory(i);
+        std::cout << "\n";
 
-       std::cout << "\n";
 
-       std::cout << " Header File Path:";
+        std::cout << "\n Source file path (system)           :";
 
-       std::cout << Dir_Lister.Get_Make_Header_File_Path(i);
+        std::cout << "\n " << Dir_Lister.Get_Source_File_System_Path(i);
 
-       std::cout << "\n";
+        std::cout << "\n";
 
-       std::cout << " Header File Name:";
 
-       std::cout << Dir_Lister.Get_Make_Header_File_Name_With_Extention(i);
+        std::cout << "\n Source file name (without file ext) :";
 
-       std::cout << "\n";
+        std::cout << "\n " << Dir_Lister.Get_Source_File_Name(i);
 
-       std::cout << " Source File name:" << Dir_Lister.Get_Make_Source_File_Name(i);
+        std::cout << "\n";
+
+
+        std::cout << "\n Source file  name (with file ext)  :";
+
+        std::cout << "\n " << Dir_Lister.Get_Source_File_Name_With_Ext(i);
+
+        std::cout << "\n";
+
+
+        int src_head_num = Dir_Lister.Get_Source_File_Include_File_Number(i);
+
+        for(int k=0;k<src_head_num;k++){
+
+            std::cout << "\n Included header file:" <<
+
+            Dir_Lister.Get_Source_File_Header(i,k);
+        }
+
+        std::cout << "\n\n\n\n";
 
     }
+
 
     std::cout << "\n Press eny key..";
 
