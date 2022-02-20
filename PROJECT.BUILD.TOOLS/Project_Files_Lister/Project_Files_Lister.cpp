@@ -48,11 +48,10 @@ void Project_Files_Lister::Determine_Git_Repo_Info(Descriptor_File_Reader * Des_
 
      this->Collect_Source_Files_Data();
 
+     this->Collect_Independent_Header_Files_Data('w');
 }
 
 void Project_Files_Lister::Determine_Source_File_Number(){
-
-     bool is_source_file = false;
 
      this->Source_File_Number = 0;
 
@@ -60,7 +59,7 @@ void Project_Files_Lister::Determine_Source_File_Number(){
 
          char * file_path = this->Git_Data_Receiver.Get_Git_File_Index(i);
 
-         is_source_file = this->Source_Determiner.Is_Source_File(file_path);
+         bool is_source_file = this->Source_Determiner.Is_Source_File(file_path);
 
          if(is_source_file){
 
@@ -70,8 +69,6 @@ void Project_Files_Lister::Determine_Source_File_Number(){
 }
 
 void Project_Files_Lister::Determine_Header_File_Number(){
-
-     bool is_source_file = false;
 
      this->Header_File_Number = 0;
 
@@ -163,9 +160,75 @@ void Project_Files_Lister::Collect_Source_Files_Data(){
 }
 
 
-void Project_Files_Lister::Collect_Independent_Header_Files_Data(){
+void Project_Files_Lister::Collect_Independent_Header_Files_Data(char operating_sis){
+
+     int head_num = this->Header_File_Number;
+
+     this->independent_header_files_number = 0;
+
+     this->independent_header_files = new char * [5*head_num];
+
+     int index = 0;
+
+     for(int i=0;i<this->git_record_size-1;i++){
+
+         char * file_path = this->Git_Data_Receiver.Get_Git_File_Index(i);
+
+         char * file_name = nullptr;
+
+         bool is_header_file = this->Header_Determiner.Is_Header(file_path);
+
+         bool is_this_included_already = false;
+
+         if(is_header_file){
+
+            this->Data_Cltr.Determine_File_Name_With_Ext(&file_name,file_path);
+
+            for(int k=0;k<this->Get_Source_File_Number();k++){
+
+                int inc_file_num = this->Get_Source_File_Include_File_Number(k);
+
+                for(int j=0;j<inc_file_num;j++){
+
+                    char * included_file_name = this->Get_Source_File_Header(k,j);
+
+                    is_this_included_already =
+
+                         this->StringManager.CheckStringInclusion(file_name,included_file_name);
+
+                    if(is_this_included_already){
+
+                       break;
+                    }
+
+                }
+
+                if(is_this_included_already){
+
+                   break;
+                }
+            }
 
 
+            if(!is_this_included_already){
+
+               if(operating_sis == 'w'){
+
+                   this->Header_Determiner.Clear_Dynamic_Memory();
+
+                   this->Header_Determiner.Determine_Header_File_System_Path(this->Repo_Dir,file_path,'w');
+
+                   char * Header_System_Path = this->Header_Determiner.Get_Header_File_System_Path();
+
+                   this->Place_String(&(this->independent_header_files[index]),Header_System_Path);
+
+                   this->independent_header_files_number++;
+
+                   index++;
+               }
+            }
+     }
+   }
 }
 
 void Project_Files_Lister::Initialize_Data_Structures(){
@@ -299,7 +362,17 @@ int  Project_Files_Lister::Get_Source_File_Include_File_Number(int num){
      return this->Data[num].Included_Header_Files_Number;
 }
 
+int Project_Files_Lister::Get_Indenpendent_Header_Files_Number(){
+
+    return this->independent_header_files_number;
+}
+
 char * Project_Files_Lister::Get_Source_File_Header(int src_num, int hdr_num){
 
       return this->Data[src_num].Included_Header_Files[hdr_num];
+}
+
+char * Project_Files_Lister::Get_Independent_Header_File(int num){
+
+       return this->independent_header_files[num];
 }

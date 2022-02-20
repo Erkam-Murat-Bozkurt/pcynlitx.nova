@@ -30,6 +30,9 @@ public:
  void Determine_Source_File_Name_With_Ext(char ** pointer,
 
       char * file_name);
+ void Determine_File_Name_With_Ext(char ** pointer,
+
+      char * string_line);
 protected:
 
 };

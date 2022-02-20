@@ -39,6 +39,8 @@ int main(int argc, char ** argv){
         Source_Determiner.Determine_Source_File_Name(argv[1],'w');
 
         std::cout << "\n Source File Name:" << Source_Determiner.Get_Source_File_Name();
+
+        std::cout << "\n Source File Name witout extenton:" << Source_Determiner.Get_File_Name_Witout_Ext();
     }
 
     std::cout << "\n\n";

@@ -81,6 +81,15 @@ int main(int argc, char ** argv){
     }
 
 
+    int ind_head_num = Dir_Lister.Get_Indenpendent_Header_Files_Number();
+
+    for(int i=0;i<ind_head_num;i++){
+
+        std::cout << "\n Independen header file - " << i << ":"
+
+        << Dir_Lister.Get_Independent_Header_File(i);
+    }
+
     std::cout << "\n Press eny key..";
 
     std::cin.get();

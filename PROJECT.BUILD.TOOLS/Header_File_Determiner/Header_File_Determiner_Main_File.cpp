@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include <cstring>
+#include "Descriptor_File_Reader.hpp"
+#include "Git_File_List_Receiver.hpp"
 #include "Header_File_Determiner.h"
 
 int main(int argc, char ** argv){
@@ -12,34 +14,48 @@ int main(int argc, char ** argv){
 
        std::cout << "\n\n";
 
-       std::cout << " usage: <exe file> <test_file_path>";
+       std::cout << " usage: <exe file> <Descriptor File Path>";
 
        std::cout << "\n\n";
 
        exit(0);
     }
 
-    Header_File_Determiner Head_Determiner;
 
-    bool is_header = Head_Determiner.Is_Header(argv[1]);
 
-    if(is_header){
+    Descriptor_File_Reader Des_Reader;
 
-       std::cout << "\n this is an header file..";
+    Des_Reader.Read_Descriptor_File(argv[1]);
+
+    Git_File_List_Receiver Receiver;
+
+    Receiver.Receive_Descriptor_File_Reader(&Des_Reader);
+
+    Receiver.Determine_Git_Repo_Info();
+
+    char * Repo_Dir = Receiver.Get_Git_Repo_Directory();
+
+    int index_size = Receiver.Get_Git_File_Index_Size();
+
+    Header_File_Determiner Header_Determiner;
+
+    for(int i=0;i<index_size-1;i++){
+
+       char * git_record_path =  Receiver.Get_Git_File_Index(i);
+
+       char * header_system_path = nullptr;
+
+       Header_Determiner.Clear_Dynamic_Memory();
+
+       bool is_header = Header_Determiner.Is_Header(git_record_path);
+
+       if(is_header){
+
+         Header_Determiner.Determine_Header_File_System_Path(Repo_Dir,git_record_path,'w');
+
+         std::cout << "\n Header system path:" << Header_Determiner.Get_Header_File_System_Path();
+       }
     }
-    else{
-
-        std::cout << "\n this is not an header file";
-    }
-
-    if(is_header){
-
-        Head_Determiner.Determine_Header_File_Directory(argv[1]);
-
-        std::cout << "\n Header Directory:" << Head_Determiner.Get_Header_Directory();
-    }
-
-    std::cout << "\n\n";
 
     return 0;
 }

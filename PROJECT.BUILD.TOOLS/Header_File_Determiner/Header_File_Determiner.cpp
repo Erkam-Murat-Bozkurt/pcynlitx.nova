@@ -13,6 +13,8 @@ Header_File_Determiner::Header_File_Determiner(){
 
     this->Header_File_Name = nullptr;
 
+    this->Header_File_System_Path = nullptr;
+
 }
 
 Header_File_Determiner::Header_File_Determiner(const Header_File_Determiner & orig){
@@ -57,6 +59,13 @@ void Header_File_Determiner::Clear_Dynamic_Memory(){
               delete [] this->Header_File_Name;
 
               this->Header_File_Name = nullptr;
+           }
+
+           if(this->Header_File_System_Path != nullptr){
+
+              delete [] this->Header_File_System_Path;
+
+              this->Header_File_System_Path = nullptr;
            }
        }
 }
@@ -261,6 +270,79 @@ void Header_File_Determiner::Determine_Header_File_Name(char * path){
       this->Header_File_Name[index] = '\0';
 }
 
+
+void Header_File_Determiner::Determine_Header_File_System_Path(char * repo_dir,
+
+     char * git_record_path, char operating_sis){
+
+     if(this->Header_File_System_Path != nullptr){
+
+        delete [] this->Header_File_System_Path;
+
+        this->Header_File_System_Path = nullptr;
+     }
+
+     size_t repo_dir_size   = strlen(repo_dir);
+
+     size_t git_record_size = strlen(git_record_path);
+
+     size_t path_size = repo_dir_size + git_record_size;
+
+     int index = 0;
+
+     this->Header_File_System_Path = new char [5*path_size];
+
+     for(size_t i=0;i<repo_dir_size;i++){
+
+         this->Header_File_System_Path[index] = repo_dir[i];
+
+         if(operating_sis == 'w'){
+
+            if(this->Header_File_System_Path[index] == '/'){
+
+               this->Header_File_System_Path[index] = '\\' ;
+            }
+         }
+
+         index++;
+     }
+
+     if(operating_sis == 'w'){
+
+        if(this->Header_File_System_Path[index] != '\\' ){
+
+          this->Header_File_System_Path[index] = '\\';
+        }
+     }
+
+     if(operating_sis == 'l'){
+
+       if(this->Header_File_System_Path[index] != '/' ){
+
+         this->Header_File_System_Path[index] = '/';
+       }
+     }
+
+
+     for(size_t i=0;i<git_record_size;i++){
+
+         this->Header_File_System_Path[index] = git_record_path[i];
+
+         if(operating_sis == 'w'){
+
+            if(this->Header_File_System_Path[index] == '/'){
+
+               this->Header_File_System_Path[index] = '\\' ;
+             }
+          }
+
+         index++;
+     }
+
+     this->Header_File_System_Path[index] = '\0';
+
+}
+
 char * Header_File_Determiner::Get_Header_Directory(){
 
        return this->Header_File_Directory;
@@ -270,4 +352,10 @@ char * Header_File_Determiner::Get_Header_Directory(){
 char * Header_File_Determiner::Get_Header_File_Name_Without_Ext(){
 
        return this->Header_File_Name;
+}
+
+
+char * Header_File_Determiner::Get_Header_File_System_Path(){
+
+      return this->Header_File_System_Path;
 }

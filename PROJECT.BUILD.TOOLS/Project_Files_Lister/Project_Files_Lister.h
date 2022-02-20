@@ -45,15 +45,17 @@ public:
  char * Get_Source_File_System_Path(int num);
  char * Get_Source_File_Name(int num);
  char * Get_Source_File_Name_With_Ext(int num);
- int    Get_Source_File_Include_File_Number(int num);
  char * Get_Source_File_Header(int src_num, int hdr_num);
+ char * Get_Independent_Header_File(int num);
+ int  Get_Source_File_Include_File_Number(int num);
+ int  Get_Indenpendent_Header_Files_Number();
 protected:
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Pointer);
  void Determine_Source_File_Number();
  void Determine_Header_File_Number();
  void Collect_Source_Files_Data();
  void Initialize_Data_Structures();
- void Collect_Independent_Header_Files_Data();
+ void Collect_Independent_Header_Files_Data(char operating_sis);
  void Clear_Dynamic_Memory();
  void Clear_Pointer_Memory(char ** pointer);
  void Place_String(char ** pointer, std::string string_line);
@@ -69,7 +71,9 @@ protected:
  Cpp_FileOperations FileManager;
  CharOperator Character_Operator;
  Build_System_Data * Data;
- char * Repo_Dir;
+ char *  Repo_Dir;
+ char ** independent_header_files;
+ int  independent_header_files_number;
  int  Source_File_Number;
  int  Header_File_Number;
  int  git_record_size;

@@ -180,6 +180,42 @@ void Project_Files_Data_Collector::Determine_File_Name(char ** pointer, char * s
      (*pointer)[index] = '\0';
 }
 
+
+void Project_Files_Data_Collector::Determine_File_Name_With_Ext(char ** pointer, char * string_line){
+
+     size_t string_size = strlen(string_line);
+
+     size_t dir_size = string_size;
+
+     size_t file_extention_start_point = string_size;
+
+     for(size_t i=string_size;i>0;i--){
+
+         if((string_line[i] == '\\') || (string_line[i] == '/')){
+
+            break;
+         }
+         else{
+
+              dir_size--;
+         }
+     }
+
+     int index = 0;
+
+     *pointer = new char [5*string_size];
+
+     for(size_t i=dir_size+1;i<string_size;i++){
+
+          (*pointer)[index] = string_line[i];
+
+           index++;
+     }
+
+     (*pointer)[index] = '\0';
+}
+
+
 void Project_Files_Data_Collector::Determine_Source_File_Name_With_Ext(char ** pointer,
 
      char * file_name){

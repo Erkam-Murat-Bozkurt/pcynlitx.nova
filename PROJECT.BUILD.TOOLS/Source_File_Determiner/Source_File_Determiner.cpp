@@ -74,6 +74,8 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
 
      char inclusion_guard [] = "#ifndef";
 
+     char main_file_key [] = "main(";
+
      char header_add_h [] = ".h";
 
      char header_add_hpp [] = ".hpp";
@@ -100,25 +102,8 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
 
             return this->Is_This_Source_File;
           }
-          else{
+     }
 
-                this->Read_File(file_path);
-
-                for(int k=0;k<this->File_Content_Size;k++){
-
-                    is_header
-
-                        = this->StringManager.CheckStringInclusion(this->File_Content[k],inclusion_guard);
-
-                    if(is_header){
-
-                       this->Is_This_Source_File = false;
-
-                       return this->Is_This_Source_File;
-                    }
-                }
-          }
-    }
 
     this->Is_This_Source_File = false;
 
@@ -129,6 +114,8 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
     this->Determine_Class_Function_Pattern(file_name);
 
     char * decleration_pattern = this->Get_Class_Function_Pattern();
+
+    bool is_this_main_file = false;
 
     if(this->StringManager.CheckStringInclusion(file_path,source_file_ext)){
 
@@ -146,6 +133,26 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
 
                 return this->Is_This_Source_File;
             }
+
+            is_this_main_file = this->StringManager.CheckStringInclusion(this->File_Content[k],main_file_key);
+
+            if(is_this_main_file){
+
+               this->Is_This_Source_File = false;
+
+               return this->Is_This_Source_File;
+            }
+
+      }
+
+
+      this->Is_This_Source_File
+
+                  = this->StringManager.CheckStringInclusion(file_path,source_file_ext);
+
+      if(this->Is_This_Source_File){
+
+         return this->Is_This_Source_File;
       }
     }
 
@@ -234,7 +241,7 @@ void Source_File_Determiner::Determine_Source_File_Name(char * path, char operat
 
      for(size_t i=file_path_size;i>0;i--){
 
-        if(path[i] == '/'){
+        if((path[i] == '/') || (path[i] == '\\')){
 
           break;
         }
@@ -278,7 +285,7 @@ void Source_File_Determiner::Determine_File_Name_Without_Ext(char * path, char o
 
     for(size_t i=file_path_size;i>0;i--){
 
-        if(path[i] == '/'){
+        if((path[i] == '/') || (path[i] == '\\')){
 
             break;
         }
