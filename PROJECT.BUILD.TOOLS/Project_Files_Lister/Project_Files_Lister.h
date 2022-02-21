@@ -47,12 +47,15 @@ public:
  char * Get_Source_File_Name_With_Ext(int num);
  char * Get_Source_File_Header(int src_num, int hdr_num);
  char * Get_Independent_Header_File(int num);
+ char * Get_Header_File_System_Path(int num);
  int  Get_Source_File_Include_File_Number(int num);
  int  Get_Indenpendent_Header_Files_Number();
+ int  Get_Header_System_Paths_Number();
 protected:
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Pointer);
  void Determine_Source_File_Number();
  void Determine_Header_File_Number();
+ void Determine_Header_Files_System_Paths();
  void Collect_Source_Files_Data();
  void Initialize_Data_Structures();
  void Collect_Independent_Header_Files_Data(char operating_sis);
@@ -73,9 +76,11 @@ protected:
  Build_System_Data * Data;
  char *  Repo_Dir;
  char ** independent_header_files;
+ char ** Header_Files_System_Paths;
  int  independent_header_files_number;
  int  Source_File_Number;
  int  Header_File_Number;
+ int  Header_System_Path_Number;
  int  git_record_size;
  bool Memory_Delete_Condition;
 };

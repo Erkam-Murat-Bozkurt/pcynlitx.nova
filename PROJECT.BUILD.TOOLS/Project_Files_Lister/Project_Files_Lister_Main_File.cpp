@@ -90,6 +90,15 @@ int main(int argc, char ** argv){
         << Dir_Lister.Get_Independent_Header_File(i);
     }
 
+    std::cout << "\n\n";
+
+    int Header_System_Path_Number = Dir_Lister.Get_Header_System_Paths_Number();
+
+    for(int i=0;i<Header_System_Path_Number;i++){
+
+        std::cout << "\n Header Path - " << i << ": "  << Dir_Lister.Get_Header_File_System_Path(i);
+    }
+
     std::cout << "\n Press eny key..";
 
     std::cin.get();

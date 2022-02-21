@@ -73,8 +73,6 @@ void Source_File_Data_Collector::Determine_Include_Line_Number(){
 
      char include_db_key [] = "#include\"";  // double_quotation_mark
 
-     char include_grth_key [] = "#include<"; // greater than
-
      this->included_header_file_number = 0;
 
      for(int i=0;i<this->File_Content_Size;i++){
@@ -85,10 +83,6 @@ void Source_File_Data_Collector::Determine_Include_Line_Number(){
 
          = this->StringManager.CheckStringInclusion(this->File_Content[i],include_db_key);
 
-         bool is_include_grth_key
-
-         = this->StringManager.CheckStringInclusion(this->File_Content[i],include_grth_key);
-
          bool char_before_sharp = false; //  sharp symbol = #
 
          if(this->File_Content[i][0]!= '#'){
@@ -98,7 +92,7 @@ void Source_File_Data_Collector::Determine_Include_Line_Number(){
 
          if(!char_before_sharp){ // In metaprograms, #include key is used on the inside code
 
-           if(is_include_line_db || is_include_grth_key ){
+           if(is_include_line_db){
 
               this->included_header_file_number++;
            }
@@ -117,17 +111,11 @@ void Source_File_Data_Collector::Receive_Include_File_Names(){
 
      char include_db_key []   = "#include\"";  // double_quotation_mark
 
-     char include_grth_key [] = "#include<";   // greater than
-
      for(int i=0;i<this->File_Content_Size;i++){
 
          bool is_include_line_db
 
          = this->StringManager.CheckStringInclusion(this->File_Content[i],include_db_key);
-
-         bool is_include_grth_key
-
-         = this->StringManager.CheckStringInclusion(this->File_Content[i],include_grth_key);
 
          bool char_before_sharp = false;
 
@@ -138,7 +126,7 @@ void Source_File_Data_Collector::Receive_Include_File_Names(){
 
           if(!char_before_sharp){ // In metaprograms, #include key is used on the inside code
 
-             if(is_include_line_db || is_include_grth_key ){
+             if(is_include_line_db){
 
                 this->Delete_Spaces_on_String(&(this->File_Content[i]));
 
@@ -167,7 +155,7 @@ void Source_File_Data_Collector::Receive_Include_File_Name(char ** pointer, char
 
      for(size_t i=0;i<string_size;i++){
 
-        if((string[i] == '\"') || (string[i] == '<')){
+        if(string[i] == '\"'){
 
             start_point = i+1;
 
@@ -177,7 +165,7 @@ void Source_File_Data_Collector::Receive_Include_File_Name(char ** pointer, char
 
      for(size_t i=start_point;i<string_size;i++){
 
-        if((string[i] == '\"') || (string[i] == '>')){
+        if(string[i] == '\"'){
 
            end_point = i;
         }
@@ -201,12 +189,9 @@ bool Source_File_Data_Collector::Control_Include_Syntax(char * string){
 
      this->syntax_error = true;
 
-
-     bool include_less_than = this->Character_Inclusion_Check(string,'<');
-
      bool include_double_quotation_mark = this->Character_Inclusion_Check(string,'\"');
 
-     bool include_start_cond = include_double_quotation_mark || include_less_than;
+     bool include_start_cond = include_double_quotation_mark;
 
 
      if(!include_start_cond){
@@ -214,22 +199,6 @@ bool Source_File_Data_Collector::Control_Include_Syntax(char * string){
         this->syntax_error = true;
 
         return this->syntax_error;
-     }
-
-     if(include_less_than){
-
-         if(this->Character_Inclusion_Check(string,'>')){
-
-            this->syntax_error = false;
-
-            return this->syntax_error;
-         }
-         else{
-
-            this->syntax_error = true;
-
-            return this->syntax_error;
-         }
      }
 
      int double_quotation_mark_number = 0;

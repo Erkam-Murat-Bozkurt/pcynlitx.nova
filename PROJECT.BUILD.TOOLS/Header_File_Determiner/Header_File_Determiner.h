@@ -27,7 +27,6 @@ public:
  void Determine_Header_File_Directory(char * path);
  void Determine_Header_File_Name(char * path);
  void Determine_Header_File_System_Path(char * repo_dir,
-
       char * git_record_path, char operating_sis);
  char * Get_Header_Directory();
  char * Get_Header_File_System_Path();
@@ -35,13 +34,12 @@ public:
  void Clear_Dynamic_Memory();
 protected:
  void Read_File(char * path);
+ void Clear_Pointer_Memory(char ** pointer);
  StringOperator StringManager;
  Cpp_FileOperations FileManager;
- char ** File_Content;
  char *  Header_File_Directory;
  char *  Header_File_Name;
  char *  Header_File_System_Path;
- int     File_Content_Size;
  bool    is_header_file;
  bool Memory_Delete_Condition;
 };

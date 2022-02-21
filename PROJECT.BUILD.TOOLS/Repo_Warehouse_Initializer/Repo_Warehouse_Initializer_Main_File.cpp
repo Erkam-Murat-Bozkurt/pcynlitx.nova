@@ -3,12 +3,14 @@
 #include <iostream>
 #include <cstring>
 #include "Repo_Warehouse_Initializer.h"
+#include "Descriptor_File_Reader.hpp"
+
 
 int main(int argc, char ** argv){
 
-    if(argc <3){
+    if(argc <2){
 
-       std::cout << "\n usage: Repo_Warehouse_Initializer.exe <repo_dir> <warehouse_path>";
+       std::cout << "\n usage: Repo_Warehouse_Initializer.exe <descriptor file path>";
 
        std::cout << "\n\n";
 
@@ -17,7 +19,7 @@ int main(int argc, char ** argv){
 
     Repo_Warehouse_Initializer Initializer;
 
-    Initializer.Build_Project_Warehouse(argv[1],argv[2]);
+    Initializer.Build_Project_Warehouse(argv[1]);
 
     std::cout << "\n\n Project Header Warehouse Constructed ..";
 

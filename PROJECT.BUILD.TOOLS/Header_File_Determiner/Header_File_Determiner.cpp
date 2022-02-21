@@ -3,10 +3,6 @@
 
 Header_File_Determiner::Header_File_Determiner(){
 
-    this->File_Content = nullptr;
-
-    this->File_Content_Size = 0;
-
     this->is_header_file = false;
 
     this->Header_File_Directory = nullptr;
@@ -33,40 +29,11 @@ void Header_File_Determiner::Clear_Dynamic_Memory(){
 
            this->Memory_Delete_Condition = true;
 
-           if(this->File_Content != nullptr){
+           this->Clear_Pointer_Memory(&this->Header_File_Directory);
 
-              for(int i=0;i<this->File_Content_Size;i++){
+           this->Clear_Pointer_Memory(&this->Header_File_Name);
 
-                  delete [] this->File_Content[i];
-
-                  this->File_Content[i] = nullptr;
-              }
-
-              delete [] this->File_Content;
-
-              this->File_Content = nullptr;
-           }
-
-           if(this->Header_File_Directory != nullptr){
-
-              delete [] this->Header_File_Directory;
-
-              this->Header_File_Directory = nullptr;
-           }
-
-           if(this->Header_File_Name != nullptr){
-
-              delete [] this->Header_File_Name;
-
-              this->Header_File_Name = nullptr;
-           }
-
-           if(this->Header_File_System_Path != nullptr){
-
-              delete [] this->Header_File_System_Path;
-
-              this->Header_File_System_Path = nullptr;
-           }
+           this->Clear_Pointer_Memory(&this->Header_File_System_Path);
        }
 }
 
@@ -101,102 +68,14 @@ bool Header_File_Determiner::Is_Header(char * file_path){
 
               return this->is_header_file;
           }
-          else{
-
-                this->Read_File(file_path);
-
-                for(int k=0;k<this->File_Content_Size;k++){
-
-                    this->is_header_file
-
-                        = this->StringManager.CheckStringInclusion(this->File_Content[k],inclusion_guard);
-
-                    if(this->is_header_file){
-
-                       return this->is_header_file;
-                    }
-                }
-          }
-
-          return this->is_header_file;
     }
-}
 
-
-void Header_File_Determiner::Read_File(char * path){
-
-     if(this->File_Content != nullptr){
-
-        for(int i=0;i<this->File_Content_Size;i++){
-
-            delete [] this->File_Content[i];
-
-            this->File_Content[i] = nullptr;
-        }
-
-        delete [] this->File_Content;
-
-        this->File_Content = nullptr;
-     }
-
-     this->FileManager.SetFilePath(path);
-
-     this->FileManager.FileOpen(Rf);
-
-     this->File_Content_Size = 0;
-
-     do {
-
-            std::string file_line = this->FileManager.ReadLine();
-
-            this->File_Content_Size++;
-
-     }while(!this->FileManager.Control_End_of_File());
-
-     this->FileManager.FileClose();
-
-
-     this->File_Content = new char * [5*this->File_Content_Size];
-
-     for(int i=0;i<this->File_Content_Size;i++){
-
-         this->File_Content[i] = nullptr;
-     }
-
-     this->FileManager.FileOpen(Rf);
-
-     int index = 0;
-
-     do {
-
-          char * string_line = this->FileManager.ReadLine_as_Cstring();
-
-          size_t string_size = strlen(string_line);
-
-          this->File_Content[index] = new char [5*string_size];
-
-          for(size_t i=0;i<string_size;i++){
-
-              this->File_Content[index][i] = string_line[i];
-          }
-
-          this->File_Content[index][string_size] ='\0';
-
-          index++;
-
-     }while(!this->FileManager.Control_End_of_File());
-
-     this->FileManager.FileClose();
+    return this->is_header_file;
 }
 
 void Header_File_Determiner::Determine_Header_File_Directory(char * path){
 
-     if(this->Header_File_Directory != nullptr){
-
-        delete [] this->Header_File_Directory;
-
-        this->Header_File_Directory = nullptr;
-     }
+     this->Clear_Pointer_Memory(&this->Header_File_Directory);
 
      size_t file_path_size = strlen(path);
 
@@ -204,7 +83,7 @@ void Header_File_Determiner::Determine_Header_File_Directory(char * path){
 
      for(size_t i=file_path_size;i>0;i--){
 
-        if(path[i] == '/'){
+        if(((path[i] == '/') || (path[i] == '\\'))){
 
            break;
         }
@@ -226,12 +105,7 @@ void Header_File_Determiner::Determine_Header_File_Directory(char * path){
 
 void Header_File_Determiner::Determine_Header_File_Name(char * path){
 
-     if(this->Header_File_Name != nullptr){
-
-        delete [] this->Header_File_Name;
-
-        this->Header_File_Name = nullptr;
-     }
+     this->Clear_Pointer_Memory(&this->Header_File_Name);
 
      size_t file_path_size = strlen(path);
 
@@ -239,7 +113,7 @@ void Header_File_Determiner::Determine_Header_File_Name(char * path){
 
      for(size_t i=file_path_size;i>0;i--){
 
-          if(path[i] == '/'){
+          if(((path[i] == '/') || (path[i] == '\\'))){
 
              break;
           }
@@ -275,12 +149,7 @@ void Header_File_Determiner::Determine_Header_File_System_Path(char * repo_dir,
 
      char * git_record_path, char operating_sis){
 
-     if(this->Header_File_System_Path != nullptr){
-
-        delete [] this->Header_File_System_Path;
-
-        this->Header_File_System_Path = nullptr;
-     }
+     this->Clear_Pointer_Memory(&this->Header_File_System_Path);
 
      size_t repo_dir_size   = strlen(repo_dir);
 
@@ -309,20 +178,23 @@ void Header_File_Determiner::Determine_Header_File_System_Path(char * repo_dir,
 
      if(operating_sis == 'w'){
 
-        if(this->Header_File_System_Path[index] != '\\' ){
+        if(repo_dir[repo_dir_size-1] != '\\' ){
 
-          this->Header_File_System_Path[index] = '\\';
+           this->Header_File_System_Path[index] = '\\';
+
+           index++;
         }
      }
 
      if(operating_sis == 'l'){
 
-       if(this->Header_File_System_Path[index] != '/' ){
+       if(repo_dir[repo_dir_size-1] != '/' ){
 
          this->Header_File_System_Path[index] = '/';
+
+         index++;
        }
      }
-
 
      for(size_t i=0;i<git_record_size;i++){
 
@@ -340,7 +212,16 @@ void Header_File_Determiner::Determine_Header_File_System_Path(char * repo_dir,
      }
 
      this->Header_File_System_Path[index] = '\0';
+}
 
+void Header_File_Determiner::Clear_Pointer_Memory(char ** pointer){
+
+     if(*pointer != nullptr){
+
+       delete [] *pointer;
+
+       *pointer = nullptr;
+     }
 }
 
 char * Header_File_Determiner::Get_Header_Directory(){
@@ -348,12 +229,10 @@ char * Header_File_Determiner::Get_Header_Directory(){
        return this->Header_File_Directory;
 }
 
-
 char * Header_File_Determiner::Get_Header_File_Name_Without_Ext(){
 
        return this->Header_File_Name;
 }
-
 
 char * Header_File_Determiner::Get_Header_File_System_Path(){
 

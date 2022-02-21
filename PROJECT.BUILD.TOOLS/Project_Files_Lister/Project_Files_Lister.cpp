@@ -10,9 +10,17 @@ Project_Files_Lister::Project_Files_Lister(){
     this->git_record_size = 0;
 
     this->Data = nullptr;
+
+    this->Header_System_Path_Number = 0;
+
+    this->Header_File_Number = 0;
+
+    this->Header_Files_System_Paths = nullptr;
 }
 
-Project_Files_Lister::Project_Files_Lister(const Project_Files_Lister & orig){
+Project_Files_Lister::Project_Files_Lister(const
+
+                  Project_Files_Lister & orig){
 
 
 }
@@ -40,6 +48,8 @@ void Project_Files_Lister::Determine_Git_Repo_Info(Descriptor_File_Reader * Des_
 
      this->git_record_size = this->Git_Data_Receiver.Get_Git_File_Index_Size();
 
+     this->Repo_Dir = this->Git_Data_Receiver.Get_Git_Repo_Directory();
+
      this->Determine_Source_File_Number();
 
      this->Determine_Header_File_Number();
@@ -49,6 +59,8 @@ void Project_Files_Lister::Determine_Git_Repo_Info(Descriptor_File_Reader * Des_
      this->Collect_Source_Files_Data();
 
      this->Collect_Independent_Header_Files_Data('w');
+
+     this->Determine_Header_Files_System_Paths();
 }
 
 void Project_Files_Lister::Determine_Source_File_Number(){
@@ -87,8 +99,6 @@ void Project_Files_Lister::Determine_Header_File_Number(){
 
 void Project_Files_Lister::Collect_Source_Files_Data(){
 
-     this->Repo_Dir = this->Git_Data_Receiver.Get_Git_Repo_Directory();
-
      int index = 0;
 
      for(int i=0;i<this->git_record_size-1;i++){
@@ -110,7 +120,6 @@ void Project_Files_Lister::Collect_Source_Files_Data(){
             this->Data[index].git_record_path = file_path;       // file path in git record
 
             this->Data[index].File_Path = nullptr;              // The file exact path ( System Path )
-
 
 
             this->Data_Cltr.Determine_File_Exact_Path(&(this->Data[index].File_Path),
@@ -150,7 +159,6 @@ void Project_Files_Lister::Collect_Source_Files_Data(){
                  this->Place_String(&(this->Data[index].Included_Header_Files[k]),
 
                       Included_File);
-
               }
             }
 
@@ -158,7 +166,6 @@ void Project_Files_Lister::Collect_Source_Files_Data(){
          }
        }
 }
-
 
 void Project_Files_Lister::Collect_Independent_Header_Files_Data(char operating_sis){
 
@@ -208,7 +215,6 @@ void Project_Files_Lister::Collect_Independent_Header_Files_Data(char operating_
                    break;
                 }
             }
-
 
             if(!is_this_included_already){
 
@@ -317,6 +323,41 @@ void Project_Files_Lister::Clear_Dynamic_Memory(){
        }
 }
 
+void Project_Files_Lister::Determine_Header_Files_System_Paths(){
+
+     this->Header_Files_System_Paths = new char * [5*this->Header_File_Number];
+
+     for(int i=0;i<this->Header_File_Number;i++){
+
+         this->Header_Files_System_Paths[i] = nullptr;
+     }
+
+     int index = 0;
+
+
+     for(int i=0;i<this->git_record_size-1;i++){
+
+         char * file_path = this->Git_Data_Receiver.Get_Git_File_Index(i);
+
+         char * file_name = nullptr;
+
+         bool is_header_file = this->Header_Determiner.Is_Header(file_path);
+
+         if(is_header_file){
+
+            this->Header_Determiner.Determine_Header_File_System_Path(this->Repo_Dir,file_path,'w');
+
+            char * Header_System_Path = this->Header_Determiner.Get_Header_File_System_Path();
+
+            this->Place_String(&this->Header_Files_System_Paths[index],Header_System_Path);
+
+            this->Header_System_Path_Number++;
+
+            index++;
+         }
+     }
+}
+
 void Project_Files_Lister::Clear_Pointer_Memory(char ** Pointer){
 
      if(*Pointer != nullptr){
@@ -362,6 +403,11 @@ int  Project_Files_Lister::Get_Source_File_Include_File_Number(int num){
      return this->Data[num].Included_Header_Files_Number;
 }
 
+int Project_Files_Lister::Get_Header_System_Paths_Number(){
+
+    return this->Header_System_Path_Number;
+}
+
 int Project_Files_Lister::Get_Indenpendent_Header_Files_Number(){
 
     return this->independent_header_files_number;
@@ -375,4 +421,9 @@ char * Project_Files_Lister::Get_Source_File_Header(int src_num, int hdr_num){
 char * Project_Files_Lister::Get_Independent_Header_File(int num){
 
        return this->independent_header_files[num];
+}
+
+char * Project_Files_Lister::Get_Header_File_System_Path(int num){
+
+       return this->Header_Files_System_Paths[num];
 }
