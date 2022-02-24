@@ -47,6 +47,7 @@ public:
  int  Get_Included_Header_Files_Number();
  void Clear_Dynamic_Memory();
 private:
+ void Clear_Pointer_Memory(char ** pointer);
  void Receive_Source_File_Name(char * source_file_name);
  void Receive_Header_File_Name_With_Its_Extention(char * header_file_name);
  void Receive_Git_Header_File_Path(char * header_path);

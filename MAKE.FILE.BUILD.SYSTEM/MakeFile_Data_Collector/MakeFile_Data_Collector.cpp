@@ -70,35 +70,17 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         if(this->Source_File_Name_With_Ext != nullptr){
+         this->Clear_Pointer_Memory(&this->Source_File_Name_With_Ext);
 
-            delete [] this->Source_File_Name_With_Ext;
+         this->Clear_Pointer_Memory(&this->Object_File_Name);
 
-            this->Source_File_Name_With_Ext = nullptr;
-         }
-
-
-         if(this->Object_File_Name != nullptr){
-
-            delete [] this->Object_File_Name;
-
-            this->Object_File_Name = nullptr;
-         }
-
-         if(this->Compiler_System_Command != nullptr){
-
-            delete [] this->Compiler_System_Command;
-
-            this->Compiler_System_Command = nullptr;
-         }
+         this->Clear_Pointer_Memory(&this->Compiler_System_Command);
 
          if(this->Included_Header_Files != nullptr){
 
             for(int i=0;i<this->Included_Header_Files_Number;i++){
 
-                delete [] this->Included_Header_Files[i];
-
-                this->Included_Header_Files[i] = nullptr;
+                this->Clear_Pointer_Memory(&(this->Included_Header_Files[i]));
             }
 
             delete [] this->Included_Header_Files;
@@ -108,54 +90,19 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
             this->Included_Header_Files_Number = 0;
          }
 
-         if(this->Dependency_Code_Line != nullptr){
+         this->Clear_Pointer_Memory(&this->Dependency_Code_Line);
 
-            delete [] this->Dependency_Code_Line;
+         this->Clear_Pointer_Memory(&this->Header_File_Directory);
 
-            this->Dependency_Code_Line = nullptr;
-         }
+         this->Clear_Pointer_Memory(&this->Make_File_Name);
 
-         if(this->Header_File_Directory != nullptr){
+         this->Clear_Pointer_Memory(&this->warehouse_head_dir);
 
-            delete [] this->Header_File_Directory;
+         this->Clear_Pointer_Memory(&this->warehouse_obj_dir);
 
-            this->Header_File_Directory = nullptr;
-         }
+         this->Clear_Pointer_Memory(&this->git_header_dir);
 
-         if(this->Make_File_Name != nullptr){
-
-            delete [] this->Make_File_Name;
-
-            this->Make_File_Name = nullptr;
-         }
-
-         if(this->warehouse_head_dir != nullptr){
-
-            delete [] this->warehouse_head_dir;
-
-            this->warehouse_head_dir = nullptr;
-         }
-
-         if(this->warehouse_obj_dir != nullptr){
-
-            delete [] this->warehouse_obj_dir;
-
-            this->warehouse_obj_dir = nullptr;
-         }
-
-         if(this->git_header_dir != nullptr){
-
-            delete [] this->git_header_dir;
-
-            this->git_header_dir = nullptr;
-          }
-
-         if(this->Header_File_Exact_Path != nullptr){
-
-             delete [] this->Header_File_Exact_Path;
-
-             this->Header_File_Exact_Path = nullptr;
-         }
+         this->Clear_Pointer_Memory(&this->Header_File_Exact_Path);
      }
 }
 
@@ -208,7 +155,6 @@ void MakeFile_Data_Collector::Collect_Make_File_Data(){
      this->Determine_Dependency_Code_Line();
 
      this->Determine_Make_File_Name();
-
 }
 
 void MakeFile_Data_Collector::Determine_Warehouse_Header_Dir(char operating_sis){
@@ -967,7 +913,9 @@ void MakeFile_Data_Collector::Determine_Dependency_Code_Line(){
      this->Dependency_Code_Line[index_counter] = '\0';
 }
 
-void MakeFile_Data_Collector::Place_Information(char ** Pointer, char * Information, int * index_counter){
+void MakeFile_Data_Collector::Place_Information(char ** Pointer,
+
+     char * Information, int * index_counter){
 
      int String_Size = strlen(Information);
 
@@ -977,6 +925,16 @@ void MakeFile_Data_Collector::Place_Information(char ** Pointer, char * Informat
 
          (*index_counter)++;
      }
+ }
+
+ void MakeFile_Data_Collector::Clear_Pointer_Memory(char ** Pointer){
+
+      if(*Pointer != nullptr){
+
+          delete [] *Pointer;
+
+          *Pointer = nullptr;
+      }
  }
 
  char * MakeFile_Data_Collector::Get_Source_File_Name(){
