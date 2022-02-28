@@ -9,7 +9,7 @@ Source_File_Data_Collector::Source_File_Data_Collector(){
 
     this->Include_File_List = nullptr;
 
-    this->Include_File_Directories;
+    this->Include_File_Directories = nullptr;
 
     this->File_Content_Size = 0;
 
@@ -473,6 +473,65 @@ void Source_File_Data_Collector::Read_File(char * path){
      }while(!this->FileManager.Control_End_of_File());
 
      this->FileManager.FileClose();
+}
+
+void Source_File_Data_Collector::Determine_Header_Files_System_Paths(char ** pointer,
+
+     char * directory, char * file_name, char operating_sis){
+
+     size_t directory_size = strlen(directory);
+
+     size_t file_name_size = strlen(file_name);
+
+     size_t path_size = directory_size + file_name_size;
+
+     *pointer = new char [5*path_size];
+
+     int index = 0;
+
+     for(size_t i=0;i<directory_size;i++){
+
+         (*pointer)[index] = directory[i];
+
+         if(operating_sis == 'w'){
+
+            if((*pointer)[index] == '/'){
+
+               (*pointer)[index] == '\\';
+            }
+         }
+
+         index++;
+     }
+
+     if(operating_sis == 'w'){
+
+        if(directory[directory_size-1] != '\\'){
+
+           (*pointer)[index] = '\\';
+
+           index++;
+        }
+     }
+
+     if(operating_sis == 'l'){
+
+        if(directory[directory_size-1] != '/'){
+
+           (*pointer)[index] = '/';
+
+           index++;
+        }
+     }
+
+     for(size_t i=0;i<file_name_size;i++){
+
+         (*pointer)[index] = file_name[i];
+
+         index++;
+     }
+
+     (*pointer)[index] = '\0';
 }
 
 void Source_File_Data_Collector::Delete_Spaces_on_String(char ** pointer){

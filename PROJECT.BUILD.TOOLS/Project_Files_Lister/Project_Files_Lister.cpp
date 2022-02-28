@@ -56,7 +56,7 @@ void Project_Files_Lister::Determine_Git_Repo_Info(Descriptor_File_Reader * Des_
 
      this->Initialize_Data_Structures();
 
-     this->Collect_Source_Files_Data();
+     this->Collect_Source_Files_Data('w');
 
      this->Collect_Independent_Header_Files_Data('w');
 
@@ -97,7 +97,7 @@ void Project_Files_Lister::Determine_Header_File_Number(){
     }
 }
 
-void Project_Files_Lister::Collect_Source_Files_Data(){
+void Project_Files_Lister::Collect_Source_Files_Data(char operating_sis){
 
      int index = 0;
 
@@ -111,7 +111,8 @@ void Project_Files_Lister::Collect_Source_Files_Data(){
 
             this->Src_Data_Col.Clear_Dynamic_Memory();
 
-            this->Src_Data_Col.Receive_Source_File_Data(file_path);
+            this->Src_Data_Col.Receive_Source_File_Data(&this->Git_Data_Receiver,file_path);
+
 
             this->Data[index].is_this_a_source_file = true;
 
@@ -152,13 +153,45 @@ void Project_Files_Lister::Collect_Source_Files_Data(){
 
                     new char * [5*Inc_Header_Number];
 
+              this->Data[index].Included_Header_Files_Directories =
+
+                    new char * [5*Inc_Header_Number];
+
+
+              this->Data[index].Included_Header_Files_System_Path =
+
+                   new char * [5*Inc_Header_Number];
+
+
               for(int k=0;k<Inc_Header_Number;k++){
 
-                 char * Included_File = Src_Data_Col.Get_Include_File_Name(k);
+                 char * Included_File = this->Src_Data_Col.Get_Include_File_Name(k);
+
+                 char * Included_File_Directory =
+
+                 this->Src_Data_Col.Get_Include_File_Directory(k);
 
                  this->Place_String(&(this->Data[index].Included_Header_Files[k]),
 
                       Included_File);
+
+                 this->Place_String(&(this->Data[index].Included_Header_Files_Directories[k]),
+
+                      Included_File_Directory);
+
+
+
+                 if(operating_sis == 'w'){
+
+                    this->Src_Data_Col.Determine_Header_Files_System_Paths(
+
+                    &(this->Data[index].Included_Header_Files_System_Path[k]),
+
+                    this->Data[index].Included_Header_Files_Directories[k],
+
+                    this->Data[index].Included_Header_Files[k],operating_sis);
+
+                  }
               }
             }
 
@@ -207,7 +240,6 @@ void Project_Files_Lister::Collect_Independent_Header_Files_Data(char operating_
 
                        break;
                     }
-
                 }
 
                 if(is_this_included_already){
@@ -255,6 +287,8 @@ void Project_Files_Lister::Initialize_Data_Structures(){
          this->Data[i].File_Name = nullptr;             // The file name witout extentation
          this->Data[i].File_Name_With_Ext = nullptr;    // The header file name with extention
          this->Data[i].Included_Header_Files = nullptr; // The list of included header files if the file is a source file
+         this->Data[i].Included_Header_Files_Directories = nullptr;
+         this->Data[i].Included_Header_Files_System_Path = nullptr;
          this->Data[i].Included_Header_Files_Number = 0;// The number of the header file included if the file is a source file
       }
 }
@@ -314,6 +348,11 @@ void Project_Files_Lister::Clear_Dynamic_Memory(){
                   for(int k=0;k<inc_file_num;k++){
 
                       this->Clear_Pointer_Memory(&(this->Data[i].Included_Header_Files[k]));
+
+                      this->Clear_Pointer_Memory(&(this->Data[i].Included_Header_Files_Directories[k]));
+
+                      this->Clear_Pointer_Memory(&(this->Data[i].Included_Header_Files_System_Path[k]));
+
                   }
 
                   delete [] this->Data[i].Included_Header_Files;
@@ -333,7 +372,6 @@ void Project_Files_Lister::Determine_Header_Files_System_Paths(){
      }
 
      int index = 0;
-
 
      for(int i=0;i<this->git_record_size-1;i++){
 
@@ -416,6 +454,16 @@ int Project_Files_Lister::Get_Indenpendent_Header_Files_Number(){
 char * Project_Files_Lister::Get_Source_File_Header(int src_num, int hdr_num){
 
       return this->Data[src_num].Included_Header_Files[hdr_num];
+}
+
+char * Project_Files_Lister::Get_Source_File_Header_Directory(int src_num, int hdr_num){
+
+       return this->Data[src_num].Included_Header_Files_Directories[hdr_num];
+}
+
+char * Project_Files_Lister::Get_Source_File_Header_System_Path(int src_num, int hdr_num){
+
+       return this->Data[src_num].Included_Header_Files_System_Path[hdr_num];
 }
 
 char * Project_Files_Lister::Get_Independent_Header_File(int num){

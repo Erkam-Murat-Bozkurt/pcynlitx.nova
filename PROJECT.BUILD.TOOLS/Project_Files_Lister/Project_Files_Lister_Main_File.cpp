@@ -74,6 +74,14 @@ int main(int argc, char ** argv){
             std::cout << "\n Included header file:" <<
 
             Dir_Lister.Get_Source_File_Header(i,k);
+
+            std::cout << "\n Included header file Directory:" <<
+
+            Dir_Lister.Get_Source_File_Header_Directory(i,k);
+
+            std::cout << "\n Included header file system path:" <<
+
+            Dir_Lister.Get_Source_File_Header_System_Path(i,k);
         }
 
         std::cout << "\n\n\n\n";

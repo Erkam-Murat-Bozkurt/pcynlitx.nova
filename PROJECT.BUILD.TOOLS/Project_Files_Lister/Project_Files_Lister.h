@@ -28,6 +28,8 @@ struct Build_System_Data {
   char * File_Name;
   char * File_Name_With_Ext; // The header file name with extention
   char ** Included_Header_Files;
+  char ** Included_Header_Files_Directories;
+  char ** Included_Header_Files_System_Path;
   int  Included_Header_Files_Number;
 
 };
@@ -46,6 +48,8 @@ public:
  char * Get_Source_File_Name(int num);
  char * Get_Source_File_Name_With_Ext(int num);
  char * Get_Source_File_Header(int src_num, int hdr_num);
+ char * Get_Source_File_Header_Directory(int src_num, int hdr_num);
+ char * Get_Source_File_Header_System_Path(int src_num, int hdr_num);
  char * Get_Independent_Header_File(int num);
  char * Get_Header_File_System_Path(int num);
  int  Get_Source_File_Include_File_Number(int num);
@@ -56,7 +60,7 @@ protected:
  void Determine_Source_File_Number();
  void Determine_Header_File_Number();
  void Determine_Header_Files_System_Paths();
- void Collect_Source_Files_Data();
+ void Collect_Source_Files_Data(char operating_sis);
  void Initialize_Data_Structures();
  void Collect_Independent_Header_Files_Data(char operating_sis);
  void Clear_Dynamic_Memory();
