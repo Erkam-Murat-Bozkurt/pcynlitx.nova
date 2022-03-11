@@ -30,6 +30,8 @@ struct Build_System_Data {
   char ** Included_Header_Files;
   char ** Included_Header_Files_Directories;
   char ** Included_Header_Files_System_Path;
+  char ** Included_Header_Files_Git_Record_Path;
+  char ** Included_Header_Files_Git_Record_Dir;
   int  Included_Header_Files_Number;
 
 };
@@ -50,6 +52,8 @@ public:
  char * Get_Source_File_Header(int src_num, int hdr_num);
  char * Get_Source_File_Header_Directory(int src_num, int hdr_num);
  char * Get_Source_File_Header_System_Path(int src_num, int hdr_num);
+ char * Get_Source_File_Header_Git_Record_Path(int src_num, int hdr_num);
+ char * Get_Source_File_Header_Git_Record_Dir(int src_num, int hdr_num);
  char * Get_Independent_Header_File(int num);
  char * Get_Header_File_System_Path(int num);
  int  Get_Source_File_Include_File_Number(int num);

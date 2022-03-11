@@ -23,6 +23,8 @@ struct Include_File_Data {
 
     char * Include_File_Name;
     char * Include_File_Directory;
+    char * Include_File_Git_Record_Path;
+    char * Include_File_Git_Record_Dir;
     int Include_File_Number;
 };
 
@@ -32,18 +34,32 @@ public:
  Source_File_Data_Collector();
  Source_File_Data_Collector(const Source_File_Data_Collector & orig);
  virtual ~Source_File_Data_Collector();
- void Receive_Source_File_Data(Git_File_List_Receiver * Git_Receiver, char * file_path);
+ void Receive_Source_File_Data(Git_File_List_Receiver * Receiver, char * file_path);
  void Determine_Header_Files_System_Paths(char ** pointer, char * directory,
+
       char * file_name, char operating_sis);
+
  void Determine_Header_File_Directory(char ** directory,char * file_path,
-           char operating_sis);
- bool Character_Inclusion_Check(char * string, char chr);
-           void Determine_Git_Record_Header_File_Path(char ** header_path,char * header_name);
+
+      char operating_sis);
+
+ void Determine_Git_Record_Header_File_Path(char ** header_path,
+
+      char * header_name, char operating_sis);
+
+ void Determine_Git_Record_Header_File_Directory(char ** header_dir,
+       char * header_path, char operating_sis);
+
  void Clear_Dynamic_Memory();
- int Get_Included_File_Number();
+ int    Get_Included_File_Number();
  char * Get_Include_File_Name(int num);
  char * Get_Include_File_Directory(int num);
+ char * Get_Include_File_Git_Record_Directory(int num);
+ char * Get_Include_File_Git_Record_Path(int num);
 protected:
+
+ bool Character_Inclusion_Check(char * string, char chr);
+
  void Receive_Include_File_Names();
  void Receive_Include_File_Name(char ** pointer, char * string);
  void Receive_Include_File_Directory(char ** pointer, char * string);
@@ -61,8 +77,6 @@ protected:
  bool Character_Inclusion_Status;
  char *  Git_Repo_Dir;
  char ** File_Content;
- char ** Include_File_List;
- char ** Include_File_Directories;
  int File_Content_Size;
  int git_record_size;
  int included_header_file_number;

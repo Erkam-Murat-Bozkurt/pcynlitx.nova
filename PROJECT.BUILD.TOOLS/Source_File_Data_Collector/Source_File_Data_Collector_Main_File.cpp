@@ -49,9 +49,19 @@ int main(int argc, char ** argv){
 
            << Data_Collector.Get_Include_File_Name(i);
 
-          std::cout << "\n The header file - " << i << ": "
+          std::cout << "\n The header file directory- " << i << ": "
 
           << Data_Collector.Get_Include_File_Directory(i);
+
+
+          std::cout << "\n The header file git record directory - " << i << ": "
+
+          << Data_Collector.Get_Include_File_Git_Record_Directory(i);
+
+
+          std::cout << "\n The header file git record path - " << i << ": "
+
+          << Data_Collector.Get_Include_File_Git_Record_Path(i);
        }
     }
 

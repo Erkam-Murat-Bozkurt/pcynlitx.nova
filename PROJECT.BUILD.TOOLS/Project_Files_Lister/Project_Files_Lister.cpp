@@ -162,6 +162,15 @@ void Project_Files_Lister::Collect_Source_Files_Data(char operating_sis){
 
                    new char * [5*Inc_Header_Number];
 
+              this->Data[index].Included_Header_Files_Git_Record_Path =
+
+                   new char * [5*Inc_Header_Number];
+
+
+              this->Data[index].Included_Header_Files_Git_Record_Dir =
+
+                  new char * [5*Inc_Header_Number];
+
 
               for(int k=0;k<Inc_Header_Number;k++){
 
@@ -171,6 +180,16 @@ void Project_Files_Lister::Collect_Source_Files_Data(char operating_sis){
 
                  this->Src_Data_Col.Get_Include_File_Directory(k);
 
+                 char * Include_File_Git_Record_Dir =
+
+                 this->Src_Data_Col.Get_Include_File_Git_Record_Directory(k);
+
+                 char * Include_File_Git_Record_Path =
+
+                 this->Src_Data_Col.Get_Include_File_Git_Record_Path(k);
+
+
+
                  this->Place_String(&(this->Data[index].Included_Header_Files[k]),
 
                       Included_File);
@@ -179,6 +198,15 @@ void Project_Files_Lister::Collect_Source_Files_Data(char operating_sis){
 
                       Included_File_Directory);
 
+
+                 this->Place_String(&(this->Data[index].Included_Header_Files_Git_Record_Dir[k]),
+
+                      Include_File_Git_Record_Dir);
+
+
+                 this->Place_String(&(this->Data[index].Included_Header_Files_Git_Record_Path[k]),
+
+                     Include_File_Git_Record_Path);
 
 
                  if(operating_sis == 'w'){
@@ -289,6 +317,8 @@ void Project_Files_Lister::Initialize_Data_Structures(){
          this->Data[i].Included_Header_Files = nullptr; // The list of included header files if the file is a source file
          this->Data[i].Included_Header_Files_Directories = nullptr;
          this->Data[i].Included_Header_Files_System_Path = nullptr;
+         this->Data[i].Included_Header_Files_Git_Record_Path = nullptr;
+         this->Data[i].Included_Header_Files_Git_Record_Dir = nullptr;
          this->Data[i].Included_Header_Files_Number = 0;// The number of the header file included if the file is a source file
       }
 }
@@ -464,6 +494,16 @@ char * Project_Files_Lister::Get_Source_File_Header_Directory(int src_num, int h
 char * Project_Files_Lister::Get_Source_File_Header_System_Path(int src_num, int hdr_num){
 
        return this->Data[src_num].Included_Header_Files_System_Path[hdr_num];
+}
+
+char * Project_Files_Lister::Get_Source_File_Header_Git_Record_Path(int src_num, int hdr_num){
+
+       return this->Data[src_num].Included_Header_Files_Git_Record_Path[hdr_num];
+}
+
+char * Project_Files_Lister::Get_Source_File_Header_Git_Record_Dir(int src_num, int hdr_num){
+
+       return this->Data[src_num].Included_Header_Files_Git_Record_Dir[hdr_num];
 }
 
 char * Project_Files_Lister::Get_Independent_Header_File(int num){

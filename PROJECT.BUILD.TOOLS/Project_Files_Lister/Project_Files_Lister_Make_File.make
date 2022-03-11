@@ -14,7 +14,7 @@ FILE_DAT_COL=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Files_Data_Collector
 
 
 VPATH = $(DIR_OPS) $(STRING_OPS) $(CHAR_OPS) $(FILE_OPRS) \
-				$(HEAD_DETR) $(SOURCE_DETR) $(CHAR_OPRT) $(DES_READ) $(DES_DATA_COL) \
+				$(HEAD_DETR) $(SOURCE_DETR) $(DES_READ) $(DES_DATA_COL) \
 				$(GIT_LIST) $(SRC_DT_COL) $(FILE_DAT_COL)
 
 Project_Files_Lister.exe: Project_Files_Lister_Main_File.cpp Project_Files_Lister.cpp  \
@@ -28,8 +28,9 @@ Project_Files_Lister.exe: Project_Files_Lister_Main_File.cpp Project_Files_Liste
 	 -I$(CHAR_OPS) -I$(FILE_OPRS) -I$(CHAR_OPS) -I$(DES_READ) \
 	 -I$(DES_DATA_COL) -I$(GIT_LIST) -I$(FILE_DAT_COL) \
 	 -I$(SRC_DT_COL) -L$(HEAD_DETR) -L$(SOURCE_DETR) -L$(DIR_OPS) \
-	 -L$(STRING_OPS) -L$(GIT_LIST) -L-I$(FILE_DAT_COL) \
-	 -L$(CHAR_OPS) -L$(FILE_OPRS) -L$(CHAR_OPRT) -L$(DES_READ) -L$(DES_DATA_COL) -L$(SRC_DT_COL) \
+	 -L$(STRING_OPS) -L$(GIT_LIST) -L$(FILE_DAT_COL) \
+	 -L$(CHAR_OPS) -L$(FILE_OPRS) \
+	 -L$(DES_READ) -L$(DES_DATA_COL) -L$(SRC_DT_COL) \
 		Project_Files_Lister_Main_File.cpp Project_Files_Lister.cpp \
 		$(SOURCE_DETR)\Source_File_Determiner.cpp $(HEAD_DETR)\Header_File_Determiner.cpp \
 		$(DIR_ENUM)\Directory_Enumerator.cpp $(DES_READ)\Descriptor_File_Reader.cpp \

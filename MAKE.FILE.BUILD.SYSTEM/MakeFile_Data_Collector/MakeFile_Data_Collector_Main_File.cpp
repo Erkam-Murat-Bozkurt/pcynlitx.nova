@@ -27,13 +27,13 @@ int main(int argc, char ** argv){
 
     Project_Files_Lister File_Lister;
 
-    File_Lister.Determine_Git_Repo_Info(project_repo_dir,warehouse_path);
+    File_Lister.Determine_Git_Repo_Info(&Des_Reader);
 
-    int dir_number = File_Lister.Get_Git_Repo_Directory_Number();
+    int src_file_num = File_Lister.Get_Source_File_Number();
 
     MakeFile_Data_Collector Data_Collector;
 
-    if(dir_number > 0){
+    if(src_file_num > 0){
 
        Data_Collector.Receive_Descriptor_File_Reader(&Des_Reader);
 

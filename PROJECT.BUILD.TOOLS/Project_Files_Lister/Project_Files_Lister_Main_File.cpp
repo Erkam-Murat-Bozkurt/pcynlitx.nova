@@ -82,10 +82,17 @@ int main(int argc, char ** argv){
             std::cout << "\n Included header file system path:" <<
 
             Dir_Lister.Get_Source_File_Header_System_Path(i,k);
+
+            std::cout << "\n Included header file git path:" <<
+
+            Dir_Lister.Get_Source_File_Header_Git_Record_Path(i,k);
+
+            std::cout << "\n Included header file git record dir:" <<
+
+            Dir_Lister.Get_Source_File_Header_Git_Record_Dir(i,k);
         }
 
         std::cout << "\n\n\n\n";
-
     }
 
 

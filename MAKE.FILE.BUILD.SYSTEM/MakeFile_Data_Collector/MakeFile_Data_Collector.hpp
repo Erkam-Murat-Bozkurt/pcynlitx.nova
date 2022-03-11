@@ -48,49 +48,52 @@ public:
  void Clear_Dynamic_Memory();
 private:
  void Clear_Pointer_Memory(char ** pointer);
- void Receive_Source_File_Name(char * source_file_name);
- void Receive_Header_File_Name_With_Its_Extention(char * header_file_name);
- void Receive_Git_Header_File_Path(char * header_path);
- void Determine_Header_File_Exact_Path(char operating_sis);
+ void Place_String(char ** pointer, char * string);
+ void Collect_Header_Files_Information();
+ void Receive_Included_Header_Files_Number();
  void Receive_Warehouse_Path(char * warehouse_path);
  void Receive_Repo_Directory(char * repo_dir);
- void Determine_Header_File_Directory(char operating_sis);
  void Determine_Make_File_Name();
  void Determine_Dependency_Code_Line();
  void Place_Information(char ** Pointer, char * Information, int * index_counter);
- void Find_File_Names_With_Extention();
- void Determine_Included_Header_Files_Number();
- void Determine_Object_File_Names();
- void Read_Include_File_Names();
+ void Find_Object_File_Name();
  void Determine_Compiler_System_Command(char * Include_Directory_Location);
- bool Include_Line_Determiner(std::string String_Line);
  void Determine_Warehouse_Header_Dir(char operating_sis);
  void Determine_Warehouse_Object_Dir(char operating_sis);
- void Determine_Git_Header_File_Directory(char operating_sis);
+ void Initialize_Header_Data_Pointers();
+
  Cpp_FileOperations FileManager;
  DirectoryOperations DirectoryManager;
  Header_File_Determiner Header_Determiner;
  IntToCharTranslater Translater;
  Descriptor_File_Reader * Des_Reader_Pointer;
  Project_Files_Lister * File_Lister_Pointer;
- std::string String_Line;
- char * git_header_dir;
+ 
  char * repo_dir;
  char * warehouse_head_dir;
  char * warehouse_obj_dir;
  char * warehouse_path;
  char * Make_File_Name;
+
  char * Dependency_Code_Line;
- char * Git_Header_File_Path;
  char * Header_File_Exact_Path;
  char * Header_File_Directory;
- char * Source_File_Name;
  char * Header_File_Name_With_Ext;
+
  char * Source_File_Name_With_Ext;
+ char * Source_File_Git_Recort_Path;
+ char * Source_File_Name;
+ char * Source_File_Directory;
+
  char * Object_File_Name;
  char * Compiler_System_Command;
  char ** Included_Header_Files;
+ char ** Included_Header_Directories;
+ char ** Included_Header_Files_System_Paths;
+ char ** Included_Header_Files_Git_Record_Paths;
+ char ** Included_Header_Files_Git_Record_Dir;
  int  Included_Header_Files_Number;
+ int  Git_Record_Index;
  bool Include_Line_Condition;
  bool Memory_Delete_Condition;
 };
