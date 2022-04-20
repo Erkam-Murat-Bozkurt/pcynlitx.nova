@@ -45,9 +45,9 @@ MakeFile_Data_Collector::MakeFile_Data_Collector(){
 
    this->warehouse_obj_dir = nullptr;
 
-   this->git_header_dir = nullptr;
-
    this->Header_File_Exact_Path = nullptr;
+
+   this->Header_File_Name_With_Ext = nullptr;
 
    this->Included_Header_Files_Number = 0;
 }
@@ -92,15 +92,13 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
 
          this->Clear_Pointer_Memory(&this->Dependency_Code_Line);
 
-         this->Clear_Pointer_Memory(&this->Header_File_Directory);
+         //this->Clear_Pointer_Memory(&this->Header_File_Directory);
 
          this->Clear_Pointer_Memory(&this->Make_File_Name);
 
          this->Clear_Pointer_Memory(&this->warehouse_head_dir);
 
          this->Clear_Pointer_Memory(&this->warehouse_obj_dir);
-
-         this->Clear_Pointer_Memory(&this->git_header_dir);
 
          this->Clear_Pointer_Memory(&this->Header_File_Exact_Path);
      }
@@ -126,9 +124,9 @@ void MakeFile_Data_Collector::Collect_Make_File_Data(Project_Files_Lister * Poin
 
      this->Collect_Header_Files_Information();
 
-     this->Find_File_Names_With_Extention();
-
      this->Determine_Compiler_System_Command();
+
+     this->Find_Object_File_Name();
 
      this->Determine_Dependency_Code_Line();
 
@@ -154,6 +152,10 @@ void MakeFile_Data_Collector::Receive_Git_Record_Data(Project_Files_Lister * Poi
      = this->File_Lister_Pointer->Get_Source_File_Git_Record_Path(git_index);
 
      this->Source_File_Directory
+
+     = this->File_Lister_Pointer->Get_Source_File_Directory(git_index);
+
+     this->Header_File_Directory
 
      = this->File_Lister_Pointer->Get_Source_File_Directory(git_index);
 }
@@ -318,20 +320,13 @@ void MakeFile_Data_Collector::Initialize_Header_Data_Pointers(){
 
 void MakeFile_Data_Collector::Receive_Header_Files_Data(){
 
-     int source_file_number = this->File_Lister_Pointer->Get_Source_File_Number();
+     this->Receive_Source_File_Header_Directory();
 
-     for(int i=0;i<source_file_number;i++){
+     this->Receive_Source_File_Header_System_Path();
 
-        this->Receive_Source_File_Header_Directory();
+     this->Receive_Source_File_Header_Git_Record_Path();
 
-        this->Receive_Source_File_Header_System_Path();
-
-        this->Receive_Source_File_Header_Git_Record_Path();
-
-        this->Receive_Header_Files_Git_Record_Dir();
-
-        this->Receive_Header_File_Name();
-     }
+     this->Receive_Header_File_Name();
 }
 
 void MakeFile_Data_Collector::Receive_Source_File_Header_Directory(){
@@ -387,7 +382,7 @@ void MakeFile_Data_Collector::Receive_Source_File_Header_Git_Record_Dir(){
 
          dir = this->File_Lister_Pointer->Get_Source_File_Header_Git_Record_Dir(this->Git_Record_Index,i);
 
-         this->Place_String(&(this->Included_Header_Files_Git_Record_Paths[i]),dir);
+         this->Place_String(&(this->Included_Header_Files_Git_Record_Dir[i]),dir);
      }
 }
 
@@ -478,7 +473,7 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
 
-     size_t Include_Directory_Name_Size = strlen(Header_Files_Directory);
+     size_t Include_Directory_Name_Size = strlen(this->Header_File_Directory);
 
      size_t Source_File_Name_Size = strlen(this->Source_File_Name_With_Ext);
 
@@ -504,7 +499,6 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
                                     compiler_input_command_size +
 
                                     + Included_Header_Files_Name_Size;
-
 
      this->Compiler_System_Command = new char [10*compiler_command_size];
 
@@ -544,7 +538,7 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
      this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
 
-     int included_dir_num = this->Des_Reader_Pointer->Get_Include_Directory_Number();
+     int  included_dir_num = this->Des_Reader_Pointer->Get_Include_Directory_Number();
 
      char include_dir_symbol [] = "$(EXTERNAL_INCLUDE_DIR_";
 
@@ -583,12 +577,12 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
             sizer = 0;
           }
-
      }
 
      this->Place_Information(&this->Compiler_System_Command,Source_Location,&index_counter);
 
      this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+
 
      this->Place_Information(&this->Compiler_System_Command,this->Source_File_Name_With_Ext,&index_counter);
 
@@ -612,7 +606,6 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
 
-     this->Place_Information(&this->Compiler_System_Command,this->Header_File_Name_With_Ext,&index_counter);
 
 
      this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
@@ -670,11 +663,12 @@ void MakeFile_Data_Collector::Determine_Dependency_Code_Line(){
 
      size_t Object_File_Name_Size = strlen(this->Object_File_Name);
 
-     size_t Header_File_Name_Size = strlen(this->Header_File_Name_With_Ext);
+     size_t Header_File_Name_Size = strlen(this->Source_File_Name_With_Ext);
 
      size_t Source_File_Name_Size = strlen(this->Source_File_Name_With_Ext);
 
      size_t Included_Header_Files_Name_Size = 0;
+
 
      for(int i=0;i<this->Included_Header_Files_Number;i++){
 
@@ -682,6 +676,7 @@ void MakeFile_Data_Collector::Determine_Dependency_Code_Line(){
 
           strlen(this->Included_Header_Files[i]);
      }
+
 
      size_t Code_Line_Size = Object_File_Name_Size + Source_File_Name_Size +
 
@@ -705,9 +700,6 @@ void MakeFile_Data_Collector::Determine_Dependency_Code_Line(){
 
      this->Place_Information(&this->Dependency_Code_Line,this->Source_File_Name_With_Ext,&index_counter);
 
-     this->Place_Information(&this->Dependency_Code_Line,space,&index_counter);
-
-     this->Place_Information(&this->Dependency_Code_Line,this->Header_File_Name_With_Ext,&index_counter);
 
      this->Place_Information(&this->Dependency_Code_Line,space,&index_counter);
 
@@ -716,7 +708,6 @@ void MakeFile_Data_Collector::Determine_Dependency_Code_Line(){
      this->Place_Information(&this->Dependency_Code_Line,new_line,&index_counter);
 
      this->Place_Information(&this->Dependency_Code_Line,tab,&index_counter);
-
 
 
      for(int i=0;i<this->Included_Header_Files_Number;i++){
@@ -805,11 +796,6 @@ void MakeFile_Data_Collector::Place_Information(char ** Pointer,
  char * MakeFile_Data_Collector::Get_Object_File_Name(){
 
        return this->Object_File_Name;
- }
-
- char * MakeFile_Data_Collector::Get_Git_Header_File_Dir(){
-
-       return this->git_header_dir;
  }
 
  char * MakeFile_Data_Collector::Get_Source_File_Name_With_Extention(){

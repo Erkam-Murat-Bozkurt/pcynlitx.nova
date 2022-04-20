@@ -37,9 +37,7 @@ int main(int argc, char ** argv){
 
        Data_Collector.Receive_Descriptor_File_Reader(&Des_Reader);
 
-       Data_Collector.Receive_Git_Record_Data(&File_Lister,0);
-
-       Data_Collector.Collect_Make_File_Data();
+       Data_Collector.Collect_Make_File_Data(&File_Lister,0);
     }
     else{
 
@@ -53,6 +51,10 @@ int main(int argc, char ** argv){
     int inhd_flnr = Data_Collector.Get_Included_Header_Files_Number();
 
     std::cout << "\n INCLUDED HEADER FILES NUMBER:";
+
+    std::cout << "\n inhd_flnr:" << inhd_flnr;
+
+    std::cout << "\n";
 
     for(int i=0;i<inhd_flnr;i++){
 
@@ -70,13 +72,11 @@ int main(int argc, char ** argv){
     std::cout << "\n Data_Collector.Get_Source_File_Name()                :" << Data_Collector.Get_Source_File_Name();
     std::cout << "\n Data_Collector.Get_Make_File_Name()                  :" << Data_Collector.Get_Make_File_Name();
     std::cout << "\n Data_Collector.Get_Object_File_Name()                :" << Data_Collector.Get_Object_File_Name();
-    std::cout << "\n Data_Collector.Get_Git_Header_File_Dir()             :" << Data_Collector.Get_Git_Header_File_Dir();
     std::cout << "\n Data_Collector.Get_Source_File_Name_With_Extention() :" << Data_Collector.Get_Source_File_Name_With_Extention();
     std::cout << "\n Data_Collector.Get_Repo_Dir()                        :" << Data_Collector.Get_Repo_Dir();
     std::cout << "\n Data_Collector.Get_Warehouse_Header_Dir()            :" << Data_Collector.Get_Warehouse_Header_Dir();
     std::cout << "\n Data_Collector.Get_Warehouse_Object_Dir()            :" << Data_Collector.Get_Warehouse_Object_Dir();
     std::cout << "\n Data_Collector.Get_Warehouse_Path()                  :" << Data_Collector.Get_Warehouse_Path();
-    std::cout << "\n Data_Collector.Get_Git_Repo_Header_File_Path()       :" << Data_Collector.Get_Git_Repo_Header_File_Path();
 
     std::cout << "\n\n";
     std::cout << "\n The end of the program ..\n\n";

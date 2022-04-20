@@ -13,36 +13,89 @@ INT_TO_CHAR=D:\pcynlitx.build\BASIC.TOOLS\IntToCharTranslater
 DES_READER=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Descriptor_File_Reader
 DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Descriptor_File_Data_Collector
 MAKE_DATA_COL=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\MakeFile_Data_Collector
+GIT_LIST=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_File_List_Receiver
+FILE_DAT_COL=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Files_Data_Collector
+SRC_DT_COL=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Source_File_Data_Collector
 
-VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) $(CLASS_NAME) $(SOURCE_DETR) \
-				$(CLASS_SYNTAX) $(DIR_ENUM) $(STRING_OPS) $(HEAD_DET) $(FILE_LISTER) \
-				$(INT_TO_CHAR) $(DES_DATA_COL) $(DES_READER) $(MAKE_DATA_COL)
+VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
+				$(CLASS_NAME) $(SOURCE_DETR) \
+				$(CLASS_SYNTAX) $(DIR_ENUM) \
+				$(STRING_OPS) $(HEAD_DET) $(FILE_LISTER) \
+				$(INT_TO_CHAR) $(DES_DATA_COL) $(DES_READER) \
+				$(MAKE_DATA_COL) $(GIT_LIST) $(FILE_DAT_COL) \
+				$(SRC_DT_COL)
 
 Make_File_Builder.exe: Make_File_Builder_Main_File.cpp Make_File_Builder.cpp \
-	Project_Files_Lister.cpp MakeFile_Data_Collector.cpp Source_File_Determiner.cpp \
-	Header_File_Determiner.cpp Descriptor_File_Reader.cpp \
-	Descriptor_File_Data_Collector.cpp Directory_Enumerator.cpp \
-	ClassNameReader.cpp ClassSyntaxControl.cpp DirectoryOperations.cpp \
-	CharOperator.cpp Cpp_FileOperations.cpp Make_File_Builder.h Project_Files_Lister.h \
-	MakeFile_Data_Collector.hpp Descriptor_File_Reader.hpp Descriptor_File_Data_Collector.hpp \
-	Source_File_Determiner.h Header_File_Determiner.h Directory_Enumerator.h \
-	DirectoryOperations.h CharOperator.h Cpp_FileOperations.h
+	Project_Files_Lister.cpp \
+  Project_Files_Data_Collector.cpp \
+	Source_File_Data_Collector.cpp \
+	Git_File_List_Receiver.cpp \
+	MakeFile_Data_Collector.cpp \
+	Source_File_Determiner.cpp \
+	Header_File_Determiner.cpp \
+	Descriptor_File_Reader.cpp \
+	Descriptor_File_Data_Collector.cpp \
+	Directory_Enumerator.cpp \
+	ClassNameReader.cpp \
+	ClassSyntaxControl.cpp \
+	DirectoryOperations.cpp \
+	CharOperator.cpp \
+	Cpp_FileOperations.cpp \
+	Make_File_Builder.h \
+	Project_Files_Lister.h \
+	Project_Files_Data_Collector.hpp \
+	Source_File_Data_Collector.cpp \
+	Git_File_List_Receiver.hpp \
+	MakeFile_Data_Collector.hpp \
+	Descriptor_File_Reader.hpp \
+	Descriptor_File_Data_Collector.hpp \
+	Source_File_Determiner.h \
+	Header_File_Determiner.h \
+	Directory_Enumerator.h \
+	DirectoryOperations.h \
+	CharOperator.h \
+	Cpp_FileOperations.h
 
-	g++ -std=c++17 -g -o Make_File_Builder.exe -I$(DIR_OPS) -I$(CPP_OPS) -I$(CHAR_OPS) \
-	 -I$(CLASS_NAME) -I$(STRING_OPS) -I$(HEAD_DET) -I$(FILE_LISTER) -I$(SOURCE_DETR) \
-	 -I$(CLASS_SYNTAX) -I$(DIR_ENUM) -I$(INT_TO_CHAR) -I$(DES_DATA_COL) -I$(DES_READER) -I$(MAKE_DATA_COL) \
-	 -L$(DIR_ENUM) -L$(DIR_OPS) -L$(CPP_OPS) -L$(CHAR_OPS) -L$(INT_TO_CHAR) -L$(DES_DATA_COL) \
-	 -L$(DES_READER) -L$(CLASS_NAME) -L$(CLASS_SYNTAX) -L$(STRING_OPS) \
-	 -L$(HEAD_DET) -L$(FILE_LISTER) -L$(SOURCE_DETR) -L$(MAKE_DATA_COL) \
-		Make_File_Builder_Main_File.cpp Make_File_Builder.cpp $(FILE_LISTER)\Project_Files_Lister.cpp \
-		$(MAKE_DATA_COL)\MakeFile_Data_Collector.cpp $(SOURCE_DETR)\Source_File_Determiner.cpp \
+	g++ -std=c++17 -g -o Make_File_Builder.exe \
+	 -I$(DIR_OPS) -I$(CPP_OPS) -I$(CHAR_OPS) \
+	 -I$(CLASS_NAME) -I$(STRING_OPS) -I$(HEAD_DET) \
+	 -I$(FILE_LISTER) -I$(SOURCE_DETR) -I$(GIT_LIST) \
+	 -I$(CLASS_SYNTAX) -I$(DIR_ENUM) -I$(INT_TO_CHAR) \
+	 -I$(DES_DATA_COL) -I$(DES_READER) \
+	 -I$(MAKE_DATA_COL) -I$(FILE_DAT_COL) \
+	 -I$(SRC_DT_COL) \
+	 -L$(DIR_ENUM) -L$(DIR_OPS) -L$(CPP_OPS) \
+	 -L$(CHAR_OPS) -L$(INT_TO_CHAR) -L$(DES_DATA_COL) \
+	 -L$(DES_READER) -L$(CLASS_NAME) \
+	 -L$(CLASS_SYNTAX) -L$(STRING_OPS) \
+	 -L$(HEAD_DET) -L$(FILE_LISTER) \
+	 -L$(SOURCE_DETR) -L$(MAKE_DATA_COL) \
+	 -L$(GIT_LIST) -L$(FILE_DAT_COL) \
+	 -L$(SRC_DT_COL) \
+		Make_File_Builder_Main_File.cpp \
+		Make_File_Builder.cpp \
+		$(FILE_LISTER)\Project_Files_Lister.cpp \
+		$(FILE_DAT_COL)\Project_Files_Data_Collector.cpp \
+		$(SRC_DT_COL)\Source_File_Data_Collector.cpp \
+		$(GIT_LIST)\Git_File_List_Receiver.cpp \
+		$(MAKE_DATA_COL)\MakeFile_Data_Collector.cpp \
+		$(SOURCE_DETR)\Source_File_Determiner.cpp \
 		$(DIR_ENUM)\Directory_Enumerator.cpp \
-		$(DES_READER)\Descriptor_File_Reader.cpp $(DES_DATA_COL)\Descriptor_File_Data_Collector.cpp \
-		$(HEAD_DET)\Header_File_Determiner.cpp $(CLASS_NAME)\ClassNameReader.cpp \
+		$(DES_READER)\Descriptor_File_Reader.cpp \
+		$(DES_DATA_COL)\Descriptor_File_Data_Collector.cpp \
+		$(HEAD_DET)\Header_File_Determiner.cpp \
+		$(CLASS_NAME)\ClassNameReader.cpp \
 		$(CLASS_SYNTAX)\ClassSyntaxControl.cpp \
-		$(DIR_OPS)\DirectoryOperations.cpp $(STRING_OPS)\StringOperator.cpp \
-		$(CHAR_OPS)\CharOperator.cpp $(CPP_OPS)\Cpp_FileOperations.cpp $(INT_TO_CHAR)\IntToCharTranslater.cpp \
-		-include Make_File_Builder.h -include $(FILE_LISTER)\Project_Files_Lister.h \
+		$(DIR_OPS)\DirectoryOperations.cpp \
+		$(STRING_OPS)\StringOperator.cpp \
+		$(CHAR_OPS)\CharOperator.cpp \
+		$(CPP_OPS)\Cpp_FileOperations.cpp \
+		$(INT_TO_CHAR)\IntToCharTranslater.cpp \
+		-include Make_File_Builder.h \
+		-include $(FILE_LISTER)\Project_Files_Lister.h \
+		-include $(FILE_DAT_COL)\Project_Files_Data_Collector.hpp \
+		-include $(SRC_DT_COL)\Source_File_Data_Collector.hpp \
+		-include $(GIT_LIST)\Git_File_List_Receiver.hpp \
 		-include $(MAKE_DATA_COL)\MakeFile_Data_Collector.hpp \
 		-include $(DES_READER)\Descriptor_File_Reader.hpp \
 		-include $(DES_DATA_COL)\Descriptor_File_Data_Collector.hpp \
@@ -51,6 +104,8 @@ Make_File_Builder.exe: Make_File_Builder_Main_File.cpp Make_File_Builder.cpp \
 		-include $(HEAD_DET)\Header_File_Determiner.h \
 		-include $(CLASS_NAME)\ClassNameReader.h \
 		-include $(CLASS_SYNTAX)\ClassSyntaxControl.h \
-		-include $(STRING_OPS)\StringOperator.h -include $(DIR_OPS)\DirectoryOperations.h \
-	  -include $(CHAR_OPS)\CharOperator.h -include $(CPP_OPS)\Cpp_FileOperations.h \
+		-include $(STRING_OPS)\StringOperator.h \
+		-include $(DIR_OPS)\DirectoryOperations.h \
+	  -include $(CHAR_OPS)\CharOperator.h \
+		-include $(CPP_OPS)\Cpp_FileOperations.h \
 		-include $(INT_TO_CHAR)\IntToCharTranslater.h

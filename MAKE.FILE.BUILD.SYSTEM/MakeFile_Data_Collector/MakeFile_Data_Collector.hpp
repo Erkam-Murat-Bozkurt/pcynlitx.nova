@@ -27,7 +27,7 @@ public:
  MakeFile_Data_Collector();
  MakeFile_Data_Collector(const MakeFile_Data_Collector & orig);
  virtual ~MakeFile_Data_Collector();
- void Collect_Make_File_Data();
+ void Collect_Make_File_Data(Project_Files_Lister * Pointer, int git_index);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * pointer);
  void Receive_Git_Record_Data(Project_Files_Lister * pointer, int git_index);
  char * Get_Source_File_Name();
@@ -35,14 +35,12 @@ public:
  char * Get_Compiler_System_Command();
  char * Get_Dependency_Code_Line();
  char * Get_Object_File_Name();
- char * Get_Git_Header_File_Dir();
  char * Get_System_Header_File_Dir();
  char * Get_Source_File_Name_With_Extention();
  char * Get_Repo_Dir();
  char * Get_Warehouse_Header_Dir();
  char * Get_Warehouse_Object_Dir();
  char * Get_Warehouse_Path();
- char * Get_Git_Repo_Header_File_Path();
  char ** Get_Included_Header_Files();
  int  Get_Included_Header_Files_Number();
  void Clear_Dynamic_Memory();
@@ -56,19 +54,24 @@ private:
  void Determine_Make_File_Name();
  void Determine_Dependency_Code_Line();
  void Place_Information(char ** Pointer, char * Information, int * index_counter);
+ void Receive_Source_File_Header_System_Path();
  void Find_Object_File_Name();
- void Determine_Compiler_System_Command(char * Include_Directory_Location);
+ void Receive_Header_Files_Data();
+ void Receive_Header_File_Name();
+ void Determine_Compiler_System_Command();
+ void Receive_Source_File_Header_Git_Record_Path();
+ void Receive_Source_File_Header_Git_Record_Dir();
+ void Receive_Source_File_Header_Directory();
  void Determine_Warehouse_Header_Dir(char operating_sis);
  void Determine_Warehouse_Object_Dir(char operating_sis);
  void Initialize_Header_Data_Pointers();
-
  Cpp_FileOperations FileManager;
  DirectoryOperations DirectoryManager;
  Header_File_Determiner Header_Determiner;
  IntToCharTranslater Translater;
  Descriptor_File_Reader * Des_Reader_Pointer;
  Project_Files_Lister * File_Lister_Pointer;
- 
+
  char * repo_dir;
  char * warehouse_head_dir;
  char * warehouse_obj_dir;

@@ -146,13 +146,16 @@ void Repo_Warehouse_Initializer::Determine_Header_File_Paths(){
          this->Headers_New_Paths[k] = nullptr;
      }
 
-     int Header_System_Path_Number = this->Dir_Lister.Get_Header_System_Paths_Number();
+     for(int i=0;i<source_files_number;i++){
 
-     for(int i=0;i<Header_System_Path_Number;i++){
+         char * source_file_class_name =  this->Dir_Lister.Get_Source_File_Name(i);
 
-         char * path = Dir_Lister.Get_Header_File_System_Path(i);
+         char * path = this->Dir_Lister.Get_Class_File_Header_System_Path(i);
 
-        this->Determine_Header_Paths(path,i);
+         if(path!= nullptr){
+
+           this->Determine_Header_Paths(path,i);
+         }
      }
 }
 
@@ -213,13 +216,14 @@ void Repo_Warehouse_Initializer::Determine_Header_Paths(char * path, int path_nu
 
 void Repo_Warehouse_Initializer::Copy_Header_Files_To_Project_Headers_Location(){
 
-     int Header_System_Path_Number = this->Dir_Lister.Get_Header_System_Paths_Number();
+     for(int i=0;i<this->source_files_number;i++){
 
-     for(int i=0;i<Header_System_Path_Number;i++){
+        if(this->Header_File_Paths[i] != nullptr){
 
-        this->FileManager.CpFile(this->Header_File_Paths[i],
+           this->FileManager.CpFile(this->Header_File_Paths[i],
 
-                  this->Headers_New_Paths[i]);
+                    this->Headers_New_Paths[i]);
+        }
      }
 }
 
@@ -267,11 +271,9 @@ void Repo_Warehouse_Initializer::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         int Header_Number = this->Dir_Lister.Get_Header_System_Paths_Number();
-
          if(this->Header_File_Paths != nullptr){
 
-            for(int i=0;i<Header_Number;i++){
+            for(int i=0;i<this->source_files_number;i++){
 
               this->Clear_Pointer_Memory(&this->Header_File_Paths[i]);
             }
@@ -283,7 +285,7 @@ void Repo_Warehouse_Initializer::Clear_Dynamic_Memory(){
 
          if(this->Headers_New_Paths != nullptr){
 
-            for(int i=0;i<Header_Number;i++){
+            for(int i=0;i<this->source_files_number;i++){
 
                 this->Clear_Pointer_Memory(&this->Headers_New_Paths[i]);
             }

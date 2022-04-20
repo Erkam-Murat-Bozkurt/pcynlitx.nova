@@ -14,6 +14,7 @@
 #include <windows.h>
 #include <string>
 #include "Project_Files_Lister.h"
+#include "Descriptor_File_Reader.hpp"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
 #include "Directory_Enumerator.h"
@@ -37,9 +38,11 @@ public:
  Compiler_Script_Writer();
  Compiler_Script_Writer(const Compiler_Script_Writer & orig);
  virtual ~Compiler_Script_Writer();
- void Build_Compiler_Script(char * repo_dir, char * warehouse_path);
+ void Build_Compiler_Script(Descriptor_File_Reader * pointer);
 protected:
  void Determine_Script_Information();
+ void Initialize_Data_Structures();
+ void Place_String(char ** pointer, char * string);
  void Determine_Source_File_Compilation_Information(int dir_num, char operating_sis);
  void Determine_Header_Files_Inclusion_Number();
  void Determine_Compiler_Order();
@@ -48,6 +51,7 @@ protected:
  bool Include_Line_Determiner(std::string String_Line);
  void Determine_Warehouse_Paths(char * paths);
  void Determine_Make_File_Names();
+ void Delete_Spaces_on_String(char ** pointer);
  void Construct_Path(char ** pointer, char * string, char * warehouse_path);
  DirectoryOperations DirectoryManager;
  Project_Files_Lister Dir_Lister;
@@ -56,9 +60,9 @@ protected:
  StringOperator StringManager;
  std::string String_Line;
  bool Include_Line_Condition;
- int project_dir_num;
+ int source_file_num;
  int Included_Header_Files_Number;
- Compiler_Data * Compiler_Data_Pointer;
+ Compiler_Data * Data_Pointer;
  char * project_repo_dir;
  char * script_path;
  char * headers_locations;

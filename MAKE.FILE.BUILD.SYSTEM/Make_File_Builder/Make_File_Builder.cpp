@@ -65,7 +65,7 @@ void Make_File_Builder::Build_MakeFile(int git_index){
 
      this->Data_Collector.Receive_Git_Record_Data(this->File_Lister_Pointer,git_index);
 
-     this->Data_Collector.Collect_Make_File_Data();
+     this->Data_Collector.Collect_Make_File_Data(this->File_Lister_Pointer,git_index);
 
      char * Header_File_Directory = this->Data_Collector.Get_System_Header_File_Dir();
 
@@ -109,9 +109,21 @@ void Make_File_Builder::Build_MakeFile(int git_index){
 
      this->FileManager.WriteToFile("SOURCE_LOCATION=$(REPO_DIRECTORY)\\");
 
-     char * git_header_dir = this->Data_Collector.Get_Git_Header_File_Dir();
+     char * source_file_dir =
 
-     this->FileManager.WriteToFile(git_header_dir);
+     this->File_Lister_Pointer->Get_Source_File_Git_Record_Directory(git_index);
+
+     std::cout << "\n ";
+
+     std::cout << "\n git_index:" << git_index;
+
+     std::cout << "\n source_file_dir:" << source_file_dir;
+
+     std::cin.get();
+
+     //char * git_header_dir = this->Data_Collector.Get_Git_Header_File_Dir();
+
+     this->FileManager.WriteToFile(source_file_dir);
 
 
      int included_dir_num = this->Des_Reader_Pointer->Get_Include_Directory_Number();

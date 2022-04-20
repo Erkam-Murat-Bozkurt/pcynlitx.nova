@@ -11,7 +11,7 @@ int main(int argc, char ** argv){
 
     if(argc< 2){
 
-       std::cout << "\n\n usage: <exe-file> <repo dir> <repo warehouse location>";
+       std::cout << "\n\n usage: <exe-file> <Descriptor File Path>";
 
        std::cout << "\n\n";
 

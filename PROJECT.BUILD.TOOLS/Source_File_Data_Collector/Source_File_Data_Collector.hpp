@@ -35,6 +35,7 @@ public:
  Source_File_Data_Collector(const Source_File_Data_Collector & orig);
  virtual ~Source_File_Data_Collector();
  void Receive_Source_File_Data(Git_File_List_Receiver * Receiver, char * file_path);
+
  void Determine_Header_Files_System_Paths(char ** pointer, char * directory,
 
       char * file_name, char operating_sis);
@@ -48,18 +49,28 @@ public:
       char * header_name, char operating_sis);
 
  void Determine_Git_Record_Header_File_Directory(char ** header_dir,
-       char * header_path, char operating_sis);
+
+      char * header_path, char operating_sis);
+
+ void Determine_Git_Record_Source_File_Path(char ** source_file_path,
+
+      char * file_path, char operating_sis);
+
+ void Determine_Git_Record_Source_File_Directory(char ** source_file_dir,
+
+      char * source_file_path, char operating_sis);
 
  void Clear_Dynamic_Memory();
- int    Get_Included_File_Number();
+ int  Get_Included_File_Number();
  char * Get_Include_File_Name(int num);
  char * Get_Include_File_Directory(int num);
  char * Get_Include_File_Git_Record_Directory(int num);
  char * Get_Include_File_Git_Record_Path(int num);
+ char * Get_Include_File_Name_Without_Ext(int num);
 protected:
-
+ void Extract_Include_File_Name_From_Path(char ** pointer, char * string );
+ bool CompareString(char * firstString,char * secondString);
  bool Character_Inclusion_Check(char * string, char chr);
-
  void Receive_Include_File_Names();
  void Receive_Include_File_Name(char ** pointer, char * string);
  void Receive_Include_File_Directory(char ** pointer, char * string);
@@ -74,6 +85,7 @@ protected:
  Cpp_FileOperations FileManager;
  Include_File_Data * Include_Data_Pointer;
  bool syntax_error;
+ bool isStringsEqual;
  bool Character_Inclusion_Status;
  char *  Git_Repo_Dir;
  char ** File_Content;

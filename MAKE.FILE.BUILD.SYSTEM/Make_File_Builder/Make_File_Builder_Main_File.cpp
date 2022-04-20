@@ -26,9 +26,15 @@ int main(int argc, char ** argv){
 
     Project_Files_Lister File_Lister;
 
-    File_Lister.Determine_Git_Repo_Info(project_repo_dir,warehouse_path);
+    File_Lister.Determine_Git_Repo_Info(&Des_Reader);
 
-    int dir_number = File_Lister.Get_Git_Repo_Directory_Number();
+    std::cout << "\n Git record dir:"
+
+              << File_Lister.Get_Source_File_Git_Record_Directory(0);
+
+    std::cin.get();
+
+    int dir_number = File_Lister.Get_Source_File_Number();
 
     Make_File_Builder File_Builder;
 

@@ -39,9 +39,16 @@ int main(int argc, char ** argv){
 
         std::cout << "\n";
 
-        std::cout << "\n Source file directory (git record)  :";
+        std::cout << "\n Source file path (git record)  :";
 
         std::cout << "\n " << Dir_Lister.Get_Source_File_Git_Record_Path(i);
+
+        std::cout << "\n";
+
+
+        std::cout << "\n Source file directory (git record)  :";
+
+        std::cout << "\n " << Dir_Lister.Get_Source_File_Git_Record_Directory(i);
 
         std::cout << "\n";
 
@@ -65,6 +72,37 @@ int main(int argc, char ** argv){
         std::cout << "\n " << Dir_Lister.Get_Source_File_Name_With_Ext(i);
 
         std::cout << "\n";
+
+
+        std::cout << "\n Class header file path:";
+
+        if(Dir_Lister.Get_Class_File_Header_System_Path(i) != nullptr){
+
+          std::cout << Dir_Lister.Get_Class_File_Header_System_Path(i);
+        }
+        else{
+
+            std::cout << "\n Class header file path does not exist";
+        }
+
+
+        std::cout << "\n";
+
+
+        std::cout << "\n Class header file name:";
+
+        if(Dir_Lister.Get_Class_File_Header_Name(i) != nullptr){
+
+           std::cout <<  Dir_Lister.Get_Class_File_Header_Name(i);
+        }
+        else{
+
+             std::cout << "\n Class header file name does not exist";
+        }
+
+        std::cout << "\n";
+
+
 
 
         int src_head_num = Dir_Lister.Get_Source_File_Include_File_Number(i);
@@ -107,12 +145,6 @@ int main(int argc, char ** argv){
 
     std::cout << "\n\n";
 
-    int Header_System_Path_Number = Dir_Lister.Get_Header_System_Paths_Number();
-
-    for(int i=0;i<Header_System_Path_Number;i++){
-
-        std::cout << "\n Header Path - " << i << ": "  << Dir_Lister.Get_Header_File_System_Path(i);
-    }
 
     std::cout << "\n Press eny key..";
 
@@ -122,5 +154,3 @@ int main(int argc, char ** argv){
 
     return 0;
 }
-
-// The Function that places the location Informations listed in below

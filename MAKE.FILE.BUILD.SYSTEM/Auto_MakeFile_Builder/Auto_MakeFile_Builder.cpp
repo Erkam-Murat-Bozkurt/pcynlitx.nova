@@ -67,13 +67,13 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
 
      // Determination of the directories recorded on the git repo
 
-     this->File_Lister.Determine_Git_Repo_Info(this->Repo_Dir,this->Warehouse_Path);
+     this->File_Lister.Determine_Git_Repo_Info(this->Des_Reader_Pointer);
 
      // Determination of the
 
      this->Determine_Project_Directories();
 
-     int dir_num = this->File_Lister.Get_Git_Repo_Directory_Number();
+     int dir_num = this->File_Lister.Get_Source_File_Number();
 
      for(int i=0;i<dir_num;i++){
 
