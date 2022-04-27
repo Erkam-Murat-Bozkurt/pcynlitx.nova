@@ -21,7 +21,7 @@ int main(int argc, char ** argv){
 
     Des_Reader.Read_Descriptor_File(argv[1]);
 
-    char * warehouse_path  = Des_Reader.Get_Warehouse_Location();
+    char * warehouse_path   = Des_Reader.Get_Warehouse_Location();
 
     char * project_repo_dir = Des_Reader.Get_Repo_Directory_Location();
 

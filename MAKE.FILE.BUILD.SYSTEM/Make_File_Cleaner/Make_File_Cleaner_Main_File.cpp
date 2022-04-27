@@ -1,7 +1,8 @@
 
+
 #include <iostream>
 #include <cstring>
-#include "Make_File_Builder.h"
+#include "Make_File_Cleaner.hpp"
 #include "Project_Files_Lister.h"
 #include "Descriptor_File_Reader.hpp"
 
@@ -9,7 +10,7 @@ int main(int argc, char ** argv){
 
     if(argc < 2){
 
-       std::cout << "\n The usage: Make_File_Builder.exe <Descriptor File Path> ";
+       std::cout << "\n The usage: Make_File_Cleaner.exe <Descriptor File Path> ";
 
        std::cout << "\n\n";
 
@@ -30,15 +31,15 @@ int main(int argc, char ** argv){
 
     int dir_number = File_Lister.Get_Source_File_Number();
 
-    Make_File_Builder File_Builder;
+    Make_File_Cleaner Mk_Cleaner;
 
     if(dir_number > 0){
 
-       File_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
+       Mk_Cleaner.Receive_Descriptor_File_Reader(&Des_Reader);
 
-       File_Builder.Receive_Git_Record_Data(&File_Lister);
+       Mk_Cleaner.Receive_File_Lister(&File_Lister);
 
-       File_Builder.Build_MakeFile(0);
+       Mk_Cleaner.Clear_Make_Files_Exist_On_Repo();
 
     }
 

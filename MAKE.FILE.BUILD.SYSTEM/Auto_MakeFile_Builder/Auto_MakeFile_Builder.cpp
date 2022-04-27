@@ -69,6 +69,12 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
 
      this->File_Lister.Determine_Git_Repo_Info(this->Des_Reader_Pointer);
 
+     this->Mk_File_Clnr.Receive_Descriptor_File_Reader(this->Des_Reader_Pointer);
+
+     this->Mk_File_Clnr.Receive_File_Lister(&this->File_Lister);
+
+     this->Mk_File_Clnr.Clear_Make_Files_Exist_On_Repo();
+
      // Determination of the
 
      this->Determine_Project_Directories();

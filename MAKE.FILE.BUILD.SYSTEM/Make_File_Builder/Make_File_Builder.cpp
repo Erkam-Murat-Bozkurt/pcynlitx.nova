@@ -113,16 +113,6 @@ void Make_File_Builder::Build_MakeFile(int git_index){
 
      this->File_Lister_Pointer->Get_Source_File_Git_Record_Directory(git_index);
 
-     std::cout << "\n ";
-
-     std::cout << "\n git_index:" << git_index;
-
-     std::cout << "\n source_file_dir:" << source_file_dir;
-
-     std::cin.get();
-
-     //char * git_header_dir = this->Data_Collector.Get_Git_Header_File_Dir();
-
      this->FileManager.WriteToFile(source_file_dir);
 
 

@@ -92,8 +92,6 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
 
          this->Clear_Pointer_Memory(&this->Dependency_Code_Line);
 
-         //this->Clear_Pointer_Memory(&this->Header_File_Directory);
-
          this->Clear_Pointer_Memory(&this->Make_File_Name);
 
          this->Clear_Pointer_Memory(&this->warehouse_head_dir);
@@ -585,27 +583,6 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
 
      this->Place_Information(&this->Compiler_System_Command,this->Source_File_Name_With_Ext,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-
-
-     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
-
-
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,include_word,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,Source_Location,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
-
 
 
      this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);

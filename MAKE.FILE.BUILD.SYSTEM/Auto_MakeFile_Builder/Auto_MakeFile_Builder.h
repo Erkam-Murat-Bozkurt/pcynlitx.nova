@@ -16,6 +16,7 @@
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 #include "Make_File_Builder.h"
+#include "Make_File_Cleaner.hpp"
 
 class Auto_MakeFile_Builder
 {
@@ -32,6 +33,7 @@ protected:
  void Construct_Path(char ** pointer, char * string, char * warehouse_path);
  Project_Files_Lister File_Lister;
  Make_File_Builder Mk_Builder;
+ Make_File_Cleaner Mk_File_Clnr;
  Descriptor_File_Reader * Des_Reader_Pointer;
  char * Warehouse_Path;
  char * Repo_Dir;
