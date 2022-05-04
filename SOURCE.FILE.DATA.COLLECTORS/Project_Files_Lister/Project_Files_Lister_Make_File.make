@@ -5,13 +5,12 @@ DIR_OPS=D:\pcynlitx.build\BASIC.TOOLS\DirectoryOperations
 CHAR_OPS=D:\pcynlitx.build\BASIC.TOOLS\CharOperator
 FILE_OPRS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
 HEAD_DETR=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Header_File_Determiner
-SOURCE_DETR=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Source_File_Determiner
 DES_READ=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Descriptor_File_Reader
 DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Descriptor_File_Data_Collector
 GIT_LIST=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_File_List_Receiver
-SRC_DT_COL=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Source_File_Data_Collector
-FILE_DAT_COL=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Files_Data_Collector
-
+SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
+FILE_DAT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Data_Collector
+SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
 
 VPATH = $(DIR_OPS) $(STRING_OPS) $(CHAR_OPS) $(FILE_OPRS) \
 				$(HEAD_DETR) $(SOURCE_DETR) $(DES_READ) $(DES_DATA_COL) \
