@@ -32,11 +32,11 @@ int main(int argc, char ** argv){
 
     std::cout << "\n ROOT DIRECTORY LOCATION:";
 
-    if(Des_File_Reader.Get_Root_Directory_Location() != nullptr){
+    if(Des_File_Reader.Get_Repo_Directory_Location() != nullptr){
 
        std::cout << "\n ";
 
-       std::cout << Des_File_Reader.Get_Root_Directory_Location();
+       std::cout << Des_File_Reader.Get_Repo_Directory_Location();
 
     }
     else{
@@ -49,11 +49,11 @@ int main(int argc, char ** argv){
 
     std::cout << "\n WAREHOUSE LOCATION:";
 
-    if(Des_File_Reader.Get_Warehouse_location() != nullptr){
+    if(Des_File_Reader.Get_Warehouse_Location() != nullptr){
 
        std::cout << "\n ";
 
-       std::cout << Des_File_Reader.Get_Warehouse_location();
+       std::cout << Des_File_Reader.Get_Warehouse_Location();
 
     }
     else{

@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <cstring>
-#include "Compiler_Script_Writer.h"
+#include "Project_Script_Writer.h"
 #include "Descriptor_File_Reader.hpp"
 
 void Place_String(char ** Pointer, char * String);
@@ -12,7 +12,7 @@ int main(int argc, char ** argv){
 
     if(argc < 2){
 
-       std::cout << "\n usage: Compiler_Script_Writer.exe <descriptor file path>";
+       std::cout << "\n usage: Project_Script_Writer.exe <descriptor file path>";
 
        std::cout << "\n\n";
 
@@ -23,7 +23,7 @@ int main(int argc, char ** argv){
 
     Des_File_Reader.Read_Descriptor_File(argv[1]);
 
-    Compiler_Script_Writer Script_Writer;
+    Project_Script_Writer Script_Writer;
 
     Script_Writer.Build_Compiler_Script(&Des_File_Reader);
 
