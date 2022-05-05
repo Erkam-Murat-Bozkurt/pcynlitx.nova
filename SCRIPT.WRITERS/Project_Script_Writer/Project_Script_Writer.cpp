@@ -42,6 +42,8 @@ void Project_Script_Writer::Build_Compiler_Script(Descriptor_File_Reader * Des_F
         exit(0);
      }
 
+     this->Dependency_Counter.Receive_Descriptor_File_Reader(Des_File_Reader);
+
      this->Src_Script_Writer.Receive_Descriptor_File_Reader(Des_File_Reader);
 
      this->Dir_Lister.Determine_Git_Repo_Info(Des_File_Reader);
@@ -58,6 +60,8 @@ void Project_Script_Writer::Build_Compiler_Script(Descriptor_File_Reader * Des_F
 
 
 
+     this->Data_Collector.Receive_Dependency_Counter(&this->Dependency_Counter);
+
      this->Data_Collector.Receive_Project_Files_Lister(&this->Dir_Lister);
 
      this->Data_Collector.Receive_Warehouse_Path(warehouse_path);
@@ -73,13 +77,14 @@ void Project_Script_Writer::Build_Compiler_Script(Descriptor_File_Reader * Des_F
 
         this->Determine_Make_File_Names();
 
-        this->Determine_Warehouse_Paths(warehouse_path);
-
         this->Write_Source_File_Scripts();
-
-        this->Determine_Compiler_Order();
      }
 
+     this->Determine_Project_Script_Path(warehouse_path);
+
+     this->Determine_Script_Order();
+
+     this->Write_The_Project_Script();
 }
 
 void Project_Script_Writer::Determine_Script_Information(){
@@ -98,11 +103,11 @@ void Project_Script_Writer::Determine_Header_Files_Inclusion_Number(){
      }
 }
 
-void Project_Script_Writer::Determine_Compiler_Order(){
+void Project_Script_Writer::Determine_Script_Order(){
 
      for(int i=0;i<this->source_file_num;i++){
 
-           for(int j=0;j<this->source_file_num;j++){
+           for(int j=i;j<this->source_file_num;j++){
 
              int dep_i = this->Data_Pointer[i].dependency;
 
@@ -123,41 +128,17 @@ void Project_Script_Writer::Determine_Compiler_Order(){
 }
 
 
-void Project_Script_Writer::Determine_Warehouse_Paths(char * warehouse_path){
+void Project_Script_Writer::Determine_Project_Script_Path(char * warehouse_path){
 
      size_t warehouse_path_size = strlen(warehouse_path);
 
      char script_path_add [] = "Compiler_Script.ps1";
 
-     char headers_location_add [] = "PROJECT.HEADER.FILES";
-
-     char object_files_location_add [] = "PROJECT.OBJECT.FILES";
-
-     char compiler_output_location_add [] = "Compiler_Output.txt";
-
      size_t script_path_size = warehouse_path_size + strlen(script_path_add);
-
-     size_t headers_location_size = warehouse_path_size + strlen(headers_location_add);
-
-     size_t object_files_location_size = warehouse_path_size + strlen(object_files_location_add);
-
-     size_t compiler_output_location_size = warehouse_path_size + strlen(compiler_output_location_add);
 
      this->script_path = new char [5*script_path_size];
 
-     this->headers_locations = new char [5*headers_location_size];
-
-     this->object_files_location = new char [5*object_files_location_size];
-
-     this->compiler_output_location = new char [5*compiler_output_location_size];
-
      this->Construct_Path(&this->script_path,script_path_add,warehouse_path);
-
-     this->Construct_Path(&this->headers_locations,headers_location_add,warehouse_path);
-
-     this->Construct_Path(&this->object_files_location,object_files_location_add,warehouse_path);
-
-     this->Construct_Path(&this->compiler_output_location,compiler_output_location_add,warehouse_path);
 }
 
 void Project_Script_Writer::Determine_Make_File_Names()
@@ -184,7 +165,7 @@ void Project_Script_Writer::Write_Source_File_Scripts(){
      }
 }
 
-void Project_Script_Writer::Write_The_Project_Script(char * warehouse_path){
+void Project_Script_Writer::Write_The_Project_Script(){
 
      this->FileManager.SetFilePath(this->script_path);
 
@@ -193,27 +174,6 @@ void Project_Script_Writer::Write_The_Project_Script(char * warehouse_path){
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("$Project_Headers=\"");
-
-     this->FileManager.WriteToFile(this->headers_locations);
-
-     this->FileManager.WriteToFile("\"");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("$Project_Objects=\"");
-
-     this->FileManager.WriteToFile(this->object_files_location);
-
-     this->FileManager.WriteToFile("\"");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
 
      this->FileManager.WriteToFile("Write-Output \"\"");
 
@@ -237,6 +197,8 @@ void Project_Script_Writer::Write_The_Project_Script(char * warehouse_path){
 
      this->FileManager.WriteToFile("\n\n");
 
+     char cd_word [] = "cd ";
+
      for(int i=0;i<this->source_file_num;i++){
 
          this->FileManager.WriteToFile("\n");
@@ -251,112 +213,23 @@ void Project_Script_Writer::Write_The_Project_Script(char * warehouse_path){
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("mingw32-make -f ");
+         this->FileManager.WriteToFile(cd_word);
+
+         this->FileManager.WriteToFile(" ");
 
 
-         this->FileManager.WriteToFile(this->Data_Pointer[i].make_file_name);
+         this->FileManager.WriteToFile(this->Data_Pointer[i].source_file_dir);
 
-         this->FileManager.WriteToFile(" > ");
+         this->FileManager.WriteToFile("\n\n");
 
-         this->FileManager.WriteToFile(this->compiler_output_location);
-
-         this->FileManager.WriteToFile("\n");
-
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("$Condition = Test-Path -Path \'");
-
-         this->FileManager.WriteToFile(this->Data_Pointer[i].object_file_path);
-
-         this->FileManager.WriteToFile("\'");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("if ($Condition){");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   $Exists_On_Obj_Dir = Test-Path -Path \'");
-
-         this->FileManager.WriteToFile(this->object_files_location);
-
-         this->FileManager.WriteToFile("\\");
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer[i].object_file_name);
-
-         this->FileManager.WriteToFile("\'");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   if($Exists_On_Obj_Dir){");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("      rm \'");
-
-         this->FileManager.WriteToFile(this->object_files_location);
-
-         this->FileManager.WriteToFile("\\");
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer[i].object_file_name);
-
-         this->FileManager.WriteToFile("\'");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   }");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   Move-Item -Path ");
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer[i].object_file_path);
-
-         this->FileManager.WriteToFile(" -Destination $Project_Objects");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("}");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("Write-Output \"  # ");
-
+         this->FileManager.WriteToFile("PowerShell .\\");
 
          this->FileManager.WriteToFile(this->Data_Pointer[i].source_file_name);
 
+         this->FileManager.WriteToFile(".ps1");
 
-         this->FileManager.WriteToFile(" class has been compiled\"");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("Write-Output \"\"");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
+         this->FileManager.WriteToFile("\n\n");
      }
-
 
      this->FileManager.WriteToFile("\n");
 

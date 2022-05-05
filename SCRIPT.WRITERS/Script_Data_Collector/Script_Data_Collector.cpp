@@ -40,6 +40,11 @@ void Script_Data_Collector::Receive_Warehouse_Path(char * path){
      this->warehouse_path = path;
 }
 
+void Script_Data_Collector::Receive_Dependency_Counter(Include_Dependency_Counter * Counter){
+
+     this->Depd_Counter = Counter;
+}
+
 void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script_Data * Src_Data_Pointer,
 
      int src_num, char operating_sis){
@@ -196,7 +201,10 @@ void Script_Data_Collector::Determine_Header_Files_Inclusion_Number(Script_Data 
 
          this->Included_Header_Files_Number = 0;
 
-         char include_db_key [] = "#include\"";
+         char include_db_key_1 [] = "#include\"";
+
+         char include_db_key_2 [] = "#include<";
+
 
          this->String_Line = "";  // double_quotation_mark
 
@@ -208,11 +216,39 @@ void Script_Data_Collector::Determine_Header_Files_Inclusion_Number(Script_Data 
 
                this->Delete_Spaces_on_String(&string_line);
 
-               bool is_header_included = this->StringManager.CheckStringInclusion(string_line,include_db_key);
+               bool is_header_included = false;
+
+
+               is_header_included =
+
+               this->StringManager.CheckStringInclusion(string_line,include_db_key_1);
 
                if(is_header_included){
 
-                  Src_Data_Pointer->dependency++;
+                  bool is_repo_hdr = this->Depd_Counter->Is_This_Repo_Header(string_line,header_file_path);
+
+                  if(is_repo_hdr){
+
+                    Src_Data_Pointer->dependency++;
+                  }
+
+               }
+               else{
+
+                     is_header_included =
+
+                     this->StringManager.CheckStringInclusion(string_line,include_db_key_2);
+
+                     if(is_header_included){
+
+                       bool is_repo_hdr = this->Depd_Counter->Is_This_Repo_Header(string_line,header_file_path);
+
+                       if(is_repo_hdr){
+
+                          Src_Data_Pointer->dependency++;
+                        }
+                     }
+
                }
           }
 

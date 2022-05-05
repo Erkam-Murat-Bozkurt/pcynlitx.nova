@@ -99,8 +99,6 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
         this->FileManager.WriteToFile("- ");
      }
 
-     //this->FileManager.WriteToFile("-");
-
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
@@ -234,12 +232,6 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile(this->compiler_output_location);
 
      this->FileManager.WriteToFile("\n");
-
-     std::cout << "\n this->Src_Data_Pointer->included_header_num:" <<
-
-     this->Src_Data_Pointer->included_header_num;
-
-     std::cin.get();
 
 
      if(this->Src_Data_Pointer->included_header_num > 0){

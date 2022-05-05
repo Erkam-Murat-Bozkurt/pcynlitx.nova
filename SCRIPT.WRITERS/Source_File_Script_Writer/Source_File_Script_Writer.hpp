@@ -7,6 +7,7 @@
 #include "Project_Files_Lister.h"
 #include "Descriptor_File_Reader.hpp"
 #include "Script_Data_Collector.hpp"
+#include "Include_Dependency_Counter.hpp"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
 #include "IntToCharTranslater.h"

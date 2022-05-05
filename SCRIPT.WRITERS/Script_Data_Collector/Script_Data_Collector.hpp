@@ -7,6 +7,7 @@
 #include <string>
 #include "Project_Files_Lister.h"
 #include "Descriptor_File_Reader.hpp"
+#include "Include_Dependency_Counter.hpp"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
 #include "Directory_Enumerator.h"
@@ -33,6 +34,7 @@ public:
  Script_Data_Collector();
  Script_Data_Collector(const Script_Data_Collector & orig);
  virtual ~Script_Data_Collector();
+ void Receive_Dependency_Counter(Include_Dependency_Counter * Dependency_Counter);
  void Receive_Script_Data(Script_Data * Pointer);
  void Receive_Project_Files_Lister(Project_Files_Lister * Pointer);
  void Receive_Warehouse_Path(char * path);
@@ -48,6 +50,7 @@ public:
 protected:
  void Place_String(char ** pointer, char * string);
  Script_Data * Src_Data_Pointer;
+ Include_Dependency_Counter * Depd_Counter;
  Project_Files_Lister * Dir_Lister;
  Cpp_FileOperations FileManager;
  StringOperator StringManager;

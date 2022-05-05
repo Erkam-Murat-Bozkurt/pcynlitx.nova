@@ -15,6 +15,7 @@
 #include "Directory_Enumerator.h"
 #include "Source_File_Script_Writer.hpp"
 #include "Script_Data_Collector.hpp"
+#include "Include_Dependency_Counter.hpp"
 
 
 class Project_Script_Writer
@@ -30,18 +31,19 @@ protected:
  void Place_String(char ** pointer, char * string);
  void Determine_Source_File_Compilation_Information(int dir_num, char operating_sis);
  void Determine_Header_Files_Inclusion_Number();
- void Determine_Compiler_Order();
+ void Determine_Script_Order();
  void Write_The_Script(char * warehouse_path);
  void Write_Source_File_Scripts();
- void Write_The_Project_Script(char * warehouse_path);
+ void Write_The_Project_Script();
  void Clear_Dynamic_Memory();
- void Determine_Warehouse_Paths(char * paths);
+ void Determine_Project_Script_Path(char * paths);
  void Determine_Make_File_Names();
  void Construct_Path(char ** pointer, char * string, char * warehouse_path);
  Script_Data_Collector Data_Collector;
  Source_File_Script_Writer Src_Script_Writer;
  DirectoryOperations DirectoryManager;
  Project_Files_Lister Dir_Lister;
+ Include_Dependency_Counter Dependency_Counter;
  Cpp_FileOperations FileManager;
  Directory_Enumerator Enumerator;
  StringOperator StringManager;
