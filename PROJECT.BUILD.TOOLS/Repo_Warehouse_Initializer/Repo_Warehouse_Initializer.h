@@ -32,7 +32,10 @@ protected:
  void Construct_Header_Files_Directory();
  void Construct_Object_Files_Directory();
  void Determine_Header_File_Paths();
- void Determine_Header_Paths(char * path, int dir_num);
+ void Copy_Independent_Header_Files_To_Project_Headers_Location();
+ void Determine_Header_Paths(char * path, int src_num, int hdr_num);
+ void Find_Independent_Header_Path(char * path, int path_num);
+ void Determine_Independent_Header_Paths();
  void Determine_New_Header_Paths();
  void Copy_Header_Files_To_Project_Headers_Location();
  void Clear_Dynamic_Memory();
@@ -43,10 +46,13 @@ protected:
  Cpp_FileOperations FileManager;
  StringOperator StringManager;
  int  source_files_number;
+ int  ind_hdr_number;
  char *  warehouse_path;
  char *  current_directory;
- char ** Header_File_Paths;
- char ** Headers_New_Paths;
+ char *** Header_File_Paths;
+ char *** Headers_New_Paths;
+ char ** Independent_Header_Paths;
+ char ** Independent_Header_New_Paths;
  char * Headers_Directory;
  char * Object_Files_Directory;
  bool Memory_Delete_Condition;

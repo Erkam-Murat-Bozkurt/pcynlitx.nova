@@ -66,7 +66,11 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(char * Des_File_Path){
 
      this->Determine_Header_File_Paths();
 
+     this->Determine_Independent_Header_Paths();
+
      this->Copy_Header_Files_To_Project_Headers_Location();
+
+     this->Copy_Independent_Header_Files_To_Project_Headers_Location();
 }
 
 
@@ -135,9 +139,9 @@ void Repo_Warehouse_Initializer::Construct_Header_Files_Directory(){
 
 void Repo_Warehouse_Initializer::Determine_Header_File_Paths(){
 
-     this->Header_File_Paths = new char * [5*this->source_files_number];
+     this->Header_File_Paths = new char ** [5*this->source_files_number];
 
-     this->Headers_New_Paths = new char * [5*this->source_files_number];
+     this->Headers_New_Paths = new char ** [5*this->source_files_number];
 
      for(int k=0;k<5*this->source_files_number;k++){
 
@@ -146,35 +150,42 @@ void Repo_Warehouse_Initializer::Determine_Header_File_Paths(){
          this->Headers_New_Paths[k] = nullptr;
      }
 
-     for(int i=0;i<source_files_number;i++){
+     for(int i=0;i<this->source_files_number;i++){
 
-         char * source_file_class_name =  this->Dir_Lister.Get_Source_File_Name(i);
+         int included_header_num = this->Dir_Lister.Get_Source_File_Include_File_Number(i);
 
-         char * path = this->Dir_Lister.Get_Class_File_Header_System_Path(i);
+         this->Header_File_Paths[i] = new char * [5*included_header_num];
 
-         if(path!= nullptr){
+         this->Headers_New_Paths[i] = new char * [5*included_header_num];
 
-           this->Determine_Header_Paths(path,i);
+         for(int k=0;k<included_header_num;k++){
+
+           char * path = this->Dir_Lister.Get_Source_File_Header_System_Path(i,k);
+
+           if(path!= nullptr){
+
+              this->Determine_Header_Paths(path,i,k);
+           }
          }
      }
 }
 
-void Repo_Warehouse_Initializer::Determine_Header_Paths(char * path, int path_num){
+void Repo_Warehouse_Initializer::Determine_Header_Paths(char * path, int src_num, int hdr_num){
 
      size_t path_size = strlen(path);
 
-     this->Header_File_Paths[path_num] = new char [5*path_size];
+     this->Header_File_Paths[src_num][hdr_num] = new char [5*path_size];
 
      int index_counter = 0;
 
      for(size_t i=0;i<path_size;i++){
 
-         this->Header_File_Paths[path_num][index_counter] = path[i];
+         this->Header_File_Paths[src_num][hdr_num][index_counter] = path[i];
 
          index_counter++;
      }
 
-     this->Header_File_Paths[path_num][index_counter] = '\0';
+     this->Header_File_Paths[src_num][hdr_num][index_counter] = '\0';
 
      char * Header_File_Name = nullptr;
 
@@ -186,29 +197,113 @@ void Repo_Warehouse_Initializer::Determine_Header_Paths(char * path, int path_nu
 
      size_t target_path_size = header_name_size + Target_Directory_Name_Size;
 
-     this->Headers_New_Paths[path_num] = new char [5*target_path_size];
+     this->Headers_New_Paths[src_num][hdr_num] = new char [5*target_path_size];
 
      int index = 0;
 
      for(size_t k=0;k<Target_Directory_Name_Size;k++){
 
-        this->Headers_New_Paths[path_num][index] = this->Headers_Directory[k];
+        this->Headers_New_Paths[src_num][hdr_num][index] = this->Headers_Directory[k];
 
         index++;
      }
 
-     this->Headers_New_Paths[path_num][index] = '\\';
+     this->Headers_New_Paths[src_num][hdr_num][index] = '\\';
 
      index++;
 
      for(size_t k=0;k<header_name_size;k++){
 
-         this->Headers_New_Paths[path_num][index] = Header_File_Name[k];
+         this->Headers_New_Paths[src_num][hdr_num][index] = Header_File_Name[k];
 
          index++;
      }
 
-     this->Headers_New_Paths[path_num][index] = '\0';
+     this->Headers_New_Paths[src_num][hdr_num][index] = '\0';
+
+     delete [] Header_File_Name;
+
+}
+
+void Repo_Warehouse_Initializer::Determine_Independent_Header_Paths(){
+
+     this->ind_hdr_number
+
+     = this->Dir_Lister.Get_Indenpendent_Header_Files_Number();
+
+     this->Independent_Header_Paths     = new char * [5*this->ind_hdr_number];
+
+     this->Independent_Header_New_Paths = new char * [5*this->ind_hdr_number];
+
+     for(int k=0;k<5*this->ind_hdr_number;k++){
+
+         this->Independent_Header_Paths[k] = nullptr;
+
+         this->Independent_Header_New_Paths[k] = nullptr;
+     }
+
+     for(int i=0;i<this->ind_hdr_number;i++){
+
+         char * path =  this->Dir_Lister.Get_Independent_Header_File(i);
+
+         if(path!= nullptr){
+
+           this->Find_Independent_Header_Path(path,i);
+         }
+     }
+}
+
+void Repo_Warehouse_Initializer::Find_Independent_Header_Path(char * path, int path_num){
+
+     size_t path_size = strlen(path);
+
+     this->Independent_Header_Paths[path_num] = new char [5*path_size];
+
+     int index_counter = 0;
+
+     for(size_t i=0;i<path_size;i++){
+
+         this->Independent_Header_Paths[path_num][index_counter] = path[i];
+
+         index_counter++;
+     }
+
+     this->Independent_Header_Paths[path_num][index_counter] = '\0';
+
+
+     char * Header_File_Name = nullptr;
+
+     this->Determine_File_Name_With_Ext(&Header_File_Name,path);
+
+     size_t header_name_size = strlen(Header_File_Name);
+
+     size_t Target_Directory_Name_Size = strlen(this->Headers_Directory);
+
+     size_t target_path_size = header_name_size + Target_Directory_Name_Size;
+
+     this->Independent_Header_New_Paths[path_num] = new char [5*target_path_size];
+
+     int index = 0;
+
+     for(size_t k=0;k<Target_Directory_Name_Size;k++){
+
+        this->Independent_Header_New_Paths[path_num][index] = this->Headers_Directory[k];
+
+        index++;
+     }
+
+     this->Independent_Header_New_Paths[path_num][index] = '\\';
+
+     index++;
+
+     for(size_t k=0;k<header_name_size;k++){
+
+         this->Independent_Header_New_Paths[path_num][index] = Header_File_Name[k];
+
+         index++;
+     }
+
+     this->Independent_Header_New_Paths[path_num][index] = '\0';
 
      delete [] Header_File_Name;
 
@@ -218,11 +313,29 @@ void Repo_Warehouse_Initializer::Copy_Header_Files_To_Project_Headers_Location()
 
      for(int i=0;i<this->source_files_number;i++){
 
-        if(this->Header_File_Paths[i] != nullptr){
+         int inc_hdr_num = this->Dir_Lister.Get_Source_File_Include_File_Number(i);
 
-           this->FileManager.CpFile(this->Header_File_Paths[i],
+         for(int k=0;k<inc_hdr_num;k++){
 
-                    this->Headers_New_Paths[i]);
+           if(this->Header_File_Paths[i][k] != nullptr){
+
+              this->FileManager.CpFile(this->Header_File_Paths[i][k],
+
+                       this->Headers_New_Paths[i][k]);
+           }
+         }
+     }
+}
+
+void Repo_Warehouse_Initializer::Copy_Independent_Header_Files_To_Project_Headers_Location(){
+
+     for(int i=0;i<this->ind_hdr_number;i++){
+
+        if(this->Independent_Header_Paths[i] != nullptr){
+
+           this->FileManager.CpFile(this->Independent_Header_Paths[i],
+
+                    this->Independent_Header_New_Paths[i]);
         }
      }
 }
@@ -262,7 +375,6 @@ void Repo_Warehouse_Initializer::Construct_Object_Files_Directory(){
      this->Object_Files_Directory[index] = '\0';
 
      this->DirectoryManager.MakeDirectory(this->Object_Files_Directory);
-
 }
 
 void Repo_Warehouse_Initializer::Clear_Dynamic_Memory(){
@@ -275,7 +387,12 @@ void Repo_Warehouse_Initializer::Clear_Dynamic_Memory(){
 
             for(int i=0;i<this->source_files_number;i++){
 
-              this->Clear_Pointer_Memory(&this->Header_File_Paths[i]);
+               int inc_hdr_num = this->Dir_Lister.Get_Source_File_Include_File_Number(i);
+
+               for(int k=0;i<inc_hdr_num;k++){
+
+                   this->Clear_Pointer_Memory(&this->Header_File_Paths[i][k]);
+               }
             }
 
             delete [] this->Header_File_Paths;
@@ -287,7 +404,12 @@ void Repo_Warehouse_Initializer::Clear_Dynamic_Memory(){
 
             for(int i=0;i<this->source_files_number;i++){
 
-                this->Clear_Pointer_Memory(&this->Headers_New_Paths[i]);
+               int inc_hdr_num = this->Dir_Lister.Get_Source_File_Include_File_Number(i);
+
+               for(int k=0;i<inc_hdr_num;k++){
+
+                   this->Clear_Pointer_Memory(&this->Headers_New_Paths[i][k]);
+               }
             }
 
             delete [] this->Headers_New_Paths;

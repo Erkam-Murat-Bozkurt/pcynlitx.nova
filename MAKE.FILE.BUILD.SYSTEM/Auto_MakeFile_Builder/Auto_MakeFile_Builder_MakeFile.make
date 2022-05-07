@@ -1,10 +1,8 @@
 
-DIR_LIST=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Files_Lister
 DIR_ENUM=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Directory_Enumerator
 REPO_DET=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Repo_Dir_Determiner
 DIR_TREE=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Directory_Tree_Size_Determiner
 MAKE_BLD=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\Make_File_Builder
-HEAD_DETER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Header_File_Determiner
 STRING_OPS=D:\pcynlitx.build\BASIC.TOOLS\StringOperator
 DIR_OPS=D:\pcynlitx.build\BASIC.TOOLS\DirectoryOperations
 STRING_OPS=D:\pcynlitx.build\BASIC.TOOLS\StringOperator
@@ -12,15 +10,18 @@ CHAR_OPS=D:\pcynlitx.build\BASIC.TOOLS\CharOperator
 FILE_OPRS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
 CLASS_NAME=D:\pcynlitx.build\BASIC.TOOLS\ClassNameReader
 CLASS_SYNTAX=D:\pcynlitx.build\BASIC.TOOLS\ClassSyntaxControl
-SOURCE_DETR=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Source_File_Determiner
 INT_TO_CHAR=D:\pcynlitx.build\BASIC.TOOLS\IntToCharTranslater
 DES_READER=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Descriptor_File_Reader
 DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Descriptor_File_Data_Collector
 MAKE_DATA_COL=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\MakeFile_Data_Collector
 GIT_LIST=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_File_List_Receiver
-SRC_DT_COL=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Source_File_Data_Collector
-FILE_DAT_COL=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Files_Data_Collector
 MK_FILE_CLNR=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\Make_File_Cleaner
+SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
+FILE_DAT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Data_Collector
+DIR_LIST=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Lister
+SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
+HEAD_DETER=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
+
 
 VPATH = $(DIR_LIST) $(DIR_ENUM) $(REPO_DET) $(DIR_TREE) $(DIR_OPS) \
 	      $(STRING_OPS) $(CHAR_OPS) $(FILE_OPRS) $(MAKE_BLD) $(CLASS_NAME) \

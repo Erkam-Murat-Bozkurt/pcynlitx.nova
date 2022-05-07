@@ -1,19 +1,19 @@
 
 
-DIR_LIST=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Files_Lister
 DIR_ENUM=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Directory_Enumerator
 DIR_TREE=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Directory_Tree_Size_Determiner
 DIR_OPS=D:\pcynlitx.build\BASIC.TOOLS\DirectoryOperations
 STRING_OPS=D:\pcynlitx.build\BASIC.TOOLS\StringOperator
 CHAR_OPS=D:\pcynlitx.build\BASIC.TOOLS\CharOperator
 FILE_OPRS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
-HEAD_DET=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Header_File_Determiner
-SRC_DET=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Source_File_Determiner
+HEAD_DET=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
 DES_READ=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Descriptor_File_Reader
 DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Descriptor_File_Data_Collector
 GIT_LIST=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_File_List_Receiver
-SRC_DT_COL=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Source_File_Data_Collector
-FILE_DAT_COL=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Files_Data_Collector
+SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
+FILE_DAT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Data_Collector
+DIR_LIST=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Lister
+SRC_DET=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
 
 VPATH = $(DIR_LIST) $(DIR_ENUM) $(DIR_TREE) $(DIR_OPS) \
 				$(STRING_OPS) $(CHAR_OPS) $(FILE_OPRS) $(HEAD_DET) $(SRC_DET) \
