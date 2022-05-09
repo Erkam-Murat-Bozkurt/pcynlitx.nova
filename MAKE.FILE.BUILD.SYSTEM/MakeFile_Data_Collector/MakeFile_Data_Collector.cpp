@@ -284,7 +284,7 @@ void MakeFile_Data_Collector::Determine_Warehouse_Object_Dir(char operating_sis)
 
         if(this->warehouse_path[warehouse_path_size-1] != '/'){
 
-            this->warehouse_head_dir[index] = '/';
+            this->warehouse_obj_dir[index] = '/';
 
             index++;
         }
@@ -312,7 +312,7 @@ void MakeFile_Data_Collector::Determine_Warehouse_Object_Dir(char operating_sis)
 
         if(this->warehouse_path[warehouse_path_size-1] != '/'){
 
-           this->warehouse_head_dir[index] = '/';
+           this->warehouse_obj_dir[index] = '/';
 
            index++;
         }
