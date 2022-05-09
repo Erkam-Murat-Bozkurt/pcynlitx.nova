@@ -160,13 +160,17 @@ void MakeFile_Data_Collector::Receive_Git_Record_Data(Project_Files_Lister * Poi
 
 void MakeFile_Data_Collector::Determine_Warehouse_Header_Dir(char operating_sis){
 
+     char warehouse_word   [] = "WAREHOUSE";
+
      char header_directory [] = "PROJECT.HEADER.FILES";
 
      size_t warehouse_path_size = strlen(this->warehouse_path);
 
      size_t head_dir_size = strlen(header_directory);
 
-     size_t path_size = warehouse_path_size + head_dir_size;
+     size_t wr_word_size  = strlen(warehouse_word);
+
+     size_t path_size = warehouse_path_size + head_dir_size + wr_word_size;
 
      this->warehouse_head_dir = new char [5*path_size];
 
@@ -199,6 +203,34 @@ void MakeFile_Data_Collector::Determine_Warehouse_Header_Dir(char operating_sis)
          }
      }
 
+     for(size_t i=0;i<wr_word_size;i++){
+
+         this->warehouse_head_dir[index] = warehouse_word[i];
+
+         index++;
+     }
+
+
+     if(operating_sis == 'w'){
+
+        if(this->warehouse_head_dir[warehouse_path_size-1] != '\\'){
+
+           this->warehouse_head_dir[index] = '\\';
+
+           index++;
+        }
+     }
+
+     if(operating_sis == 'l'){
+
+        if(this->warehouse_head_dir[warehouse_path_size-1] != '/'){
+
+           this->warehouse_head_dir[index] = '/';
+
+           index++;
+        }
+     }
+
      for(size_t i=0;i<head_dir_size;i++){
 
          this->warehouse_head_dir[index] = header_directory[i];
@@ -213,11 +245,19 @@ void MakeFile_Data_Collector::Determine_Warehouse_Object_Dir(char operating_sis)
 
      char object_directory [] = "PROJECT.OBJECT.FILES";
 
+     char warehouse_word   [] = "WAREHOUSE";
+
      size_t warehouse_path_size = strlen(this->warehouse_path);
 
      size_t object_dir_size = strlen(object_directory);
 
-     size_t path_size = warehouse_path_size + object_dir_size;
+     size_t wr_word_size  = strlen(warehouse_word);
+
+
+     size_t path_size = warehouse_path_size
+
+            + object_dir_size + wr_word_size;
+
 
      this->warehouse_obj_dir = new char [5*path_size];
 
@@ -247,6 +287,34 @@ void MakeFile_Data_Collector::Determine_Warehouse_Object_Dir(char operating_sis)
             this->warehouse_head_dir[index] = '/';
 
             index++;
+        }
+     }
+
+     for(size_t i=0;i<wr_word_size;i++){
+
+         this->warehouse_obj_dir[index] = warehouse_word[i];
+
+         index++;
+     }
+
+
+     if(operating_sis == 'w'){
+
+        if(this->warehouse_path[warehouse_path_size-1] != '\\'){
+
+           this->warehouse_obj_dir[index] = '\\';
+
+           index++;
+        }
+     }
+
+     if(operating_sis == 'l'){
+
+        if(this->warehouse_path[warehouse_path_size-1] != '/'){
+
+           this->warehouse_head_dir[index] = '/';
+
+           index++;
         }
      }
 

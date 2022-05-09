@@ -21,7 +21,7 @@ int main(int argc, char ** argv){
 
     Initializer.Build_Project_Warehouse(argv[1]);
 
-    std::cout << "\n\n Project Header Warehouse Constructed ..";
+    std::cout << "\n Project Header Warehouse Constructed ..";
 
     std::cout << "\n\n";
 

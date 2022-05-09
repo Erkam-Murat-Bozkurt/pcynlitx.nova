@@ -26,6 +26,7 @@ public:
  void Build_Project_Warehouse(char * Des_File_Path);
 protected:
  void Determine_File_Name_With_Ext(char ** file_name, char * path);
+ void Construct_Warehouse_Path(char opr_sis);
  void Determine_Project_Directories();
  void Determine_Current_Directory();
  void Determine_Header_File_Names();
@@ -47,6 +48,7 @@ protected:
  StringOperator StringManager;
  int  source_files_number;
  int  ind_hdr_number;
+ char *  warehouse_location;
  char *  warehouse_path;
  char *  current_directory;
  char *** Header_File_Paths;

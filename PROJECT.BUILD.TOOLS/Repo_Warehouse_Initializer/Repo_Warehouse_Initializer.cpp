@@ -17,6 +17,8 @@ Repo_Warehouse_Initializer::Repo_Warehouse_Initializer(){
 
      this->warehouse_path = nullptr;
 
+     this->warehouse_location = nullptr;
+
      this->current_directory = nullptr;
 
      this->source_files_number = 0;
@@ -41,16 +43,11 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(char * Des_File_Path){
 
      this->Des_Reader.Read_Descriptor_File(Des_File_Path);
 
-     this->warehouse_path = this->Des_Reader.Get_Warehouse_Location();
+     this->warehouse_location = this->Des_Reader.Get_Warehouse_Location();
 
      this->Determine_Current_Directory();
 
-     int return_condition = this->DirectoryManager.ChangeDirectory(this->warehouse_path);
-
-     if(return_condition == 0){
-
-        this->DirectoryManager.MakeDirectory(this->warehouse_path);
-     }
+     this->Construct_Warehouse_Path('w');
 
      this->DirectoryManager.ChangeDirectory(this->current_directory);
 
@@ -62,7 +59,7 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(char * Des_File_Path){
 
      this->source_files_number
 
-            = this->Dir_Lister.Get_Source_File_Number();
+     = this->Dir_Lister.Get_Source_File_Number();
 
      this->Determine_Header_File_Paths();
 
@@ -95,6 +92,69 @@ void Repo_Warehouse_Initializer::Determine_Current_Directory(){
      }
 
      this->current_directory[dir_name_size] = '\0';
+}
+
+void Repo_Warehouse_Initializer::Construct_Warehouse_Path(char opr_sis){
+
+     char warehouse_word [] ="WAREHOUSE";
+
+     size_t word_size = strlen(warehouse_word);
+
+     size_t wr_location_size = strlen(this->warehouse_location);
+
+     size_t path_size = word_size + wr_location_size;
+
+     this->warehouse_path = new char [5*path_size];
+
+     int index = 0;
+
+     for(size_t i=0;i<wr_location_size;i++){
+
+         this->warehouse_path[index] = this->warehouse_location[i];
+
+         index++;
+     }
+
+     if(opr_sis == 'w'){
+
+         this->warehouse_path[index] = '\\';
+
+         index++;
+     }
+
+     if(opr_sis == 'l'){
+
+       this->warehouse_path[index] = '/';
+
+       index++;
+     }
+
+     for(size_t i=0;i<word_size;i++){
+
+         this->warehouse_path[index] = warehouse_word[i];
+
+         index++;
+     }
+
+     this->warehouse_path[index] = '\0';
+
+     int return_condition = this->DirectoryManager.ChangeDirectory(this->warehouse_path);
+
+     if(return_condition == 0){
+
+        int const_cond = this->DirectoryManager.MakeDirectory(this->warehouse_path);
+
+        if(const_cond == 0){
+
+            std::cout << "\n The project warehouse can not be constructed on:";
+
+            std::cout << "\n";
+
+            std::cout << this->warehouse_location;
+
+            exit(0);
+        }
+     }
 }
 
 void Repo_Warehouse_Initializer::Construct_Header_Files_Directory(){
@@ -420,6 +480,8 @@ void Repo_Warehouse_Initializer::Clear_Dynamic_Memory(){
          this->Clear_Pointer_Memory(&this->Headers_Directory);
 
          this->Clear_Pointer_Memory(&this->Object_Files_Directory);
+
+         this->Clear_Pointer_Memory(&this->warehouse_path);
 
          this->Des_Reader.Clear_Dynamic_Memory();
      }
