@@ -15,6 +15,8 @@ Repo_Warehouse_Initializer::Repo_Warehouse_Initializer(){
 
      this->Object_Files_Directory = nullptr;
 
+     this->Library_Files_Directory = nullptr;
+
      this->warehouse_path = nullptr;
 
      this->warehouse_location = nullptr;
@@ -56,6 +58,8 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(char * Des_File_Path){
      this->Construct_Header_Files_Directory();
 
      this->Construct_Object_Files_Directory();
+
+     this->Construct_Library_Files_Directory();
 
      this->source_files_number
 
@@ -437,6 +441,44 @@ void Repo_Warehouse_Initializer::Construct_Object_Files_Directory(){
      this->DirectoryManager.MakeDirectory(this->Object_Files_Directory);
 }
 
+
+void Repo_Warehouse_Initializer::Construct_Library_Files_Directory(){
+
+     char directory_folder_name [] = "PROJECT.LIBRARY.FILES";
+
+     size_t warehouse_path_size = strlen(this->warehouse_path);
+
+     size_t name_size= strlen(directory_folder_name);
+
+     size_t library_dir_size = warehouse_path_size + name_size;
+
+     this->Library_Files_Directory = new char [5*library_dir_size];
+
+     int index = 0;
+
+     for(size_t i=0;i<warehouse_path_size;i++){
+
+         this->Library_Files_Directory[index] = this->warehouse_path[i];
+
+         index++;
+     }
+
+     this->Library_Files_Directory[index] = '\\';
+
+     index++;
+
+     for(size_t i=0;i<name_size;i++){
+
+         this->Library_Files_Directory[index] = directory_folder_name[i];
+
+         index++;
+     }
+
+     this->Library_Files_Directory[index] = '\0';
+
+     this->DirectoryManager.MakeDirectory(this->Library_Files_Directory);
+}
+
 void Repo_Warehouse_Initializer::Clear_Dynamic_Memory(){
 
      if(!this->Memory_Delete_Condition){
@@ -480,6 +522,8 @@ void Repo_Warehouse_Initializer::Clear_Dynamic_Memory(){
          this->Clear_Pointer_Memory(&this->Headers_Directory);
 
          this->Clear_Pointer_Memory(&this->Object_Files_Directory);
+
+         this->Clear_Pointer_Memory(&this->Library_Files_Directory);
 
          this->Clear_Pointer_Memory(&this->warehouse_path);
 

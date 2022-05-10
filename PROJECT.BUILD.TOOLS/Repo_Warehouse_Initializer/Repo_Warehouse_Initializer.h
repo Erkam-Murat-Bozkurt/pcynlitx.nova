@@ -32,6 +32,7 @@ protected:
  void Determine_Header_File_Names();
  void Construct_Header_Files_Directory();
  void Construct_Object_Files_Directory();
+ void Construct_Library_Files_Directory();
  void Determine_Header_File_Paths();
  void Copy_Independent_Header_Files_To_Project_Headers_Location();
  void Determine_Header_Paths(char * path, int src_num, int hdr_num);
@@ -57,6 +58,7 @@ protected:
  char ** Independent_Header_New_Paths;
  char * Headers_Directory;
  char * Object_Files_Directory;
+ char * Library_Files_Directory;
  bool Memory_Delete_Condition;
 };
 

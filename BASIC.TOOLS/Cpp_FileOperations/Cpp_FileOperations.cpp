@@ -354,37 +354,7 @@ void Cpp_FileOperations::CpFile(char * path, char * target_path){
 
 void Cpp_FileOperations::MoveFile_Win(char * current_path, char * target_path){
 
-     int current_path_length = strlen(current_path);
-
-     TCHAR * current_path_pointer = new TCHAR[5*current_path_length];
-
-     for(int i=0;i<current_path_length;i++){
-
-         current_path_pointer[i] = current_path[i];
-     }
-
-     current_path_pointer[current_path_length] = '\0';
-
-     current_path_pointer[current_path_length+1] = '\0';
-
-
-
-     int target_path_length = strlen(target_path);
-
-     TCHAR * target_path_pointer = new TCHAR[5*target_path_length];
-
-     for(int i=0;i<target_path_length;i++){
-
-         target_path_pointer[i] = target_path[i];
-     }
-
-     target_path_pointer[target_path_length] = '\0';
-
-     target_path_pointer[target_path_length+1] = '\0';
-
-
-     CopyFile(current_path_pointer,target_path_pointer,false);
-
+     CopyFile(current_path,target_path,false);
 
      if(this->Is_Path_Exist(current_path)){
 
