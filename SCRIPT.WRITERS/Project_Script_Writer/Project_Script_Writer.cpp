@@ -132,7 +132,7 @@ void Project_Script_Writer::Determine_Project_Script_Path(char * warehouse_path)
 
      size_t warehouse_path_size = strlen(warehouse_path);
 
-     char script_path_add [] = "Compiler_Script.ps1";
+     char script_path_add [] = "Project_Build_Script.ps1";
 
      size_t script_path_size = warehouse_path_size + strlen(script_path_add);
 
