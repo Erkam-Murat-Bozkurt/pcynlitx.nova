@@ -420,22 +420,36 @@ void Source_File_Data_Collector::Determine_Git_Record_Source_File_Directory(char
 
      dir_size = end_point;
 
-     *record_dir =  new char [5*dir_size];
+     if(dir_size<=1){
 
-     for(size_t i=0;i<dir_size;i++){
+       *record_dir =  new char [5];
 
-         (*record_dir)[i] = git_record_path[i];
+       for(int i=0;i<5;i++){
 
-         if(operating_sis =='w'){
-
-            if((*record_dir)[i] == '/'){
-
-                (*record_dir)[i] = '\\';
-            }
-         }
+          (*record_dir)[i] = '\0';
+       }
      }
+     else{
 
-     (*record_dir)[dir_size] = '\0';
+
+       *record_dir =  new char [5*dir_size];
+
+       for(size_t i=0;i<dir_size;i++){
+
+           (*record_dir)[i] = git_record_path[i];
+
+           if(operating_sis =='w'){
+
+              if((*record_dir)[i] == '/'){
+
+                  (*record_dir)[i] = '\\';
+              }
+           }
+       }
+
+       (*record_dir)[dir_size] = '\0';
+       
+     }
 }
 
 

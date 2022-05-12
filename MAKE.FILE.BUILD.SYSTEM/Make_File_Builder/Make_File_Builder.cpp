@@ -107,13 +107,21 @@ void Make_File_Builder::Build_MakeFile(int git_index){
      this->FileManager.WriteToFile("\n");
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("SOURCE_LOCATION=$(REPO_DIRECTORY)\\");
+     this->FileManager.WriteToFile("SOURCE_LOCATION=$(REPO_DIRECTORY)");
 
      char * source_file_dir =
 
      this->File_Lister_Pointer->Get_Source_File_Git_Record_Directory(git_index);
 
-     this->FileManager.WriteToFile(source_file_dir);
+
+
+     if(strlen(source_file_dir) != 0){
+
+        this->FileManager.WriteToFile("\\");
+
+        this->FileManager.WriteToFile(source_file_dir);
+     }
+
 
 
      int included_dir_num = this->Des_Reader_Pointer->Get_Include_Directory_Number();
