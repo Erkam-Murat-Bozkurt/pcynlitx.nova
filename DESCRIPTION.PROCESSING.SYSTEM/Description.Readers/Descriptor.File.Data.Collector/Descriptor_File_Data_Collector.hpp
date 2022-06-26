@@ -52,7 +52,6 @@ protected:
  StringOperator StringManager;
  CharOperator CharacterOperations;
  char * Descriptor_File_Path;
- char ** File_Content;
  int File_Content_Size;
  int wordPosition;
  int Root_Directory_Record_Area[2];

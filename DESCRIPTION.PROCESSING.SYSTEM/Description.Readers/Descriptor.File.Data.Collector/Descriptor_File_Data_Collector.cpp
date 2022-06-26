@@ -16,7 +16,6 @@ Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(){
       this->Root_Directory_Record_Area[i] = 0;
   }
 
-  this->File_Content_Size = 0;
   this->Library_Directories_Record_Number = 0;
   this->Source_File_Directories_Record_Number = 0;
   this->Include_Directories_Record_Number = 0;
@@ -99,198 +98,274 @@ void Descriptor_File_Data_Collector::Receive_Descriptor_File_Path(char * path){
 
 void Descriptor_File_Data_Collector::Determine_Root_Directory_Record_Area(){
 
-     char root_key [] = "[PROJECTROOTDIR]";
+     char key_word [] = "[PROJECTROOTDIR]";
 
-     char warehouse_key [] = "[PROJECTWAREHOUSELOCATION]";
+     int record_stard = 1, record_end = 0;
 
-     int record_stard = 0, record_end = 0;
+     int keyword_line = this->FindStringPoint(key_word,record_stard);
+
+     char start_brace [] = "{";
+
+     char end_brace []   = "}";
 
      this->Root_Directory_Record_Area[0] =
 
-           this->FindStringPoint(root_key,record_stard) + 2;
+           this->FindStringPoint(start_brace,keyword_line);
+
+     int start_brace_line = this->Root_Directory_Record_Area[0];
 
      this->Root_Directory_Record_Area[1] =
 
-           this->FindStringPoint(warehouse_key,record_end);
+           this->FindStringPoint(end_brace,start_brace_line);
 }
 
 void Descriptor_File_Data_Collector::Determine_Warehouse_Location_Record_Area(){
 
-     char warehouse_key [] = "[PROJECTWAREHOUSELOCATION]";
+     char key_word [] = "[PROJECTWAREHOUSELOCATION]";
 
-     char standard_key [] = "[C++STANDARD]";
+     int record_stard = 1, record_end = 0;
 
-     int record_stard = 0, record_end = 0;
+     int keyword_line = this->FindStringPoint(key_word,record_stard);
+
+     char start_brace [] = "{";
+
+     char end_brace []   = "}";
 
      this->Warehouse_Location_Record_Area[0] =
 
-           this->FindStringPoint(warehouse_key,record_stard) + 2;
+         this->FindStringPoint(start_brace,keyword_line);
 
-     this->Warehouse_Location_Record_Area[1] =
+     int start_brace_line = this->Warehouse_Location_Record_Area[0];
 
-           this->FindStringPoint(standard_key,record_end);
+         this->Warehouse_Location_Record_Area[1] =
+
+     this->FindStringPoint(end_brace,start_brace_line);
 }
 
 void Descriptor_File_Data_Collector::Determine_Standard_Record_Area(){
 
-     char standard_key [] = "[C++STANDARD]";
+     char key_word [] = "[C++STANDARD]";
 
-     char include_key [] = "[INCLUDEDIRECTORIES]";
+     int record_stard = 1, record_end = 0;
 
-     int record_stard = 0, record_end = 0;
+     int keyword_line = this->FindStringPoint(key_word,record_stard);
+
+
+     char start_brace [] = "{";
+
+     char end_brace []   = "}";
 
 
      this->Standard_Record_Area[0] =
 
-                this->FindStringPoint(standard_key,record_stard) + 2;
+     this->FindStringPoint(start_brace,keyword_line);
+
+
+     int start_brace_line = this->Standard_Record_Area[0];
 
      this->Standard_Record_Area[1] =
 
-                this->FindStringPoint(include_key,record_end);
-
+     this->FindStringPoint(end_brace,start_brace_line);
 }
 
 void Descriptor_File_Data_Collector::Determine_Include_Directories_Record_Area(){
 
-     char include_key [] = "[INCLUDEDIRECTORIES]";
+     char key_word [] = "[INCLUDEDIRECTORIES]";
 
-     char source_files_key [] = "[SOURCEFILEDIRECTORIES]";
+     int record_stard = 1, record_end = 0;
 
-     int record_stard = 0, record_end = 0;
+     int keyword_line = this->FindStringPoint(key_word,record_stard);
+
+     char start_brace [] = "{";
+
+     char end_brace []   = "}";
+
 
      this->Include_Directories_Record_Area[0] =
 
-              this->FindStringPoint(include_key,record_stard) + 2;
+     this->FindStringPoint(start_brace,keyword_line);
+
+
+     int start_brace_line = this->Include_Directories_Record_Area[0];
 
      this->Include_Directories_Record_Area[1] =
 
-              this->FindStringPoint(source_files_key,record_end);
+     this->FindStringPoint(end_brace,start_brace_line);
+
 }
 
 void Descriptor_File_Data_Collector::Determine_Source_File_Directories_Record_Area(){
 
-     char source_files_key [] = "[SOURCEFILEDIRECTORIES]";
+     char key_word [] = "[SOURCEFILEDIRECTORIES]";
 
-     char library_dir_key [] = "[LIBRARYDIRECTORIES]";
 
-     int record_stard = 0, record_end = 0;
+     int record_stard = 1, record_end = 0;
+
+     int keyword_line = this->FindStringPoint(key_word,record_stard);
+
+
+     char start_brace [] = "{";
+
+     char end_brace []   = "}";
+
 
      this->Source_File_Directories_Record_Area[0] =
 
-                this->FindStringPoint(source_files_key,record_stard) + 2;
+     this->FindStringPoint(start_brace,keyword_line);
+
+
+     int start_brace_line = this->Source_File_Directories_Record_Area[0];
 
      this->Source_File_Directories_Record_Area[1] =
 
-                this->FindStringPoint(library_dir_key,record_end);
+     this->FindStringPoint(end_brace,start_brace_line);
 }
 
 
 void Descriptor_File_Data_Collector::Determine_Library_Directories_Record_Area(){
 
-     char library_dir_key [] = "[LIBRARYDIRECTORIES]";
+     char key_word [] = "[LIBRARYDIRECTORIES]";
 
-     char options_key [] = "[OPTIONS]";
 
-     int record_stard = 0, record_end = 0;
+     int record_stard = 1, record_end = 0;
+
+     int keyword_line = this->FindStringPoint(key_word,record_stard);
+
+
+     char start_brace [] = "{";
+
+     char end_brace []   = "}";
+
 
      this->Library_Directories_Record_Area[0] =
 
-              this->FindStringPoint(library_dir_key,record_stard) + 2;
+     this->FindStringPoint(start_brace,keyword_line);
+
+
+     int start_brace_line = this->Library_Directories_Record_Area[0];
 
      this->Library_Directories_Record_Area[1] =
 
-              this->FindStringPoint(options_key,record_end);
+     this->FindStringPoint(end_brace,start_brace_line);
 }
 
 void Descriptor_File_Data_Collector::Determine_Options_Record_Area(){
 
-     char options_key [] = "[OPTIONS]";
+     char key_word [] = "[OPTIONS]";
 
-     char main_file_name_key [] = "[MAINFILENAMES]";
 
-     int record_stard = 0, record_end = 0;
+     int record_stard = 1, record_end = 0;
+
+     int keyword_line = this->FindStringPoint(key_word,record_stard);
+
+
+     char start_brace [] = "{";
+
+     char end_brace []   = "}";
+
 
      this->Options_Record_Area[0] =
 
-            this->FindStringPoint(options_key,record_stard) + 2;
+     this->FindStringPoint(start_brace,keyword_line);
+
+
+     int start_brace_line = this->Options_Record_Area[0];
 
      this->Options_Record_Area[1] =
 
-            this->FindStringPoint(main_file_name_key,record_end);
+     this->FindStringPoint(end_brace,start_brace_line);
 }
 
 void Descriptor_File_Data_Collector::Determine_Main_File_Des_Record_Area(){
 
-     char main_file_name_key [] = "[MAINFILENAMES]";
+     char key_word [] = "[MAINFILENAMES]";
 
-     char exe_file_name [] = "[EXECUTABLEFILENAMES]";
+     int record_stard = 1, record_end = 0;
 
-     int record_stard = 0, record_end = 0;
+     int keyword_line = this->FindStringPoint(key_word,record_stard);
+
+
+     char start_brace [] = "{";
+
+     char end_brace []   = "}";
+
 
      this->Main_File_Name_Record_Area[0] =
 
-        this->FindStringPoint(main_file_name_key,record_stard) + 2;
+     this->FindStringPoint(start_brace,keyword_line);
+
+
+     int start_brace_line = this->Main_File_Name_Record_Area[0];
 
      this->Main_File_Name_Record_Area[1] =
 
-        this->FindStringPoint(exe_file_name,record_end);
+     this->FindStringPoint(end_brace,start_brace_line);
 }
 
 void Descriptor_File_Data_Collector::Determine_Executable_File_Name_Record_Area(){
 
-     char exe_file_name [] = "[EXECUTABLEFILENAMES]";
+     char key_word [] = "[EXECUTABLEFILENAMES]";
 
-     char end_key [] = "[END]";
 
-     int record_stard = 0, record_end = 0;
+     int record_stard = 1, record_end = 0;
+
+     int keyword_line = this->FindStringPoint(key_word,record_stard);
+
+
+     char start_brace [] = "{";
+
+     char end_brace []   = "}";
+
 
      this->Executable_File_Name_Area[0] =
 
-          this->FindStringPoint(exe_file_name,record_stard) + 2;
+     this->FindStringPoint(start_brace,keyword_line);
+
+
+     int start_brace_line = this->Executable_File_Name_Area[0];
 
      this->Executable_File_Name_Area[1] =
 
-          this->FindStringPoint(end_key,record_end);
+     this->FindStringPoint(end_brace,start_brace_line);
 }
 
 int Descriptor_File_Data_Collector::FindStringPoint(char * search_word,int startPoint){
 
     this->FileManager.FileOpen(Rf);
 
-    this->CharacterOperations.ForwardFilePointer(&this->FileManager,startPoint);
+    for(int i=1;i<startPoint;i++){
+
+        this->FileManager.ReadLine();
+    }
 
     this->wordPosition = startPoint;
 
     do{
-            char * string_line = this->FileManager.ReadLine_as_Cstring();
+          char * string_line = this->FileManager.ReadLine_as_Cstring();
 
-            this->Delete_Spaces_on_String(&string_line);
+          this->Delete_Spaces_on_String(&string_line);
 
-            if(this->FileManager.Control_End_of_File()){
+          if(this->FileManager.Control_End_of_File()){
 
-               break;
-            }
+              break;
+          }
 
-            if(this->StringManager.CheckStringLine(string_line)){
+          if(this->StringManager.CheckStringLine(string_line)){
 
-               this->StringManager.ReceiveFileLine(string_line);
+             this->StringManager.ReceiveFileLine(string_line);
 
-               bool include_condition
+             bool include_condition
 
-                  = this->StringManager.CheckStringInclusion(this->StringManager.GetStringBuffer(),search_word);
+             = this->StringManager.CheckStringInclusion(this->StringManager.GetStringBuffer(),search_word);
 
-               if(include_condition){
+             if(include_condition){
 
-                  break;
-               }
-               else{
-                     this->wordPosition++;
-               }
-            }
-            else{
+                break;
+             }
+          }
 
-                this->wordPosition++;
-            }
+          this->wordPosition++;
+
 
     }while(!this->FileManager.Control_End_of_File());
 
@@ -356,7 +431,6 @@ int Descriptor_File_Data_Collector::Get_Warehouse_Location_Record_Area(int index
 
     return this->Warehouse_Location_Record_Area[index];
 }
-
 
 int Descriptor_File_Data_Collector::Get_Main_File_Name_Record_Area(int index){
 
