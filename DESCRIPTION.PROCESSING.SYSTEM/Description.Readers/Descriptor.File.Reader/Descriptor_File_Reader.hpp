@@ -12,6 +12,7 @@
 #include <iostream>
 #include <windows.h>
 #include "Descriptor_File_Data_Collector.hpp"
+#include "Descriptor_File_Syntax_Controller.hpp"
 #include "StringOperator.h"
 #include "Cpp_FileOperations.h"
 
@@ -50,6 +51,7 @@ protected:
  void Read_Options();
  void Place_String(char ** pointer, char * string);
  Descriptor_File_Data_Collector Data_Collector;
+ Descriptor_File_Syntax_Controller Syntax_Controller;
  StringOperator StringManager;
  Cpp_FileOperations FileManager;
  int include_dir_num;

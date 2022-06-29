@@ -73,7 +73,7 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
 
      this->Receive_File_Path(path);
 
-     int new_lines = 5;
+     int new_lines = 3;
 
      this->FileManager.SetFilePath(this->file_path);
 
@@ -85,41 +85,94 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
 
      this->WriteNewLines(new_lines);
 
-     this->FileManager.WriteToFile("[PROJECT ROOT DIR]:");
+     this->FileManager.WriteToFile("[PROJECT ROOT DIR]{");
 
      this->WriteNewLines(new_lines);
 
-     this->FileManager.WriteToFile("[PROJECT WAREHOUSE LOCATION]:");
+     this->FileManager.WriteToFile("}");
 
      this->WriteNewLines(new_lines);
 
-     this->FileManager.WriteToFile("[C++ STANDARD]:");
+
+     this->FileManager.WriteToFile("[PROJECT WAREHOUSE LOCATION]{");
 
      this->WriteNewLines(new_lines);
 
-     this->FileManager.WriteToFile("[INCLUDE DIRECTORIES]:");
+     this->FileManager.WriteToFile("}");
 
      this->WriteNewLines(new_lines);
 
-     this->FileManager.WriteToFile("[SOURCE FILE DIRECTORIES]:");
+
+
+     this->FileManager.WriteToFile("[C++ STANDARD]{");
 
      this->WriteNewLines(new_lines);
 
-     this->FileManager.WriteToFile("[LIBRARY DIRECTORIES]:");
+     this->FileManager.WriteToFile("}");
 
      this->WriteNewLines(new_lines);
 
-     this->FileManager.WriteToFile("[OPTIONS]:");
+
+
+
+     this->FileManager.WriteToFile("[INCLUDE DIRECTORIES]{");
 
      this->WriteNewLines(new_lines);
 
-     this->FileManager.WriteToFile("[MAIN FILE NAMES]:");
+     this->FileManager.WriteToFile("}");
 
      this->WriteNewLines(new_lines);
 
-     this->FileManager.WriteToFile("[EXECUTABLE FILE NAMES]:");
+
+
+
+     this->FileManager.WriteToFile("[SOURCE FILE DIRECTORIES]{");
 
      this->WriteNewLines(new_lines);
+
+     this->FileManager.WriteToFile("}");
+
+     this->WriteNewLines(new_lines);
+
+
+
+     this->FileManager.WriteToFile("[LIBRARY DIRECTORIES]{");
+
+     this->WriteNewLines(new_lines);
+
+     this->FileManager.WriteToFile("}");
+
+     this->WriteNewLines(new_lines);
+
+
+
+     this->FileManager.WriteToFile("[OPTIONS]{");
+
+     this->WriteNewLines(new_lines);
+
+     this->FileManager.WriteToFile("}");
+
+     this->WriteNewLines(new_lines);
+
+
+     this->FileManager.WriteToFile("[MAIN FILE NAMES]{");
+
+     this->WriteNewLines(new_lines);
+
+     this->FileManager.WriteToFile("}");
+
+     this->WriteNewLines(new_lines);
+
+
+
+     this->FileManager.WriteToFile("[EXECUTABLE FILE NAMES]{");
+
+     this->WriteNewLines(new_lines);
+
+     this->FileManager.WriteToFile("}");
+
+     this->WriteNewLines(new_lines);
+
 
      this->FileManager.WriteToFile("[END]:");
 
