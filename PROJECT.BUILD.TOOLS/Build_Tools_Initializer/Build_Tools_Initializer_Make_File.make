@@ -23,8 +23,9 @@ DIR_TREE=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Directory_Tree_Size_Determiner
 GIT_REC=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_File_List_Receiver
 
 # The start of the description processign systm path declerations
-DES_DAT_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Descriptor_File_Data_Collector
-DES_READ=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Descriptor_File_Reader
+DES_DAT_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
+DES_READ=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
+DES_SYN_CTR=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
 
 # The start of the make file build system classes path declerations
 AUTO_MAK=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\Auto_MakeFile_Builder
@@ -47,7 +48,7 @@ VPATH = $(DIR_LIST) $(DIR_ENUM) $(DIR_TREE) $(DIR_OPS) \
 				$(REPO_INI) $(AUTO_MAK) $(MAKE_BLD) $(CLASS_NM) \
 				$(CLASS_SY) $(DES_DAT_COL) $(SRC_DAT_COL) $(PRO_FILE_DAT_COL) \
 				$(DES_READ) $(HEAD_FILE_DET) $(SOURCE_FILE_DET) $(MAKE_DAT) \
-				$(TRANSLATER) $(MK_FLN_CLN)
+				$(TRANSLATER) $(MK_FLN_CLN) $(DES_SYN_CTR)
 
 Build_Tools_Initializer.exe: Build_Tools_Initializer_Main_File.cpp Build_Tools_Initializer.cpp \
 	Project_Script_Writer.cpp Script_Data_Collector.cpp \
@@ -81,7 +82,7 @@ Build_Tools_Initializer.exe: Build_Tools_Initializer_Main_File.cpp Build_Tools_I
 	 -I$(HEAD_FILE_DET) -I$(SOURCE_FILE_DET) \
 	 -I$(MAKE_DAT) -I$(GIT_REC) -I$(SRC_DAT_COL) \
 	 -I$(PRO_FILE_DAT_COL) -I$(TRANSLATER) \
-	 -I$(MK_FLN_CLN) -I$(FILE_OPRS) \
+	 -I$(MK_FLN_CLN) -I$(FILE_OPRS) -I$(DES_SYN_CTR) \
 	 -L$(DIR_LIST) -L$(DIR_ENUM) -L$(REPO_DET) \
 	 -L$(DIR_TREE) -L$(DIR_OPS) \
 	 -L$(STRING_OPS) -L$(CHAR_OPS) \
@@ -92,7 +93,7 @@ Build_Tools_Initializer.exe: Build_Tools_Initializer_Main_File.cpp Build_Tools_I
 	 -L$(HEAD_FILE_DET) -L$(SOURCE_FILE_DET) \
 	 -L$(GIT_REC) -L$(SRC_DAT_COL) \
 	 -L$(PRO_FILE_DAT_COL) -L$(TRANSLATER) \
-	 -L$(MK_FLN_CLN) \
+	 -L$(MK_FLN_CLN) -L$(DES_SYN_CTR) \
 	 -L$(PRJ_SCR_WRIT) -L$(SCR_DATA_COL) \
 	 -L$(SRC_FLT_WRIT) -L$(INC_DEP_CNT) \
 		Build_Tools_Initializer_Main_File.cpp \
@@ -108,6 +109,7 @@ Build_Tools_Initializer.exe: Build_Tools_Initializer_Main_File.cpp Build_Tools_I
 		$(GIT_REC)\Git_File_List_Receiver.cpp \
 		$(DES_READ)\Descriptor_File_Reader.cpp \
 		$(DES_DAT_COL)\Descriptor_File_Data_Collector.cpp \
+		$(DES_SYN_CTR)\Descriptor_File_Syntax_Controller.cpp \
 		$(HEAD_FILE_DET)\Header_File_Determiner.cpp \
 		$(SOURCE_FILE_DET)\Source_File_Determiner.cpp \
 		$(DIR_ENUM)\Directory_Enumerator.cpp \
@@ -133,6 +135,7 @@ Build_Tools_Initializer.exe: Build_Tools_Initializer_Main_File.cpp Build_Tools_I
 		-include $(GIT_REC)\Git_File_List_Receiver.hpp \
 		-include $(DES_READ)\Descriptor_File_Reader.hpp \
 		-include $(DES_DAT_COL)\Descriptor_File_Data_Collector.hpp \
+		-include $(DES_SYN_CTR)\Descriptor_File_Syntax_Controller.hpp \
 		-include $(DIR_ENUM)\Directory_Enumerator.h \
 		-include $(DIR_TREE)\Directory_Tree_Size_Determiner.h\
  		-include $(MAKE_BLD)\Make_File_Builder.h \

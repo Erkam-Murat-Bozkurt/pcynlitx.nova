@@ -13,14 +13,18 @@ public:
   DataRecorder();
   virtual ~DataRecorder();
   void SetFilePath(char * Data_File_Path);
-  void Add_Data_Record(char * Data_Record);
+  void Add_Data_Record(char * Data_Type, char * Data_Record);
+  void Clear_Data_Record(char * Data_Type);
   void Replace_Data_Record(char * Data_Record);
   void Collect_Information_For_Data_Recording(char * Record_Type);
+  void Collect_Information_For_Data_Clearing(char * Record_Type);
   void Determine_Data_Type_Record_Number(char * Data_Type);
   void Read_Data_Records(char * Data_Type);
-  void Determine_Record_Point(char * Record_Type);
-  void Read_Before_Record_Point();
-  void Read_After_Record_Point();
+  int  Determine_Record_Point(char * Record_Type);
+  int  Determine_Data_Record_Start_Point(char * Data_Type);
+  int  Determine_Data_Record_End_Point(char * Data_Type);
+  void Read_Before_Record_Point(int read_start_point);
+  void Read_After_Record_Point(int read_start_point);
   void Record_Data(char * Data);
   void Clear_Dynamic_Memory();
   char ** Get_Up_Record();
@@ -30,6 +34,7 @@ public:
   int Get_Down_Record_Number();
   int Get_Data_Type_Record_Number();
   int Get_Record_Point();
+  int Get_Data_Record_Start_Point();
 private:
   bool Determine_Is_This_Line_A_Record_Line(char * File_Line);
   bool Is_This_First_Brace(char * string);
@@ -45,6 +50,8 @@ private:
   bool is_this_a_brace_line;
   bool is_this_on_the_inside_of_record_area;
   bool Enter_Record_Area;
+  int Data_Record_Start_Point;
+  int Data_Record_End_Point;
   int Up_Record_Number;
   int Down_Record_Number;
   int Record_Point;

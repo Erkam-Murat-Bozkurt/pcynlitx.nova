@@ -113,7 +113,9 @@ void DataRecorder::SetFilePath(char * TargetFilePath){
      this->File_Manager.SetFilePath(TargetFilePath);
 }
 
-void DataRecorder::Add_Data_Record(char * Data_Record){
+void DataRecorder::Add_Data_Record(char * Data_Type, char * Data_Record){
+
+     this->Collect_Information_For_Data_Recording(Data_Type);
 
      this->Memory_Delete_Condition = false;
 
@@ -180,6 +182,75 @@ void DataRecorder::Add_Data_Record(char * Data_Record){
 
      this->File_Manager.FileClose();
 }
+
+void DataRecorder::Clear_Data_Record(char * Data_Type){
+
+     this->Collect_Information_For_Data_Clearing(Data_Type);
+
+     this->Memory_Delete_Condition = false;
+
+     this->File_Manager.FileOpen(RWCf);
+
+     for(int i=0;i<this->Get_Up_Record_Number();i++){
+
+         if(this->Get_Up_Record()[i][0] == '\0'){
+
+            this->File_Manager.WriteToFile("\n");
+         }
+         else{
+
+              if(this->Is_This_Inside_of_Record_Area(this->Get_Up_Record()[i])){
+
+                 this->File_Manager.WriteToFile("   ");
+              }
+
+              this->File_Manager.WriteToFile(" ");
+
+              this->File_Manager.WriteToFile(this->Get_Up_Record()[i]);
+
+              this->File_Manager.WriteToFile("\n");
+         }
+     }
+
+     if(this->Get_Data_Type_Record_Number() > 0){
+
+        this->File_Manager.WriteToFile("\n");
+     }
+
+     this->File_Manager.WriteToFile("    ");
+
+     this->File_Manager.WriteToFile("\n");
+
+     for(int i=0;i<this->Get_Down_Record_Number();i++){
+
+         if(this->Get_Down_Record()[i][0] == '\0'){
+
+            if(i < (this->Get_Down_Record_Number()-1)){
+
+               this->File_Manager.WriteToFile("\n");
+            }
+         }
+         else{
+
+              if(this->Is_This_Inside_of_Record_Area(this->Get_Down_Record()[i])){
+
+                 this->File_Manager.WriteToFile("   ");
+              }
+
+              this->File_Manager.WriteToFile(" ");
+
+              this->File_Manager.WriteToFile(this->Get_Down_Record()[i]);
+
+              if(i < (this->Get_Down_Record_Number())){
+
+                 this->File_Manager.WriteToFile("\n");
+              }
+         }
+     }
+
+     this->File_Manager.FileClose();
+}
+
 
 void DataRecorder::Replace_Data_Record(char * Data_Record){
 
@@ -252,16 +323,63 @@ void DataRecorder::Collect_Information_For_Data_Recording(char * Record_Type){
 
      this->Memory_Delete_Condition = false;
 
-     this->Determine_Record_Point(Record_Type);
+     int record_point = this->Determine_Record_Point(Record_Type);
 
-     this->Read_Before_Record_Point();
+     this->Read_Before_Record_Point(record_point);
 
-     this->Read_After_Record_Point();
+     this->Read_After_Record_Point(record_point);
 
      this->Determine_Data_Type_Record_Number(Record_Type);
 }
 
-void DataRecorder::Determine_Record_Point(char * Data_Type){
+void DataRecorder::Collect_Information_For_Data_Clearing(char * Record_Type){
+
+     this->Clear_Dynamic_Memory();
+
+     this->Memory_Delete_Condition = false;
+
+     int Start_Point = this->Determine_Data_Record_Start_Point(Record_Type);
+
+     int End_Point = this->Determine_Data_Record_End_Point(Record_Type);
+
+     this->Read_Before_Record_Point(Start_Point+1);
+
+     this->Read_After_Record_Point(End_Point-1);
+}
+
+int DataRecorder::Determine_Data_Record_Start_Point(char * Data_Type){
+
+     this->Data_Record_Start_Point = 0;
+
+     int Start_Point = 0;
+
+     Start_Point = this->StringOperations.FindNextWordLine(Data_Type,0);
+
+     char First_Brace_Line [] = {'{','\0'};
+
+     this->Data_Record_Start_Point
+
+     = this->StringOperations.FindNextWordLine(First_Brace_Line,Start_Point);
+
+     return this->Data_Record_Start_Point;
+}
+
+int DataRecorder::Determine_Data_Record_End_Point(char * Data_Type){
+
+     this->Data_Record_End_Point = 0;
+
+     char End_Brace_Line [] = {'}','\0'};
+
+     int Start_Point = this->Data_Record_Start_Point;
+
+     this->Data_Record_End_Point
+
+     = this->StringOperations.FindNextWordLine(End_Brace_Line,Start_Point);
+
+     return this->Data_Record_End_Point;
+}
+
+int DataRecorder::Determine_Record_Point(char * Data_Type){
 
      this->Record_Point = 0;
 
@@ -295,7 +413,9 @@ void DataRecorder::Determine_Record_Point(char * Data_Type){
            File_Line = this->StringOperations.ReadFileLine(Read_Point);
      }
 
-     this->Record_Point = Read_Point+1;
+     this->Record_Point = Read_Point;
+
+     return this->Record_Point;
 }
 
 void DataRecorder::Read_Data_Records(char * Data_Type){
@@ -330,7 +450,7 @@ void DataRecorder::Read_Data_Records(char * Data_Type){
 
         int Start_Point = this->StringOperations.FindNextWordLine(Data_Type,0);
 
-        Start_Point = this->StringOperations.FindNextWordLine(First_Brace_Line,Start_Point) +1;
+        Start_Point   = this->StringOperations.FindNextWordLine(First_Brace_Line,Start_Point) +1;
 
         int End_Point = this->StringOperations.FindNextWordLine(Last_Brace_Line,Start_Point);
 
@@ -388,9 +508,9 @@ void DataRecorder::Read_Data_Records(char * Data_Type){
       }
 }
 
-void DataRecorder::Read_Before_Record_Point(){
+void DataRecorder::Read_Before_Record_Point(int read_start_point){
 
-     this->Up_Record_Number = this->Record_Point-1;
+     this->Up_Record_Number = read_start_point;
 
      this->Up_Record = new char * [10*this->Up_Record_Number];
 
@@ -427,7 +547,7 @@ void DataRecorder::Read_Before_Record_Point(){
      }
 }
 
-void DataRecorder::Read_After_Record_Point(){
+void DataRecorder::Read_After_Record_Point(int read_start_point){
 
      this->File_Manager.FileOpen(Rf);
 
@@ -442,13 +562,13 @@ void DataRecorder::Read_After_Record_Point(){
 
      this->File_Manager.FileClose();
 
-     this->Down_Record_Number = this->End_of_File - this->Up_Record_Number;
+     this->Down_Record_Number = this->End_of_File - read_start_point;
 
      this->Down_Record = new char * [10*this->Down_Record_Number];
 
      int index_counter = 0;
 
-     for(int i=this->Up_Record_Number;i<this->End_of_File;i++){
+     for(int i=read_start_point;i<this->End_of_File;i++){
 
          char * File_Line = this->StringOperations.ReadFileLine(i+1);
 
@@ -614,4 +734,9 @@ int DataRecorder::Get_Data_Type_Record_Number(){
 int DataRecorder::Get_Record_Point(){
 
     return this->Record_Point;
+}
+
+int DataRecorder::Get_Data_Record_Start_Point(){
+
+    return this->Data_Record_Start_Point;
 }

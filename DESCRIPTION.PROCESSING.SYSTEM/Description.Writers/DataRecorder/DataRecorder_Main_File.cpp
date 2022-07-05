@@ -7,28 +7,15 @@ int main(int argc, char ** argv){
 
     Recorder.SetFilePath(argv[1]);
 
-    char Data_Type [] = "Header_File_Locations";
+    char Data_Type [] = "INCLUDE DIRECTORIES";
 
-    Recorder.Read_Data_Records(Data_Type);
+    char Clear_Data_Type [] = "MAIN FILE NAMES";
 
-    std::cout << "\n Data record number:"
+    char dir [] = "D:\\PCYNLITX.BUILD.TEST";
 
-              << Recorder.Get_Data_Type_Record_Number();
+    Recorder.Add_Data_Record(Data_Type,dir);
 
-    std::cout << "\n Up record number:"
-
-              << Recorder.Get_Up_Record_Number();
-
-    for(int i=0;i<Recorder.Get_Data_Type_Record_Number();i++){
-
-       std::cout << "\n Recorder.Get_Data_Type_Records()["
-
-                 << i << "]:"
-
-                 << Recorder.Get_Data_Type_Records()[i]  << "#";
-    }
-
-    Recorder.Clear_Dynamic_Memory();
+    Recorder.Clear_Data_Record(Clear_Data_Type);
 
     std::cout << "\n\n The end of the file..\n\n";
 
