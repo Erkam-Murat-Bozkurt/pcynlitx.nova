@@ -345,6 +345,8 @@ bool Cpp_FileOperations::Control_End_of_File(){
 
 void Cpp_FileOperations::CpFile(char * path, char * target_path){
 
+     this->Clear_Dynamic_Memory();
+
      this->Determine_Base_File_Size(path);
 
      this->Receive_File(path);
@@ -409,21 +411,6 @@ void Cpp_FileOperations::Receive_File(char * path){
 
      this->Memory_Delete_Condition = true;
 
-     if(this->File_Index != nullptr){
-
-        for(int i=0;i<this->File_line_Number;i++){
-
-            if(this->File_Index[i] != nullptr){
-
-               delete [] this->File_Index[i];
-
-               this->File_Index[i] = nullptr;
-            }
-        }
-
-        delete [] this->File_Index;
-     }
-
      this->File_Index = new char * [5*this->File_line_Number];
 
      for(int i=0;i<5*this->File_line_Number;i++){
@@ -434,6 +421,7 @@ void Cpp_FileOperations::Receive_File(char * path){
      this->SetFilePath(path);
 
      this->FileOpen(Rf);
+
 
      int line_index = 0;
 
@@ -472,7 +460,10 @@ void Cpp_FileOperations::Determine_Base_File_Size(char * path){
 
           std::string string_line = this->ReadLine();
 
-          this->File_line_Number++;
+          if(!this->Control_End_of_File()){
+
+            this->File_line_Number++;
+          }
 
      }while(!this->Control_End_of_File());
 

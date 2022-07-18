@@ -29,6 +29,8 @@ void Build_Tools_Initializer::Setup_Build_Tools(char * descriptor_file_path){
 
      this->Des_Reader.Read_Descriptor_File(descriptor_file_path);
 
+     std::cout << "\n Descriptor File Readed ..";
+
      this->Rep_Init.Build_Project_Warehouse(descriptor_file_path);
 
      std::cout << "\n Project warehouse constructed ..";
@@ -39,11 +41,9 @@ void Build_Tools_Initializer::Setup_Build_Tools(char * descriptor_file_path){
 
      std::cout << "\n Project make files constructed ..";
 
-
      char * repo_dir_path  = this->Des_Reader.Get_Repo_Directory_Location();
 
      char * warehouse_path = this->Des_Reader.Get_Warehouse_Location();
-
 
      this->Script_Writer.Build_Compiler_Script(&this->Des_Reader);
 

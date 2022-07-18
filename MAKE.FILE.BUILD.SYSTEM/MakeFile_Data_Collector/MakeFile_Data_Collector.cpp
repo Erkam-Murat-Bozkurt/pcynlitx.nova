@@ -527,6 +527,8 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      char compiler_input_command [] = "g++ -Wall -c -std=c++17";
 
+     char * options = this->Des_Reader_Pointer->Get_Options();
+
      char Include_Character [] = "-I";
 
      char include_word [] = "-include";
@@ -577,6 +579,19 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
      int index_counter = 0;
 
      this->Place_Information(&this->Compiler_System_Command,compiler_input_command,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,options,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+
+
+     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
 
      this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
