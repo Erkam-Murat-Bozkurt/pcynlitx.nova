@@ -213,7 +213,6 @@ void Project_Files_Lister::Initialize_Data_Structures(){
 
 void Project_Files_Lister::Place_Source_File_Data(int index, char * src_path, char opr_sis){
 
-
      this->Src_Data_Col.Clear_Dynamic_Memory();
 
      this->Src_Data_Col.Receive_Source_File_Data(&this->Git_Data_Receiver,src_path);
@@ -225,10 +224,10 @@ void Project_Files_Lister::Place_Source_File_Data(int index, char * src_path, ch
 
      this->Data[index].File_Path = nullptr;              // The file exact path ( System Path )
 
-
      char ** path = &this->Data[index].File_Path;
 
      char * repo = this->Repo_Dir;
+
 
      this->Data_Cltr.Determine_File_Exact_Path(path,repo,src_path,opr_sis);
 
@@ -241,7 +240,6 @@ void Project_Files_Lister::Place_Source_File_Data(int index, char * src_path, ch
      this->Data_Cltr.Extract_Upper_Directory_Path(dir,*path,'w');
 
 
-
      char ** name = &this->Data[index].File_Name;
 
      this->Data_Cltr.Determine_File_Name(name,*path);
@@ -250,7 +248,6 @@ void Project_Files_Lister::Place_Source_File_Data(int index, char * src_path, ch
      char ** name_ext = &this->Data[index].File_Name_With_Ext;
 
      this->Data_Cltr.Determine_Source_File_Name_With_Ext(name_ext,*name);
-
 
 
      char ** git_path = &this->Data[index].git_record_path;

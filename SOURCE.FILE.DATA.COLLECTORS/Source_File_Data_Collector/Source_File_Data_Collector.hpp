@@ -84,6 +84,7 @@ protected:
  StringOperator StringManager;
  Cpp_FileOperations FileManager;
  Include_File_Data * Include_Data_Pointer;
+ char * File_Path;
  bool syntax_error;
  bool isStringsEqual;
  bool Character_Inclusion_Status;

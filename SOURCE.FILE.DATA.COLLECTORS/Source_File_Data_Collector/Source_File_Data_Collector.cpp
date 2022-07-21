@@ -7,6 +7,8 @@ Source_File_Data_Collector::Source_File_Data_Collector(){
 
     this->File_Content = nullptr;
 
+    this->File_Path = nullptr;
+
     this->Include_Data_Pointer = nullptr;
 
     this->File_Content_Size = 0;
@@ -29,6 +31,8 @@ Source_File_Data_Collector::~Source_File_Data_Collector(){
 void Source_File_Data_Collector::Receive_Source_File_Data(Git_File_List_Receiver * Git_Receiver,
 
      char * file_path){
+
+     this->File_Path = file_path;
 
      this->Git_Receiver_Pointer = Git_Receiver;
 
@@ -112,6 +116,8 @@ void Source_File_Data_Collector::Receive_Include_File_Names(){
 
          bool char_before_sharp = false;
 
+
+
          if(this->File_Content[i][0]!= '#'){
 
             char_before_sharp = true;
@@ -133,17 +139,16 @@ void Source_File_Data_Collector::Receive_Include_File_Names(){
 
                         this->File_Content[i]);
 
+
                     // Determination of the header file directory
 
                     this->Determine_Git_Record_Header_File_Path(&(this->Include_Data_Pointer[index].Include_File_Git_Record_Path),
 
                       this->Include_Data_Pointer[index].Include_File_Name,'w');
 
-
                     this->Determine_Git_Record_Header_File_Directory(&(this->Include_Data_Pointer[index].Include_File_Git_Record_Dir),
 
                     this->Include_Data_Pointer[index].Include_File_Git_Record_Path,'w');
-
 
                     this->Determine_Header_File_Directory(&(this->Include_Data_Pointer[index].Include_File_Directory),
 
@@ -177,6 +182,7 @@ void Source_File_Data_Collector::Determine_Git_Record_Header_File_Path(char ** h
          delete [] file_name;
 
 
+
          if(is_equal){
 
             size_t header_path_size = strlen(file_path);
@@ -200,7 +206,22 @@ void Source_File_Data_Collector::Determine_Git_Record_Header_File_Path(char ** h
 
             break;
          }
-     }
+      }
+
+      if(*header_path == nullptr){
+
+        std::cerr << "\n\n";
+
+        std::cerr << "\n The user defined header file decleration :" << header_name;
+
+        std::cerr << "\n is not macth with the git records :";
+
+        std::cerr << "\n please check header decleration";
+
+        std::cerr << "\n\n";
+
+        exit(EXIT_FAILURE);
+      }
 }
 
 void Source_File_Data_Collector::Determine_Git_Record_Header_File_Directory(char ** header_dir,
@@ -448,7 +469,7 @@ void Source_File_Data_Collector::Determine_Git_Record_Source_File_Directory(char
        }
 
        (*record_dir)[dir_size] = '\0';
-       
+
      }
 }
 
