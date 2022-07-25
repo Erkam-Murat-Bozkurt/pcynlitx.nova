@@ -3,21 +3,25 @@
 
 int main(int argc, char ** argv){
 
+    if(argc < 3){
+
+       std::cout << "\n The usage: <DataRecorder.exe> <Descriptor File Path> <Data Type> <Data>";
+
+    }
+
     DataRecorder Recorder;
+
+
+    // The argv[1] is the descriptor file path
+
+    // The argv[2] is the data ttype
+
+    // The argv[3] is the data to be recorded
+
 
     Recorder.SetFilePath(argv[1]);
 
-    char Data_Type [] = "INCLUDE DIRECTORIES";
-
-    char Clear_Data_Type [] = "MAIN FILE NAMES";
-
-    char dir [] = "D:\\PCYNLITX.BUILD.TEST";
-
-    Recorder.Add_Data_Record(Data_Type,dir);
-
-    Recorder.Clear_Data_Record(Clear_Data_Type);
-
-    std::cout << "\n\n The end of the file..\n\n";
+    Recorder.Add_Data_Record(argv[2],argv[3]);
 
     return 0;
 }

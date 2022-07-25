@@ -147,11 +147,11 @@ void DataRecorder::Add_Data_Record(char * Data_Type, char * Data_Record){
         this->File_Manager.WriteToFile("\n");
      }
 
+     this->File_Manager.WriteToFile("\n");
+
      this->File_Manager.WriteToFile("    ");
 
      this->File_Manager.WriteToFile(Data_Record);
-
-     this->File_Manager.WriteToFile("\n");
 
      for(int i=0;i<this->Get_Down_Record_Number();i++){
 
@@ -636,7 +636,9 @@ bool DataRecorder::Determine_Is_This_Line_A_Record_Line(char * File_Line){
 
      for(int i=0;i<Line_Size;i++){
 
-         if(((File_Line[i]!= '\0') && (File_Line[i]!= ' ') && (File_Line[i]!= '\n') && (File_Line[i] != '\t'))){
+         if(((File_Line[i]!= '\0') && (File_Line[i]!= ' ') &&
+
+             (File_Line[i]!= '\n') && (File_Line[i] != '\t'))){
 
               this->is_this_a_record_line = true;
          }

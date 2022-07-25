@@ -85,7 +85,7 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
 
      this->WriteNewLines(new_lines);
 
-     this->FileManager.WriteToFile("[PROJECT ROOT DIR]{");
+     this->FileManager.WriteToFile("[PROJECT-ROOT-DIR]{");
 
      this->WriteNewLines(new_lines);
 
@@ -94,17 +94,7 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
      this->WriteNewLines(new_lines);
 
 
-     this->FileManager.WriteToFile("[PROJECT WAREHOUSE LOCATION]{");
-
-     this->WriteNewLines(new_lines);
-
-     this->FileManager.WriteToFile("}");
-
-     this->WriteNewLines(new_lines);
-
-
-
-     this->FileManager.WriteToFile("[C++ STANDARD]{");
+     this->FileManager.WriteToFile("[PROJECT-WAREHOUSE-LOCATION]{");
 
      this->WriteNewLines(new_lines);
 
@@ -114,8 +104,7 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
 
 
 
-
-     this->FileManager.WriteToFile("[INCLUDE DIRECTORIES]{");
+     this->FileManager.WriteToFile("[C++-STANDARD]{");
 
      this->WriteNewLines(new_lines);
 
@@ -126,7 +115,7 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
 
 
 
-     this->FileManager.WriteToFile("[SOURCE FILE DIRECTORIES]{");
+     this->FileManager.WriteToFile("[INCLUDE-DIRECTORIES]{");
 
      this->WriteNewLines(new_lines);
 
@@ -136,7 +125,18 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
 
 
 
-     this->FileManager.WriteToFile("[LIBRARY DIRECTORIES]{");
+
+     this->FileManager.WriteToFile("[SOURCE-FILE-DIRECTORIES]{");
+
+     this->WriteNewLines(new_lines);
+
+     this->FileManager.WriteToFile("}");
+
+     this->WriteNewLines(new_lines);
+
+
+
+     this->FileManager.WriteToFile("[LIBRARY-DIRECTORIES]{");
 
      this->WriteNewLines(new_lines);
 
@@ -155,7 +155,7 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
      this->WriteNewLines(new_lines);
 
 
-     this->FileManager.WriteToFile("[MAIN FILE NAMES]{");
+     this->FileManager.WriteToFile("[MAIN-FILE-NAMES]{");
 
      this->WriteNewLines(new_lines);
 
@@ -165,7 +165,7 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
 
 
 
-     this->FileManager.WriteToFile("[EXECUTABLE FILE NAMES]{");
+     this->FileManager.WriteToFile("[EXECUTABLE-FILE-NAMES]{");
 
      this->WriteNewLines(new_lines);
 
