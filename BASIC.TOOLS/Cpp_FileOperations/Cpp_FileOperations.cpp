@@ -313,7 +313,14 @@ std::string Cpp_FileOperations::ReadLine(){
 
      this->String_Line = "";
 
-     std::getline(this->DataFile,this->String_Line);
+     if(std::getline(this->DataFile,this->String_Line)){
+
+         this->End_Of_File_Condition = false;
+     }
+     else{
+
+        this->End_Of_File_Condition = true;
+     }
 
      this->String_Line = this->String_Line + '\0';
 
@@ -329,16 +336,19 @@ char * Cpp_FileOperations::ReadLine_as_Cstring(){;
 
 std::string Cpp_FileOperations::Read(){
 
-     this->DataFile >> this->string_word;
+     if(this->DataFile >> this->string_word){
+
+       this->End_Of_File_Condition = false;
+     }
+     else{
+
+          this->End_Of_File_Condition = true;
+     }
 
      return this->string_word;
 }
 
 bool Cpp_FileOperations::Control_End_of_File(){
-
-     this->End_Of_File_Condition = false;
-
-     this->End_Of_File_Condition = this->DataFile.eof();
 
      return this->End_Of_File_Condition;
 }

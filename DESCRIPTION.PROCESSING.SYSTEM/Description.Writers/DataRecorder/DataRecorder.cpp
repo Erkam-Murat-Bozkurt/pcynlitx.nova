@@ -340,7 +340,7 @@ void DataRecorder::Collect_Information_For_Data_Clearing(char * Record_Type){
 
      int Start_Point = this->Determine_Data_Record_Start_Point(Record_Type);
 
-     int End_Point = this->Determine_Data_Record_End_Point(Record_Type);
+     int End_Point   = this->Determine_Data_Record_End_Point(Record_Type);
 
      this->Read_Before_Record_Point(Start_Point+1);
 
