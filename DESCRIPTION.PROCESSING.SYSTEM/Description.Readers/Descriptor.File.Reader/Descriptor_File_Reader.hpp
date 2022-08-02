@@ -25,6 +25,7 @@ public:
  void Read_Descriptor_File(char * path);
  void Clear_Dynamic_Memory();
  char ** Get_Library_Directories();
+ char ** Get_Library_Files();
  char ** Get_Source_File_Directories();
  char ** Get_Include_Directories();
  char ** Get_Main_File_Names();
@@ -34,6 +35,7 @@ public:
  char *  Get_Warehouse_Location();
  char *  Get_Repo_Directory_Location();
  int Get_Library_Directory_Number();
+ int Get_Library_Files_Number();
  int Get_Source_File_Directory_Number();
  int Get_Include_Directory_Number();
  int Get_Exe_File_Name_Number();
@@ -48,6 +50,7 @@ protected:
  void Read_Include_Directories();
  void Read_Source_File_Directories();
  void Read_Library_Directories();
+ void Read_Library_Files();
  void Read_Options();
  void Place_String(char ** pointer, char * string);
  Descriptor_File_Data_Collector Data_Collector;
@@ -57,6 +60,7 @@ protected:
  int include_dir_num;
  int source_file_dir_num;
  int lib_dir_num;
+ int lib_file_num;
  int main_file_name_num;
  int exec_file_name_num;
  char * file_path;
@@ -67,6 +71,7 @@ protected:
  char ** Include_Directories;
  char ** Source_File_Directories;
  char ** Library_Directories;
+ char ** Library_Files;
  char ** Main_File_Names;
  char ** Executable_File_Names;
  bool Memory_Delete_Condition;

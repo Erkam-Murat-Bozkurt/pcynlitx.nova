@@ -147,6 +147,27 @@ int main(int argc, char ** argv){
 
     std::cout << "\n\n";
 
+    std::cout << "\n LIBRARY-FILES RECORD:";
+
+    int lib_files_num = Des_File_Reader.Get_Library_Files_Number();
+
+
+    if(lib_files_num > 0){
+
+       for(int i=0;i<lib_files_num;i++){
+
+           std::cout << "\n ";
+
+           std::cout << Des_File_Reader.Get_Library_Files()[i];
+       }
+    }
+    else{
+
+         std::cout << "\n There is no library directory decleration";
+    }
+
+    std::cout << "\n\n";
+
 
     std::cout << "\n MAIN FILE NAMES RECORD:";
 

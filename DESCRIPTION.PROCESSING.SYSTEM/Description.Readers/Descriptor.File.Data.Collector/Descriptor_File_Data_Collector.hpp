@@ -26,6 +26,7 @@ public:
  void Clear_Dynamic_Memory();
  int Get_Record_Directory_Record_Area(int index);
  int Get_Library_Directories_Record_Area(int index);
+ int Get_Library_Files_Record_Area(int index);
  int Get_Source_File_Directories_Record_Area(int index);
  int Get_Include_Directories_Record_Area(int index);
  int Get_Standard_Record_Area(int index);
@@ -44,6 +45,7 @@ protected:
  void Determine_Include_Directories_Record_Area();
  void Determine_Source_File_Directories_Record_Area();
  void Determine_Library_Directories_Record_Area();
+ void Determine_Library_Files_Record_Area();
  void Determine_Options_Record_Area();
  void Determine_Warehouse_Location_Record_Area();
  void Determine_Root_Directory_Record_Area();
@@ -57,6 +59,7 @@ protected:
  int Root_Directory_Record_Area[2];
  int Warehouse_Location_Record_Area[2];
  int Library_Directories_Record_Area[2];
+ int Library_Files_Record_Area[2];
  int Source_File_Directories_Record_Area[2];
  int Include_Directories_Record_Area[2];
  int Standard_Record_Area[2];

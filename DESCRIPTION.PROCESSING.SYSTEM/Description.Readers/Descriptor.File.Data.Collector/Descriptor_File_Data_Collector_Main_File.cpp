@@ -80,6 +80,14 @@ int main(int argc, char ** argv){
 
     std::cout << "\n\n";
 
+    std::cout << "\n LIBRARY FILES RECORD:";
+
+    std::cout << "\n Library files record area start:" << Data_Collector.Get_Library_Files_Record_Area(0);
+
+    std::cout << "\n Library files record area end:"   << Data_Collector.Get_Library_Files_Record_Area(1);
+
+    std::cout << "\n\n";
+
 
 
     std::cout << "\n OPTIONS RECORD:";

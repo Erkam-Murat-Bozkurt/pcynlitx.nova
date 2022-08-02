@@ -69,23 +69,25 @@ void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Path(char * path
 
 void Descriptor_File_Syntax_Controller::Control_Keywords(){
 
-     char root_dir [] = "[PROJECTROOTDIR]";
+     char root_dir [] = "[PROJECT-ROOT-DIR]";
 
-     char warehouse_location [] = "[PROJECTWAREHOUSELOCATION]";
+     char warehouse_location [] = "[PROJECT-WAREHOUSE-LOCATION]";
 
-     char standard [] = "[C++STANDARD]";
+     char standard [] = "[C++-STANDARD]";
 
-     char include_dir [] = "[INCLUDEDIRECTORIES]";
+     char include_dir [] = "[INCLUDE-DIRECTORIES]";
 
-     char src_dir [] = "[SOURCEFILEDIRECTORIES]";
+     char src_dir [] = "[SOURCE-FILE-DIRECTORIES]";
 
-     char lib_dir [] = "[LIBRARYDIRECTORIES]";
+     char lib_dir [] = "[LIBRARY-DIRECTORIES]";
+
+     char lib_files [] = "[LIBRARY-FILES]";
 
      char options [] = "[OPTIONS]";
 
-     char main_file_name [] = "[MAINFILENAMES]";
+     char main_file_name [] = "[MAIN-FILE-NAMES]";
 
-     char exe_file_name [] = "[EXECUTABLEFILENAMES]";
+     char exe_file_name [] = "[EXECUTABLE-FILE-NAMES]";
 
 
      if(!this->Control_String_Inclusion(root_dir)){
@@ -123,6 +125,15 @@ void Descriptor_File_Syntax_Controller::Control_Keywords(){
         std::cout << "\n There is a syntax error on descriptor file";
 
         exit(0);
+     };
+
+
+
+     if(!this->Control_String_Inclusion(lib_files)){
+
+         std::cout << "\n There is a syntax error on descriptor file";
+
+         exit(0);
      };
 
 

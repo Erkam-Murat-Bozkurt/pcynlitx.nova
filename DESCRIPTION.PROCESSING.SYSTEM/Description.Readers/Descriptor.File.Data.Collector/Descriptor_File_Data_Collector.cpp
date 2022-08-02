@@ -6,6 +6,7 @@ Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(){
   for(int i=0;i<2;i++){
 
       this->Library_Directories_Record_Area[i] = 0;
+      this->Library_Files_Record_Area[i] = 0;
       this->Source_File_Directories_Record_Area[i] = 0;
       this->Include_Directories_Record_Area[i] = 0;
       this->Standard_Record_Area[i] = 0;
@@ -71,6 +72,8 @@ void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(char * path){
 
      this->Determine_Library_Directories_Record_Area();
 
+     this->Determine_Library_Files_Record_Area();
+
      this->Determine_Options_Record_Area();
 
      this->Determine_Main_File_Des_Record_Area();
@@ -98,7 +101,7 @@ void Descriptor_File_Data_Collector::Receive_Descriptor_File_Path(char * path){
 
 void Descriptor_File_Data_Collector::Determine_Root_Directory_Record_Area(){
 
-     char key_word [] = "[PROJECTROOTDIR]";
+     char key_word [] = "[PROJECT-ROOT-DIR]";
 
      int record_stard = 1, record_end = 0;
 
@@ -121,7 +124,7 @@ void Descriptor_File_Data_Collector::Determine_Root_Directory_Record_Area(){
 
 void Descriptor_File_Data_Collector::Determine_Warehouse_Location_Record_Area(){
 
-     char key_word [] = "[PROJECTWAREHOUSELOCATION]";
+     char key_word [] = "[PROJECT-WAREHOUSE-LOCATION]";
 
      int record_stard = 1, record_end = 0;
 
@@ -144,7 +147,7 @@ void Descriptor_File_Data_Collector::Determine_Warehouse_Location_Record_Area(){
 
 void Descriptor_File_Data_Collector::Determine_Standard_Record_Area(){
 
-     char key_word [] = "[C++STANDARD]";
+     char key_word [] = "[C++-STANDARD]";
 
      int record_stard = 1, record_end = 0;
 
@@ -170,7 +173,7 @@ void Descriptor_File_Data_Collector::Determine_Standard_Record_Area(){
 
 void Descriptor_File_Data_Collector::Determine_Include_Directories_Record_Area(){
 
-     char key_word [] = "[INCLUDEDIRECTORIES]";
+     char key_word [] = "[INCLUDE-DIRECTORIES]";
 
      int record_stard = 1, record_end = 0;
 
@@ -196,7 +199,7 @@ void Descriptor_File_Data_Collector::Determine_Include_Directories_Record_Area()
 
 void Descriptor_File_Data_Collector::Determine_Source_File_Directories_Record_Area(){
 
-     char key_word [] = "[SOURCEFILEDIRECTORIES]";
+     char key_word [] = "[SOURCE-FILE-DIRECTORIES]";
 
 
      int record_stard = 1, record_end = 0;
@@ -224,8 +227,7 @@ void Descriptor_File_Data_Collector::Determine_Source_File_Directories_Record_Ar
 
 void Descriptor_File_Data_Collector::Determine_Library_Directories_Record_Area(){
 
-     char key_word [] = "[LIBRARYDIRECTORIES]";
-
+     char key_word [] = "[LIBRARY-DIRECTORIES]";
 
      int record_stard = 1, record_end = 0;
 
@@ -248,6 +250,34 @@ void Descriptor_File_Data_Collector::Determine_Library_Directories_Record_Area()
 
      this->FindStringPoint(end_brace,start_brace_line);
 }
+
+void Descriptor_File_Data_Collector::Determine_Library_Files_Record_Area(){
+
+     char key_word [] = "[LIBRARY-FILES]";
+
+
+     int record_stard = 1, record_end = 0;
+
+     int keyword_line = this->FindStringPoint(key_word,record_stard);
+
+
+     char start_brace [] = "{";
+
+     char end_brace []   = "}";
+
+
+     this->Library_Files_Record_Area[0] =
+
+     this->FindStringPoint(start_brace,keyword_line);
+
+
+     int start_brace_line = this->Library_Files_Record_Area[0];
+
+     this->Library_Files_Record_Area[1] =
+
+     this->FindStringPoint(end_brace,start_brace_line);
+}
+
 
 void Descriptor_File_Data_Collector::Determine_Options_Record_Area(){
 
@@ -278,7 +308,7 @@ void Descriptor_File_Data_Collector::Determine_Options_Record_Area(){
 
 void Descriptor_File_Data_Collector::Determine_Main_File_Des_Record_Area(){
 
-     char key_word [] = "[MAINFILENAMES]";
+     char key_word [] = "[MAIN-FILE-NAMES]";
 
      int record_stard = 1, record_end = 0;
 
@@ -304,7 +334,7 @@ void Descriptor_File_Data_Collector::Determine_Main_File_Des_Record_Area(){
 
 void Descriptor_File_Data_Collector::Determine_Executable_File_Name_Record_Area(){
 
-     char key_word [] = "[EXECUTABLEFILENAMES]";
+     char key_word [] = "[EXECUTABLE-FILE-NAMES]";
 
 
      int record_stard = 1, record_end = 0;
@@ -406,6 +436,12 @@ int Descriptor_File_Data_Collector::Get_Library_Directories_Record_Area(int inde
 
       return this->Library_Directories_Record_Area[index];
 }
+
+int Descriptor_File_Data_Collector::Get_Library_Files_Record_Area(int index) {
+
+      return this->Library_Files_Record_Area[index];
+}
+
 
 int Descriptor_File_Data_Collector::Get_Source_File_Directories_Record_Area(int index) {
 

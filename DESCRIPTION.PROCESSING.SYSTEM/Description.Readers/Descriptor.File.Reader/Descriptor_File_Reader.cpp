@@ -10,6 +10,7 @@ Descriptor_File_Reader::Descriptor_File_Reader(){
     this->Include_Directories = nullptr;
     this->Source_File_Directories = nullptr;
     this->Library_Directories = nullptr;
+    this->Library_Files = nullptr;
     this->warehouse_location = nullptr;
     this->Main_File_Names = nullptr;
     this->Executable_File_Names = nullptr;
@@ -17,6 +18,7 @@ Descriptor_File_Reader::Descriptor_File_Reader(){
     this->include_dir_num = 0;
     this->source_file_dir_num = 0;
     this->lib_dir_num = 0;
+    this->lib_file_num = 0;
 }
 
 
@@ -66,6 +68,16 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
                delete [] this->Library_Directories[i];
 
                this->Library_Directories[i] = nullptr;
+            }
+         }
+
+         if(this->Library_Files != nullptr){
+
+            for(int i=0;i<this->lib_file_num;i++){
+
+               delete [] this->Library_Files[i];
+
+               this->Library_Files[i] = nullptr;
             }
          }
 
@@ -133,6 +145,8 @@ void Descriptor_File_Reader::Read_Descriptor_File(char * path){
 
      this->Read_Library_Directories();
 
+     this->Read_Library_Files();
+
      this->Read_Options();
 
      this->Read_Main_File_Names();
@@ -198,7 +212,7 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
 
         std::cout << "\n Error:";
 
-        std::cout << "\n There is no any decleration about project warehouse location";
+        std::cout << "\n There is no any decleration about project root directory";
 
         std::cout << "\n\n";
 
@@ -450,6 +464,49 @@ void Descriptor_File_Reader::Read_Library_Directories(){
      }
 }
 
+void Descriptor_File_Reader::Read_Library_Files(){
+
+     int start_line = this->Data_Collector.Get_Library_Files_Record_Area(0);
+
+     int end_line  = this->Data_Collector.Get_Library_Files_Record_Area(1);
+
+     this->lib_file_num = 0;
+
+     for(int i=start_line+1;i<end_line;i++){
+
+         char * line = this->StringManager.ReadFileLine(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+             this->lib_file_num++;
+         }
+     }
+
+     if(this->lib_file_num > 0){
+
+        this->Library_Files = new char * [5*this->lib_file_num];
+
+        for(int i=0;i<this->lib_file_num;i++){
+
+            this->Library_Files[i] = nullptr;
+        }
+
+        int record_index = 0;
+
+        for(int i=start_line+1;i<end_line;i++){
+
+            char * line = this->StringManager.ReadFileLine(i);
+
+            if(this->StringManager.CheckStringLine(line)){
+
+               this->Place_String(&(this->Library_Files[record_index]),line);
+
+                record_index++;
+            }
+        }
+     }
+}
+
 void Descriptor_File_Reader::Read_Options(){
 
      int start_line = this->Data_Collector.Get_Options_Record_Area(0);
@@ -559,7 +616,7 @@ void Descriptor_File_Reader::Read_Executable_File_Names(){
 
      this->Executable_File_Names = new char * [5*this->exec_file_name_num];
 
-     for(int i=0;i<this->lib_dir_num;i++){
+     for(int i=0;i<this->exec_file_name_num;i++){
 
          this->Executable_File_Names[i] = nullptr;
      }
@@ -601,6 +658,10 @@ char ** Descriptor_File_Reader::Get_Library_Directories(){
         return this->Library_Directories;
 }
 
+char ** Descriptor_File_Reader::Get_Library_Files(){
+
+        return this->Library_Files;
+}
 
 char ** Descriptor_File_Reader::Get_Source_File_Directories(){
 
@@ -647,6 +708,11 @@ char * Descriptor_File_Reader::Get_Repo_Directory_Location(){
 int Descriptor_File_Reader::Get_Library_Directory_Number(){
 
     return this->lib_dir_num;
+}
+
+int Descriptor_File_Reader::Get_Library_Files_Number(){
+
+    return this->lib_file_num;
 }
 
 int Descriptor_File_Reader::Get_Source_File_Directory_Number(){
