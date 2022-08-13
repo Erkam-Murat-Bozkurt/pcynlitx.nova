@@ -75,13 +75,15 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
 
      this->Mk_File_Clnr.Clear_Make_Files_Exist_On_Repo();
 
+
      // Determination of the
 
      this->Determine_Project_Directories();
 
-     int dir_num = this->File_Lister.Get_Source_File_Number();
 
-     for(int i=0;i<dir_num;i++){
+     int src_num = this->File_Lister.Get_Source_File_Number();
+
+     for(int i=0;i<src_num;i++){
 
          char * source_file_name = this->File_Lister.Get_Source_File_Name(i);
 

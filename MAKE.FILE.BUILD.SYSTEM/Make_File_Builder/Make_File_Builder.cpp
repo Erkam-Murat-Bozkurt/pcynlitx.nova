@@ -63,7 +63,18 @@ void Make_File_Builder::Build_MakeFile(int git_index){
 
      this->Data_Collector.Receive_Descriptor_File_Reader(this->Des_Reader_Pointer);
 
+
+     /*
+
      this->Data_Collector.Receive_Git_Record_Data(this->File_Lister_Pointer,git_index);
+
+
+     std::cout << "\n --3";
+
+     std::cin.get();
+
+     */
+
 
      this->Data_Collector.Collect_Make_File_Data(this->File_Lister_Pointer,git_index);
 
