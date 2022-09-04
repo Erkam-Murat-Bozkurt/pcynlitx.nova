@@ -70,7 +70,16 @@ void Source_File_Data_Collector::Determine_Include_Line_Number(){
              char_before_sharp = true;
          }
 
-         if(!char_before_sharp){ // In metaprograms, #include key is used on the inside code
+         // In metaprograms, #include key is used on the inside code
+
+         // Therefore, there may be false include therms which is used in the metaprograms
+
+         // in order to produce header files. If there is a character before the sharp symbol,
+
+         // it is a meta program code. ( simething like write{ #include \"sample.h\" })
+
+         if(!char_before_sharp){
+
 
            if(is_include_line_db){
 

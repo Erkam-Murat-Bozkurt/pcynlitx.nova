@@ -23,7 +23,6 @@
                       //  it is truncated to zero length.
                       // If the file does not exist, it is created.
 
-
 #define Af   'a'      // Open the file for writing in append mode.
                       // The file is created if it does not exist.
                       // The stream is positioned at the end of the file.
@@ -50,12 +49,15 @@ public:
  std::string Read();
  std::string ReadLine();
  std::string Receive_File_As_std_string(char * path);
+ int GetFileSize() const;
  char * GetFilePath();
+ char * GetFileLine(int line_number); // in therms of cstring
  char * ReadLine_as_Cstring();
  void Determine_Base_File_Size(char * path);
  void Receive_File(char * path);
- void Record_File(char * path);
- char * Conver_Std_String_To_Char(std::string string_line);
+ void Record_File(char * path); // It reads whole of file in therms of cstring
+ void Read_File_as_CString(char * path);
+ char * Convert_Std_String_To_Char(std::string string_line);
  bool Is_Path_Exist(char * path);
  bool Is_This_File_Empty(char * path);
  void Clear_Dynamic_Memory();

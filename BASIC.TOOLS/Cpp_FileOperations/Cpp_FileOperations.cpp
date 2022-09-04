@@ -331,7 +331,7 @@ char * Cpp_FileOperations::ReadLine_as_Cstring(){;
 
        this->ReadLine();
 
-       return this->Conver_Std_String_To_Char(this->String_Line);
+       return this->Convert_Std_String_To_Char(this->String_Line);
 }
 
 std::string Cpp_FileOperations::Read(){
@@ -405,7 +405,7 @@ bool Cpp_FileOperations::Is_This_File_Empty(char * path){
 
      this->Is_File_Empty = true;
 
-     char * string = Conver_Std_String_To_Char(this->File_Content);
+     char * string = Convert_Std_String_To_Char(this->File_Content);
 
      size_t string_size = strlen(string);
 
@@ -415,6 +415,13 @@ bool Cpp_FileOperations::Is_This_File_Empty(char * path){
      }
 
      return this->Is_File_Empty;
+}
+
+void Cpp_FileOperations::Read_File_as_CString(char * path){
+
+     this->Determine_Base_File_Size(path);
+
+     this->Receive_File(path);
 }
 
 void Cpp_FileOperations::Receive_File(char * path){
@@ -499,7 +506,7 @@ void Cpp_FileOperations::Record_File(char * target_path){
      this->FileClose();
 }
 
-char * Cpp_FileOperations::Conver_Std_String_To_Char(std::string string_line){
+char * Cpp_FileOperations::Convert_Std_String_To_Char(std::string string_line){
 
        if(this->CString != nullptr){
 
@@ -594,4 +601,27 @@ int Cpp_FileOperations::Delete_File(char * path){
 char * Cpp_FileOperations::GetFilePath(){
 
        return this->CString_FilePATH;
+}
+
+char * Cpp_FileOperations::GetFileLine(int index){
+
+       if(this->File_Index != nullptr){
+
+          return this->File_Index[index];
+       }
+       else{
+
+            std::cout << "\n\n the file did not read yet";
+
+            std::cout << "\n\n the file must be read with";
+
+            std::cout << "\n\n command ReadFile(char * path) ";
+
+            exit(0);
+       }
+}
+
+int Cpp_FileOperations::GetFileSize() const {
+
+    return this->File_line_Number;
 }

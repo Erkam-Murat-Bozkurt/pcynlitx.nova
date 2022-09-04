@@ -31,7 +31,13 @@ int main(int argc, char ** argv){
 
     int src_file_num = Dir_Lister.Get_Source_File_Number();
 
+    std::cout << "\n src_file_num:" << src_file_num;
+
+    std::cout << "\n";
+
     for(int i=0;i<src_file_num;i++){
+
+       /*
 
         std::cout << "\n Source file directory (system)      :";
 
@@ -89,7 +95,20 @@ int main(int argc, char ** argv){
         std::cout << "\n";
 
 
-        std::cout << "\n Class header file name:";
+        */
+
+
+        std::cout << "\n\n";
+
+
+        std::cout << "\n Source file name (without file ext) -" << i << " ";
+
+        std::cout << "\n " << Dir_Lister.Get_Source_File_Name(i);
+
+        std::cout << "\n";
+
+
+        std::cout << "\n Class header file name -" << i << " " ;
 
         if(Dir_Lister.Get_Class_File_Header_Name(i) != nullptr){
 
@@ -103,7 +122,7 @@ int main(int argc, char ** argv){
         std::cout << "\n";
 
 
-
+        /*
 
         int src_head_num = Dir_Lister.Get_Source_File_Include_File_Number(i);
 
@@ -131,10 +150,17 @@ int main(int argc, char ** argv){
         }
 
         std::cout << "\n\n\n\n";
+
+            */
     }
 
 
+
     int ind_head_num = Dir_Lister.Get_Indenpendent_Header_Files_Number();
+
+    std::cout << "\n ind_head_num:" << ind_head_num;
+
+    std::cin.get();
 
     for(int i=0;i<ind_head_num;i++){
 

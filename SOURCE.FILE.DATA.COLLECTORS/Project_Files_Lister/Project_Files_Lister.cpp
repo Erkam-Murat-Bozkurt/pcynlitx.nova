@@ -63,7 +63,7 @@ void Project_Files_Lister::Determine_Source_File_Number(){
 
      for(int i=0;i<this->git_record_size-1;i++){
 
-         char * file_path = this->Git_Data_Receiver.Get_Git_File_Index(i);
+         char * file_path    = this->Git_Data_Receiver.Get_Git_File_Index(i);
 
          bool is_source_file = this->Source_Determiner.Is_Source_File(file_path);
 

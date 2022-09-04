@@ -21,8 +21,6 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-
-
     Descriptor_File_Reader Des_Reader;
 
     Des_Reader.Read_Descriptor_File(argv[1]);
@@ -39,6 +37,8 @@ int main(int argc, char ** argv){
 
     Header_File_Determiner Header_Determiner;
 
+    Header_Determiner.Receive_Git_Data(&Receiver);
+
     for(int i=0;i<index_size-1;i++){
 
        char * git_record_path =  Receiver.Get_Git_File_Index(i);
@@ -51,9 +51,9 @@ int main(int argc, char ** argv){
 
        if(is_header){
 
-         Header_Determiner.Determine_Header_File_System_Path(Repo_Dir,git_record_path,'w');
+         Header_Determiner.Determine_Header_File_Name(git_record_path);
 
-         std::cout << "\n Header system path:" << Header_Determiner.Get_Header_File_System_Path();
+         std::cout << "\n Header system path:" << Header_Determiner.Get_Header_File_Name_Without_Ext();
        }
     }
 
