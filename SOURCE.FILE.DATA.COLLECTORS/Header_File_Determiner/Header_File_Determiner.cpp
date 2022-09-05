@@ -18,6 +18,8 @@ Header_File_Determiner::Header_File_Determiner(){
     this->include_decleration_cond = false;
 
     this->Repo_Dir = nullptr;
+
+    this->Header_File_Name_With_Extention = nullptr;
 }
 
 Header_File_Determiner::Header_File_Determiner(const Header_File_Determiner & orig){
@@ -315,6 +317,42 @@ void Header_File_Determiner::Determine_Header_File_Name(char * path){
 }
 
 
+void Header_File_Determiner::Determine_Header_File_Name_With_Extention(char * path){
+
+     this->Clear_Pointer_Memory(&this->Header_File_Name_With_Extention);
+
+     size_t file_path_size = strlen(path);
+
+     size_t dir_size = file_path_size;
+
+     for(size_t i=file_path_size;i>0;i--){
+
+          if(((path[i] == '/') || (path[i] == '\\'))){
+
+             break;
+          }
+          else{
+
+              dir_size--;
+          }
+      }
+
+      size_t Header_File_Name_Size = file_path_size - dir_size;
+
+      this->Header_File_Name_With_Extention = new char [5*Header_File_Name_Size];
+
+      int index = 0;
+
+      for(size_t i=dir_size+1;i<file_path_size;i++){
+
+          this->Header_File_Name_With_Extention[index] = path[i];
+
+          index++;
+      }
+
+      this->Header_File_Name_With_Extention[index] = '\0';
+}
+
 void Header_File_Determiner::Determine_Header_File_System_Path(char * repo_dir,
 
      char * git_record_path, char operating_sis){
@@ -543,6 +581,11 @@ char * Header_File_Determiner::Get_Header_Directory(){
 char * Header_File_Determiner::Get_Header_File_Name_Without_Ext(){
 
        return this->Header_File_Name;
+}
+
+char * Header_File_Determiner::Get_Header_File_Name_With_Ext(){
+
+       return this->Header_File_Name_With_Extention;
 }
 
 char * Header_File_Determiner::Get_Header_File_System_Path(){

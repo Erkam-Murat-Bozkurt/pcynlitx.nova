@@ -31,6 +31,7 @@ public:
  bool Is_this_file_included_on_anywhere(char * file_path);
  void Determine_Header_File_Directory(char * path);
  void Determine_Header_File_Name(char * path);
+ void Determine_Header_File_Name_With_Extention(char * path);
  void Determine_Header_File_System_Path(char * repo_dir,
       char * git_record_path, char operating_sis);
  void Extract_Header_File_Name_From_Decleration(char ** header_name, char * string);
@@ -42,6 +43,7 @@ public:
  char * Get_Header_Directory();
  char * Get_Header_File_System_Path();
  char * Get_Header_File_Name_Without_Ext();
+ char * Get_Header_File_Name_With_Ext();
  void Clear_Dynamic_Memory();
 protected:
  void Read_File(char * path);
@@ -51,6 +53,7 @@ protected:
  Git_File_List_Receiver * Git_Receiver_Pointer;
  char *  Header_File_Directory;
  char *  Header_File_Name;
+ char *  Header_File_Name_With_Extention;
  char *  Header_File_System_Path;
  char *  Repo_Dir;
  bool is_header_file;

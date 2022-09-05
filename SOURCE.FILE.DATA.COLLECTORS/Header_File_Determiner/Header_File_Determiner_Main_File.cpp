@@ -51,11 +51,13 @@ int main(int argc, char ** argv){
 
        if(is_header){
 
-         Header_Determiner.Determine_Header_File_Name(git_record_path);
+         Header_Determiner.Determine_Header_File_Name_With_Extention(git_record_path);
 
-         std::cout << "\n Header system path:" << Header_Determiner.Get_Header_File_Name_Without_Ext();
+         std::cout << "\n Header file name:" << Header_Determiner.Get_Header_File_Name_With_Ext();
        }
     }
+
+    std::cout << "\n\n The end of the program ";
 
     return 0;
 }
