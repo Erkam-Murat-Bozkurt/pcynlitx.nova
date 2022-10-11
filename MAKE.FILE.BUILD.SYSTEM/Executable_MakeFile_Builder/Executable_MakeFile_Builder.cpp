@@ -56,298 +56,237 @@ void Executable_MakeFile_Builder::Clear_Dynamic_Memory(){
 
 void Executable_MakeFile_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader){
 
-     this->Des_Reader_Pointer = Des_Reader;
-
-     this->warehouse_path = this->Des_Reader_Pointer->Get_Warehouse_Location();
-
-     this->repo_dir = this->Des_Reader_Pointer->Get_Repo_Directory_Location();
+     this->DataCollector.Receive_Descriptor_File_Reader(Des_Reader);
 }
 
-void Executable_MakeFile_Builder::Receive_Git_Record_Data(Project_Files_Lister * Lister_Pointer){
+void Executable_MakeFile_Builder::Receive_Git_Record_Data(Git_File_List_Receiver * Pointer){
 
-     this->File_Lister_Pointer = Lister_Pointer;
+     this->DataCollector.Receive_Git_Record_Data(Pointer);
+}
+
+void Executable_MakeFile_Builder::Receive_Source_File_Info(Project_Files_Lister * Pointer){
+
+     this->DataCollector.Receive_Source_File_Info(Pointer);
 }
 
 void Executable_MakeFile_Builder::Build_MakeFile(){
 
-     int src_num = this->File_Lister_Pointer->Get_Source_File_Number();
+     this->DataCollector.Collect_Make_File_Data();
 
-     for(int i=0;i<src_num;i++){
+     this->Receive_DataCollector_Info();
 
-         char * src_file_name =
+     this->Determine_Compile_Order();
 
-             this->File_Lister_Pointer->Get_Source_File_Name(i);
 
-         std::cout << "\n src_file_name:" << src_file_name;
-
-     }
-
-     this->Collect_Make_File_Data();
 }
 
+  void Executable_MakeFile_Builder::Determine_Compile_Order(){
+
+       //this->DataCollector.Print_Header_Data();
+
+       this->Receive_DataCollector_Info();
+
+       this->Reverse_Order_Priorities();
 
 
-void Executable_MakeFile_Builder::Collect_Make_File_Data(){
+       for(int i=0;i<this->header_file_number;i++){
 
-     this->Determine_Warehouse_Header_Dir('w');
 
-     this->Determine_Warehouse_Object_Dir('w');
+          std::cout << "\n\n\n";
 
-     this->Determine_Object_File_List();
+          std::cout << "\n RECURSIVE SEARCH STARTED";
 
-     this->Determine_Header_File_List();
-}
+          std::cout << "\n this->Data_Ptr_CString[" << i << "].priority: "
 
-void Executable_MakeFile_Builder::Determine_Header_File_List(){
+          << this->Data_Ptr_CString[i].priority;
 
-  int src_head_num = this->File_Lister_Pointer->Get_Source_File_Number();
 
-  std::cout << "\n src_head_num:" << src_head_num;
+          bool rec_search = this->Data_Ptr_CString[i].rcr_srch_complated;
 
-  for(int k=0;k<src_head_num;k++){
+          if(!rec_search){
 
-      std::cout << "\n Included header file -" << k <<
+             this->Search_Recursive_Include_Dependency(i);
+          }
 
-      this->File_Lister_Pointer->Get_Class_File_Header_Name(k);
+          std::cout << "\n this->Data_Ptr_CString[" << i << "].priority: "
+
+          << this->Data_Ptr_CString[i].priority;
+
+          std::cout << "\n RECURSIVE SEARCH ENDED";
+
+          std::cin.get();
+       }
+
+
+       this->Order_Priorities();
+
+       this->DataCollector.Print_Header_Data();
+
+       std::cin.get();
+
+
+
+       for(int i=0;i<this->header_file_number;i++){
+
+           std::cout << "\n this->Data_Ptr_CString[" << i << "].priority"
+
+           << this->Data_Ptr_CString[i].priority;
+           std::cin.get();
+
+
+           bool rec_search = this->Data_Ptr_CString[i].rcr_srch_complated;
+
+           this->Search_Recursive_Include_Dependency(i);
+
+           std::cout << "\n this->Data_Ptr_CString[" << i << "].priority"
+
+           << this->Data_Ptr_CString[i].priority;
+
+           std::cin.get();
+       }
+
+       this->Order_Priorities();
+
+       std::cout << "\n\n ////////////////////////////////////////// ";
+
+       this->Print_Compiler_Orders();
+
+       std::cin.get();
   }
 
-  std::cout << "\n src_head_num:" << src_head_num;
 
-  std::cin.get();
+  void Executable_MakeFile_Builder::Search_Recursive_Include_Dependency(int index){
 
-  int ind_head_num = this->File_Lister_Pointer->Get_Indenpendent_Header_Files_Number();
+       int inc_num = this->Data_Ptr_CString[index].inclusion_number;
 
-  for(int i=0;i<ind_head_num;i++){
+       std::cout << "\n this->Data_Ptr_CString[" << index << "].header_name:" <<
 
-      std::cout << "\n Independen header file - " << i << ":"
+       this->Data_Ptr_CString[index].header_name;
 
-      << this->File_Lister_Pointer->Get_Independent_Header_File(i);
+       std::cout << "\n index:" << index;
+
+       std::cout << "\n inc_num:" << inc_num;
+
+       if(inc_num>0){
+
+          for(int k=0;k<inc_num;k++){
+
+              char * inc_header_name = this->Data_Ptr_CString[index].included_headers[k];
+
+              for(int j=0;j<this->header_file_number;j++){
+
+                  char * repo_header = this->Data_Ptr_CString[j].header_name;
+
+                  bool is_equal = this->Char_Processor.CompareString(inc_header_name,repo_header);
+
+                  if(is_equal){
+
+                     int priority = this->Data_Ptr_CString[j].priority;
+
+                     if(priority == 0){
+
+                        priority = 1;
+                     }
+
+                     this->Data_Ptr_CString[index].priority =
+
+                     this->Data_Ptr_CString[index].priority + priority;
+
+
+                     //this->Search_Recursive_Include_Dependency(j);
+                  }
+              }
+          }
+        }
+        else{
+
+             this->Data_Ptr_CString[index].rcr_srch_complated = true;
+        }
+
+        //std::cout << "\n The recursive call ended ..";
   }
-}
 
-void Executable_MakeFile_Builder::Determine_Object_File_List(){
+  void Executable_MakeFile_Builder::Order_Priorities(){
 
-     int src_num = this->File_Lister_Pointer->Get_Source_File_Number();
+       for(int i=0;i<this->header_file_number;i++){
 
-     size_t list_size = 0;
+           for(int j=i;j<this->header_file_number;j++){
 
-     for(int i=0;i<src_num;i++){
+               int dep_i = this->Data_Ptr_CString[i].priority;
 
-         char * src_file_name =
+               int dep_j = this->Data_Ptr_CString[j].priority;
 
-         this->File_Lister_Pointer->Get_Source_File_Name(i);
+               Compiler_Data_CString temp;
 
-         size_t src_name_size = strlen(src_file_name);
+               if( dep_i < dep_j){
 
-         list_size = list_size + src_name_size;
-     }
+                   temp  = this->Data_Ptr_CString[j];
 
-     this->object_file_list = new char [5*list_size];
+                   this->Data_Ptr_CString[j] = this->Data_Ptr_CString[i];
 
-     char object_file_add [] = ".o";
-
-     int index = 0;
-
-     for(int i=0;i<src_num;i++){
-
-         char * src_name =
-
-         this->File_Lister_Pointer->Get_Source_File_Name(i);
-
-         this->Add_String(&this->object_file_list,src_name,&index);
-
-         this->Add_String(&this->object_file_list,object_file_add,&index);
-
-         this->object_file_list[index] = ' ';
-
-         index++;
-     }
-
-     this->object_file_list[index] = '\0';
-}
-
-
-void Executable_MakeFile_Builder::Add_String(char ** list, char * string, int * index){
-
-     size_t string_size = strlen(string);
-
-     for(size_t i=0;i<string_size;i++){
-
-         (*list)[(*index)] = string[i];
-
-         (*index)++;
-     }
-}
-
-void Executable_MakeFile_Builder::Determine_Warehouse_Header_Dir(char operating_sis){
-
-     char warehouse_word   [] = "WAREHOUSE";
-
-     char header_directory [] = "PROJECT.HEADER.FILES";
-
-     size_t warehouse_path_size = strlen(this->warehouse_path);
-
-     size_t head_dir_size = strlen(header_directory);
-
-     size_t wr_word_size  = strlen(warehouse_word);
-
-     size_t path_size = warehouse_path_size + head_dir_size + wr_word_size;
-
-     this->warehouse_head_dir = new char [5*path_size];
-
-     int index = 0;
-
-     for(size_t i=0;i<warehouse_path_size;i++){
-
-        this->warehouse_head_dir[index] = this->warehouse_path[i];
-
-        index++;
-     }
-
-     if(operating_sis == 'w'){
-
-        if(this->warehouse_head_dir[warehouse_path_size-1] != '\\'){
-
-           this->warehouse_head_dir[index] = '\\';
-
-           index++;
+                   this->Data_Ptr_CString[i] = temp;
+               }
+            }
         }
-     }
+  }
 
-     if(operating_sis == 'l'){
+  void Executable_MakeFile_Builder::Reverse_Order_Priorities(){
 
-         if(this->warehouse_head_dir[warehouse_path_size-1] != '/'){
+       for(int i=0;i<this->header_file_number;i++){
 
-            this->warehouse_head_dir[index] = '/';
+           for(int j=i;j<this->header_file_number;j++){
 
-            index++;
-         }
-     }
+               int dep_i = this->Data_Ptr_CString[i].priority;
 
-     for(size_t i=0;i<wr_word_size;i++){
+               int dep_j = this->Data_Ptr_CString[j].priority;
 
-         this->warehouse_head_dir[index] = warehouse_word[i];
+               Compiler_Data_CString temp;
 
-         index++;
-     }
+               if( dep_i > dep_j){
 
-     if(operating_sis == 'w'){
+                   temp  = this->Data_Ptr_CString[j];
 
-        if(this->warehouse_head_dir[warehouse_path_size-1] != '\\'){
+                   this->Data_Ptr_CString[j] = this->Data_Ptr_CString[i];
 
-           this->warehouse_head_dir[index] = '\\';
+                   this->Data_Ptr_CString[i] = temp;
+               }
 
-           index++;
+               dep_i = this->Data_Ptr_CString[i].priority;
+
+               dep_j = this->Data_Ptr_CString[j].priority;
+            }
         }
-     }
+  }
 
-     if(operating_sis == 'l'){
+  void Executable_MakeFile_Builder::Receive_DataCollector_Info(){
 
-        if(this->warehouse_head_dir[warehouse_path_size-1] != '/'){
+       this->header_file_number = this->DataCollector.Get_Compiler_Data_Size();
 
-           this->warehouse_head_dir[index] = '/';
+       this->Data_Ptr_CString   = this->DataCollector.Get_Compiler_Data();
+  }
 
-           index++;
-        }
-     }
+  void Executable_MakeFile_Builder::Print_Compiler_Orders(){
 
-     for(size_t i=0;i<head_dir_size;i++){
+       for(int i=0;i<this->header_file_number;i++){
 
-         this->warehouse_head_dir[index] = header_directory[i];
+           std::cout << "\n this->Data_Ptr_CString[" << i <<"].header_name:"
 
-         index++;
-     }
+           <<  this->Data_Ptr_CString[i].header_name;
 
-     this->warehouse_head_dir[index] = '\0';
+           std::cout << "\n this->Data_Ptr_CString[" << i <<"].priority:"
 
-     std::cout << "\n this->warehouse_head_dir:" << this->warehouse_head_dir;
-}
+           <<  this->Data_Ptr_CString[i].priority;
 
-
-void Executable_MakeFile_Builder::Determine_Warehouse_Object_Dir(char operating_sis){
-
-     char object_directory [] = "PROJECT.OBJECT.FILES";
-
-     char warehouse_word   [] = "WAREHOUSE";
-
-     size_t warehouse_path_size = strlen(this->warehouse_path);
-
-     size_t object_dir_size = strlen(object_directory);
-
-     size_t wr_word_size  = strlen(warehouse_word);
+           std::cout << "\n\n";
 
 
-     size_t path_size = warehouse_path_size
+           std::cout << "\n this->Data_Ptr_CString[" << i <<"].inclusion_number:"
 
-            + object_dir_size + wr_word_size;
+           <<  this->Data_Ptr_CString[i].inclusion_number;
+
+           std::cout << "\n\n";
 
 
-     this->warehouse_obj_dir = new char [5*path_size];
-
-     int index = 0;
-
-     for(size_t i=0;i<warehouse_path_size;i++){
-
-         this->warehouse_obj_dir[index] = this->warehouse_path[i];
-
-         index++;
-     }
-
-     if(operating_sis == 'w'){
-
-        if(this->warehouse_path[warehouse_path_size-1] != '\\'){
-
-           this->warehouse_obj_dir[index] = '\\';
-
-           index++;
-        }
-     }
-
-     if(operating_sis == 'l'){
-
-        if(this->warehouse_path[warehouse_path_size-1] != '/'){
-
-            this->warehouse_obj_dir[index] = '/';
-
-            index++;
-        }
-     }
-
-     for(size_t i=0;i<wr_word_size;i++){
-
-         this->warehouse_obj_dir[index] = warehouse_word[i];
-
-         index++;
-     }
-
-     if(operating_sis == 'w'){
-
-        if(this->warehouse_path[warehouse_path_size-1] != '\\'){
-
-           this->warehouse_obj_dir[index] = '\\';
-
-           index++;
-        }
-     }
-
-     if(operating_sis == 'l'){
-
-        if(this->warehouse_path[warehouse_path_size-1] != '/'){
-
-           this->warehouse_obj_dir[index] = '/';
-
-           index++;
-        }
-     }
-
-     for(size_t i=0;i<object_dir_size;i++){
-
-         this->warehouse_obj_dir[index] = object_directory[i];
-
-         index++;
-     }
-
-     this->warehouse_obj_dir[index] = '\0';
-
-     std::cout << "\n this->warehouse_obj_dir:" << this->warehouse_obj_dir;
-}
+           std::cin.get();
+       }
+  }

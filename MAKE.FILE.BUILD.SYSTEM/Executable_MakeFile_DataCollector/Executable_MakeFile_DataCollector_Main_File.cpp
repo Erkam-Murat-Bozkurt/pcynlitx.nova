@@ -1,9 +1,10 @@
 
 
+
 #include <iostream>
 #include <cstring>
 #include <vector>
-#include "Executable_MakeFile_Builder.hpp"
+#include "Executable_MakeFile_DataCollector.hpp"
 #include "Project_Files_Lister.h"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
@@ -43,19 +44,34 @@ int main(int argc, char ** argv){
     std::cout << "\n src_file_num:" << src_file_num;
 
 
-    Executable_MakeFile_Builder File_Builder;
+    Executable_MakeFile_DataCollector Data_Collector;
 
     if(src_file_num > 0){
 
-       File_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
+       Data_Collector.Receive_Descriptor_File_Reader(&Des_Reader);
 
-       File_Builder.Receive_Git_Record_Data(&Git_Data_Receiver);
+       Data_Collector.Receive_Git_Record_Data(&Git_Data_Receiver);
 
-       File_Builder.Receive_Source_File_Info(&Dir_Lister);
+       Data_Collector.Receive_Source_File_Info(&Dir_Lister);
 
-       File_Builder.Build_MakeFile();
+       Data_Collector.Collect_Make_File_Data();
 
+       Data_Collector.Print_Header_Data();
     }
+
+
+    int data_size = Data_Collector.Get_Compiler_Data_Size();
+
+    Compiler_Data_CString * Data_Pointer = Data_Collector.Get_Compiler_Data();
+
+    for(int i=0;i<data_size;i++){
+
+       std::cout << "\n repo_path:" << Data_Pointer[i].repo_path;
+
+       std::cout << "\n header_name:" << Data_Pointer[i].header_name;
+    }
+
+    Data_Collector.Clear_Dynamic_Memory();
 
     return 0;
 }
