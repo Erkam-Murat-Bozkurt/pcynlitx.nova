@@ -27,10 +27,6 @@ Executable_MakeFile_DepDeterminer::Executable_MakeFile_DepDeterminer(){
 
    this->Memory_Delete_Condition = false;
 
-   this->object_file_list = nullptr;
-
-   this->header_file_list = nullptr;
-
 }
 
 Executable_MakeFile_DepDeterminer::Executable_MakeFile_DepDeterminer(const
@@ -111,8 +107,6 @@ void Executable_MakeFile_DepDeterminer::Determine_Dependencies(){
        }
 
        this->Order_Priorities();
-
-       this->Print_Compiler_Orders();
   }
 
 
@@ -238,4 +232,34 @@ void Executable_MakeFile_DepDeterminer::Determine_Dependencies(){
 
            std::cout << "\n\n";
        }
+  }
+
+  Compiler_Data_CString Executable_MakeFile_DepDeterminer::Get_Compiler_Data(int i){
+
+        return this->Data_Ptr_CString[i];
+  }
+
+  Compiler_Data_CString * Executable_MakeFile_DepDeterminer::Get_Compiler_Data_Pointer(){
+
+        return this->Data_Ptr_CString;
+  }
+
+  int Executable_MakeFile_DepDeterminer::Get_Compiler_Data_Size(){
+
+       return this->header_file_number;
+  }
+
+  char * Executable_MakeFile_DepDeterminer::Get_Warehouse_Headers_Dir(){
+
+         return this->DataCollector.Get_Warehouse_Headers_Dir();
+  }
+
+  char * Executable_MakeFile_DepDeterminer::Get_Warehouse_Objetcs_Dir(){
+
+         return this->DataCollector.Get_Warehouse_Objetcs_Dir();
+  }
+
+  char * Executable_MakeFile_DepDeterminer::Get_Warehouse_Path(){
+
+         return this->DataCollector.Get_Warehouse_Path();
   }

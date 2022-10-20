@@ -42,6 +42,12 @@ public:
  void Determine_Dependencies();
  void Print_Compiler_Orders();
  void Clear_Dynamic_Memory();
+ Compiler_Data_CString Get_Compiler_Data(int i);
+ Compiler_Data_CString * Get_Compiler_Data_Pointer();
+ int    Get_Compiler_Data_Size();
+ char * Get_Warehouse_Headers_Dir();
+ char * Get_Warehouse_Objetcs_Dir();
+ char * Get_Warehouse_Path();
 protected:
  void Search_Recursive_Include_Dependency(int index);
  void Determine_Compile_Order();
@@ -51,18 +57,8 @@ protected:
  Executable_MakeFile_DataCollector DataCollector;
  Compiler_Data_CString * Data_Ptr_CString;
  CharOperator Char_Processor;
- char * git_header_dir;
- char * repo_dir;
- char * warehouse_head_dir;
- char * warehouse_obj_dir;
- char * warehouse_path;
- char * Make_File_Name;
- char * object_file_list;
- char * header_file_list;
  int  header_file_number;
- bool include_decleration_cond;
  bool Memory_Delete_Condition;
- bool is_independent_header;
 };
 
 #endif /* EXECUTABLE_MAKEFILE_DEPDETERMINER_HPP */

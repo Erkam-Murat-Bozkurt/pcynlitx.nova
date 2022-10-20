@@ -61,8 +61,12 @@ public:
  void Clear_Dynamic_Memory();
  void Print_Header_Data();
  Compiler_Data_CString * Get_Compiler_Data();
- int  Get_Compiler_Data_Size();
+ int    Get_Compiler_Data_Size();
+ char * Get_Warehouse_Headers_Dir();
+ char * Get_Warehouse_Objetcs_Dir();
+ char * Get_Warehouse_Path();
 protected:
+ void Clear_Pointer_Memory(char ** Pointer);
  void Determine_Header_File_List();
  void Determine_Warehouse_Object_Dir(char operating_sis);
  void Determine_Warehouse_Header_Dir(char operating_sis);
@@ -78,7 +82,6 @@ protected:
  void Place_String(std::string * pointer, char * string);
  void Place_CString(char ** str_pointer, std::string string);
  void Place_CString(char ** str_pointer, char * string);
- void Clear_Pointer_Memory(char ** Pointer);
  void Convert_to_CString(char ** Pointer, std::string path);
  bool Include_Decleration_Test(char * string);
  void Initialize_Header_Data();
@@ -89,24 +92,17 @@ protected:
  Project_Files_Lister * File_Lister_Pointer;
  Git_File_List_Receiver * Git_Data_Receiver;
  Cpp_FileOperations FileManager;
- DirectoryOperations DirectoryManager;
  Header_File_Determiner Header_Determiner;
  StringOperator StringManager;
- IntToCharTranslater Translater;
  CharOperator Char_Processor;
  std::vector<Headers_Data> v_head_data;
  std::vector<Headers_Data>::iterator itr;
  std::string String_Line;
  Headers_Data * Header_Data_Pointer;
  Compiler_Data_CString * Data_Ptr_CString;
- char * git_header_dir;
- char * repo_dir;
  char * warehouse_head_dir;
  char * warehouse_obj_dir;
  char * warehouse_path;
- char * Make_File_Name;
- char * object_file_list;
- char * header_file_list;
  int  header_file_number;
  bool include_decleration_cond;
  bool Memory_Delete_Condition;

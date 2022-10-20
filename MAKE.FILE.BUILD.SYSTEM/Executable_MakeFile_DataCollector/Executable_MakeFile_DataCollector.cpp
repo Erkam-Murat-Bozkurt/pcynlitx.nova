@@ -28,10 +28,6 @@ Executable_MakeFile_DataCollector::Executable_MakeFile_DataCollector(){
 
    this->Memory_Delete_Condition = false;
 
-   this->object_file_list = nullptr;
-
-   this->header_file_list = nullptr;
-
    this->Header_Data_Pointer = nullptr;
 
 }
@@ -101,8 +97,6 @@ void Executable_MakeFile_DataCollector::Receive_Descriptor_File_Reader(Descripto
      this->Des_Reader_Pointer = Des_Reader;
 
      this->warehouse_path = this->Des_Reader_Pointer->Get_Warehouse_Location();
-
-     this->repo_dir = this->Des_Reader_Pointer->Get_Repo_Directory_Location();
 }
 
 void Executable_MakeFile_DataCollector::Receive_Git_Record_Data(Git_File_List_Receiver * Pointer){
@@ -462,7 +456,6 @@ void Executable_MakeFile_DataCollector::Construct_Temporary_String(char ** tmp_s
 
      (*tmp_string)[string_size] = '\0';
 }
-
 
 
 bool Executable_MakeFile_DataCollector::Include_Decleration_Test(char * string){
@@ -942,4 +935,19 @@ void Executable_MakeFile_DataCollector::Clear_Pointer_Memory(char ** Pointer){
   int Executable_MakeFile_DataCollector::Get_Compiler_Data_Size(){
 
       return this->header_file_number;
+  }
+
+  char * Executable_MakeFile_DataCollector::Get_Warehouse_Headers_Dir(){
+
+         return this->warehouse_head_dir;
+  }
+
+  char * Executable_MakeFile_DataCollector::Get_Warehouse_Objetcs_Dir(){
+
+         return this->warehouse_obj_dir;
+  }
+
+  char * Executable_MakeFile_DataCollector::Get_Warehouse_Path(){
+
+         return this->warehouse_path;
   }

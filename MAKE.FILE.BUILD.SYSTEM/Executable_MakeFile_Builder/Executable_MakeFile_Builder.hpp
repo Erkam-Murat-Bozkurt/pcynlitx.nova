@@ -17,16 +17,13 @@
 #include <string>
 #include <fcntl.h>
 #include <windows.h>
+#include "Executable_MakeFile_DepDeterminer.hpp"
 #include "Executable_MakeFile_DataCollector.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 #include "Header_File_Determiner.h"
-#include "StringOperator.h"
 #include "CharOperator.h"
-#include "Cpp_FileOperations.h"
-#include "DirectoryOperations.h"
-#include "IntToCharTranslater.h"
 
 
 class Executable_MakeFile_Builder
@@ -42,13 +39,12 @@ public:
  void Print_Compiler_Orders();
  void Clear_Dynamic_Memory();
 protected:
- void Search_Recursive_Include_Dependency(int index);
- void Determine_Compile_Order();
- void Reverse_Order_Priorities();
- void Receive_DataCollector_Info();
- void Order_Priorities();
- Executable_MakeFile_DataCollector DataCollector;
+ void Add_String(char ** list, char * string, int * index);
+ void Place_String(std::string * pointer, char * string);
+ void Place_CString(char ** str_pointer, std::string string);
+ void Place_CString(char ** str_pointer, char * string);
  Compiler_Data_CString * Data_Ptr_CString;
+ Executable_MakeFile_DepDeterminer Dep_Determiner;
  CharOperator Char_Processor;
  char * git_header_dir;
  char * repo_dir;
