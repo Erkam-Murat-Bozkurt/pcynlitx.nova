@@ -1,6 +1,5 @@
 
 
-
 STRING_OPS=D:\pcynlitx.build\BASIC.TOOLS\StringOperator
 DIR_OPS=D:\pcynlitx.build\BASIC.TOOLS\DirectoryOperations
 CPP_OPS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
@@ -17,16 +16,19 @@ MAKE_DATA_COL=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\MakeFile_Data_Collector
 GIT_LIST=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_File_List_Receiver
 FILE_DAT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Data_Collector
 SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
-EXC_MKF_DT_CL=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\Executable_MakeFile_DataCollector
+EXC_MKF_DT_CL=D:\pcynlitx.build\EXECUTABLE.MAKE.FILE.BUILD.SYSTEM\Executable_MakeFile_DataCollector
+EXC_MKF_DEP_DTR=D:\pcynlitx.build\EXECUTABLE.MAKE.FILE.BUILD.SYSTEM\Executable_MakeFile_DepDeterminer
 
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 				$(SOURCE_DETR) $(DIR_ENUM) \
 				$(STRING_OPS) $(HEAD_DET) $(FILE_LISTER) \
 				$(INT_TO_CHAR) $(DES_DATA_COL) $(DES_READER) \
 				$(MAKE_DATA_COL) $(GIT_LIST) $(FILE_DAT_COL) \
-				$(SRC_DT_COL) $(DES_FILE_SYNT_COL) $(EXC_MKF_DT_CL)
+				$(SRC_DT_COL) $(DES_FILE_SYNT_COL) $(EXC_MKF_DT_CL) \
+				$(EXC_MKF_DEP_DTR)
 
-Executable_MakeFile_Builder.exe: Executable_MakeFile_DepDeterminer_Main_File.cpp \
+Executable_MakeFile_Builder.exe: Executable_MakeFile_Builder_Main_File.cpp \
+	Executable_MakeFile_Builder.cpp \
 	Executable_MakeFile_DepDeterminer.cpp \
 	Executable_MakeFile_DataCollector.cpp \
 	Project_Files_Lister.cpp \
@@ -44,7 +46,9 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_DepDeterminer_Main_File.cpp
 	StringOperator.cpp \
 	CharOperator.cpp \
 	Cpp_FileOperations.cpp \
+	Executable_MakeFile_Builder.hpp \
 	Executable_MakeFile_DepDeterminer.hpp \
+	Executable_MakeFile_DataCollector.hpp \
 	Project_Files_Lister.h \
 	Project_Files_Data_Collector.hpp \
 	Source_File_Data_Collector.cpp \
@@ -61,8 +65,8 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_DepDeterminer_Main_File.cpp
 	CharOperator.h \
 	Cpp_FileOperations.h
 
-	g++ -std=c++17 -g -o Executable_MakeFile_DepDeterminer.exe \
-	 -I$(DIR_OPS) -I$(CPP_OPS) -I$(CHAR_OPS) \
+	g++ -std=c++17 -g -o Executable_MakeFile_Builder.exe \
+	 -I$(DIR_OPS) -I$(CPP_OPS) -I$(CHAR_OPS) -I$(EXC_MKF_DEP_DTR) \
 	 -I$(EXC_MKF_DT_CL) -I$(STRING_OPS) -I$(HEAD_DET) \
 	 -I$(FILE_LISTER) -I$(SOURCE_DETR) -I$(GIT_LIST) \
 	 -I$(CLASS_SYNTAX) -I$(DIR_ENUM) -I$(INT_TO_CHAR) \
@@ -76,8 +80,10 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_DepDeterminer_Main_File.cpp
 	 -L$(SOURCE_DETR) -L$(MAKE_DATA_COL) \
 	 -L$(GIT_LIST) -L$(FILE_DAT_COL) \
 	 -L$(SRC_DT_COL) -L$(DES_FILE_SYNT_COL) \
-		Executable_MakeFile_DepDeterminer_Main_File.cpp \
-		Executable_MakeFile_DepDeterminer.cpp \
+	 -L$(EXC_MKF_DEP_DTR) \
+		Executable_MakeFile_Builder_Main_File.cpp \
+		Executable_MakeFile_Builder.cpp \
+		$(EXC_MKF_DEP_DTR)\Executable_MakeFile_DepDeterminer.cpp \
 		$(EXC_MKF_DT_CL)\Executable_MakeFile_DataCollector.cpp \
 		$(FILE_LISTER)\Project_Files_Lister.cpp \
 		$(FILE_DAT_COL)\Project_Files_Data_Collector.cpp \
@@ -95,8 +101,9 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_DepDeterminer_Main_File.cpp
 		$(CHAR_OPS)\CharOperator.cpp \
 		$(CPP_OPS)\Cpp_FileOperations.cpp \
 		$(INT_TO_CHAR)\IntToCharTranslater.cpp \
-		-include Executable_MakeFile_DepDeterminer.hpp \
+		-include Executable_MakeFile_Builder.hpp \
 		-include $(EXC_MKF_DT_CL)\Executable_MakeFile_DataCollector.hpp \
+		-include $(EXC_MKF_DEP_DTR)\Executable_MakeFile_DepDeterminer.hpp \
 		-include $(FILE_LISTER)\Project_Files_Lister.h \
 		-include $(FILE_DAT_COL)\Project_Files_Data_Collector.hpp \
 		-include $(SRC_DT_COL)\Source_File_Data_Collector.hpp \
