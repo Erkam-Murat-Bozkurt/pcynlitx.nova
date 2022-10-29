@@ -76,7 +76,68 @@ void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(){
 
      this->Data_Size = this->Dep_Determiner->Get_Compiler_Data_Size();
 
+     this->Determine_Header_File_List_Size();
+
+     this->Construct_Header_File_List();
+
      this->Determine_Object_File_List_Size();
+
+     this->Construct_Object_File_List();
+}
+
+
+void Executable_MakeFile_ComConstructor::Determine_Header_File_List_Size(){
+
+     size_t list_size = 0;
+
+     for(int i=0;i<this->Data_Size;i++){
+
+         char * head_name = this->Data_Ptr_CString[i].header_name;
+
+         size_t head_name_size = strlen(head_name);
+
+         list_size = list_size + head_name_size;
+     }
+
+     this->header_file_list = new char [5*list_size];
+}
+
+void Executable_MakeFile_ComConstructor::Construct_Header_File_List(){
+
+     size_t list_size = 0;
+
+     int index = 0;
+
+     char space [] = " ";
+
+     char new_line [] = "\n";
+
+     char tab_char [] = "\t";
+
+     char include_command [] = "-include";
+
+     char slash [] = "\\";
+
+     for(int i=0;i<this->Data_Size;i++){
+
+         char * header_name = this->Data_Ptr_CString[i].header_name;
+
+         this->Add_String(&this->header_file_list,include_command,&index);
+
+         this->Add_String(&this->header_file_list,space,&index);
+
+         this->Add_String(&this->header_file_list,header_name,&index);
+
+         this->Add_String(&this->header_file_list,space,&index);
+
+         this->Add_String(&this->header_file_list,slash,&index);
+
+         this->Add_String(&this->header_file_list,new_line,&index);
+
+         this->Add_String(&this->header_file_list,tab_char,&index);
+     }
+
+     this->header_file_list[index-2] = '\0';
 }
 
 
@@ -88,15 +149,54 @@ void Executable_MakeFile_ComConstructor::Determine_Object_File_List_Size(){
 
          char * obj_name = this->Data_Ptr_CString[i].object_file_name;
 
-         std::cout << "\n object name:" << obj_name;
+         if(obj_name != nullptr){
 
-         size_t obj_name_size = strlen(obj_name);
+            size_t obj_name_size = strlen(obj_name);
 
-         list_size = list_size + obj_name_size;
+            list_size = list_size + obj_name_size;
+         }
      }
 
-     std::cout << "\n list_size:" << list_size;
+     this->object_file_list = new char [5*list_size];
 }
+
+void Executable_MakeFile_ComConstructor::Construct_Object_File_List(){
+
+     size_t list_size = 0;
+
+     int index = 0;
+
+     char space [] = " ";
+
+     char new_line [] = "\n";
+
+     char tab_char [] = "\t";
+
+     char include_command [] = "-include";
+
+     char slash [] = "\\";
+
+     for(int i=0;i<this->Data_Size;i++){
+
+         char * obj_name = this->Data_Ptr_CString[i].object_file_name;
+
+         if(obj_name != nullptr){
+
+            this->Add_String(&this->object_file_list,obj_name,&index);
+
+            this->Add_String(&this->object_file_list,space,&index);
+
+            this->Add_String(&this->object_file_list,space,&index);
+
+            this->Add_String(&this->object_file_list,slash,&index);
+
+            this->Add_String(&this->object_file_list,new_line,&index);
+
+            this->Add_String(&this->object_file_list,tab_char,&index);
+         }
+     }
+}
+
 
 void Executable_MakeFile_ComConstructor::Add_String(char ** list, char * string, int * index){
 
@@ -148,4 +248,15 @@ void Executable_MakeFile_ComConstructor::Place_CString(char ** str_pointer, char
      }
 
      (*str_pointer)[string_size] = '\0' ;
+}
+
+
+char * Executable_MakeFile_ComConstructor::Get_Object_File_List(){
+
+       return this->object_file_list;
+}
+
+char * Executable_MakeFile_ComConstructor::Get_Header_File_List(){
+
+       return this->header_file_list;
 }

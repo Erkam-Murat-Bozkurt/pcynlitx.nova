@@ -83,7 +83,6 @@ void Executable_MakeFile_DepDeterminer::Determine_Dependencies(){
 
        this->Reverse_Order_Priorities();
 
-
        for(int i=0;i<this->header_file_number;i++){
 
           bool rec_search = this->Data_Ptr_CString[i].rcr_srch_complated;
@@ -94,10 +93,7 @@ void Executable_MakeFile_DepDeterminer::Determine_Dependencies(){
           }
        }
 
-
        this->Order_Priorities();
-
-
 
        for(int i=0;i<this->header_file_number;i++){
 

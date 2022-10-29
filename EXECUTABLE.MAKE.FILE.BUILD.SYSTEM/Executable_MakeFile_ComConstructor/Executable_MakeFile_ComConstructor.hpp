@@ -36,8 +36,13 @@ public:
  void Receive_DepDeterminer(Executable_MakeFile_DepDeterminer * pointer);
  void Construct_Compiler_Commands();
  void Clear_Dynamic_Memory();
+ char * Get_Object_File_List();
+ char * Get_Header_File_List();
 protected:
  void Determine_Object_File_List_Size();
+ void Construct_Object_File_List();
+ void Determine_Header_File_List_Size();
+ void Construct_Header_File_List();
  void Add_String(char ** list, char * string, int * index);
  void Place_String(std::string * pointer, char * string);
  void Place_CString(char ** str_pointer, std::string string);

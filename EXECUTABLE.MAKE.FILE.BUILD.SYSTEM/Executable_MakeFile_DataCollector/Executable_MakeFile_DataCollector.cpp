@@ -26,7 +26,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Executable_MakeFile_DataCollector::Executable_MakeFile_DataCollector(){
 
-   this->Memory_Delete_Condition = false;
+   this->Memory_Delete_Condition = true;
 
    this->Header_Data_Pointer = nullptr;
 
@@ -111,7 +111,7 @@ void Executable_MakeFile_DataCollector::Receive_Source_File_Info(Project_Files_L
 
 
 void Executable_MakeFile_DataCollector::Collect_Make_File_Data(){
-
+     
      this->Determine_Warehouse_Header_Dir('w');
 
      this->Determine_Warehouse_Object_Dir('w');
@@ -185,6 +185,8 @@ void Executable_MakeFile_DataCollector::Determine_Header_File_List(){
 void Executable_MakeFile_DataCollector::Extract_Compiler_Data(){
 
      std::size_t dt_size = this->v_head_data.size();
+
+     this->Memory_Delete_Condition = false;
 
      this->Data_Ptr_CString = new Compiler_Data_CString [5*dt_size];
 

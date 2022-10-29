@@ -58,15 +58,15 @@ int main(int argc, char ** argv){
 
     }
 
-    std::cout << "\n Before Executable_MakeFile_ComConstructor construction";
-
-    std::cin.get();
-
     Executable_MakeFile_ComConstructor Command_Constructor;
 
     Command_Constructor.Receive_DepDeterminer(&Dep_Determiner);
 
     Command_Constructor.Construct_Compiler_Commands();
+
+    std::cout << "\n Header File List:" << Command_Constructor.Get_Header_File_List();
+
+    std::cout << "\n Object File List:" << Command_Constructor.Get_Object_File_List();
 
     return 0;
 }
