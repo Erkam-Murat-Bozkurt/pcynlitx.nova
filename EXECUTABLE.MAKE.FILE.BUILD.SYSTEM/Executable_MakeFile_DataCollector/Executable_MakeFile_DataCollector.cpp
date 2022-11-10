@@ -111,7 +111,7 @@ void Executable_MakeFile_DataCollector::Receive_Source_File_Info(Project_Files_L
 
 
 void Executable_MakeFile_DataCollector::Collect_Make_File_Data(){
-     
+
      this->Determine_Warehouse_Header_Dir('w');
 
      this->Determine_Warehouse_Object_Dir('w');
@@ -167,6 +167,9 @@ void Executable_MakeFile_DataCollector::Determine_Header_File_List(){
          }
       }
 
+
+      /*
+
       int hd_lst_index = 0;
 
       int vct_index = 0;
@@ -179,6 +182,8 @@ void Executable_MakeFile_DataCollector::Determine_Header_File_List(){
           vct_index++;
 
       }
+
+      */
 
 }
 
