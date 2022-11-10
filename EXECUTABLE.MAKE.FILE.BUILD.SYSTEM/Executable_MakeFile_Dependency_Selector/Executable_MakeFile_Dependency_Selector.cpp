@@ -49,6 +49,15 @@ void Executable_MakeFile_Dependency_Selector::Clear_Dynamic_Memory(){
      if(!this->Memory_Delete_Condition){
 
          this->Memory_Delete_Condition = true;
+
+         for(int i=0;i<this->Dep_Counter;i++){
+
+             delete [] this->Dependent_List[i].Header_Name;
+
+             delete [] this->Dependent_List[i].repo_warehouse_path;
+         }
+
+         delete [] this->Dependent_List;
      }
 }
 
@@ -58,139 +67,61 @@ void Executable_MakeFile_Dependency_Selector::Receive_Executable_MakeFile_DataCo
      this->DataCollector = pointer;
 }
 
-void Executable_MakeFile_Dependency_Selector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader){
-
-     this->Des_Reader_Pointer = Des_Reader;
-}
-
-void Executable_MakeFile_Dependency_Selector::Receive_Git_Record_Data(Git_File_List_Receiver * Pointer){
-
-     this->Git_Data_Receiver = Pointer;
-}
-
-void Executable_MakeFile_Dependency_Selector::Receive_Source_File_Info(Project_Files_Lister * Pointer){
-
-     this->File_Lister_Pointer = Pointer;
-}
-
 void Executable_MakeFile_Dependency_Selector::Determine_Source_File_Dependencies(char * path){
 
      this->Receive_DataCollector_Info();
 
      this->Extract_Dependency_Data(path);
-
-     this->Determine_Dependencies();
 }
 
-void Executable_MakeFile_Dependency_Selector::Determine_Dependencies(){
+void Executable_MakeFile_Dependency_Selector::Receive_DataCollector_Info(){
 
-     for(int i=0;i<this->header_file_number;i++){
+     this->header_file_number = this->DataCollector->Get_Compiler_Data_Size();
 
-         bool rec_search = this->Data_Ptr_CString[i].rcr_srch_complated;
+     this->Data_Ptr_CString   = this->DataCollector->Get_Compiler_Data();
 
-         if(!rec_search){
+     this->warehouse_head_dir = this->DataCollector->Get_Warehouse_Headers_Dir();
 
-            this->Search_Recursive_Include_Dependency(i);
+     this->Dependent_List     = new Header_Dependency [5*this->header_file_number];
+}
+
+void Executable_MakeFile_Dependency_Selector::Extract_Dependency_Data(char * path){
+
+     int inclusion_number = 0;
+
+     /*  Determination of the inclusion number */
+
+     Cpp_FileOperations FileStream;
+
+     FileStream.Read_File_as_CString(path);
+
+     int FileSize = FileStream.GetFileSize();
+
+     for(int k=0;k<FileSize;k++){
+
+         char * string = FileStream.GetFileLine(k);
+
+         // In order to remove possible spaces on the string
+
+         // a temporary string is constructed
+
+         char * tmp_string = nullptr;
+
+         this->Construct_Temporary_String(&tmp_string,string);
+
+         this->Delete_Spaces_on_String(&tmp_string);
+
+         bool is_include_decleration = this->Include_Decleration_Test(tmp_string);
+
+         if(is_include_decleration){
+
+            inclusion_number++;
          }
+
+         this->Clear_Pointer_Memory(&tmp_string);
      }
 
-     for(int i=0;i<this->header_file_number;i++){
-
-         bool rec_search = this->Data_Ptr_CString[i].rcr_srch_complated;
-
-         this->Search_Recursive_Include_Dependency(i);
-     }
-}
-
-void Executable_MakeFile_Dependency_Selector::Search_Recursive_Include_Dependency(int index){
-
-     int inc_num = this->Data_Ptr_CString[index].inclusion_number;
-
-     if(inc_num>0){
-
-          for(int k=0;k<inc_num;k++){
-
-              char * inc_header_name = this->Data_Ptr_CString[index].included_headers[k];
-
-              for(int j=0;j<this->header_file_number;j++){
-
-                  char * repo_header = this->Data_Ptr_CString[j].header_name;
-
-                  bool is_equal = this->Char_Processor.CompareString(inc_header_name,repo_header);
-
-                  if(is_equal){
-
-                     int priority = this->Data_Ptr_CString[j].priority;
-
-                     if(priority == 0){
-
-                        priority = 1;
-                     }
-
-                     this->Data_Ptr_CString[index].priority =
-
-                     this->Data_Ptr_CString[index].priority + priority;
-                  }
-              }
-          }
-        }
-        else{
-
-             this->Data_Ptr_CString[index].rcr_srch_complated = true;
-        }
-  }
-
-
-  void Executable_MakeFile_Dependency_Selector::Receive_DataCollector_Info(){
-
-       this->header_file_number = this->DataCollector->Get_Compiler_Data_Size();
-
-       this->Data_Ptr_CString   = this->DataCollector->Get_Compiler_Data();
-
-       this->warehouse_head_dir = this->DataCollector->Get_Warehouse_Headers_Dir();
-
-       this->warehouse_path = this->DataCollector->Get_Warehouse_Path();
-
-       this->Dependent_List = new Header_Dependency [5*this->header_file_number];
-  }
-
-  void Executable_MakeFile_Dependency_Selector::Extract_Dependency_Data(char * path){
-
-       int inclusion_number = 0;
-
-       /*  Determination of the inclusion number */
-
-       Cpp_FileOperations FileStream;
-
-       FileStream.Read_File_as_CString(path);
-
-       int FileSize = FileStream.GetFileSize();
-
-       for(int k=0;k<FileSize;k++){
-
-           char * string = FileStream.GetFileLine(k);
-
-           // In order to remove possible spaces on the string
-
-           // a temporary string is constructed
-
-           char * tmp_string = nullptr;
-
-           this->Construct_Temporary_String(&tmp_string,string);
-
-           this->Delete_Spaces_on_String(&tmp_string);
-
-           bool is_include_decleration = this->Include_Decleration_Test(tmp_string);
-
-           if(is_include_decleration){
-
-              inclusion_number++;
-           }
-
-           this->Clear_Pointer_Memory(&tmp_string);
-      }
-
-      if(inclusion_number>0){
+     if(inclusion_number>0){
 
         FileStream.Read_File_as_CString(path);
 
@@ -213,9 +144,7 @@ void Executable_MakeFile_Dependency_Selector::Search_Recursive_Include_Dependenc
 
             bool is_include_decleration = this->Include_Decleration_Test(tmp_string);
 
-
             if(is_include_decleration){
-
 
                char * header_name = nullptr;
 
@@ -556,32 +485,17 @@ void Executable_MakeFile_Dependency_Selector::Search_Recursive_Include_Dependenc
        }
   }
 
-  Compiler_Data_CString Executable_MakeFile_Dependency_Selector::Get_Compiler_Data(int i){
+  char * Executable_MakeFile_Dependency_Selector::Get_Dependent_Header(int i){
 
-        return this->Data_Ptr_CString[i];
+        return this->Dependent_List[i].Header_Name;
   }
 
-  Compiler_Data_CString * Executable_MakeFile_Dependency_Selector::Get_Compiler_Data_Pointer(){
+  char * Executable_MakeFile_Dependency_Selector::Get_Dependent_Header_Path(int i){
 
-        return this->Data_Ptr_CString;
+        return this->Dependent_List[i].repo_warehouse_path;
   }
 
-  int Executable_MakeFile_Dependency_Selector::Get_Compiler_Data_Size(){
+  int Executable_MakeFile_Dependency_Selector::Get_Dependency_List_Size(){
 
-       return this->header_file_number;
-  }
-
-  char * Executable_MakeFile_Dependency_Selector::Get_Warehouse_Headers_Dir(){
-
-         return this->DataCollector->Get_Warehouse_Headers_Dir();
-  }
-
-  char * Executable_MakeFile_Dependency_Selector::Get_Warehouse_Objetcs_Dir(){
-
-         return this->DataCollector->Get_Warehouse_Objetcs_Dir();
-  }
-
-  char * Executable_MakeFile_Dependency_Selector::Get_Warehouse_Path(){
-
-         return this->DataCollector->Get_Warehouse_Path();
+       return this->Dep_Counter;
   }

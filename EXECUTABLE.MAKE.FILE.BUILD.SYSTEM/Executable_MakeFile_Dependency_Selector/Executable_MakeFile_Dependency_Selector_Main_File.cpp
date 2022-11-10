@@ -44,7 +44,6 @@ int main(int argc, char ** argv){
 
 
 
-
     Executable_MakeFile_DataCollector Data_Collector;
 
     if(src_file_num > 0){
@@ -66,18 +65,13 @@ int main(int argc, char ** argv){
 
       Dep_Selector.Receive_Executable_MakeFile_DataCollector(&Data_Collector);
 
-      Dep_Selector.Receive_Descriptor_File_Reader(&Des_Reader);
-
-      Dep_Selector.Receive_Git_Record_Data(&Git_Data_Receiver);
-
-      Dep_Selector.Receive_Source_File_Info(&Dir_Lister);
-
       Dep_Selector.Determine_Source_File_Dependencies(path);
 
       Dep_Selector.Print_Dependency_List();
     }
 
-    //Dep_Selector.Construct_Compiler_Commands();
+    std::cout << "\n\n THE END OF THE PROGRAM \n\n";
+
 
     return 0;
 }
