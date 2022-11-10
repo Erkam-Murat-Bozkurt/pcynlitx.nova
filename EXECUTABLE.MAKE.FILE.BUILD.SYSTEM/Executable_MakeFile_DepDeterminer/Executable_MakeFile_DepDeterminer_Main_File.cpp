@@ -5,6 +5,7 @@
 #include <cstring>
 #include <vector>
 #include "Executable_MakeFile_DepDeterminer.hpp"
+#include "Executable_MakeFile_DataCollector.hpp"
 #include "Project_Files_Lister.h"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
@@ -44,9 +45,24 @@ int main(int argc, char ** argv){
     std::cout << "\n TOTAL SOURCE FILE NUMBER:" << src_file_num;
 
 
+    Executable_MakeFile_DataCollector Data_Collector;
+
+    if(src_file_num > 0){
+
+       Data_Collector.Receive_Descriptor_File_Reader(&Des_Reader);
+
+       Data_Collector.Receive_Git_Record_Data(&Git_Data_Receiver);
+
+       Data_Collector.Receive_Source_File_Info(&Dir_Lister);
+
+       Data_Collector.Collect_Make_File_Data();
+    }
+
     Executable_MakeFile_DepDeterminer Dep_Determiner;
 
     if(src_file_num > 0){
+
+       Dep_Determiner.Receive_Executable_MakeFile_DataCollector(&Data_Collector);
 
        Dep_Determiner.Receive_Descriptor_File_Reader(&Des_Reader);
 
@@ -56,6 +72,7 @@ int main(int argc, char ** argv){
 
        Dep_Determiner.Determine_Dependencies();
 
+       Dep_Determiner.Print_Compiler_Orders();
     }
 
     return 0;

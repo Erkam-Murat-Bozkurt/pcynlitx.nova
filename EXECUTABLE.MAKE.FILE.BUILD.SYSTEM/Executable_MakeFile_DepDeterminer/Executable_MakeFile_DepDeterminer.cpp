@@ -43,7 +43,6 @@ Executable_MakeFile_DepDeterminer::~Executable_MakeFile_DepDeterminer(){
    }
 }
 
-
 void Executable_MakeFile_DepDeterminer::Clear_Dynamic_Memory(){
 
      if(!this->Memory_Delete_Condition){
@@ -52,126 +51,126 @@ void Executable_MakeFile_DepDeterminer::Clear_Dynamic_Memory(){
      }
 }
 
+void Executable_MakeFile_DepDeterminer::Receive_Executable_MakeFile_DataCollector(Executable_MakeFile_DataCollector * Pointer){
+
+     this->DataCollector = Pointer;
+}
+
 void Executable_MakeFile_DepDeterminer::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader){
 
-     this->DataCollector.Receive_Descriptor_File_Reader(Des_Reader);
+     this->DataCollector->Receive_Descriptor_File_Reader(Des_Reader);
 }
 
 void Executable_MakeFile_DepDeterminer::Receive_Git_Record_Data(Git_File_List_Receiver * Pointer){
 
-     this->DataCollector.Receive_Git_Record_Data(Pointer);
+     this->DataCollector->Receive_Git_Record_Data(Pointer);
 }
 
 void Executable_MakeFile_DepDeterminer::Receive_Source_File_Info(Project_Files_Lister * Pointer){
 
-     this->DataCollector.Receive_Source_File_Info(Pointer);
+     this->DataCollector->Receive_Source_File_Info(Pointer);
 }
 
 void Executable_MakeFile_DepDeterminer::Determine_Dependencies(){
 
-     this->DataCollector.Collect_Make_File_Data();
-
      this->Receive_DataCollector_Info();
 
      this->Determine_Compile_Order();
-
 }
 
-  void Executable_MakeFile_DepDeterminer::Determine_Compile_Order(){
+void Executable_MakeFile_DepDeterminer::Determine_Compile_Order(){
 
-       this->Receive_DataCollector_Info();
+     this->Reverse_Order_Priorities();
 
-       this->Reverse_Order_Priorities();
+     for(int i=0;i<this->header_file_number;i++){
 
-       for(int i=0;i<this->header_file_number;i++){
+        bool rec_search = this->Data_Ptr_CString[i].rcr_srch_complated;
+
+        if(!rec_search){
+
+            this->Search_Recursive_Include_Dependency(i);
+        }
+      }
+
+      this->Order_Priorities();
+
+      for(int i=0;i<this->header_file_number;i++){
 
           bool rec_search = this->Data_Ptr_CString[i].rcr_srch_complated;
 
-          if(!rec_search){
+          this->Search_Recursive_Include_Dependency(i);
+      }
 
-             this->Search_Recursive_Include_Dependency(i);
-          }
-       }
-
-       this->Order_Priorities();
-
-       for(int i=0;i<this->header_file_number;i++){
-
-           bool rec_search = this->Data_Ptr_CString[i].rcr_srch_complated;
-
-           this->Search_Recursive_Include_Dependency(i);
-       }
-
-       this->Order_Priorities();
-  }
+      this->Order_Priorities();
+}
 
 
-  void Executable_MakeFile_DepDeterminer::Search_Recursive_Include_Dependency(int index){
+void Executable_MakeFile_DepDeterminer::Search_Recursive_Include_Dependency(int index){
 
-       int inc_num = this->Data_Ptr_CString[index].inclusion_number;
+     int inc_num = this->Data_Ptr_CString[index].inclusion_number;
 
-       if(inc_num>0){
+     if(inc_num>0){
 
-          for(int k=0;k<inc_num;k++){
+        for(int k=0;k<inc_num;k++){
 
-              char * inc_header_name = this->Data_Ptr_CString[index].included_headers[k];
+            char * inc_header_name = this->Data_Ptr_CString[index].included_headers[k];
 
-              for(int j=0;j<this->header_file_number;j++){
+            for(int j=0;j<this->header_file_number;j++){
 
-                  char * repo_header = this->Data_Ptr_CString[j].header_name;
+                char * repo_header = this->Data_Ptr_CString[j].header_name;
 
-                  bool is_equal = this->Char_Processor.CompareString(inc_header_name,repo_header);
+                bool is_equal = this->Char_Processor.CompareString(inc_header_name,repo_header);
 
-                  if(is_equal){
+                if(is_equal){
 
-                     int priority = this->Data_Ptr_CString[j].priority;
+                   int priority = this->Data_Ptr_CString[j].priority;
 
-                     if(priority == 0){
+                   if(priority == 0){
 
-                        priority = 1;
-                     }
+                      priority = 1;
+                   }
 
-                     this->Data_Ptr_CString[index].priority =
+                   this->Data_Ptr_CString[index].priority =
 
-                     this->Data_Ptr_CString[index].priority + priority;
+                   this->Data_Ptr_CString[index].priority + priority;
 
-                  }
-              }
-          }
-        }
-        else{
-
-             this->Data_Ptr_CString[index].rcr_srch_complated = true;
-        }
-  }
-
-  void Executable_MakeFile_DepDeterminer::Order_Priorities(){
-
-       for(int i=0;i<this->header_file_number;i++){
-
-           for(int j=i;j<this->header_file_number;j++){
-
-               int dep_i = this->Data_Ptr_CString[i].priority;
-
-               int dep_j = this->Data_Ptr_CString[j].priority;
-
-               Compiler_Data_CString temp;
-
-               if( dep_i < dep_j){
-
-                   temp  = this->Data_Ptr_CString[j];
-
-                   this->Data_Ptr_CString[j] = this->Data_Ptr_CString[i];
-
-                   this->Data_Ptr_CString[i] = temp;
-               }
+                }
             }
         }
-  }
+      }
+      else{
 
-  void Executable_MakeFile_DepDeterminer::Reverse_Order_Priorities(){
+           this->Data_Ptr_CString[index].rcr_srch_complated = true;
+      }
+}
 
-       for(int i=0;i<this->header_file_number;i++){
+void Executable_MakeFile_DepDeterminer::Order_Priorities(){
+
+     for(int i=0;i<this->header_file_number;i++){
+
+         for(int j=i;j<this->header_file_number;j++){
+
+             int dep_i = this->Data_Ptr_CString[i].priority;
+
+             int dep_j = this->Data_Ptr_CString[j].priority;
+
+             Compiler_Data_CString temp;
+
+             if( dep_i < dep_j){
+
+                 temp  = this->Data_Ptr_CString[j];
+
+                 this->Data_Ptr_CString[j] = this->Data_Ptr_CString[i];
+
+                 this->Data_Ptr_CString[i] = temp;
+              }
+          }
+      }
+}
+
+void Executable_MakeFile_DepDeterminer::Reverse_Order_Priorities(){
+
+     for(int i=0;i<this->header_file_number;i++){
 
            for(int j=i;j<this->header_file_number;j++){
 
@@ -194,68 +193,68 @@ void Executable_MakeFile_DepDeterminer::Determine_Dependencies(){
 
                dep_j = this->Data_Ptr_CString[j].priority;
             }
-        }
-  }
+      }
+}
 
-  void Executable_MakeFile_DepDeterminer::Receive_DataCollector_Info(){
+void Executable_MakeFile_DepDeterminer::Receive_DataCollector_Info(){
 
-       this->header_file_number = this->DataCollector.Get_Compiler_Data_Size();
+      this->header_file_number = this->DataCollector->Get_Compiler_Data_Size();
 
-       this->Data_Ptr_CString   = this->DataCollector.Get_Compiler_Data();
-  }
+      this->Data_Ptr_CString   = this->DataCollector->Get_Compiler_Data();
+}
 
-  void Executable_MakeFile_DepDeterminer::Print_Compiler_Orders(){
+void Executable_MakeFile_DepDeterminer::Print_Compiler_Orders(){
 
-       for(int i=0;i<this->header_file_number;i++){
+     for(int i=0;i<this->header_file_number;i++){
 
-           std::cout << "\n\n";
+         std::cout << "\n\n";
 
-           std::cout << "\n --------------------------------------------------------------------------";
+         std::cout << "\n --------------------------------------------------------------------------";
 
-           std::cout << "\n SOURCE FILE NUMBER:" << i;
+         std::cout << "\n SOURCE FILE NUMBER:" << i;
 
-           std::cout << "\n HEADER NAME:"
+         std::cout << "\n HEADER NAME:"
 
-           <<  this->Data_Ptr_CString[i].header_name;
+         <<  this->Data_Ptr_CString[i].header_name;
 
-           std::cout << "\n PRIORITY:"
+         std::cout << "\n PRIORITY:"
 
-           <<  this->Data_Ptr_CString[i].priority;
+         <<  this->Data_Ptr_CString[i].priority;
 
-           std::cout << "\n INCLUSION NUMBER:"
+         std::cout << "\n INCLUSION NUMBER:"
 
-           <<  this->Data_Ptr_CString[i].inclusion_number;
+         <<  this->Data_Ptr_CString[i].inclusion_number;
 
-           std::cout << "\n\n";
-       }
-  }
+         std::cout << "\n\n";
+      }
+}
 
-  Compiler_Data_CString Executable_MakeFile_DepDeterminer::Get_Compiler_Data(int i){
+Compiler_Data_CString Executable_MakeFile_DepDeterminer::Get_Compiler_Data(int i){
 
-        return this->Data_Ptr_CString[i];
-  }
+      return this->Data_Ptr_CString[i];
+}
 
-  Compiler_Data_CString * Executable_MakeFile_DepDeterminer::Get_Compiler_Data_Pointer(){
+Compiler_Data_CString * Executable_MakeFile_DepDeterminer::Get_Compiler_Data_Pointer(){
 
-        return this->Data_Ptr_CString;
-  }
+      return this->Data_Ptr_CString;
+}
 
-  int Executable_MakeFile_DepDeterminer::Get_Compiler_Data_Size(){
+int Executable_MakeFile_DepDeterminer::Get_Compiler_Data_Size(){
 
-       return this->header_file_number;
-  }
+    return this->header_file_number;
+}
 
-  char * Executable_MakeFile_DepDeterminer::Get_Warehouse_Headers_Dir(){
+char * Executable_MakeFile_DepDeterminer::Get_Warehouse_Headers_Dir(){
 
-         return this->DataCollector.Get_Warehouse_Headers_Dir();
-  }
+       return this->DataCollector->Get_Warehouse_Headers_Dir();
+}
 
-  char * Executable_MakeFile_DepDeterminer::Get_Warehouse_Objetcs_Dir(){
+char * Executable_MakeFile_DepDeterminer::Get_Warehouse_Objetcs_Dir(){
 
-         return this->DataCollector.Get_Warehouse_Objetcs_Dir();
-  }
+       return this->DataCollector->Get_Warehouse_Objetcs_Dir();
+}
 
-  char * Executable_MakeFile_DepDeterminer::Get_Warehouse_Path(){
+char * Executable_MakeFile_DepDeterminer::Get_Warehouse_Path(){
 
-         return this->DataCollector.Get_Warehouse_Path();
-  }
+       return this->DataCollector->Get_Warehouse_Path();
+}

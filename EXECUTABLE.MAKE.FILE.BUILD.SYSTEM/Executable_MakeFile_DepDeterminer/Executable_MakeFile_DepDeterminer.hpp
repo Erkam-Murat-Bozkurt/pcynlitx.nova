@@ -38,6 +38,7 @@ public:
  virtual ~Executable_MakeFile_DepDeterminer();
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader);
  void Receive_Git_Record_Data(Git_File_List_Receiver * Lister_Pointer);
+ void Receive_Executable_MakeFile_DataCollector(Executable_MakeFile_DataCollector * DataCollector);
  void Receive_Source_File_Info(Project_Files_Lister * Pointer);
  void Determine_Dependencies();
  void Print_Compiler_Orders();
@@ -54,7 +55,7 @@ protected:
  void Reverse_Order_Priorities();
  void Receive_DataCollector_Info();
  void Order_Priorities();
- Executable_MakeFile_DataCollector DataCollector;
+ Executable_MakeFile_DataCollector * DataCollector;
  Compiler_Data_CString * Data_Ptr_CString;
  CharOperator Char_Processor;
  int  header_file_number;

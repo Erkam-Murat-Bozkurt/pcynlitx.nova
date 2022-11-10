@@ -44,6 +44,7 @@ protected:
  void Place_CString(char ** str_pointer, std::string string);
  void Place_CString(char ** str_pointer, char * string);
  Compiler_Data_CString * Data_Ptr_CString;
+ Executable_MakeFile_DataCollector Data_Collector;
  Executable_MakeFile_DepDeterminer Dep_Determiner;
  CharOperator Char_Processor;
  char * git_header_dir;
