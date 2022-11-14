@@ -49,14 +49,19 @@ int main(int argc, char ** argv){
 
     if(src_file_num > 0){
 
-       Data_Collector.Receive_Descriptor_File_Reader(&Des_Reader);
+      Data_Collector.Receive_Descriptor_File_Reader(&Des_Reader);
 
-       Data_Collector.Receive_Git_Record_Data(&Git_Data_Receiver);
+      Data_Collector.Receive_Git_Record_Data(&Git_Data_Receiver);
 
-       Data_Collector.Receive_Source_File_Info(&Dir_Lister);
+      Data_Collector.Receive_Source_File_Info(&Dir_Lister);
 
-       Data_Collector.Collect_Make_File_Data();
+      Data_Collector.Collect_Make_File_Data();
+
     }
+
+    std::cout << "\n Before Executable_MakeFile_DepDeterminer";
+
+    std::cin.get();
 
     Executable_MakeFile_DepDeterminer Dep_Determiner;
 

@@ -18,16 +18,20 @@ GIT_LIST=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_File_List_Receiver
 FILE_DAT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Data_Collector
 SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
 EXC_MKF_DT_CL=D:\pcynlitx.build\EXECUTABLE.MAKE.FILE.BUILD.SYSTEM\Executable_MakeFile_DataCollector
+EXC_MKF_DEP_SEL=D:\pcynlitx.build\EXECUTABLE.MAKE.FILE.BUILD.SYSTEM\Executable_MakeFile_Dependency_Selector
+
 
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 				$(SOURCE_DETR) $(DIR_ENUM) \
 				$(STRING_OPS) $(HEAD_DET) $(FILE_LISTER) \
 				$(INT_TO_CHAR) $(DES_DATA_COL) $(DES_READER) \
 				$(MAKE_DATA_COL) $(GIT_LIST) $(FILE_DAT_COL) \
-				$(SRC_DT_COL) $(DES_FILE_SYNT_COL) $(EXC_MKF_DT_CL)
+				$(SRC_DT_COL) $(DES_FILE_SYNT_COL) $(EXC_MKF_DT_CL) \
+				$(EXC_MKF_DEP_SEL)
 
 Executable_MakeFile_Builder.exe: Executable_MakeFile_DepDeterminer_Main_File.cpp \
 	Executable_MakeFile_DepDeterminer.cpp \
+	Executable_MakeFile_Dependency_Selector.cpp \
 	Executable_MakeFile_DataCollector.cpp \
 	Project_Files_Lister.cpp \
   Project_Files_Data_Collector.cpp \
@@ -45,6 +49,8 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_DepDeterminer_Main_File.cpp
 	CharOperator.cpp \
 	Cpp_FileOperations.cpp \
 	Executable_MakeFile_DepDeterminer.hpp \
+	Executable_MakeFile_Dependency_Selector.hpp\
+	Executable_MakeFile_DataCollector.hpp\
 	Project_Files_Lister.h \
 	Project_Files_Data_Collector.hpp \
 	Source_File_Data_Collector.cpp \
@@ -69,15 +75,17 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_DepDeterminer_Main_File.cpp
 	 -I$(DES_DATA_COL) -I$(DES_READER) \
 	 -I$(MAKE_DATA_COL) -I$(FILE_DAT_COL) \
 	 -I$(SRC_DT_COL) -I$(DES_FILE_SYNT_COL) \
+	 -I$(EXC_MKF_DEP_SEL) \
 	 -L$(EXC_MKF_DT_CL) -L$(DIR_ENUM) -L$(DIR_OPS) -L$(CPP_OPS) \
 	 -L$(CHAR_OPS) -L$(INT_TO_CHAR) -L$(DES_DATA_COL) \
 	 -L$(DES_READER) -L$(STRING_OPS) \
 	 -L$(HEAD_DET) -L$(FILE_LISTER) \
 	 -L$(SOURCE_DETR) -L$(MAKE_DATA_COL) \
 	 -L$(GIT_LIST) -L$(FILE_DAT_COL) \
-	 -L$(SRC_DT_COL) -L$(DES_FILE_SYNT_COL) \
+	 -L$(SRC_DT_COL) -L$(DES_FILE_SYNT_COL) -L$(EXC_MKF_DEP_SEL) \
 		Executable_MakeFile_DepDeterminer_Main_File.cpp \
 		Executable_MakeFile_DepDeterminer.cpp \
+		$(EXC_MKF_DEP_SEL)\Executable_MakeFile_Dependency_Selector.cpp \
 		$(EXC_MKF_DT_CL)\Executable_MakeFile_DataCollector.cpp \
 		$(FILE_LISTER)\Project_Files_Lister.cpp \
 		$(FILE_DAT_COL)\Project_Files_Data_Collector.cpp \
@@ -96,6 +104,7 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_DepDeterminer_Main_File.cpp
 		$(CPP_OPS)\Cpp_FileOperations.cpp \
 		$(INT_TO_CHAR)\IntToCharTranslater.cpp \
 		-include Executable_MakeFile_DepDeterminer.hpp \
+		-include $(EXC_MKF_DEP_SEL)\Executable_MakeFile_Dependency_Selector.hpp \
 		-include $(EXC_MKF_DT_CL)\Executable_MakeFile_DataCollector.hpp \
 		-include $(FILE_LISTER)\Project_Files_Lister.h \
 		-include $(FILE_DAT_COL)\Project_Files_Data_Collector.hpp \

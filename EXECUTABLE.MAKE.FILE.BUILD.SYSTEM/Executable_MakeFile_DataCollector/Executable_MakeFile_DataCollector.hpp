@@ -42,8 +42,9 @@ struct Compiler_Data_CString
   char *  header_name;
   char *  object_file_name;
   char ** included_headers;
-  int inclusion_number;
-  int priority;
+  char ** included_headers_path;
+  int  inclusion_number;
+  int  priority;
   bool rcr_srch_complated;
 };
 

@@ -20,6 +20,7 @@
 #include <windows.h>
 #include "Executable_MakeFile_DepDeterminer.hpp"
 #include "Executable_MakeFile_DataCollector.hpp"
+#include "Executable_MakeFile_Dependency_Selector.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
@@ -34,21 +35,28 @@ public:
  Executable_MakeFile_ComConstructor(const Executable_MakeFile_ComConstructor & orig);
  virtual ~Executable_MakeFile_ComConstructor();
  void Receive_DepDeterminer(Executable_MakeFile_DepDeterminer * pointer);
- void Construct_Compiler_Commands();
+ void Receice_DataCollector(Executable_MakeFile_DataCollector * pointer);
+ void Construct_Compiler_Commands(char * main_file_path);
  void Clear_Dynamic_Memory();
  char * Get_Object_File_List();
  char * Get_Header_File_List();
 protected:
- void Determine_Object_File_List_Size();
  void Construct_Object_File_List();
- void Determine_Header_File_List_Size();
+ void Determine_List_Sizes();
  void Construct_Header_File_List();
+ void Set_Header_File_Priorities();
+ void Re_Order_Header_Files();
+ void Determine_Object_File_Name(char ** obj_name, char * header);
  void Add_String(char ** list, char * string, int * index);
  void Place_String(std::string * pointer, char * string);
  void Place_CString(char ** str_pointer, std::string string);
  void Place_CString(char ** str_pointer, char * string);
  Compiler_Data_CString * Data_Ptr_CString;
+ Header_Dependency * Header_Dependency_List;
+ CharOperator CharOpr;
  Executable_MakeFile_DepDeterminer * Dep_Determiner;
+ Executable_MakeFile_Dependency_Selector Dependency_Selector;
+ Executable_MakeFile_DataCollector * Data_Collector;
  char * repo_dir;
  char * warehouse_head_dir;
  char * warehouse_obj_dir;

@@ -82,6 +82,8 @@ void Executable_MakeFile_DataCollector::Clear_Dynamic_Memory(){
                       if(this->Data_Ptr_CString[i].included_headers[k] != nullptr){
 
                          delete [] this->Data_Ptr_CString[i].included_headers[k];
+
+                         delete [] this->Data_Ptr_CString[i].included_headers_path[k];
                       }
                   }
 
@@ -166,25 +168,6 @@ void Executable_MakeFile_DataCollector::Determine_Header_File_List(){
             delete header_path;
          }
       }
-
-
-      /*
-
-      int hd_lst_index = 0;
-
-      int vct_index = 0;
-
-
-      for(this->itr=this->v_head_data.begin();
-
-          this->itr<this->v_head_data.end();this->itr++){
-
-          vct_index++;
-
-      }
-
-      */
-
 }
 
 void Executable_MakeFile_DataCollector::Extract_Compiler_Data(){
@@ -268,6 +251,8 @@ void Executable_MakeFile_DataCollector::Extract_Compiler_Data(){
 
              this->Data_Ptr_CString[i].included_headers = new char * [5*head_inc_number];
 
+             this->Data_Ptr_CString[i].included_headers_path = new char * [5*head_inc_number];
+
              this->Data_Ptr_CString[i].inclusion_number = head_inc_number;
 
              this->Data_Ptr_CString[i].priority = head_inc_number;
@@ -306,9 +291,18 @@ void Executable_MakeFile_DataCollector::Extract_Compiler_Data(){
 
                     this->Extract_Header_File_Name_From_Decleration(&header_name,tmp_string);
 
-                    char ** heap_address = &(this->Data_Ptr_CString[i].included_headers[inclusion_index]);
+                    char ** header_address
 
-                    this->Place_CString(heap_address,header_name);
+                    = &(this->Data_Ptr_CString[i].included_headers[inclusion_index]);
+
+                    this->Place_CString(header_address,header_name);
+
+                    char ** header_path_address
+
+                    = &(this->Data_Ptr_CString[i].included_headers_path[inclusion_index]);
+
+
+                    this->Determine_Header_Repo_Warehouse_Path(header_path_address,header_name,'w');
 
                     inclusion_index++;
 
@@ -717,12 +711,11 @@ void Executable_MakeFile_DataCollector::Clear_Pointer_Memory(char ** Pointer){
 
            std::cout << "\n Header Number:" << i;
 
-           std::cout << "\n repo_path:" << this->Data_Ptr_CString[i].repo_path;
+           std::cout << "\n repo_path:  "   << this->Data_Ptr_CString[i].repo_path;
 
            std::cout << "\n header_name:" << this->Data_Ptr_CString[i].header_name;
 
-
-           std::cout << "\n this->Data_Ptr_CString[" << i <<"].inclusion_number:"
+           std::cout << "\n inclusion_number:"
 
            <<  this->Data_Ptr_CString[i].inclusion_number;
 
@@ -733,9 +726,15 @@ void Executable_MakeFile_DataCollector::Clear_Pointer_Memory(char ** Pointer){
 
            for(int k=0;k<inc_number;k++){
 
-               std::cout << "\n include head -" << k
+               std::cout << "\n include header -" << k
 
                << ":" << this->Data_Ptr_CString[i].included_headers[k];
+
+               std::cout << "\n include header path -" << k
+
+               << ":" << this->Data_Ptr_CString[i].included_headers_path[k];
+
+               std::cout << "\n\n";
            }
 
            std::cout << "\n\n";

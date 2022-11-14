@@ -18,6 +18,7 @@
 #include <string>
 #include <fcntl.h>
 #include <windows.h>
+#include "Executable_MakeFile_Dependency_Selector.hpp"
 #include "Executable_MakeFile_DataCollector.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
@@ -56,6 +57,7 @@ protected:
  void Receive_DataCollector_Info();
  void Order_Priorities();
  Executable_MakeFile_DataCollector * DataCollector;
+ Executable_MakeFile_Dependency_Selector DepSelector;
  Compiler_Data_CString * Data_Ptr_CString;
  CharOperator Char_Processor;
  int  header_file_number;

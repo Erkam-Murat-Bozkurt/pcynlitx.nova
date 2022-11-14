@@ -58,6 +58,8 @@ void Executable_MakeFile_Dependency_Selector::Clear_Dynamic_Memory(){
          }
 
          delete [] this->Dependent_List;
+
+         this->Dep_Counter = 0;
      }
 }
 
@@ -82,7 +84,9 @@ void Executable_MakeFile_Dependency_Selector::Receive_DataCollector_Info(){
 
      this->warehouse_head_dir = this->DataCollector->Get_Warehouse_Headers_Dir();
 
-     this->Dependent_List     = new Header_Dependency [5*this->header_file_number];
+     this->Memory_Delete_Condition = false;
+
+     this->Dependent_List = new Header_Dependency [5*this->header_file_number];
 }
 
 void Executable_MakeFile_Dependency_Selector::Extract_Dependency_Data(char * path){
@@ -483,6 +487,11 @@ void Executable_MakeFile_Dependency_Selector::Extract_Dependency_Data(char * pat
 
           *Pointer = nullptr;
        }
+  }
+
+  Header_Dependency * Executable_MakeFile_Dependency_Selector::Get_Header_Dependency_List(){
+
+        return this->Dependent_List;
   }
 
   char * Executable_MakeFile_Dependency_Selector::Get_Dependent_Header(int i){

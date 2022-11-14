@@ -73,6 +73,8 @@ void Executable_MakeFile_DepDeterminer::Receive_Source_File_Info(Project_Files_L
 
 void Executable_MakeFile_DepDeterminer::Determine_Dependencies(){
 
+     this->DepSelector.Receive_Executable_MakeFile_DataCollector(this->DataCollector);
+
      this->Receive_DataCollector_Info();
 
      this->Determine_Compile_Order();
@@ -80,25 +82,21 @@ void Executable_MakeFile_DepDeterminer::Determine_Dependencies(){
 
 void Executable_MakeFile_DepDeterminer::Determine_Compile_Order(){
 
-     this->Reverse_Order_Priorities();
+     //this->Reverse_Order_Priorities();
 
      for(int i=0;i<this->header_file_number;i++){
 
-        bool rec_search = this->Data_Ptr_CString[i].rcr_srch_complated;
+        //bool rec_search  = this->Data_Ptr_CString[i].rcr_srch_complated;
 
-        if(!rec_search){
+        char * repo_path = this->Data_Ptr_CString[i].repo_path;
 
-            this->Search_Recursive_Include_Dependency(i);
-        }
-      }
+            this->DepSelector.Determine_Source_File_Dependencies(repo_path);
 
-      this->Order_Priorities();
+            int priority = this->DepSelector.Get_Dependency_List_Size();
 
-      for(int i=0;i<this->header_file_number;i++){
+            this->Data_Ptr_CString[i].priority = priority;
 
-          bool rec_search = this->Data_Ptr_CString[i].rcr_srch_complated;
-
-          this->Search_Recursive_Include_Dependency(i);
+            this->DepSelector.Clear_Dynamic_Memory();
       }
 
       this->Order_Priorities();
@@ -133,7 +131,6 @@ void Executable_MakeFile_DepDeterminer::Search_Recursive_Include_Dependency(int 
                    this->Data_Ptr_CString[index].priority =
 
                    this->Data_Ptr_CString[index].priority + priority;
-
                 }
             }
         }

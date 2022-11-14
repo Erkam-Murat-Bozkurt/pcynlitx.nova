@@ -64,13 +64,6 @@ int main(int argc, char ** argv){
 
     Compiler_Data_CString * Data_Pointer = Data_Collector.Get_Compiler_Data();
 
-    for(int i=0;i<data_size;i++){
-
-       std::cout << "\n repo_path:" << Data_Pointer[i].repo_path;
-
-       std::cout << "\n header_name:" << Data_Pointer[i].header_name;
-    }
-
     Data_Collector.Clear_Dynamic_Memory();
 
     return 0;

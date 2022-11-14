@@ -44,9 +44,25 @@ int main(int argc, char ** argv){
     std::cout << "\n src_file_num:" << src_file_num;
 
 
+
+    Executable_MakeFile_DataCollector Data_Collector;
+
+    if(src_file_num > 0){
+
+       Data_Collector.Receive_Descriptor_File_Reader(&Des_Reader);
+
+       Data_Collector.Receive_Git_Record_Data(&Git_Data_Receiver);
+
+       Data_Collector.Receive_Source_File_Info(&Dir_Lister);
+
+       Data_Collector.Collect_Make_File_Data();
+    }
+
     Executable_MakeFile_DepDeterminer Dep_Determiner;
 
     if(src_file_num > 0){
+
+       Dep_Determiner.Receive_Executable_MakeFile_DataCollector(&Data_Collector);
 
        Dep_Determiner.Receive_Descriptor_File_Reader(&Des_Reader);
 
@@ -55,14 +71,21 @@ int main(int argc, char ** argv){
        Dep_Determiner.Receive_Source_File_Info(&Dir_Lister);
 
        Dep_Determiner.Determine_Dependencies();
-
     }
+
+
+    char path [] = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\KERNEL.DEVELOPMENT\\Kernel\\Kernel_Main_File.cpp";
 
     Executable_MakeFile_ComConstructor Command_Constructor;
 
-    Command_Constructor.Receive_DepDeterminer(&Dep_Determiner);
+    if(src_file_num > 0){
 
-    Command_Constructor.Construct_Compiler_Commands();
+      Command_Constructor.Receice_DataCollector(&Data_Collector);
+
+      Command_Constructor.Receive_DepDeterminer(&Dep_Determiner);
+
+      Command_Constructor.Construct_Compiler_Commands(path);
+    }
 
     std::cout << "\n Header File List:" << Command_Constructor.Get_Header_File_List();
 

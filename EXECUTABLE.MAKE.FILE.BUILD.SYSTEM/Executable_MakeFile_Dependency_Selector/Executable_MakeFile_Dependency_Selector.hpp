@@ -35,6 +35,7 @@ struct Header_Dependency {
   bool   rcr_srch_complated;
   char * Header_Name;
   char * repo_warehouse_path;
+  int  priority;
 };
 
 
@@ -48,6 +49,7 @@ public:
  void Determine_Source_File_Dependencies(char * pointer);
  void Print_Dependency_List();
  void Clear_Dynamic_Memory();
+ Header_Dependency * Get_Header_Dependency_List();
  char * Get_Dependent_Header(int i);
  char * Get_Dependent_Header_Path(int i);
  int    Get_Dependency_List_Size();
