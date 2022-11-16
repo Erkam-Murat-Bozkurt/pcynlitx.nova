@@ -37,10 +37,7 @@ public:
  Executable_MakeFile_DepDeterminer();
  Executable_MakeFile_DepDeterminer(const Executable_MakeFile_DepDeterminer & orig);
  virtual ~Executable_MakeFile_DepDeterminer();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader);
- void Receive_Git_Record_Data(Git_File_List_Receiver * Lister_Pointer);
  void Receive_Executable_MakeFile_DataCollector(Executable_MakeFile_DataCollector * DataCollector);
- void Receive_Source_File_Info(Project_Files_Lister * Pointer);
  void Determine_Dependencies();
  void Print_Compiler_Orders();
  void Clear_Dynamic_Memory();

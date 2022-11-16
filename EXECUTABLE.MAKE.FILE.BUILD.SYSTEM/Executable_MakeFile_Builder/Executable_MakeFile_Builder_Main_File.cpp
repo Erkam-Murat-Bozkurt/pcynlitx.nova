@@ -42,6 +42,8 @@ int main(int argc, char ** argv){
 
     std::cout << "\n src_file_num:" << src_file_num;
 
+    char path [] = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\KERNEL.DEVELOPMENT\\Kernel\\Kernel_Main_File.cpp";
+
 
     Executable_MakeFile_Builder File_Builder;
 
@@ -53,7 +55,7 @@ int main(int argc, char ** argv){
 
        File_Builder.Receive_Source_File_Info(&Dir_Lister);
 
-       File_Builder.Build_MakeFile();
+       File_Builder.Build_MakeFile(path);
 
     }
 

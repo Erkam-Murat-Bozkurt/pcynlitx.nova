@@ -59,21 +59,11 @@ int main(int argc, char ** argv){
 
     }
 
-    std::cout << "\n Before Executable_MakeFile_DepDeterminer";
-
-    std::cin.get();
-
     Executable_MakeFile_DepDeterminer Dep_Determiner;
 
     if(src_file_num > 0){
 
        Dep_Determiner.Receive_Executable_MakeFile_DataCollector(&Data_Collector);
-
-       Dep_Determiner.Receive_Descriptor_File_Reader(&Des_Reader);
-
-       Dep_Determiner.Receive_Git_Record_Data(&Git_Data_Receiver);
-
-       Dep_Determiner.Receive_Source_File_Info(&Dir_Lister);
 
        Dep_Determiner.Determine_Dependencies();
 

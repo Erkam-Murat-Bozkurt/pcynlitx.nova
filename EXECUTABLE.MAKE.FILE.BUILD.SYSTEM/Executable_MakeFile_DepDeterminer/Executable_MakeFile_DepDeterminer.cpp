@@ -56,21 +56,6 @@ void Executable_MakeFile_DepDeterminer::Receive_Executable_MakeFile_DataCollecto
      this->DataCollector = Pointer;
 }
 
-void Executable_MakeFile_DepDeterminer::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader){
-
-     this->DataCollector->Receive_Descriptor_File_Reader(Des_Reader);
-}
-
-void Executable_MakeFile_DepDeterminer::Receive_Git_Record_Data(Git_File_List_Receiver * Pointer){
-
-     this->DataCollector->Receive_Git_Record_Data(Pointer);
-}
-
-void Executable_MakeFile_DepDeterminer::Receive_Source_File_Info(Project_Files_Lister * Pointer){
-
-     this->DataCollector->Receive_Source_File_Info(Pointer);
-}
-
 void Executable_MakeFile_DepDeterminer::Determine_Dependencies(){
 
      this->DepSelector.Receive_Executable_MakeFile_DataCollector(this->DataCollector);
@@ -82,21 +67,17 @@ void Executable_MakeFile_DepDeterminer::Determine_Dependencies(){
 
 void Executable_MakeFile_DepDeterminer::Determine_Compile_Order(){
 
-     //this->Reverse_Order_Priorities();
-
      for(int i=0;i<this->header_file_number;i++){
 
-        //bool rec_search  = this->Data_Ptr_CString[i].rcr_srch_complated;
+         char * repo_path = this->Data_Ptr_CString[i].repo_path;
 
-        char * repo_path = this->Data_Ptr_CString[i].repo_path;
+         this->DepSelector.Determine_Source_File_Dependencies(repo_path);
 
-            this->DepSelector.Determine_Source_File_Dependencies(repo_path);
+         int priority = this->DepSelector.Get_Dependency_List_Size();
 
-            int priority = this->DepSelector.Get_Dependency_List_Size();
+         this->Data_Ptr_CString[i].priority = priority;
 
-            this->Data_Ptr_CString[i].priority = priority;
-
-            this->DepSelector.Clear_Dynamic_Memory();
+         this->DepSelector.Clear_Dynamic_Memory();
       }
 
       this->Order_Priorities();
