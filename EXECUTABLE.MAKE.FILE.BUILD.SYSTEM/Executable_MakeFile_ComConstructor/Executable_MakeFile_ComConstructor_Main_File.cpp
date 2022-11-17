@@ -41,9 +41,6 @@ int main(int argc, char ** argv){
 
     int src_file_num = Dir_Lister.Get_Source_File_Number();
 
-    std::cout << "\n src_file_num:" << src_file_num;
-
-
 
     Executable_MakeFile_DataCollector Data_Collector;
 
@@ -64,12 +61,6 @@ int main(int argc, char ** argv){
 
        Dep_Determiner.Receive_Executable_MakeFile_DataCollector(&Data_Collector);
 
-       Dep_Determiner.Receive_Descriptor_File_Reader(&Des_Reader);
-
-       Dep_Determiner.Receive_Git_Record_Data(&Git_Data_Receiver);
-
-       Dep_Determiner.Receive_Source_File_Info(&Dir_Lister);
-
        Dep_Determiner.Determine_Dependencies();
     }
 
@@ -80,6 +71,8 @@ int main(int argc, char ** argv){
 
     if(src_file_num > 0){
 
+      Command_Constructor.Receive_Descriptor_File_Reader(&Des_Reader);
+
       Command_Constructor.Receice_DataCollector(&Data_Collector);
 
       Command_Constructor.Receive_DepDeterminer(&Dep_Determiner);
@@ -87,9 +80,11 @@ int main(int argc, char ** argv){
       Command_Constructor.Construct_Compiler_Commands(path);
     }
 
-    std::cout << "\n Header File List:" << Command_Constructor.Get_Header_File_List();
+    char * Compiler_System_Command = Command_Constructor.Get_Compiler_System_Command();
 
-    std::cout << "\n Object File List:" << Command_Constructor.Get_Object_File_List();
+    std::cout << "\n Compiler_System_Command:" << Compiler_System_Command;
+
+    std::cout << "\n\n";
 
     return 0;
 }

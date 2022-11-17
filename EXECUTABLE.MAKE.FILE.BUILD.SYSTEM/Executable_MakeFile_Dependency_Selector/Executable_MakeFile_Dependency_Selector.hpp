@@ -34,6 +34,7 @@ struct Header_Dependency {
 
   bool   rcr_srch_complated;
   char * Header_Name;
+  char * Object_File_Name;
   char * repo_warehouse_path;
   int  priority;
 };

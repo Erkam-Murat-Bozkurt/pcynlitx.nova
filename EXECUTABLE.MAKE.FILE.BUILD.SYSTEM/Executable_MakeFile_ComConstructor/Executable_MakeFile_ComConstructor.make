@@ -48,6 +48,7 @@ Executable_MakeFile_ComConstructor.exe: Executable_MakeFile_ComConstructor_Main_
 	DirectoryOperations.cpp \
 	StringOperator.cpp \
 	CharOperator.cpp \
+	IntToCharTranslater.cpp \
 	Cpp_FileOperations.cpp \
 	Executable_MakeFile_ComConstructor.hpp \
 	Executable_MakeFile_Dependency_Selector.hpp \
@@ -67,6 +68,7 @@ Executable_MakeFile_ComConstructor.exe: Executable_MakeFile_ComConstructor_Main_
 	StringOperator.h \
 	DirectoryOperations.h \
 	CharOperator.h \
+	IntToCharTranslater.h \
 	Cpp_FileOperations.h
 
 	g++ -std=c++17 -g -o Executable_MakeFile_ComConstructor.exe \
