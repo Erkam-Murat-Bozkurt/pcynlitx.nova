@@ -53,6 +53,12 @@ void Executable_MakeFile_DataCollector::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
+         delete [] this->warehouse_head_dir;
+
+         delete [] this->warehouse_path;
+
+         delete [] this->warehouse_obj_dir;
+
         if(this->Data_Ptr_CString != nullptr){
 
            for(int i=0;i<this->header_file_number;i++){
@@ -110,7 +116,6 @@ void Executable_MakeFile_DataCollector::Receive_Source_File_Info(Project_Files_L
 
      this->File_Lister_Pointer = Pointer;
 }
-
 
 void Executable_MakeFile_DataCollector::Collect_Make_File_Data(){
 

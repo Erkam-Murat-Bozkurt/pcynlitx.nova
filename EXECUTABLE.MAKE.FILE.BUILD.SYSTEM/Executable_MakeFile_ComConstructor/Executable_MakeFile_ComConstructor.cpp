@@ -67,6 +67,16 @@ void Executable_MakeFile_ComConstructor::Clear_Dynamic_Memory(){
 
         delete [] this->object_file_list;
 
+        delete [] this->git_src_dir;
+
+        delete [] this->src_file_dir;
+
+        delete [] this->source_file_name;
+
+        delete [] this->make_file_name;
+
+        delete [] this->Compiler_System_Command;
+
         this->Dependency_Selector.Clear_Dynamic_Memory();
      }
 }
@@ -223,10 +233,6 @@ void Executable_MakeFile_ComConstructor::Construct_Header_File_List(){
 
          char * header_name = this->Header_Dependency_List[i].Header_Name;
 
-         this->Add_String(&this->header_file_list,include_command,&index);
-
-         this->Add_String(&this->header_file_list,space,&index);
-
          this->Add_String(&this->header_file_list,header_name,&index);
 
          this->Add_String(&this->header_file_list,space,&index);
@@ -262,7 +268,6 @@ void Executable_MakeFile_ComConstructor::Construct_Object_File_List(){
          this->Determine_Object_File_Name(&this->Header_Dependency_List[i].Object_File_Name,header_name);
 
          char * obj_name = this->Header_Dependency_List[i].Object_File_Name;
-
 
          if(obj_name != nullptr){
 
@@ -740,66 +745,68 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
 void Executable_MakeFile_ComConstructor::Divide_Options(char * options){
 
-     size_t options_size = strlen(options);
+     if(options != nullptr){
 
-     this->options = new char [5*options_size];
+        size_t options_size = strlen(options);
 
-     char space = ' ';
+        this->options = new char [5*options_size];
 
-     int space_counter = 0;
+        char space = ' ';
 
-     for(int i=0;i<options_size;i++){
+        int space_counter = 0;
 
-         if(options[i] == ' '){
+        for(int i=0;i<options_size;i++){
 
-           space_counter++;
-         }
-     }
+           if(options[i] == ' '){
 
-     int index = 0;
-
-     if(space_counter>2){
-
-        space_counter = 0;
-
-        for(size_t i=0;i<options_size;i++){
-
-            this->options[index] = options[i];
-
-            index++;
-
-            if(options[i] == ' '){
-
-               space_counter++;
+              space_counter++;
             }
-
-            if(space_counter>2){
-
-               this->options[index] = '\\';
-
-               index++;
-
-               this->options[index] = '\n';
-
-               index++;
-
-               this->options[index] = '\t';
-
-               index++;
-
-
-               this->options[index] = ' ';
-
-               index++;
-
-
-               space_counter = 0;
-            }
-
         }
 
-        this->options[index] = '\0';
-     }
+        int index = 0;
+
+        if(space_counter>2){
+
+           space_counter = 0;
+
+           for(size_t i=0;i<options_size;i++){
+
+               this->options[index] = options[i];
+
+               index++;
+
+               if(options[i] == ' '){
+
+                  space_counter++;
+                }
+
+                if(space_counter>2){
+
+                   this->options[index] = '\\';
+
+                   index++;
+
+                   this->options[index] = '\n';
+
+                   index++;
+
+                   this->options[index] = '\t';
+
+                   index++;
+
+
+                   this->options[index] = ' ';
+
+                   index++;
+
+                   space_counter = 0;
+                }
+
+            }
+
+            this->options[index] = '\0';
+          }
+       }
 }
 
 

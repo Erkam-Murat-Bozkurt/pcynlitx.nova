@@ -48,6 +48,8 @@ void Executable_MakeFile_DepDeterminer::Clear_Dynamic_Memory(){
      if(!this->Memory_Delete_Condition){
 
          this->Memory_Delete_Condition = true;
+
+         this->DepSelector.Clear_Dynamic_Memory();
      }
 }
 

@@ -35,8 +35,7 @@ Executable_MakeFile_Builder::Executable_MakeFile_Builder(){
 
    this->git_src_dir = nullptr;
 
-   this->Dependency_Code_Line = nullptr;
-
+   this->Compiler_System_Command = nullptr;
 }
 
 Executable_MakeFile_Builder::Executable_MakeFile_Builder(const
@@ -58,7 +57,13 @@ void Executable_MakeFile_Builder::Clear_Dynamic_Memory(){
 
      if(!this->Memory_Delete_Condition){
 
+        this->Memory_Delete_Condition = true;
 
+        this->Data_Collector.Clear_Dynamic_Memory();
+
+        this->Dep_Determiner.Clear_Dynamic_Memory();
+
+        this->ComConstructor.Clear_Dynamic_Memory();
      }
 }
 
@@ -79,7 +84,7 @@ void Executable_MakeFile_Builder::Receive_Source_File_Info(Project_Files_Lister 
      this->Data_Collector.Receive_Source_File_Info(Pointer);
 }
 
-void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path){
+void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_Name){
 
      this->Data_Collector.Collect_Make_File_Data();
 
@@ -91,6 +96,8 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path){
 
      this->ComConstructor.Receive_DepDeterminer(&this->Dep_Determiner);
 
+     this->ComConstructor.Receive_Descriptor_File_Reader(this->Des_Reader_Pointer);
+
      this->ComConstructor.Construct_Compiler_Commands(mn_src_path);
 
      // Receiving the compiler data from the member objects
@@ -101,180 +108,27 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path){
 
       this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
 
-      this->Determine_Src_File_Dir(mn_src_path,'w');
+      this->Src_File_Dir   = this->ComConstructor.Get_Src_File_Dr();
 
-      this->Determine_Make_File_Name(mn_src_path);
+      this->git_src_dir    = this->ComConstructor.Get_Git_Src_Dr();
 
-      std::cout << "\n this->Make_File_Name:" << this->Make_File_Name;
+      this->make_file_name = this->ComConstructor.Get_Make_File_Name();
 
-      std::cout << "\n this->Src_File_Dir:" << this->Src_File_Dir;
+      this->Compiler_System_Command = this->ComConstructor.Get_Compiler_System_Command();
 
-      std::cout << "\n WAREHOUSE HEADER DIR:" << this->warehouse_head_dir;
-
-      std::cout << "\n WAREHOUSE OBJECT DIR:" << this->warehouse_obj_dir;
-
-      std::cout << "\n WAREHOUSE PATH      :" << this->warehouse_path;
-
-      this->Determine_Git_Src_Dir();
-
-      std::cout << "\n this->git_src_dir:" << this->git_src_dir;
-
-      std::cin.get();
-
-      this->Write_MakeFile();
+      this->Write_MakeFile(Exe_Name);
 }
 
 
 void Executable_MakeFile_Builder::Print_Compiler_Orders(){
 
-     /*
-
-     int head_number = this->Dep_Determiner.Get_Compiler_Data_Size();
-
-     for(int i=0;i<head_number;i++){
-
-         std::cout << "\n\n";
-
-         std::cout << "\n --------------------------------------------------------------------------";
-
-         std::cout << "\n SOURCE FILE NUMBER:" << i;
-
-         std::cout << "\n HEADER NAME:"
-
-         <<  this->Data_Ptr_CString[i].header_name;
-
-         std::cout << "\n PRIORITY:"
-
-         <<  this->Data_Ptr_CString[i].priority;
-
-         std::cout << "\n INCLUSION NUMBER:"
-
-         <<  this->Data_Ptr_CString[i].inclusion_number;
-
-         std::cout << "\n\n";
-     }
-
-     */
 }
 
-
-void Executable_MakeFile_Builder::Determine_Git_Src_Dir(){
-
-     size_t warehouse_path_size = strlen(this->warehouse_path);
-
-     size_t src_dir_size = strlen(this->Src_File_Dir);
-
-     size_t git_dr_size = src_dir_size - warehouse_path_size;
-
-     this->git_src_dir = new char [5*git_dr_size];
-
-     int index = 0;
-
-     for(size_t i=warehouse_path_size+1;i<src_dir_size;i++){
-
-        this->git_src_dir[index] = this->Src_File_Dir[i];
-
-        index++;
-     }
-
-     this->git_src_dir[index] = '\0';
-}
-
-void Executable_MakeFile_Builder::Determine_Src_File_Dir(char * file_path, char opr_sis){
-
-     size_t path_size = strlen(file_path);
-
-     size_t dir_size = path_size;
-
-     for(int i=path_size;i>0;i--){
-
-         if(opr_sis == 'w'){
-
-              if(file_path[i] == '\\'){
-
-                 break;
-              }
-              else{
-
-                 dir_size--;
-              }
-         }
-
-         if(opr_sis == 'l'){
-
-              if(file_path[i] == '/'){
-
-                 break;
-              }
-              else{
-
-                 dir_size--;
-              }
-         }
-     }
-
-     this->Src_File_Dir = new char [5*dir_size];
-
-     int index = 0;
-
-     for(int i=0;i<dir_size;i++){
-
-         this->Src_File_Dir[index] = file_path[i];
-
-         index++;
-     }
-
-     this->Src_File_Dir[index] = '\0';
-}
-
-
-void Executable_MakeFile_Builder::Determine_Make_File_Name(char * file_path){
-
-     char file_ext [] = ".make";
-
-     size_t ext_size  = strlen(file_ext);
-
-     size_t path_size = strlen(file_path);
-
-     size_t dir_size  = strlen(this->Src_File_Dir);
-
-     size_t name_size = path_size - dir_size + ext_size;
-
-     this->Make_File_Name = new char [5*name_size];
-
-
-     int index = 0;
-
-     for(size_t i=dir_size+1;i<path_size;i++){
-
-        if(file_path[i] == '.'){
-
-           break;
-        }
-        else{
-
-            this->Make_File_Name[index] = file_path[i];
-
-            index++;
-        }
-     }
-
-     for(size_t i=0;i<ext_size;i++){
-
-         this->Make_File_Name[index] = file_ext[i];
-
-         index++;
-     }
-
-     this->Make_File_Name[index] ='\0';
-}
-
-void Executable_MakeFile_Builder::Write_MakeFile(){
+void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      this->DirectoryManager.ChangeDirectory(this->Src_File_Dir);
 
-
-     this->FileManager.SetFilePath(this->Make_File_Name);
+     this->FileManager.SetFilePath(this->make_file_name);
 
      this->FileManager.FileOpen(RWCf);
 
@@ -311,8 +165,6 @@ void Executable_MakeFile_Builder::Write_MakeFile(){
         this->FileManager.WriteToFile(this->git_src_dir);
      }
 
-
-
      int included_dir_num = this->Des_Reader_Pointer->Get_Include_Directory_Number();
 
      char include_symbol [] = "EXTERNAL_INCLUDE_DIR_";
@@ -339,8 +191,6 @@ void Executable_MakeFile_Builder::Write_MakeFile(){
      }
 
      char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
-
-
 
      char PathSpecifier [] = {'v','p','a','t','h',' ','%','\0'};
 
@@ -392,129 +242,41 @@ void Executable_MakeFile_Builder::Write_MakeFile(){
          this->FileManager.WriteToFile(dir_index);
 
          this->FileManager.WriteToFile(")");
-
      }
 
      this->FileManager.WriteToFile("\n");
-     this->FileManager.WriteToFile("\n");
-     this->FileManager.WriteToFile("\n");
-     this->FileManager.WriteToFile("\n");
-
-     /*
-
-     char * Dependency_Code_Line = this->Data_Collector.Get_Dependency_Code_Line();
-
-     char * Compiler_System_Command= this->Data_Collector.Get_Compiler_System_Command();
-
-
-     this->FileManager.WriteToFile(Dependency_Code_Line);
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("\n\t");
+     this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile(Compiler_System_Command);
+     this->FileManager.WriteToFile("\n");
 
-     */
+     this->FileManager.WriteToFile(" ");
+
+     this->FileManager.WriteToFile(Exe_Name);
+
+     this->FileManager.WriteToFile(": ");
+
+
 
      char * header_file_list = this->ComConstructor.Get_Header_File_List();
 
      char * object_file_list = this->ComConstructor.Get_Object_File_List();
 
+
      this->FileManager.WriteToFile(object_file_list);
+
+     this->FileManager.WriteToFile(header_file_list);
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("\n\t");
+
+     this->FileManager.WriteToFile(this->Compiler_System_Command);
 
      this->FileManager.WriteToFile("\n\n");
 
 
-     this->FileManager.WriteToFile(header_file_list);
-
-     this->FileManager.WriteToFile("\n");
-
      this->FileManager.FileClose();
-
-
 }
-
-
-void Executable_MakeFile_Builder::Determine_Dependency_Code_Line(){
-
-     char double_quotes [] = " : ";
-
-     char space [] = " ";
-
-     char * header_file_list = this->ComConstructor.Get_Header_File_List();
-
-     char * object_file_list = this->ComConstructor.Get_Object_File_List();
-
-     size_t header_file_list_size = strlen(header_file_list);
-
-     size_t object_file_list_size = strlen(object_file_list);
-
-     size_t Code_Line_Size = header_file_list_size + object_file_list_size;
-
-     this->Dependency_Code_Line =  new char [10*Code_Line_Size];
-
-     int index_counter = 0;
-
-     int  sizer = 0;
-
-     char slash [] = "\\";
-
-     char new_line [] = "\n";
-
-     char tab [] = "\t";
-
-     this->Place_Information(&this->Dependency_Code_Line,this->Object_File_Name,&index_counter);
-
-     this->Place_Information(&this->Dependency_Code_Line,double_quotes,&index_counter);
-
-     this->Place_Information(&this->Dependency_Code_Line,this->Source_File_Name_With_Ext,&index_counter);
-
-
-     this->Place_Information(&this->Dependency_Code_Line,space,&index_counter);
-
-     this->Place_Information(&this->Dependency_Code_Line,slash,&index_counter);
-
-     this->Place_Information(&this->Dependency_Code_Line,new_line,&index_counter);
-
-     this->Place_Information(&this->Dependency_Code_Line,tab,&index_counter);
-
-
-     for(int i=0;i<this->Included_Header_Files_Number;i++){
-
-         this->Place_Information(&this->Dependency_Code_Line,space,&index_counter);
-
-         this->Place_Information(&this->Dependency_Code_Line,this->Included_Header_Files[i],&index_counter);
-
-         sizer++;
-
-         if(((sizer >= 2) && (i!=(this->Included_Header_Files_Number -1)))){
-
-            this->Place_Information(&this->Dependency_Code_Line,space,&index_counter);
-
-            this->Place_Information(&this->Dependency_Code_Line,slash,&index_counter);
-
-            this->Place_Information(&this->Dependency_Code_Line,new_line,&index_counter);
-
-            this->Place_Information(&this->Dependency_Code_Line,tab,&index_counter);
-
-            sizer = 0;
-         }
-     }
-
-     this->Dependency_Code_Line[index_counter] = '\0';
-}
-
-void Executable_MakeFile_Builder::Place_Information(char ** Pointer,
-
-     char * Information, int * index_counter){
-
-     int String_Size = strlen(Information);
-
-     for(int i=0;i<String_Size;i++){
-
-         (*Pointer)[(*index_counter)] = Information[i];
-
-         (*index_counter)++;
-     }
- }
