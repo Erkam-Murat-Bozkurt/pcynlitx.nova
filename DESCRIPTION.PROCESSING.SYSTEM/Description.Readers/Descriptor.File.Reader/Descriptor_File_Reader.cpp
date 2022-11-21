@@ -12,8 +12,6 @@ Descriptor_File_Reader::Descriptor_File_Reader(){
     this->Library_Directories = nullptr;
     this->Library_Files = nullptr;
     this->warehouse_location = nullptr;
-    this->Main_File_Names = nullptr;
-    this->Executable_File_Names = nullptr;
     this->Memory_Delete_Condition = false;
     this->include_dir_num = 0;
     this->source_file_dir_num = 0;
@@ -81,26 +79,6 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
             }
          }
 
-         if(this->Main_File_Names != nullptr){
-
-            for(int i=0;i<this->main_file_name_num;i++){
-
-               delete [] this->Main_File_Names[i];
-
-               this->Main_File_Names[i] = nullptr;
-            }
-         }
-
-         if(this->Executable_File_Names != nullptr){
-
-            for(int i=0;i<this->exec_file_name_num;i++){
-
-               delete [] this->Executable_File_Names[i];
-
-               this->Executable_File_Names[i] = nullptr;
-            }
-         }
-
          if(this->file_path != nullptr){
 
             delete [] this->file_path;
@@ -149,9 +127,6 @@ void Descriptor_File_Reader::Read_Descriptor_File(char * path){
 
      this->Read_Options();
 
-     this->Read_Main_File_Names();
-
-     this->Read_Executable_File_Names();
 }
 
 void Descriptor_File_Reader::Receive_Descriptor_File_Path(char * path){
@@ -523,33 +498,31 @@ void Descriptor_File_Reader::Read_Options(){
 
             record_num++;
          }
-
-         if(record_num > 1){
-
-            std::cout << "\n\n";
-
-            std::cout << "\n Error:";
-
-            std::cout << "\n There are multiple C++ options declerations";
-
-            std::cout << "\n\n";
-
-            exit(0);
-          }
       }
 
-      for(int i=start_line+1;i<end_line;i++){
+      if(record_num < 1){
 
-          char * line = this->StringManager.ReadFileLine(i);
-
-          if(this->StringManager.CheckStringLine(line)){
-
-             this->Place_String(&(this->options),line);
-
-             break;
-          }
+         this->options = nullptr;
       }
+      else{
+
+           for(int i=start_line+1;i<end_line;i++){
+
+               char * line = this->StringManager.ReadFileLine(i);
+
+               if(this->StringManager.CheckStringLine(line)){
+
+                  this->Place_String(&(this->options),line);
+
+                  break;
+               }
+            }
+      }
+
 }
+
+
+/*
 
 void Descriptor_File_Reader::Read_Main_File_Names(){
 
@@ -638,6 +611,8 @@ void Descriptor_File_Reader::Read_Executable_File_Names(){
 
 }
 
+*/
+
 void Descriptor_File_Reader::Place_String(char ** pointer, char * string){
 
      size_t string_size = strlen(string);
@@ -672,16 +647,6 @@ char ** Descriptor_File_Reader::Get_Source_File_Directories(){
 char ** Descriptor_File_Reader::Get_Include_Directories(){
 
        return this->Include_Directories;
-}
-
-char ** Descriptor_File_Reader::Get_Main_File_Names(){
-
-      return this->Main_File_Names;
-}
-
-char ** Descriptor_File_Reader::Get_Exe_File_Names(){
-
-     return this->Executable_File_Names;
 }
 
 char * Descriptor_File_Reader::Get_Standard(){
@@ -725,6 +690,8 @@ int Descriptor_File_Reader::Get_Include_Directory_Number(){
     return this->include_dir_num;
 }
 
+/*
+
 int Descriptor_File_Reader::Get_Main_File_Name_Number(){
 
     return this->main_file_name_num;
@@ -734,3 +701,5 @@ int Descriptor_File_Reader::Get_Exe_File_Name_Number(){
 
     return this->exec_file_name_num;
 }
+
+*/

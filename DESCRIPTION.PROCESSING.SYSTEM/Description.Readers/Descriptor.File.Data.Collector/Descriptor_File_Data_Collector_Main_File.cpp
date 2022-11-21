@@ -1,8 +1,6 @@
 
 
 
-
-
 #include <iostream>
 #include <cstring>
 #include "Descriptor_File_Data_Collector.hpp"
@@ -97,23 +95,6 @@ int main(int argc, char ** argv){
     std::cout << "\n Options record area end:"   << Data_Collector.Get_Options_Record_Area(1);
 
     std::cout << "\n\n";
-
-
-    std::cout << "\n MAIN FILE NAME RECORD:";
-
-    std::cout << "\n Main File name record area start:" << Data_Collector.Get_Main_File_Name_Record_Area(0);
-
-    std::cout << "\n Main File name record area end:"   << Data_Collector.Get_Main_File_Name_Record_Area(1);
-
-    std::cout << "\n\n";
-
-
-
-    std::cout << "\n EXECUTABLE FILE NAME RECORD:";
-
-    std::cout << "\n Executable File name record area start:" << Data_Collector.Get_Executable_File_Name_Record_Area(0);
-
-    std::cout << "\n Executable File name record area end:"   << Data_Collector.Get_Executable_File_Name_Record_Area(1);
 
     std::cout << "\n\n";
 

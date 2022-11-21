@@ -103,7 +103,6 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
      this->WriteNewLines(new_lines);
 
 
-
      this->FileManager.WriteToFile("[C++-STANDARD]{");
 
      this->WriteNewLines(new_lines);
@@ -111,8 +110,6 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
      this->FileManager.WriteToFile("}");
 
      this->WriteNewLines(new_lines);
-
-
 
 
      this->FileManager.WriteToFile("[INCLUDE-DIRECTORIES]{");
@@ -124,8 +121,6 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
      this->WriteNewLines(new_lines);
 
 
-
-
      this->FileManager.WriteToFile("[SOURCE-FILE-DIRECTORIES]{");
 
      this->WriteNewLines(new_lines);
@@ -133,7 +128,6 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
      this->FileManager.WriteToFile("}");
 
      this->WriteNewLines(new_lines);
-
 
 
      this->FileManager.WriteToFile("[LIBRARY-DIRECTORIES]{");
@@ -171,7 +165,6 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
      this->FileManager.WriteToFile("}");
 
      this->WriteNewLines(new_lines);
-
 
 
      this->FileManager.WriteToFile("[EXECUTABLE-FILE-NAMES]{");

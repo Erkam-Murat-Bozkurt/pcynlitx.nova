@@ -85,10 +85,6 @@ void Descriptor_File_Syntax_Controller::Control_Keywords(){
 
      char options [] = "[OPTIONS]";
 
-     char main_file_name [] = "[MAIN-FILE-NAMES]";
-
-     char exe_file_name [] = "[EXECUTABLE-FILE-NAMES]";
-
 
      if(!this->Control_String_Inclusion(root_dir)){
 
@@ -145,20 +141,6 @@ void Descriptor_File_Syntax_Controller::Control_Keywords(){
      };
 
      if(!this->Control_String_Inclusion(options)){
-
-        std::cout << "\n There is a syntax error on descriptor file";
-
-        exit(0);
-     };
-
-     if(!this->Control_String_Inclusion(main_file_name)){
-
-        std::cout << "\n There is a syntax error on descriptor file";
-
-        exit(0);
-     };
-
-     if(!this->Control_String_Inclusion(exe_file_name)){
 
         std::cout << "\n There is a syntax error on descriptor file";
 
