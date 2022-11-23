@@ -98,6 +98,8 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
 
      this->ComConstructor.Receive_Descriptor_File_Reader(this->Des_Reader_Pointer);
 
+     this->ComConstructor.Receive_ExeFileName(Exe_Name);
+
      this->ComConstructor.Construct_Compiler_Commands(mn_src_path);
 
      // Receiving the compiler data from the member objects
@@ -108,11 +110,11 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
 
       this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
 
-      this->Src_File_Dir   = this->ComConstructor.Get_Src_File_Dr();
+      this->Src_File_Dir       = this->ComConstructor.Get_Src_File_Dr();
 
-      this->git_src_dir    = this->ComConstructor.Get_Git_Src_Dr();
+      this->git_src_dir        = this->ComConstructor.Get_Git_Src_Dr();
 
-      this->make_file_name = this->ComConstructor.Get_Make_File_Name();
+      this->make_file_name     = this->ComConstructor.Get_Make_File_Name();
 
       this->Compiler_System_Command = this->ComConstructor.Get_Compiler_System_Command();
 

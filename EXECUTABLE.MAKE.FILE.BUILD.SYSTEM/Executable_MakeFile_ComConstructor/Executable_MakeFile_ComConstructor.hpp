@@ -38,6 +38,7 @@ public:
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Pointer);
  void Receive_DepDeterminer(Executable_MakeFile_DepDeterminer * pointer);
  void Receice_DataCollector(Executable_MakeFile_DataCollector * pointer);
+ void Receive_ExeFileName(char * name);
  void Construct_Compiler_Commands(char * main_file_path);
  void Clear_Dynamic_Memory();
  char * Get_Compiler_System_Command();
@@ -73,7 +74,7 @@ protected:
  Executable_MakeFile_Dependency_Selector Dependency_Selector;
  Executable_MakeFile_DataCollector * Data_Collector;
  IntToCharTranslater Translater;
- char * repo_dir;
+ char * Exe_Name;
  char * options;
  char * warehouse_head_dir;
  char * warehouse_obj_dir;

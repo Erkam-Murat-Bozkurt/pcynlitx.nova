@@ -212,7 +212,7 @@ void Script_Data_Collector::Determine_Header_Files_Inclusion_Number(Script_Data 
 
                this->String_Line = this->FileManager.ReadLine();
 
-               char * string_line = this->FileManager.Conver_Std_String_To_Char(this->String_Line);
+               char * string_line = this->FileManager.Convert_Std_String_To_Char(this->String_Line);
 
                this->Delete_Spaces_on_String(&string_line);
 

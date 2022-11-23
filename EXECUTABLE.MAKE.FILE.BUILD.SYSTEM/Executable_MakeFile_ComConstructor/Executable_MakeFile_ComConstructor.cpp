@@ -40,6 +40,8 @@ Executable_MakeFile_ComConstructor::Executable_MakeFile_ComConstructor(){
    this->source_file_name = nullptr;
 
    this->options = nullptr;
+
+   this->Exe_Name = nullptr;
 }
 
 Executable_MakeFile_ComConstructor::Executable_MakeFile_ComConstructor(const
@@ -84,6 +86,11 @@ void Executable_MakeFile_ComConstructor::Clear_Dynamic_Memory(){
 void Executable_MakeFile_ComConstructor::Receive_Descriptor_File_Reader(Descriptor_File_Reader * pointer){
 
      this->Des_Reader_Pointer = pointer;
+}
+
+void Executable_MakeFile_ComConstructor::Receive_ExeFileName(char * pointer){
+
+     this->Exe_Name = pointer;
 }
 
 void Executable_MakeFile_ComConstructor::Receive_DepDeterminer(Executable_MakeFile_DepDeterminer * pointer){
@@ -475,7 +482,7 @@ void Executable_MakeFile_ComConstructor::Determine_Source_File_Name(char * file_
 
 void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
-     char compiler_input_command [] = "g++ -Wall -c -std=c++17";
+     char compiler_input_command [] = "g++ -Wall -std=c++17 -o";
 
 
      char * options = this->Des_Reader_Pointer->Get_Options();
@@ -493,7 +500,11 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      char Headers_Location [] ="$(PROJECT_HEADERS_LOCATION)";
 
-     char Source_Location [] ="$(SOURCE_LOCATION)";
+     char Objects_Location [] ="$(PROJECT_OBJECTS_LOCATION)";
+
+     char Source_Location []  ="$(SOURCE_LOCATION)";
+
+
 
      size_t object_file_list_size = strlen(this->object_file_list);
 
@@ -513,6 +524,10 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
      int index_counter = 0;
 
      this->Place_Information(&this->Compiler_System_Command,compiler_input_command,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,this->Exe_Name,&index_counter);
 
      this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
@@ -547,6 +562,16 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
      this->Place_Information(&this->Compiler_System_Command,Headers_Location,&index_counter);
 
      this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+
+
+     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+
 
      this->Place_Information(&this->Compiler_System_Command,Include_Character,&index_counter);
 
@@ -606,6 +631,21 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
 
      int  library_dir_num = this->Des_Reader_Pointer->Get_Library_Directory_Number();
+
+
+     this->Place_Information(&this->Compiler_System_Command,Link_Character,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,Objects_Location,&index_counter);
+
+
+     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
+
+     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+
 
      this->Place_Information(&this->Compiler_System_Command,Link_Character,&index_counter);
 
@@ -676,6 +716,10 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
      for(int i=0;i<list_size;i++){
 
          this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+
+         this->Place_Information(&this->Compiler_System_Command,Objects_Location,&index_counter);
+
+         this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
 
          this->Place_Information(&this->Compiler_System_Command,this->Header_Dependency_List[i].Object_File_Name,&index_counter);
 
