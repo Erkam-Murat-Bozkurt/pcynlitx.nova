@@ -20,6 +20,8 @@ EXC_MKF_DT_CL=D:\pcynlitx.build\EXECUTABLE.MAKE.FILE.BUILD.SYSTEM\Executable_Mak
 EXC_MKF_DEP_DTR=D:\pcynlitx.build\EXECUTABLE.MAKE.FILE.BUILD.SYSTEM\Executable_MakeFile_DepDeterminer
 EXC_MKF_DEP_SLT=D:\pcynlitx.build\EXECUTABLE.MAKE.FILE.BUILD.SYSTEM\Executable_MakeFile_Dependency_Selector
 EXC_MKF_COM_CNSR=D:\pcynlitx.build\EXECUTABLE.MAKE.FILE.BUILD.SYSTEM\Executable_MakeFile_ComConstructor
+REPO_INIT=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Repo_Warehouse_Initializer
+
 
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 				$(SOURCE_DETR) $(DIR_ENUM) \
@@ -28,7 +30,7 @@ VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 				$(MAKE_DATA_COL) $(GIT_LIST) $(FILE_DAT_COL) \
 				$(SRC_DT_COL) $(DES_FILE_SYNT_COL) $(EXC_MKF_DT_CL) \
 				$(EXC_MKF_DEP_DTR) $(EXC_MKF_DEP_SLT) \
-				$(EXC_MKF_COM_CNSR)
+				$(EXC_MKF_COM_CNSR) $(REPO_INIT)
 
 
 Executable_MakeFile_Builder.exe: Executable_MakeFile_Builder_Main_File.cpp \
@@ -44,6 +46,7 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_Builder_Main_File.cpp \
 	MakeFile_Data_Collector.cpp \
 	Source_File_Determiner.cpp \
 	Header_File_Determiner.cpp \
+	Repo_Warehouse_Initializer.cpp \
 	Descriptor_File_Reader.cpp \
 	Descriptor_File_Data_Collector.cpp \
 	Descriptor_File_Syntax_Controller.cpp \
@@ -63,6 +66,7 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_Builder_Main_File.cpp \
 	Source_File_Data_Collector.cpp \
 	Git_File_List_Receiver.hpp \
 	MakeFile_Data_Collector.hpp \
+	Repo_Warehouse_Initializer.h \
 	Descriptor_File_Reader.hpp \
 	Descriptor_File_Data_Collector.hpp \
 	Descriptor_File_Syntax_Controller.hpp \
@@ -84,6 +88,7 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_Builder_Main_File.cpp \
 	 -I$(MAKE_DATA_COL) -I$(FILE_DAT_COL) \
 	 -I$(SRC_DT_COL) -I$(DES_FILE_SYNT_COL) \
 	 -I$(EXC_MKF_COM_CNSR) -I$(EXC_MKF_DEP_SLT) \
+	 -I$(REPO_INIT) \
 	 -L$(EXC_MKF_DT_CL) -L$(DIR_ENUM) -L$(DIR_OPS) -L$(CPP_OPS) \
 	 -L$(CHAR_OPS) -L$(INT_TO_CHAR) -L$(DES_DATA_COL) \
 	 -L$(DES_READER) -L$(STRING_OPS) \
@@ -92,13 +97,14 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_Builder_Main_File.cpp \
 	 -L$(GIT_LIST) -L$(FILE_DAT_COL) \
 	 -L$(SRC_DT_COL) -L$(DES_FILE_SYNT_COL) \
 	 -L$(EXC_MKF_DEP_DTR) -L$(EXC_MKF_COM_CNSR)\
-	 -L$(EXC_MKF_DEP_SLT) \
+	 -L$(EXC_MKF_DEP_SLT) -L$(REPO_INIT) \
 		Executable_MakeFile_Builder_Main_File.cpp \
 		Executable_MakeFile_Builder.cpp \
 		$(EXC_MKF_COM_CNSR)\Executable_MakeFile_ComConstructor.cpp \
 		$(EXC_MKF_DEP_DTR)\Executable_MakeFile_DepDeterminer.cpp \
 		$(EXC_MKF_DEP_SLT)\Executable_MakeFile_Dependency_Selector.cpp \
 		$(EXC_MKF_DT_CL)\Executable_MakeFile_DataCollector.cpp \
+		$(REPO_INIT)\Repo_Warehouse_Initializer.cpp \
 		$(FILE_LISTER)\Project_Files_Lister.cpp \
 		$(FILE_DAT_COL)\Project_Files_Data_Collector.cpp \
 		$(SRC_DT_COL)\Source_File_Data_Collector.cpp \
@@ -120,6 +126,7 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_Builder_Main_File.cpp \
 		-include $(EXC_MKF_DEP_DTR)\Executable_MakeFile_DepDeterminer.hpp \
 		-include $(EXC_MKF_DEP_SLT)\Executable_MakeFile_Dependency_Selector.hpp \
 		-include $(EXC_MKF_DT_CL)\Executable_MakeFile_DataCollector.hpp \
+		-include $(REPO_INIT)\Repo_Warehouse_Initializer.h \
 		-include $(FILE_LISTER)\Project_Files_Lister.h \
 		-include $(FILE_DAT_COL)\Project_Files_Data_Collector.hpp \
 		-include $(SRC_DT_COL)\Source_File_Data_Collector.hpp \

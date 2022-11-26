@@ -67,11 +67,19 @@ void Executable_MakeFile_Builder::Clear_Dynamic_Memory(){
      }
 }
 
-void Executable_MakeFile_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader){
+void Executable_MakeFile_Builder::Receive_Descriptor_File_Path(char * path){
 
-     this->Des_Reader_Pointer = Des_Reader;
+     this->Initializer.Build_Project_Warehouse(path);
 
-     this->Data_Collector.Receive_Descriptor_File_Reader(Des_Reader);
+     this->Initializer.Clear_Dynamic_Memory();
+
+     std::cout << "\n Project Header Warehouse Updated ..";
+
+     std::cout << "\n\n";
+
+     this->Des_Reader.Read_Descriptor_File(path);
+
+     this->Data_Collector.Receive_Descriptor_File_Reader(&this->Des_Reader);
 }
 
 void Executable_MakeFile_Builder::Receive_Git_Record_Data(Git_File_List_Receiver * Pointer){
@@ -86,6 +94,7 @@ void Executable_MakeFile_Builder::Receive_Source_File_Info(Project_Files_Lister 
 
 void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_Name){
 
+
      this->Data_Collector.Collect_Make_File_Data();
 
      this->Dep_Determiner.Receive_Executable_MakeFile_DataCollector(&this->Data_Collector);
@@ -96,7 +105,7 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
 
      this->ComConstructor.Receive_DepDeterminer(&this->Dep_Determiner);
 
-     this->ComConstructor.Receive_Descriptor_File_Reader(this->Des_Reader_Pointer);
+     this->ComConstructor.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
      this->ComConstructor.Receive_ExeFileName(Exe_Name);
 
@@ -122,10 +131,6 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
 }
 
 
-void Executable_MakeFile_Builder::Print_Compiler_Orders(){
-
-}
-
 void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      this->DirectoryManager.ChangeDirectory(this->Src_File_Dir);
@@ -134,11 +139,13 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      this->FileManager.FileOpen(RWCf);
 
+
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("PROJECT_HEADERS_LOCATION=");
 
      this->FileManager.WriteToFile(this->warehouse_head_dir);
+
 
      this->FileManager.WriteToFile("\n");
      this->FileManager.WriteToFile("\n");
@@ -146,6 +153,7 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
      this->FileManager.WriteToFile("PROJECT_OBJECTS_LOCATION=");
 
      this->FileManager.WriteToFile(this->warehouse_obj_dir);
+
 
      this->FileManager.WriteToFile("\n");
      this->FileManager.WriteToFile("\n");
@@ -167,7 +175,7 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
         this->FileManager.WriteToFile(this->git_src_dir);
      }
 
-     int included_dir_num = this->Des_Reader_Pointer->Get_Include_Directory_Number();
+     int included_dir_num = this->Des_Reader.Get_Include_Directory_Number();
 
      char include_symbol [] = "EXTERNAL_INCLUDE_DIR_";
 
@@ -179,7 +187,7 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
          this->FileManager.WriteToFile("\n");
 
-         char * included_dir = this->Des_Reader_Pointer->Get_Include_Directories()[i];
+         char * included_dir = this->Des_Reader.Get_Include_Directories()[i];
 
          char * dir_index = this->Translater.Translate(i);
 
@@ -229,7 +237,7 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
          this->FileManager.WriteToFile("\n");
 
-         char * included_dir = this->Des_Reader_Pointer->Get_Include_Directories()[i];
+         char * included_dir = this->Des_Reader.Get_Include_Directories()[i];
 
          char * dir_index = this->Translater.Translate(i);
 
@@ -260,8 +268,6 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      this->FileManager.WriteToFile(": ");
 
-
-
      char * header_file_list = this->ComConstructor.Get_Header_File_List();
 
      char * object_file_list = this->ComConstructor.Get_Object_File_List();
@@ -275,10 +281,12 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      this->FileManager.WriteToFile("\n\t");
 
+
      this->FileManager.WriteToFile(this->Compiler_System_Command);
 
      this->FileManager.WriteToFile("\n\n");
 
 
      this->FileManager.FileClose();
+
 }

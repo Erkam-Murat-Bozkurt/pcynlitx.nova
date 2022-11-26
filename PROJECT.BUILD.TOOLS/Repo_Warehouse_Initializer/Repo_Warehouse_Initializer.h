@@ -12,7 +12,6 @@
 #include <fcntl.h>
 #include <windows.h>
 #include "Descriptor_File_Reader.hpp"
-#include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
@@ -24,12 +23,16 @@ public:
  Repo_Warehouse_Initializer(const Repo_Warehouse_Initializer & orig);
  virtual ~Repo_Warehouse_Initializer();
  void Build_Project_Warehouse(char * Des_File_Path);
+ void Update_Warehaouse_Headers(char * Des_File_Path);
+ void Clear_Dynamic_Memory();
 protected:
  void Determine_File_Name_With_Ext(char ** file_name, char * path);
- void Construct_Warehouse_Path(char opr_sis);
- void Determine_Project_Directories();
+ void Determine_Warehouse_Path(char opr_sis);
+ void Determine_Header_Files_Directory(char opr_sis);
+ void Determine_Object_Files_Directory(char opr_sis);
+ void Determine_Library_Files_Directory(char opr_sis);
  void Determine_Current_Directory();
- void Determine_Header_File_Names();
+ void Construct_Warehouse_Path();
  void Construct_Header_Files_Directory();
  void Construct_Object_Files_Directory();
  void Construct_Library_Files_Directory();
@@ -38,9 +41,7 @@ protected:
  void Determine_Header_Paths(char * path, int src_num, int hdr_num);
  void Find_Independent_Header_Path(char * path, int path_num);
  void Determine_Independent_Header_Paths();
- void Determine_New_Header_Paths();
  void Copy_Header_Files_To_Project_Headers_Location();
- void Clear_Dynamic_Memory();
  void Clear_Pointer_Memory(char ** pointer);
  DirectoryOperations DirectoryManager;
  Project_Files_Lister Dir_Lister;

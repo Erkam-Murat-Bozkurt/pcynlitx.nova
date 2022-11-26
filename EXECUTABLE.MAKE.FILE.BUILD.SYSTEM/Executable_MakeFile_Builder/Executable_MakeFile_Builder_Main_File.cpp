@@ -10,9 +10,11 @@
 
 int main(int argc, char ** argv){
 
-    if(argc < 2){
+    if(argc < 4){
 
-       std::cout << "\n The usage: Executable_MakeFile_Builder.exe <Descriptor File Path> ";
+       std::cout << "\n The usage: Executable_MakeFile_Builder.exe <Descriptor File Path>";
+
+       std::cout << " <main file path> <exe file name>";
 
        std::cout << "\n\n";
 
@@ -40,23 +42,17 @@ int main(int argc, char ** argv){
 
     int src_file_num = Dir_Lister.Get_Source_File_Number();
 
-    char path [] = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\KERNEL.DEVELOPMENT\\Kernel\\Kernel_Main_File.cpp";
-
-
     Executable_MakeFile_Builder File_Builder;
-
-    char Exe_Name [] = "Kernel.exe";
 
     if(src_file_num > 0){
 
-       File_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
+       File_Builder.Receive_Descriptor_File_Path(argv[1]);
 
        File_Builder.Receive_Git_Record_Data(&Git_Data_Receiver);
 
        File_Builder.Receive_Source_File_Info(&Dir_Lister);
 
-       File_Builder.Build_MakeFile(path,Exe_Name);
-
+       File_Builder.Build_MakeFile(argv[2],argv[3]);
     }
 
     return 0;

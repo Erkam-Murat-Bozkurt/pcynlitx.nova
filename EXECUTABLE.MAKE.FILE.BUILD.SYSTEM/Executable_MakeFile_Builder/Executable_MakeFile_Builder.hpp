@@ -25,6 +25,7 @@
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 #include "Header_File_Determiner.h"
+#include "Repo_Warehouse_Initializer.h"
 #include "CharOperator.h"
 #include "IntToCharTranslater.h"
 
@@ -36,7 +37,7 @@ public:
  Executable_MakeFile_Builder();
  Executable_MakeFile_Builder(const Executable_MakeFile_Builder & orig);
  virtual ~Executable_MakeFile_Builder();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader);
+ void Receive_Descriptor_File_Path(char * path);
  void Receive_Git_Record_Data(Git_File_List_Receiver * Lister_Pointer);
  void Receive_Source_File_Info(Project_Files_Lister * Pointer);
  void Build_MakeFile(char * path, char * Exe_Name);
@@ -48,10 +49,11 @@ protected:
  void Determine_Git_Src_Dir(char * file_path, char opr_sis);
  void Determine_Make_File_Name(char * file_path);
  void Determine_Git_Src_Dir();
+ Repo_Warehouse_Initializer Initializer;
  Executable_MakeFile_ComConstructor ComConstructor;
  Executable_MakeFile_DataCollector  Data_Collector;
  Executable_MakeFile_DepDeterminer  Dep_Determiner;
- Descriptor_File_Reader * Des_Reader_Pointer;
+ Descriptor_File_Reader Des_Reader;
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
  IntToCharTranslater Translater;

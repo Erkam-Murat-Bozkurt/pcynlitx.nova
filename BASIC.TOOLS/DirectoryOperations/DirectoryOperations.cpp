@@ -232,7 +232,25 @@ int DirectoryOperations::RemoveSubDirectory(char * DirectoryName){
 
 int DirectoryOperations::MakeDirectory(char * path){
 
-    this->ReturnCondition = CreateDirectoryA(path,NULL);
+    std::cout << "\n path:" << path;
+
+    int return_condition = this->ChangeDirectory(path);
+
+    if(return_condition == 0){
+
+       std::cout << "\n Directory will be created.";
+
+
+       this->ReturnCondition = CreateDirectoryA(path,NULL);
+    }
+    else{
+
+            std::cout << "\n Directory will be removed.";
+
+            this->RemoveDirectory(path);
+
+            this->ReturnCondition = CreateDirectoryA(path,NULL);
+    }
 
     return this->ReturnCondition;
 };

@@ -49,17 +49,25 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(char * Des_File_Path){
 
      this->Determine_Current_Directory();
 
-     this->Construct_Warehouse_Path('w');
+     this->Determine_Warehouse_Path('w');
 
-     this->DirectoryManager.ChangeDirectory(this->current_directory);
+     this->Determine_Header_Files_Directory('w');
 
-     this->Dir_Lister.Determine_Git_Repo_Info(&this->Des_Reader);
+     this->Determine_Object_Files_Directory('w');
+
+     this->Determine_Library_Files_Directory('w');
+
+     this->Construct_Warehouse_Path();
 
      this->Construct_Header_Files_Directory();
 
      this->Construct_Object_Files_Directory();
 
      this->Construct_Library_Files_Directory();
+
+     this->DirectoryManager.ChangeDirectory(this->current_directory);
+
+     this->Dir_Lister.Determine_Git_Repo_Info(&this->Des_Reader);
 
      this->source_files_number
 
@@ -74,6 +82,36 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(char * Des_File_Path){
      this->Copy_Independent_Header_Files_To_Project_Headers_Location();
 }
 
+void Repo_Warehouse_Initializer::Update_Warehaouse_Headers(char * Des_File_Path){
+
+     this->Des_Reader.Read_Descriptor_File(Des_File_Path);
+
+     this->warehouse_location = this->Des_Reader.Get_Warehouse_Location();
+
+     this->Determine_Current_Directory();
+
+     this->Determine_Warehouse_Path('w');
+
+     this->Determine_Header_Files_Directory('w');
+
+     this->DirectoryManager.ChangeDirectory(this->current_directory);
+
+     this->Dir_Lister.Determine_Git_Repo_Info(&this->Des_Reader);
+
+     this->Construct_Header_Files_Directory();
+
+     this->source_files_number
+
+     = this->Dir_Lister.Get_Source_File_Number();
+
+     this->Determine_Header_File_Paths();
+
+     this->Determine_Independent_Header_Paths();
+
+     this->Copy_Header_Files_To_Project_Headers_Location();
+
+     this->Copy_Independent_Header_Files_To_Project_Headers_Location();
+}
 
 void Repo_Warehouse_Initializer::Determine_Current_Directory(){
 
@@ -98,7 +136,7 @@ void Repo_Warehouse_Initializer::Determine_Current_Directory(){
      this->current_directory[dir_name_size] = '\0';
 }
 
-void Repo_Warehouse_Initializer::Construct_Warehouse_Path(char opr_sis){
+void Repo_Warehouse_Initializer::Determine_Warehouse_Path(char opr_sis){
 
      char warehouse_word [] ="WAREHOUSE";
 
@@ -121,16 +159,16 @@ void Repo_Warehouse_Initializer::Construct_Warehouse_Path(char opr_sis){
 
      if(opr_sis == 'w'){
 
-         this->warehouse_path[index] = '\\';
+        this->warehouse_path[index] = '\\';
 
-         index++;
+        index++;
      }
 
      if(opr_sis == 'l'){
 
-       this->warehouse_path[index] = '/';
+        this->warehouse_path[index] = '/';
 
-       index++;
+        index++;
      }
 
      for(size_t i=0;i<word_size;i++){
@@ -141,6 +179,131 @@ void Repo_Warehouse_Initializer::Construct_Warehouse_Path(char opr_sis){
      }
 
      this->warehouse_path[index] = '\0';
+}
+
+void Repo_Warehouse_Initializer::Determine_Header_Files_Directory(char opr_sis){
+
+     char header_directory_folder_name [] = "PROJECT.HEADER.FILES";
+
+     size_t warehouse_path_size = strlen(this->warehouse_path);
+
+     size_t head_folder_size= strlen(header_directory_folder_name);
+
+     size_t head_dir_size = head_folder_size
+
+                             + warehouse_path_size;
+
+     this->Headers_Directory = new char [5*head_dir_size];
+
+     int index = 0;
+
+     for(size_t i=0;i<warehouse_path_size;i++){
+
+         this->Headers_Directory[index] = this->warehouse_path[i];
+
+         index++;
+     }
+
+     if(opr_sis == 'w'){
+
+       this->Headers_Directory[index] = '\\';
+     }
+     else{
+
+         this->Headers_Directory[index] = '/';
+     }
+
+     index++;
+
+     for(size_t i=0;i<head_folder_size;i++){
+
+         this->Headers_Directory[index] = header_directory_folder_name[i];
+
+         index++;
+     }
+
+     this->Headers_Directory[index] = '\0';
+
+}
+
+void Repo_Warehouse_Initializer::Determine_Object_Files_Directory(char opr_sis){
+
+     char object_directory_folder_name [] = "PROJECT.OBJECT.FILES";
+
+     size_t warehouse_path_size = strlen(this->warehouse_path);
+
+     size_t object_folder_size= strlen(object_directory_folder_name);
+
+     size_t object_dir_size = warehouse_path_size + object_folder_size;
+
+     this->Object_Files_Directory = new char [5*object_dir_size];
+
+     int index = 0;
+
+     for(size_t i=0;i<warehouse_path_size;i++){
+
+         this->Object_Files_Directory[index] = this->warehouse_path[i];
+
+         index++;
+     }
+
+     if(opr_sis == 'w'){
+
+        this->Object_Files_Directory[index] = '\\';
+     }
+     else{
+
+        this->Object_Files_Directory[index] = '/';
+     }
+
+     index++;
+
+     for(size_t i=0;i<object_folder_size;i++){
+
+         this->Object_Files_Directory[index] = object_directory_folder_name[i];
+
+         index++;
+      }
+
+      this->Object_Files_Directory[index] = '\0';
+}
+
+void Repo_Warehouse_Initializer::Determine_Library_Files_Directory(char opr_sis){
+
+     char directory_folder_name [] = "PROJECT.LIBRARY.FILES";
+
+     size_t warehouse_path_size = strlen(this->warehouse_path);
+
+     size_t name_size= strlen(directory_folder_name);
+
+     size_t library_dir_size = warehouse_path_size + name_size;
+
+     this->Library_Files_Directory = new char [5*library_dir_size];
+
+     int index = 0;
+
+     for(size_t i=0;i<warehouse_path_size;i++){
+
+         this->Library_Files_Directory[index] = this->warehouse_path[i];
+
+         index++;
+     }
+
+     this->Library_Files_Directory[index] = '\\';
+
+     index++;
+
+     for(size_t i=0;i<name_size;i++){
+
+         this->Library_Files_Directory[index] = directory_folder_name[i];
+
+         index++;
+     }
+
+     this->Library_Files_Directory[index] = '\0';
+}
+
+void Repo_Warehouse_Initializer::Construct_Warehouse_Path(){
 
      int return_condition = this->DirectoryManager.ChangeDirectory(this->warehouse_path);
 
@@ -163,42 +326,66 @@ void Repo_Warehouse_Initializer::Construct_Warehouse_Path(char opr_sis){
 
 void Repo_Warehouse_Initializer::Construct_Header_Files_Directory(){
 
-     char header_directory_folder_name [] = "PROJECT.HEADER.FILES";
+     int return_condition = this->DirectoryManager.ChangeDirectory(this->Headers_Directory);
 
-     size_t warehouse_path_size = strlen(this->warehouse_path);
+     if(return_condition == 0){
 
-     size_t head_folder_size= strlen(header_directory_folder_name);
+        int const_cond = this->DirectoryManager.MakeDirectory(this->Headers_Directory);
 
-     size_t head_dir_size = head_folder_size
+        if(const_cond == 0){
 
-                           + warehouse_path_size;
+           std::cout << "\n The headers files directory can not be constructed on:";
 
+           std::cout << "\n";
 
-     this->Headers_Directory = new char [5*head_dir_size];
+           std::cout << this->Headers_Directory;
 
-     int index = 0;
-
-     for(size_t i=0;i<warehouse_path_size;i++){
-
-         this->Headers_Directory[index] = this->warehouse_path[i];
-
-         index++;
+           exit(0);
+        }
      }
+}
 
-     this->Headers_Directory[index] = '\\';
+void Repo_Warehouse_Initializer::Construct_Object_Files_Directory(){
 
-     index++;
+     int return_condition = this->DirectoryManager.ChangeDirectory(this->Object_Files_Directory);
 
-     for(size_t i=0;i<head_folder_size;i++){
+     if(return_condition == 0){
 
-         this->Headers_Directory[index] = header_directory_folder_name[i];
+        int const_cond = this->DirectoryManager.MakeDirectory(this->Object_Files_Directory);
 
-         index++;
+        if(const_cond == 0){
+
+           std::cout << "\n The object files directory can not be constructed on:";
+
+           std::cout << "\n";
+
+           std::cout << this->Object_Files_Directory;
+
+           exit(0);
+        }
      }
+}
 
-     this->Headers_Directory[index] = '\0';
 
-     this->DirectoryManager.MakeDirectory(this->Headers_Directory);
+void Repo_Warehouse_Initializer::Construct_Library_Files_Directory(){
+
+     int return_condition = this->DirectoryManager.ChangeDirectory(this->Library_Files_Directory);
+
+     if(return_condition == 0){
+
+        int const_cond = this->DirectoryManager.MakeDirectory(this->Library_Files_Directory);
+
+        if(const_cond == 0){
+
+           std::cout << "\n The Library files directory can not be constructed on:";
+
+           std::cout << "\n";
+
+           std::cout << this->Library_Files_Directory;
+
+           exit(0);
+        }
+     }
 }
 
 void Repo_Warehouse_Initializer::Determine_Header_File_Paths(){
@@ -370,7 +557,6 @@ void Repo_Warehouse_Initializer::Find_Independent_Header_Path(char * path, int p
      this->Independent_Header_New_Paths[path_num][index] = '\0';
 
      delete [] Header_File_Name;
-
 }
 
 void Repo_Warehouse_Initializer::Copy_Header_Files_To_Project_Headers_Location(){
@@ -404,80 +590,6 @@ void Repo_Warehouse_Initializer::Copy_Independent_Header_Files_To_Project_Header
      }
 }
 
-void Repo_Warehouse_Initializer::Construct_Object_Files_Directory(){
-
-     char object_directory_folder_name [] = "PROJECT.OBJECT.FILES";
-
-     size_t warehouse_path_size = strlen(this->warehouse_path);
-
-     size_t object_folder_size= strlen(object_directory_folder_name);
-
-     size_t object_dir_size = warehouse_path_size + object_folder_size;
-
-     this->Object_Files_Directory = new char [5*object_dir_size];
-
-     int index = 0;
-
-     for(size_t i=0;i<warehouse_path_size;i++){
-
-         this->Object_Files_Directory[index] = this->warehouse_path[i];
-
-         index++;
-     }
-
-     this->Object_Files_Directory[index] = '\\';
-
-     index++;
-
-     for(size_t i=0;i<object_folder_size;i++){
-
-         this->Object_Files_Directory[index] = object_directory_folder_name[i];
-
-         index++;
-     }
-
-     this->Object_Files_Directory[index] = '\0';
-
-     this->DirectoryManager.MakeDirectory(this->Object_Files_Directory);
-}
-
-
-void Repo_Warehouse_Initializer::Construct_Library_Files_Directory(){
-
-     char directory_folder_name [] = "PROJECT.LIBRARY.FILES";
-
-     size_t warehouse_path_size = strlen(this->warehouse_path);
-
-     size_t name_size= strlen(directory_folder_name);
-
-     size_t library_dir_size = warehouse_path_size + name_size;
-
-     this->Library_Files_Directory = new char [5*library_dir_size];
-
-     int index = 0;
-
-     for(size_t i=0;i<warehouse_path_size;i++){
-
-         this->Library_Files_Directory[index] = this->warehouse_path[i];
-
-         index++;
-     }
-
-     this->Library_Files_Directory[index] = '\\';
-
-     index++;
-
-     for(size_t i=0;i<name_size;i++){
-
-         this->Library_Files_Directory[index] = directory_folder_name[i];
-
-         index++;
-     }
-
-     this->Library_Files_Directory[index] = '\0';
-
-     this->DirectoryManager.MakeDirectory(this->Library_Files_Directory);
-}
 
 void Repo_Warehouse_Initializer::Clear_Dynamic_Memory(){
 
@@ -519,13 +631,33 @@ void Repo_Warehouse_Initializer::Clear_Dynamic_Memory(){
             this->Headers_New_Paths = nullptr;
          }
 
-         this->Clear_Pointer_Memory(&this->Headers_Directory);
+         if(this->Headers_Directory != nullptr){
 
-         this->Clear_Pointer_Memory(&this->Object_Files_Directory);
+           this->Clear_Pointer_Memory(&this->Headers_Directory);
 
-         this->Clear_Pointer_Memory(&this->Library_Files_Directory);
+           this->Headers_Directory = nullptr;
+         }
 
-         this->Clear_Pointer_Memory(&this->warehouse_path);
+         if(this->Object_Files_Directory != nullptr){
+
+            this->Clear_Pointer_Memory(&this->Object_Files_Directory);
+
+            this->Object_Files_Directory = nullptr;
+         }
+
+         if(this->Library_Files_Directory != nullptr){
+
+           this->Clear_Pointer_Memory(&this->Library_Files_Directory);
+
+           this->Library_Files_Directory = nullptr;
+         }
+
+         if(this->warehouse_path != nullptr){
+
+            this->Clear_Pointer_Memory(&this->warehouse_path);
+
+            this->warehouse_path = nullptr;
+         }
 
          this->Des_Reader.Clear_Dynamic_Memory();
      }

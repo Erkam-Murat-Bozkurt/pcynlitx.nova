@@ -8,9 +8,9 @@
 
 int main(int argc, char ** argv){
 
-    if(argc <2){
+    if(argc <3){
 
-       std::cout << "\n usage: Repo_Warehouse_Initializer.exe <descriptor file path>";
+       std::cout << "\n usage: Repo_Warehouse_Initializer.exe <descriptor file path> <option>";
 
        std::cout << "\n\n";
 
@@ -19,13 +19,32 @@ int main(int argc, char ** argv){
 
     Repo_Warehouse_Initializer Initializer;
 
-    Initializer.Build_Project_Warehouse(argv[1]);
+    if(argv[2][0] == 'b'){
 
-    std::cout << "\n Project Header Warehouse Constructed ..";
+       // The project warehouse will be builded
 
-    std::cout << "\n\n";
+       Initializer.Build_Project_Warehouse(argv[1]);
+
+       std::cout << "\n Project Warehouse Constructed ..";
+
+       std::cout << "\n\n";
+
+    }
+    else{
+
+          // The project warehouse headers will be updated
+
+          if(argv[2][0] == 'u'){
+
+              Initializer.Update_Warehaouse_Headers(argv[1]);
+          }
+
+          std::cout << "\n Project Header Files Updated ..";
+
+          std::cout << "\n\n";
+
+    }
+
 
     return 0;
 }
-
-// The Function that places the location Informations listed in below
