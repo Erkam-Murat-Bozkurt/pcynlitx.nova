@@ -2,8 +2,8 @@
 
 
 
-#ifndef EXECUTABLE_MAKEFILE_DEPDETERMINER_HPP
-#define EXECUTABLE_MAKEFILE_DEPDETERMINER_HPP
+#ifndef SOURCE_FILE_DEPENDENCY_DETERMINER_HPP
+#define SOURCE_FILE_DEPENDENCY_DETERMINER_HPP
 
 #include <cstring>
 #include <cstdlib>
@@ -18,8 +18,8 @@
 #include <string>
 #include <fcntl.h>
 #include <windows.h>
-#include "Executable_MakeFile_Dependency_Selector.hpp"
-#include "Executable_MakeFile_DataCollector.hpp"
+#include "Source_File_Dependency_Selector.hpp"
+#include "Source_File_Information_Collector.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
@@ -31,13 +31,13 @@
 #include "IntToCharTranslater.h"
 
 
-class Executable_MakeFile_DepDeterminer
+class Source_File_Dependency_Determiner
 {
 public:
- Executable_MakeFile_DepDeterminer();
- Executable_MakeFile_DepDeterminer(const Executable_MakeFile_DepDeterminer & orig);
- virtual ~Executable_MakeFile_DepDeterminer();
- void Receive_Executable_MakeFile_DataCollector(Executable_MakeFile_DataCollector * DataCollector);
+ Source_File_Dependency_Determiner();
+ Source_File_Dependency_Determiner(const Source_File_Dependency_Determiner & orig);
+ virtual ~Source_File_Dependency_Determiner();
+ void Receive_Source_File_Information_Collector(Source_File_Information_Collector * DataCollector);
  void Determine_Dependencies();
  void Print_Compiler_Orders();
  void Clear_Dynamic_Memory();
@@ -50,14 +50,14 @@ public:
 protected:
  void Search_Recursive_Include_Dependency(int index);
  void Determine_Compile_Order();
- void Receive_DataCollector_Info();
+ void Receive_Collector_Info();
  void Order_Priorities();
- Executable_MakeFile_DataCollector * DataCollector;
- Executable_MakeFile_Dependency_Selector DepSelector;
+ Source_File_Information_Collector * Info_Collector;
+ Source_File_Dependency_Selector DepSelector;
  Compiler_Data_CString * Data_Ptr_CString;
  CharOperator Char_Processor;
  int  header_file_number;
  bool Memory_Delete_Condition;
 };
 
-#endif /* EXECUTABLE_MAKEFILE_DEPDETERMINER_HPP */
+#endif /* SOURCE_FILE_DEPENDENCY_DETERMINER_HPP */

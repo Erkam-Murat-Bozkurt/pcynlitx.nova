@@ -1,5 +1,6 @@
 
 
+
 /*
 
 Copyright ©  2021,  Erkam Murat Bozkurt
@@ -21,21 +22,21 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include "Executable_MakeFile_DepDeterminer.hpp"
+#include "Source_File_Dependency_Determiner.hpp"
 
-Executable_MakeFile_DepDeterminer::Executable_MakeFile_DepDeterminer(){
+Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(){
 
    this->Memory_Delete_Condition = false;
 
 }
 
-Executable_MakeFile_DepDeterminer::Executable_MakeFile_DepDeterminer(const
+Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(const
 
-          Executable_MakeFile_DepDeterminer & orig){
+          Source_File_Dependency_Determiner & orig){
 
 }
 
-Executable_MakeFile_DepDeterminer::~Executable_MakeFile_DepDeterminer(){
+Source_File_Dependency_Determiner::~Source_File_Dependency_Determiner(){
 
    if(!this->Memory_Delete_Condition){
 
@@ -43,7 +44,7 @@ Executable_MakeFile_DepDeterminer::~Executable_MakeFile_DepDeterminer(){
    }
 }
 
-void Executable_MakeFile_DepDeterminer::Clear_Dynamic_Memory(){
+void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
 
      if(!this->Memory_Delete_Condition){
 
@@ -53,21 +54,21 @@ void Executable_MakeFile_DepDeterminer::Clear_Dynamic_Memory(){
      }
 }
 
-void Executable_MakeFile_DepDeterminer::Receive_Executable_MakeFile_DataCollector(Executable_MakeFile_DataCollector * Pointer){
+void Source_File_Dependency_Determiner::Receive_Source_File_Information_Collector(Source_File_Information_Collector * Pointer){
 
-     this->DataCollector = Pointer;
+     this->Info_Collector = Pointer;
 }
 
-void Executable_MakeFile_DepDeterminer::Determine_Dependencies(){
+void Source_File_Dependency_Determiner::Determine_Dependencies(){
 
-     this->DepSelector.Receive_Executable_MakeFile_DataCollector(this->DataCollector);
+     this->DepSelector.Receive_Source_File_Information_Collector(this->Info_Collector);
 
-     this->Receive_DataCollector_Info();
+     this->Receive_Collector_Info();
 
      this->Determine_Compile_Order();
 }
 
-void Executable_MakeFile_DepDeterminer::Determine_Compile_Order(){
+void Source_File_Dependency_Determiner::Determine_Compile_Order(){
 
      for(int i=0;i<this->header_file_number;i++){
 
@@ -86,7 +87,7 @@ void Executable_MakeFile_DepDeterminer::Determine_Compile_Order(){
 }
 
 
-void Executable_MakeFile_DepDeterminer::Search_Recursive_Include_Dependency(int index){
+void Source_File_Dependency_Determiner::Search_Recursive_Include_Dependency(int index){
 
      int inc_num = this->Data_Ptr_CString[index].inclusion_number;
 
@@ -124,7 +125,7 @@ void Executable_MakeFile_DepDeterminer::Search_Recursive_Include_Dependency(int 
       }
 }
 
-void Executable_MakeFile_DepDeterminer::Order_Priorities(){
+void Source_File_Dependency_Determiner::Order_Priorities(){
 
      for(int i=0;i<this->header_file_number;i++){
 
@@ -149,14 +150,14 @@ void Executable_MakeFile_DepDeterminer::Order_Priorities(){
 }
 
 
-void Executable_MakeFile_DepDeterminer::Receive_DataCollector_Info(){
+void Source_File_Dependency_Determiner::Receive_Collector_Info(){
 
-      this->header_file_number = this->DataCollector->Get_Compiler_Data_Size();
+      this->header_file_number = this->Info_Collector->Get_Compiler_Data_Size();
 
-      this->Data_Ptr_CString   = this->DataCollector->Get_Compiler_Data();
+      this->Data_Ptr_CString   = this->Info_Collector->Get_Compiler_Data();
 }
 
-void Executable_MakeFile_DepDeterminer::Print_Compiler_Orders(){
+void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
 
      for(int i=0;i<this->header_file_number;i++){
 
@@ -182,32 +183,32 @@ void Executable_MakeFile_DepDeterminer::Print_Compiler_Orders(){
       }
 }
 
-Compiler_Data_CString Executable_MakeFile_DepDeterminer::Get_Compiler_Data(int i){
+Compiler_Data_CString Source_File_Dependency_Determiner::Get_Compiler_Data(int i){
 
       return this->Data_Ptr_CString[i];
 }
 
-Compiler_Data_CString * Executable_MakeFile_DepDeterminer::Get_Compiler_Data_Pointer(){
+Compiler_Data_CString * Source_File_Dependency_Determiner::Get_Compiler_Data_Pointer(){
 
       return this->Data_Ptr_CString;
 }
 
-int Executable_MakeFile_DepDeterminer::Get_Compiler_Data_Size(){
+int Source_File_Dependency_Determiner::Get_Compiler_Data_Size(){
 
     return this->header_file_number;
 }
 
-char * Executable_MakeFile_DepDeterminer::Get_Warehouse_Headers_Dir(){
+char * Source_File_Dependency_Determiner::Get_Warehouse_Headers_Dir(){
 
-       return this->DataCollector->Get_Warehouse_Headers_Dir();
+       return this->Info_Collector->Get_Warehouse_Headers_Dir();
 }
 
-char * Executable_MakeFile_DepDeterminer::Get_Warehouse_Objetcs_Dir(){
+char * Source_File_Dependency_Determiner::Get_Warehouse_Objetcs_Dir(){
 
-       return this->DataCollector->Get_Warehouse_Objetcs_Dir();
+       return this->Info_Collector->Get_Warehouse_Objetcs_Dir();
 }
 
-char * Executable_MakeFile_DepDeterminer::Get_Warehouse_Path(){
+char * Source_File_Dependency_Determiner::Get_Warehouse_Path(){
 
-       return this->DataCollector->Get_Warehouse_Path();
+       return this->Info_Collector->Get_Warehouse_Path();
 }
