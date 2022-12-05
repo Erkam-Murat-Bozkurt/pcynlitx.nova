@@ -45,7 +45,7 @@ struct Compiler_Data_CString
   char ** included_headers;
   char ** included_headers_path;
   int  inclusion_number;
-  int  priority;
+  int  priority; // dependency
   bool rcr_srch_complated;
 };
 
@@ -57,8 +57,6 @@ public:
  Source_File_Information_Collector(const Source_File_Information_Collector & orig);
  virtual ~Source_File_Information_Collector();
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader);
- void Receive_Git_Record_Data(Git_File_List_Receiver * Lister_Pointer);
- void Receive_Source_File_Info(Project_Files_Lister * Pointer);
  void Collect_Make_File_Data();
  void Clear_Dynamic_Memory();
  void Print_Header_Data();
@@ -91,8 +89,8 @@ protected:
  void Extract_Header_File_Name_From_Path(char * path,
       char ** name, char opr_sis);
  Descriptor_File_Reader * Des_Reader_Pointer;
- Project_Files_Lister * File_Lister_Pointer;
- Git_File_List_Receiver * Git_Data_Receiver;
+ Project_Files_Lister File_Lister_Pointer;
+ Git_File_List_Receiver Git_Data_Receiver;
  Cpp_FileOperations FileManager;
  Header_File_Determiner Header_Determiner;
  StringOperator StringManager;

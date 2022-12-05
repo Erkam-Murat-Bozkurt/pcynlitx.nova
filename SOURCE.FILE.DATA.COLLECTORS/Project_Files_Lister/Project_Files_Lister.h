@@ -63,6 +63,7 @@ public:
  char * Get_Source_File_Git_Record_Directory(int src_num);
  int  Get_Source_File_Include_File_Number(int num);
  int  Get_Indenpendent_Header_Files_Number();
+ void Clear_Dynamic_Memory();
 protected:
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Pointer);
  void Determine_Git_Record_Directories(char operating_sis);
@@ -74,7 +75,6 @@ protected:
  void Collect_Source_Files_Data(char operating_sis);
  void Initialize_Data_Structures();
  void Collect_Independent_Header_Files_Data(char operating_sis);
- void Clear_Dynamic_Memory();
  void Clear_Pointer_Memory(char ** pointer);
  bool Check_String_Equality(char * firstString,char * secondString);
  void Allocate_Memory_For_Headers_Data(int index,int inc_hdr_num);

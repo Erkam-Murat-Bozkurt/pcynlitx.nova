@@ -94,9 +94,7 @@ void Source_File_Dependency_Selector::Receive_Collector_Info(){
 
      this->Memory_Delete_Condition = false;
 
-     this->Dependent_List = new Header_Dependency [5*this->header_file_number];
-
-     
+     this->Dependent_List = new Header_Dependency [5*this->header_file_number];     
 }
 
 void Source_File_Dependency_Selector::Extract_Dependency_Data(char * path){

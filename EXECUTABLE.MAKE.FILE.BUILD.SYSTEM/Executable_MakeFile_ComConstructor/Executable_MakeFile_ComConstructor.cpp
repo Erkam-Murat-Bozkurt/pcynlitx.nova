@@ -93,14 +93,14 @@ void Executable_MakeFile_ComConstructor::Receive_ExeFileName(char * pointer){
      this->Exe_Name = pointer;
 }
 
-void Executable_MakeFile_ComConstructor::Receive_DepDeterminer(Executable_MakeFile_DepDeterminer * pointer){
+void Executable_MakeFile_ComConstructor::Receive_DepDeterminer(Source_File_Dependency_Determiner * pointer){
 
      this->Dep_Determiner = pointer;
 }
 
-void Executable_MakeFile_ComConstructor::Receice_DataCollector(Executable_MakeFile_DataCollector * pointer){
+void Executable_MakeFile_ComConstructor::Receice_DataCollector(Source_File_Information_Collector * pointer){
 
-     this->Data_Collector = pointer;
+     this->Info_Collector = pointer;
 }
 
 void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(char * main_file_path){
@@ -117,7 +117,7 @@ void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(char * main
 
      this->Data_Size = this->Dep_Determiner->Get_Compiler_Data_Size();
 
-     this->Dependency_Selector.Receive_Executable_MakeFile_DataCollector(this->Data_Collector);
+     this->Dependency_Selector.Receive_Source_File_Information_Collector(this->Info_Collector);
 
      this->Dependency_Selector.Determine_Source_File_Dependencies(main_file_path);
 

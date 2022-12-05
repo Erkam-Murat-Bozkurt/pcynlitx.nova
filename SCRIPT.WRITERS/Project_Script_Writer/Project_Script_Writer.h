@@ -16,6 +16,9 @@
 #include "Source_File_Script_Writer.hpp"
 #include "Script_Data_Collector.hpp"
 #include "Include_Dependency_Counter.hpp"
+#include "Source_File_Dependency_Determiner.hpp"
+#include "Source_File_Dependency_Selector.hpp"
+#include "Source_File_Information_Collector.hpp"
 
 
 class Project_Script_Writer
@@ -39,6 +42,7 @@ protected:
  void Determine_Project_Script_Path(char * paths);
  void Determine_Make_File_Names();
  void Construct_Path(char ** pointer, char * string, char * warehouse_path);
+ Source_File_Dependency_Determiner Dep_Determiner;
  Script_Data_Collector Data_Collector;
  Source_File_Script_Writer Src_Script_Writer;
  DirectoryOperations DirectoryManager;

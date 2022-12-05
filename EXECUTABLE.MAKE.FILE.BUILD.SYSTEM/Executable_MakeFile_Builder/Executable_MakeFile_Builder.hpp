@@ -18,9 +18,9 @@
 #include <fcntl.h>
 #include <windows.h>
 #include "Executable_MakeFile_ComConstructor.hpp"
-#include "Executable_MakeFile_DepDeterminer.hpp"
-#include "Executable_MakeFile_Dependency_Selector.hpp"
-#include "Executable_MakeFile_DataCollector.hpp"
+#include "Source_File_Dependency_Determiner.hpp"
+#include "Source_File_Dependency_Selector.hpp"
+#include "Source_File_Information_Collector.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
@@ -51,8 +51,8 @@ protected:
  void Determine_Git_Src_Dir();
  Repo_Warehouse_Initializer Initializer;
  Executable_MakeFile_ComConstructor ComConstructor;
- Executable_MakeFile_DataCollector  Data_Collector;
- Executable_MakeFile_DepDeterminer  Dep_Determiner;
+ Source_File_Information_Collector  Info_Collector;
+ Source_File_Dependency_Determiner  Dep_Determiner;
  Descriptor_File_Reader Des_Reader;
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;

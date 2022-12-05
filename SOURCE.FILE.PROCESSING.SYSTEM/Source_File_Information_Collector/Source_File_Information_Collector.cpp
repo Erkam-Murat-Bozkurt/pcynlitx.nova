@@ -98,6 +98,10 @@ void Source_File_Information_Collector::Clear_Dynamic_Memory(){
                }
            }
         }
+
+        this->Git_Data_Receiver.Clear_Dynamic_Memory();
+
+        this->File_Lister_Pointer.Clear_Dynamic_Memory();
      }
 }
 
@@ -108,17 +112,13 @@ void Source_File_Information_Collector::Receive_Descriptor_File_Reader(Descripto
      this->warehouse_path = this->Des_Reader_Pointer->Get_Warehouse_Location();
 }
 
-void Source_File_Information_Collector::Receive_Git_Record_Data(Git_File_List_Receiver * Pointer){
-
-     this->Git_Data_Receiver = Pointer;
-}
-
-void Source_File_Information_Collector::Receive_Source_File_Info(Project_Files_Lister * Pointer){
-
-     this->File_Lister_Pointer = Pointer;
-}
-
 void Source_File_Information_Collector::Collect_Make_File_Data(){
+
+     this->Git_Data_Receiver.Receive_Descriptor_File_Reader(this->Des_Reader_Pointer);
+
+     this->Git_Data_Receiver.Determine_Git_Repo_Info();
+
+     this->File_Lister_Pointer.Determine_Git_Repo_Info(this->Des_Reader_Pointer);
 
      this->Determine_Warehouse_Header_Dir('w');
 
@@ -133,11 +133,11 @@ void Source_File_Information_Collector::Determine_Header_File_List(){
 
      size_t list_str_size = 0;
 
-     int index_size = this->Git_Data_Receiver->Get_Git_File_Index_Size();
+     int index_size = this->Git_Data_Receiver.Get_Git_File_Index_Size();
 
      for(int i=0;i<index_size;i++){
 
-         char * path = this->Git_Data_Receiver->Get_Git_File_Index(i);
+         char * path = this->Git_Data_Receiver.Get_Git_File_Index(i);
 
          bool is_header = this->Header_Determiner.Is_Header(path);
 
@@ -713,37 +713,40 @@ void Source_File_Information_Collector::Clear_Pointer_Memory(char ** Pointer){
 
        for(int i=0;i<this->header_file_number;i++){
 
-           std::cout << "\n\n";
+           if(this->Data_Ptr_CString[i].header_name != nullptr){
 
-           std::cout << "\n Header Number:" << i;
+              std::cout << "\n\n";
 
-           std::cout << "\n repo_path:  "   << this->Data_Ptr_CString[i].repo_path;
+              std::cout << "\n Header Number:" << i;
 
-           std::cout << "\n header_name:" << this->Data_Ptr_CString[i].header_name;
+              std::cout << "\n repo_path:  "   << this->Data_Ptr_CString[i].repo_path;
 
-           std::cout << "\n inclusion_number:"
+              std::cout << "\n header_name:" << this->Data_Ptr_CString[i].header_name;
 
-           <<  this->Data_Ptr_CString[i].inclusion_number;
+              std::cout << "\n inclusion_number:"
 
-           std::cout << "\n\n";
+              <<  this->Data_Ptr_CString[i].inclusion_number;
+
+              std::cout << "\n\n";
 
 
-           int inc_number = this->Data_Ptr_CString[i].inclusion_number;
+              int inc_number = this->Data_Ptr_CString[i].inclusion_number;
 
-           for(int k=0;k<inc_number;k++){
+              for(int k=0;k<inc_number;k++){
 
-               std::cout << "\n include header -" << k
+                  std::cout << "\n include header -" << k
 
-               << ":" << this->Data_Ptr_CString[i].included_headers[k];
+                  << ":" << this->Data_Ptr_CString[i].included_headers[k];
 
-               std::cout << "\n include header path -" << k
+                  std::cout << "\n include header path -" << k
 
-               << ":" << this->Data_Ptr_CString[i].included_headers_path[k];
+                  << ":" << this->Data_Ptr_CString[i].included_headers_path[k];
 
-               std::cout << "\n\n";
+                  std::cout << "\n\n";
+              }
+
+              std::cout << "\n\n";
            }
-
-           std::cout << "\n\n";
         }
   }
 
@@ -815,11 +818,11 @@ void Source_File_Information_Collector::Clear_Pointer_Memory(char ** Pointer){
 
        this->is_independent_header = false;
 
-       int ind_header_num = this->File_Lister_Pointer->Get_Indenpendent_Header_Files_Number();
+       int ind_header_num = this->File_Lister_Pointer.Get_Indenpendent_Header_Files_Number();
 
        for(int i=0;i<ind_header_num;i++){
 
-           char * ind_header_path = this->File_Lister_Pointer->Get_Independent_Header_File(i);
+           char * ind_header_path = this->File_Lister_Pointer.Get_Independent_Header_File(i);
 
            char * ind_header = nullptr;
 

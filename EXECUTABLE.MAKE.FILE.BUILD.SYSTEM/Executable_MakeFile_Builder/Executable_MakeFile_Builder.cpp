@@ -59,7 +59,7 @@ void Executable_MakeFile_Builder::Clear_Dynamic_Memory(){
 
         this->Memory_Delete_Condition = true;
 
-        this->Data_Collector.Clear_Dynamic_Memory();
+        this->Info_Collector.Clear_Dynamic_Memory();
 
         this->Dep_Determiner.Clear_Dynamic_Memory();
 
@@ -79,29 +79,33 @@ void Executable_MakeFile_Builder::Receive_Descriptor_File_Path(char * path){
 
      this->Des_Reader.Read_Descriptor_File(path);
 
-     this->Data_Collector.Receive_Descriptor_File_Reader(&this->Des_Reader);
+     this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
 }
+
+
+/*
 
 void Executable_MakeFile_Builder::Receive_Git_Record_Data(Git_File_List_Receiver * Pointer){
 
-     this->Data_Collector.Receive_Git_Record_Data(Pointer);
+     this->Info_Collector.Receive_Git_Record_Data(Pointer);
 }
 
 void Executable_MakeFile_Builder::Receive_Source_File_Info(Project_Files_Lister * Pointer){
 
-     this->Data_Collector.Receive_Source_File_Info(Pointer);
+     this->Info_Collector.Receive_Source_File_Info(Pointer);
 }
+
+*/
 
 void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_Name){
 
+     this->Info_Collector.Collect_Make_File_Data();
 
-     this->Data_Collector.Collect_Make_File_Data();
-
-     this->Dep_Determiner.Receive_Executable_MakeFile_DataCollector(&this->Data_Collector);
+     this->Dep_Determiner.Receive_Source_File_Information_Collector(&this->Info_Collector);
 
      this->Dep_Determiner.Determine_Dependencies();
 
-     this->ComConstructor.Receice_DataCollector(&this->Data_Collector);
+     this->ComConstructor.Receice_DataCollector(&this->Info_Collector);
 
      this->ComConstructor.Receive_DepDeterminer(&this->Dep_Determiner);
 
@@ -209,7 +213,7 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
      char object_add [] = ".o";
 
      this->FileManager.WriteToFile("\n");
-     
+
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile(PathSpecifier);

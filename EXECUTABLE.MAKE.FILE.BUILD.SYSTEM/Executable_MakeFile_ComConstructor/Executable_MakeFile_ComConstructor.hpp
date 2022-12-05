@@ -18,9 +18,9 @@
 #include <string>
 #include <fcntl.h>
 #include <windows.h>
-#include "Executable_MakeFile_DepDeterminer.hpp"
-#include "Executable_MakeFile_DataCollector.hpp"
-#include "Executable_MakeFile_Dependency_Selector.hpp"
+#include "Source_File_Dependency_Determiner.hpp"
+#include "Source_File_Information_Collector.hpp"
+#include "Source_File_Dependency_Selector.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
@@ -36,8 +36,8 @@ public:
  Executable_MakeFile_ComConstructor(const Executable_MakeFile_ComConstructor & orig);
  virtual ~Executable_MakeFile_ComConstructor();
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Pointer);
- void Receive_DepDeterminer(Executable_MakeFile_DepDeterminer * pointer);
- void Receice_DataCollector(Executable_MakeFile_DataCollector * pointer);
+ void Receive_DepDeterminer(Source_File_Dependency_Determiner * pointer);
+ void Receice_DataCollector(Source_File_Information_Collector * pointer);
  void Receive_ExeFileName(char * name);
  void Construct_Compiler_Commands(char * main_file_path);
  void Clear_Dynamic_Memory();
@@ -70,9 +70,9 @@ protected:
  Compiler_Data_CString * Data_Ptr_CString;
  Header_Dependency * Header_Dependency_List;
  CharOperator CharOpr;
- Executable_MakeFile_DepDeterminer * Dep_Determiner;
- Executable_MakeFile_Dependency_Selector Dependency_Selector;
- Executable_MakeFile_DataCollector * Data_Collector;
+ Source_File_Dependency_Determiner * Dep_Determiner;
+ Source_File_Dependency_Selector Dependency_Selector;
+ Source_File_Information_Collector * Info_Collector;
  IntToCharTranslater Translater;
  char * Exe_Name;
  char * options;

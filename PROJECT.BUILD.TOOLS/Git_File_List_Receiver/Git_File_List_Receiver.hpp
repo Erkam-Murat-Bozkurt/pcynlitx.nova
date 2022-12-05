@@ -24,8 +24,8 @@ public:
  int Get_Git_File_Index_Size();
  char * Get_Git_File_Index(int num);
  char * Get_Git_Repo_Directory();
-protected:
  void Clear_Dynamic_Memory();
+protected:
  void Place_String(char ** pointer, std::string string_line);
  void Determine_Repo_List_File_Size();
  void List_Files_in_Repo();

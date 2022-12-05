@@ -54,14 +54,26 @@ void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
      }
 }
 
-void Source_File_Dependency_Determiner::Receive_Source_File_Information_Collector(Source_File_Information_Collector * Pointer){
+void Source_File_Dependency_Determiner::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Pointer){
 
-     this->Info_Collector = Pointer;
+     this->Des_Reader = Pointer;
+}
+
+
+void Source_File_Dependency_Determiner::Determine_Particular_Source_File_Dependencies(char * file_path){
+
+     this->DepSelector.Clear_Dynamic_Memory();
+
+     this->DepSelector.Determine_Source_File_Dependencies(file_path);
 }
 
 void Source_File_Dependency_Determiner::Determine_Dependencies(){
 
-     this->DepSelector.Receive_Source_File_Information_Collector(this->Info_Collector);
+     this->Information_Collector.Receive_Descriptor_File_Reader(this->Des_Reader);
+
+     this->Information_Collector.Collect_Make_File_Data();
+
+     this->DepSelector.Receive_Source_File_Information_Collector(&this->Information_Collector);
 
      this->Receive_Collector_Info();
 
@@ -152,9 +164,9 @@ void Source_File_Dependency_Determiner::Order_Priorities(){
 
 void Source_File_Dependency_Determiner::Receive_Collector_Info(){
 
-      this->header_file_number = this->Info_Collector->Get_Compiler_Data_Size();
+      this->header_file_number = this->Information_Collector.Get_Compiler_Data_Size();
 
-      this->Data_Ptr_CString   = this->Info_Collector->Get_Compiler_Data();
+      this->Data_Ptr_CString   = this->Information_Collector.Get_Compiler_Data();
 }
 
 void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
@@ -183,6 +195,11 @@ void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
       }
 }
 
+void Source_File_Dependency_Determiner::Print_Dependency_List(){
+
+     this->DepSelector.Print_Dependency_List();
+}
+
 Compiler_Data_CString Source_File_Dependency_Determiner::Get_Compiler_Data(int i){
 
       return this->Data_Ptr_CString[i];
@@ -200,15 +217,37 @@ int Source_File_Dependency_Determiner::Get_Compiler_Data_Size(){
 
 char * Source_File_Dependency_Determiner::Get_Warehouse_Headers_Dir(){
 
-       return this->Info_Collector->Get_Warehouse_Headers_Dir();
+       return this->Information_Collector.Get_Warehouse_Headers_Dir();
 }
 
 char * Source_File_Dependency_Determiner::Get_Warehouse_Objetcs_Dir(){
 
-       return this->Info_Collector->Get_Warehouse_Objetcs_Dir();
+       return this->Information_Collector.Get_Warehouse_Objetcs_Dir();
 }
 
 char * Source_File_Dependency_Determiner::Get_Warehouse_Path(){
 
-       return this->Info_Collector->Get_Warehouse_Path();
+       return this->Information_Collector.Get_Warehouse_Path();
+}
+
+
+Header_Dependency * Source_File_Dependency_Determiner::Get_Header_Dependency_List(){
+
+      return this->DepSelector.Get_Header_Dependency_List();
+}
+
+
+char * Source_File_Dependency_Determiner::Get_Dependent_Header(int i){
+
+       return this->DepSelector.Get_Dependent_Header(i);
+}
+
+char * Source_File_Dependency_Determiner::Get_Dependent_Header_Path(int i){
+
+       return this->DepSelector.Get_Dependent_Header_Path(i);
+}
+
+int Source_File_Dependency_Determiner::Get_Dependency_List_Size(){
+
+      return this->DepSelector.Get_Dependency_List_Size();
 }

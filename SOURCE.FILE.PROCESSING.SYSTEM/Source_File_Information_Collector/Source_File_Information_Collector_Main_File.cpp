@@ -29,12 +29,6 @@ int main(int argc, char ** argv){
 
     char * warehouse_path   = Des_Reader.Get_Warehouse_Location();
 
-    Git_File_List_Receiver Git_Data_Receiver;
-
-    Git_Data_Receiver.Receive_Descriptor_File_Reader(&Des_Reader);
-
-    Git_Data_Receiver.Determine_Git_Repo_Info();
-
 
     Project_Files_Lister Dir_Lister;
 
@@ -50,10 +44,6 @@ int main(int argc, char ** argv){
     if(src_file_num > 0){
 
        Information_Collector.Receive_Descriptor_File_Reader(&Des_Reader);
-
-       Information_Collector.Receive_Git_Record_Data(&Git_Data_Receiver);
-
-       Information_Collector.Receive_Source_File_Info(&Dir_Lister);
 
        Information_Collector.Collect_Make_File_Data();
 
