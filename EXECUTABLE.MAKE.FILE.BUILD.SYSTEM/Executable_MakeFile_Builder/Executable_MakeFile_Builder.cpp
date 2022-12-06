@@ -82,30 +82,9 @@ void Executable_MakeFile_Builder::Receive_Descriptor_File_Path(char * path){
      this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
 }
 
-
-/*
-
-void Executable_MakeFile_Builder::Receive_Git_Record_Data(Git_File_List_Receiver * Pointer){
-
-     this->Info_Collector.Receive_Git_Record_Data(Pointer);
-}
-
-void Executable_MakeFile_Builder::Receive_Source_File_Info(Project_Files_Lister * Pointer){
-
-     this->Info_Collector.Receive_Source_File_Info(Pointer);
-}
-
-*/
-
 void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_Name){
 
-     this->Info_Collector.Collect_Make_File_Data();
-
-     this->Dep_Determiner.Receive_Source_File_Information_Collector(&this->Info_Collector);
-
      this->Dep_Determiner.Determine_Dependencies();
-
-     this->ComConstructor.Receice_DataCollector(&this->Info_Collector);
 
      this->ComConstructor.Receive_DepDeterminer(&this->Dep_Determiner);
 
@@ -115,23 +94,24 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
 
      this->ComConstructor.Construct_Compiler_Commands(mn_src_path);
 
+
      // Receiving the compiler data from the member objects
 
-      this->warehouse_head_dir = this->Dep_Determiner.Get_Warehouse_Headers_Dir();
+     this->warehouse_head_dir = this->Dep_Determiner.Get_Warehouse_Headers_Dir();
 
-      this->warehouse_obj_dir  = this->Dep_Determiner.Get_Warehouse_Objetcs_Dir();
+     this->warehouse_obj_dir  = this->Dep_Determiner.Get_Warehouse_Objetcs_Dir();
 
-      this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
+     this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
 
-      this->Src_File_Dir       = this->ComConstructor.Get_Src_File_Dr();
+     this->Src_File_Dir       = this->ComConstructor.Get_Src_File_Dr();
 
-      this->git_src_dir        = this->ComConstructor.Get_Git_Src_Dr();
+     this->git_src_dir        = this->ComConstructor.Get_Git_Src_Dr();
 
-      this->make_file_name     = this->ComConstructor.Get_Make_File_Name();
+     this->make_file_name     = this->ComConstructor.Get_Make_File_Name();
 
-      this->Compiler_System_Command = this->ComConstructor.Get_Compiler_System_Command();
+     this->Compiler_System_Command = this->ComConstructor.Get_Compiler_System_Command();
 
-      this->Write_MakeFile(Exe_Name);
+     this->Write_MakeFile(Exe_Name);
 }
 
 

@@ -38,8 +38,6 @@ public:
  Executable_MakeFile_Builder(const Executable_MakeFile_Builder & orig);
  virtual ~Executable_MakeFile_Builder();
  void Receive_Descriptor_File_Path(char * path);
- void Receive_Git_Record_Data(Git_File_List_Receiver * Lister_Pointer);
- void Receive_Source_File_Info(Project_Files_Lister * Pointer);
  void Build_MakeFile(char * path, char * Exe_Name);
  void Print_Compiler_Orders();
  void Clear_Dynamic_Memory();

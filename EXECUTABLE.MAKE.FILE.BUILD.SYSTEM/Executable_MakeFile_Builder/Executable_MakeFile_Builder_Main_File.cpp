@@ -48,10 +48,6 @@ int main(int argc, char ** argv){
 
        File_Builder.Receive_Descriptor_File_Path(argv[1]);
 
-       File_Builder.Receive_Git_Record_Data(&Git_Data_Receiver);
-
-       File_Builder.Receive_Source_File_Info(&Dir_Lister);
-
        File_Builder.Build_MakeFile(argv[2],argv[3]);
     }
 
