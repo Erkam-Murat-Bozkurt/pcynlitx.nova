@@ -78,8 +78,6 @@ void Executable_MakeFile_ComConstructor::Clear_Dynamic_Memory(){
         delete [] this->make_file_name;
 
         delete [] this->Compiler_System_Command;
-
-        this->Dependency_Selector.Clear_Dynamic_Memory();
      }
 }
 
@@ -98,11 +96,6 @@ void Executable_MakeFile_ComConstructor::Receive_DepDeterminer(Source_File_Depen
      this->Dep_Determiner = pointer;
 }
 
-void Executable_MakeFile_ComConstructor::Receice_DataCollector(Source_File_Information_Collector * pointer){
-
-     this->Info_Collector = pointer;
-}
-
 void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(char * main_file_path){
 
      // Receiving the compiler data from the member objects
@@ -117,11 +110,10 @@ void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(char * main
 
      this->Data_Size = this->Dep_Determiner->Get_Compiler_Data_Size();
 
-     this->Dependency_Selector.Receive_Source_File_Information_Collector(this->Info_Collector);
 
-     this->Dependency_Selector.Determine_Source_File_Dependencies(main_file_path);
+     this->Dep_Determiner->Determine_Particular_Source_File_Dependencies(main_file_path);
 
-     this->Header_Dependency_List =  this->Dependency_Selector.Get_Header_Dependency_List();
+     this->Header_Dependency_List =  this->Dep_Determiner->Get_Header_Dependency_List();
 
      this->Determine_Src_File_Dir(main_file_path,'w');
 
@@ -146,7 +138,7 @@ void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(char * main
 
 void Executable_MakeFile_ComConstructor::Set_Header_File_Priorities(){
 
-     int list_size = this->Dependency_Selector.Get_Dependency_List_Size();
+     int list_size = this->Dep_Determiner->Get_Dependency_List_Size();
 
      for(int i=0;i<list_size;i++){
 
@@ -154,7 +146,7 @@ void Executable_MakeFile_ComConstructor::Set_Header_File_Priorities(){
 
              char * repo_header =  this->Data_Ptr_CString[k].repo_path;
 
-             char * list_header = this->Dependency_Selector.Get_Dependent_Header_Path(i);
+             char * list_header = this->Dep_Determiner->Get_Dependent_Header_Path(i);
 
              bool is_equal = this->CharOpr.CompareString(repo_header,list_header);
 
@@ -176,7 +168,7 @@ void Executable_MakeFile_ComConstructor::Set_Header_File_Priorities(){
 
 void Executable_MakeFile_ComConstructor::Re_Order_Header_Files(){
 
-     int list_size = this->Dependency_Selector.Get_Dependency_List_Size();
+     int list_size = this->Dep_Determiner->Get_Dependency_List_Size();
 
      for(int i=0;i<list_size;i++){
 
@@ -202,7 +194,7 @@ void Executable_MakeFile_ComConstructor::Re_Order_Header_Files(){
 
 void Executable_MakeFile_ComConstructor::Determine_List_Sizes(){
 
-     size_t header_number = this->Dependency_Selector.Get_Dependency_List_Size();
+     size_t header_number = this->Dep_Determiner->Get_Dependency_List_Size();
 
      size_t list_size = 0;
 
@@ -222,7 +214,7 @@ void Executable_MakeFile_ComConstructor::Determine_List_Sizes(){
 
 void Executable_MakeFile_ComConstructor::Construct_Header_File_List(){
 
-     size_t list_size = this->Dependency_Selector.Get_Dependency_List_Size();
+     size_t list_size = this->Dep_Determiner->Get_Dependency_List_Size();
 
      int index = 0;
 
@@ -256,7 +248,7 @@ void Executable_MakeFile_ComConstructor::Construct_Header_File_List(){
 
 void Executable_MakeFile_ComConstructor::Construct_Object_File_List(){
 
-     size_t list_size = this->Dependency_Selector.Get_Dependency_List_Size();;
+     size_t list_size = this->Dep_Determiner->Get_Dependency_List_Size();;
 
      int index = 0;
 
@@ -505,7 +497,6 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
      char Source_Location []  ="$(SOURCE_LOCATION)";
 
 
-
      size_t object_file_list_size = strlen(this->object_file_list);
 
      size_t header_file_list_size = strlen(this->header_file_list);
@@ -589,6 +580,8 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      int  included_dir_num = this->Des_Reader_Pointer->Get_Include_Directory_Number();
 
+
+
      char include_dir_symbol [] = "$(EXTERNAL_INCLUDE_DIR_";
 
      char makro_end [] = ")";
@@ -631,7 +624,6 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
 
      int  library_dir_num = this->Des_Reader_Pointer->Get_Library_Directory_Number();
-
 
      this->Place_Information(&this->Compiler_System_Command,Link_Character,&index_counter);
 
@@ -708,7 +700,7 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
      this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
 
-     int list_size = this->Dependency_Selector.Get_Dependency_List_Size();
+     int list_size = this->Dep_Determiner->Get_Dependency_List_Size();
 
      // The include commands definition
 

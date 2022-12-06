@@ -37,7 +37,6 @@ public:
  virtual ~Executable_MakeFile_ComConstructor();
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Pointer);
  void Receive_DepDeterminer(Source_File_Dependency_Determiner * pointer);
- void Receice_DataCollector(Source_File_Information_Collector * pointer);
  void Receive_ExeFileName(char * name);
  void Construct_Compiler_Commands(char * main_file_path);
  void Clear_Dynamic_Memory();
@@ -71,7 +70,7 @@ protected:
  Header_Dependency * Header_Dependency_List;
  CharOperator CharOpr;
  Source_File_Dependency_Determiner * Dep_Determiner;
- Source_File_Dependency_Selector Dependency_Selector;
+ //Source_File_Dependency_Selector Dependency_Selector;
  Source_File_Information_Collector * Info_Collector;
  IntToCharTranslater Translater;
  char * Exe_Name;
