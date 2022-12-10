@@ -42,8 +42,6 @@ void Project_Script_Writer::Build_Compiler_Script(Descriptor_File_Reader * Des_F
         exit(0);
      }
 
-     this->Dependency_Counter.Receive_Descriptor_File_Reader(Des_File_Reader);
-
      this->Src_Script_Writer.Receive_Descriptor_File_Reader(Des_File_Reader);
 
      this->Dir_Lister.Determine_Git_Repo_Info(Des_File_Reader);
@@ -52,39 +50,30 @@ void Project_Script_Writer::Build_Compiler_Script(Descriptor_File_Reader * Des_F
 
      = this->Dir_Lister.Get_Source_File_Number();
 
-
-
     char * warehouse_path
 
              = Des_File_Reader->Get_Warehouse_Location();
 
+    this->Data_Collector.Receive_Descriptor_File_Reader(Des_File_Reader);
 
+    if(this->source_file_num > 0){
 
-     this->Data_Collector.Receive_Dependency_Counter(&this->Dependency_Counter);
+       this->Initialize_Data_Structures();
 
-     this->Data_Collector.Receive_Project_Files_Lister(&this->Dir_Lister);
+       this->Determine_Script_Information();
 
-     this->Data_Collector.Receive_Warehouse_Path(warehouse_path);
+       this->Determine_Header_Files_Inclusion_Number();
 
+       this->Determine_Make_File_Names();
 
-     if(this->source_file_num > 0){
+       this->Write_Source_File_Scripts();
+    }
 
-        this->Initialize_Data_Structures();
+    this->Determine_Project_Script_Path(warehouse_path);
 
-        this->Determine_Script_Information();
+    this->Determine_Script_Order();
 
-        this->Determine_Header_Files_Inclusion_Number();
-
-        this->Determine_Make_File_Names();
-
-        this->Write_Source_File_Scripts();
-     }
-
-     this->Determine_Project_Script_Path(warehouse_path);
-
-     this->Determine_Script_Order();
-
-     this->Write_The_Project_Script();
+    this->Write_The_Project_Script();
 }
 
 void Project_Script_Writer::Determine_Script_Information(){
@@ -135,6 +124,8 @@ void Project_Script_Writer::Determine_Project_Script_Path(char * warehouse_path)
      char script_path_add [] = "Project_Build_Script.ps1";
 
      size_t script_path_size = warehouse_path_size + strlen(script_path_add);
+
+     this->Memory_Delete_Condition = false;
 
      this->script_path = new char [5*script_path_size];
 
@@ -267,6 +258,8 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
 void Project_Script_Writer::Initialize_Data_Structures(){
 
+     this->Memory_Delete_Condition = false;
+
      this->Data_Pointer = new Script_Data [2*this->source_file_num];
 
      for(int i=0;i<2*this->source_file_num;i++){
@@ -294,8 +287,6 @@ void Project_Script_Writer::Clear_Dynamic_Memory(){
          }
      }
 }
-
-
 
 void Project_Script_Writer::Construct_Path(char ** pointer,
 

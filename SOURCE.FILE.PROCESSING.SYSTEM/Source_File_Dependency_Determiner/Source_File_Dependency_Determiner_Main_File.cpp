@@ -49,6 +49,8 @@ int main(int argc, char ** argv){
 
        Dep_Determiner.Print_Compiler_Orders();
 
+       Dep_Determiner.Clear_Dynamic_Memory();
+
        std::cout << "\n\n ---------------------------------------------------------------";
 
        Dep_Determiner.Determine_Particular_Source_File_Dependencies(path);

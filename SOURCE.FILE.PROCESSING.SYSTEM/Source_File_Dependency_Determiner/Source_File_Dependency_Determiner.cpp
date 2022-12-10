@@ -57,6 +57,13 @@ void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
 void Source_File_Dependency_Determiner::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Pointer){
 
      this->Des_Reader = Pointer;
+
+     this->Information_Collector.Receive_Descriptor_File_Reader(this->Des_Reader);
+
+     this->Information_Collector.Collect_Make_File_Data();
+
+     this->DepSelector.Receive_Source_File_Information_Collector(&this->Information_Collector);
+
 }
 
 
@@ -68,12 +75,6 @@ void Source_File_Dependency_Determiner::Determine_Particular_Source_File_Depende
 }
 
 void Source_File_Dependency_Determiner::Determine_Dependencies(){
-
-     this->Information_Collector.Receive_Descriptor_File_Reader(this->Des_Reader);
-
-     this->Information_Collector.Collect_Make_File_Data();
-
-     this->DepSelector.Receive_Source_File_Information_Collector(&this->Information_Collector);
 
      this->Receive_Collector_Info();
 

@@ -51,10 +51,6 @@ int main(int argc, char ** argv){
 
        Info_Collector.Receive_Descriptor_File_Reader(&Des_Reader);
 
-       Info_Collector.Receive_Git_Record_Data(&Git_Data_Receiver);
-
-       Info_Collector.Receive_Source_File_Info(&Dir_Lister);
-
        Info_Collector.Collect_Make_File_Data();
     }
 

@@ -1,10 +1,11 @@
 
 
 
+
 #include <iostream>
 #include <cstring>
-#include "Project_Script_Writer.h"
 #include "Descriptor_File_Reader.hpp"
+#include "Script_Data_Collector.hpp"
 
 void Place_String(char ** Pointer, char * String);
 
@@ -19,15 +20,11 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_File_Reader;
-
     Des_File_Reader.Read_Descriptor_File(argv[1]);
 
-    Project_Script_Writer Script_Writer;
+    Script_Data_Collector Scr_Data;
 
-    Script_Writer.Build_Compiler_Script(&Des_File_Reader);
-
-    Script_Writer.Clear_Dynamic_Memory();
+    Scr_Data.Build_Compiler_Script(&Des_File_Reader);
 
     std::cout << "\n The project compiler script has been constructed";
 

@@ -5,6 +5,7 @@
 
 #include <cstring>
 #include <string>
+#include "Source_File_Dependency_Determiner.hpp"
 #include "Project_Files_Lister.h"
 #include "Descriptor_File_Reader.hpp"
 #include "Include_Dependency_Counter.hpp"
@@ -34,10 +35,10 @@ public:
  Script_Data_Collector();
  Script_Data_Collector(const Script_Data_Collector & orig);
  virtual ~Script_Data_Collector();
- void Receive_Dependency_Counter(Include_Dependency_Counter * Dependency_Counter);
+ //void Receive_Dependency_Counter(Include_Dependency_Counter * Dependency_Counter);
+ void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader);
  void Receive_Script_Data(Script_Data * Pointer);
- void Receive_Project_Files_Lister(Project_Files_Lister * Pointer);
- void Receive_Warehouse_Path(char * path);
+ //void Receive_Warehouse_Path(char * path);
  void Initialize_Data_Structure(Script_Data * Src_Data_Pointer, int src_num);
  void Determine_Source_File_Compilation_Information(Script_Data * Src_Data_Pointer,
       int dir_num, char operating_sis);
@@ -49,9 +50,11 @@ public:
  void Clear_Data_Memory(Script_Data * Src_Data_Pointer, int src_num);
 protected:
  void Place_String(char ** pointer, char * string);
+ Source_File_Dependency_Determiner Dep_Determiner;
+ Descriptor_File_Reader * Des_File_Reader;
+ Project_Files_Lister Dir_Lister;
  Script_Data * Src_Data_Pointer;
  Include_Dependency_Counter * Depd_Counter;
- Project_Files_Lister * Dir_Lister;
  Cpp_FileOperations FileManager;
  StringOperator StringManager;
  std::string String_Line;

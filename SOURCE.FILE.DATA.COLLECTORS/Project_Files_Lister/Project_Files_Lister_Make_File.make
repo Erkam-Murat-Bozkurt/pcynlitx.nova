@@ -11,11 +11,15 @@ SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collec
 FILE_DAT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Data_Collector
 SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
 HEAD_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
+SRC_INF_CL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector
+SRC_DEP_SL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector
+SRC_DEP_DT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Determiner
 
 
 VPATH = $(DIR_OPS) $(STRING_OPS) $(CHAR_OPS) $(FILE_OPRS) \
 				$(HEAD_DETR) $(SOURCE_DETR) $(DES_READ) $(DES_DATA_COL) \
-				$(GIT_LIST) $(SRC_DT_COL) $(FILE_DAT_COL) $(DES_SYN_CON)
+				$(GIT_LIST) $(SRC_DT_COL) $(FILE_DAT_COL) $(DES_SYN_CON) \
+				$(SRC_DEP_DT) $(SRC_DEP_SL) $(SRC_INF_CL)
 
 Project_Files_Lister.exe: Project_Files_Lister_Main_File.cpp \
 	Project_Files_Lister.cpp  \
@@ -23,6 +27,9 @@ Project_Files_Lister.exe: Project_Files_Lister_Main_File.cpp \
 	Descriptor_File_Reader.cpp \
 	Descriptor_File_Data_Collector.cpp \
 	Descriptor_File_Syntax_Controller.cpp \
+	Source_File_Dependency_Determiner.cpp \
+	Source_File_Dependency_Selector.cpp \
+	Source_File_Information_Collector.cpp \
 	Source_File_Determiner.cpp \
 	Header_File_Determiner.cpp \
 	StringOperator.cpp \
@@ -30,6 +37,9 @@ Project_Files_Lister.exe: Project_Files_Lister_Main_File.cpp \
 	CharOperator.cpp \
 	Project_Files_Lister.h \
 	Project_Files_Data_Collector.hpp \
+	Source_File_Dependency_Determiner.hpp \
+	Source_File_Dependency_Selector.hpp \
+	Source_File_Information_Collector.hpp \
 	Source_File_Determiner.h \
 	Header_File_Determiner.h \
 	StringOperator.h \
@@ -45,14 +55,19 @@ Project_Files_Lister.exe: Project_Files_Lister_Main_File.cpp \
 	 -I$(DES_DATA_COL) -I$(GIT_LIST) \
 	 -I$(FILE_DAT_COL) -I$(SRC_DT_COL) \
 	 -I$(DES_SYN_CON) \
+	 -I$(SRC_DEP_DT) -I$(SRC_DEP_SL) -I$(SRC_INF_CL) \
 	 -L$(HEAD_DETR) -L$(SOURCE_DETR) -L$(DIR_OPS) \
 	 -L$(STRING_OPS) -L$(GIT_LIST) -L$(FILE_DAT_COL) \
 	 -L$(CHAR_OPS) -L$(FILE_OPRS) \
 	 -L$(DES_READ) -L$(DES_DATA_COL) \
 	 -L$(SRC_DT_COL) -L$(DES_SYN_CON) \
+	 -L$(SRC_DEP_DT) -L$(SRC_DEP_SL) -L$(SRC_INF_CL) \
 		Project_Files_Lister_Main_File.cpp \
 		Project_Files_Lister.cpp \
 		$(FILE_DAT_COL)\Project_Files_Data_Collector.cpp \
+		$(SRC_DEP_DT)\Source_File_Dependency_Determiner.cpp \
+		$(SRC_DEP_SL)\Source_File_Dependency_Selector.cpp \
+		$(SRC_INF_CL)\Source_File_Information_Collector.cpp \
 		$(SOURCE_DETR)\Source_File_Determiner.cpp \
 		$(HEAD_DETR)\Header_File_Determiner.cpp \
 		$(DIR_ENUM)\Directory_Enumerator.cpp \
@@ -68,6 +83,9 @@ Project_Files_Lister.exe: Project_Files_Lister_Main_File.cpp \
 		-include Project_Files_Lister.h \
 		-include $(FILE_DAT_COL)\Project_Files_Data_Collector.hpp \
 		-include $(SOURCE_DETR)\Source_File_Determiner.h \
+		-include $(SRC_DEP_DT)\Source_File_Dependency_Determiner.hpp \
+		-include $(SRC_DEP_SL)\Source_File_Dependency_Selector.hpp \
+		-include $(SRC_INF_CL)\Source_File_Information_Collector.hpp \
 		-include $(HEAD_DETR)\Header_File_Determiner.h \
 		-include $(DES_READ)\Descriptor_File_Reader.hpp \
 		-include $(SRC_DT_COL)\Source_File_Data_Collector.hpp \

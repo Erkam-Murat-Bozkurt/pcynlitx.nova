@@ -28,6 +28,7 @@ public:
  Project_Script_Writer(const Project_Script_Writer & orig);
  virtual ~Project_Script_Writer();
  void Build_Compiler_Script(Descriptor_File_Reader * pointer);
+ void Clear_Dynamic_Memory();
 protected:
  void Determine_Script_Information();
  void Initialize_Data_Structures();
@@ -38,7 +39,6 @@ protected:
  void Write_The_Script(char * warehouse_path);
  void Write_Source_File_Scripts();
  void Write_The_Project_Script();
- void Clear_Dynamic_Memory();
  void Determine_Project_Script_Path(char * paths);
  void Determine_Make_File_Names();
  void Construct_Path(char ** pointer, char * string, char * warehouse_path);
@@ -47,7 +47,7 @@ protected:
  Source_File_Script_Writer Src_Script_Writer;
  DirectoryOperations DirectoryManager;
  Project_Files_Lister Dir_Lister;
- Include_Dependency_Counter Dependency_Counter;
+ //Include_Dependency_Counter Dependency_Counter;
  Cpp_FileOperations FileManager;
  Directory_Enumerator Enumerator;
  StringOperator StringManager;

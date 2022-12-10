@@ -25,24 +25,15 @@ Script_Data_Collector::~Script_Data_Collector(){
    }
 }
 
-void Script_Data_Collector::Receive_Project_Files_Lister(Project_Files_Lister * Pointer){
+void Script_Data_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader){
 
-     this->Dir_Lister = Pointer;
-}
+     this->Des_File_Reader = Des_Reader;
 
-void Script_Data_Collector::Receive_Script_Data(Script_Data * Pointer){
+     this->Dir_Lister.Determine_Git_Repo_Info(this->Des_File_Reader);
 
-     this->Src_Data_Pointer = Pointer;
-}
+     this->Dep_Determiner.Receive_Descriptor_File_Reader(this->Des_File_Reader);
 
-void Script_Data_Collector::Receive_Warehouse_Path(char * path){
-
-     this->warehouse_path = path;
-}
-
-void Script_Data_Collector::Receive_Dependency_Counter(Include_Dependency_Counter * Counter){
-
-     this->Depd_Counter = Counter;
+     this->warehouse_path = this->Des_File_Reader->Get_Warehouse_Location();
 }
 
 void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script_Data * Src_Data_Pointer,
@@ -52,21 +43,17 @@ void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script
 
      Src_Data_Pointer->warehouse_path = this->warehouse_path;
 
-
-
-     char * git_record_dir = this->Dir_Lister->Get_Source_File_Git_Record_Directory(src_num);
+     char * git_record_dir = this->Dir_Lister.Get_Source_File_Git_Record_Directory(src_num);
 
      this->Place_String(&Src_Data_Pointer->source_file_git_record_dir,git_record_dir);
 
 
-
-
-     char * src_file_name = this->Dir_Lister->Get_Source_File_Name(src_num);
+     char * src_file_name = this->Dir_Lister.Get_Source_File_Name(src_num);
 
      this->Place_String(&Src_Data_Pointer->source_file_name,src_file_name);
 
 
-     char * src_dir = this->Dir_Lister->Get_Source_File_Directory(src_num);
+     char * src_dir = this->Dir_Lister.Get_Source_File_Directory(src_num);
 
      this->Place_String(&Src_Data_Pointer->source_file_dir,src_dir);
 
@@ -74,7 +61,7 @@ void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script
 
      int src_head_num =
 
-     this->Dir_Lister->Get_Source_File_Include_File_Number(src_num);
+     this->Dir_Lister.Get_Source_File_Include_File_Number(src_num);
 
      Src_Data_Pointer->included_header_num = src_head_num;
 
@@ -89,11 +76,11 @@ void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script
 
              char * src_hd_git_dir
 
-               = this->Dir_Lister->Get_Source_File_Header_Git_Record_Dir(src_num,i);
+               = this->Dir_Lister.Get_Source_File_Header_Git_Record_Dir(src_num,i);
 
              char * src_hd_name
 
-               =  this->Dir_Lister->Get_Source_File_Header(src_num,i);
+               =  this->Dir_Lister.Get_Source_File_Header(src_num,i);
 
              this->Place_String(&Src_Data_Pointer->header_files_git_dir[i],src_hd_git_dir);
 
@@ -185,81 +172,23 @@ void Script_Data_Collector::Determine_Header_Files_Inclusion_Number(Script_Data 
 
      int src_num){
 
-     int src_head_num = this->Dir_Lister->Get_Source_File_Include_File_Number(src_num);
+     char * src_file_path = this->Dir_Lister.Get_Source_File_System_Path(src_num);
 
-     char * src_file_name = this->Dir_Lister->Get_Source_File_Name(src_num);
+     this->Dep_Determiner.Clear_Dynamic_Memory();
 
-     for(int k=0;k<src_head_num;k++){
+     this->Dep_Determiner.Determine_Particular_Source_File_Dependencies(src_file_path);
 
-         char * header_file_path =
+     // Dependencies of a particular source file.
 
-         this->Dir_Lister->Get_Source_File_Header_System_Path(src_num,k);
+     int dep_size = this->Dep_Determiner.Get_Dependency_List_Size();
 
-         this->FileManager.SetFilePath(header_file_path);
-
-         this->FileManager.FileOpen(Rf);
-
-         this->Included_Header_Files_Number = 0;
-
-         char include_db_key_1 [] = "#include\"";
-
-         char include_db_key_2 [] = "#include<";
-
-
-         this->String_Line = "";  // double_quotation_mark
-
-         while(!this->FileManager.Control_End_of_File()){
-
-               this->String_Line = this->FileManager.ReadLine();
-
-               char * string_line = this->FileManager.Convert_Std_String_To_Char(this->String_Line);
-
-               this->Delete_Spaces_on_String(&string_line);
-
-               bool is_header_included = false;
-
-
-               is_header_included =
-
-               this->StringManager.CheckStringInclusion(string_line,include_db_key_1);
-
-               if(is_header_included){
-
-                  bool is_repo_hdr = this->Depd_Counter->Is_This_Repo_Header(string_line,header_file_path);
-
-                  if(is_repo_hdr){
-
-                    Src_Data_Pointer->dependency++;
-                  }
-
-               }
-               else{
-
-                     is_header_included =
-
-                     this->StringManager.CheckStringInclusion(string_line,include_db_key_2);
-
-                     if(is_header_included){
-
-                       bool is_repo_hdr = this->Depd_Counter->Is_This_Repo_Header(string_line,header_file_path);
-
-                       if(is_repo_hdr){
-
-                          Src_Data_Pointer->dependency++;
-                        }
-                     }
-
-               }
-          }
-
-          this->FileManager.FileClose();
-     }
+     Src_Data_Pointer->dependency = dep_size;
 }
 
 
 void Script_Data_Collector::Determine_Make_File_Name(Script_Data * Src_Data_Pointer, int src_num){
 
-     char * source_file_name = this->Dir_Lister->Get_Source_File_Name(src_num);
+     char * source_file_name = this->Dir_Lister.Get_Source_File_Name(src_num);
 
      size_t file_name_size = strlen(source_file_name);
 
