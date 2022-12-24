@@ -90,9 +90,7 @@ protected:
  Source_File_Determiner Source_Determiner;
  Project_Files_Data_Collector Data_Cltr;
  StringOperator StringManager;
- DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
- CharOperator Character_Operator;
  Build_System_Data * Data;
  char *  Repo_Dir;
  char ** independent_header_files;

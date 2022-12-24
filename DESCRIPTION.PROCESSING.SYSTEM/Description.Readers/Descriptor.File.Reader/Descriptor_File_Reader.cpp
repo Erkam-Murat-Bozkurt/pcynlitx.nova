@@ -47,6 +47,10 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
                this->Include_Directories[i] = nullptr;
             }
+
+            delete [] this->Include_Directories;
+
+            this->Include_Directories = nullptr;
          }
 
          if(this->Source_File_Directories != nullptr){
@@ -57,6 +61,10 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
                this->Source_File_Directories[i] = nullptr;
             }
+
+            delete [] this->Source_File_Directories;
+
+            this->Source_File_Directories = nullptr;
          }
 
          if(this->Library_Directories != nullptr){
@@ -67,6 +75,10 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
                this->Library_Directories[i] = nullptr;
             }
+
+            delete [] this->Library_Directories;
+
+            this->Library_Directories = nullptr;
          }
 
          if(this->Library_Files != nullptr){
@@ -77,31 +89,45 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
                this->Library_Files[i] = nullptr;
             }
+
+            delete [] this->Library_Files;
+
+            this->Library_Files = nullptr;
          }
 
          if(this->file_path != nullptr){
 
             delete [] this->file_path;
+
+            this->file_path = nullptr;
          }
 
          if(this->standard != nullptr){
 
             delete [] this->standard;
+
+            this->standard = nullptr;
          }
 
          if(this->options != nullptr){
 
             delete [] this->options;
+
+            this->options = nullptr;
          }
 
          if(this->warehouse_location != nullptr){
 
             delete [] this->warehouse_location;
+
+            this->warehouse_location = nullptr;
          }
 
          if(this->root_dir != nullptr){
 
             delete [] this->root_dir;
+
+            this->root_dir = nullptr;
          }
      }
 }
@@ -132,6 +158,8 @@ void Descriptor_File_Reader::Read_Descriptor_File(char * path){
 void Descriptor_File_Reader::Receive_Descriptor_File_Path(char * path){
 
      size_t path_size = strlen(path);
+
+     this->Memory_Delete_Condition = false;
 
      this->file_path = new char [5*path_size];
 
@@ -329,9 +357,11 @@ void Descriptor_File_Reader::Read_Include_Directories(){
 
       if(this->include_dir_num > 0){
 
+         this->Memory_Delete_Condition = false;
+
          this->Include_Directories = new char * [5*this->include_dir_num];
 
-         for(int i=0;i<this->include_dir_num;i++){
+         for(int i=0;i<5*this->include_dir_num;i++){
 
              this->Include_Directories[i] = nullptr;
          }
@@ -372,10 +402,11 @@ void Descriptor_File_Reader::Read_Source_File_Directories(){
 
      if(this->source_file_dir_num > 0){
 
+        this->Memory_Delete_Condition = false;
 
         this->Source_File_Directories = new char * [5*this->source_file_dir_num];
 
-        for(int i=0;i<this->source_file_dir_num;i++){
+        for(int i=0;i<5*this->source_file_dir_num;i++){
 
             this->Source_File_Directories[i] = nullptr;
         }
@@ -416,9 +447,11 @@ void Descriptor_File_Reader::Read_Library_Directories(){
 
      if(this->lib_dir_num > 0){
 
+        this->Memory_Delete_Condition = false;
+
         this->Library_Directories = new char * [5*this->lib_dir_num];
 
-        for(int i=0;i<this->lib_dir_num;i++){
+        for(int i=0;i<5*this->lib_dir_num;i++){
 
             this->Library_Directories[i] = nullptr;
         }
@@ -459,9 +492,11 @@ void Descriptor_File_Reader::Read_Library_Files(){
 
      if(this->lib_file_num > 0){
 
+        this->Memory_Delete_Condition = false;
+
         this->Library_Files = new char * [5*this->lib_file_num];
 
-        for(int i=0;i<this->lib_file_num;i++){
+        for(int i=0;i<5*this->lib_file_num;i++){
 
             this->Library_Files[i] = nullptr;
         }
@@ -521,97 +556,6 @@ void Descriptor_File_Reader::Read_Options(){
 
 }
 
-
-/*
-
-void Descriptor_File_Reader::Read_Main_File_Names(){
-
-     int start_line = this->Data_Collector.Get_Main_File_Name_Record_Area(0);
-
-     int end_line  = this->Data_Collector.Get_Main_File_Name_Record_Area(1);
-
-     this->main_file_name_num = 0;
-
-     for(int i=start_line+1;i<end_line;i++){
-
-         char * line = this->StringManager.ReadFileLine(i);
-
-         if(this->StringManager.CheckStringLine(line)){
-
-             this->main_file_name_num++;
-         }
-      }
-
-      if(this->main_file_name_num > 0){
-
-        this->Main_File_Names = new char * [5*this->main_file_name_num];
-
-        for(int i=0;i<this->main_file_name_num;i++){
-
-            this->Main_File_Names[i] = nullptr;
-        }
-
-        int record_index = 0;
-
-        for(int i=start_line+1;i<end_line;i++){
-
-            char * line = this->StringManager.ReadFileLine(i);
-
-            if(this->StringManager.CheckStringLine(line)){
-
-                this->Place_String(&(this->Main_File_Names[record_index]),line);
-
-                record_index++;
-            }
-          }
-       }
-}
-
-void Descriptor_File_Reader::Read_Executable_File_Names(){
-
-  int start_line = this->Data_Collector.Get_Executable_File_Name_Record_Area(0);
-
-  int end_line  = this->Data_Collector.Get_Executable_File_Name_Record_Area(1);
-
-  this->exec_file_name_num = 0;
-
-  for(int i=start_line+1;i<end_line;i++){
-
-      char * line = this->StringManager.ReadFileLine(i);
-
-      if(this->StringManager.CheckStringLine(line)){
-
-          this->exec_file_name_num++;
-      }
-   }
-
-   if(this->exec_file_name_num > 0){
-
-     this->Executable_File_Names = new char * [5*this->exec_file_name_num];
-
-     for(int i=0;i<this->exec_file_name_num;i++){
-
-         this->Executable_File_Names[i] = nullptr;
-     }
-
-     int record_index = 0;
-
-     for(int i=start_line+1;i<end_line;i++){
-
-         char * line = this->StringManager.ReadFileLine(i);
-
-         if(this->StringManager.CheckStringLine(line)){
-
-             this->Place_String(&(this->Executable_File_Names[record_index]),line);
-
-             record_index++;
-         }
-       }
-    }
-
-}
-
-*/
 
 void Descriptor_File_Reader::Place_String(char ** pointer, char * string){
 
@@ -689,17 +633,3 @@ int Descriptor_File_Reader::Get_Include_Directory_Number(){
 
     return this->include_dir_num;
 }
-
-/*
-
-int Descriptor_File_Reader::Get_Main_File_Name_Number(){
-
-    return this->main_file_name_num;
-}
-
-int Descriptor_File_Reader::Get_Exe_File_Name_Number(){
-
-    return this->exec_file_name_num;
-}
-
-*/

@@ -35,10 +35,8 @@ public:
  Script_Data_Collector();
  Script_Data_Collector(const Script_Data_Collector & orig);
  virtual ~Script_Data_Collector();
- //void Receive_Dependency_Counter(Include_Dependency_Counter * Dependency_Counter);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader);
  void Receive_Script_Data(Script_Data * Pointer);
- //void Receive_Warehouse_Path(char * path);
  void Initialize_Data_Structure(Script_Data * Src_Data_Pointer, int src_num);
  void Determine_Source_File_Compilation_Information(Script_Data * Src_Data_Pointer,
       int dir_num, char operating_sis);
@@ -54,10 +52,6 @@ protected:
  Descriptor_File_Reader * Des_File_Reader;
  Project_Files_Lister Dir_Lister;
  Script_Data * Src_Data_Pointer;
- Include_Dependency_Counter * Depd_Counter;
- Cpp_FileOperations FileManager;
- StringOperator StringManager;
- std::string String_Line;
  char * warehouse_path;
  bool Include_Line_Condition;
  int  Included_Header_Files_Number;

@@ -3,17 +3,19 @@
 
 Source_File_Determiner::Source_File_Determiner(){
 
-    this->File_Content = nullptr;
-
     this->File_Content_Size = 0;
 
     this->Is_This_Source_File = false;
+
+    this->File_Content = nullptr;
 
     this->Source_File_Name = nullptr;
 
     this->File_Name_Witout_Ext = nullptr;
 
     this->Class_Function_Patern = nullptr;
+
+    this->Memory_Delete_Condition = true;
 
 }
 
@@ -24,7 +26,14 @@ Source_File_Determiner::Source_File_Determiner(const Source_File_Determiner & or
 
 Source_File_Determiner::~Source_File_Determiner(){
 
+     if(!this->Memory_Delete_Condition){
 
+        this->Clear_Dynamic_Memory();
+     }
+
+     std::cout << "\n the end of ~Source_File_Determiner()";
+
+     std::cin.get();
 }
 
 void Source_File_Determiner::Clear_Dynamic_Memory(){
@@ -191,10 +200,11 @@ void Source_File_Determiner::Read_File(char * path){
 
      this->FileManager.FileClose();
 
+     this->Memory_Delete_Condition = false;
 
      this->File_Content = new char * [5*this->File_Content_Size];
 
-     for(int i=0;i<this->File_Content_Size;i++){
+     for(int i=0;i<5*this->File_Content_Size;i++){
 
          this->File_Content[i] = nullptr;
      }
@@ -208,6 +218,8 @@ void Source_File_Determiner::Read_File(char * path){
           char * string_line = this->FileManager.ReadLine_as_Cstring();
 
           size_t string_size = strlen(string_line);
+
+          this->Memory_Delete_Condition = false;
 
           this->File_Content[index] = new char [5*string_size];
 
@@ -252,6 +264,8 @@ void Source_File_Determiner::Determine_Source_File_Name(char * path, char operat
      }
 
      size_t file_name_size = file_path_size - dir_size;
+
+     this->Memory_Delete_Condition = false;
 
      this->Source_File_Name = new char [5*file_name_size];
 
@@ -327,6 +341,8 @@ void Source_File_Determiner::Determine_File_Name_Without_Ext(char * path, char o
         file_name_size = file_extention_start_point - dir_size;
      }
 
+     this->Memory_Delete_Condition = false;
+
      this->File_Name_Witout_Ext = new char [5*file_name_size];
 
      int index = 0;
@@ -358,6 +374,8 @@ void Source_File_Determiner::Determine_Class_Function_Pattern(char * file_name){
      }
 
      size_t file_name_size = strlen(file_name);
+
+     this->Memory_Delete_Condition = false;
 
      this->Class_Function_Patern = new char [5*file_name_size];
 

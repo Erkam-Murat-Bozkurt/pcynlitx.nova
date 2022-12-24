@@ -45,11 +45,19 @@ Source_File_Information_Collector::~Source_File_Information_Collector(){
    if(!this->Memory_Delete_Condition){
 
        this->Clear_Dynamic_Memory();
+
+       std::cout << "\n the end of ~Source_File_Information_Collector()";
+
+       std::cin.get();
    }
 }
 
 
 void Source_File_Information_Collector::Clear_Dynamic_Memory(){
+
+     std::cout << "\n the start of Source_File_Information_Collector::Clear_Dynamic_Memory()";
+
+     std::cin.get();
 
      if(!this->Memory_Delete_Condition){
 
@@ -103,6 +111,10 @@ void Source_File_Information_Collector::Clear_Dynamic_Memory(){
 
         this->File_Lister_Pointer.Clear_Dynamic_Memory();
      }
+
+     std::cout << "\n the end of Source_File_Information_Collector::Clear_Dynamic_Memory()";
+
+     std::cin.get();
 }
 
 void Source_File_Information_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader){

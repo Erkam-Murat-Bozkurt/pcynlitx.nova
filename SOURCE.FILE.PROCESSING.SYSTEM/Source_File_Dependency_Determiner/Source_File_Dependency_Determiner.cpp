@@ -38,10 +38,19 @@ Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(const
 
 Source_File_Dependency_Determiner::~Source_File_Dependency_Determiner(){
 
+   std::cout << "\n the start of desturctor ~Source_File_Dependency_Determiner()";
+
+   std::cin.get();
+
    if(!this->Memory_Delete_Condition){
 
        this->Clear_Dynamic_Memory();
    }
+
+   std::cout << "\n the end of desturctor ~Source_File_Dependency_Determiner()";
+
+   std::cin.get();
+
 }
 
 void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
@@ -51,6 +60,8 @@ void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
          this->Memory_Delete_Condition = true;
 
          this->DepSelector.Clear_Dynamic_Memory();
+
+         this->Information_Collector.Clear_Dynamic_Memory();
      }
 }
 
@@ -63,13 +74,14 @@ void Source_File_Dependency_Determiner::Receive_Descriptor_File_Reader(Descripto
      this->Information_Collector.Collect_Make_File_Data();
 
      this->DepSelector.Receive_Source_File_Information_Collector(&this->Information_Collector);
-
 }
 
 
 void Source_File_Dependency_Determiner::Determine_Particular_Source_File_Dependencies(char * file_path){
 
      this->DepSelector.Clear_Dynamic_Memory();
+
+     this->Memory_Delete_Condition = false;
 
      this->DepSelector.Determine_Source_File_Dependencies(file_path);
 }

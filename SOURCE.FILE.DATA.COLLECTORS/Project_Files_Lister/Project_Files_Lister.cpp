@@ -12,6 +12,10 @@ Project_Files_Lister::Project_Files_Lister(){
     this->Data = nullptr;
 
     this->Header_File_Number = 0;
+
+    this->independent_header_files = nullptr;
+
+    this->independent_header_files_number = 0;
 }
 
 Project_Files_Lister::Project_Files_Lister(const
@@ -32,6 +36,10 @@ void Project_Files_Lister::Receive_Descriptor_File_Reader(Descriptor_File_Reader
      this->Des_Reader_Pointer = Pointer;
 
      this->Git_Data_Receiver.Receive_Descriptor_File_Reader(Pointer);
+
+     std::cout << "\n Descriptor_File_Reader recived..";
+
+     std::cin.get();
 }
 
 void Project_Files_Lister::Determine_Git_Repo_Info(Descriptor_File_Reader * Des_Reader){
@@ -42,7 +50,15 @@ void Project_Files_Lister::Determine_Git_Repo_Info(Descriptor_File_Reader * Des_
 
      this->git_record_size = this->Git_Data_Receiver.Get_Git_File_Index_Size();
 
+     std::cout << "\n this->git_record_size:" << this->git_record_size;
+
+     std::cin.get();
+
      this->Repo_Dir = this->Git_Data_Receiver.Get_Git_Repo_Directory();
+
+     std::cout << "\n this->Repo_Dir:" << this->Repo_Dir;
+
+     std::cin.get();
 
      this->Determine_Source_File_Number();
 
@@ -72,6 +88,12 @@ void Project_Files_Lister::Determine_Source_File_Number(){
             this->Source_File_Number++;
          }
     }
+
+    std::cout << "\n Inside Determine_Source_File_Number";
+
+    std::cout << "\n this->Source_File_Number:" << this->Source_File_Number;
+
+    std::cin.get();
 }
 
 void Project_Files_Lister::Determine_Header_File_Number(){
@@ -89,6 +111,13 @@ void Project_Files_Lister::Determine_Header_File_Number(){
             this->Header_File_Number++;
          }
     }
+
+
+    std::cout << "\n Inside Determine_Header_File_Number";
+
+    std::cout << "\n this->Header_File_Number:" << this->Header_File_Number;
+
+    std::cin.get();
 }
 
 void Project_Files_Lister::Collect_Source_Files_Data(char operating_sis){
@@ -117,6 +146,8 @@ void Project_Files_Lister::Collect_Independent_Header_Files_Data(char operating_
      int head_num = this->Header_File_Number;
 
      this->independent_header_files_number = 0;
+
+     this->Memory_Delete_Condition = false;
 
      this->independent_header_files = new char * [5*head_num];
 
@@ -186,6 +217,19 @@ void Project_Files_Lister::Initialize_Data_Structures(){
      int total_project_file_num = this->Source_File_Number
 
                                 + this->Header_File_Number;
+
+     std::cout << "\n total_project_file_num:" << total_project_file_num;
+
+     std::cin.get();
+
+     if(total_project_file_num<=0){
+
+        std::cout << "\n There is no any code file on the repository";
+
+        exit(0);
+     }
+
+     this->Memory_Delete_Condition = false;
 
      this->Data = new Build_System_Data [5*total_project_file_num];
 
@@ -481,12 +525,21 @@ bool Project_Files_Lister::Check_String_Equality(char * firstString,char * secon
      }
 }
 
-
 void Project_Files_Lister::Clear_Dynamic_Memory(){
 
      if(!this->Memory_Delete_Condition){
 
          this->Memory_Delete_Condition = true;
+
+         if(this->independent_header_files_number > 0){
+
+            for(int i=0;i<this->independent_header_files_number;i++){
+
+               delete [] this->independent_header_files[i];
+            }
+         }
+
+         delete [] this->independent_header_files;
 
          if(this->Source_File_Number > 0){
 
@@ -516,12 +569,25 @@ void Project_Files_Lister::Clear_Dynamic_Memory(){
 
                       this->Clear_Pointer_Memory(&(this->Data[i].Included_Header_Files_System_Path[k]));
 
+                      this->Clear_Pointer_Memory(&(this->Data[i].Included_Header_Files_Git_Record_Dir[k]));
+
+                      this->Clear_Pointer_Memory(&(this->Data[i].Included_Header_Files_Git_Record_Path[k]));
                   }
 
                   delete [] this->Data[i].Included_Header_Files;
-                }
+
+                  delete [] this->Data[i].Included_Header_Files_Directories;
+
+                  delete [] this->Data[i].Included_Header_Files_System_Path;
+
+                  delete [] this->Data[i].Included_Header_Files_Git_Record_Dir;
+
+                  delete [] this->Data[i].Included_Header_Files_Git_Record_Path;
+              }
            }
          }
+
+         delete [] this->Data;
        }
 }
 

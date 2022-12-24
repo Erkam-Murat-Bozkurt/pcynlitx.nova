@@ -53,6 +53,8 @@ void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Path(char * path
 
      size_t path_size = strlen(path);
 
+     this->Memory_Delete_Condition = false;
+
      this->Descriptor_File_Path = new char [5*path_size];
 
      for(size_t i=0;i<path_size;i++){

@@ -4,8 +4,6 @@
 
 Git_File_List_Receiver::Git_File_List_Receiver(){
 
-    this->Repo_Dir = nullptr;
-
     this->Memory_Delete_Condition = true;
 
     this->File_Line_Number = 0;
@@ -17,6 +15,8 @@ Git_File_List_Receiver::Git_File_List_Receiver(){
     this->git_file_list_path = nullptr;
 
     this->git_listing_command = nullptr;
+
+    this->Repo_Dir = nullptr;
 }
 
 Git_File_List_Receiver::Git_File_List_Receiver(const Git_File_List_Receiver & orig){
@@ -38,25 +38,29 @@ void Git_File_List_Receiver::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         if(this->Repo_Dir != nullptr){
-
-            delete [] this->Repo_Dir;
-
-            this->Repo_Dir = nullptr;
-         }
-
-         if(this->Warehouse != nullptr){
-
-            delete [] this->Warehouse;
-
-            this->Warehouse = nullptr;
-         }
 
          if(this->git_listing_command != nullptr){
 
             delete [] this->git_listing_command;
 
             this->git_listing_command = nullptr;
+          }
+
+          if(this->File_List_Content != nullptr){
+
+            for(int i=0;i<this->File_Line_Number;i++){
+
+               delete [] this->File_List_Content[i];
+            }
+
+            delete [] this->File_List_Content;
+
+            this->File_List_Content = nullptr;
+          }
+
+          if(this->git_file_list_path != nullptr){
+
+             delete [] this->git_file_list_path;
           }
      }
 }
@@ -92,6 +96,8 @@ void Git_File_List_Receiver::Determine_Git_File_List_Path(){
      size_t warehouse_path_size = strlen(this->Warehouse);
 
      size_t file_path_size = file_name_size + warehouse_path_size;
+
+     this->Memory_Delete_Condition = false;
 
      this->git_file_list_path = new char [5*file_path_size];
 
@@ -132,6 +138,8 @@ void Git_File_List_Receiver::Determine_Git_Listing_Command(){
 
      size_t command_size = git_command_size + target_file_path_size;
 
+     this->Memory_Delete_Condition = false;
+
      this->git_listing_command = new char [5*command_size];
 
      int index = 0;
@@ -167,6 +175,10 @@ void Git_File_List_Receiver::List_Files_in_Repo(){
 
 void Git_File_List_Receiver::Determine_Repo_List_File_Size(){
 
+     std::cout << "\n Inside Determine_Repo_List_File_Size";
+
+     std::cin.get();
+
      this->File_Line_Number = 0;
 
      this->FileManager.SetFilePath(this->git_file_list_path);
@@ -177,15 +189,27 @@ void Git_File_List_Receiver::Determine_Repo_List_File_Size(){
 
           std::string string_line = this->FileManager.ReadLine();
 
+          std::cout << "\n string_line:" << string_line;
+
+          std::cin.get();
+
           this->File_Line_Number++;
 
      }while(!this->FileManager.Control_End_of_File());
 
      this->FileManager.FileClose();
 
+     std::cout << "\n Inside Git_File_List_Receiver::Determine_Repo_List_File_Size()";
+
+     std::cout << "\n this->File_Line_Number:" << this->File_Line_Number;
+
+     std::cin.get();
+
 }
 
 void Git_File_List_Receiver::Read_Repo_List_File(){
+
+     this->Memory_Delete_Condition = false;
 
      this->File_List_Content = new char * [10*this->File_Line_Number];
 

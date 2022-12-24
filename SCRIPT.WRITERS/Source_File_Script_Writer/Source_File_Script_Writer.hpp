@@ -32,7 +32,6 @@ public:
 protected:
  Descriptor_File_Reader * Des_Reader_Ptr;
  Script_Data * Src_Data_Pointer;
- Project_Files_Lister * Dir_Lister;
  Cpp_FileOperations FileManager;
  DirectoryOperations DirectoryManager;
  IntToCharTranslater Translater;

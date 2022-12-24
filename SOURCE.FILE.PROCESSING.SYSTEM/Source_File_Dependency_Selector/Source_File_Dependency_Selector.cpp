@@ -45,6 +45,10 @@ Source_File_Dependency_Selector::~Source_File_Dependency_Selector(){
 
        this->Clear_Dynamic_Memory();
    }
+
+   std::cout << "\n the end of Source_File_Dependency_Selector destructor";
+
+   std::cin.get();
 }
 
 void Source_File_Dependency_Selector::Clear_Dynamic_Memory(){

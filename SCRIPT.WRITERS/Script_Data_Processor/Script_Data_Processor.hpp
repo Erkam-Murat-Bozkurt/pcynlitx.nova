@@ -1,18 +1,18 @@
 
 
-#ifndef PROJECT_SCRIPT_WRITER_H
-#define PROJECT_SCRIPT_WRITER_H
+
+#ifndef SCRIPT_DATA_PROCESSOR_HPP
+#define SCRIPT_DATA_PROCESSOR_HPP
 
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
 #include <iostream>
 #include <string>
-#include "Project_Files_Lister.h"
 #include "Descriptor_File_Reader.hpp"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
-#include "Script_Data_Processor.hpp"
+#include "Directory_Enumerator.h"
 #include "Source_File_Script_Writer.hpp"
 #include "Script_Data_Collector.hpp"
 #include "Source_File_Dependency_Determiner.hpp"
@@ -20,29 +20,36 @@
 #include "Source_File_Information_Collector.hpp"
 
 
-class Project_Script_Writer
+class Script_Data_Processor
 {
 public:
- Project_Script_Writer();
- Project_Script_Writer(const Project_Script_Writer & orig);
- virtual ~Project_Script_Writer();
- void Build_Compiler_Script(Descriptor_File_Reader * pointer);
+ Script_Data_Processor();
+ Script_Data_Processor(const Script_Data_Processor & orig);
+ virtual ~Script_Data_Processor();
+ void Process_Script_Data(Descriptor_File_Reader * Des_File_Reader);
+ Script_Data Get_SrcFile_Script_Data(char * file_git_path);
+ Script_Data * Get_Script_Data();
+ int Get_Source_File_Number();
  void Clear_Dynamic_Memory();
 protected:
  void Determine_Script_Information();
  void Initialize_Data_Structures();
- void Write_Source_File_Scripts();
- void Write_The_Project_Script();
+ void Determine_Header_Files_Inclusion_Number();
+ void Determine_Script_Order();
  void Determine_Project_Script_Path(char * paths);
+ void Determine_Make_File_Names();
  void Construct_Path(char ** pointer, char * string, char * warehouse_path);
- Script_Data_Processor Src_Data_Processor;
- Source_File_Script_Writer Src_Script_Writer;
- DirectoryOperations DirectoryManager;
+ Script_Data_Collector Data_Collector;
+ Project_Files_Lister Dir_Lister;
  Cpp_FileOperations FileManager;
+ CharOperator CString_Proccessor;
+ std::string String_Line;
  int source_file_num;
  Script_Data * Data_Pointer;
+ char * warehouse_path;
+ char * project_repo_dir;
  char * script_path;
  bool Memory_Delete_Condition;
 };
 
-#endif /* PROJECT_SCRIPT_WRITER_H */
+#endif /* SCRIPT_DATA_PROCESSOR_HPP */

@@ -25,6 +25,12 @@ int main(int argc, char ** argv){
 
     Data_Collector.Collect_Descriptor_File_Data(argv[1]);
 
+    std::cout << "\n ----------------------------------------";
+    
+    Data_Collector.Print_Descriptor_File_Index();
+
+    std::cin.get();
+
     std::cout << "\n ROOT DIRECTORY LOCATION:";
 
     std::cout << "\n Root directory record area start:" << Data_Collector.Get_Root_Directory_Record_Area(0);

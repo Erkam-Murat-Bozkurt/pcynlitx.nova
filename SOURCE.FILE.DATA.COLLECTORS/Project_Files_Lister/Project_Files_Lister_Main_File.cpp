@@ -37,67 +37,6 @@ int main(int argc, char ** argv){
 
     for(int i=0;i<src_file_num;i++){
 
-       /*
-
-        std::cout << "\n Source file directory (system)      :";
-
-        std::cout << "\n " <<  Dir_Lister.Get_Source_File_Directory(i);
-
-        std::cout << "\n";
-
-        std::cout << "\n Source file path (git record)  :";
-
-        std::cout << "\n " << Dir_Lister.Get_Source_File_Git_Record_Path(i);
-
-        std::cout << "\n";
-
-
-        std::cout << "\n Source file directory (git record)  :";
-
-        std::cout << "\n " << Dir_Lister.Get_Source_File_Git_Record_Directory(i);
-
-        std::cout << "\n";
-
-
-        std::cout << "\n Source file path (system)           :";
-
-        std::cout << "\n " << Dir_Lister.Get_Source_File_System_Path(i);
-
-        std::cout << "\n";
-
-
-        std::cout << "\n Source file name (without file ext) :";
-
-        std::cout << "\n " << Dir_Lister.Get_Source_File_Name(i);
-
-        std::cout << "\n";
-
-
-        std::cout << "\n Source file  name (with file ext)  :";
-
-        std::cout << "\n " << Dir_Lister.Get_Source_File_Name_With_Ext(i);
-
-        std::cout << "\n";
-
-
-        std::cout << "\n Class header file path:";
-
-        if(Dir_Lister.Get_Class_File_Header_System_Path(i) != nullptr){
-
-          std::cout << Dir_Lister.Get_Class_File_Header_System_Path(i);
-        }
-        else{
-
-            std::cout << "\n Class header file path does not exist";
-        }
-
-
-        std::cout << "\n";
-
-
-        */
-
-
         std::cout << "\n\n";
 
 
@@ -121,37 +60,6 @@ int main(int argc, char ** argv){
 
         std::cout << "\n";
 
-
-        /*
-
-        int src_head_num = Dir_Lister.Get_Source_File_Include_File_Number(i);
-
-        for(int k=0;k<src_head_num;k++){
-
-            std::cout << "\n Included header file:" <<
-
-            Dir_Lister.Get_Source_File_Header(i,k);
-
-            std::cout << "\n Included header file Directory:" <<
-
-            Dir_Lister.Get_Source_File_Header_Directory(i,k);
-
-            std::cout << "\n Included header file system path:" <<
-
-            Dir_Lister.Get_Source_File_Header_System_Path(i,k);
-
-            std::cout << "\n Included header file git path:" <<
-
-            Dir_Lister.Get_Source_File_Header_Git_Record_Path(i,k);
-
-            std::cout << "\n Included header file git record dir:" <<
-
-            Dir_Lister.Get_Source_File_Header_Git_Record_Dir(i,k);
-        }
-
-        std::cout << "\n\n\n\n";
-
-            */
     }
 
 

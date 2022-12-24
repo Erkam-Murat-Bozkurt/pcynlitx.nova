@@ -31,6 +31,10 @@ Source_File_Script_Writer::~Source_File_Script_Writer(){
       this->Memory_Delete_Condition = true;
 
       this->Clear_Dynamic_Memory();
+
+      std::cout << "\n after Source_File_Script_Writer::Clear_Dynamic_Memory()";
+
+      std::cin.get();
    }
 }
 

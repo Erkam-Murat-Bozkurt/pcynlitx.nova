@@ -20,6 +20,8 @@ Header_File_Determiner::Header_File_Determiner(){
     this->Repo_Dir = nullptr;
 
     this->Header_File_Name_With_Extention = nullptr;
+
+    this->Memory_Delete_Condition = true;
 }
 
 Header_File_Determiner::Header_File_Determiner(const Header_File_Determiner & orig){
@@ -29,7 +31,14 @@ Header_File_Determiner::Header_File_Determiner(const Header_File_Determiner & or
 
 Header_File_Determiner::~Header_File_Determiner(){
 
+  if(!this->Memory_Delete_Condition){
 
+     this->Clear_Dynamic_Memory();
+  }
+
+  std::cout << "\n The end of ~Header_File_Determiner()";
+
+  std::cin.get();
 }
 
 void Header_File_Determiner::Clear_Dynamic_Memory(){
@@ -265,6 +274,8 @@ void Header_File_Determiner::Determine_Header_File_Directory(char * path){
         }
      }
 
+     this->Memory_Delete_Condition = false;
+
      this->Header_File_Directory = new char [5*dir_size];
 
      for(size_t i=0;i<dir_size;i++){
@@ -296,6 +307,8 @@ void Header_File_Determiner::Determine_Header_File_Name(char * path){
       }
 
       size_t Header_File_Name_Size = file_path_size - dir_size;
+
+      this->Memory_Delete_Condition = false;
 
       this->Header_File_Name = new char [5*Header_File_Name_Size];
 
@@ -338,6 +351,8 @@ void Header_File_Determiner::Determine_Header_File_Name_With_Extention(char * pa
       }
 
       size_t Header_File_Name_Size = file_path_size - dir_size;
+
+      this->Memory_Delete_Condition = false;
 
       this->Header_File_Name_With_Extention = new char [5*Header_File_Name_Size];
 

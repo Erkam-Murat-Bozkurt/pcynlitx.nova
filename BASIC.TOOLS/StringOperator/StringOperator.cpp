@@ -107,12 +107,16 @@ void StringOperator::LoadStringBuffer(char * ReadLine){
 
      int spaceCounter = 0;
 
-     while (((ReadLine[spaceCounter]== ' ') || (ReadLine[spaceCounter]== '\t'))) {   // This loop corp the spaceses in the same line the readed worc ..
+     while (((ReadLine[spaceCounter]== ' ') ||
+
+            (ReadLine[spaceCounter]== '\t'))) {
+
+            // This loop corp the spaceses in the same line the readed worc ..
 
             spaceCounter++;
      };
 
-     int string_length = this->CharacterOperations.CharListLength(ReadLine)-spaceCounter;
+     size_t string_length = this->CharacterOperations.CharListLength(ReadLine)-spaceCounter;
 
      if(string_length>0){
 
@@ -149,13 +153,14 @@ void StringOperator::LoadStringBuffer(char * ReadLine){
 
          this->StringBuffer = new char [10];
 
+         for(size_t i=0;i<10;i++){
+
+            this->StringBuffer[i] = '\0';
+         }
+
          this->Memory_Delete_Condition = false;
 
          this->isBufferEmpty = false;
-
-         this->StringBuffer[0] = '\0';
-
-         this->StringBuffer[1] = '\0';
      }
 }
 
@@ -205,10 +210,10 @@ void StringOperator::ReceiveFileLine(char * ReadLine){
 
       this->isBufferEmpty = false;
 
-      this->StringBuffer[0] = '\0';
+      for(int i=0;i<10;i++){
 
-      this->StringBuffer[1] = '\0';
-
+         this->StringBuffer[i] = '\0';
+      }
     }
 }
 
@@ -292,9 +297,10 @@ void StringOperator::ReadWordBetweenToPoint(char * StringLine, int StartPoint, i
 
            this->isBufferEmpty = false;
 
-           this->StringBuffer[0] = '\0';
+           for(int i=0;i<10;i++){
 
-           this->StringBuffer[1] = '\0';
+              this->StringBuffer[i] = '\0';
+           }
        }
      }
 }

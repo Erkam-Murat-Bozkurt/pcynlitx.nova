@@ -8,12 +8,6 @@ Project_Script_Writer::Project_Script_Writer(){
 
      this->source_file_num = 0;
 
-     this->compiler_output_location = nullptr;
-
-     this->headers_locations = nullptr;
-
-     this->object_files_location = nullptr;
-
      this->script_path = nullptr;
 
      this->Data_Pointer = nullptr;
@@ -29,93 +23,31 @@ Project_Script_Writer::~Project_Script_Writer(){
    if(!this->Memory_Delete_Condition){
 
        this->Clear_Dynamic_Memory();
+
+       std::cout << "\n after Project_Script_Writer::Clear_Dynamic_Memory";
+
+       std::cin.get();
    }
 }
 
 void Project_Script_Writer::Build_Compiler_Script(Descriptor_File_Reader * Des_File_Reader){
 
-     if(Des_File_Reader->Get_Warehouse_Location() == nullptr){
+    this->Src_Data_Processor.Process_Script_Data(Des_File_Reader);
 
-        std::cout << "\n There is no any decleration about";
-        std::cout << "\n project warehouse location";
+    this->Src_Script_Writer.Receive_Descriptor_File_Reader(Des_File_Reader);
 
-        exit(0);
-     }
+    this->Data_Pointer    = this->Src_Data_Processor.Get_Script_Data();
 
-     this->Src_Script_Writer.Receive_Descriptor_File_Reader(Des_File_Reader);
+    this->source_file_num = this->Src_Data_Processor.Get_Source_File_Number();
 
-     this->Dir_Lister.Determine_Git_Repo_Info(Des_File_Reader);
-
-     this->source_file_num
-
-     = this->Dir_Lister.Get_Source_File_Number();
-
-    char * warehouse_path
-
-             = Des_File_Reader->Get_Warehouse_Location();
-
-    this->Data_Collector.Receive_Descriptor_File_Reader(Des_File_Reader);
-
-    if(this->source_file_num > 0){
-
-       this->Initialize_Data_Structures();
-
-       this->Determine_Script_Information();
-
-       this->Determine_Header_Files_Inclusion_Number();
-
-       this->Determine_Make_File_Names();
-
-       this->Write_Source_File_Scripts();
-    }
+    char * warehouse_path = Des_File_Reader->Get_Warehouse_Location();
 
     this->Determine_Project_Script_Path(warehouse_path);
 
-    this->Determine_Script_Order();
+    this->Write_Source_File_Scripts();
 
     this->Write_The_Project_Script();
 }
-
-void Project_Script_Writer::Determine_Script_Information(){
-
-     for(int i=0;i<this->source_file_num;i++){
-
-        this->Data_Collector.Determine_Source_File_Compilation_Information(&this->Data_Pointer[i],i,'w');
-     }
-}
-
-void Project_Script_Writer::Determine_Header_Files_Inclusion_Number(){
-
-     for(int n=0;n<this->source_file_num;n++){
-
-        this->Data_Collector.Determine_Header_Files_Inclusion_Number(&this->Data_Pointer[n],n);
-     }
-}
-
-void Project_Script_Writer::Determine_Script_Order(){
-
-     for(int i=0;i<this->source_file_num;i++){
-
-           for(int j=i;j<this->source_file_num;j++){
-
-             int dep_i = this->Data_Pointer[i].dependency;
-
-             int dep_j = this->Data_Pointer[j].dependency;
-
-             Script_Data temp;
-
-             if( dep_i > dep_j){
-
-                 temp  = this->Data_Pointer[j];
-
-                 this->Data_Pointer[j] = this->Data_Pointer[i];
-
-                 this->Data_Pointer[i] = temp;
-             }
-           }
-     }
-}
-
 
 void Project_Script_Writer::Determine_Project_Script_Path(char * warehouse_path){
 
@@ -132,13 +64,6 @@ void Project_Script_Writer::Determine_Project_Script_Path(char * warehouse_path)
      this->Construct_Path(&this->script_path,script_path_add,warehouse_path);
 }
 
-void Project_Script_Writer::Determine_Make_File_Names()
-{
-     for(int i=0;i<this->source_file_num;i++){
-
-         this->Data_Collector.Determine_Make_File_Name(&this->Data_Pointer[i],i);
-     }
-}
 
 void Project_Script_Writer::Write_Source_File_Scripts(){
 
@@ -208,7 +133,6 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile(" ");
 
-
          this->FileManager.WriteToFile(this->Data_Pointer[i].source_file_dir);
 
          this->FileManager.WriteToFile("\n\n");
@@ -220,6 +144,15 @@ void Project_Script_Writer::Write_The_Project_Script(){
          this->FileManager.WriteToFile(".ps1");
 
          this->FileManager.WriteToFile("\n\n");
+
+         this->FileManager.WriteToFile("# Dependency: ");
+
+         std::string dep = std::to_string(this->Data_Pointer[i].dependency);
+
+         this->FileManager.WriteToFile(dep);
+
+         this->FileManager.WriteToFile("\n\n");
+
      }
 
      this->FileManager.WriteToFile("\n");
@@ -256,35 +189,13 @@ void Project_Script_Writer::Write_The_Project_Script(){
 }
 
 
-void Project_Script_Writer::Initialize_Data_Structures(){
-
-     this->Memory_Delete_Condition = false;
-
-     this->Data_Pointer = new Script_Data [2*this->source_file_num];
-
-     for(int i=0;i<2*this->source_file_num;i++){
-
-         this->Data_Collector.Initialize_Data_Structure(&this->Data_Pointer[i],i);
-     }
-}
-
 void Project_Script_Writer::Clear_Dynamic_Memory(){
 
      if(!this->Memory_Delete_Condition){
 
          this->Memory_Delete_Condition = true;
 
-         if(this->Data_Pointer != nullptr){
-
-           for(int i=0;i<this->source_file_num;i++){
-
-               this->Data_Collector.Clear_Data_Memory(&this->Data_Pointer[i],i);
-           }
-
-           delete [] this->Data_Pointer;
-
-           this->Data_Pointer = nullptr;
-         }
+         this->Src_Data_Processor.Clear_Dynamic_Memory();
      }
 }
 
@@ -320,23 +231,4 @@ void Project_Script_Writer::Construct_Path(char ** pointer,
      }
 
      (*pointer)[index] = '\0';
-}
-
-void Project_Script_Writer::Place_String(char ** pointer, char * string){
-
-     size_t string_size = strlen(string);
-
-     *pointer = new char [5*string_size];
-
-     for(size_t i=0;i<5*string_size;i++){
-
-         (*pointer)[i] = '\0';
-     }
-
-     for(size_t i=0;i<string_size;i++){
-
-        (*pointer)[i] = string[i];
-     }
-
-     (*pointer)[string_size] = '\0';
 }

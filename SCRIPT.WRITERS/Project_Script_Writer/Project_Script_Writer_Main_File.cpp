@@ -29,6 +29,12 @@ int main(int argc, char ** argv){
 
     Script_Writer.Clear_Dynamic_Memory();
 
+    Des_File_Reader.Clear_Dynamic_Memory();
+
+    std::cout << "\n After Des_File_Reader.Clear_Dynamic_Memory()";
+
+    std::cin.get();
+
     std::cout << "\n The project compiler script has been constructed";
 
     std::cout << "\n\n";

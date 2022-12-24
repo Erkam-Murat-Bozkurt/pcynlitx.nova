@@ -65,7 +65,7 @@ int main(int argc, char ** argv){
 
         std::cout << "\n File_Name_With_Ext:" << File_Name_With_Ext;
 
-        std::cin.get();
+        //std::cin.get();
 
         delete [] file_system_path;
 

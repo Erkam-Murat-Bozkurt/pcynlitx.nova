@@ -26,11 +26,7 @@ Cpp_FileOperations::Cpp_FileOperations(){
 
      this->File_line_Number = 0;
 
-     this->CString = nullptr;
-
-     this->CString_FilePATH = nullptr;
-
-     this->Memory_Delete_Condition = false;
+     this->Memory_Delete_Condition = true;
 
      this->Delete_Return_Status = 0;
 
@@ -43,6 +39,12 @@ Cpp_FileOperations::Cpp_FileOperations(){
      this->String_Line = "";
 
      this->File_Index = nullptr;
+
+
+     this->CString = nullptr;
+
+     this->CString_FilePATH = nullptr;
+
 
    // Constructor Function
 };
@@ -102,14 +104,14 @@ void Cpp_FileOperations::SetFilePath(std::string FilePATH){
 
      this->FilePath = "";
 
-     int Name_Size = FilePATH.length();
+     size_t Name_Size = FilePATH.length();
 
-     for(int i=0;i<Name_Size;i++){
+     for(size_t i=0;i<Name_Size;i++){
 
          this->FilePath.append(1,FilePATH[i]) ;
      }
 
-     int string_size = this->FilePath.length();
+     size_t string_size = this->FilePath.length();
 
      if(this->CString_FilePATH != nullptr){
 
@@ -120,9 +122,11 @@ void Cpp_FileOperations::SetFilePath(std::string FilePATH){
 
      int index_counter = 0;
 
+     this->Memory_Delete_Condition = false;
+
      this->CString_FilePATH = new char [5*string_size];
 
-     for(int i=0;i<string_size;i++){
+     for(size_t i=0;i<string_size;i++){
 
          this->CString_FilePATH[index_counter] = this->FilePath[i];
 
@@ -138,9 +142,9 @@ void Cpp_FileOperations::SetFilePath(const char * String){
 
      this->FilePath = "";
 
-     int String_Size = strlen(String);
+     size_t String_Size = strlen(String);
 
-     for(int i=0;i<String_Size;i++){
+     for(size_t i=0;i<String_Size;i++){
 
          this->FilePath.append(1,String[i]);
      }
@@ -152,14 +156,14 @@ void Cpp_FileOperations::SetFilePath(char * String){
 
      this->FilePath = "";
 
-     int String_Size = strlen(String);
+     size_t String_Size = strlen(String);
 
-     for(int i=0;i<String_Size;i++){
+     for(size_t i=0;i<String_Size;i++){
 
          this->FilePath.append(1,String[i]);
      }
 
-     int string_size = this->FilePath.length();
+     size_t string_size = this->FilePath.length();
 
      if(this->CString_FilePATH != nullptr){
 
@@ -168,11 +172,18 @@ void Cpp_FileOperations::SetFilePath(char * String){
         this->CString_FilePATH = nullptr;
      }
 
-     int index_counter = 0;
+     size_t index_counter = 0;
+
+     this->Memory_Delete_Condition = false;
 
      this->CString_FilePATH = new char [5*string_size];
 
-     for(int i=0;i<string_size;i++){
+     for(size_t i=0;i<5*string_size;i++){
+
+         this->CString_FilePATH[i] = '\0';
+     }
+
+     for(size_t i=0;i<string_size;i++){
 
          this->CString_FilePATH[index_counter] = this->FilePath[i];
 
@@ -284,9 +295,9 @@ void Cpp_FileOperations::WriteToFile(const char * string_list){
 
      std::string transfer_string;
 
-     int String_Size = strlen(string_list);
+     size_t String_Size = strlen(string_list);
 
-     for(int i=0;i<String_Size;i++){
+     for(size_t i=0;i<String_Size;i++){
 
          transfer_string.append(1,string_list[i]);
      }
@@ -299,9 +310,9 @@ void Cpp_FileOperations::WriteToFile(char * string_list){
 
      std::string transfer_string;
 
-     int String_Size = strlen(string_list);
+     size_t String_Size = strlen(string_list);
 
-     for(int i=0;i<String_Size;i++){
+     for(size_t i=0;i<String_Size;i++){
 
          transfer_string.append(1,string_list[i]);
      }
@@ -315,12 +326,18 @@ std::string Cpp_FileOperations::ReadLine(){
 
      if(std::getline(this->DataFile,this->String_Line)){
 
+         //std::cout << "\n Inside Cpp_FileOperations::ReadLine";
+
+         //std::cout << "\n this->String_Line:" << this->String_Line;
+
          this->End_Of_File_Condition = false;
      }
      else{
 
         this->End_Of_File_Condition = true;
      }
+
+     //std::cout << "\n this->End_Of_File_Condition:" << this->End_Of_File_Condition;
 
      this->String_Line = this->String_Line + '\0';
 
@@ -426,7 +443,7 @@ void Cpp_FileOperations::Read_File_as_CString(char * path){
 
 void Cpp_FileOperations::Receive_File(char * path){
 
-     this->Memory_Delete_Condition = true;
+     this->Memory_Delete_Condition = false;
 
      this->File_Index = new char * [5*this->File_line_Number];
 
@@ -511,15 +528,22 @@ char * Cpp_FileOperations::Convert_Std_String_To_Char(std::string string_line){
        if(this->CString != nullptr){
 
           delete [] this->CString;
+
+          this->CString = nullptr;
        }
 
-       int string_size = string_line.length();
+       size_t string_size = string_line.length();
 
        this->Memory_Delete_Condition = false;
 
        this->CString = new char [5*string_size];
 
-       for(int i=0;i<string_size;i++){
+       for(size_t i=0;i<5*string_size;i++){
+
+           this->CString[i] = '\0';
+       }
+
+       for(size_t i=0;i<string_size;i++){
 
            this->CString[i] = string_line[i];
        }

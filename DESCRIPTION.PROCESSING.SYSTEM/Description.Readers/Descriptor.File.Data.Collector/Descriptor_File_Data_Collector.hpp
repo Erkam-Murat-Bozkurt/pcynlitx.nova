@@ -35,8 +35,12 @@ public:
  int Get_Main_File_Name_Record_Area(int index);
  int Get_Executable_File_Name_Record_Area(int index);
  int Get_Root_Directory_Record_Area(int index);
+ void Print_Descriptor_File_Index();
 protected:
  int FindStringPoint(char * search_word,int startPoint);
+ void Place_String(char ** pointer, char * string);
+ void Receive_Descriptor_File_Index();
+ void Determine_Descriptor_File_Size();
  void Receive_Descriptor_File_Path(char * path);
  void Determine_Standard_Record_Area();
  void Read_File_Content();
@@ -54,8 +58,10 @@ protected:
  StringOperator StringManager;
  CharOperator CharacterOperations;
  char * Descriptor_File_Path;
+ char ** Descriptor_File_Index;
  int File_Content_Size;
  int wordPosition;
+ int File_Size;
  int Root_Directory_Record_Area[2];
  int Warehouse_Location_Record_Area[2];
  int Library_Directories_Record_Area[2];

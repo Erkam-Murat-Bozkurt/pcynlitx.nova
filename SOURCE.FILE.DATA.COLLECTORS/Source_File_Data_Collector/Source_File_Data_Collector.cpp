@@ -5,6 +5,8 @@
 
 Source_File_Data_Collector::Source_File_Data_Collector(){
 
+    this->Memory_Delete_Condition = true;
+
     this->File_Content = nullptr;
 
     this->File_Path = nullptr;
@@ -25,7 +27,14 @@ Source_File_Data_Collector::Source_File_Data_Collector(const Source_File_Data_Co
 
 Source_File_Data_Collector::~Source_File_Data_Collector(){
 
+    if(!this->Memory_Delete_Condition){
 
+        this->Clear_Dynamic_Memory();
+    }
+
+    std::cout << "\n the end of ~Source_File_Data_Collector()";
+
+    std::cin.get();
 }
 
 void Source_File_Data_Collector::Receive_Source_File_Data(Git_File_List_Receiver * Git_Receiver,
@@ -92,6 +101,8 @@ void Source_File_Data_Collector::Determine_Include_Line_Number(){
 void Source_File_Data_Collector::Initialize_Data_Structures(){
 
      int memory_size = 5*this->included_header_file_number;
+
+     this->Memory_Delete_Condition = false;
 
      this->Include_Data_Pointer = new Include_File_Data [memory_size];
 
