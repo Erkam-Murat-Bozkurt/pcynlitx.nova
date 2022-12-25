@@ -127,6 +127,7 @@ void Descriptor_File_Data_Collector::Determine_Descriptor_File_Size(){
 
      this->FileManager.FileClose();
 }
+
 void Descriptor_File_Data_Collector::Receive_Descriptor_File_Index(){
 
      this->Descriptor_File_Index = new char * [5*this->File_Size];
@@ -135,8 +136,6 @@ void Descriptor_File_Data_Collector::Receive_Descriptor_File_Index(){
 
          this->Descriptor_File_Index[i] = nullptr;
      }
-
-
 
      this->FileManager.FileOpen(Rf);
 
@@ -410,7 +409,6 @@ void Descriptor_File_Data_Collector::Delete_Spaces_on_String(char ** pointer){
 
      size_t string_size = strlen(*pointer);
 
-
      int remove_index = 0;
 
      for(size_t j=0;j<string_size;j++){
@@ -448,6 +446,16 @@ void Descriptor_File_Data_Collector::Place_String(char ** pointer, char * string
      }
 
      (*pointer)[string_size] = '\0';
+}
+
+int Descriptor_File_Data_Collector::Get_Descriptor_File_Line_Number(){
+
+    return this->File_Size;
+}
+
+char *  Descriptor_File_Data_Collector::Get_Descriptor_File_Line(int line_number){
+
+      return this->Descriptor_File_Index[line_number];
 }
 
 int Descriptor_File_Data_Collector::Get_Root_Directory_Record_Area(int index){

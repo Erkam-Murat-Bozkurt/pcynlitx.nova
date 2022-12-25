@@ -243,9 +243,9 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
 
      int record_num = 0;
 
-     for(int i=start_line+1;i<end_line;i++){
+     for(int i=start_line+1;i<end_line-1;i++){
 
-         char * line = this->StringManager.ReadFileLine(i);
+         char * line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
          if(this->StringManager.CheckStringLine(line)){
 
@@ -279,9 +279,9 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
         exit(0);
      }
 
-     for(int i=start_line+1;i<end_line;i++){
+     for(int i=start_line+1;i<end_line-1;i++){
 
-         char * line = this->StringManager.ReadFileLine(i);
+         char * line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
          if(this->StringManager.CheckStringLine(line)){
 
@@ -300,7 +300,7 @@ void Descriptor_File_Reader::Read_Standard(){
 
      int record_num = 0;
 
-     for(int i=start_line+1;i<end_line;i++){
+     for(int i=start_line+1;i<end_line-1;i++){
 
          char * line = this->StringManager.ReadFileLine(i);
 
@@ -323,7 +323,7 @@ void Descriptor_File_Reader::Read_Standard(){
          }
      }
 
-     for(int i=start_line+1;i<end_line;i++){
+     for(int i=start_line+1;i<end_line-1;i++){
 
          char * line = this->StringManager.ReadFileLine(i);
 
@@ -344,9 +344,9 @@ void Descriptor_File_Reader::Read_Include_Directories(){
 
      this->include_dir_num = 0;
 
-     for(int i=start_line+1;i<end_line;i++){
+     for(int i=start_line+1;i<end_line-1;i++){
 
-         char * line = this->StringManager.ReadFileLine(i);
+         char * line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
          if(this->StringManager.CheckStringLine(line)){
 
@@ -368,9 +368,9 @@ void Descriptor_File_Reader::Read_Include_Directories(){
 
          int record_index = 0;
 
-         for(int i=start_line+1;i<end_line;i++){
+         for(int i=start_line+1;i<end_line-1;i++){
 
-             char * line = this->StringManager.ReadFileLine(i);
+             char * line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
              if(this->StringManager.CheckStringLine(line)){
 
@@ -390,7 +390,7 @@ void Descriptor_File_Reader::Read_Source_File_Directories(){
 
      this->source_file_dir_num = 0;
 
-     for(int i=start_line+1;i<end_line;i++){
+     for(int i=start_line+1;i<end_line-1;i++){
 
         char * line = this->StringManager.ReadFileLine(i);
 
@@ -413,7 +413,7 @@ void Descriptor_File_Reader::Read_Source_File_Directories(){
 
         int record_index = 0;
 
-        for(int i=start_line+1;i<end_line;i++){
+        for(int i=start_line+1;i<end_line-1;i++){
 
             char * line = this->StringManager.ReadFileLine(i);
 
@@ -435,7 +435,7 @@ void Descriptor_File_Reader::Read_Library_Directories(){
 
      this->lib_dir_num = 0;
 
-     for(int i=start_line+1;i<end_line;i++){
+     for(int i=start_line+1;i<end_line-1;i++){
 
          char * line = this->StringManager.ReadFileLine(i);
 
@@ -458,9 +458,9 @@ void Descriptor_File_Reader::Read_Library_Directories(){
 
         int record_index = 0;
 
-        for(int i=start_line+1;i<end_line;i++){
+        for(int i=start_line+1;i<end_line-1;i++){
 
-            char * line = this->StringManager.ReadFileLine(i);
+            char * line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
             if(this->StringManager.CheckStringLine(line)){
 
@@ -480,9 +480,9 @@ void Descriptor_File_Reader::Read_Library_Files(){
 
      this->lib_file_num = 0;
 
-     for(int i=start_line+1;i<end_line;i++){
+     for(int i=start_line+1;i<end_line-1;i++){
 
-         char * line = this->StringManager.ReadFileLine(i);
+         char * line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
          if(this->StringManager.CheckStringLine(line)){
 
@@ -503,9 +503,9 @@ void Descriptor_File_Reader::Read_Library_Files(){
 
         int record_index = 0;
 
-        for(int i=start_line+1;i<end_line;i++){
+        for(int i=start_line+1;i<end_line-1;i++){
 
-            char * line = this->StringManager.ReadFileLine(i);
+            char * line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
             if(this->StringManager.CheckStringLine(line)){
 
@@ -525,9 +525,9 @@ void Descriptor_File_Reader::Read_Options(){
 
      int record_num = 0;
 
-     for(int i=start_line+1;i<end_line;i++){
+     for(int i=start_line+1;i<end_line-1;i++){
 
-         char * line = this->StringManager.ReadFileLine(i);
+         char * line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
          if(this->StringManager.CheckStringLine(line)){
 
@@ -541,9 +541,9 @@ void Descriptor_File_Reader::Read_Options(){
       }
       else{
 
-           for(int i=start_line+1;i<end_line;i++){
+           for(int i=start_line+1;i<end_line-1;i++){
 
-               char * line = this->StringManager.ReadFileLine(i);
+               char * line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
                if(this->StringManager.CheckStringLine(line)){
 
@@ -553,7 +553,6 @@ void Descriptor_File_Reader::Read_Options(){
                }
             }
       }
-
 }
 
 
