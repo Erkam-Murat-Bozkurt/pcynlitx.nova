@@ -15,10 +15,6 @@ Script_Data_Collector::Script_Data_Collector(const Script_Data_Collector & orig)
 
 Script_Data_Collector::~Script_Data_Collector(){
 
-   std::cout << "\n The start of the ~Script_Data_Collector()";
-
-   std::cin.get();
-
    if(!this->Memory_Delete_Condition){
 
       this->Memory_Delete_Condition = true;
@@ -29,15 +25,7 @@ Script_Data_Collector::~Script_Data_Collector(){
 
       this->Dep_Determiner.Clear_Dynamic_Memory();
 
-      std::cout << "\n After this->Dep_Determiner.Clear_Dynamic_Memory()";
-
-      std::cin.get();
-
       this->Dir_Lister.Clear_Dynamic_Memory();
-
-      std::cout << "\n After this->Dir_Lister.Clear_Dynamic_Memory()";
-
-      std::cin.get();
    }
 }
 

@@ -31,10 +31,6 @@ Source_File_Data_Collector::~Source_File_Data_Collector(){
 
         this->Clear_Dynamic_Memory();
     }
-
-    std::cout << "\n the end of ~Source_File_Data_Collector()";
-
-    std::cin.get();
 }
 
 void Source_File_Data_Collector::Receive_Source_File_Data(Git_File_List_Receiver * Git_Receiver,
@@ -586,21 +582,14 @@ bool Source_File_Data_Collector::Character_Inclusion_Check(char * string, char c
 
 void Source_File_Data_Collector::Read_File(char * path){
 
-     if(this->File_Content != nullptr){
+     this->Clear_File_Content_Memory(); // this->File_Content erased
 
-        for(int i=0;i<this->File_Content_Size;i++){
-
-            delete [] this->File_Content[i];
-
-            this->File_Content[i] = nullptr;
-        }
-
-        delete [] this->File_Content;
-
-        this->File_Content = nullptr;
-     }
+     this->FileManager.Clear_Dynamic_Memory();
 
      this->FileManager.SetFilePath(path);
+
+
+     // File size Determination
 
      this->FileManager.FileOpen(Rf);
 
@@ -617,12 +606,21 @@ void Source_File_Data_Collector::Read_File(char * path){
      this->FileManager.FileClose();
 
 
+
+     // The initiaization of file content memory
+
+     this->Memory_Delete_Condition = false;
+
      this->File_Content = new char * [5*this->File_Content_Size];
 
      for(int i=0;i<this->File_Content_Size;i++){
 
          this->File_Content[i] = nullptr;
      }
+
+
+
+     // SETTING FILE CONTENT
 
      this->FileManager.FileOpen(Rf);
 
@@ -771,19 +769,9 @@ void Source_File_Data_Collector::Clear_Dynamic_Memory(){
 
           this->Memory_Delete_Condition = true;
 
-          if(this->File_Content != nullptr){
+          this->Clear_File_Content_Memory();
 
-             for(int i=0;i<this->File_Content_Size;i++){
-
-                 delete [] this->File_Content[i];
-
-                 this->File_Content[i] = nullptr;
-             }
-
-             delete [] this->File_Content;
-
-             this->File_Content = nullptr;
-          }
+          //std::cin.get();
 
           if(this->included_header_file_number > 0){
 
@@ -809,9 +797,28 @@ void Source_File_Data_Collector::Clear_Dynamic_Memory(){
 
               delete [] this->Include_Data_Pointer;
           }
+
+
+          this->FileManager.Clear_Dynamic_Memory();
       }
 }
 
+void Source_File_Data_Collector::Clear_File_Content_Memory(){
+
+     if(this->File_Content != nullptr){
+
+        for(int i=0;i<this->File_Content_Size;i++){
+
+            delete [] this->File_Content[i];
+
+            this->File_Content[i] = nullptr;
+        }
+
+        delete [] this->File_Content;
+
+        this->File_Content = nullptr;
+      }
+}
 
 int Source_File_Data_Collector::Get_Included_File_Number(){
 

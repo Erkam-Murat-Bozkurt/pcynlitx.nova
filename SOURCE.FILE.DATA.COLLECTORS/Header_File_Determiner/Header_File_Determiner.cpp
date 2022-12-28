@@ -35,10 +35,6 @@ Header_File_Determiner::~Header_File_Determiner(){
 
      this->Clear_Dynamic_Memory();
   }
-
-  std::cout << "\n The end of ~Header_File_Determiner()";
-
-  std::cin.get();
 }
 
 void Header_File_Determiner::Clear_Dynamic_Memory(){
@@ -76,51 +72,76 @@ bool Header_File_Determiner::Is_this_file_included_on_anywhere(char * file_path)
 
          this->Determine_Git_Record_File_System_Path(git_record_path,&record_sys_path,'w');
 
-         this->FileManager.Read_File_as_CString(record_sys_path);
+         bool is_path_exist = this->FileManager.Is_Path_Exist(record_sys_path);
 
-         int FileSize = this->FileManager.GetFileSize();
+         this->FileManager.SetFilePath(record_sys_path);
 
-         for(int k=0;k<FileSize;k++){
+         bool is_file_openned = this->FileManager.TryOpen('r');
 
-             char * string = this->FileManager.GetFileLine(k);
+         bool file_exist = false;
 
-             // In order to remove possible spaces on the string
+         if(is_path_exist && is_file_openned){
 
-             // a temporary string is constructed
+            file_exist = true;
+         }
 
-             char * tmp_string = nullptr;
+         this->FileManager.Clear_Dynamic_Memory();
 
-             this->Construct_Temporary_String(&tmp_string,string);
+         if(file_exist){
 
-             this->Delete_Spaces_on_String(&tmp_string);
+            this->FileManager.Read_File_as_CString(record_sys_path);
 
-             bool is_include_decleration = this->Include_Decleration_Test(tmp_string);
+            int FileSize = this->FileManager.GetFileSize();
+
+            for(int k=0;k<FileSize;k++){
+
+                char * string = this->FileManager.GetFileLine(k);
+
+                // In order to remove possible spaces on the string
+
+                // a temporary string is constructed
+
+                char * tmp_string = nullptr;
+
+                this->Construct_Temporary_String(&tmp_string,string);
+
+                this->Delete_Spaces_on_String(&tmp_string);
+
+                bool is_include_decleration = this->Include_Decleration_Test(tmp_string);
 
 
-             char * header_name = nullptr;
+                char * header_name = nullptr;
 
-             if(is_include_decleration){
+                if(is_include_decleration){
 
-                this->Extract_Header_File_Name_From_Decleration(&header_name,tmp_string);
+                   this->Extract_Header_File_Name_From_Decleration(&header_name,tmp_string);
 
-                this->Determine_Header_File_Name(file_path);
+                   this->Determine_Header_File_Name(file_path);
 
-                bool is_strings_equal = this->CompareString(header_name,this->Header_File_Name);
+                   bool is_strings_equal = this->CompareString(header_name,this->Header_File_Name);
 
-                if(is_strings_equal){
+                   if(is_strings_equal){
 
-                  this->Is_this_file_included_on_somewhere = true;
+                      this->Is_this_file_included_on_somewhere = true;
 
-                  break;
+                      break;
+                    }
                 }
-             }
 
-             this->Clear_Pointer_Memory(&header_name);
+                this->Clear_Pointer_Memory(&header_name);
 
-             this->Clear_Pointer_Memory(&tmp_string);
+                this->Clear_Pointer_Memory(&tmp_string);
+            }
+         }
+         else{
+
+                std::cout << "\n the git repo file " << record_sys_path <<
+
+                 "\n can not find on the repo directory !..";
          }
 
          this->Clear_Pointer_Memory(&record_sys_path);
+
       }
 
       return this->Is_this_file_included_on_somewhere;

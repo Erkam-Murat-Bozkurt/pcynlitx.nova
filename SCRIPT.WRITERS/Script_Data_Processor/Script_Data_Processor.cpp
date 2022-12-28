@@ -136,10 +136,6 @@ void Script_Data_Processor::Clear_Dynamic_Memory(){
            this->Data_Pointer = nullptr;
          }
      }
-
-     std::cout << "\n After Script_Data_Processor::Clear_Dynamic_Memory()";
-
-     std::cin.get();
 }
 
 Script_Data * Script_Data_Processor::Get_Script_Data(){

@@ -38,19 +38,10 @@ Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(const
 
 Source_File_Dependency_Determiner::~Source_File_Dependency_Determiner(){
 
-   std::cout << "\n the start of desturctor ~Source_File_Dependency_Determiner()";
-
-   std::cin.get();
-
    if(!this->Memory_Delete_Condition){
 
        this->Clear_Dynamic_Memory();
    }
-
-   std::cout << "\n the end of desturctor ~Source_File_Dependency_Determiner()";
-
-   std::cin.get();
-
 }
 
 void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){

@@ -33,8 +33,9 @@ int main(int argc, char ** argv){
 
     int src_file_num = Dir_Lister.Get_Source_File_Number();
 
-    std::cout << "\n TOTAL SOURCE FILE NUMBER:" << src_file_num;
+    Dir_Lister.~Project_Files_Lister();
 
+    std::cout << "\n TOTAL SOURCE FILE NUMBER:" << src_file_num;
 
     char path [] = "D:\\PCYNLITX.BUILD.TEST\\WAREHOUSE\\PROJECT.HEADER.FILES\\Thread_Manager_Builder.h";
 

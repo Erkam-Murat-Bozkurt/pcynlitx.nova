@@ -12,7 +12,6 @@
 #include "Descriptor_File_Reader.hpp"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
-#include "Directory_Enumerator.h"
 #include "Source_File_Script_Writer.hpp"
 #include "Script_Data_Collector.hpp"
 #include "Source_File_Dependency_Determiner.hpp"

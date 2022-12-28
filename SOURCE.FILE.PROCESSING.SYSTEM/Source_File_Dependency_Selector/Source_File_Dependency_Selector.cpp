@@ -26,7 +26,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Source_File_Dependency_Selector::Source_File_Dependency_Selector(){
 
-   this->Memory_Delete_Condition = false;
+   this->Memory_Delete_Condition = true;
 
    this->Dependent_List = nullptr;
 
@@ -45,10 +45,6 @@ Source_File_Dependency_Selector::~Source_File_Dependency_Selector(){
 
        this->Clear_Dynamic_Memory();
    }
-
-   std::cout << "\n the end of Source_File_Dependency_Selector destructor";
-
-   std::cin.get();
 }
 
 void Source_File_Dependency_Selector::Clear_Dynamic_Memory(){
@@ -194,6 +190,8 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(char * path){
              this->Clear_Pointer_Memory(&tmp_string);
          }
       }
+
+      FileStream.Clear_Dynamic_Memory();
   }
 
   bool Source_File_Dependency_Selector::Is_This_Repo_HeaderFile(char * path){

@@ -7,13 +7,11 @@
 #include "Descriptor_File_Reader.hpp"
 #include "Script_Data_Collector.hpp"
 
-void Place_String(char ** Pointer, char * String);
-
 int main(int argc, char ** argv){
 
     if(argc < 2){
 
-       std::cout << "\n usage: Project_Script_Writer.exe <descriptor file path>";
+       std::cout << "\n usage: Script_Data_Collector.exe <descriptor file path>";
 
        std::cout << "\n\n";
 

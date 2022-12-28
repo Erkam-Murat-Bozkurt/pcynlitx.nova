@@ -3,6 +3,7 @@
 #define CPP_FILEOPERATIONS_H
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <string>
 #include <cstring>
@@ -60,9 +61,9 @@ public:
  char * Convert_Std_String_To_Char(std::string string_line);
  bool Is_Path_Exist(char * path);
  bool Is_This_File_Empty(char * path);
+ bool TryOpen(char path);
  void Clear_Dynamic_Memory();
 private:
- bool TryOpen(char path);
  std::fstream DataFile;
  std::string String_Line;
  std::string string_word;

@@ -63,6 +63,8 @@ void Git_File_List_Receiver::Clear_Dynamic_Memory(){
              delete [] this->git_file_list_path;
           }
      }
+
+     this->FileManager.Clear_Dynamic_Memory();
 }
 
 void Git_File_List_Receiver::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Pointer){
@@ -71,7 +73,7 @@ void Git_File_List_Receiver::Receive_Descriptor_File_Reader(Descriptor_File_Read
 
      this->Warehouse = this->Des_Reader_Pointer->Get_Warehouse_Location();
 
-     this->Repo_Dir = this->Des_Reader_Pointer->Get_Repo_Directory_Location();
+     this->Repo_Dir  = this->Des_Reader_Pointer->Get_Repo_Directory_Location();
 }
 
 void Git_File_List_Receiver::Determine_Git_Repo_Info(){
@@ -175,10 +177,6 @@ void Git_File_List_Receiver::List_Files_in_Repo(){
 
 void Git_File_List_Receiver::Determine_Repo_List_File_Size(){
 
-     std::cout << "\n Inside Determine_Repo_List_File_Size";
-
-     std::cin.get();
-
      this->File_Line_Number = 0;
 
      this->FileManager.SetFilePath(this->git_file_list_path);
@@ -189,22 +187,11 @@ void Git_File_List_Receiver::Determine_Repo_List_File_Size(){
 
           std::string string_line = this->FileManager.ReadLine();
 
-          std::cout << "\n string_line:" << string_line;
-
-          std::cin.get();
-
           this->File_Line_Number++;
 
      }while(!this->FileManager.Control_End_of_File());
 
      this->FileManager.FileClose();
-
-     std::cout << "\n Inside Git_File_List_Receiver::Determine_Repo_List_File_Size()";
-
-     std::cout << "\n this->File_Line_Number:" << this->File_Line_Number;
-
-     std::cin.get();
-
 }
 
 void Git_File_List_Receiver::Read_Repo_List_File(){
@@ -230,6 +217,8 @@ void Git_File_List_Receiver::Read_Repo_List_File(){
      }while(!this->FileManager.Control_End_of_File());
 
      this->FileManager.FileClose();
+
+     this->FileManager.Clear_Dynamic_Memory();
 }
 
 

@@ -17,7 +17,7 @@ Header_File_Determiner.exe: Header_File_Determiner_Main_File.cpp Header_File_Det
 	StringOperator.cpp CharOperator.cpp Cpp_FileOperations.cpp Header_File_Determiner.h \
 	Git_File_List_Receiver.hpp StringOperator.h CharOperator.h Cpp_FileOperations.h
 
-	g++ -std=c++17 -o Header_File_Determiner.exe \
+	g++ -std=c++17 -static-libgcc -static-libstdc++ -ggdb -o Header_File_Determiner.exe \
 	  -I$(STRING_OPS) -I$(CHAR_OPS) -I$(FILE_OPRS) -I$(DES_READ) \
 		-I$(DES_DATA_COL) -I$(GIT_LIST) -I$(DIR_OPS) -I$(DES_SYN_CON) \
 	  -L$(STRING_OPS) -L$(CHAR_OPS) -L$(FILE_OPRS) -L$(DES_READ) \

@@ -50,7 +50,7 @@ Project_Files_Lister.exe: Project_Files_Lister_Main_File.cpp \
 	IntToCharTranslater.h \
 	Cpp_FileOperations.h
 
-	g++ -std=c++17 -o Project_Files_Lister.exe \
+	g++ -std=c++17 -g -o Project_Files_Lister.exe \
 	 -I. \
 	 -I$(HEAD_DETR) \
 	 -I$(SOURCE_DETR) \

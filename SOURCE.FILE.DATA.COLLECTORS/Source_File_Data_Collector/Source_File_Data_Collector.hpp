@@ -80,6 +80,7 @@ protected:
  void Determine_Include_Line_Number();
  void Read_Include_Files();
  void Delete_Spaces_on_String(char ** pointer);
+ void Clear_File_Content_Memory();
  Git_File_List_Receiver * Git_Receiver_Pointer;
  StringOperator StringManager;
  Cpp_FileOperations FileManager;

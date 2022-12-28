@@ -30,10 +30,6 @@ Source_File_Determiner::~Source_File_Determiner(){
 
         this->Clear_Dynamic_Memory();
      }
-
-     std::cout << "\n the end of ~Source_File_Determiner()";
-
-     std::cin.get();
 }
 
 void Source_File_Determiner::Clear_Dynamic_Memory(){

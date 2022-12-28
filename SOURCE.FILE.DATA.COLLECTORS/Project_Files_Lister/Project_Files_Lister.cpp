@@ -36,10 +36,6 @@ void Project_Files_Lister::Receive_Descriptor_File_Reader(Descriptor_File_Reader
      this->Des_Reader_Pointer = Pointer;
 
      this->Git_Data_Receiver.Receive_Descriptor_File_Reader(Pointer);
-
-     std::cout << "\n Descriptor_File_Reader recived..";
-
-     std::cin.get();
 }
 
 void Project_Files_Lister::Determine_Git_Repo_Info(Descriptor_File_Reader * Des_Reader){
@@ -50,16 +46,8 @@ void Project_Files_Lister::Determine_Git_Repo_Info(Descriptor_File_Reader * Des_
 
      this->git_record_size = this->Git_Data_Receiver.Get_Git_File_Index_Size();
 
-     std::cout << "\n this->git_record_size:" << this->git_record_size;
-
-     std::cin.get();
-
      this->Repo_Dir = this->Git_Data_Receiver.Get_Git_Repo_Directory();
-
-     std::cout << "\n this->Repo_Dir:" << this->Repo_Dir;
-
-     std::cin.get();
-
+;
      this->Determine_Source_File_Number();
 
      this->Determine_Header_File_Number();
@@ -88,12 +76,6 @@ void Project_Files_Lister::Determine_Source_File_Number(){
             this->Source_File_Number++;
          }
     }
-
-    std::cout << "\n Inside Determine_Source_File_Number";
-
-    std::cout << "\n this->Source_File_Number:" << this->Source_File_Number;
-
-    std::cin.get();
 }
 
 void Project_Files_Lister::Determine_Header_File_Number(){
@@ -111,13 +93,6 @@ void Project_Files_Lister::Determine_Header_File_Number(){
             this->Header_File_Number++;
          }
     }
-
-
-    std::cout << "\n Inside Determine_Header_File_Number";
-
-    std::cout << "\n this->Header_File_Number:" << this->Header_File_Number;
-
-    std::cin.get();
 }
 
 void Project_Files_Lister::Collect_Source_Files_Data(char operating_sis){
@@ -217,10 +192,6 @@ void Project_Files_Lister::Initialize_Data_Structures(){
      int total_project_file_num = this->Source_File_Number
 
                                 + this->Header_File_Number;
-
-     std::cout << "\n total_project_file_num:" << total_project_file_num;
-
-     std::cin.get();
 
      if(total_project_file_num<=0){
 

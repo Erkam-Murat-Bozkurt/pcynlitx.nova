@@ -326,18 +326,12 @@ std::string Cpp_FileOperations::ReadLine(){
 
      if(std::getline(this->DataFile,this->String_Line)){
 
-         //std::cout << "\n Inside Cpp_FileOperations::ReadLine";
-
-         //std::cout << "\n this->String_Line:" << this->String_Line;
-
          this->End_Of_File_Condition = false;
      }
      else{
 
         this->End_Of_File_Condition = true;
      }
-
-     //std::cout << "\n this->End_Of_File_Condition:" << this->End_Of_File_Condition;
 
      this->String_Line = this->String_Line + '\0';
 
