@@ -24,21 +24,23 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Source_File_Information_Collector.hpp"
 
-Source_File_Information_Collector::Source_File_Information_Collector(){
+Source_File_Information_Collector::Source_File_Information_Collector(char * descriptor_file_path){
 
    this->Memory_Delete_Condition = true;
 
-   this->Header_Data_Pointer = nullptr;
-
    this->Data_Ptr_CString = nullptr;
 
+   this->Des_Reader.Read_Descriptor_File(descriptor_file_path);
+
+   this->warehouse_path = this->Des_Reader.Get_Warehouse_Location();
+
+   this->Git_Data_Receiver.Receive_Descriptor_File_Reader(&this->Des_Reader);
+
+   this->Git_Data_Receiver.Determine_Git_Repo_Info();
+
+   this->File_Lister_Pointer.Determine_Git_Repo_Info(&this->Des_Reader);
 }
 
-Source_File_Information_Collector::Source_File_Information_Collector(const
-
-     Source_File_Information_Collector & orig){
-
-}
 
 Source_File_Information_Collector::~Source_File_Information_Collector(){
 
@@ -56,8 +58,6 @@ void Source_File_Information_Collector::Clear_Dynamic_Memory(){
          this->Memory_Delete_Condition = true;
 
          delete [] this->warehouse_head_dir;
-
-         delete [] this->warehouse_path;
 
          delete [] this->warehouse_obj_dir;
 
@@ -102,23 +102,12 @@ void Source_File_Information_Collector::Clear_Dynamic_Memory(){
         this->Git_Data_Receiver.Clear_Dynamic_Memory();
 
         this->File_Lister_Pointer.Clear_Dynamic_Memory();
+
+        this->Des_Reader.Clear_Dynamic_Memory();
      }
 }
 
-void Source_File_Information_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader){
-
-     this->Des_Reader_Pointer = Des_Reader;
-
-     this->warehouse_path = this->Des_Reader_Pointer->Get_Warehouse_Location();
-}
-
 void Source_File_Information_Collector::Collect_Make_File_Data(){
-
-     this->Git_Data_Receiver.Receive_Descriptor_File_Reader(this->Des_Reader_Pointer);
-
-     this->Git_Data_Receiver.Determine_Git_Repo_Info();
-
-     this->File_Lister_Pointer.Determine_Git_Repo_Info(this->Des_Reader_Pointer);
 
      this->Determine_Warehouse_Header_Dir('w');
 
@@ -887,18 +876,6 @@ void Source_File_Information_Collector::Clear_Pointer_Memory(char ** Pointer){
        }
 
        (*name)[index] = '\0';
-  }
-
-  void Source_File_Information_Collector::Add_String(char ** list, char * string, int * index){
-
-       size_t string_size = strlen(string);
-
-       for(size_t i=0;i<string_size;i++){
-
-           (*list)[(*index)] = string[i];
-
-           (*index)++;
-       }
   }
 
   void Source_File_Information_Collector::Place_String(std::string * str_pointer, char * string){

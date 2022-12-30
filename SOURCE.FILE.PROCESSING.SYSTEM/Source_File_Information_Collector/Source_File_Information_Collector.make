@@ -58,7 +58,7 @@ Source_File_Information_Collector.exe: Source_File_Information_Collector_Main_Fi
 	CharOperator.h \
 	Cpp_FileOperations.h
 
-	g++ -std=c++17 -g -o Source_File_Information_Collector.exe \
+	g++ -std=c++17 -static-libgcc -static-libstdc++ -ggdb -o Source_File_Information_Collector.exe \
 	 -I$(DIR_OPS) -I$(CPP_OPS) -I$(CHAR_OPS) \
 	 -I$(STRING_OPS) -I$(HEAD_DET) \
 	 -I$(FILE_LISTER) -I$(SOURCE_DETR) -I$(GIT_LIST) \

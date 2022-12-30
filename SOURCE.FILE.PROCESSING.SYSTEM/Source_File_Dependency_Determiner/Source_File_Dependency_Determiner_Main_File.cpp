@@ -40,11 +40,9 @@ int main(int argc, char ** argv){
     char path [] = "D:\\PCYNLITX.BUILD.TEST\\WAREHOUSE\\PROJECT.HEADER.FILES\\Thread_Manager_Builder.h";
 
 
-    Source_File_Dependency_Determiner Dep_Determiner;
+    Source_File_Dependency_Determiner Dep_Determiner(argv[1]);
 
     if(src_file_num > 0){
-
-       Dep_Determiner.Receive_Descriptor_File_Reader(&Des_Reader);
 
        Dep_Determiner.Determine_Dependencies();
 

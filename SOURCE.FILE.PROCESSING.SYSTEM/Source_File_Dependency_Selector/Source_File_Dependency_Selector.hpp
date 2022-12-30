@@ -31,6 +31,7 @@
 #include "DirectoryOperations.h"
 #include "IntToCharTranslater.h"
 
+
 struct Header_Dependency {
 
   bool   rcr_srch_complated;
@@ -42,17 +43,20 @@ struct Header_Dependency {
 class Source_File_Dependency_Selector
 {
 public:
- Source_File_Dependency_Selector();
- Source_File_Dependency_Selector(const Source_File_Dependency_Selector & orig);
+ Source_File_Dependency_Selector(char * descriptor_file_path);
  virtual ~Source_File_Dependency_Selector();
- void Receive_Source_File_Information_Collector(Source_File_Information_Collector * pointer);
- void Determine_Source_File_Dependencies(char * pointer);
+ void Determine_Source_File_Dependencies(char * path);
  void Print_Dependency_List();
  void Clear_Dynamic_Memory();
- Header_Dependency * Get_Header_Dependency_List();
  char * Get_Dependent_Header(int i);
  char * Get_Dependent_Header_Path(int i);
- int    Get_Dependency_List_Size();
+ char * Get_Warehouse_Headers_Dir();
+ char * Get_Warehouse_Objetcs_Dir();
+ char * Get_Warehouse_Path();
+ Compiler_Data_CString * Get_Compiler_Data();
+ Header_Dependency * Get_Header_Dependency_List();
+ int  Get_Compiler_Data_Size();
+ int  Get_Dependency_List_Size();
 protected:
  void Extract_Dependency_Data(char * path);
  void Extract_Header_File_Name_From_Decleration(char ** header_name,
@@ -72,13 +76,14 @@ protected:
  bool CompareString(char * firstString,char * secondString);
  bool Is_This_Repo_HeaderFile(char * head_name);
  void Clear_Pointer_Memory(char ** Pointer);
- Source_File_Information_Collector * Info_Collector;
+ Source_File_Information_Collector Info_Collector;
  Header_Dependency * Dependent_List;
- Cpp_FileOperations FileManager;
  Compiler_Data_CString * Data_Ptr_CString;
  char * warehouse_head_dir;
- StringOperator StringManager;
+ char * descriptor_file_path;
  Header_File_Determiner Header_Determiner;
+ StringOperator StringManager;
+ Cpp_FileOperations FileManager;
  int  header_file_number;
  size_t ListLength;
  int Dep_Counter;

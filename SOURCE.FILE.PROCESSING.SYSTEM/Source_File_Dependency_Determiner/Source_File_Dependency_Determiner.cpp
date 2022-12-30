@@ -24,15 +24,12 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Source_File_Dependency_Determiner.hpp"
 
-Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(){
+Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_file_path) :
+
+   DepSelector(des_file_path)
+{
 
    this->Memory_Delete_Condition = false;
-
-}
-
-Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(const
-
-          Source_File_Dependency_Determiner & orig){
 
 }
 
@@ -51,20 +48,7 @@ void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
          this->Memory_Delete_Condition = true;
 
          this->DepSelector.Clear_Dynamic_Memory();
-
-         this->Information_Collector.Clear_Dynamic_Memory();
      }
-}
-
-void Source_File_Dependency_Determiner::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Pointer){
-
-     this->Des_Reader = Pointer;
-
-     this->Information_Collector.Receive_Descriptor_File_Reader(this->Des_Reader);
-
-     this->Information_Collector.Collect_Make_File_Data();
-
-     this->DepSelector.Receive_Source_File_Information_Collector(&this->Information_Collector);
 }
 
 
@@ -82,6 +66,13 @@ void Source_File_Dependency_Determiner::Determine_Dependencies(){
      this->Receive_Collector_Info();
 
      this->Determine_Compile_Order();
+}
+
+void Source_File_Dependency_Determiner::Receive_Collector_Info(){
+
+      this->header_file_number = this->DepSelector.Get_Compiler_Data_Size();
+
+      this->Data_Ptr_CString   = this->DepSelector.Get_Compiler_Data();
 }
 
 void Source_File_Dependency_Determiner::Determine_Compile_Order(){
@@ -166,12 +157,7 @@ void Source_File_Dependency_Determiner::Order_Priorities(){
 }
 
 
-void Source_File_Dependency_Determiner::Receive_Collector_Info(){
 
-      this->header_file_number = this->Information_Collector.Get_Compiler_Data_Size();
-
-      this->Data_Ptr_CString   = this->Information_Collector.Get_Compiler_Data();
-}
 
 void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
 
@@ -221,17 +207,17 @@ int Source_File_Dependency_Determiner::Get_Compiler_Data_Size(){
 
 char * Source_File_Dependency_Determiner::Get_Warehouse_Headers_Dir(){
 
-       return this->Information_Collector.Get_Warehouse_Headers_Dir();
+       return this->DepSelector.Get_Warehouse_Headers_Dir();
 }
 
 char * Source_File_Dependency_Determiner::Get_Warehouse_Objetcs_Dir(){
 
-       return this->Information_Collector.Get_Warehouse_Objetcs_Dir();
+       return this->DepSelector.Get_Warehouse_Objetcs_Dir();
 }
 
 char * Source_File_Dependency_Determiner::Get_Warehouse_Path(){
 
-       return this->Information_Collector.Get_Warehouse_Path();
+       return this->DepSelector.Get_Warehouse_Path();
 }
 
 

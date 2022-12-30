@@ -39,11 +39,9 @@ int main(int argc, char ** argv){
     std::cout << "\n src_file_num:" << src_file_num;
 
 
-    Source_File_Information_Collector Information_Collector;
+    Source_File_Information_Collector Information_Collector(argv[1]);
 
     if(src_file_num > 0){
-
-       Information_Collector.Receive_Descriptor_File_Reader(&Des_Reader);
 
        Information_Collector.Collect_Make_File_Data();
 

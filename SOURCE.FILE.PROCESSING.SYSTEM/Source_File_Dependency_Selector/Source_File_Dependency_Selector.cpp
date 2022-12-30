@@ -24,20 +24,19 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Source_File_Dependency_Selector.hpp"
 
-Source_File_Dependency_Selector::Source_File_Dependency_Selector(){
+Source_File_Dependency_Selector::Source_File_Dependency_Selector(char * des_file_path)
+
+: Info_Collector(des_file_path){
 
    this->Memory_Delete_Condition = true;
 
    this->Dependent_List = nullptr;
 
    this->Dep_Counter = 0;
+
+   this->descriptor_file_path = des_file_path;
 }
 
-Source_File_Dependency_Selector::Source_File_Dependency_Selector(const
-
-          Source_File_Dependency_Selector & orig){
-
-}
 
 Source_File_Dependency_Selector::~Source_File_Dependency_Selector(){
 
@@ -45,6 +44,7 @@ Source_File_Dependency_Selector::~Source_File_Dependency_Selector(){
 
        this->Clear_Dynamic_Memory();
    }
+
 }
 
 void Source_File_Dependency_Selector::Clear_Dynamic_Memory(){
@@ -52,6 +52,12 @@ void Source_File_Dependency_Selector::Clear_Dynamic_Memory(){
      if(!this->Memory_Delete_Condition){
 
          this->Memory_Delete_Condition = true;
+
+         std::cout << "\n this->Dep_Counter:" << this->Dep_Counter;
+
+         std::cout << "\n this->header_file_number:" << this->header_file_number;
+
+         std::cin.get();
 
          for(int i=0;i<this->Dep_Counter;i++){
 
@@ -69,15 +75,9 @@ void Source_File_Dependency_Selector::Clear_Dynamic_Memory(){
      }
 }
 
-
-void Source_File_Dependency_Selector::Receive_Source_File_Information_Collector(
-
-     Source_File_Information_Collector * pointer){
-
-     this->Info_Collector = pointer;
-}
-
 void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(char * path){
+
+     this->Info_Collector.Collect_Make_File_Data();
 
      this->Receive_Collector_Info();
 
@@ -86,11 +86,11 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(char * 
 
 void Source_File_Dependency_Selector::Receive_Collector_Info(){
 
-     this->header_file_number = this->Info_Collector->Get_Compiler_Data_Size();
+     this->header_file_number = this->Info_Collector.Get_Compiler_Data_Size();
 
-     this->Data_Ptr_CString   = this->Info_Collector->Get_Compiler_Data();
+     this->Data_Ptr_CString   = this->Info_Collector.Get_Compiler_Data();
 
-     this->warehouse_head_dir = this->Info_Collector->Get_Warehouse_Headers_Dir();
+     this->warehouse_head_dir = this->Info_Collector.Get_Warehouse_Headers_Dir();
 
      this->Memory_Delete_Condition = false;
 
@@ -200,7 +200,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(char * path){
 
        bool is_header = this->Header_Determiner.Is_Header(path);
 
-       int index_size = this->Info_Collector->Get_Compiler_Data_Size();
+       int index_size = this->Info_Collector.Get_Compiler_Data_Size();
 
        if(is_header){
 
@@ -504,6 +504,17 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(char * path){
         return this->Dependent_List;
   }
 
+
+  Compiler_Data_CString * Source_File_Dependency_Selector::Get_Compiler_Data(){
+
+    return this->Info_Collector.Get_Compiler_Data();
+  }
+
+  int Source_File_Dependency_Selector::Get_Compiler_Data_Size(){
+
+      return this->Info_Collector.Get_Compiler_Data_Size();
+  }
+
   char * Source_File_Dependency_Selector::Get_Dependent_Header(int i){
 
         return this->Dependent_List[i].Header_Name;
@@ -517,4 +528,19 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(char * path){
   int Source_File_Dependency_Selector::Get_Dependency_List_Size(){
 
        return this->Dep_Counter;
+  }
+
+  char * Source_File_Dependency_Selector::Get_Warehouse_Headers_Dir(){
+
+      return this->Info_Collector.Get_Warehouse_Headers_Dir();
+  }
+
+  char * Source_File_Dependency_Selector::Get_Warehouse_Objetcs_Dir(){
+
+     return this->Info_Collector.Get_Warehouse_Objetcs_Dir();
+  }
+
+  char * Source_File_Dependency_Selector::Get_Warehouse_Path(){
+
+       return this->Info_Collector.Get_Warehouse_Path();
   }

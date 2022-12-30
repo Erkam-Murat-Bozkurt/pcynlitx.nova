@@ -45,22 +45,11 @@ int main(int argc, char ** argv){
 
 
 
-    Source_File_Information_Collector Info_Collector;
-
-    if(src_file_num > 0){
-
-       Info_Collector.Receive_Descriptor_File_Reader(&Des_Reader);
-
-       Info_Collector.Collect_Make_File_Data();
-    }
-
     char path [] = "D:\\PCYNLITX.BUILD.TEST\\WAREHOUSE\\PROJECT.HEADER.FILES\\Thread_Manager_Builder.h";
 
-    Source_File_Dependency_Selector Dep_Selector;
+    Source_File_Dependency_Selector Dep_Selector(argv[1]);
 
     if(src_file_num > 0){
-
-      Dep_Selector.Receive_Source_File_Information_Collector(&Info_Collector);
 
       Dep_Selector.Determine_Source_File_Dependencies(path);
 

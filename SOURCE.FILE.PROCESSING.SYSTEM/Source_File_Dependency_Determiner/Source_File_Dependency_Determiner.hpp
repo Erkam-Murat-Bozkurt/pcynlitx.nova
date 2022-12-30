@@ -33,10 +33,9 @@
 class Source_File_Dependency_Determiner
 {
 public:
- Source_File_Dependency_Determiner();
+ Source_File_Dependency_Determiner(char * des_file_path);
  Source_File_Dependency_Determiner(const Source_File_Dependency_Determiner & orig);
  virtual ~Source_File_Dependency_Determiner();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader);
  void Determine_Particular_Source_File_Dependencies(char * file_path);
  void Determine_Dependencies();
  void Print_Compiler_Orders();
@@ -57,8 +56,6 @@ protected:
  void Determine_Compile_Order();
  void Receive_Collector_Info();
  void Order_Priorities();
- Descriptor_File_Reader * Des_Reader;
- Source_File_Information_Collector Information_Collector;
  Source_File_Dependency_Selector DepSelector;
  Compiler_Data_CString * Data_Ptr_CString;
  CharOperator Char_Processor;
