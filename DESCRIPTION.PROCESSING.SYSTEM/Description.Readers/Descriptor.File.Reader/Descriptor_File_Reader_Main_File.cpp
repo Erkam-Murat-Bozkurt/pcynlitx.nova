@@ -29,7 +29,7 @@ int main(int argc, char ** argv){
 
     std::cout << "\n ROOT DIRECTORY LOCATION:";
 
-    if(Des_File_Reader.Get_Repo_Directory_Location() != nullptr){
+    if(Des_File_Reader.Get_Repo_Directory_Location() != ""){
 
        std::cout << "\n ";
 
@@ -46,7 +46,7 @@ int main(int argc, char ** argv){
 
     std::cout << "\n WAREHOUSE LOCATION:";
 
-    if(Des_File_Reader.Get_Warehouse_Location() != nullptr){
+    if(Des_File_Reader.Get_Warehouse_Location() != ""){
 
        std::cout << "\n ";
 
@@ -63,7 +63,7 @@ int main(int argc, char ** argv){
 
     std::cout << "\n STANDART RECORD:";
 
-    if(Des_File_Reader.Get_Standard() != nullptr){
+    if(Des_File_Reader.Get_Standard() != ""){
 
        std::cout << "\n Standart record:" << Des_File_Reader.Get_Standard();
 
@@ -87,7 +87,7 @@ int main(int argc, char ** argv){
 
           std::cout << "\n ";
 
-          std::cout << Des_File_Reader.Get_Include_Directories()[i];
+          std::cout << Des_File_Reader.Get_Include_Directory(i);
        }
     }
     else{
@@ -110,7 +110,7 @@ int main(int argc, char ** argv){
 
           std::cout << "\n ";
 
-          std::cout << Des_File_Reader.Get_Source_File_Directories()[i];
+          std::cout << Des_File_Reader.Get_Source_File_Directory(i);
        }
     }
     else{
@@ -134,7 +134,7 @@ int main(int argc, char ** argv){
 
            std::cout << "\n ";
 
-           std::cout << Des_File_Reader.Get_Library_Directories()[i];
+           std::cout << Des_File_Reader.Get_Library_Directory(i);
        }
     }
     else{
@@ -155,7 +155,7 @@ int main(int argc, char ** argv){
 
            std::cout << "\n ";
 
-           std::cout << Des_File_Reader.Get_Library_Files()[i];
+           std::cout << Des_File_Reader.Get_Library_File(i);
        }
     }
     else{
@@ -167,7 +167,7 @@ int main(int argc, char ** argv){
 
     std::cout << "\n OPTIONS RECORD: ";
 
-    if(Des_File_Reader.Get_Options() != nullptr){
+    if(Des_File_Reader.Get_Options() != ""){
 
        std::cout << "\n ";
 

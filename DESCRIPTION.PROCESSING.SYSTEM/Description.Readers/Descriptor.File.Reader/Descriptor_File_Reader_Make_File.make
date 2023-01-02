@@ -18,7 +18,8 @@ Descriptor_File_Reader.exe: Descriptor_File_Reader_Main_File.cpp \
 	Descriptor_File_Syntax_Controller.hpp \
 	StringOperator.h CharOperator.h Cpp_FileOperations.h
 
-	g++ -std=c++17 -o Descriptor_File_Reader.exe \
+	g++ -std=c++17 -static-libgcc -static-libstdc++ -ggdb \
+	  -o Descriptor_File_Reader.exe \
 	  -I$(DES_COL) -I$(CPP_OPS) -I$(STRING_OPS) \
 		-I$(SYN_CON) -I$(CHAR_OPS) \
 		-L$(CPP_OPS) -L$(STRING_OPS) \

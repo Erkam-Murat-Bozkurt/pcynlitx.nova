@@ -20,14 +20,10 @@ Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(){
   this->Include_Directories_Record_Number = 0;
   this->Memory_Delete_Condition = true;
 
-  this->Descriptor_File_Path = nullptr;
+  this->Descriptor_File_Path = "";
 
 }
 
-Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(const Descriptor_File_Data_Collector & orig){
-
-
-}
 
 Descriptor_File_Data_Collector::~Descriptor_File_Data_Collector(){
 
@@ -44,30 +40,18 @@ void Descriptor_File_Data_Collector::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         if(this->Descriptor_File_Path != nullptr){
-
-            delete [] this->Descriptor_File_Path;
-         }
-
-         this->Descriptor_File_Path = nullptr;
-
-         for(int i=0;i<this->File_Size;i++){
-
-             delete [] this->Descriptor_File_Index[i];
-         }
-
-         delete [] this->Descriptor_File_Index;
+         this->File_Index.clear();
      }
 }
 
 
-void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(char * path){
+void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(std::string path){
 
      this->Receive_Descriptor_File_Path(path);
 
-     this->Determine_Descriptor_File_Size();
-
      this->Receive_Descriptor_File_Index();
+
+     this->Determine_Descriptor_File_Size();
 
      this->Determine_Root_Directory_Record_Area();
 
@@ -86,20 +70,9 @@ void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(char * path){
      this->Determine_Options_Record_Area();
 }
 
-void Descriptor_File_Data_Collector::Receive_Descriptor_File_Path(char * path){
+void Descriptor_File_Data_Collector::Receive_Descriptor_File_Path(std::string path){
 
-     size_t path_size = strlen(path);
-
-     this->Memory_Delete_Condition = false;
-
-     this->Descriptor_File_Path = new char [5*path_size];
-
-     for(size_t i=0;i<path_size;i++){
-
-        this->Descriptor_File_Path[i] = path[i];
-     }
-
-     this->Descriptor_File_Path[path_size] = '\0';
+     this->Descriptor_File_Path = path;
 
      this->StringManager.SetFilePath(this->Descriptor_File_Path);
 
@@ -107,67 +80,50 @@ void Descriptor_File_Data_Collector::Receive_Descriptor_File_Path(char * path){
 }
 
 
-void Descriptor_File_Data_Collector::Determine_Descriptor_File_Size(){
-
-     this->File_Size = 0;
-
-     this->FileManager.FileOpen(Rf);
-
-     do{
-            char * string_line = this->FileManager.ReadLine_as_Cstring();
-
-            if(this->FileManager.Control_End_of_File()){
-
-                break;
-            }
-
-            this->File_Size++;
-
-     }while(!this->FileManager.Control_End_of_File());
-
-     this->FileManager.FileClose();
-}
 
 void Descriptor_File_Data_Collector::Receive_Descriptor_File_Index(){
-
-     this->Descriptor_File_Index = new char * [5*this->File_Size];
-
-     for(int i=0;i<5*this->File_Size;i++){
-
-         this->Descriptor_File_Index[i] = nullptr;
-     }
 
      this->FileManager.FileOpen(Rf);
 
      int index = 0;
 
      do{
-          char * string_line = this->FileManager.ReadLine_as_Cstring();
+          std::string string_line = this->FileManager.ReadLine();
 
-          if(this->FileManager.Control_End_of_File()){
+          this->Delete_Spaces_on_String(&string_line);
 
-             break;
-          }
-
-
-          this->Place_String(&this->Descriptor_File_Index[index],string_line);
-
-          this->Delete_Spaces_on_String(&this->Descriptor_File_Index[index]);
-
-          index++;
+          this->File_Index.push_back(string_line);
 
       }while(!this->FileManager.Control_End_of_File());
 
       this->FileManager.FileClose();
 }
 
+
+void Descriptor_File_Data_Collector::Determine_Descriptor_File_Size(){
+
+     this->File_Size = 0;
+
+     std::vector<std::string>::iterator it;
+
+     for(auto it=this->File_Index.begin();it<this->File_Index.end();it++){
+
+         this->File_Size++;
+     }
+}
+
+
 void Descriptor_File_Data_Collector::Print_Descriptor_File_Index(){
 
-     for(int i=0;i<this->File_Size;i++){
+     std::vector<std::string>::iterator it;
+
+     int i=0;
+
+     for(auto it=this->File_Index.begin();it<this->File_Index.end();it++){
 
          std::cout << "\n"
 
-         << this->Descriptor_File_Index[i];
+         << *it;
      }
 }
 
@@ -378,17 +334,17 @@ void Descriptor_File_Data_Collector::Determine_Options_Record_Area(){
      this->FindStringPoint(end_brace,start_brace_line);
 }
 
-int Descriptor_File_Data_Collector::FindStringPoint(char * search_word,int startPoint){
+int Descriptor_File_Data_Collector::FindStringPoint(std::string search_word,int startPoint){
 
     this->wordPosition = startPoint;
 
     for(int i=startPoint;i<this->File_Size;i++){
 
-       if(this->StringManager.CheckStringLine(this->Descriptor_File_Index[i])){
+       if(this->StringManager.CheckStringLine(this->File_Index[i])){
 
           bool include_condition
 
-          = this->StringManager.CheckStringInclusion(this->Descriptor_File_Index[i],search_word);
+          = this->StringManager.CheckStringInclusion(this->File_Index[i],search_word);
 
           if(include_condition){
 
@@ -405,9 +361,9 @@ int Descriptor_File_Data_Collector::FindStringPoint(char * search_word,int start
 }
 
 
-void Descriptor_File_Data_Collector::Delete_Spaces_on_String(char ** pointer){
+void Descriptor_File_Data_Collector::Delete_Spaces_on_String(std::string * pointer){
 
-     size_t string_size = strlen(*pointer);
+     size_t string_size = (*pointer).length();
 
      int remove_index = 0;
 
@@ -434,28 +390,15 @@ void Descriptor_File_Data_Collector::Delete_Spaces_on_String(char ** pointer){
      }
 }
 
-void Descriptor_File_Data_Collector::Place_String(char ** pointer, char * string){
-
-     size_t string_size = strlen(string);
-
-     (*pointer) = new char [5*string_size];
-
-     for(size_t i=0;i<string_size;i++){
-
-         (*pointer)[i] = string[i];
-     }
-
-     (*pointer)[string_size] = '\0';
-}
 
 int Descriptor_File_Data_Collector::Get_Descriptor_File_Line_Number(){
 
     return this->File_Size;
 }
 
-char *  Descriptor_File_Data_Collector::Get_Descriptor_File_Line(int line_number){
+std::string Descriptor_File_Data_Collector::Get_Descriptor_File_Line(int line_number){
 
-      return this->Descriptor_File_Index[line_number];
+      return this->File_Index[line_number];
 }
 
 int Descriptor_File_Data_Collector::Get_Root_Directory_Record_Area(int index){

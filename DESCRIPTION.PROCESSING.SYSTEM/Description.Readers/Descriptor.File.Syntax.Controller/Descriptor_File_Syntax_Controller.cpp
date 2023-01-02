@@ -6,12 +6,7 @@ Descriptor_File_Syntax_Controller::Descriptor_File_Syntax_Controller(){
 
   this->Memory_Delete_Condition = true;
 
-  this->Descriptor_File_Path = nullptr;
-
-}
-
-Descriptor_File_Syntax_Controller::Descriptor_File_Syntax_Controller(const Descriptor_File_Syntax_Controller & orig){
-
+  this->Descriptor_File_Path = "";
 
 }
 
@@ -30,43 +25,54 @@ void Descriptor_File_Syntax_Controller::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         if(this->Descriptor_File_Path != nullptr){
-
-            delete [] this->Descriptor_File_Path;
-         }
-
-         this->Descriptor_File_Path = nullptr;
+         this->Descriptor_File_Path = "";
      }
 }
 
 
-void Descriptor_File_Syntax_Controller::Control_Descriptor_File_Syntax(char * path){
+void Descriptor_File_Syntax_Controller::Control_Descriptor_File_Syntax(std::string path){
 
      this->Receive_Descriptor_File_Path(path);
+
+     this->Receive_Descriptor_File_Index();
 
      this->Control_Keywords();
 
      this->Control_Braces();
 }
 
-void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Path(char * path){
+void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Path(std::string path){
 
-     size_t path_size = strlen(path);
-
-     this->Memory_Delete_Condition = false;
-
-     this->Descriptor_File_Path = new char [5*path_size];
-
-     for(size_t i=0;i<path_size;i++){
-
-        this->Descriptor_File_Path[i] = path[i];
-     }
-
-     this->Descriptor_File_Path[path_size] = '\0';
+     this->Descriptor_File_Path = path;
 
      this->StringManager.SetFilePath(this->Descriptor_File_Path);
 
      this->FileManager.SetFilePath(this->Descriptor_File_Path);
+}
+
+
+void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Index(){
+
+     this->FileManager.FileOpen(Rf);
+
+     do{
+          std::string string_line = this->FileManager.ReadLine();
+
+          this->Delete_Spaces_on_String(&string_line);
+
+          if(this->FileManager.Control_End_of_File()){
+
+             break;
+          }
+
+          if(this->StringManager.CheckStringLine(string_line)){
+
+            this->File_Index.push_back(string_line);
+          }
+
+      }while(!this->FileManager.Control_End_of_File());
+
+      this->FileManager.FileClose();
 }
 
 void Descriptor_File_Syntax_Controller::Control_Keywords(){
@@ -103,12 +109,14 @@ void Descriptor_File_Syntax_Controller::Control_Keywords(){
          exit(0);
      };
 
+
      if(!this->Control_String_Inclusion(standard)){
 
         std::cout << "\n There is a syntax error on descriptor file";
 
         exit(0);
      };
+
 
      if(!this->Control_String_Inclusion(include_dir)){
 
@@ -124,7 +132,6 @@ void Descriptor_File_Syntax_Controller::Control_Keywords(){
 
         exit(0);
      };
-
 
 
      if(!this->Control_String_Inclusion(lib_files)){
@@ -170,85 +177,59 @@ void Descriptor_File_Syntax_Controller::Control_Braces(){
      }
 }
 
-bool Descriptor_File_Syntax_Controller::Control_String_Inclusion(char * search_word){
 
-    this->include_condition = false;
 
-    this->FileManager.FileOpen(Rf);
+bool Descriptor_File_Syntax_Controller::Control_String_Inclusion(std::string search_word){
 
-    do{
-          char * string_line = this->FileManager.ReadLine_as_Cstring();
+     this->include_condition = false;
 
-          this->Delete_Spaces_on_String(&string_line);
+     std::vector<std::string>::iterator it;
 
-          if(this->FileManager.Control_End_of_File()){
+     for(auto it=this->File_Index.begin();it<this->File_Index.end();it++){
 
-              break;
+         if(this->StringManager.CheckStringLine(*it)){
+
+            this->include_condition
+
+            = this->StringManager.CheckStringInclusion(*it,search_word);
+
+            if(this->include_condition){
+
+               break;
+            }
           }
-
-          if(this->StringManager.CheckStringLine(string_line)){
-
-             this->StringManager.ReceiveFileLine(string_line);
-
-             this->include_condition
-
-             = this->StringManager.CheckStringInclusion(this->StringManager.GetStringBuffer(),search_word);
-
-             if(this->include_condition){
-
-                break;
-             }
-          }
-
-    }while(!this->FileManager.Control_End_of_File());
-
-    this->FileManager.FileClose();
+     }
 
     return this->include_condition;
 }
 
 
-int Descriptor_File_Syntax_Controller::Determine_Repitation(char * search_word){
+int Descriptor_File_Syntax_Controller::Determine_Repitation(std::string search_word){
 
     this->repitation = 0;
 
-    this->FileManager.FileOpen(Rf);
+    for(auto it=this->File_Index.begin();it<this->File_Index.end();it++){
 
-    do{
-          char * string_line = this->FileManager.ReadLine_as_Cstring();
+        if(this->StringManager.CheckStringLine(*it)){
 
-          this->Delete_Spaces_on_String(&string_line);
+           this->include_condition
 
-          if(this->FileManager.Control_End_of_File()){
+           = this->StringManager.CheckStringInclusion(*it,search_word);
 
-              break;
-          }
+           if(this->include_condition){
 
-          if(this->StringManager.CheckStringLine(string_line)){
-
-             this->StringManager.ReceiveFileLine(string_line);
-
-             bool include_condition
-
-             = this->StringManager.CheckStringInclusion(this->StringManager.GetStringBuffer(),search_word);
-
-             if(include_condition){
-
-               this->repitation++;
-             }
-          }
-
-    }while(!this->FileManager.Control_End_of_File());
-
-    this->FileManager.FileClose();
+             this->repitation++;
+           }
+         }
+    }
 
     return this->repitation;
 }
 
 
-void Descriptor_File_Syntax_Controller::Delete_Spaces_on_String(char ** pointer){
+void Descriptor_File_Syntax_Controller::Delete_Spaces_on_String(std::string * pointer){
 
-     size_t string_size = strlen(*pointer);
+     size_t string_size = (*pointer).length();
 
      int remove_index = 0;
 

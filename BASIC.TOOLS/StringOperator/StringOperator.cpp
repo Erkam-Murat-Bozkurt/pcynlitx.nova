@@ -26,6 +26,8 @@ StringOperator::StringOperator(){
 
      this->StringBuffer = nullptr;
 
+     this->StringBuffer_Std_String = "";
+
      this->isBufferEmpty = false;
 
      this->Included_Word_Start_Position = 0;
@@ -70,6 +72,14 @@ void StringOperator::SetFilePath(char * TargetFilePath){
      this->Cpp_File_Manager.SetFilePath(TargetFilePath);
 }
 
+void StringOperator::SetFilePath(std::string TargetFilePath){
+
+     this->Memory_Delete_Condition = false;
+
+     this->Cpp_File_Manager.SetFilePath(TargetFilePath);
+}
+
+
 int StringOperator::GetBufferLength(){
 
     this->BufferLength = this->CharacterOperations.CharListLength(this->GetStringBuffer());
@@ -100,6 +110,100 @@ bool StringOperator::CheckStringLine(char * readedline){
 
      return this->isStringLine;
 }
+
+
+bool StringOperator::CheckStringLine(std::string readedline){
+
+     this->isStringLine = false;
+
+     bool isNewLine = false , isNull = false;
+
+     if(readedline[0] == '\n'){
+
+        isNewLine = true;
+     }
+
+     if(readedline[0] == '\0'){
+
+        isNull = true;
+     }
+
+     if((!isNewLine) && (!isNull)){
+
+          this->isStringLine = true;
+     }
+
+     return this->isStringLine;
+}
+
+
+void StringOperator::LoadStringBuffer_As_Std_String(std::string ReadLine){
+
+     this->StringBuffer_Std_String = ReadLine;
+
+     std::cout << "\n this->StringBuffer_Std_String:" << this->StringBuffer_Std_String << "#";
+
+     std::cin.get();
+}
+
+char * StringOperator::GetStringBuffer(){
+
+       return this->StringBuffer;
+}
+
+std::string StringOperator::GetStringBuffer_As_Std_String(){
+
+       return this->StringBuffer_Std_String;
+}
+
+void StringOperator::ClearStringBuffer(){
+
+     if(!this->isBufferEmpty){
+
+         if(this->StringBuffer != nullptr){
+
+            delete [] this->StringBuffer;
+
+            this->StringBuffer = nullptr;
+         }
+
+         this->isBufferEmpty = true;
+     }
+}
+
+void StringOperator::ReceiveFileLine(char * ReadLine){
+
+     int spaceCounter=0;
+
+     if(this->CheckStringLine(ReadLine)){
+
+         while(ReadLine[spaceCounter]== ' ') {   // This loop corp the spaceses in the same line the readed word ..
+
+               spaceCounter++;
+
+               if(spaceCounter>500){
+
+                  break;
+               }
+        };
+
+        this->LoadStringBuffer(ReadLine);
+    }
+    else{
+
+      this->ClearStringBuffer();
+
+      this->StringBuffer = new char [10];
+
+      this->isBufferEmpty = false;
+
+      for(int i=0;i<10;i++){
+
+         this->StringBuffer[i] = '\0';
+      }
+    }
+}
+
 
 void StringOperator::LoadStringBuffer(char * ReadLine){
 
@@ -164,29 +268,15 @@ void StringOperator::LoadStringBuffer(char * ReadLine){
      }
 }
 
-char * StringOperator::GetStringBuffer(){
-
-       return this->StringBuffer;
-}
-
-void StringOperator::ClearStringBuffer(){
-
-     if(!this->isBufferEmpty){
-
-         if(this->StringBuffer != nullptr){
-
-            delete [] this->StringBuffer;
-
-            this->StringBuffer = nullptr;
-         }
-
-         this->isBufferEmpty = true;
-     }
-}
-
-void StringOperator::ReceiveFileLine(char * ReadLine){
+void StringOperator::ReceiveFileLine_As_Std_String(std::string ReadLine){
 
      int spaceCounter=0;
+
+     std::cout << "\n Inside StringOperator::ReceiveFileLine_As_Std_String";
+
+     std::cout << "\n this->CheckStringLine(ReadLine):" << this->CheckStringLine(ReadLine);
+
+     std::cin.get();
 
      if(this->CheckStringLine(ReadLine)){
 
@@ -200,20 +290,15 @@ void StringOperator::ReceiveFileLine(char * ReadLine){
                }
         };
 
-        this->LoadStringBuffer(ReadLine);
+        this->LoadStringBuffer_As_Std_String(ReadLine);
     }
     else{
 
-      this->ClearStringBuffer();
 
-      this->StringBuffer = new char [10];
+        std::string empty_string = "";
 
-      this->isBufferEmpty = false;
+        this->LoadStringBuffer_As_Std_String(empty_string);
 
-      for(int i=0;i<10;i++){
-
-         this->StringBuffer[i] = '\0';
-      }
     }
 }
 
@@ -238,6 +323,54 @@ int StringOperator::FindNextWordLine(char * search_word,int startPoint){
                this->ReceiveFileLine(string_line);
 
                bool include_condition = this->CheckStringInclusion(this->GetStringBuffer(),search_word);
+
+               if(include_condition){
+
+                  break;
+               }
+               else{
+                     this->wordPosition++;
+               }
+            }
+            else{
+
+                this->wordPosition++;
+            }
+
+    }while(!this->Cpp_File_Manager.Control_End_of_File());
+
+    this->File_End_Condition = this->Cpp_File_Manager.Control_End_of_File();
+
+    this->Cpp_File_Manager.FileClose();
+
+    return this->wordPosition;
+}
+
+int StringOperator::FindNextWordLine(std::string search_word,int startPoint){
+
+    this->Cpp_File_Manager.FileOpen(Rf);
+
+    this->CharacterOperations.ForwardFilePointer(&this->Cpp_File_Manager,startPoint);
+
+    this->wordPosition = startPoint;
+
+    do{
+            std::string string_line = this->Cpp_File_Manager.ReadLine();
+
+            if(this->Cpp_File_Manager.Control_End_of_File()){
+
+               break;
+            }
+
+            if(this->CheckStringLine(string_line)){
+
+               this->ReceiveFileLine_As_Std_String(string_line);
+
+
+               bool include_condition
+
+                = this->CheckStringInclusion(this->GetStringBuffer_As_Std_String(),search_word);
+
 
                if(include_condition){
 
@@ -371,6 +504,28 @@ char * StringOperator::ReadFileLine(int lineNumber){
        return this->GetStringBuffer();
 }
 
+std::string StringOperator::ReadFileLine_As_Std_String(int lineNumber){
+
+       this->Cpp_File_Manager.FileOpen(Rf);
+
+       this->CharacterOperations.ForwardFilePointer(&this->Cpp_File_Manager,lineNumber);
+
+       std::string line = this->Cpp_File_Manager.ReadLine();
+
+       std::cout << "\n Inside StringOperator::ReadFileLine_As_Std_String";
+
+       std::cout << "\n line:" << line;
+
+       std::cin.get();
+
+       this->ReceiveFileLine_As_Std_String(line);
+
+       this->Cpp_File_Manager.FileClose();
+
+       return this->GetStringBuffer_As_Std_String();
+}
+
+
 bool StringOperator::CheckStringInclusion(char * StringLine,char * search_word){
 
      this->includeCondition = false;
@@ -380,6 +535,51 @@ bool StringOperator::CheckStringInclusion(char * StringLine,char * search_word){
      int stringSize = this->CharacterOperations.CharListLength(StringLine);
 
      int wordSize = this->CharacterOperations.CharListLength(search_word);
+
+     if(stringSize < wordSize){
+
+        this->includeCondition = false;
+
+        return this->includeCondition;
+     }
+
+     for(int i=0;i<stringSize;i++){
+
+         indexCounter = 0;
+
+         if(StringLine[i] == search_word[indexCounter]){
+
+            this->Included_Word_Start_Position = i;
+
+            while(StringLine[i] == search_word[indexCounter]){
+
+                  if(indexCounter == wordSize -1){
+
+                     this->includeCondition = true;
+
+                     return this->includeCondition;
+                  }
+
+                  i++;
+
+                  indexCounter++;
+            }
+         }
+      }
+
+      return this->includeCondition;
+}
+
+
+bool StringOperator::CheckStringInclusion(std::string StringLine, std::string search_word){
+
+     this->includeCondition = false;
+
+     int indexCounter = 0;
+
+     int stringSize = StringLine.length();
+
+     int wordSize = search_word.length();
 
      if(stringSize < wordSize){
 
