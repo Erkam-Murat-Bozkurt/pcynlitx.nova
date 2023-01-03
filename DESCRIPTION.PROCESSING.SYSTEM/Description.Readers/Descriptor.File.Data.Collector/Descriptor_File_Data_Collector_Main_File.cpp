@@ -21,15 +21,11 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Data_Collector Data_Collector;
+    Descriptor_File_Data_Collector Data_Collector(argv[1]);
 
-    Data_Collector.Collect_Descriptor_File_Data(argv[1]);
+    Data_Collector.Collect_Descriptor_File_Data();
 
     std::cout << "\n ----------------------------------------";
-    
-    Data_Collector.Print_Descriptor_File_Index();
-
-    std::cin.get();
 
     std::cout << "\n ROOT DIRECTORY LOCATION:";
 

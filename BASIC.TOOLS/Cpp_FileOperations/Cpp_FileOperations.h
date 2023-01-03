@@ -32,12 +32,9 @@
 class Cpp_FileOperations
 {
 public:
- Cpp_FileOperations();
- Cpp_FileOperations(const Cpp_FileOperations & orig);
+ Cpp_FileOperations(char * FilePATH);
+ Cpp_FileOperations(std::string FilePATH);
  virtual ~Cpp_FileOperations();
- void SetFilePath(std::string FilePATH);
- void SetFilePath(char * String);
- void SetFilePath(const char * String);
  void CpFile(char * path, char * target_path);
  void MoveFile_Win(char * path, char * target_path);  // Transfer file to another location in windows
  int  Delete_File(char * path);
@@ -64,6 +61,9 @@ public:
  bool TryOpen(char path);
  void Clear_Dynamic_Memory();
 private:
+ void Initialize_Members();
+ void SetFilePath(std::string FilePATH);
+ void SetFilePath(char * String);
  std::fstream DataFile;
  std::string String_Line;
  std::string string_word;

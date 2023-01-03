@@ -22,16 +22,20 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "CharOperator.h"
 
-CharOperator::CharOperator(){
+CharOperator::CharOperator(char * FilePath) : FileManager (FilePath){
 
    this->String_Buffer = nullptr;
 
    this->Memory_Delete_Condition = false;
 }
 
-CharOperator::CharOperator(const CharOperator &orig){
+CharOperator::CharOperator(std::string FilePath): FileManager (FilePath){
 
+   this->String_Buffer = nullptr;
+
+   this->Memory_Delete_Condition = false;
 }
+
 
 CharOperator::~CharOperator(){
 
@@ -46,11 +50,6 @@ void CharOperator::Clear_Dynamic_Memory(){
             delete [] this->String_Buffer;
          }
      }
-}
-
-void CharOperator::SetFilePath(const char * TargetFile){
-
-     this->FileManager.SetFilePath(TargetFile);
 }
 
 int CharOperator::DetermineTotalMethodNumber(){
@@ -70,7 +69,7 @@ int CharOperator::DetermineTotalMethodNumber(){
 
     for(int i=0;i<TheFileEND;i++){
 
-        pointer = this->Conver_Std_String_To_Char(this->FileManager.ReadLine());
+        pointer = this->Conver_Std_String_To_Char(this->FileManager.Read());
 
         condition = this->CharacterCheck(pointer,'(');
 
@@ -89,7 +88,7 @@ void CharOperator::ForwardFilePointer(Cpp_FileOperations * FileManager,int stepS
 
     for(int i=0;i<stepSize-1;i++){
 
-        FileManager->ReadLine();
+        FileManager->Read();
     }
 }
 
@@ -145,7 +144,7 @@ int CharOperator::FindTheSpecificWordLine(std::string word){
 
      while(true){
 
-           buffer = this->FileManager.ReadLine();
+           buffer = this->FileManager.Read();
 
            if(buffer != word){
 

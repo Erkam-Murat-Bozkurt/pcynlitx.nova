@@ -1,53 +1,82 @@
 
 #include "Descriptor_File_Data_Collector.hpp"
 
-Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(){
+Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(char * Descriptor_File_Path) :
 
-  for(int i=0;i<2;i++){
+  StringManager(Descriptor_File_Path), FileManager(Descriptor_File_Path)
+{
 
-      this->Library_Directories_Record_Area[i] = 0;
-      this->Library_Files_Record_Area[i] = 0;
-      this->Source_File_Directories_Record_Area[i] = 0;
-      this->Include_Directories_Record_Area[i] = 0;
-      this->Standard_Record_Area[i] = 0;
-      this->Options_Record_Area[i] = 0;
-      this->Warehouse_Location_Record_Area[i] = 0;
-      this->Root_Directory_Record_Area[i] = 0;
-  }
+   size_t path_size = strlen(Descriptor_File_Path);
 
-  this->Library_Directories_Record_Number = 0;
-  this->Source_File_Directories_Record_Number = 0;
-  this->Include_Directories_Record_Number = 0;
-  this->Memory_Delete_Condition = true;
+   this->Descriptor_File_Path = "";
 
-  this->Descriptor_File_Path = "";
+   for(size_t i=0;i<path_size;i++){
+
+       this->Descriptor_File_Path.append(1,Descriptor_File_Path[i]);
+   }
+
+   this->Initialize_Members();
+}
+
+
+Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(std::string Descriptor_File_Path) :
+
+  FileManager(Descriptor_File_Path), StringManager(Descriptor_File_Path)
+
+{
+   this->Initialize_Members();
+
+   this->Descriptor_File_Path = Descriptor_File_Path;
 
 }
 
 
 Descriptor_File_Data_Collector::~Descriptor_File_Data_Collector(){
 
-  if(!this->Memory_Delete_Condition){
+    if(!this->Memory_Delete_Condition){
 
-     this->Clear_Dynamic_Memory();
-  }
+       this->Clear_Dynamic_Memory();
+    }
 }
 
 
-void Descriptor_File_Data_Collector::Clear_Dynamic_Memory(){
+void Descriptor_File_Data_Collector::Initialize_Members(){
 
+     for(int i=0;i<2;i++){
+
+        this->Library_Directories_Record_Area[i] = 0;
+        this->Library_Files_Record_Area[i] = 0;
+        this->Source_File_Directories_Record_Area[i] = 0;
+        this->Include_Directories_Record_Area[i] = 0;
+        this->Standard_Record_Area[i] = 0;
+        this->Options_Record_Area[i] = 0;
+        this->Warehouse_Location_Record_Area[i] = 0;
+        this->Root_Directory_Record_Area[i] = 0;
+     }
+
+     this->Library_Directories_Record_Number = 0;
+     this->Source_File_Directories_Record_Number = 0;
+     this->Include_Directories_Record_Number = 0;
+     this->Memory_Delete_Condition = true;
+
+     this->Descriptor_File_Path = "";
+}
+
+void Descriptor_File_Data_Collector::Clear_Dynamic_Memory()
+{
      if(!this->Memory_Delete_Condition){
 
          this->Memory_Delete_Condition = true;
 
-         this->File_Index.clear();
+         if(!this->File_Index.empty()){
+
+           this->File_Index.clear();
+         }
      }
 }
 
 
-void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(std::string path){
-
-     this->Receive_Descriptor_File_Path(path);
+void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(){
 
      this->Receive_Descriptor_File_Index();
 
@@ -69,16 +98,6 @@ void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(std::string pa
 
      this->Determine_Options_Record_Area();
 }
-
-void Descriptor_File_Data_Collector::Receive_Descriptor_File_Path(std::string path){
-
-     this->Descriptor_File_Path = path;
-
-     this->StringManager.SetFilePath(this->Descriptor_File_Path);
-
-     this->FileManager.SetFilePath(this->Descriptor_File_Path);
-}
-
 
 
 void Descriptor_File_Data_Collector::Receive_Descriptor_File_Index(){

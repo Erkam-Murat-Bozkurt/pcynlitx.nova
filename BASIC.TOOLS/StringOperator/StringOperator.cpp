@@ -22,7 +22,32 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "StringOperator.h"
 
-StringOperator::StringOperator(){
+StringOperator::StringOperator(char * FilePATH) :
+
+   CharacterOperations(FilePATH), Cpp_File_Manager(FilePATH)
+{
+   this->Initialize_Members();
+}
+
+
+StringOperator::StringOperator(std::string FilePATH) :
+
+ CharacterOperations(FilePATH), Cpp_File_Manager(FilePATH)
+{
+   this->Initialize_Members();
+}
+
+StringOperator::~StringOperator(){
+
+    if(!this->Memory_Delete_Condition){
+
+        this->Clear_Dynamic_Memory();
+
+        this->Cpp_File_Manager.Clear_Dynamic_Memory();
+    }
+}
+
+void StringOperator::Initialize_Members(){
 
      this->StringBuffer = nullptr;
 
@@ -41,18 +66,6 @@ StringOperator::StringOperator(){
      this->Word_Count = 0;
 }
 
-StringOperator::StringOperator(const StringOperator & orig){}
-
-StringOperator::~StringOperator(){
-
-    if(!this->Memory_Delete_Condition){
-
-        this->Clear_Dynamic_Memory();
-
-        this->Cpp_File_Manager.Clear_Dynamic_Memory();
-    }
-}
-
 void StringOperator::Clear_Dynamic_Memory(){
 
      if(!this->Memory_Delete_Condition){
@@ -64,21 +77,6 @@ void StringOperator::Clear_Dynamic_Memory(){
          this->CharacterOperations.Clear_Dynamic_Memory();
      }
 }
-
-void StringOperator::SetFilePath(char * TargetFilePath){
-
-     this->Memory_Delete_Condition = false;
-
-     this->Cpp_File_Manager.SetFilePath(TargetFilePath);
-}
-
-void StringOperator::SetFilePath(std::string TargetFilePath){
-
-     this->Memory_Delete_Condition = false;
-
-     this->Cpp_File_Manager.SetFilePath(TargetFilePath);
-}
-
 
 int StringOperator::GetBufferLength(){
 
@@ -140,10 +138,6 @@ bool StringOperator::CheckStringLine(std::string readedline){
 void StringOperator::LoadStringBuffer_As_Std_String(std::string ReadLine){
 
      this->StringBuffer_Std_String = ReadLine;
-
-     std::cout << "\n this->StringBuffer_Std_String:" << this->StringBuffer_Std_String << "#";
-
-     std::cin.get();
 }
 
 char * StringOperator::GetStringBuffer(){
@@ -272,12 +266,6 @@ void StringOperator::ReceiveFileLine_As_Std_String(std::string ReadLine){
 
      int spaceCounter=0;
 
-     std::cout << "\n Inside StringOperator::ReceiveFileLine_As_Std_String";
-
-     std::cout << "\n this->CheckStringLine(ReadLine):" << this->CheckStringLine(ReadLine);
-
-     std::cin.get();
-
      if(this->CheckStringLine(ReadLine)){
 
          while(ReadLine[spaceCounter]== ' ') {   // This loop corp the spaceses in the same line the readed word ..
@@ -355,7 +343,7 @@ int StringOperator::FindNextWordLine(std::string search_word,int startPoint){
     this->wordPosition = startPoint;
 
     do{
-            std::string string_line = this->Cpp_File_Manager.ReadLine();
+            std::string string_line = this->Cpp_File_Manager.Read();
 
             if(this->Cpp_File_Manager.Control_End_of_File()){
 
@@ -511,12 +499,6 @@ std::string StringOperator::ReadFileLine_As_Std_String(int lineNumber){
        this->CharacterOperations.ForwardFilePointer(&this->Cpp_File_Manager,lineNumber);
 
        std::string line = this->Cpp_File_Manager.ReadLine();
-
-       std::cout << "\n Inside StringOperator::ReadFileLine_As_Std_String";
-
-       std::cout << "\n line:" << line;
-
-       std::cin.get();
 
        this->ReceiveFileLine_As_Std_String(line);
 

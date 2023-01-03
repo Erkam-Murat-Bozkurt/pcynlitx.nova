@@ -22,7 +22,36 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Cpp_FileOperations.h"
 
-Cpp_FileOperations::Cpp_FileOperations(){
+Cpp_FileOperations::Cpp_FileOperations(char * FilePATH){
+
+    this->Initialize_Members();
+
+    this->SetFilePath(FilePATH);
+
+   // Constructor Function for CString defined paths
+};
+
+Cpp_FileOperations::Cpp_FileOperations(std::string FilePATH){
+
+    this->Initialize_Members();
+
+    this->SetFilePath(FilePATH);
+
+   // Constructor Function for CString defined paths
+};
+
+
+Cpp_FileOperations::~Cpp_FileOperations(){
+
+     if(!this->Memory_Delete_Condition){
+
+        this->Clear_Dynamic_Memory();
+     }
+
+    // Destructor Function
+};
+
+void Cpp_FileOperations::Initialize_Members(){
 
      this->File_line_Number = 0;
 
@@ -40,29 +69,11 @@ Cpp_FileOperations::Cpp_FileOperations(){
 
      this->File_Index = nullptr;
 
-
      this->CString = nullptr;
 
      this->CString_FilePATH = nullptr;
 
-
-   // Constructor Function
-};
-
-Cpp_FileOperations::Cpp_FileOperations(const Cpp_FileOperations & orig){
-
-   // Copy Constructor
-};
-
-Cpp_FileOperations::~Cpp_FileOperations(){
-
-     if(!this->Memory_Delete_Condition){
-
-        this->Clear_Dynamic_Memory();
-     }
-
-    // Destructor Function
-};
+}
 
 void Cpp_FileOperations::Clear_Dynamic_Memory(){
 
@@ -134,20 +145,7 @@ void Cpp_FileOperations::SetFilePath(std::string FilePATH){
      }
 
      this->CString_FilePATH[index_counter] = '\0';
-}
 
-void Cpp_FileOperations::SetFilePath(const char * String){
-
-     this->isFilePathReceive = true;
-
-     this->FilePath = "";
-
-     size_t String_Size = strlen(String);
-
-     for(size_t i=0;i<String_Size;i++){
-
-         this->FilePath.append(1,String[i]);
-     }
 }
 
 void Cpp_FileOperations::SetFilePath(char * String){
@@ -322,8 +320,6 @@ void Cpp_FileOperations::WriteToFile(char * string_list){
 
 std::string Cpp_FileOperations::ReadLine(){
 
-     this->String_Line = "";
-
      if(std::getline(this->DataFile,this->String_Line)){
 
          this->End_Of_File_Condition = false;
@@ -340,7 +336,7 @@ std::string Cpp_FileOperations::ReadLine(){
 
 char * Cpp_FileOperations::ReadLine_as_Cstring(){;
 
-       this->ReadLine();
+       this->Read();
 
        return this->Convert_Std_String_To_Char(this->String_Line);
 }
@@ -399,7 +395,7 @@ std::string Cpp_FileOperations::Receive_File_As_std_string(char * path){
      this->FileOpen(Rf);
 
      do{
-             std::string string_line = this->ReadLine();
+             std::string string_line = this->Read();
 
              this->File_Content = this->File_Content + string_line;
 
@@ -456,7 +452,7 @@ void Cpp_FileOperations::Receive_File(char * path){
      do{
            std::string string_line = "";
 
-           string_line = this->ReadLine();
+           string_line = this->Read();
 
            size_t line_size = string_line.length();
 
@@ -486,7 +482,7 @@ void Cpp_FileOperations::Determine_Base_File_Size(char * path){
 
       do {
 
-          std::string string_line = this->ReadLine();
+          std::string string_line = this->Read();
 
           if(!this->Control_End_of_File()){
 

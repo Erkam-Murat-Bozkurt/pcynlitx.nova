@@ -19,10 +19,10 @@
 class Descriptor_File_Reader
 {
 public:
- Descriptor_File_Reader();
- Descriptor_File_Reader(const Descriptor_File_Reader & orig);
+ Descriptor_File_Reader(char * path);
+ Descriptor_File_Reader(std::string path);
  virtual ~Descriptor_File_Reader();
- void Read_Descriptor_File(char * path);
+ void Read_Descriptor_File();
  void Clear_Dynamic_Memory();
  std::string Get_Library_Directory(int i);
  std::string Get_Library_File(int i);
@@ -37,7 +37,7 @@ public:
  int Get_Source_File_Directory_Number();
  int Get_Include_Directory_Number();
 protected:
- void Receive_Descriptor_File_Path(char * path);
+ void Initialize_Members();
  void Read_Root_Directory_Location();
  void Read_Warehouse_Location();
  void Read_Standard();

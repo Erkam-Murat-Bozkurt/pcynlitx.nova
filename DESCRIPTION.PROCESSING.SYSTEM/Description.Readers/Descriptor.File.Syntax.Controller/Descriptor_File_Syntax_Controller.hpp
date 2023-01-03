@@ -21,9 +21,10 @@
 class Descriptor_File_Syntax_Controller
 {
 public:
- Descriptor_File_Syntax_Controller();
+ Descriptor_File_Syntax_Controller(char * path);
+ Descriptor_File_Syntax_Controller(std::string path);
  virtual ~Descriptor_File_Syntax_Controller();
- void Control_Descriptor_File_Syntax(std::string path);
+ void Control_Descriptor_File_Syntax();
  void Clear_Dynamic_Memory();
 protected:
  void Control_Keywords();
@@ -31,7 +32,6 @@ protected:
  bool Control_String_Inclusion(std::string search_word);
  int  Determine_Repitation(std::string search_word);
  void Delete_Spaces_on_String(std::string * pointer);
- void Receive_Descriptor_File_Path(std::string path);
  void Receive_Descriptor_File_Index();
  std::vector<std::string> File_Index;
  StringOperator StringManager;

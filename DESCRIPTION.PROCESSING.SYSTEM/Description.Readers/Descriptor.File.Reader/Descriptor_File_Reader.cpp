@@ -1,19 +1,42 @@
 
 #include "Descriptor_File_Reader.hpp"
 
-Descriptor_File_Reader::Descriptor_File_Reader(){
+Descriptor_File_Reader::Descriptor_File_Reader(char * FilePATH) :
 
-    this->root_dir  = "";
-    this->standard  = "";
-    this->options   = "";
-    this->warehouse_location   = "";
-    this->descriptor_file_path = "";
-    this->include_dir_num     = 0;
-    this->source_file_dir_num = 0;
-    this->lib_dir_num         = 0;
-    this->lib_file_num        = 0;
-    this->Memory_Delete_Condition = true;
+  Syntax_Controller(FilePATH), Data_Collector(FilePATH),
+  StringManager(FilePATH),     FileManager(FilePATH)
 
+{
+   this->Initialize_Members();
+
+   size_t path_size = strlen(FilePATH);
+
+   this->descriptor_file_path = "";
+
+   for(size_t i=0;i<path_size;i++){
+
+       this->descriptor_file_path.append(1,FilePATH[i]);
+   }
+
+   this->Syntax_Controller.Control_Descriptor_File_Syntax();
+
+   this->Data_Collector.Collect_Descriptor_File_Data();
+}
+
+
+Descriptor_File_Reader::Descriptor_File_Reader(std::string FilePATH) :
+
+  Syntax_Controller(FilePATH), Data_Collector(FilePATH),
+  StringManager(FilePATH),     FileManager(FilePATH)
+{
+
+   this->Initialize_Members();
+
+   this->descriptor_file_path = FilePATH;
+
+   this->Syntax_Controller.Control_Descriptor_File_Syntax();
+
+   this->Data_Collector.Collect_Descriptor_File_Data();
 }
 
 
@@ -24,6 +47,21 @@ Descriptor_File_Reader::~Descriptor_File_Reader(){
         this->Clear_Dynamic_Memory();
     }
 }
+
+void Descriptor_File_Reader::Initialize_Members(){
+
+     this->root_dir  = "";
+     this->standard  = "";
+     this->options   = "";
+     this->warehouse_location   = "";
+     this->descriptor_file_path = "";
+     this->include_dir_num     = 0;
+     this->source_file_dir_num = 0;
+     this->lib_dir_num         = 0;
+     this->lib_file_num        = 0;
+     this->Memory_Delete_Condition = true;
+}
+
 
 void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
@@ -63,9 +101,7 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
 
 
-void Descriptor_File_Reader::Read_Descriptor_File(char * path){
-
-     this->Receive_Descriptor_File_Path(path);
+void Descriptor_File_Reader::Read_Descriptor_File(){
 
      this->Read_Root_Directory_Location();
 
@@ -83,29 +119,6 @@ void Descriptor_File_Reader::Read_Descriptor_File(char * path){
 
      this->Read_Options();
 }
-
-
-
-void Descriptor_File_Reader::Receive_Descriptor_File_Path(char * path){
-
-     size_t path_size = strlen(path);
-
-     this->descriptor_file_path = "";
-
-     for(size_t i=0;i<path_size;i++){
-
-         this->descriptor_file_path.append(1,path[i]);
-     }
-
-     this->StringManager.SetFilePath(this->descriptor_file_path);
-
-     this->Syntax_Controller.Control_Descriptor_File_Syntax(this->descriptor_file_path);
-
-     this->Data_Collector.Collect_Descriptor_File_Data(this->descriptor_file_path);
-
-}
-
-
 
 
 void Descriptor_File_Reader::Read_Root_Directory_Location(){

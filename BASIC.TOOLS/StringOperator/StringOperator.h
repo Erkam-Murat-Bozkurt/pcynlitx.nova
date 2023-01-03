@@ -10,12 +10,9 @@
 class StringOperator
 {
 public:
- StringOperator();
- StringOperator(const StringOperator & orig);
+ StringOperator(char * FilePATH);
+ StringOperator(std::string FilePATH);
  virtual ~StringOperator();
- void SetFilePath(const char * TargetFilePath);
- void SetFilePath(char * TargetFilePath);
- void SetFilePath(std::string TargetFilePath);
  void ReceiveFileLine(char * readline);
  void ReceiveFileLine_As_Std_String(std::string ReadLine);
  void LoadStringBuffer(char * readline);
@@ -38,6 +35,7 @@ public:
  std::string ReadFileLine_As_Std_String(int lineNumber);
  std::string GetStringBuffer_As_Std_String();
 private:
+ void Initialize_Members();
  CharOperator CharacterOperations;
  Cpp_FileOperations Cpp_File_Manager;
  int Word_Count;

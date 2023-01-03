@@ -20,9 +20,10 @@
 class Descriptor_File_Data_Collector
 {
 public:
- Descriptor_File_Data_Collector();
+ Descriptor_File_Data_Collector(char * FilePATH);
+ Descriptor_File_Data_Collector(std::string FilePATH);
  virtual ~Descriptor_File_Data_Collector();
- void Collect_Descriptor_File_Data(std::string path);
+ void Collect_Descriptor_File_Data();
  void Clear_Dynamic_Memory();
  int Get_Record_Directory_Record_Area(int index);
  int Get_Library_Directories_Record_Area(int index);
@@ -39,6 +40,7 @@ public:
  std::string Get_Descriptor_File_Line(int line_number);
  void Print_Descriptor_File_Index();
 protected:
+ void Initialize_Members();
  int  FindStringPoint(std::string search_word,int startPoint);
  void Receive_Descriptor_File_Index();
  void Determine_Descriptor_File_Size();
@@ -55,9 +57,8 @@ protected:
  void Determine_Warehouse_Location_Record_Area();
  void Determine_Root_Directory_Record_Area();
  void Delete_Spaces_on_String(std::string * pointer);
- Cpp_FileOperations FileManager;
  StringOperator StringManager;
- CharOperator CharacterOperations;
+ Cpp_FileOperations FileManager;
  std::string Descriptor_File_Path;
  std::vector<std::string> File_Index;
  int wordPosition;

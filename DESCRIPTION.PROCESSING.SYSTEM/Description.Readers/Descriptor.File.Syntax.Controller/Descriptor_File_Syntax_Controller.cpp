@@ -2,20 +2,30 @@
 
 #include "Descriptor_File_Syntax_Controller.hpp"
 
-Descriptor_File_Syntax_Controller::Descriptor_File_Syntax_Controller(){
+Descriptor_File_Syntax_Controller::Descriptor_File_Syntax_Controller(char * path) :
 
-  this->Memory_Delete_Condition = true;
+  StringManager(path), FileManager(path)
+{
 
-  this->Descriptor_File_Path = "";
+   this->Memory_Delete_Condition = false;
+
+}
+
+Descriptor_File_Syntax_Controller::Descriptor_File_Syntax_Controller(std::string path) :
+
+  StringManager(path), FileManager(path)
+{
+
+  this->Memory_Delete_Condition = false;
 
 }
 
 Descriptor_File_Syntax_Controller::~Descriptor_File_Syntax_Controller(){
 
-  if(!this->Memory_Delete_Condition){
+    if(!this->Memory_Delete_Condition){
 
-     this->Clear_Dynamic_Memory();
-  }
+       this->Clear_Dynamic_Memory();
+    }
 }
 
 
@@ -25,14 +35,13 @@ void Descriptor_File_Syntax_Controller::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         this->Descriptor_File_Path = "";
+         this->StringManager.Clear_Dynamic_Memory();
+
+         this->FileManager.Clear_Dynamic_Memory();
      }
 }
 
-
-void Descriptor_File_Syntax_Controller::Control_Descriptor_File_Syntax(std::string path){
-
-     this->Receive_Descriptor_File_Path(path);
+void Descriptor_File_Syntax_Controller::Control_Descriptor_File_Syntax(){
 
      this->Receive_Descriptor_File_Index();
 
@@ -41,29 +50,16 @@ void Descriptor_File_Syntax_Controller::Control_Descriptor_File_Syntax(std::stri
      this->Control_Braces();
 }
 
-void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Path(std::string path){
-
-     this->Descriptor_File_Path = path;
-
-     this->StringManager.SetFilePath(this->Descriptor_File_Path);
-
-     this->FileManager.SetFilePath(this->Descriptor_File_Path);
-}
-
 
 void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Index(){
 
      this->FileManager.FileOpen(Rf);
 
      do{
-          std::string string_line = this->FileManager.ReadLine();
+
+          std::string string_line = this->FileManager.Read();
 
           this->Delete_Spaces_on_String(&string_line);
-
-          if(this->FileManager.Control_End_of_File()){
-
-             break;
-          }
 
           if(this->StringManager.CheckStringLine(string_line)){
 

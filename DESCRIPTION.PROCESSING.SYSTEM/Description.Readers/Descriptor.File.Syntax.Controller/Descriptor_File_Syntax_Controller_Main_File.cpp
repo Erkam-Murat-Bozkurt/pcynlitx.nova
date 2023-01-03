@@ -23,9 +23,9 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Syntax_Controller Syntax_Controller;
+    Descriptor_File_Syntax_Controller Syntax_Controller(argv[1]);
 
-    Syntax_Controller.Control_Descriptor_File_Syntax(argv[1]);
+    Syntax_Controller.Control_Descriptor_File_Syntax();
 
     std::cout << "\n There is no any syntax error.";
 
