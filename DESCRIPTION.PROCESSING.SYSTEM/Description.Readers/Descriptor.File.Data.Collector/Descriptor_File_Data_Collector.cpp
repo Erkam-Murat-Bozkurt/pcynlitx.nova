@@ -80,8 +80,6 @@ void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(){
 
      this->Receive_Descriptor_File_Index();
 
-     this->Determine_Descriptor_File_Size();
-
      this->Determine_Root_Directory_Record_Area();
 
      this->Determine_Warehouse_Location_Record_Area();
@@ -104,6 +102,8 @@ void Descriptor_File_Data_Collector::Receive_Descriptor_File_Index(){
 
      this->FileManager.FileOpen(Rf);
 
+     this->File_Size = 0;
+
      int index = 0;
 
      do{
@@ -113,22 +113,11 @@ void Descriptor_File_Data_Collector::Receive_Descriptor_File_Index(){
 
           this->File_Index.push_back(string_line);
 
+          this->File_Size++;
+
       }while(!this->FileManager.Control_End_of_File());
 
       this->FileManager.FileClose();
-}
-
-
-void Descriptor_File_Data_Collector::Determine_Descriptor_File_Size(){
-
-     this->File_Size = 0;
-
-     std::vector<std::string>::iterator it;
-
-     for(auto it=this->File_Index.begin();it<this->File_Index.end();it++){
-
-         this->File_Size++;
-     }
 }
 
 
@@ -388,25 +377,27 @@ void Descriptor_File_Data_Collector::Delete_Spaces_on_String(std::string * point
 
      for(size_t j=0;j<string_size;j++){
 
-     for(size_t i=0;i<string_size;i++){
+        for(size_t i=0;i<string_size;i++){
 
-         if((((*pointer)[i] == ' ') || (((*pointer)[i] == '\t')))) {
+           if((((*pointer)[i] == ' ') || (((*pointer)[i] == '\t')))) {
 
-            for(size_t k=i;k<string_size-1;k++){
+              for(size_t k=i;k<string_size-1;k++){
 
-               (*pointer)[k] = (*pointer)[k+1];
+                 (*pointer)[k] = (*pointer)[k+1];
+              }
+
+              remove_index++;
             }
-
-            remove_index++;
-         }
+        }
      }
 
+
+     for(size_t i=0;i<remove_index+1;i++){
+
+         (*pointer).pop_back();
      }
 
-     for(size_t i=string_size- remove_index;i<string_size;i++){
 
-         (*pointer)[string_size - remove_index] = '\0';
-     }
 }
 
 

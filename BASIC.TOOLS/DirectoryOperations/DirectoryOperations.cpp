@@ -23,7 +23,34 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 #include "DirectoryOperations.h"
 #include <iostream>
 
-DirectoryOperations::DirectoryOperations(){
+DirectoryOperations::DirectoryOperations(char * DesPath) :
+
+CString_Operator(DesPath)
+
+{
+    this->Initialize_Mermbers();
+};
+
+
+DirectoryOperations::DirectoryOperations(std::string DesPath) :
+
+CString_Operator(DesPath)
+
+{
+    this->Initialize_Mermbers();
+};
+
+
+DirectoryOperations::~DirectoryOperations()
+{
+     if(!this->Memory_Delete_Condition){
+
+        this->Clear_Dynamic_Memory();
+     }
+};
+
+
+void DirectoryOperations::Initialize_Mermbers(){
 
      this->CurrentDirectory = nullptr;
 
@@ -42,19 +69,7 @@ DirectoryOperations::DirectoryOperations(){
      this->ReturnCondition = 0;
 
      this->File_Number = 0;
-};
-
-DirectoryOperations::DirectoryOperations(const DirectoryOperations & orig){
-
-};
-
-DirectoryOperations::~DirectoryOperations(){
-
-     if(!this->Memory_Delete_Condition){
-
-        this->Clear_Dynamic_Memory();
-     }
-};
+}
 
 void DirectoryOperations::Clear_Dynamic_Memory(){
 

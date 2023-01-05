@@ -22,6 +22,13 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Cpp_FileOperations.h"
 
+Cpp_FileOperations::Cpp_FileOperations(){
+
+    this->Initialize_Members();
+  
+   // Constructor Function for CString defined paths
+};
+
 Cpp_FileOperations::Cpp_FileOperations(char * FilePATH){
 
     this->Initialize_Members();
@@ -319,6 +326,8 @@ void Cpp_FileOperations::WriteToFile(char * string_list){
 }
 
 std::string Cpp_FileOperations::ReadLine(){
+
+     this->String_Line = "";
 
      if(std::getline(this->DataFile,this->String_Line)){
 

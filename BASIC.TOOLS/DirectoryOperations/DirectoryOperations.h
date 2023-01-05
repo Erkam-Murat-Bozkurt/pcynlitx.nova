@@ -21,8 +21,8 @@
 class DirectoryOperations
 {
 public:
- DirectoryOperations();
- DirectoryOperations(const DirectoryOperations & orig);
+ DirectoryOperations(char * DesPath);
+ DirectoryOperations(std::string DesPath);
  virtual ~DirectoryOperations();
  void LoadSystemFunctionCommand(char * command,char * DirectoryName);
  void RecordCurrentDirectoryPATH();
@@ -50,6 +50,7 @@ public:
  std::string * Get_File_List_In_Directory();
  int  Get_File_Number_In_Directory();
 private:
+ void Initialize_Mermbers();
  void   Place_String(char ** Pointer, char * String, int String_Size);
  void   Place_Information(char ** Pointer, const char * Information, int * index_counter);
  void   Place_Information(char ** Pointer, char * Information, int * index_counter);

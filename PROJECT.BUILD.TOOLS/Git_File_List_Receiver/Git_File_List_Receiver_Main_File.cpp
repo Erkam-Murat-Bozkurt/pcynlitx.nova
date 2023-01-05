@@ -22,14 +22,8 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_Reader;
-
-    Des_Reader.Read_Descriptor_File(argv[1]);
-
-    Git_File_List_Receiver Receiver;
-
-    Receiver.Receive_Descriptor_File_Reader(&Des_Reader);
-
+    Git_File_List_Receiver Receiver(argv[1]);
+    
     Receiver.Determine_Git_Repo_Info();
 
     int index_size = Receiver.Get_Git_File_Index_Size();

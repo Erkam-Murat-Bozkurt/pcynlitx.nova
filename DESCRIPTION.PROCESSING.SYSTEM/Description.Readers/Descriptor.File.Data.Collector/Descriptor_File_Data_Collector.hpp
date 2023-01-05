@@ -43,7 +43,6 @@ protected:
  void Initialize_Members();
  int  FindStringPoint(std::string search_word,int startPoint);
  void Receive_Descriptor_File_Index();
- void Determine_Descriptor_File_Size();
  void Receive_Descriptor_File_Path(std::string path);
  void Determine_Standard_Record_Area();
  void Read_File_Content();
