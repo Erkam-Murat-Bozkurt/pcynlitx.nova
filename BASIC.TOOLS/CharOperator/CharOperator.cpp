@@ -22,7 +22,14 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "CharOperator.h"
 
-CharOperator::CharOperator(char * FilePath) : FileManager (FilePath){
+CharOperator::CharOperator(){
+
+   this->String_Buffer = nullptr;
+
+   this->Memory_Delete_Condition = false;
+}
+
+CharOperator::CharOperator(char * FilePath) : FileManager (FilePath) {
 
    this->String_Buffer = nullptr;
 

@@ -12,6 +12,7 @@
 class CharOperator
 {
 public:
+  CharOperator();
   CharOperator(char * FilePATH);
   CharOperator(std::string FilePATH);
   virtual ~CharOperator();

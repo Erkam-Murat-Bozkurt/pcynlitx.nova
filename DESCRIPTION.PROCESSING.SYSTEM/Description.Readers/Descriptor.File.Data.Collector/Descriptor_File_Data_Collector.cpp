@@ -369,8 +369,8 @@ int Descriptor_File_Data_Collector::FindStringPoint(std::string search_word,int 
 }
 
 
-void Descriptor_File_Data_Collector::Delete_Spaces_on_String(std::string * pointer){
-
+void Descriptor_File_Data_Collector::Delete_Spaces_on_String(std::string * pointer)
+{
      size_t string_size = (*pointer).length();
 
      int remove_index = 0;
@@ -391,13 +391,10 @@ void Descriptor_File_Data_Collector::Delete_Spaces_on_String(std::string * point
         }
      }
 
-
      for(size_t i=0;i<remove_index+1;i++){
 
          (*pointer).pop_back();
      }
-
-
 }
 
 

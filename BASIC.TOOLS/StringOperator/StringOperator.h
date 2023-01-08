@@ -10,6 +10,7 @@
 class StringOperator
 {
 public:
+ StringOperator();
  StringOperator(char * FilePATH);
  StringOperator(std::string FilePATH);
  virtual ~StringOperator();

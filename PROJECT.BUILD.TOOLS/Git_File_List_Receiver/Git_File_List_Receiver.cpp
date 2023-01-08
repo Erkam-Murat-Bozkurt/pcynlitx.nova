@@ -91,7 +91,6 @@ void Git_File_List_Receiver::Determine_Git_File_List_Path(){
 
      this->git_file_list_path = "";
 
-     int index = 0;
 
      for(size_t i=0;i<warehouse_path_size;i++){
 

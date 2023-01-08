@@ -22,6 +22,13 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "StringOperator.h"
 
+
+StringOperator::StringOperator()
+{
+   this->Initialize_Members();
+}
+
+
 StringOperator::StringOperator(char * FilePATH) :
 
    CharacterOperations(FilePATH), Cpp_File_Manager(FilePATH)

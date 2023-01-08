@@ -18,21 +18,20 @@ int main(int argc, char ** argv){
 
        exit(0);
     }
+    
 
+    std::string file_path = "";
 
-    Descriptor_File_Reader Des_Reader;
+    size_t path_size = strlen(argv[2]);
 
-    Des_Reader.Read_Descriptor_File(argv[1]);
+    for(size_t i=0;i<path_size;i++){
 
-    Git_File_List_Receiver Git_Receiver;
+         file_path.append(1,argv[2][i]);
+    }
 
-    Git_Receiver.Receive_Descriptor_File_Reader(&Des_Reader);
+    Source_File_Data_Collector Data_Collector(argv[1],'w');
 
-    Git_Receiver.Determine_Git_Repo_Info();
-
-    Source_File_Data_Collector Data_Collector;
-
-    Data_Collector.Receive_Source_File_Data(&Git_Receiver,argv[2]);
+    Data_Collector.Receive_Source_File_Data(file_path);
 
     int Header_File_Number = Data_Collector.Get_Included_File_Number();
 
@@ -65,5 +64,3 @@ int main(int argc, char ** argv){
 
     return 0;
 }
-
-// The Function that places the location Informations listed in below
