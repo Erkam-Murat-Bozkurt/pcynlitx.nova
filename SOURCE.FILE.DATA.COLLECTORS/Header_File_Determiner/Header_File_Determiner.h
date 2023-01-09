@@ -21,10 +21,8 @@
 class Header_File_Determiner
 {
 public:
- Header_File_Determiner();
- Header_File_Determiner(const Header_File_Determiner & orig);
+ Header_File_Determiner(char * DesPath, char opr_sis);
  virtual ~Header_File_Determiner();
- void Receive_Git_Data(Git_File_List_Receiver * pointer);
  bool Is_Header(char * file_path);
  bool Include_Decleration_Test(char * string);
  bool Is_this_an_include_decleration(char * string_line);
@@ -40,25 +38,24 @@ public:
  bool CompareString(char * firstString,char * secondString);
  void Construct_Temporary_String(char ** tmp_string, char * string);
  void Delete_Spaces_on_String(char ** pointer);
- char * Get_Header_Directory();
- char * Get_Header_File_System_Path();
- char * Get_Header_File_Name_Without_Ext();
- char * Get_Header_File_Name_With_Ext();
+ std::string Get_Header_Directory();
+ std::string Get_Header_File_System_Path();
+ std::string Get_Header_File_Name_Without_Ext();
+ std::string Get_Header_File_Name_With_Ext();
  void Clear_Dynamic_Memory();
 protected:
  void Read_File(char * path);
  void Clear_Pointer_Memory(char ** pointer);
  StringOperator StringManager;
  Cpp_FileOperations FileManager;
- Git_File_List_Receiver * Git_Receiver_Pointer;
- char *  Header_File_Directory;
- char *  Header_File_Name;
- char *  Header_File_Name_With_Extention;
- char *  Header_File_System_Path;
- char *  Repo_Dir;
+ Git_File_List_Receiver Git_Receiver;
+ std::string  Header_File_Directory;
+ std::string  Header_File_Name;
+ std::string  Header_File_Name_With_Extention;
+ std::string  Header_File_System_Path;
+ std::string  Repo_Dir;
  bool is_header_file;
  int  git_record_size;
- int File_Content_Size;
  bool Memory_Delete_Condition;
  bool isStringsEqual;
  bool include_decleration_cond;

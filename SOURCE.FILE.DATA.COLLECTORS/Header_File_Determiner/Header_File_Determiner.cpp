@@ -1,33 +1,32 @@
 
 #include "Header_File_Determiner.h"
 
-Header_File_Determiner::Header_File_Determiner(){
+Header_File_Determiner::Header_File_Determiner(char * DesPath, char * opr_sis) :
 
-    this->is_header_file = false;
+     Git_Receiver(DesPath)
+{
 
-    this->Header_File_Directory = nullptr;
+    this->git_record_size = this->Git_Receiver.Get_Git_File_Index_Size();
 
-    this->Header_File_Name = nullptr;
+    this->Repo_Dir        = this->Git_Receiver.Get_Git_Repo_Directory();
 
-    this->Header_File_System_Path = nullptr;
+    this->operating_sis = opr_sis;
 
-    this->Git_Receiver_Pointer = nullptr;
+    this->Header_File_Directory   = "";
 
-    this->File_Content_Size = 0;
+    this->Header_File_Name        = "";
+
+    this->Header_File_System_Path = "";
+
+    this->Header_File_Name_With_Extention = "";
+
+    this->Memory_Delete_Condition  = true;
 
     this->include_decleration_cond = false;
 
-    this->Repo_Dir = nullptr;
-
-    this->Header_File_Name_With_Extention = nullptr;
-
-    this->Memory_Delete_Condition = true;
+    this->is_header_file = false;
 }
 
-Header_File_Determiner::Header_File_Determiner(const Header_File_Determiner & orig){
-
-
-}
 
 Header_File_Determiner::~Header_File_Determiner(){
 
@@ -43,34 +42,21 @@ void Header_File_Determiner::Clear_Dynamic_Memory(){
 
         this->Memory_Delete_Condition = true;
 
-        this->Clear_Pointer_Memory(&this->Header_File_Directory);
 
-        this->Clear_Pointer_Memory(&this->Header_File_Name);
-
-        this->Clear_Pointer_Memory(&this->Header_File_System_Path);
      }
 }
 
-void Header_File_Determiner::Receive_Git_Data(Git_File_List_Receiver * pointer){
-
-     this->Git_Receiver_Pointer = pointer;
-
-     this->git_record_size = this->Git_Receiver_Pointer->Get_Git_File_Index_Size();
-
-     this->Repo_Dir = this->Git_Receiver_Pointer->Get_Git_Repo_Directory();
-}
-
-bool Header_File_Determiner::Is_this_file_included_on_anywhere(char * file_path){
+bool Header_File_Determiner::Is_this_file_included_on_anywhere(std::string file_path){
 
      this->Is_this_file_included_on_somewhere = false;
 
      for(int i=0;i<this->git_record_size-1;i++){
 
-         char * git_record_path = this->Git_Receiver_Pointer->Get_Git_File_Index(i);
+         std::string git_record_path = this->Git_Receiver_Pointer->Get_Git_File_Index(i);
 
-         char * record_sys_path = nullptr;
+         std::string record_sys_path = nullptr;
 
-         this->Determine_Git_Record_File_System_Path(git_record_path,&record_sys_path,'w');
+         this->Determine_Git_Record_File_System_Path(&record_sys_path,git_record_path);
 
          bool is_path_exist = this->FileManager.Is_Path_Exist(record_sys_path);
 
@@ -460,16 +446,6 @@ void Header_File_Determiner::Determine_Header_File_System_Path(char * repo_dir,
 
 
 
-void Header_File_Determiner::Clear_Pointer_Memory(char ** pointer){
-
-     if(*pointer != nullptr){
-
-       delete [] *pointer;
-
-       *pointer = nullptr;
-     }
-}
-
 void Header_File_Determiner::Construct_Temporary_String(char ** tmp_string, char * string){
 
      size_t string_size = strlen(string);
@@ -544,11 +520,13 @@ void Header_File_Determiner::Delete_Spaces_on_String(char ** pointer){
 }
 
 
-void Header_File_Determiner::Determine_Git_Record_File_System_Path(char * file_path, char ** sys_path,
+void Header_File_Determiner::Determine_Git_Record_File_System_Path(std::string * sys_path,
 
-     char operating_sis){
+     std::string file_path)
 
-     size_t repo_dir_size = strlen(this->Repo_Dir);
+     {
+
+     size_t repo_dir_size = this->Repo_Dir.length();
 
      size_t path_size = strlen(file_path);
 
@@ -609,22 +587,22 @@ void Header_File_Determiner::Determine_Git_Record_File_System_Path(char * file_p
       (*sys_path)[index] = '\0';
 }
 
-char * Header_File_Determiner::Get_Header_Directory(){
+std::string Header_File_Determiner::Get_Header_Directory(){
 
        return this->Header_File_Directory;
 }
 
-char * Header_File_Determiner::Get_Header_File_Name_Without_Ext(){
+std::string Header_File_Determiner::Get_Header_File_Name_Without_Ext(){
 
        return this->Header_File_Name;
 }
 
-char * Header_File_Determiner::Get_Header_File_Name_With_Ext(){
+std::string Header_File_Determiner::Get_Header_File_Name_With_Ext(){
 
        return this->Header_File_Name_With_Extention;
 }
 
-char * Header_File_Determiner::Get_Header_File_System_Path(){
+std::string Header_File_Determiner::Get_Header_File_System_Path(){
 
       return this->Header_File_System_Path;
 }

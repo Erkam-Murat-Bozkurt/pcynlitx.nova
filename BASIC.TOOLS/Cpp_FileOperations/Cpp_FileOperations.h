@@ -7,6 +7,7 @@
 #include <fstream>
 #include <string>
 #include <cstring>
+#include <vector>
 #include <windows.h>
 #include <tchar.h>
 #include <sys/stat.h>
@@ -20,7 +21,7 @@
 #define RWf  'x'     // Open the file for both reading and writing.
                      // The stream is positioned at the start of the file.
 
-#define RWCf   'b'    // Open the file for both reading and writing. If the file exists,
+#define RWCf 'b'     // Open the file for both reading and writing. If the file exists,
                       //  it is truncated to zero length.
                       // If the file does not exist, it is created.
 
@@ -39,29 +40,25 @@ public:
  void CpFile(char * path, char * target_path);
  void SetFilePath(std::string FilePATH);
  void SetFilePath(char * String);
- void MoveFile_Win(char * path, char * target_path);  // Transfer file to another location in windows
+ void MoveFile_Win(char * path, char * tr_path);  // Transfer file to another location in windows
  int  Delete_File(char * path);
  void FileOpen(char Open_Mode);
  void FileClose( );
  void WriteToFile(std::string string_list);
  void WriteToFile(const char * String);
  void WriteToFile(char * String);
- bool Control_End_of_File();
+ bool Control_Stop_Condition();
  std::string Read();
  std::string ReadLine();
- std::string Receive_File_As_std_string(char * path);
- int GetFileSize() const;
- char * GetFilePath();
- char * GetFileLine(int line_number); // in therms of cstring
- char * ReadLine_as_Cstring();
- void Determine_Base_File_Size(char * path);
- void Receive_File(char * path);
+ void Read_File(char * path);
+ void Read_File(std::string path);
  void Record_File(char * path); // It reads whole of file in therms of cstring
- void Read_File_as_CString(char * path);
- char * Convert_Std_String_To_Char(std::string string_line);
  bool Is_Path_Exist(char * path);
  bool Is_This_File_Empty(char * path);
  bool TryOpen(char path);
+ int  GetFileSize() const;
+ std::string GetFileLine(int lnbr);
+ void Printf();
  void Clear_Dynamic_Memory();
 private:
  void Initialize_Members();
@@ -69,18 +66,15 @@ private:
  std::string String_Line;
  std::string string_word;
  std::string FilePath;
- std::string File_Content;
  bool Memory_Delete_Condition;
  bool Is_File_Empty;
- char * CString;
- char * CString_FilePATH;
- char ** File_Index;
+ std::vector<std::string> File_Content;
+ char Open_Mode_Determiner;
  int  File_line_Number;
  int  Delete_Return_Status;
- char Open_Mode_Determiner;
  int  FileDeleteCondition;
  bool isFilePathReceive;
- bool End_Of_File_Condition;
+ bool Read_Stop_Condition;
  bool is_path_exist;
  bool file_open_status;
 };
