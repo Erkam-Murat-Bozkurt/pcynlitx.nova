@@ -36,7 +36,7 @@ int main(int argc, char ** argv){
 
     if(Is_Source_File){
 
-        Source_Determiner.Determine_Source_File_Name(argv[1],'w');
+        Source_Determiner.Determine_Source_File_Name(argv[1]);
 
         std::cout << "\n Source File Name:" << Source_Determiner.Get_Source_File_Name();
 

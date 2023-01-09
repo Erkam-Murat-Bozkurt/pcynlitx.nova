@@ -7,22 +7,16 @@ Source_File_Determiner::Source_File_Determiner(){
 
     this->Is_This_Source_File = false;
 
-    this->File_Content = nullptr;
+    this->Source_File_Name = "";
 
-    this->Source_File_Name = nullptr;
+    this->File_Name_Witout_Ext = "";
 
-    this->File_Name_Witout_Ext = nullptr;
-
-    this->Class_Function_Patern = nullptr;
+    this->Class_Function_Patern = "";
 
     this->Memory_Delete_Condition = true;
 
 }
 
-Source_File_Determiner::Source_File_Determiner(const Source_File_Determiner & orig){
-
-
-}
 
 Source_File_Determiner::~Source_File_Determiner(){
 
@@ -36,43 +30,13 @@ void Source_File_Determiner::Clear_Dynamic_Memory(){
 
      if(!this->Memory_Delete_Condition){
 
-          this->Memory_Delete_Condition = true;
+        this->Memory_Delete_Condition = true;
 
-          if(this->File_Content != nullptr){
+        if(!this->File_Content.empty()){
 
-             for(int i=0;i<this->File_Content_Size;i++){
-
-                 delete [] this->File_Content[i];
-
-                 this->File_Content[i] = nullptr;
-             }
-
-             delete [] this->File_Content;
-
-             this->File_Content = nullptr;
-          }
-
-          if(this->Source_File_Name != nullptr){
-
-             delete [] this->Source_File_Name;
-
-             this->Source_File_Name = nullptr;
-          }
-
-          if(this->File_Name_Witout_Ext != nullptr){
-
-             delete [] this->File_Name_Witout_Ext;
-
-             this->File_Name_Witout_Ext = nullptr;
-          }
-
-          if(this->Class_Function_Patern != nullptr){
-
-             delete [] this->Class_Function_Patern;
-
-             this->Class_Function_Patern = nullptr;
-          }
-       }
+           this->File_Content.clear();
+        }
+     }
 }
 
 bool Source_File_Determiner::Is_Source_File(char * file_path){
@@ -112,13 +76,13 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
 
     this->Is_This_Source_File = false;
 
-    this->Determine_File_Name_Without_Ext(file_path,'w');
+    this->Determine_File_Name_Without_Ext(file_path);
 
-    char * file_name = this->Get_File_Name_Witout_Ext();
+    std::string file_name = this->Get_File_Name_Witout_Ext();
 
     this->Determine_Class_Function_Pattern(file_name);
 
-    char * decleration_pattern = this->Get_Class_Function_Pattern();
+    std::string decleration_pattern = this->Get_Class_Function_Pattern();
 
     bool is_this_main_file = false;
 
@@ -164,25 +128,18 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
     return this->Is_This_Source_File;
 }
 
-void Source_File_Determiner::Read_File(char * path){
+void Source_File_Determiner::Read_File(std::string path){
 
-     if(this->File_Content != nullptr){
+     if(!this->File_Content.empty()){
 
-        for(int i=0;i<this->File_Content_Size;i++){
-
-            delete [] this->File_Content[i];
-
-            this->File_Content[i] = nullptr;
-        }
-
-        delete [] this->File_Content;
-
-        this->File_Content = nullptr;
+        this->File_Content.clear();
      }
 
      this->FileManager.SetFilePath(path);
 
      this->FileManager.FileOpen(Rf);
+
+     this->Memory_Delete_Condition = false;
 
      this->File_Content_Size = 0;
 
@@ -190,59 +147,20 @@ void Source_File_Determiner::Read_File(char * path){
 
             std::string file_line = this->FileManager.ReadLine();
 
+            this->File_Content.push_back(file_line);
+
             this->File_Content_Size++;
-
-     }while(!this->FileManager.Control_End_of_File());
-
-     this->FileManager.FileClose();
-
-     this->Memory_Delete_Condition = false;
-
-     this->File_Content = new char * [5*this->File_Content_Size];
-
-     for(int i=0;i<5*this->File_Content_Size;i++){
-
-         this->File_Content[i] = nullptr;
-     }
-
-     this->FileManager.FileOpen(Rf);
-
-     int index = 0;
-
-     do {
-
-          char * string_line = this->FileManager.ReadLine_as_Cstring();
-
-          size_t string_size = strlen(string_line);
-
-          this->Memory_Delete_Condition = false;
-
-          this->File_Content[index] = new char [5*string_size];
-
-          for(size_t i=0;i<string_size;i++){
-
-              this->File_Content[index][i] = string_line[i];
-          }
-
-          this->File_Content[index][string_size] ='\0';
-
-          index++;
 
      }while(!this->FileManager.Control_End_of_File());
 
      this->FileManager.FileClose();
 }
 
-void Source_File_Determiner::Determine_Source_File_Name(char * path, char operating_sis){
+void Source_File_Determiner::Determine_Source_File_Name(std::string path){
 
-     if(this->Source_File_Name != nullptr){
+     this->Source_File_Name = "";
 
-        delete [] this->Source_File_Name;
-
-        this->Source_File_Name = nullptr;
-     }
-
-     size_t file_path_size = strlen(path);
+     size_t file_path_size = path.length();
 
      size_t dir_size = file_path_size;
 
@@ -261,32 +179,19 @@ void Source_File_Determiner::Determine_Source_File_Name(char * path, char operat
 
      size_t file_name_size = file_path_size - dir_size;
 
-     this->Memory_Delete_Condition = false;
-
-     this->Source_File_Name = new char [5*file_name_size];
-
      int index = 0;
 
      for(size_t i=dir_size+1;i<file_path_size;i++){
 
-         this->Source_File_Name[index] = path[i];
-
-         index++;
+         this->Source_File_Name.append(1,path[i]);
      }
-
-     this->Source_File_Name[index] = '\0';
 }
 
-void Source_File_Determiner::Determine_File_Name_Without_Ext(char * path, char operating_sis){
+void Source_File_Determiner::Determine_File_Name_Without_Ext(std::string path){
 
-     if(this->File_Name_Witout_Ext != nullptr){
+     this->File_Name_Witout_Ext ="";
 
-        delete [] this->File_Name_Witout_Ext;
-
-        this->File_Name_Witout_Ext = nullptr;
-     }
-
-     size_t file_path_size = strlen(path);
+     size_t file_path_size = path.length();
 
      size_t dir_size = file_path_size;
 
@@ -304,7 +209,6 @@ void Source_File_Determiner::Determine_File_Name_Without_Ext(char * path, char o
               dir_size--;
         }
      }
-
 
      for(size_t i=file_path_size;i>0;i--){
 
@@ -325,8 +229,6 @@ void Source_File_Determiner::Determine_File_Name_Without_Ext(char * path, char o
 
      size_t file_name_size = 0;
 
-
-
      if(file_extention_start_point <= dir_size){
 
         file_name_size = file_path_size - dir_size; // It is the case in which the file does not have extenton
@@ -337,11 +239,7 @@ void Source_File_Determiner::Determine_File_Name_Without_Ext(char * path, char o
         file_name_size = file_extention_start_point - dir_size;
      }
 
-     this->Memory_Delete_Condition = false;
-
-     this->File_Name_Witout_Ext = new char [5*file_name_size];
-
-     int index = 0;
+     this->File_Name_Witout_Ext = "";
 
      size_t name_start_point = 0;
 
@@ -352,52 +250,27 @@ void Source_File_Determiner::Determine_File_Name_Without_Ext(char * path, char o
 
      for(size_t i=name_start_point;i<file_extention_start_point;i++){
 
-         this->File_Name_Witout_Ext[index] = path[i];
-
-         index++;
+         this->File_Name_Witout_Ext.append(1,path[i]);
      }
 
-     this->File_Name_Witout_Ext[index] = '\0';
+
 }
 
-void Source_File_Determiner::Determine_Class_Function_Pattern(char * file_name){
+void Source_File_Determiner::Determine_Class_Function_Pattern(std::string file_name)
+{
+     size_t file_name_size = file_name.length();
 
-     if(this->Class_Function_Patern != nullptr){
-
-        delete [] this->Class_Function_Patern;
-
-        this->Class_Function_Patern = nullptr;
-     }
-
-     size_t file_name_size = strlen(file_name);
-
-     this->Memory_Delete_Condition = false;
-
-     this->Class_Function_Patern = new char [5*file_name_size];
-
-     int index = 0;
+     this->Class_Function_Patern = "";
 
      for(size_t i=0;i<file_name_size;i++){
 
-         this->Class_Function_Patern[index] = file_name[i];
-
-         index++;
+         this->Class_Function_Patern.append(1,file_name[i]);
      }
-
-     this->Class_Function_Patern[index] = ':';
-
-     index++;
-
-     this->Class_Function_Patern[index] = ':';
-
-     index++;
-
-     this->Class_Function_Patern[index] = '\0';
 }
 
-void Source_File_Determiner::Delete_Spaces_on_String(char ** pointer){
+void Source_File_Determiner::Delete_Spaces_on_String(std::string * pointer){
 
-     size_t string_size = strlen(*pointer);
+     size_t string_size = pointer->length();
 
      int remove_index = 0;
 
@@ -414,20 +287,23 @@ void Source_File_Determiner::Delete_Spaces_on_String(char ** pointer){
          }
      }
 
-     (*pointer)[string_size - remove_index+1] = '\0';
+     for(int i=0;i<remove_index+1;i++){
+
+        pointer->pop_back();
+     }
 }
 
-char * Source_File_Determiner::Get_Source_File_Name(){
+std::string Source_File_Determiner::Get_Source_File_Name(){
 
        return this->Source_File_Name;
 }
 
-char * Source_File_Determiner::Get_File_Name_Witout_Ext(){
+std::string Source_File_Determiner::Get_File_Name_Witout_Ext(){
 
        return this->File_Name_Witout_Ext;
 }
 
-char * Source_File_Determiner::Get_Class_Function_Pattern(){
+std::string Source_File_Determiner::Get_Class_Function_Pattern(){
 
        return this->Class_Function_Patern;
 }
