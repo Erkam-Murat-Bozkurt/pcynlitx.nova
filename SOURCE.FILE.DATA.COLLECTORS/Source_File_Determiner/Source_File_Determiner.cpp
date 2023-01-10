@@ -151,7 +151,7 @@ void Source_File_Determiner::Read_File(std::string path){
 
             this->File_Content_Size++;
 
-     }while(!this->FileManager.Control_End_of_File());
+     }while(!this->FileManager.Control_Stop_Condition());
 
      this->FileManager.FileClose();
 }
@@ -252,8 +252,6 @@ void Source_File_Determiner::Determine_File_Name_Without_Ext(std::string path){
 
          this->File_Name_Witout_Ext.append(1,path[i]);
      }
-
-
 }
 
 void Source_File_Determiner::Determine_Class_Function_Pattern(std::string file_name)
@@ -274,22 +272,25 @@ void Source_File_Determiner::Delete_Spaces_on_String(std::string * pointer){
 
      int remove_index = 0;
 
-     for(size_t i=0;i<string_size;i++){
+     if(string_size>0){
 
-         if((*pointer)[i] == ' '){
+       for(size_t i=0;i<string_size;i++){
 
-            for(size_t k=i;k<string_size;k++){
+           if((*pointer)[i] == ' '){
 
-               (*pointer)[k] = (*pointer)[k+1];
-            }
+              for(size_t k=i;k<string_size;k++){
 
-            remove_index++;
-         }
-     }
+                 (*pointer)[k] = (*pointer)[k+1];
+              }
 
-     for(int i=0;i<remove_index+1;i++){
+              remove_index++;
+           }
+       }
 
-        pointer->pop_back();
+       for(int i=0;i<remove_index;i++){
+
+          pointer->pop_back();
+       }
      }
 }
 
