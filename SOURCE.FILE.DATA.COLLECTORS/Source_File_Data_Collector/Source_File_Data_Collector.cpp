@@ -40,6 +40,8 @@ void Source_File_Data_Collector::Receive_Source_File_Data(std::string file_path)
 
      this->Git_Repo_Dir    = this->Git_Receiver.Get_Git_Repo_Directory();
 
+     this->FilePATH = file_path;
+
      this->Read_File(file_path);
 
      this->Determine_Include_Line_Number();
@@ -70,7 +72,7 @@ void Source_File_Data_Collector::Read_File(std::string path){
 
             this->File_Content_Size++;
 
-     }while(!this->FileManager.Control_End_of_File());
+     }while(!this->FileManager.Control_Stop_Condition());
 
      this->FileManager.FileClose();
 }
@@ -133,11 +135,26 @@ void Source_File_Data_Collector::Receive_Include_File_Names(){
             char_before_sharp = true;
          }
 
+
          if(!char_before_sharp){ // In metaprograms, #include key is used on the inside code
 
              if(is_include_line_db){
 
                 bool syntax_error_cond = this->Control_Include_Syntax(this->File_Content[i]);
+
+
+                if(syntax_error_cond){
+
+                   std::cout << "\n There is a syntax error on the header file declerations";
+
+                   std::cout << "\n which is performed on the source file path:\n";
+
+                   std::cout << "\n " << this->FilePATH;
+
+                   std::cout << "\n\n";
+
+                   exit(EXIT_FAILURE);
+                }
 
                 if(!syntax_error_cond){
 
@@ -149,20 +166,22 @@ void Source_File_Data_Collector::Receive_Include_File_Names(){
 
                           this->File_Content[i]);
 
-
                     // Determination of the header file directory
 
                     this->Determine_Git_Record_Header_File_Path(&(Data.Include_File_Git_Record_Path),
 
                            Data.Include_File_Name);
 
+
                     this->Determine_Git_Record_Header_File_Directory(&(Data.Include_File_Git_Record_Dir),
 
                            Data.Include_File_Git_Record_Path);
 
+
                     this->Determine_Header_File_Directory(&(Data.Include_File_Directory),
 
                             Data.Include_File_Git_Record_Path);
+
 
                     Data.Include_File_Number++;
 
@@ -485,22 +504,25 @@ void Source_File_Data_Collector::Delete_Spaces_on_String(std::string * pointer)
 
      int remove_index = 0;
 
-     for(size_t i=0;i<string_size;i++){
+     if(string_size>0){
 
-         if((*pointer)[i] == ' '){
+        for(size_t i=0;i<string_size;i++){
 
-            for(size_t k=i;k<string_size;k++){
+            if((*pointer)[i] == ' '){
 
-               (*pointer)[k] = (*pointer)[k+1];
+                for(size_t k=i;k<string_size;k++){
+
+                   (*pointer)[k] = (*pointer)[k+1];
+                }
+
+                remove_index++;
             }
+        }
 
-            remove_index++;
-         }
-     }
+        for(size_t i=0;i<remove_index;i++){
 
-     for(size_t i=0;i<remove_index+1;i++){
-
-        (*pointer).pop_back();
+            (*pointer).pop_back();
+        }
      }
 }
 
@@ -550,7 +572,6 @@ bool Source_File_Data_Collector::Control_Include_Syntax(std::string string){
      bool include_double_quotation_mark = this->Character_Inclusion_Check(string,'\"');
 
      bool include_start_cond = include_double_quotation_mark;
-
 
      if(!include_start_cond){
 

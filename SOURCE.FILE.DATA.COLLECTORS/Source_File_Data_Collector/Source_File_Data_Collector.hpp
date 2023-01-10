@@ -92,6 +92,7 @@ protected:
  bool isStringsEqual;
  bool Character_Inclusion_Status;
  std::string Git_Repo_Dir;
+ std::string FilePATH;
  std::vector<std::string> File_Content;
  std::vector<Include_File_Data> Head_Data;
  int File_Content_Size;

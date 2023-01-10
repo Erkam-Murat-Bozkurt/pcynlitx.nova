@@ -173,7 +173,7 @@ void Git_File_List_Receiver::Read_Repo_List_File(){
 
           this->File_Line_Number++;
 
-     }while(!this->FileManager.Control_End_of_File());
+     }while(!this->FileManager.Control_Stop_Condition());
 
      this->FileManager.FileClose();
 
