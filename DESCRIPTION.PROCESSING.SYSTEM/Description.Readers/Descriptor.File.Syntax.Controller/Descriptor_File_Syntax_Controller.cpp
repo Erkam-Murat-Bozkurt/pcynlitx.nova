@@ -8,7 +8,6 @@ Descriptor_File_Syntax_Controller::Descriptor_File_Syntax_Controller(char * path
 {
 
    this->Memory_Delete_Condition = false;
-
 }
 
 Descriptor_File_Syntax_Controller::Descriptor_File_Syntax_Controller(std::string path) :
@@ -34,8 +33,6 @@ void Descriptor_File_Syntax_Controller::Clear_Dynamic_Memory(){
      if(!this->Memory_Delete_Condition){
 
          this->Memory_Delete_Condition = true;
-
-         this->StringManager.Clear_Dynamic_Memory();
 
          this->FileManager.Clear_Dynamic_Memory();
      }
@@ -66,7 +63,7 @@ void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Index(){
             this->File_Index.push_back(string_line);
           }
 
-      }while(!this->FileManager.Control_End_of_File());
+      }while(!this->FileManager.Control_Stop_Condition());
 
       this->FileManager.FileClose();
 }
@@ -175,8 +172,8 @@ void Descriptor_File_Syntax_Controller::Control_Braces(){
 
 
 
-bool Descriptor_File_Syntax_Controller::Control_String_Inclusion(std::string search_word){
-
+bool Descriptor_File_Syntax_Controller::Control_String_Inclusion(std::string search_word)
+{
      this->include_condition = false;
 
      std::vector<std::string>::iterator it;
@@ -200,8 +197,8 @@ bool Descriptor_File_Syntax_Controller::Control_String_Inclusion(std::string sea
 }
 
 
-int Descriptor_File_Syntax_Controller::Determine_Repitation(std::string search_word){
-
+int Descriptor_File_Syntax_Controller::Determine_Repitation(std::string search_word)
+{
     this->repitation = 0;
 
     for(auto it=this->File_Index.begin();it<this->File_Index.end();it++){

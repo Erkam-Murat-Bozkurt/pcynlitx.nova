@@ -24,72 +24,38 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 CharOperator::CharOperator(){
 
-   this->String_Buffer = nullptr;
+     this->Memory_Delete_Condition = false;
 
-   this->Memory_Delete_Condition = false;
 }
 
 CharOperator::CharOperator(char * FilePath) : FileManager (FilePath) {
 
-   this->String_Buffer = nullptr;
 
-   this->Memory_Delete_Condition = false;
 }
 
 CharOperator::CharOperator(std::string FilePath): FileManager (FilePath){
 
-   this->String_Buffer = nullptr;
-
-   this->Memory_Delete_Condition = false;
 }
 
 
 CharOperator::~CharOperator(){
 
+  if(!this->Memory_Delete_Condition){
+
+      this->Clear_Dynamic_Memory();
+   }
 }
 
 void CharOperator::Clear_Dynamic_Memory(){
 
      if(!this->Memory_Delete_Condition){
 
-         if(this->String_Buffer != nullptr){
+        this->Memory_Delete_Condition = true;
 
-            delete [] this->String_Buffer;
-         }
+        this->FileManager.Clear_Dynamic_Memory();
      }
 }
 
-int CharOperator::DetermineTotalMethodNumber(){
-
-    this->TotalMethodNumber = 0;
-
-    int TheFileEND = this->FindTheSpecificWordLine("END");
-
-    this->FileManager.FileOpen(Rf);
-
-    char * pointer;
-
-    bool condition;
-
-    // FileEND shows the line number includes END word.
-    // END word is used to specify the meta data file end.
-
-    for(int i=0;i<TheFileEND;i++){
-
-        pointer = this->Conver_Std_String_To_Char(this->FileManager.Read());
-
-        condition = this->CharacterCheck(pointer,'(');
-
-        if(condition){
-
-           this->TotalMethodNumber++;
-        }
-    }
-
-    this->FileManager.FileClose();
-
-    return this->TotalMethodNumber;
-}
 
 void CharOperator::ForwardFilePointer(Cpp_FileOperations * FileManager,int stepSize){
 
@@ -99,15 +65,17 @@ void CharOperator::ForwardFilePointer(Cpp_FileOperations * FileManager,int stepS
     }
 }
 
-int CharOperator::FindNextCharacterPositon(char * targetList,int startPoint, char character){
+
+
+int CharOperator::FindNextCharacterPositon(std::string targetList, int startPoint, char c){
 
      this->CharacterPosition = 0;
 
-     int ListSize = this->CharListLength(targetList);
+     int ListSize = targetList.length();
 
      int Position = startPoint;
 
-     while(targetList[Position]!= character){
+     while(targetList[Position]!= c){
 
           Position++;
 
@@ -124,15 +92,16 @@ int CharOperator::FindNextCharacterPositon(char * targetList,int startPoint, cha
      return this->CharacterPosition;
 }
 
-int CharOperator::DetermineCharacterRepitation(char * listPointer, char character){
+
+int CharOperator::DetermineCharacterRepitation(std::string list, char c){
 
      this->CharacterRepitation = 0;
 
-     int ListSize = this->CharListLength(listPointer);
+     size_t ListSize = list.length();
 
      for(int k=0;k<ListSize+1;k++){
 
-          if(listPointer[k]== character){
+          if(list[k]== c){
 
              this->CharacterRepitation++;
           }
@@ -158,7 +127,7 @@ int CharOperator::FindTheSpecificWordLine(std::string word){
               break;
            }
 
-           bool end_of_file = this->FileManager.Control_End_of_File();
+           bool end_of_file = this->FileManager.Control_Stop_Condition();
 
            if(end_of_file){
 
@@ -173,26 +142,12 @@ int CharOperator::FindTheSpecificWordLine(std::string word){
       return this->WordPosition;
 }
 
-size_t CharOperator::CharListLength(char * Characterlist){
 
-    this->ListLength = 0;
-
-    if((Characterlist[this->ListLength] != '\0') && (Characterlist[this->ListLength] != '\n') ){
-
-        while((Characterlist[this->ListLength] != '\0') && (Characterlist[this->ListLength] != '\n')){
-
-             this->ListLength++;
-        }
-    }
-
-    return this->ListLength;
-}
-
-bool CharOperator::CharacterCheck(char * list,char character){
+bool CharOperator::CharacterCheck(std::string list,char character){
 
     int listLength;
 
-    listLength = this->CharListLength(list);
+    listLength = list.length();
 
     for(int i=0;i<listLength;i++){
 
@@ -205,7 +160,8 @@ bool CharOperator::CharacterCheck(char * list,char character){
     return false;
 }
 
-int CharOperator::FindFirstCharacterPosition(char * list){
+
+int CharOperator::FindFirstCharacterPosition(std::string list){
 
     this->FirstCharacterPosition = 0;
 
@@ -217,11 +173,12 @@ int CharOperator::FindFirstCharacterPosition(char * list){
     return this->FirstCharacterPosition;
 }
 
-bool CharOperator::CompareString(char * firstString,char * secondString){
 
-     int firstStringLength  = this->CharListLength(firstString);
+bool CharOperator::CompareString(std::string firstString, std::string secondString){
 
-     int secondStringLength = this->CharListLength(secondString);
+     int firstStringLength  = firstString.length();
+
+     int secondStringLength = secondString.length();
 
      if(firstStringLength==secondStringLength){
 
@@ -245,27 +202,4 @@ bool CharOperator::CompareString(char * firstString,char * secondString){
 
           return this->isStringsEqual;
      }
-}
-
-char * CharOperator::Conver_Std_String_To_Char(std::string string_line){
-
-       if(this->String_Buffer != nullptr){
-
-          delete [] this->String_Buffer;
-       }
-
-       int string_size = string_line.length();
-
-       this->Memory_Delete_Condition = false;
-
-       this->String_Buffer = new char [5*string_size];
-
-       for(int i=0;i<string_size;i++){
-
-           this->String_Buffer[i] = string_line[i];
-       }
-
-       this->String_Buffer[string_size] = '\0';
-
-       return this->String_Buffer;
 }

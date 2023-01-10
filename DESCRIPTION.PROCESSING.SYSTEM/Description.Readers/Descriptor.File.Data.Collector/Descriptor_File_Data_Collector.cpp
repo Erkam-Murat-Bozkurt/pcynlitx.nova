@@ -115,7 +115,7 @@ void Descriptor_File_Data_Collector::Receive_Descriptor_File_Index(){
 
           this->File_Size++;
 
-      }while(!this->FileManager.Control_End_of_File());
+      }while(!this->FileManager.Control_Stop_Condition());
 
       this->FileManager.FileClose();
 }
@@ -371,29 +371,32 @@ int Descriptor_File_Data_Collector::FindStringPoint(std::string search_word,int 
 
 void Descriptor_File_Data_Collector::Delete_Spaces_on_String(std::string * pointer)
 {
-     size_t string_size = (*pointer).length();
+     size_t string_size = pointer->length();
 
-     int remove_index = 0;
+     if(string_size>0){
 
-     for(size_t j=0;j<string_size;j++){
+        int remove_index = 0;
 
-        for(size_t i=0;i<string_size;i++){
+        for(size_t j=0;j<string_size;j++){
 
-           if((((*pointer)[i] == ' ') || (((*pointer)[i] == '\t')))) {
+           for(size_t i=0;i<string_size;i++){
 
-              for(size_t k=i;k<string_size-1;k++){
+              if((((*pointer)[i] == ' ') || (((*pointer)[i] == '\t')))) {
 
-                 (*pointer)[k] = (*pointer)[k+1];
+                 for(size_t k=i;k<string_size-1;k++){
+
+                    (*pointer)[k] = (*pointer)[k+1];
+                 }
+
+                 remove_index++;
               }
-
-              remove_index++;
             }
         }
-     }
 
-     for(size_t i=0;i<remove_index+1;i++){
+        for(size_t i=0;i<remove_index;i++){
 
-         (*pointer).pop_back();
+            (*pointer).pop_back();
+        }
      }
 }
 

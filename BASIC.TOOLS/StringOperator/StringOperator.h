@@ -14,27 +14,16 @@ public:
  StringOperator(char * FilePATH);
  StringOperator(std::string FilePATH);
  virtual ~StringOperator();
- void ReceiveFileLine(char * readline);
- void ReceiveFileLine_As_Std_String(std::string ReadLine);
- void LoadStringBuffer(char * readline);
- void LoadStringBuffer_As_Std_String(std::string ReadLine);
- void ClearStringBuffer();
- void Clear_Dynamic_Memory();
- int  FindNextWordLine(char * search_word,int startPoint);
- int  FindNextWordLine(std::string search_word,int startPoint);
- bool CheckStringLine(char * readline);
+ void ReceiveFileLine(std::string ReadLine);
+ void LoadStringBuffer(std::string ReadLine);
+ int  FindNextWordLine(std::string search_word, int startPoint);
  bool CheckStringLine(std::string readline);
- void ReadWordBetweenToPoint(char * StringLine,int startPoint, int endPoint);
- int  GetBufferLength();
- bool CheckStringInclusion(char * StringLine,char * search_word);
+ bool CheckStringLine(char * readline);
  bool CheckStringInclusion(std::string StringLine, std::string search_word);
- bool Get_File_End_Condition();
  int  Get_Start_Position_of_an_included_String();
- int  Get_Word_Number_on_String(char * String,char * word);
- char * ReadFileLine(int lineNumber);
- char * GetStringBuffer();
- std::string ReadFileLine_As_Std_String(int lineNumber);
- std::string GetStringBuffer_As_Std_String();
+ std::string ReadFileLine(int lineNumber);
+ std::string GetStringBuffer();
+ size_t GetBufferLength();
 private:
  void Initialize_Members();
  CharOperator CharacterOperations;
@@ -43,14 +32,12 @@ private:
  int wordPosition;
  int Included_Word_Start_Position;
  int BufferLength;
- bool File_End_Condition;
  bool isStringLine;
  bool includeCondition;
  bool isBufferEmpty;
  bool Included_Word_Start_Position_Set_Condition;
  bool Memory_Delete_Condition;
- char * StringBuffer;
- std::string StringBuffer_Std_String;
+ std::string StringBuffer;
 };
 
 #endif /* STRINGOPERATOR_H */
