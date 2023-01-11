@@ -1,90 +1,81 @@
 
+
+
 #include "Project_Files_Data_Collector.hpp"
 
-Project_Files_Data_Collector::Project_Files_Data_Collector(){
+Project_Files_Data_Collector::Project_Files_Data_Collector(char opr_sis){
 
-
+    this->operating_sis = opr_sis;
 }
 
 Project_Files_Data_Collector::~Project_Files_Data_Collector(){
 
 }
 
-void Project_Files_Data_Collector::Determine_File_Exact_Path(char ** pointer,
+void Project_Files_Data_Collector::Determine_File_Exact_Path(std::string * pointer,
 
-     char * repo_dir, char * string_line, char operating_sis){
+     std::string repo_dir, std::string string_line){
 
-     size_t repo_dir_size = strlen(repo_dir);
+     size_t repo_dir_size = repo_dir.length();
 
-     size_t string_size = strlen(string_line);
-
-     size_t dir_size = repo_dir_size + string_size;
-
-     int index = 0;
-
-     *pointer = new char [5*dir_size];
+     size_t string_size = string_line.length();
 
      for(size_t i=0;i<repo_dir_size;i++){
 
-         (*pointer)[index] = repo_dir[i];
+         (*pointer).append(1,repo_dir[i]);
 
-         index++;
+         if(this->operating_sis == 'w'){
 
-         if(operating_sis == 'w'){
+            if((*pointer)[i] == '/'){
 
-            if((*pointer)[index] == '/'){
-
-               (*pointer)[index] = '\\';
+               (*pointer)[i] = '\\';
             }
           }
      }
 
-     if(operating_sis == 'w'){
+     if(this->operating_sis == 'w'){
 
        if(repo_dir[repo_dir_size-1] != '\\'){
 
-          (*pointer)[index] = '\\';
-
-          index++;
+          (*pointer).append(1,'\\');
        }
      }
 
-     if(operating_sis == 'l'){
+     if(this->operating_sis == 'l'){
 
        if(repo_dir[repo_dir_size-1] != '/'){
 
-          (*pointer)[index] = '/';
+          (*pointer).append(1,'/');
        }
      }
 
      for(size_t i=0;i<string_size;i++){
 
-        (*pointer)[index] = string_line[i];
+         if(string_line[i] == '/'){
 
-        if(string_line[i] == '/'){
+            if(this->operating_sis == 'w'){
 
-           if(operating_sis == 'w'){
-
-              (*pointer)[index] = '\\';
+              (*pointer).append(1,'\\');
             }
-        }
+         }
+         else{
 
-        index++;
+           (*pointer).append(1,string_line[i]);
+
+         }
      }
-
-     (*pointer)[index] = '\0';
 }
 
 
-void Project_Files_Data_Collector::Extract_Upper_Directory_Path(char ** pointer,
+void Project_Files_Data_Collector::Extract_Upper_Directory_Path(std::string * pointer,
 
-     char * string_line, char operating_sis){
+     std::string string_line){
 
-     size_t file_path_size = strlen(string_line);
+     size_t file_path_size = string_line.length();
 
      size_t dir_size = file_path_size;
 
-     if(operating_sis == 'l'){
+     if(this->operating_sis == 'l'){
 
         for(size_t i=file_path_size;i>0;i--){
 
@@ -100,7 +91,7 @@ void Project_Files_Data_Collector::Extract_Upper_Directory_Path(char ** pointer,
      }
      else{
 
-           if(operating_sis == 'w'){
+           if(this->operating_sis == 'w'){
 
              for(size_t i=file_path_size;i>0;i--){
 
@@ -116,27 +107,23 @@ void Project_Files_Data_Collector::Extract_Upper_Directory_Path(char ** pointer,
           }
      }
 
-     *pointer = new char [5*dir_size];
-
      for(size_t i=0;i<dir_size;i++){
 
-         (*pointer)[i] = string_line[i];
+         (*pointer).append(1,string_line[i]);
 
          if(string_line[i] == '/'){
 
-            if(operating_sis == 'w'){
+            if(this->operating_sis == 'w'){
 
                (*pointer)[i] = '\\';
              }
          }
      }
-
-     (*pointer)[dir_size] = '\0';
 }
 
-void Project_Files_Data_Collector::Determine_File_Name(char ** pointer, char * string_line){
+void Project_Files_Data_Collector::Determine_File_Name(std::string * pointer, std::string string_line){
 
-     size_t string_size = strlen(string_line);
+     size_t string_size = string_line.length();
 
      size_t dir_size = string_size;
 
@@ -166,24 +153,18 @@ void Project_Files_Data_Collector::Determine_File_Name(char ** pointer, char * s
          }
      }
 
-     int index = 0;
-
-     *pointer = new char [5*string_size];
-
      for(size_t i=dir_size+1;i<file_extention_start_point;i++){
 
-          (*pointer)[index] = string_line[i];
-
-           index++;
+          (*pointer).append(1,string_line[i]);
      }
-
-     (*pointer)[index] = '\0';
 }
 
 
-void Project_Files_Data_Collector::Determine_File_Name_With_Ext(char ** pointer, char * string_line){
+void Project_Files_Data_Collector::Determine_File_Name_With_Ext(std::string * pointer,
 
-     size_t string_size = strlen(string_line);
+     std::string string_line){
+
+     size_t string_size = string_line.length();
 
      size_t dir_size = string_size;
 
@@ -191,8 +172,8 @@ void Project_Files_Data_Collector::Determine_File_Name_With_Ext(char ** pointer,
 
      for(size_t i=string_size;i>0;i--){
 
-         if((string_line[i] == '\\') || (string_line[i] == '/')){
-
+         if((string_line[i] == '\\') || (string_line[i] == '/'))
+         {
             break;
          }
          else{
@@ -201,48 +182,31 @@ void Project_Files_Data_Collector::Determine_File_Name_With_Ext(char ** pointer,
          }
      }
 
-     int index = 0;
-
-     *pointer = new char [5*string_size];
-
      for(size_t i=dir_size+1;i<string_size;i++){
 
-          (*pointer)[index] = string_line[i];
-
-           index++;
+          (*pointer).append(1,string_line[i]);
      }
-
-     (*pointer)[index] = '\0';
 }
 
 
-void Project_Files_Data_Collector::Determine_Source_File_Name_With_Ext(char ** pointer,
+void Project_Files_Data_Collector::Determine_Source_File_Name_With_Ext(std::string * pointer,
 
-     char * file_name){
+     std::string file_name){
 
      char source_file_ext [] = ".cpp";
 
-     size_t file_name_size = strlen(file_name);
+     size_t file_name_size = file_name.length();
 
-     int index = 0;
-
-     *pointer = new char [5*file_name_size];
 
      for(size_t i=0;i<file_name_size;i++){
 
-         (*pointer)[index] = file_name[i];
-
-         index++;
+         (*pointer).append(1,file_name[i]);
      }
 
      size_t ext_size = strlen(source_file_ext);
 
      for(size_t i=0;i<ext_size;i++){
 
-         (*pointer)[index] = source_file_ext[i];
-
-         index++;
+         (*pointer).append(1,source_file_ext[i]);
      }
-
-    (*pointer)[index] = '\0';
 }

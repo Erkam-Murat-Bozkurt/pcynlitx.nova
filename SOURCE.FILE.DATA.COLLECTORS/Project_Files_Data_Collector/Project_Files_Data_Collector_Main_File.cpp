@@ -19,41 +19,36 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_Reader;
 
-    Des_Reader.Read_Descriptor_File(argv[1]);
-
-    Git_File_List_Receiver Receiver;
-
-    Receiver.Receive_Descriptor_File_Reader(&Des_Reader);
+    Git_File_List_Receiver Receiver(argv[1]);
 
     Receiver.Determine_Git_Repo_Info();
 
     int index_size = Receiver.Get_Git_File_Index_Size();
 
-    Project_Files_Data_Collector Data_Collector;
+    Project_Files_Data_Collector Data_Collector('w');
 
     char repo_dir [] = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS";
 
     for(int i=0;i<index_size;i++){
 
-        char * file_record = Receiver.Get_Git_File_Index(i);
+        std::string file_record = Receiver.Get_Git_File_Index(i);
 
         std::cout << "\n Git Record File -"  << i << " :" << file_record;
 
-        char * file_system_path = nullptr;
+        std::string file_system_path;
 
-        Data_Collector.Determine_File_Exact_Path(&file_system_path,repo_dir,file_record,'w');
+        Data_Collector.Determine_File_Exact_Path(&file_system_path,repo_dir,file_record);
 
-        char * upper_directory_path = nullptr;
+        std::string upper_directory_path;
 
-        Data_Collector.Extract_Upper_Directory_Path(&upper_directory_path,file_system_path,'w');
+        Data_Collector.Extract_Upper_Directory_Path(&upper_directory_path,file_system_path);
 
-        char * file_name = nullptr;
+        std::string file_name;
 
         Data_Collector.Determine_File_Name(&file_name,file_system_path);
 
-        char * File_Name_With_Ext = nullptr;
+        std::string File_Name_With_Ext;
 
         Data_Collector.Determine_Source_File_Name_With_Ext(&File_Name_With_Ext,file_name);
 
@@ -65,13 +60,6 @@ int main(int argc, char ** argv){
 
         std::cout << "\n File_Name_With_Ext:" << File_Name_With_Ext;
 
-        //std::cin.get();
-
-        delete [] file_system_path;
-
-        delete [] upper_directory_path;
-
-        delete [] file_name;
     }
 
     std::cout << "\n Press eny key..";

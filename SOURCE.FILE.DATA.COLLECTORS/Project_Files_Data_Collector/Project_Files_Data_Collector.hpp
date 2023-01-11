@@ -14,27 +14,28 @@
 class Project_Files_Data_Collector
 {
 public:
- Project_Files_Data_Collector();
- Project_Files_Data_Collector(const Project_Files_Data_Collector & orig);
+ Project_Files_Data_Collector(char operating_sis);
  virtual ~Project_Files_Data_Collector();
- void Determine_File_Exact_Path(char ** pointer,
 
-      char * repo_dir, char * string_line, char operating_sis);
+ void Determine_File_Exact_Path(std::string * pointer,
 
- void Extract_Upper_Directory_Path(char ** pointer,
+      std::string repo_dir, std::string string_line);
 
-           char * string_line, char operating_sis);
+ void Extract_Upper_Directory_Path(std::string * pointer,
 
- void Determine_File_Name(char ** pointer, char * string_line);
+      std::string string_line);
 
- void Determine_Source_File_Name_With_Ext(char ** pointer,
+ void Determine_File_Name(std::string * pointer, std::string string_line);
 
-      char * file_name);
- void Determine_File_Name_With_Ext(char ** pointer,
+ void Determine_Source_File_Name_With_Ext(std::string * pointer,
 
-      char * string_line);
-protected:
+      std::string file_name);
 
+ void Determine_File_Name_With_Ext(std::string * pointer,
+
+      std::string string_line);
+private:
+  char operating_sis;
 };
 
 #endif /* PROJECT_FILES_DATA_COLLECTOR_H */
