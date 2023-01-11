@@ -1,7 +1,7 @@
 
 #include "Header_File_Determiner.h"
 
-Header_File_Determiner::Header_File_Determiner(char * DesPath, char * opr_sis) :
+Header_File_Determiner::Header_File_Determiner(char * DesPath, char opr_sis) :
 
      Git_Receiver(DesPath)
 {
@@ -12,17 +12,9 @@ Header_File_Determiner::Header_File_Determiner(char * DesPath, char * opr_sis) :
 
     this->operating_sis = opr_sis;
 
-    this->Header_File_Directory   = "";
-
-    this->Header_File_Name        = "";
-
-    this->Header_File_System_Path = "";
-
-    this->Header_File_Name_With_Extention = "";
-
-    this->Memory_Delete_Condition  = true;
-
     this->include_decleration_cond = false;
+
+    this->Memory_Delete_Condition = false;
 
     this->is_header_file = false;
 }
@@ -42,7 +34,13 @@ void Header_File_Determiner::Clear_Dynamic_Memory(){
 
         this->Memory_Delete_Condition = true;
 
+        this->Clear_String_Memory(&this->Header_File_Directory);
 
+        this->Clear_String_Memory(&this->Header_File_Name);
+
+        this->Clear_String_Memory(&this->Header_File_Name_With_Extention);
+
+        this->Clear_String_Memory(&this->Header_File_System_Path);
      }
 }
 
@@ -52,9 +50,9 @@ bool Header_File_Determiner::Is_this_file_included_on_anywhere(std::string file_
 
      for(int i=0;i<this->git_record_size-1;i++){
 
-         std::string git_record_path = this->Git_Receiver_Pointer->Get_Git_File_Index(i);
+         std::string git_record_path = this->Git_Receiver.Get_Git_File_Index(i);
 
-         std::string record_sys_path = nullptr;
+         std::string record_sys_path = "";
 
          this->Determine_Git_Record_File_System_Path(&record_sys_path,git_record_path);
 
@@ -75,32 +73,28 @@ bool Header_File_Determiner::Is_this_file_included_on_anywhere(std::string file_
 
          if(file_exist){
 
-            this->FileManager.Read_File_as_CString(record_sys_path);
+            this->FileManager.Read_File(record_sys_path);
 
             int FileSize = this->FileManager.GetFileSize();
 
             for(int k=0;k<FileSize;k++){
 
-                char * string = this->FileManager.GetFileLine(k);
+                std::string file_line = this->FileManager.GetFileLine(k);
 
                 // In order to remove possible spaces on the string
 
                 // a temporary string is constructed
 
-                char * tmp_string = nullptr;
+                this->Delete_Spaces_on_String(&file_line);
 
-                this->Construct_Temporary_String(&tmp_string,string);
-
-                this->Delete_Spaces_on_String(&tmp_string);
-
-                bool is_include_decleration = this->Include_Decleration_Test(tmp_string);
+                bool is_include_decleration = this->Include_Decleration_Test(file_line);
 
 
-                char * header_name = nullptr;
+                std::string header_name;
 
                 if(is_include_decleration){
 
-                   this->Extract_Header_File_Name_From_Decleration(&header_name,tmp_string);
+                   this->Extract_Header_File_Name_From_Decleration(&header_name,file_line);
 
                    this->Determine_Header_File_Name(file_path);
 
@@ -113,10 +107,6 @@ bool Header_File_Determiner::Is_this_file_included_on_anywhere(std::string file_
                       break;
                     }
                 }
-
-                this->Clear_Pointer_Memory(&header_name);
-
-                this->Clear_Pointer_Memory(&tmp_string);
             }
          }
          else{
@@ -125,15 +115,12 @@ bool Header_File_Determiner::Is_this_file_included_on_anywhere(std::string file_
 
                  "\n can not find on the repo directory !..";
          }
-
-         this->Clear_Pointer_Memory(&record_sys_path);
-
       }
 
       return this->Is_this_file_included_on_somewhere;
 }
 
-bool Header_File_Determiner::Include_Decleration_Test(char * string){
+bool Header_File_Determiner::Include_Decleration_Test(std::string string){
 
      this->include_decleration_cond = false;
 
@@ -169,9 +156,12 @@ bool Header_File_Determiner::Include_Decleration_Test(char * string){
      return this->include_decleration_cond;
 }
 
-void Header_File_Determiner::Extract_Header_File_Name_From_Decleration(char ** header_name, char * string){
+void Header_File_Determiner::Extract_Header_File_Name_From_Decleration(std::string * header_name,
 
-     size_t size = strlen(string);
+     std::string string)
+{
+
+     size_t size = string.length();
 
      int start_point = 0;
 
@@ -203,24 +193,14 @@ void Header_File_Determiner::Extract_Header_File_Name_From_Decleration(char ** h
         }
      }
 
-     int Name_Size = end_point - start_point;
-
-     *header_name = new char [5*Name_Size];
-
-     int index_counter = 0;
-
      for(int i=start_point;i<end_point;i++){
 
-          (*header_name)[index_counter] = string[i];
-
-          index_counter++;
+          (*header_name).append(1,string[i]);
      }
-
-     (*header_name)[index_counter] = '\0';
 }
 
 
-bool Header_File_Determiner::Is_Header(char * file_path){
+bool Header_File_Determiner::Is_Header(std::string file_path){
 
      char inclusion_guard [] = "#ifndef";
 
@@ -261,11 +241,11 @@ bool Header_File_Determiner::Is_Header(char * file_path){
     return this->is_header_file;
 }
 
-void Header_File_Determiner::Determine_Header_File_Directory(char * path){
+void Header_File_Determiner::Determine_Header_File_Directory(std::string path){
 
-     this->Clear_Pointer_Memory(&this->Header_File_Directory);
+     this->Clear_String_Memory(&this->Header_File_Directory);
 
-     size_t file_path_size = strlen(path);
+     size_t file_path_size = path.length();
 
      size_t dir_size = file_path_size;
 
@@ -281,8 +261,6 @@ void Header_File_Determiner::Determine_Header_File_Directory(char * path){
         }
      }
 
-     this->Memory_Delete_Condition = false;
-
      this->Header_File_Directory = new char [5*dir_size];
 
      for(size_t i=0;i<dir_size;i++){
@@ -293,11 +271,12 @@ void Header_File_Determiner::Determine_Header_File_Directory(char * path){
      this->Header_File_Directory[dir_size] = '\0';
 }
 
-void Header_File_Determiner::Determine_Header_File_Name(char * path){
+void Header_File_Determiner::Determine_Header_File_Name(std::string path){
 
-     this->Clear_Pointer_Memory(&this->Header_File_Name);
+     this->Clear_String_Memory(&this->Header_File_Name);
 
-     size_t file_path_size = strlen(path);
+
+     size_t file_path_size = path.length();
 
      size_t dir_size = file_path_size;
 
@@ -313,13 +292,6 @@ void Header_File_Determiner::Determine_Header_File_Name(char * path){
           }
       }
 
-      size_t Header_File_Name_Size = file_path_size - dir_size;
-
-      this->Memory_Delete_Condition = false;
-
-      this->Header_File_Name = new char [5*Header_File_Name_Size];
-
-      int index = 0;
 
       for(size_t i=dir_size+1;i<file_path_size;i++){
 
@@ -328,20 +300,17 @@ void Header_File_Determiner::Determine_Header_File_Name(char * path){
               break;
           }
 
-          this->Header_File_Name[index] = path[i];
-
-          index++;
+          this->Header_File_Name.append(1,path[i]);
       }
-
-      this->Header_File_Name[index] = '\0';
 }
 
 
-void Header_File_Determiner::Determine_Header_File_Name_With_Extention(char * path){
+void Header_File_Determiner::Determine_Header_File_Name_With_Extention(std::string path){
 
-     this->Clear_Pointer_Memory(&this->Header_File_Name_With_Extention);
+     size_t file_path_size = path.length();
 
-     size_t file_path_size = strlen(path);
+     this->Clear_String_Memory(&this->Header_File_Name_With_Extention);
+
 
      size_t dir_size = file_path_size;
 
@@ -355,121 +324,128 @@ void Header_File_Determiner::Determine_Header_File_Name_With_Extention(char * pa
 
               dir_size--;
           }
-      }
+     }
 
-      size_t Header_File_Name_Size = file_path_size - dir_size;
+     for(size_t i=dir_size+1;i<file_path_size;i++){
 
-      this->Memory_Delete_Condition = false;
-
-      this->Header_File_Name_With_Extention = new char [5*Header_File_Name_Size];
-
-      int index = 0;
-
-      for(size_t i=dir_size+1;i<file_path_size;i++){
-
-          this->Header_File_Name_With_Extention[index] = path[i];
-
-          index++;
-      }
-
-      this->Header_File_Name_With_Extention[index] = '\0';
+        this->Header_File_Name_With_Extention.append(1,path[i]);
+     }
 }
 
-void Header_File_Determiner::Determine_Header_File_System_Path(char * repo_dir,
+void Header_File_Determiner::Determine_Header_File_System_Path(std::string repo_dir,
 
-     char * git_record_path, char operating_sis){
+     std::string git_record_path){
 
-     this->Clear_Pointer_Memory(&this->Header_File_System_Path);
+     this->Clear_String_Memory(&this->Header_File_System_Path);
 
-     size_t repo_dir_size   = strlen(repo_dir);
 
-     size_t git_record_size = strlen(git_record_path);
+     size_t repo_dir_size   = repo_dir.length();
+
+     size_t git_record_size = git_record_path.length();
 
      size_t path_size = repo_dir_size + git_record_size;
 
-     int index = 0;
-
-     this->Header_File_System_Path = new char [5*path_size];
 
      for(size_t i=0;i<repo_dir_size;i++){
 
-         this->Header_File_System_Path[index] = repo_dir[i];
+         this->Header_File_System_Path.append(1,repo_dir[i]);
 
-         if(operating_sis == 'w'){
+         if(this->operating_sis == 'w'){
 
-            if(this->Header_File_System_Path[index] == '/'){
+            if(this->Header_File_System_Path[i] == '/'){
 
-               this->Header_File_System_Path[index] = '\\' ;
+               this->Header_File_System_Path[i] = '\\' ;
             }
          }
-
-         index++;
      }
 
-     if(operating_sis == 'w'){
+     if(this->operating_sis == 'w'){
 
-        if(repo_dir[repo_dir_size-1] != '\\' ){
+        if(repo_dir[repo_dir_size] != '\\' ){
 
-           this->Header_File_System_Path[index] = '\\';
-
-           index++;
+           this->Header_File_System_Path[repo_dir_size] = '\\';
         }
      }
 
-     if(operating_sis == 'l'){
+     if(this->operating_sis == 'l'){
 
-       if(repo_dir[repo_dir_size-1] != '/' ){
+       if(repo_dir[repo_dir_size] != '/' ){
 
-         this->Header_File_System_Path[index] = '/';
-
-         index++;
+         this->Header_File_System_Path[repo_dir_size] = '/';
        }
      }
 
      for(size_t i=0;i<git_record_size;i++){
 
-         this->Header_File_System_Path[index] = git_record_path[i];
+         this->Header_File_System_Path.append(1,git_record_path[i]);
 
          if(operating_sis == 'w'){
 
-            if(this->Header_File_System_Path[index] == '/'){
+            if(this->Header_File_System_Path[i] == '/'){
 
-               this->Header_File_System_Path[index] = '\\' ;
+               this->Header_File_System_Path[i] = '\\' ;
              }
           }
-
-         index++;
      }
-
-     this->Header_File_System_Path[index] = '\0';
 }
 
 
+void Header_File_Determiner::Determine_Git_Record_File_System_Path(std::string * sys_path,
 
-void Header_File_Determiner::Construct_Temporary_String(char ** tmp_string, char * string){
+     std::string file_path){
 
-     size_t string_size = strlen(string);
+     size_t repo_dir_size = this->Repo_Dir.length();
 
-     *tmp_string = new char [5*string_size];
+     size_t path_size = file_path.length();
 
-     for(size_t n=0;n<5*string_size;n++){
+     size_t sys_path_size = repo_dir_size + path_size;
 
-        (*tmp_string)[n] = '\0';
+     int index=0;
+
+     for(size_t i=0;i<repo_dir_size;i++){
+
+        (*sys_path).append(1,this->Repo_Dir[i]);
+
+        if(this->operating_sis =='w'){
+
+          if((*sys_path)[i] == '/'){
+
+             (*sys_path)[i] = '\\';
+          }
+       }
      }
 
-     for(size_t n=0;n<string_size;n++){
 
-        (*tmp_string)[n] = string[n];
+     if(this->operating_sis =='w'){
+
+        (*sys_path).append(1,'\\');
+     }
+     else{
+
+        (*sys_path).append(1,'/');
      }
 
-     (*tmp_string)[string_size] = '\0';
+
+     for(size_t i=0;i<path_size;i++){
+
+        (*sys_path).append(1,file_path[i]);
+
+        if(operating_sis =='w'){
+
+           if((*sys_path)[i] == '/'){
+
+              (*sys_path)[i] = '\\';
+           }
+        }
+     }
 }
 
-bool Header_File_Determiner::CompareString(char * firstString,char * secondString){
 
-     int firstStringLength  = strlen(firstString);
+bool Header_File_Determiner::CompareString(std::string firstString, std::string secondString){
 
-     int secondStringLength = strlen(secondString);
+     int firstStringLength  = firstString.length();
+
+     int secondStringLength = secondString.length();
 
      this->isStringsEqual = false;
 
@@ -497,13 +473,15 @@ bool Header_File_Determiner::CompareString(char * firstString,char * secondStrin
      }
 }
 
-void Header_File_Determiner::Delete_Spaces_on_String(char ** pointer){
+void Header_File_Determiner::Delete_Spaces_on_String(std::string * pointer){
 
-     size_t string_size = strlen(*pointer);
+     size_t string_size = pointer->length();
 
      int remove_index = 0;
 
-     for(size_t i=0;i<string_size;i++){
+     if(string_size>0){
+
+       for(size_t i=0;i<string_size;i++){
 
          if((*pointer)[i] == ' '){
 
@@ -514,77 +492,22 @@ void Header_File_Determiner::Delete_Spaces_on_String(char ** pointer){
 
             remove_index++;
          }
-     }
+       }
 
-     (*pointer)[string_size - remove_index+1] = '\0';
+       for(int i=0;i<remove_index;i++){
+
+         pointer->pop_back();
+       }
+     }
 }
 
 
-void Header_File_Determiner::Determine_Git_Record_File_System_Path(std::string * sys_path,
+void Header_File_Determiner::Clear_String_Memory(std::string * pointer){
 
-     std::string file_path)
+     if(!pointer->empty()){
 
-     {
-
-     size_t repo_dir_size = this->Repo_Dir.length();
-
-     size_t path_size = strlen(file_path);
-
-     size_t sys_path_size = repo_dir_size + path_size;
-
-     *sys_path =  new char [5*sys_path_size];
-
-     for(size_t i=0;i<5*sys_path_size;i++){
-
-         (*sys_path)[i] = '\0';
+        pointer->clear();
      }
-
-     int index=0;
-
-     for(size_t i=0;i<repo_dir_size;i++){
-
-       (*sys_path)[index] = this->Repo_Dir[i];
-
-       index++;
-
-       if(operating_sis =='w'){
-
-          if((*sys_path)[index] == '/'){
-
-             (*sys_path)[index] = '\\';
-          }
-       }
-     }
-
-     //index++;
-
-     if(operating_sis =='w'){
-
-           (*sys_path)[index] = '\\';
-     }
-     else{
-
-          (*sys_path)[index] = '/';
-     }
-
-     index++;
-
-     for(size_t i=0;i<path_size;i++){
-
-        (*sys_path)[index] = file_path[i];
-
-        if(operating_sis =='w'){
-
-           if((*sys_path)[index] == '/'){
-
-              (*sys_path)[index] = '\\';
-           }
-        }
-
-        index++;
-      }
-
-      (*sys_path)[index] = '\0';
 }
 
 std::string Header_File_Determiner::Get_Header_Directory(){

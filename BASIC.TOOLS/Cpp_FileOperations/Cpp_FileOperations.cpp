@@ -406,6 +406,7 @@ void Cpp_FileOperations::Printf(){ // Prints file to the screen
      }
 }
 
+
 bool Cpp_FileOperations::Is_Path_Exist(char * path){
 
      this->is_path_exist = true;
@@ -415,6 +416,24 @@ bool Cpp_FileOperations::Is_Path_Exist(char * path){
      int result = 0;
 
      result = _stat( path, &buf );
+
+     if( result != 0 ){
+
+       this->is_path_exist = false;
+     }
+
+     return this->is_path_exist;
+}
+
+bool Cpp_FileOperations::Is_Path_Exist(std::string path){
+
+     this->is_path_exist = true;
+
+     struct _stat buf;
+
+     int result = 0;
+
+     result = _stat( path.c_str(), &buf );
 
      if( result != 0 ){
 

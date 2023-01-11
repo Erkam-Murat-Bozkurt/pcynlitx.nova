@@ -53,6 +53,7 @@ public:
  void Read_File(char * path);
  void Read_File(std::string path);
  void Record_File(char * path); // It reads whole of file in therms of cstring
+ bool Is_Path_Exist(std::string path);
  bool Is_Path_Exist(char * path);
  bool Is_This_File_Empty(char * path);
  bool TryOpen(char path);
