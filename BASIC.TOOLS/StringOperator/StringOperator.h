@@ -20,6 +20,7 @@ public:
  bool CheckStringLine(std::string readline);
  bool CheckStringLine(char * readline);
  bool CheckStringInclusion(std::string StringLine, std::string search_word);
+ bool CompareString(std::string firstString, std::string secondString);  // Compares two string
  int  Get_Start_Position_of_an_included_String();
  std::string ReadFileLine(int lineNumber);
  std::string GetStringBuffer();

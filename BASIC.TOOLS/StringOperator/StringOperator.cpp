@@ -267,6 +267,12 @@ bool StringOperator::CheckStringInclusion(std::string StringLine, std::string se
       return this->includeCondition;
 }
 
+bool StringOperator::CompareString(std::string s1, std::string s2)
+{
+     return this->CharacterOperations.CompareString(s1,s2);
+}
+
+
 int StringOperator::Get_Start_Position_of_an_included_String(){
 
     return this->Included_Word_Start_Position;

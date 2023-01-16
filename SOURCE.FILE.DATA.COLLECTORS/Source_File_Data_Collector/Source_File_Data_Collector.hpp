@@ -98,7 +98,6 @@ protected:
  int File_Content_Size;
  int git_record_size;
  int included_header_file_number;
- bool Memory_Delete_Condition;
 };
 
 #endif /* SOURCE_FILE_DATA_COLLECTOR_H */

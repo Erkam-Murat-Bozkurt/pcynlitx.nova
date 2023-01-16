@@ -45,6 +45,32 @@ int main(int argc, char ** argv){
 
     std::cout << "\n\n";
 
+    std::string file_path = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\CLASS.DECLERATION.READER\\ClassReader\\DataBaseBuilder\\DataBaseBuilder.cpp";
+
+    Is_Source_File = Source_Determiner.Is_Source_File(file_path);
+
+    if(Is_Source_File){
+
+       std::cout << "\n this is a source file..";
+    }
+    else{
+
+        std::cout << "\n this is not a source file";
+    }
+
+    if(Is_Source_File){
+
+        Source_Determiner.Determine_Source_File_Name(file_path);
+
+        std::cout << "\n Source File Name:" << Source_Determiner.Get_Source_File_Name();
+
+        std::cout << "\n Source File Name witout extenton:" << Source_Determiner.Get_File_Name_Witout_Ext();
+    }
+
+    std::cout << "\n\n";
+
+
+
     return 0;
 }
 

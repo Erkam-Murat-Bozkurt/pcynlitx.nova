@@ -24,6 +24,7 @@ class Source_File_Determiner
 public:
  Source_File_Determiner();
  virtual ~Source_File_Determiner();
+ bool Is_Source_File(std::string file_path);
  bool Is_Source_File(char * file_path);
  void Determine_Source_File_Name(std::string path);
  void Determine_File_Name_Without_Ext(std::string path);

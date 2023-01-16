@@ -21,13 +21,10 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_Reader;
 
-    Des_Reader.Read_Descriptor_File(argv[1]);
+    Project_Files_Lister Dir_Lister(argv[1],'w');
 
-    Project_Files_Lister Dir_Lister;
-
-    Dir_Lister.Determine_Git_Repo_Info(&Des_Reader);
+    Dir_Lister.Determine_Git_Repo_Info();
 
     int src_file_num = Dir_Lister.Get_Source_File_Number();
 
@@ -39,17 +36,15 @@ int main(int argc, char ** argv){
 
         std::cout << "\n\n";
 
-
         std::cout << "\n Source file name (without file ext) -" << i << " ";
 
         std::cout << "\n " << Dir_Lister.Get_Source_File_Name(i);
 
         std::cout << "\n";
 
-
         std::cout << "\n Class header file name -" << i << " " ;
 
-        if(Dir_Lister.Get_Class_File_Header_Name(i) != nullptr){
+        if(!Dir_Lister.Get_Class_File_Header_Name(i).empty()){
 
            std::cout <<  Dir_Lister.Get_Class_File_Header_Name(i);
         }

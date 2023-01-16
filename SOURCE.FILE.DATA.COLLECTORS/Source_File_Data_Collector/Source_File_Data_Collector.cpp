@@ -17,15 +17,11 @@ Source_File_Data_Collector::Source_File_Data_Collector(char * DesPath, char opr_
 
 Source_File_Data_Collector::~Source_File_Data_Collector(){
 
-    if(!this->Memory_Delete_Condition){
-
-        this->Clear_Dynamic_Memory();
-    }
+        this->Clear_Dynamic_Memory();    
 }
 
 void Source_File_Data_Collector::Initialize_Members(){
 
-     this->Memory_Delete_Condition = true;
 
      this->File_Content_Size = 0;
 
@@ -472,10 +468,12 @@ void Source_File_Data_Collector::Determine_Header_Files_System_Paths(std::string
 
      size_t file_name_size = file_name.length();
 
+
      for(size_t i=0;i<directory_size;i++){
 
-        (*pointer).append(1,directory[i]) ;
+        (*pointer).append(1,directory[i]);
      }
+
 
      if(this->operating_sis == 'w'){
 
@@ -483,6 +481,7 @@ void Source_File_Data_Collector::Determine_Header_Files_System_Paths(std::string
 
           (*pointer).append(1,'\\') ;
        }
+
      }
      else{
 
@@ -632,17 +631,17 @@ bool Source_File_Data_Collector::Character_Inclusion_Check(std::string string, c
 
 void Source_File_Data_Collector::Clear_Dynamic_Memory(){
 
-     if(!this->Memory_Delete_Condition){
+     if(!this->Head_Data.empty()){
 
-          this->Memory_Delete_Condition = true;
+         this->Head_Data.clear();
+     }
 
-          if(!this->Head_Data.empty()){
+     if(!this->File_Content.empty()){
 
-             this->Head_Data.clear();
-          }
+         this->File_Content.clear();
+     }
 
-          this->FileManager.Clear_Dynamic_Memory();
-      }
+     this->FileManager.Clear_Dynamic_Memory();
 }
 
 

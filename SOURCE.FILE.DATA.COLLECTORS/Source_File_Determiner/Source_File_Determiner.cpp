@@ -128,6 +128,97 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
     return this->Is_This_Source_File;
 }
 
+
+
+bool Source_File_Determiner::Is_Source_File(std::string file_path){
+
+     std::string inclusion_guard = "#ifndef";
+
+     std::string main_file_key   = "main(";
+
+     std::string header_add_h    = ".h";
+
+     std::string header_add_hpp  = ".hpp";
+
+     std::string source_file_ext = ".cpp";
+
+     this->Is_This_Source_File = false;
+
+     bool is_header = this->StringManager.CheckStringInclusion(file_path,header_add_h);
+
+     if(is_header){
+
+        this->Is_This_Source_File = false;
+
+        return this->Is_This_Source_File;
+     }
+     else{
+
+          is_header = this->StringManager.CheckStringInclusion(file_path,header_add_hpp);
+
+          if(is_header){
+
+            this->Is_This_Source_File = false;
+
+            return this->Is_This_Source_File;
+          }
+     }
+
+
+    this->Is_This_Source_File = false;
+
+    this->Determine_File_Name_Without_Ext(file_path);
+
+    std::string file_name = this->Get_File_Name_Witout_Ext();
+
+    this->Determine_Class_Function_Pattern(file_name);
+
+    std::string decleration_pattern = this->Get_Class_Function_Pattern();
+
+    bool is_this_main_file = false;
+
+    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext)){
+
+       this->Read_File(file_path);
+
+       for(int k=0;k<this->File_Content_Size;k++){
+
+           this->Delete_Spaces_on_String(&this->File_Content[k]);
+
+           this->Is_This_Source_File
+
+            = this->StringManager.CheckStringInclusion(this->File_Content[k],decleration_pattern);
+
+            if(this->Is_This_Source_File){
+
+                return this->Is_This_Source_File;
+            }
+
+            is_this_main_file = this->StringManager.CheckStringInclusion(this->File_Content[k],main_file_key);
+
+            if(is_this_main_file){
+
+               this->Is_This_Source_File = false;
+
+               return this->Is_This_Source_File;
+            }
+      }
+
+
+      this->Is_This_Source_File
+
+                  = this->StringManager.CheckStringInclusion(file_path,source_file_ext);
+
+      if(this->Is_This_Source_File){
+
+         return this->Is_This_Source_File;
+      }
+    }
+
+    return this->Is_This_Source_File;
+}
+
+
 void Source_File_Determiner::Read_File(std::string path){
 
      if(!this->File_Content.empty()){
