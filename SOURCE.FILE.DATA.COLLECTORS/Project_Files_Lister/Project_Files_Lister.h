@@ -20,25 +20,6 @@
 #include "Cpp_FileOperations.h"
 
 
-struct Build_System_Data {
-
-  std::string git_record_path;     // Header path in git record
-  std::string git_record_dir;      // The git record directory
-  std::string File_Directory;      // The directory of the file which is record constructed
-  std::string File_Path;           // Header file exact path ( System Path )
-  std::string File_Name;           // The file name witout extentation
-  std::string File_Name_With_Ext;  // The header file name with extention
-  std::string class_header_file_name;
-  std::string class_header_file_path;
-  std::vector<std::string> Included_Header_Files;    // The list of included header files if the file is a source file
-  std::vector<std::string> Included_Header_Files_Directories;
-  std::vector<std::string> Included_Header_Files_System_Path;
-  std::vector<std::string> Included_Header_Files_Git_Record_Path;
-  std::vector<std::string> Included_Header_Files_Git_Record_Dir;
-  int  Included_Header_Files_Number;  // The number of the header file included if the file is a source file
-  bool is_this_a_source_file;
-  bool is_this_a_header_file;
-};
 
 class Project_Files_Lister
 {

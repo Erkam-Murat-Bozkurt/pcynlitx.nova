@@ -17,11 +17,10 @@ Source_File_Data_Collector::Source_File_Data_Collector(char * DesPath, char opr_
 
 Source_File_Data_Collector::~Source_File_Data_Collector(){
 
-        this->Clear_Dynamic_Memory();    
+        this->Clear_Dynamic_Memory();
 }
 
 void Source_File_Data_Collector::Initialize_Members(){
-
 
      this->File_Content_Size = 0;
 
@@ -30,25 +29,37 @@ void Source_File_Data_Collector::Initialize_Members(){
      this->git_record_size = 0;
 }
 
-void Source_File_Data_Collector::Receive_Source_File_Data(std::string file_path)
+void Source_File_Data_Collector::Process_Source_File_Data(Build_System_Data * Ptr, std::string path)
 {
+     this->Data_Pointer = Ptr;
+
      this->git_record_size = this->Git_Receiver.Get_Git_File_Index_Size();
 
-     this->Git_Repo_Dir    = this->Git_Receiver.Get_Git_Repo_Directory();
+     this->Git_Repo_Dir  = this->Git_Receiver.Get_Git_Repo_Directory();
 
-     this->FilePATH = file_path;
+     this->FilePATH = path;
 
-     this->Read_File(file_path);
+     this->Read_File(path);
 
      this->Determine_Include_Line_Number();
 
      this->Receive_Include_File_Names();
+
+     this->Place_Data_To_Container();
+}
+
+void Source_File_Data_Collector::Place_Data_To_Container(){
+
+     this->Place_Source_File_Data();
+
+     this->Place_Source_File_Headers_Data();
+
+     this->Determine_Class_Header_File_Name();
 }
 
 
-
-void Source_File_Data_Collector::Read_File(std::string path){
-
+void Source_File_Data_Collector::Read_File(std::string path)
+{
      this->FileManager.Clear_Dynamic_Memory();
 
      this->FileManager.SetFilePath(path);
@@ -131,7 +142,6 @@ void Source_File_Data_Collector::Receive_Include_File_Names(){
             char_before_sharp = true;
          }
 
-
          if(!char_before_sharp){ // In metaprograms, #include key is used on the inside code
 
              if(is_include_line_db){
@@ -187,6 +197,87 @@ void Source_File_Data_Collector::Receive_Include_File_Names(){
           }
       }
 }
+
+
+
+void Source_File_Data_Collector::Place_Source_File_Data(){
+
+     this->Determine_Git_Record_Source_File_Path(&this->Data_Pointer->git_record_path,this->FilePATH);
+
+     this->Determine_Git_Record_Source_File_Directory(&this->Data_Pointer->git_record_dir,this->FilePATH);
+
+     this->Data_Pointer->is_this_a_source_file = true;
+
+     this->Data_Pointer->is_this_a_header_file = false;
+
+     this->Data_Pointer->File_Path = "";  // The file exact path ( System Path )
+
+     this->Determine_Source_File_System_Path(&this->Data_Pointer->File_Path,this->FilePATH);
+
+     this->Extract_Upper_Directory_Path(&this->Data_Pointer->File_Directory,this->Data_Pointer->File_Path);
+
+     this->Determine_File_Name(&this->Data_Pointer->File_Name,this->Data_Pointer->File_Path);
+
+     this->Determine_Source_File_Name_With_Ext(&this->Data_Pointer->File_Name_With_Ext,this->Data_Pointer->File_Name);
+}
+
+void Source_File_Data_Collector::Place_Source_File_Headers_Data(){
+
+     int Inc_Header_Number = this->Get_Included_File_Number();
+
+     this->Data_Pointer->Included_Header_Files_Number = Inc_Header_Number;
+
+     if(Inc_Header_Number > 0){
+
+        for(int k=0;k<Inc_Header_Number;k++){
+
+            this->Place_Headers_Data(k);
+        }
+     }
+}
+
+void Source_File_Data_Collector::Place_Headers_Data(int hdr_num)
+{
+     std::string Included_File =
+
+     this->Get_Include_File_Name(hdr_num);
+
+     std::string Included_File_Directory =
+
+     this->Get_Include_File_Directory(hdr_num);
+
+     std::string Include_File_Git_Record_Dir =
+
+     this->Get_Include_File_Git_Record_Directory(hdr_num);
+
+     std::string Include_File_Git_Record_Path =
+
+     this->Get_Include_File_Git_Record_Path(hdr_num);
+
+     this->Data_Pointer->Included_Header_Files.push_back(Included_File);
+
+     this->Data_Pointer->Included_Header_Files_Directories.push_back(Included_File_Directory);
+
+     this->Data_Pointer->Included_Header_Files_Git_Record_Dir.push_back(Include_File_Git_Record_Dir);
+
+     this->Data_Pointer->Included_Header_Files_Git_Record_Path.push_back(Include_File_Git_Record_Path);
+
+     if(this->operating_sis == 'w'){
+
+        std::string path;
+
+        std::string dir  = this->Data_Pointer->Included_Header_Files_Directories[0];
+
+        std::string name = this->Data_Pointer->Included_Header_Files[0];
+
+        this->Determine_Header_Files_System_Paths(&path,dir,name);
+
+        this->Data_Pointer->Included_Header_Files_System_Path.push_back(path);
+     }
+}
+
+
+
 
 void Source_File_Data_Collector::Determine_Git_Record_Header_File_Path(std::string * header_path,
 
@@ -339,6 +430,50 @@ void Source_File_Data_Collector::Determine_Header_File_Directory(std::string * d
      }
 }
 
+void Source_File_Data_Collector::Determine_Class_Header_File_Name()
+{
+     int total_hdr_number   = this->Data_Pointer->Included_Header_Files_Number;
+
+     std::string  src_name  = this->Data_Pointer->File_Name;
+
+     for(int i=0;i<total_hdr_number;i++){
+
+         std::string  hdr_name =
+
+         this->Data_Pointer->Included_Header_Files[i];
+
+         size_t hdr_name_size = hdr_name.length();
+
+         std::string hdr_temp;
+
+         for(size_t i=0;i<hdr_name_size;i++){
+
+            if(hdr_name[i] == '.'){
+
+               break;
+            }
+            else{
+
+              hdr_temp.append(1,hdr_name[i]);
+            }
+         }
+
+         bool is_equal = this->CompareString(src_name,hdr_temp);
+
+         if(is_equal){
+
+           std::string hdr_path = this->Data_Pointer->Included_Header_Files_System_Path[i];
+
+            this->Data_Pointer->class_header_file_name = src_name;
+
+            this->Data_Pointer->class_header_file_path = hdr_path;
+
+            break;
+         }
+     }
+}
+
+
 void Source_File_Data_Collector::Receive_Include_File_Name(std::string * pointer,
 
      std::string string ){
@@ -373,7 +508,100 @@ void Source_File_Data_Collector::Receive_Include_File_Name(std::string * pointer
      }
 }
 
+void Source_File_Data_Collector::Extract_Upper_Directory_Path(std::string * pointer,
 
+     std::string string_line){
+
+     size_t file_path_size = string_line.length();
+
+     size_t dir_size = file_path_size;
+
+     if(this->operating_sis == 'l'){
+
+        for(size_t i=file_path_size;i>0;i--){
+
+            if(string_line[i] == '/'){
+
+               break;
+            }
+            else{
+
+               dir_size--;
+            }
+        }
+     }
+     else{
+
+           if(this->operating_sis == 'w'){
+
+             for(size_t i=file_path_size;i>0;i--){
+
+                 if(string_line[i] == '\\'){
+
+                    break;
+                 }
+                 else{
+
+                     dir_size--;
+                 }
+             }
+          }
+     }
+
+
+
+     for(size_t i=0;i<dir_size;i++){
+
+         (*pointer).append(1,string_line[i]);
+
+         if(string_line[i] == '/'){
+
+            if(this->operating_sis == 'w'){
+
+               (*pointer)[i] = '\\';
+             }
+         }
+     }
+}
+
+
+void Source_File_Data_Collector::Determine_File_Name(std::string * pointer, std::string string_line){
+
+     size_t string_size = string_line.length();
+
+     size_t dir_size = string_size;
+
+     size_t file_extention_start_point = string_size;
+
+     for(size_t i=string_size;i>0;i--){
+
+         if((string_line[i] == '\\') || (string_line[i] == '/')){
+
+            break;
+         }
+         else{
+
+              dir_size--;
+         }
+     }
+
+     for(size_t i=string_size;i>0;i--){
+
+         if((string_line[i] == '.')){
+
+            break;
+         }
+         else{
+
+              file_extention_start_point--;
+         }
+     }
+
+     for(size_t i=dir_size+1;i<file_extention_start_point;i++){
+
+          (*pointer).append(1,string_line[i]);
+     }
+}
 
 void Source_File_Data_Collector::Extract_Include_File_Name_From_Path(std::string * pointer,
 
@@ -413,17 +641,41 @@ void Source_File_Data_Collector::Determine_Git_Record_Source_File_Directory(std:
 
      for(int i=path_size;i>0;i--){
 
-         if(git_record_path[i] == '/'){
+         if(this->operating_sis =='w'){
 
-           end_point = i;
+           if(git_record_path[i] == '\\'){
 
-           break;
+             end_point = i;
+
+             break;
+           }
+         }
+
+         if(this->operating_sis =='l'){
+
+           if(git_record_path[i] == '/'){
+
+             end_point = i;
+
+             break;
+           }
          }
      }
 
-     dir_size = end_point;
 
-     for(size_t i=0;i<dir_size;i++){
+     size_t repo_dir_size = this->Git_Repo_Dir.length();
+
+     size_t start_point = repo_dir_size;
+
+     if(((git_record_path[repo_dir_size] == '\\' )
+
+         || (git_record_path[repo_dir_size] == '/' ))){
+
+         start_point++;
+     }
+
+
+     for(size_t i=start_point;i<end_point;i++){
 
          (*record_dir).append(1,git_record_path[i]) ;
 
@@ -444,7 +696,18 @@ void Source_File_Data_Collector::Determine_Git_Record_Source_File_Path(std::stri
 
      size_t path_size = file_path.length();
 
-     for(size_t i=0;i<path_size;i++){
+     size_t repo_dir_size = this->Git_Repo_Dir.length();
+
+     size_t start_point = repo_dir_size;
+
+     if(((file_path[repo_dir_size] == '\\' )
+
+         || (file_path[repo_dir_size] == '/' ))){
+
+         start_point++;
+     }
+
+     for(size_t i=start_point;i<path_size;i++){
 
          (*source_file_path).append(1,file_path[i]) ;
 
@@ -458,6 +721,25 @@ void Source_File_Data_Collector::Determine_Git_Record_Source_File_Path(std::stri
      }
 }
 
+void Source_File_Data_Collector::Determine_Source_File_System_Path(std::string * pointer,
+
+    std::string path) {
+
+     size_t path_size = path.length();
+
+     for(size_t i=0;i<path_size;i++){
+
+        (*pointer).append(1,path[i]) ;
+
+        if(this->operating_sis =='w'){
+
+           if((*pointer)[i] == '/'){
+
+              (*pointer)[i] = '\\';
+           }
+        }
+     }
+}
 
 
 void Source_File_Data_Collector::Determine_Header_Files_System_Paths(std::string * pointer,
@@ -473,7 +755,6 @@ void Source_File_Data_Collector::Determine_Header_Files_System_Paths(std::string
 
         (*pointer).append(1,directory[i]);
      }
-
 
      if(this->operating_sis == 'w'){
 
@@ -494,6 +775,28 @@ void Source_File_Data_Collector::Determine_Header_Files_System_Paths(std::string
      for(size_t i=0;i<file_name_size;i++){
 
         (*pointer).append(1,file_name[i]) ;
+     }
+}
+
+void Source_File_Data_Collector::Determine_Source_File_Name_With_Ext(std::string * pointer,
+
+     std::string file_name){
+
+     char source_file_ext [] = ".cpp";
+
+     size_t file_name_size = file_name.length();
+
+
+     for(size_t i=0;i<file_name_size;i++){
+
+         (*pointer).append(1,file_name[i]);
+     }
+
+     size_t ext_size = strlen(source_file_ext);
+
+     for(size_t i=0;i<ext_size;i++){
+
+         (*pointer).append(1,source_file_ext[i]);
      }
 }
 
@@ -526,40 +829,10 @@ void Source_File_Data_Collector::Delete_Spaces_on_String(std::string * pointer)
 }
 
 
-bool Source_File_Data_Collector::CompareString(std::string firstString,
-
-     std::string secondString){
-
-     size_t firstStringLength  = firstString.length();
-
-     size_t secondStringLength = secondString.length();
-
-     this->isStringsEqual = false;
-
-     if(firstStringLength==secondStringLength){
-
-        for(size_t i=0;i<firstStringLength;i++){
-
-            if(firstString[i]!=secondString[i]){
-
-               this->isStringsEqual = false;
-
-               return this->isStringsEqual;
-            }
-        }
-
-        this->isStringsEqual = true;
-
-        return this->isStringsEqual;
-     }
-     else{
-
-          this->isStringsEqual = false;
-
-          return this->isStringsEqual;
-     }
+bool Source_File_Data_Collector::CompareString(std::string sr1, std::string sr2)
+{
+     return this->StringManager.CompareString(sr1,sr2);
 }
-
 
 
 bool Source_File_Data_Collector::Control_Include_Syntax(std::string string){
@@ -628,7 +901,6 @@ bool Source_File_Data_Collector::Character_Inclusion_Check(std::string string, c
 }
 
 
-
 void Source_File_Data_Collector::Clear_Dynamic_Memory(){
 
      if(!this->Head_Data.empty()){
@@ -644,6 +916,11 @@ void Source_File_Data_Collector::Clear_Dynamic_Memory(){
      this->FileManager.Clear_Dynamic_Memory();
 }
 
+
+Build_System_Data * Source_File_Data_Collector::Get_Data_Pointer(){
+
+    return this->Data_Pointer;
+}
 
 int Source_File_Data_Collector::Get_Included_File_Number(){
 

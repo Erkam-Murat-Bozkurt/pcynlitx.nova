@@ -18,7 +18,7 @@ int main(int argc, char ** argv){
 
        exit(0);
     }
-    
+
 
     std::string file_path = "";
 
@@ -29,9 +29,11 @@ int main(int argc, char ** argv){
          file_path.append(1,argv[2][i]);
     }
 
+    Build_System_Data Data;
+
     Source_File_Data_Collector Data_Collector(argv[1],'w');
 
-    Data_Collector.Receive_Source_File_Data(file_path);
+    Data_Collector.Process_Source_File_Data(&Data,file_path);
 
     int Header_File_Number = Data_Collector.Get_Included_File_Number();
 
@@ -61,6 +63,50 @@ int main(int argc, char ** argv){
     }
 
     std::cout << "\n\n";
+
+    std::cout << "\n\n BUILD DATA INFORMATIONS: ";
+
+    std::cout << "\n git_record_path   :"  << Data.git_record_path;   // Header path in git record
+    std::cout << "\n git_record_dir    :"  << Data.git_record_dir;    // The git record directory
+    std::cout << "\n File_Directory    :"  << Data.File_Directory;      // The directory of the file which is record constructed
+    std::cout << "\n File_Path         :"  << Data.File_Path;           // Header file exact path ( System Path )
+    std::cout << "\n File_Name         :"  << Data.File_Name;           // The file name witout extentation
+    std::cout << "\n File_Name (Ext)   :"  << Data.File_Name_With_Ext;  // The header file name with extention
+    std::cout << "\n Header Name       :"  << Data.class_header_file_name;
+    std::cout << "\n Header Path       :"  << Data.class_header_file_path;
+    std::cout << "\n Header Number     :"  << Data.Included_Header_Files_Number;
+    std::cout << "\n Is Source         :"  << Data.is_this_a_source_file;
+    std::cout << "\n Is Header         :"  << Data.is_this_a_header_file;
+
+
+    std::vector<std::string>::iterator it;
+
+    for(auto it=Data.Included_Header_Files.begin();it<Data.Included_Header_Files.end();it++){
+
+        std::cout << "\n Header File :" << *it;
+    }
+
+
+    for(auto it=Data.Included_Header_Files_Directories.begin();it<Data.Included_Header_Files_Directories.end();it++){
+
+        std::cout << "\n Header File :" << *it;
+    }
+
+
+    for(auto it=Data.Included_Header_Files_System_Path.begin();it<Data.Included_Header_Files_System_Path.end();it++){
+
+        std::cout << "\n Header File :" << *it;
+    }
+
+    for(auto it=Data.Included_Header_Files_Git_Record_Path.begin();it<Data.Included_Header_Files_Git_Record_Path.end();it++){
+
+        std::cout << "\n Header File :" << *it;
+    }
+
+    for(auto it=Data.Included_Header_Files_Git_Record_Dir.begin();it<Data.Included_Header_Files_Git_Record_Dir.end();it++){
+
+        std::cout << "\n Header File :" << *it;
+    }
 
     return 0;
 }
