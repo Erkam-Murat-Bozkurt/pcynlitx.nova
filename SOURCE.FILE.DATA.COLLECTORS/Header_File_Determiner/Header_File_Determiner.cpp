@@ -363,7 +363,7 @@ void Header_File_Determiner::Determine_Header_File_System_Path(std::string repo_
 
         if(repo_dir[repo_dir_size] != '\\' ){
 
-           this->Header_File_System_Path[repo_dir_size] = '\\';
+          this->Header_File_System_Path.append(1,'\\');
         }
      }
 
@@ -371,21 +371,37 @@ void Header_File_Determiner::Determine_Header_File_System_Path(std::string repo_
 
        if(repo_dir[repo_dir_size] != '/' ){
 
-         this->Header_File_System_Path[repo_dir_size] = '/';
+         this->Header_File_System_Path.append(1,'/');
        }
      }
 
      for(size_t i=0;i<git_record_size;i++){
 
-         this->Header_File_System_Path.append(1,git_record_path[i]);
+        if((git_record_path[i] == '/') || (git_record_path[i] == '\\')){
 
-         if(operating_sis == 'w'){
+           if(this->operating_sis == 'w'){
 
-            if(this->Header_File_System_Path[i] == '/'){
+              if(git_record_path[i] == '/'){
 
-               this->Header_File_System_Path[i] = '\\' ;
+                this->Header_File_System_Path.append(1,'\\');
+              }
+           }
+           else{
+
+                 if(this->operating_sis == 'l'){
+
+                  if(git_record_path[i] == '\\'){
+
+                     this->Header_File_System_Path.append(1,'/');
+                  }
              }
-          }
+           }
+        }
+        else{
+
+            this->Header_File_System_Path.append(1,git_record_path[i]);
+
+        }
      }
 }
 

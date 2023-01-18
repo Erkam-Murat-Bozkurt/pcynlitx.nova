@@ -52,7 +52,7 @@ void Project_Files_Lister::Determine_Git_Repo_Info()
 
      this->Collect_Independent_Header_Files_Data();
 
-     this->Determine_Class_Header_Files();
+     //this->Determine_Class_Header_Files();
 }
 
 
@@ -103,15 +103,22 @@ void Project_Files_Lister::Collect_Source_Files_Data()
 
             this->Src_Data_Col.Clear_Dynamic_Memory();
 
+            this->Src_Data_Col.Process_Source_File_Data(&Temp_Data,file_path);
+
+            /*
+
             this->Place_Source_File_Data(&Temp_Data,file_path);
 
             this->Place_Source_File_Headers_Data(&Temp_Data);
+
+            */
 
             this->Data.push_back(Temp_Data);
          }
       }
 }
 
+/*
 
 void Project_Files_Lister::Place_Source_File_Data(Build_System_Data * Data, std::string src_path)
 {
@@ -251,7 +258,7 @@ void Project_Files_Lister::Determine_Class_Header_File_Name(int data_num)
      }
 }
 
-
+*/
 
 void Project_Files_Lister::Collect_Independent_Header_Files_Data()
 {
