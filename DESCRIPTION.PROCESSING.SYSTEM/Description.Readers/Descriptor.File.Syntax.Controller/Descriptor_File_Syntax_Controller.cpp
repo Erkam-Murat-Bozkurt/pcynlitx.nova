@@ -6,7 +6,6 @@ Descriptor_File_Syntax_Controller::Descriptor_File_Syntax_Controller(char * path
 
   StringManager(path), FileManager(path)
 {
-
    this->Memory_Delete_Condition = false;
 }
 
@@ -34,6 +33,11 @@ void Descriptor_File_Syntax_Controller::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
+         if(!this->File_Index.empty()){
+
+             this->File_Index.clear();
+         }
+
          this->FileManager.Clear_Dynamic_Memory();
      }
 }
@@ -53,8 +57,7 @@ void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Index(){
      this->FileManager.FileOpen(Rf);
 
      do{
-
-          std::string string_line = this->FileManager.Read();
+          std::string string_line = this->FileManager.ReadLine();
 
           this->Delete_Spaces_on_String(&string_line);
 
@@ -220,24 +223,25 @@ int Descriptor_File_Syntax_Controller::Determine_Repitation(std::string search_w
 }
 
 
-void Descriptor_File_Syntax_Controller::Delete_Spaces_on_String(std::string * pointer){
+void Descriptor_File_Syntax_Controller::Delete_Spaces_on_String(std::string * str)
+{
+     size_t string_size = str->length();
 
-     size_t string_size = (*pointer).length();
+     bool search_cond = true;
 
-     int remove_index = 0;
+     do{
 
-     for(size_t i=0;i<string_size;i++){
+       search_cond = false;
 
-         if((*pointer)[i] == ' '){
+        for(size_t i=0;i<str->length();i++){
 
-            for(size_t k=i;k<string_size;k++){
+           if((*str)[i] == ' '){
 
-               (*pointer)[k] = (*pointer)[k+1];
-            }
+              search_cond = true;
 
-            remove_index++;
-         }
-     }
+              str->erase(i,1);
+           }
+        }
 
-     (*pointer)[string_size - remove_index+1] = '\0';
+     }while(search_cond);
 }

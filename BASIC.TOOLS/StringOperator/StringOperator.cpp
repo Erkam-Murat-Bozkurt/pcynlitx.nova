@@ -48,7 +48,7 @@ StringOperator::~StringOperator(){
 
     if(!this->Memory_Delete_Condition){
 
-        this->Cpp_File_Manager.Clear_Dynamic_Memory();
+        this->Clear_Dynamic_Memory();
     }
 }
 
@@ -65,6 +65,16 @@ void StringOperator::Initialize_Members(){
      this->Memory_Delete_Condition = false;
 
      this->Word_Count = 0;
+}
+
+void StringOperator::Clear_Dynamic_Memory(){
+
+     if(!this->Memory_Delete_Condition){
+
+         this->Memory_Delete_Condition = true;
+
+         this->Cpp_File_Manager.Clear_Dynamic_Memory();
+     }
 }
 
 size_t StringOperator::GetBufferLength(){

@@ -57,7 +57,7 @@ void Descriptor_File_Data_Collector::Initialize_Members(){
      this->Library_Directories_Record_Number = 0;
      this->Source_File_Directories_Record_Number = 0;
      this->Include_Directories_Record_Number = 0;
-     this->Memory_Delete_Condition = true;
+     this->Memory_Delete_Condition = false;
 
      this->Descriptor_File_Path = "";
 }
@@ -72,6 +72,15 @@ void Descriptor_File_Data_Collector::Clear_Dynamic_Memory()
 
            this->File_Index.clear();
          }
+
+         if(!this->Descriptor_File_Path.empty()){
+
+             this->Descriptor_File_Path.clear();
+         }
+
+         this->StringManager.Clear_Dynamic_Memory();
+
+         this->FileManager.Clear_Dynamic_Memory();
      }
 }
 
@@ -95,6 +104,10 @@ void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(){
      this->Determine_Library_Files_Record_Area();
 
      this->Determine_Options_Record_Area();
+
+     this->StringManager.Clear_Dynamic_Memory();
+
+     this->FileManager.Clear_Dynamic_Memory();
 }
 
 
@@ -105,6 +118,8 @@ void Descriptor_File_Data_Collector::Receive_Descriptor_File_Index(){
      this->File_Size = 0;
 
      int index = 0;
+
+     this->Memory_Delete_Condition = false;
 
      do{
           std::string string_line = this->FileManager.ReadLine();
@@ -369,35 +384,27 @@ int Descriptor_File_Data_Collector::FindStringPoint(std::string search_word,int 
 }
 
 
-void Descriptor_File_Data_Collector::Delete_Spaces_on_String(std::string * pointer)
+void Descriptor_File_Data_Collector::Delete_Spaces_on_String(std::string * str)
 {
-     size_t string_size = pointer->length();
+    size_t string_size = str->length();
 
-     if(string_size>0){
+    bool search_cond = true;
 
-        int remove_index = 0;
+    do{
 
-        for(size_t j=0;j<string_size;j++){
+        search_cond = false;
 
-           for(size_t i=0;i<string_size;i++){
+        for(size_t i=0;i<str->length();i++){
 
-              if((((*pointer)[i] == ' ') || (((*pointer)[i] == '\t')))) {
+           if((*str)[i] == ' '){
 
-                 for(size_t k=i;k<string_size-1;k++){
+              search_cond = true;
 
-                    (*pointer)[k] = (*pointer)[k+1];
-                 }
-
-                 remove_index++;
-              }
-            }
+              str->erase(i,1);
+           }
         }
 
-        for(size_t i=0;i<remove_index;i++){
-
-            (*pointer).pop_back();
-        }
-     }
+  }while(search_cond);
 }
 
 

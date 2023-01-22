@@ -30,10 +30,15 @@ CharOperator::CharOperator(){
 
 CharOperator::CharOperator(char * FilePath) : FileManager (FilePath) {
 
+    this->Memory_Delete_Condition = false;
+
 
 }
 
 CharOperator::CharOperator(std::string FilePath): FileManager (FilePath){
+
+
+    this->Memory_Delete_Condition = false;
 
 }
 

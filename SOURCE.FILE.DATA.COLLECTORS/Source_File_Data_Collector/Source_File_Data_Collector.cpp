@@ -800,32 +800,27 @@ void Source_File_Data_Collector::Determine_Source_File_Name_With_Ext(std::string
      }
 }
 
-void Source_File_Data_Collector::Delete_Spaces_on_String(std::string * pointer)
+void Source_File_Data_Collector::Delete_Spaces_on_String(std::string * str)
 {
-     size_t string_size = (*pointer).length();
+      size_t string_size = str->length();
 
-     int remove_index = 0;
+      bool search_cond = true;
 
-     if(string_size>0){
+      do{
 
-        for(size_t i=0;i<string_size;i++){
+         search_cond = false;
 
-            if((*pointer)[i] == ' '){
+         for(size_t i=0;i<str->length();i++){
 
-                for(size_t k=i;k<string_size;k++){
+           if((*str)[i] == ' '){
 
-                   (*pointer)[k] = (*pointer)[k+1];
-                }
+             search_cond = true;
 
-                remove_index++;
-            }
-        }
+             str->erase(i,1);
+           }
+         }
 
-        for(size_t i=0;i<remove_index;i++){
-
-            (*pointer).pop_back();
-        }
-     }
+      }while(search_cond);
 }
 
 

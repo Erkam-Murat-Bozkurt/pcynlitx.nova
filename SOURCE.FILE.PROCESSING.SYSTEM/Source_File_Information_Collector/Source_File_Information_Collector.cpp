@@ -24,30 +24,37 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Source_File_Information_Collector.hpp"
 
-Source_File_Information_Collector::Source_File_Information_Collector(char * descriptor_file_path){
+Source_File_Information_Collector::Source_File_Information_Collector(char * des_file_path, char opr_sis) :
 
-   this->Memory_Delete_Condition = true;
+   Des_Reader(des_file_path), File_Lister(des_file_path, opr_sis),
 
-   this->Data_Ptr_CString = nullptr;
+   Git_Data_Receiver(des_file_path), Header_Determiner(des_file_path,opr_sis)
+{
 
-   this->Des_Reader.Read_Descriptor_File(descriptor_file_path);
+   this->Memory_Delete_Condition = false;
 
-   this->warehouse_path = this->Des_Reader.Get_Warehouse_Location();
+   this->operating_sis = opr_sis;
 
-   this->Git_Data_Receiver.Receive_Descriptor_File_Reader(&this->Des_Reader);
+   this->Des_Reader.Read_Descriptor_File();
 
-   this->Git_Data_Receiver.Determine_Git_Repo_Info();
+   this->warehouse_path
 
-   this->File_Lister_Pointer.Determine_Git_Repo_Info(&this->Des_Reader);
+   = this->Des_Reader.Get_Warehouse_Location();
+
+   this->Des_Reader.Clear_Dynamic_Memory();
+
+   this->Git_Data_Receiver.Determine_Git_Repo_Info();   //  Git_File_List_Receiver instance
+
+   this->File_Lister.Determine_Git_Repo_Info();         // Project_Files_Lister instance
 }
 
 
 Source_File_Information_Collector::~Source_File_Information_Collector(){
 
-   if(!this->Memory_Delete_Condition){
+    if(!this->Memory_Delete_Condition){
 
-       this->Clear_Dynamic_Memory();
-   }
+      this->Clear_Dynamic_Memory();
+    }
 }
 
 
@@ -57,51 +64,40 @@ void Source_File_Information_Collector::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         delete [] this->warehouse_head_dir;
+         std::vector<Headers_Data>::iterator ith;
 
-         delete [] this->warehouse_obj_dir;
+         if(!this->v_head_data.empty()){
 
-        if(this->Data_Ptr_CString != nullptr){
+            for(auto ith=this->v_head_data.begin();ith<this->v_head_data.end();ith++){
 
-           for(int i=0;i<this->header_file_number;i++){
+                if(ith->included_headers.empty()){
+                   ith->included_headers.clear();
+                }
+            }
 
-               if(this->Data_Ptr_CString[i].repo_path != nullptr){
+            this->v_head_data.clear();
+         }
 
-                  delete [] this->Data_Ptr_CString[i].repo_path;
-               }
+         std::vector<Compiler_Data>::iterator it;
 
-               if(this->Data_Ptr_CString[i].header_name != nullptr){
+         if(!this->Data.empty()){
 
-                  delete [] this->Data_Ptr_CString[i].header_name;
-               }
+           for(auto it=this->Data.begin();it<this->Data.end();it++){
 
-               if(this->Data_Ptr_CString[i].object_file_name != nullptr){
+              if(!it->included_headers.empty()){
+                 it->included_headers.clear();
+              }
 
-                  delete [] this->Data_Ptr_CString[i].object_file_name;
-               }
-
-               int inc_num = this->Data_Ptr_CString[i].inclusion_number;
-
-               if(inc_num > 0){
-
-                  for(int k=0;k<inc_num;k++){
-
-                      if(this->Data_Ptr_CString[i].included_headers[k] != nullptr){
-
-                         delete [] this->Data_Ptr_CString[i].included_headers[k];
-
-                         delete [] this->Data_Ptr_CString[i].included_headers_path[k];
-                      }
-                  }
-
-                  delete [] this->Data_Ptr_CString[i].included_headers;
-               }
+              if(!it->included_headers_path.empty()){
+                  it->included_headers_path.clear();
+              }
            }
-        }
+         }
+
 
         this->Git_Data_Receiver.Clear_Dynamic_Memory();
 
-        this->File_Lister_Pointer.Clear_Dynamic_Memory();
+        this->File_Lister.Clear_Dynamic_Memory();
 
         this->Des_Reader.Clear_Dynamic_Memory();
      }
@@ -109,13 +105,14 @@ void Source_File_Information_Collector::Clear_Dynamic_Memory(){
 
 void Source_File_Information_Collector::Collect_Make_File_Data(){
 
-     this->Determine_Warehouse_Header_Dir('w');
+     this->Determine_Warehouse_Header_Dir();
 
-     this->Determine_Warehouse_Object_Dir('w');
+     this->Determine_Warehouse_Object_Dir();
 
      this->Determine_Header_File_List();
 
      this->Extract_Compiler_Data();
+
 }
 
 void Source_File_Information_Collector::Determine_Header_File_List(){
@@ -126,7 +123,7 @@ void Source_File_Information_Collector::Determine_Header_File_List(){
 
      for(int i=0;i<index_size;i++){
 
-         char * path = this->Git_Data_Receiver.Get_Git_File_Index(i);
+         std::string path = this->Git_Data_Receiver.Get_Git_File_Index(i);
 
          bool is_header = this->Header_Determiner.Is_Header(path);
 
@@ -136,33 +133,30 @@ void Source_File_Information_Collector::Determine_Header_File_List(){
 
             this->Header_Determiner.Determine_Header_File_Name_With_Extention(path);
 
-            char * head_name = this->Header_Determiner.Get_Header_File_Name_With_Ext();
+            std::string head_name = this->Header_Determiner.Get_Header_File_Name_With_Ext();
 
-            char * header_path = nullptr;
+            std::string header_path = "";
 
             this->Determine_Header_Repo_Warehouse_Path(&header_path,head_name,'w');
 
 
             Headers_Data Temp_Data;
 
-            size_t path_size = strlen(header_path);
+            Temp_Data.repo_path = header_path;
 
-            this->Place_String(&(Temp_Data.repo_path),header_path);
-
-
-            size_t name_size = strlen(head_name);
-
-            this->Place_String(&(Temp_Data.name),head_name);
+            Temp_Data.name = head_name;
 
             Temp_Data.inclusion_number = 0;
 
             Temp_Data.priority = 0;
 
             this->v_head_data.push_back(Temp_Data);
-
-            delete header_path;
          }
       }
+
+      this->Git_Data_Receiver.Clear_Dynamic_Memory();
+
+      this->Header_Determiner.Clear_Dynamic_Memory();
 }
 
 void Source_File_Information_Collector::Extract_Compiler_Data(){
@@ -171,197 +165,142 @@ void Source_File_Information_Collector::Extract_Compiler_Data(){
 
      this->Memory_Delete_Condition = false;
 
-     this->Data_Ptr_CString = new Compiler_Data_CString [5*dt_size];
-
-     this->Initialize_Header_Data();
-
      for(std::size_t i = 0;i<dt_size;i++){
 
          std::string path = this->v_head_data[i].repo_path;
 
-         char * c_path =nullptr;
+         this->FileManager.Clear_Dynamic_Memory();
 
-         this->Convert_to_CString(&c_path,path);
-
-         this->FileManager.Read_File_as_CString(c_path);
+         this->FileManager.Read_File(path);
 
          int FileSize = this->FileManager.GetFileSize();
 
          for(int k=0;k<FileSize;k++){
 
-             char * string = this->FileManager.GetFileLine(k);
+             std::string string = this->FileManager.GetFileLine(k);
 
              // In order to remove possible spaces on the string
 
              // a temporary string is constructed
 
-             char * tmp_string = nullptr;
+             this->Delete_Spaces_on_String(&string);
 
-             this->Construct_Temporary_String(&tmp_string,string);
-
-             this->Delete_Spaces_on_String(&tmp_string);
-
-
-             bool is_include_decleration = this->Include_Decleration_Test(tmp_string);
+             bool is_include_decleration = this->Include_Decleration_Test(string);
 
 
              if(is_include_decleration){
 
                  this->v_head_data[i].inclusion_number++;
              }
-
-             this->Clear_Pointer_Memory(&tmp_string);
           }
 
 
-          this->Clear_Pointer_Memory(&c_path);
-      }
 
-      for(std::size_t i = 0;i<dt_size;i++){
-
-          std::string path = this->v_head_data[i].repo_path;
-
-          std::string name = this->v_head_data[i].name;
-
-          int head_inc_number = this->v_head_data[i].inclusion_number;
+          if(this->v_head_data[i].inclusion_number > 1){
 
 
-          this->Place_CString(&(this->Data_Ptr_CString[i].repo_path),path);
-
-          this->Place_CString(&(this->Data_Ptr_CString[i].header_name),name);
-
-          bool is_indep = this->is_this_independent_header(name);
-
-          if(is_indep){
-
-            this->Data_Ptr_CString[i].object_file_name = nullptr;
-          }
-          else{
-
-               this->Extract_Obj_File_Name_From_Header_Name(&(this->Data_Ptr_CString[i].object_file_name),name);
-          }
+             Compiler_Data Temp_Data;
 
 
-          if(head_inc_number > 0){
+             Temp_Data.repo_path        = this->v_head_data[i].repo_path;
 
-             this->Data_Ptr_CString[i].included_headers = new char * [5*head_inc_number];
+             Temp_Data.header_name      = this->v_head_data[i].name;
 
-             this->Data_Ptr_CString[i].included_headers_path = new char * [5*head_inc_number];
-
-             this->Data_Ptr_CString[i].inclusion_number = head_inc_number;
-
-             this->Data_Ptr_CString[i].priority = head_inc_number;
+             Temp_Data.inclusion_number = this->v_head_data[i].inclusion_number;
 
 
-             char * c_path =nullptr;
+             bool is_indep = this->is_this_independent_header(Temp_Data.header_name);
 
-             this->Convert_to_CString(&c_path,path);
+             if(is_indep){
 
-             this->FileManager.Read_File_as_CString(c_path);
+                Temp_Data.object_file_name = "";
+             }
+             else{
+
+                this->Extract_Obj_File_Name_From_Header_Name(&(Temp_Data.object_file_name),
+
+                 Temp_Data.header_name);
+             }
+
+             Temp_Data.priority = Temp_Data.inclusion_number;
 
              int FileSize = this->FileManager.GetFileSize();
+
 
              int inclusion_index = 0;
 
              for(int k=0;k<FileSize;k++){
 
-                 char * string = this->FileManager.GetFileLine(k);
+                 std::string string = this->FileManager.GetFileLine(k);
 
                  // In order to remove possible spaces on the string
 
                  // a temporary string is constructed
 
-                 char * tmp_string = nullptr;
+                 this->Delete_Spaces_on_String(&string);
 
-                 this->Construct_Temporary_String(&tmp_string,string);
-
-                 this->Delete_Spaces_on_String(&tmp_string);
-
-                 bool is_include_decleration = this->Include_Decleration_Test(tmp_string);
+                 bool is_include_decleration = this->Include_Decleration_Test(string);
 
 
                  if(is_include_decleration){
 
-                    char * header_name = nullptr;
+                    std::string header_name = "";
 
-                    this->Extract_Header_File_Name_From_Decleration(&header_name,tmp_string);
+                    this->Extract_Header_File_Name_From_Decleration(&header_name,string);
 
-                    char ** header_address
+                    Temp_Data.included_headers.push_back(header_name);
 
-                    = &(this->Data_Ptr_CString[i].included_headers[inclusion_index]);
+                    std::string header_path_address;
 
-                    this->Place_CString(header_address,header_name);
+                    this->Determine_Header_Repo_Warehouse_Path(&header_path_address,header_name,'w');
 
-                    char ** header_path_address
-
-                    = &(this->Data_Ptr_CString[i].included_headers_path[inclusion_index]);
-
-
-                    this->Determine_Header_Repo_Warehouse_Path(header_path_address,header_name,'w');
+                    Temp_Data.included_headers_path.push_back(header_path_address);
 
                     inclusion_index++;
+                  }
+              }
 
-                    this->Clear_Pointer_Memory(&header_name);
-
-                 }
-
-                 this->Clear_Pointer_Memory(&tmp_string);
-            }
-
-            this->Clear_Pointer_Memory(&c_path);
+              this->Data.push_back(Temp_Data);
           }
         }
 
         this->v_head_data.clear();
 }
 
-void Source_File_Information_Collector::Determine_Header_Repo_Warehouse_Path(char ** wrd_path,
 
-     char * file_name, char opr_sis){
+void Source_File_Information_Collector::Determine_Header_Repo_Warehouse_Path(std::string * wrd_path,
 
-     size_t name_size = strlen(file_name);
+     std::string file_name, char opr_sis){
 
-     size_t wrd_path_size = strlen(this->warehouse_head_dir);
+     size_t name_size = file_name.length();
 
-     size_t path_size = name_size + wrd_path_size;
-
-     *wrd_path = new char [5*path_size];
-
-     size_t index = 0;
+     size_t wrd_path_size = this->warehouse_head_dir.length();
 
      for(size_t i=0;i<wrd_path_size;i++){
 
-         (*wrd_path)[index] = this->warehouse_head_dir[i];
-
-         index++;
+         (*wrd_path).append(1,this->warehouse_head_dir[i]);
      }
 
      if(opr_sis == 'w'){
 
-       (*wrd_path)[index] = '\\';
+         (*wrd_path).append(1,'\\');
      }
      else{
 
-       (*wrd_path)[index] = '/';
+         (*wrd_path).append(1,'/');
      }
-
-     index++;
 
      for(size_t i=0;i<name_size;i++){
 
-         (*wrd_path)[index] = file_name[i];
-
-         index++;
+        (*wrd_path).append(1,file_name[i]);
      }
-
-     (*wrd_path)[index] = '\0';
 }
 
-void Source_File_Information_Collector::Extract_Header_File_Name_From_Decleration(char ** header_name,
+void Source_File_Information_Collector::Extract_Header_File_Name_From_Decleration(std::string * header_name,
 
-     char * string){
+     std::string string){
 
-     size_t size = strlen(string);
+     size_t size = string.length();
 
      int start_point = 0;
 
@@ -393,72 +332,43 @@ void Source_File_Information_Collector::Extract_Header_File_Name_From_Decleratio
         }
      }
 
-     int Name_Size = end_point - start_point;
-
-     *header_name = new char [5*Name_Size];
-
-     int index_counter = 0;
-
      for(int i=start_point;i<end_point;i++){
 
-          (*header_name)[index_counter] = string[i];
-
-          index_counter++;
+          (*header_name).append(1,string[i]);
      }
-
-     (*header_name)[index_counter] = '\0';
 }
 
 
-void Source_File_Information_Collector::Delete_Spaces_on_String(char ** pointer){
+void Source_File_Information_Collector::Delete_Spaces_on_String(std::string * str){
 
-     size_t string_size = strlen(*pointer);
+     size_t string_size = str->length();
 
-     int remove_index = 0;
+     bool search_cond = true;
 
-     for(size_t i=0;i<string_size;i++){
+     do{
 
-         if((*pointer)[i] == ' '){
+         search_cond = false;
 
-            for(size_t k=i;k<string_size;k++){
+         for(size_t i=0;i<str->length();i++){
 
-               (*pointer)[k] = (*pointer)[k+1];
+            if((*str)[i] == ' '){
+
+               search_cond = true;
+
+               str->erase(i,1);
             }
-
-            remove_index++;
          }
-     }
 
-     (*pointer)[string_size - remove_index+1] = '\0';
-}
-
-void Source_File_Information_Collector::Construct_Temporary_String(char ** tmp_string,
-
-     char * string){
-
-     size_t string_size = strlen(string);
-
-     *tmp_string = new char [5*string_size];
-
-     for(size_t n=0;n<5*string_size;n++){
-
-        (*tmp_string)[n] = '\0';
-     }
-
-     for(size_t n=0;n<string_size;n++){
-
-        (*tmp_string)[n] = string[n];
-     }
-
-     (*tmp_string)[string_size] = '\0';
+     }while(search_cond);
 }
 
 
-bool Source_File_Information_Collector::Include_Decleration_Test(char * string){
+
+bool Source_File_Information_Collector::Include_Decleration_Test(std::string string){
 
      this->include_decleration_cond = false;
 
-     char include_key [] = "#include\"";  // double_quotation_mark
+     std::string include_key = "#include\"";  // double_quotation_mark
 
      bool is_this_include_dec
 
@@ -491,245 +401,163 @@ bool Source_File_Information_Collector::Include_Decleration_Test(char * string){
 }
 
 
-void Source_File_Information_Collector::Determine_Warehouse_Header_Dir(char operating_sis){
+void Source_File_Information_Collector::Determine_Warehouse_Header_Dir(){
 
-     char warehouse_word   [] = "WAREHOUSE";
+     std::string warehouse_word = "WAREHOUSE";
 
-     char header_directory [] = "PROJECT.HEADER.FILES";
+     std::string header_directory = "PROJECT.HEADER.FILES";
 
-     size_t warehouse_path_size = strlen(this->warehouse_path);
+     size_t warehouse_path_size = this->warehouse_path.length();
 
-     size_t head_dir_size = strlen(header_directory);
+     size_t head_dir_size = header_directory.length();
 
-     size_t wr_word_size  = strlen(warehouse_word);
-
-     size_t path_size = warehouse_path_size + head_dir_size + wr_word_size;
-
-     this->warehouse_head_dir = new char [5*path_size];
-
-     int index = 0;
+     size_t wr_word_size  = warehouse_word.length();
 
      for(size_t i=0;i<warehouse_path_size;i++){
 
-        this->warehouse_head_dir[index] = this->warehouse_path[i];
-
-        index++;
+        this->warehouse_head_dir.append(1,this->warehouse_path[i]);
      }
 
-     if(operating_sis == 'w'){
+     if(this->operating_sis == 'w'){
 
         if(this->warehouse_head_dir[warehouse_path_size-1] != '\\'){
 
-           this->warehouse_head_dir[index] = '\\';
-
-           index++;
+           this->warehouse_head_dir.append(1,'\\');
         }
      }
 
-     if(operating_sis == 'l'){
+     if(this->operating_sis == 'l'){
 
          if(this->warehouse_head_dir[warehouse_path_size-1] != '/'){
 
-            this->warehouse_head_dir[index] = '/';
-
-            index++;
+           this->warehouse_head_dir.append(1,'/');
          }
      }
 
      for(size_t i=0;i<wr_word_size;i++){
 
-         this->warehouse_head_dir[index] = warehouse_word[i];
-
-         index++;
+         this->warehouse_head_dir.append(1,warehouse_word[i]);
      }
 
-     if(operating_sis == 'w'){
+     if(this->operating_sis == 'w'){
 
         if(this->warehouse_head_dir[warehouse_path_size-1] != '\\'){
 
-           this->warehouse_head_dir[index] = '\\';
-
-           index++;
+           this->warehouse_head_dir.append(1, '\\');
         }
      }
 
-     if(operating_sis == 'l'){
+     if(this->operating_sis == 'l'){
 
         if(this->warehouse_head_dir[warehouse_path_size-1] != '/'){
 
-           this->warehouse_head_dir[index] = '/';
-
-           index++;
+           this->warehouse_head_dir.append(1,'/');
         }
      }
 
      for(size_t i=0;i<head_dir_size;i++){
 
-         this->warehouse_head_dir[index] = header_directory[i];
-
-         index++;
+         this->warehouse_head_dir.append(1,header_directory[i]);
      }
-
-     this->warehouse_head_dir[index] = '\0';
 }
 
 
-void Source_File_Information_Collector::Determine_Warehouse_Object_Dir(char operating_sis){
+void Source_File_Information_Collector::Determine_Warehouse_Object_Dir(){
 
-     char object_directory [] = "PROJECT.OBJECT.FILES";
+     std::string object_directory  = "PROJECT.OBJECT.FILES";
 
-     char warehouse_word   [] = "WAREHOUSE";
+     std::string warehouse_word    = "WAREHOUSE";
 
-     size_t warehouse_path_size = strlen(this->warehouse_path);
+     size_t warehouse_path_size = this->warehouse_path.length();
 
-     size_t object_dir_size = strlen(object_directory);
+     size_t object_dir_size     = object_directory.length();
 
-     size_t wr_word_size  = strlen(warehouse_word);
+     size_t wr_word_size        = warehouse_word.length();
 
-
-     size_t path_size = warehouse_path_size
-
-            + object_dir_size + wr_word_size;
-
-
-     this->warehouse_obj_dir = new char [5*path_size];
-
-     int index = 0;
 
      for(size_t i=0;i<warehouse_path_size;i++){
 
-         this->warehouse_obj_dir[index] = this->warehouse_path[i];
-
-         index++;
+         this->warehouse_obj_dir.append(1,this->warehouse_path[i]);
      }
 
-     if(operating_sis == 'w'){
+     if(this->operating_sis == 'w'){
 
         if(this->warehouse_path[warehouse_path_size-1] != '\\'){
 
-           this->warehouse_obj_dir[index] = '\\';
-
-           index++;
+           this->warehouse_obj_dir.append(1,'\\');
         }
      }
 
-     if(operating_sis == 'l'){
+     if(this->operating_sis == 'l'){
 
         if(this->warehouse_path[warehouse_path_size-1] != '/'){
 
-            this->warehouse_obj_dir[index] = '/';
-
-            index++;
+            this->warehouse_obj_dir.append(1,'/');
         }
      }
 
      for(size_t i=0;i<wr_word_size;i++){
 
-         this->warehouse_obj_dir[index] = warehouse_word[i];
-
-         index++;
+         this->warehouse_obj_dir.append(1,warehouse_word[i]);
      }
 
-     if(operating_sis == 'w'){
+     if(this->operating_sis == 'w'){
 
         if(this->warehouse_path[warehouse_path_size-1] != '\\'){
 
-           this->warehouse_obj_dir[index] = '\\';
-
-           index++;
+           this->warehouse_obj_dir.append(1,'\\');
         }
      }
 
-     if(operating_sis == 'l'){
+     if(this->operating_sis == 'l'){
 
         if(this->warehouse_path[warehouse_path_size-1] != '/'){
 
-           this->warehouse_obj_dir[index] = '/';
-
-           index++;
+           this->warehouse_obj_dir.append(1,'/');
         }
      }
 
      for(size_t i=0;i<object_dir_size;i++){
 
-         this->warehouse_obj_dir[index] = object_directory[i];
-
-         index++;
+         this->warehouse_obj_dir.append(1,object_directory[i]);
      }
-
-     this->warehouse_obj_dir[index] = '\0';
 }
 
 
-void Source_File_Information_Collector::Clear_Pointer_Memory(char ** Pointer){
-
-     if(*Pointer != nullptr){
-
-        delete [] *Pointer;
-
-        *Pointer = nullptr;
-     }
- }
-
- void Source_File_Information_Collector::Convert_to_CString(char ** pointer, std::string path){
-
-      if(*pointer != nullptr){
-
-         delete [] *pointer;
-
-         *pointer = nullptr;
-      }
-
-      size_t string_size = path.length();
-
-      *pointer = new char [5*string_size];
-
-      for(size_t i=0;i<5*string_size;i++){
-
-          (*pointer)[i] = '\0';
-      }
-
-      for(size_t i=0;i<string_size;i++){
-
-          (*pointer)[i] = path[i];
-      }
-
-      (*pointer)[string_size] = '\0';
-  }
+void Source_File_Information_Collector::Print_Header_Data(){
 
 
-  void Source_File_Information_Collector::Print_Header_Data(){
 
-       for(int i=0;i<this->header_file_number;i++){
+     for(size_t i=0;i<this->Data.size();i++){
 
-           if(this->Data_Ptr_CString[i].header_name != nullptr){
+         if(this->Data[i].inclusion_number > 0){
 
-              std::cout << "\n\n";
+            std::cout << "\n\n";
 
-              std::cout << "\n Header Number:" << i;
+            std::cout << "\n Header Number:" << i;
 
-              std::cout << "\n repo_path:  "   << this->Data_Ptr_CString[i].repo_path;
+              std::cout << "\n repo_path:  "   << this->Data[i].repo_path;
 
-              std::cout << "\n header_name:" << this->Data_Ptr_CString[i].header_name;
+              std::cout << "\n header_name:" << this->Data[i].header_name;
 
               std::cout << "\n inclusion_number:"
 
-              <<  this->Data_Ptr_CString[i].inclusion_number;
+              <<  this->Data[i].inclusion_number;
 
               std::cout << "\n\n";
 
 
-              int inc_number = this->Data_Ptr_CString[i].inclusion_number;
+              int inc_number = this->Data[i].inclusion_number;
 
               for(int k=0;k<inc_number;k++){
 
                   std::cout << "\n include header -" << k
 
-                  << ":" << this->Data_Ptr_CString[i].included_headers[k];
+                  << ":" << this->Data[i].included_headers[k];
 
                   std::cout << "\n include header path -" << k
 
-                  << ":" << this->Data_Ptr_CString[i].included_headers_path[k];
+                  << ":" << this->Data[i].included_headers_path[k];
 
                   std::cout << "\n\n";
               }
@@ -740,41 +568,13 @@ void Source_File_Information_Collector::Clear_Pointer_Memory(char ** Pointer){
   }
 
 
-  void Source_File_Information_Collector::Initialize_Header_Data(){
-
-       std::size_t dt_size = this->v_head_data.size();
-
-       this->header_file_number = dt_size;
-
-       for(int i=0;i<this->header_file_number;i++){
-
-           this->Data_Ptr_CString[i].repo_path = nullptr;
-
-           this->Data_Ptr_CString[i].header_name = nullptr;
-
-           this->Data_Ptr_CString[i].inclusion_number = 0;
-
-           this->Data_Ptr_CString[i].rcr_srch_complated = false;
-       }
-  }
-
-
-  void Source_File_Information_Collector::Extract_Obj_File_Name_From_Header_Name(char ** object_name,
+  void Source_File_Information_Collector::Extract_Obj_File_Name_From_Header_Name(std::string * object_name,
 
        std::string header_name){
 
        size_t header_name_size = header_name.length();
 
-       *object_name = new char [5*header_name_size];
-
-       for(size_t i=0;i<5*header_name_size;i++){
-
-          (*object_name)[i] = '\0';
-       }
-
-      size_t index = 0;
-
-      for(size_t i=0;i<header_name_size;i++){
+       for(size_t i=0;i<header_name_size;i++){
 
           if(header_name[i] == '.'){
 
@@ -782,44 +582,30 @@ void Source_File_Information_Collector::Clear_Pointer_Memory(char ** Pointer){
           }
           else{
 
-            (*object_name)[index] = header_name[i];
-
-            index++;
+            (*object_name).append(1,header_name[i]);
           }
-      }
+       }
 
-      (*object_name)[index] = '.';
+       (*object_name).append(1,'.');
 
-      index++;
-
-      (*object_name)[index] = 'o';
-
-      index++;
-
-      (*object_name)[index] = '\0';
+       (*object_name).append(1,'o');
   }
 
   bool Source_File_Information_Collector::is_this_independent_header(std::string header_name){
 
-       char * cstring_header = nullptr;
-
-       this->Convert_to_CString(&cstring_header,header_name);
-
        this->is_independent_header = false;
 
-       int ind_header_num = this->File_Lister_Pointer.Get_Indenpendent_Header_Files_Number();
+       int ind_header_num = this->File_Lister.Get_Indenpendent_Header_Files_Number();
 
        for(int i=0;i<ind_header_num;i++){
 
-           char * ind_header_path = this->File_Lister_Pointer.Get_Independent_Header_File(i);
+           std::string ind_header_path = this->File_Lister.Get_Independent_Header_File(i);
 
-           char * ind_header = nullptr;
+           std::string ind_header = "";
 
-           this->Extract_Header_File_Name_From_Path(ind_header_path,&ind_header,'w');
+           this->Extract_Header_File_Name_From_Path(&ind_header,ind_header_path);
 
-           bool is_equal = this->Char_Processor.CompareString(cstring_header,ind_header);
-
-           this->Clear_Pointer_Memory(&ind_header);
+           bool is_equal = this->Char_Processor.CompareString(header_name,ind_header);
 
            if(is_equal){
 
@@ -832,18 +618,17 @@ void Source_File_Information_Collector::Clear_Pointer_Memory(char ** Pointer){
        return this->is_independent_header;
   }
 
-  void Source_File_Information_Collector::Extract_Header_File_Name_From_Path(char * path,
+  void Source_File_Information_Collector::Extract_Header_File_Name_From_Path(std::string * name,
 
-       char ** name, char opr_sis){
+       std::string path){
 
-       size_t string_size = strlen(path);
-
+       size_t string_size = path.length();
 
        size_t header_name_size = 0;
 
        for(size_t i = string_size;i>0;i--){
 
-           if(opr_sis == 'w'){
+           if(this->operating_sis == 'w'){
 
               if(path[i] == '\\'){
 
@@ -861,85 +646,37 @@ void Source_File_Information_Collector::Clear_Pointer_Memory(char ** Pointer){
            header_name_size++;
        }
 
-
-       *name = new char [5*header_name_size];
-
        size_t start_point = string_size - header_name_size + 1;
-
-       size_t index = 0;
 
        for(size_t i = start_point;i<string_size;i++){
 
-          (*name)[index] = path[i];
-
-          index++;
+          (*name).append(1,path[i]);
        }
-
-       (*name)[index] = '\0';
-  }
-
-  void Source_File_Information_Collector::Place_String(std::string * str_pointer, char * string){
-
-       size_t string_size = strlen(string);
-
-       for(size_t i=0;i<string_size;i++){
-
-           (*str_pointer).append(1,string[i]) ;
-       }
-
-       (*str_pointer).append(1,'\0') ;
-  }
-
-  void Source_File_Information_Collector::Place_CString(char ** str_pointer, std::string string){
-
-       size_t string_size = string.length();
-
-       *str_pointer = new char [5*string_size];
-
-       for(size_t i=0;i<string_size;i++){
-
-           (*str_pointer)[i] = string[i];
-       }
-
-       (*str_pointer)[string_size] = '\0' ;
-  }
-
-  void Source_File_Information_Collector::Place_CString(char ** str_pointer, char * string){
-
-       size_t string_size = strlen(string);
-
-       *str_pointer = new char [5*string_size];
-
-       for(size_t i=0;i<string_size;i++){
-
-           (*str_pointer)[i] = string[i];
-       }
-
-       (*str_pointer)[string_size] = '\0' ;
   }
 
 
-  Compiler_Data_CString * Source_File_Information_Collector::Get_Compiler_Data(){
+  Compiler_Data Source_File_Information_Collector::Get_Compiler_Data(int num){
 
-    return this->Data_Ptr_CString;
+    return this->Data[num];
   }
 
-  int Source_File_Information_Collector::Get_Compiler_Data_Size(){
 
-      return this->header_file_number;
-  }
-
-  char * Source_File_Information_Collector::Get_Warehouse_Headers_Dir(){
+  std::string Source_File_Information_Collector::Get_Warehouse_Headers_Dir(){
 
          return this->warehouse_head_dir;
   }
 
-  char * Source_File_Information_Collector::Get_Warehouse_Objetcs_Dir(){
+  std::string Source_File_Information_Collector::Get_Warehouse_Objetcs_Dir(){
 
          return this->warehouse_obj_dir;
   }
 
-  char * Source_File_Information_Collector::Get_Warehouse_Path(){
+  std::string Source_File_Information_Collector::Get_Warehouse_Path(){
 
          return this->warehouse_path;
+  }
+
+  size_t Source_File_Information_Collector::Get_Data_Size(){
+
+        return this->Data.size();
   }

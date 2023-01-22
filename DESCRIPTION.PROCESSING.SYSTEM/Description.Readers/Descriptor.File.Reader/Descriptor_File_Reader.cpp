@@ -20,7 +20,10 @@ Descriptor_File_Reader::Descriptor_File_Reader(char * FilePATH) :
 
    this->Syntax_Controller.Control_Descriptor_File_Syntax();
 
+   this->Syntax_Controller.Clear_Dynamic_Memory();
+
    this->Data_Collector.Collect_Descriptor_File_Data();
+
 }
 
 
@@ -59,7 +62,7 @@ void Descriptor_File_Reader::Initialize_Members(){
      this->source_file_dir_num = 0;
      this->lib_dir_num         = 0;
      this->lib_file_num        = 0;
-     this->Memory_Delete_Condition = true;
+     this->Memory_Delete_Condition = false;
 }
 
 
@@ -96,6 +99,14 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
          this->warehouse_location = "";
 
          this->root_dir = "";
+
+         this->Data_Collector.Clear_Dynamic_Memory();
+
+         this->Syntax_Controller.Clear_Dynamic_Memory();
+
+         this->StringManager.Clear_Dynamic_Memory();
+
+         this->FileManager.Clear_Dynamic_Memory();
      }
 }
 
@@ -118,6 +129,8 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
      this->Read_Library_Files();
 
      this->Read_Options();
+
+     this->Data_Collector.Clear_Dynamic_Memory();
 }
 
 
@@ -308,22 +321,13 @@ void Descriptor_File_Reader::Read_Include_Directories(){
 
          this->Memory_Delete_Condition = false;
 
-         for(int i=0;i<this->include_dir_num;i++){
-
-             this->Include_Directories.push_back("");
-         }
-
-         int record_index = 0;
-
          for(int i=start_line+1;i<end_line-1;i++){
 
              std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
              if(this->StringManager.CheckStringLine(line)){
 
-                this->Include_Directories[record_index] = line;
-
-                record_index++;
+                this->Include_Directories.push_back(line);
              }
           }
       }
@@ -332,7 +336,6 @@ void Descriptor_File_Reader::Read_Include_Directories(){
 
 
 void Descriptor_File_Reader::Read_Source_File_Directories(){
-
 
      int start_line = this->Data_Collector.Get_Source_File_Directories_Record_Area(0);
 
@@ -355,22 +358,13 @@ void Descriptor_File_Reader::Read_Source_File_Directories(){
 
         this->Memory_Delete_Condition = false;
 
-        for(int i=0;i<this->source_file_dir_num;i++){
-
-             this->Source_File_Directories.push_back("");
-        }
-
-        int record_index = 0;
-
         for(int i=start_line+1;i<end_line-1;i++){
 
             std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
             if(this->StringManager.CheckStringLine(line)){
 
-                this->Source_File_Directories[record_index] = line;
-
-                record_index++;
+                this->Source_File_Directories.push_back(line);
             }
         }
      }
@@ -400,22 +394,13 @@ void Descriptor_File_Reader::Read_Library_Directories(){
 
         this->Memory_Delete_Condition = false;
 
-        for(int i=0;i<this->lib_dir_num;i++){
-
-            this->Library_Directories.push_back("");
-        }
-
-        int record_index = 0;
-
         for(int i=start_line+1;i<end_line-1;i++){
 
             std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
             if(this->StringManager.CheckStringLine(line)){
 
-               this->Library_Directories[record_index] = line;
-
-                record_index++;
+              this->Library_Directories.push_back(line);
             }
         }
      }
@@ -445,22 +430,13 @@ void Descriptor_File_Reader::Read_Library_Files(){
 
         this->Memory_Delete_Condition = false;
 
-        for(int i=0;i<this->lib_file_num;i++){
-
-            this->Library_Files.push_back("");
-        }
-
-        int record_index = 0;
-
         for(int i=start_line+1;i<end_line-1;i++){
 
             std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
             if(this->StringManager.CheckStringLine(line)){
 
-               this->Library_Files[record_index] = line;
-
-               record_index++;
+               this->Library_Files.push_back(line);
             }
         }
      }

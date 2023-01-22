@@ -15,6 +15,7 @@
 #include <iostream>
 #include <vector>
 #include <windows.h>
+#include <algorithm>  
 #include "StringOperator.h"
 #include "Cpp_FileOperations.h"
 

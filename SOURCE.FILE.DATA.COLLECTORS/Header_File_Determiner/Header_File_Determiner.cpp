@@ -5,7 +5,6 @@ Header_File_Determiner::Header_File_Determiner(char * DesPath, char opr_sis) :
 
      Git_Receiver(DesPath)
 {
-
     this->git_record_size = this->Git_Receiver.Get_Git_File_Index_Size();
 
     this->Repo_Dir        = this->Git_Receiver.Get_Git_Repo_Directory();
@@ -489,32 +488,27 @@ bool Header_File_Determiner::CompareString(std::string firstString, std::string 
      }
 }
 
-void Header_File_Determiner::Delete_Spaces_on_String(std::string * pointer){
+void Header_File_Determiner::Delete_Spaces_on_String(std::string * str){
 
-     size_t string_size = pointer->length();
+    size_t string_size = str->length();
 
-     int remove_index = 0;
+    bool search_cond = true;
 
-     if(string_size>0){
+    do{
 
-       for(size_t i=0;i<string_size;i++){
+      search_cond = false;
 
-         if((*pointer)[i] == ' '){
+      for(size_t i=0;i<str->length();i++){
 
-            for(size_t k=i;k<string_size;k++){
+          if((*str)[i] == ' '){
 
-               (*pointer)[k] = (*pointer)[k+1];
-            }
+            search_cond = true;
 
-            remove_index++;
-         }
-       }
+            str->erase(i,1);
+          }
+        }
 
-       for(int i=0;i<remove_index;i++){
-
-         pointer->pop_back();
-       }
-     }
+    }while(search_cond);
 }
 
 

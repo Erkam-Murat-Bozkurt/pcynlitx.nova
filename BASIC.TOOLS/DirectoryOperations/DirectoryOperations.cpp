@@ -23,6 +23,13 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 #include "DirectoryOperations.h"
 #include <iostream>
 
+
+DirectoryOperations::DirectoryOperations()
+{
+    this->Initialize_Mermbers();
+};
+
+
 DirectoryOperations::DirectoryOperations(char * DesPath) :
 
 CString_Operator(DesPath)

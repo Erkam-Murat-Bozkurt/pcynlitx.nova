@@ -21,6 +21,7 @@
 class DirectoryOperations
 {
 public:
+ DirectoryOperations();
  DirectoryOperations(char * DesPath);
  DirectoryOperations(std::string DesPath);
  virtual ~DirectoryOperations();

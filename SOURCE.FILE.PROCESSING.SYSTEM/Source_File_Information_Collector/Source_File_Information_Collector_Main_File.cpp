@@ -21,37 +21,18 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_Reader;
 
-    Des_Reader.Read_Descriptor_File(argv[1]);
+    Source_File_Information_Collector Information_Collector(argv[1],'w');
 
-    char * project_repo_dir = Des_Reader.Get_Repo_Directory_Location();
+    Information_Collector.Collect_Make_File_Data();
 
-    char * warehouse_path   = Des_Reader.Get_Warehouse_Location();
-
-
-    Project_Files_Lister Dir_Lister;
-
-    Dir_Lister.Determine_Git_Repo_Info(&Des_Reader);
-
-    int src_file_num = Dir_Lister.Get_Source_File_Number();
-
-    std::cout << "\n src_file_num:" << src_file_num;
+    Information_Collector.Print_Header_Data();
 
 
-    Source_File_Information_Collector Information_Collector(argv[1]);
 
-    if(src_file_num > 0){
+    size_t data_size = Information_Collector.Get_Data_Size();
 
-       Information_Collector.Collect_Make_File_Data();
-
-       Information_Collector.Print_Header_Data();
-    }
-
-
-    int data_size = Information_Collector.Get_Compiler_Data_Size();
-
-    Compiler_Data_CString * Data_Pointer = Information_Collector.Get_Compiler_Data();
+    Compiler_Data Data_Pointer = Information_Collector.Get_Compiler_Data(0);
 
     Information_Collector.Clear_Dynamic_Memory();
 

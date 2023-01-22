@@ -7,7 +7,6 @@ Project_Files_Lister::Project_Files_Lister(char * DesPATH, char opr_sis) :
 
    Header_Determiner(DesPATH,opr_sis), File_Data_Cltr(opr_sis)
 {
-
     this->Initialize_Members(opr_sis);
 }
 
@@ -42,7 +41,7 @@ void Project_Files_Lister::Determine_Git_Repo_Info()
 
      this->git_record_size = this->Git_Data_Receiver.Get_Git_File_Index_Size();
 
-     this->Repo_Dir = this->Git_Data_Receiver.Get_Git_Repo_Directory();
+     this->Repo_Dir        = this->Git_Data_Receiver.Get_Git_Repo_Directory();
 ;
      this->Determine_Source_File_Number();
 
@@ -52,7 +51,13 @@ void Project_Files_Lister::Determine_Git_Repo_Info()
 
      this->Collect_Independent_Header_Files_Data();
 
-     //this->Determine_Class_Header_Files();
+     this->Des_Reader.Clear_Dynamic_Memory();
+
+     this->Git_Data_Receiver.Clear_Dynamic_Memory();
+
+     this->Src_Data_Col.Clear_Dynamic_Memory();
+
+     this->Header_Determiner.Clear_Dynamic_Memory();
 }
 
 
@@ -105,160 +110,11 @@ void Project_Files_Lister::Collect_Source_Files_Data()
 
             this->Src_Data_Col.Process_Source_File_Data(&Temp_Data,file_path);
 
-            /*
-
-            this->Place_Source_File_Data(&Temp_Data,file_path);
-
-            this->Place_Source_File_Headers_Data(&Temp_Data);
-
-            */
-
             this->Data.push_back(Temp_Data);
          }
       }
 }
 
-/*
-
-void Project_Files_Lister::Place_Source_File_Data(Build_System_Data * Data, std::string src_path)
-{
-     this->Src_Data_Col.Receive_Source_File_Data(src_path);
-
-     this->Src_Data_Col.Determine_Git_Record_Source_File_Path(&Data->git_record_path,src_path);
-
-     this->Src_Data_Col.Determine_Git_Record_Source_File_Directory(&Data->git_record_dir,src_path);
-
-     Data->is_this_a_source_file = true;
-
-     Data->is_this_a_header_file = false;
-
-     Data->File_Path = "";              // The file exact path ( System Path )
-
-     this->File_Data_Cltr.Determine_File_Exact_Path(&Data->File_Path,this->Repo_Dir,src_path);
-
-     this->File_Data_Cltr.Extract_Upper_Directory_Path(&Data->File_Directory,Data->File_Path);
-
-     this->File_Data_Cltr.Determine_File_Name(&Data->File_Name,Data->File_Path);
-
-     this->File_Data_Cltr.Determine_Source_File_Name_With_Ext(&Data->File_Name_With_Ext,Data->File_Name);
-}
-
-
-void Project_Files_Lister::Place_Source_File_Headers_Data(Build_System_Data * Data){
-
-     int Inc_Header_Number = this->Src_Data_Col.Get_Included_File_Number();
-
-     Data->Included_Header_Files_Number = Inc_Header_Number;
-
-     if(Inc_Header_Number > 0){
-
-        for(int k=0;k<Inc_Header_Number;k++){
-
-            this->Place_Headers_Data(Data,k);
-        }
-     }
-}
-
-
-void Project_Files_Lister::Place_Headers_Data(Build_System_Data * Data, int hdr_num)
-{
-     std::string Included_File =
-
-     this->Src_Data_Col.Get_Include_File_Name(hdr_num);
-
-     std::string Included_File_Directory =
-
-     this->Src_Data_Col.Get_Include_File_Directory(hdr_num);
-
-     std::string Include_File_Git_Record_Dir =
-
-     this->Src_Data_Col.Get_Include_File_Git_Record_Directory(hdr_num);
-
-     std::string Include_File_Git_Record_Path =
-
-     this->Src_Data_Col.Get_Include_File_Git_Record_Path(hdr_num);
-
-
-     Data->Included_Header_Files.push_back(Included_File);
-
-     Data->Included_Header_Files_Directories.push_back(Included_File_Directory);
-
-     Data->Included_Header_Files_Git_Record_Dir.push_back(Include_File_Git_Record_Dir);
-
-     Data->Included_Header_Files_Git_Record_Path.push_back(Include_File_Git_Record_Path);
-
-
-     if(this->operating_sis == 'w'){
-
-        std::string path;
-
-        std::string dir  = Data->Included_Header_Files_Directories[0];
-
-        std::string name = Data->Included_Header_Files[0];
-
-        this->Src_Data_Col.Determine_Header_Files_System_Paths(&path,dir,name);
-
-        Data->Included_Header_Files_System_Path.push_back(path);
-     }
-}
-
-
-void Project_Files_Lister::Determine_Class_Header_Files()
-{
-     int src_num = this->Get_Source_File_Number();
-
-     for(int i=0;i<src_num;i++){
-
-         this->Determine_Class_Header_File_Name(i);
-     }
-}
-
-
-void Project_Files_Lister::Determine_Class_Header_File_Name(int data_num)
-{
-     // This is the case when the source file include more than one header
-     // file and one of them is the definition of the source file (the definition of the class)
-
-     int total_hdr_number = this->Get_Source_File_Include_File_Number(data_num);
-
-     std::string  src_name  = this->Get_Source_File_Name(data_num);
-
-     for(int i=0;i<total_hdr_number;i++){
-
-         std::string  hdr_name = this->Get_Source_File_Header(data_num,i);
-
-         size_t hdr_name_size = hdr_name.length();
-
-         std::string hdr_temp;
-
-         for(size_t i=0;i<hdr_name_size;i++){
-
-            if(hdr_name[i] == '.'){
-
-               break;
-            }
-            else{
-
-              hdr_temp.append(1,hdr_name[i]);
-            }
-         }
-
-         bool is_equal = this->Check_String_Equality(src_name,hdr_temp);
-
-         std::string hdr_path = this->Get_Source_File_Header_System_Path(data_num,i);
-
-         if(is_equal){
-
-            this->Data[data_num].class_header_file_name = src_name;
-
-            this->Data[data_num].class_header_file_path = hdr_path;
-
-            break;
-         }
-     }
-}
-
-*/
 
 void Project_Files_Lister::Collect_Independent_Header_Files_Data()
 {

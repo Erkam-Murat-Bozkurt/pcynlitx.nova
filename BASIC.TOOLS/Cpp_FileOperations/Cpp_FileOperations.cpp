@@ -62,7 +62,7 @@ void Cpp_FileOperations::Initialize_Members(){
 
      this->File_line_Number = 0;
 
-     this->Memory_Delete_Condition = true;
+     this->Memory_Delete_Condition = false;
 
      this->Delete_Return_Status = 0;
 
@@ -75,18 +75,35 @@ void Cpp_FileOperations::Initialize_Members(){
 
 void Cpp_FileOperations::Clear_Dynamic_Memory(){
 
-      if(!this->Memory_Delete_Condition){
-
+      if(!this->Memory_Delete_Condition)
+      {
           this->Memory_Delete_Condition = true;
 
-          if(!this->File_Content.empty()){
+          if(!this->File_Content.empty())
+          {
+              this->File_Content.clear();
+          }
 
-             this->File_Content.clear();
+          if(!this->String_Line.empty())
+          {
+              this->String_Line.clear();
+          }
+
+          if(!this->string_word.empty())
+          {
+              this->string_word.clear();
+          }
+
+          if(!this->FilePath.empty())
+          {
+             this->FilePath.clear();
           }
       }
 }
 
 void Cpp_FileOperations::SetFilePath(std::string FilePATH){
+
+     this->Memory_Delete_Condition = false;
 
      this->isFilePathReceive = true;
 
@@ -101,6 +118,8 @@ void Cpp_FileOperations::SetFilePath(std::string FilePATH){
 }
 
 void Cpp_FileOperations::SetFilePath(char * String){
+
+     this->Memory_Delete_Condition = false;
 
      this->isFilePathReceive = true;
 
@@ -243,7 +262,7 @@ void Cpp_FileOperations::WriteToFile(char * string_list){
 
 std::string Cpp_FileOperations::ReadLine(){
 
-     this->String_Line = "";
+     this->String_Line.clear();
 
      if(std::getline(this->DataFile,this->String_Line)){
 
@@ -314,6 +333,8 @@ void Cpp_FileOperations::MoveFile_Win(char * current_path, char * target_path){
 
 void Cpp_FileOperations::Read_File(char * path){
 
+     this->Memory_Delete_Condition = false;
+
      this->File_line_Number = 0;
 
      this->SetFilePath(path);
@@ -337,11 +358,13 @@ void Cpp_FileOperations::Read_File(char * path){
 
 void Cpp_FileOperations::Read_File(std::string path){
 
+     this->Memory_Delete_Condition = false;
+
      this->File_line_Number = 0;
 
-     if(!this->File_Content.empty()){
-
-        this->File_Content.clear();
+     if(!this->File_Content.empty())
+     {
+         this->File_Content.clear();
      }
 
 
@@ -492,7 +515,6 @@ int Cpp_FileOperations::Delete_File(char * path){
 
      return this->Delete_Return_Status;
 }
-
 
 
 std::string Cpp_FileOperations::GetFileLine(int index){
