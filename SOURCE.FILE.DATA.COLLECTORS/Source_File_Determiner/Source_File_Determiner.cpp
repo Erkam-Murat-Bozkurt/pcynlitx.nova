@@ -1,42 +1,32 @@
 
 #include "Source_File_Determiner.h"
 
-Source_File_Determiner::Source_File_Determiner(){
-
+Source_File_Determiner::Source_File_Determiner()
+{
     this->File_Content_Size = 0;
 
     this->Is_This_Source_File = false;
-
-    this->Source_File_Name = "";
-
-    this->File_Name_Witout_Ext = "";
-
-    this->Class_Function_Patern = "";
-
-    this->Memory_Delete_Condition = true;
-
 }
 
 
-Source_File_Determiner::~Source_File_Determiner(){
-
-     if(!this->Memory_Delete_Condition){
-
-        this->Clear_Dynamic_Memory();
-     }
+Source_File_Determiner::~Source_File_Determiner()
+{
+    this->Clear_Dynamic_Memory();
 }
 
-void Source_File_Determiner::Clear_Dynamic_Memory(){
+void Source_File_Determiner::Clear_Dynamic_Memory()
+{
+     this->Clear_Vector_Memory(&this->File_Content);
 
-     if(!this->Memory_Delete_Condition){
+     this->Clear_String_Memory(&this->Source_File_Name);
 
-        this->Memory_Delete_Condition = true;
+     this->Clear_String_Memory(&this->Class_Function_Patern);
 
-        if(!this->File_Content.empty()){
+     this->Clear_String_Memory(&this->File_Name_Witout_Ext);
 
-           this->File_Content.clear();
-        }
-     }
+     this->StringManager.Clear_Dynamic_Memory();
+
+     this->FileManager.Clear_Dynamic_Memory();
 }
 
 bool Source_File_Determiner::Is_Source_File(char * file_path){
@@ -111,7 +101,6 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
 
                return this->Is_This_Source_File;
             }
-
       }
 
 
@@ -207,10 +196,10 @@ bool Source_File_Determiner::Is_Source_File(std::string file_path){
 
       this->Is_This_Source_File
 
-                  = this->StringManager.CheckStringInclusion(file_path,source_file_ext);
+          = this->StringManager.CheckStringInclusion(file_path,source_file_ext);
 
-      if(this->Is_This_Source_File){
-
+      if(this->Is_This_Source_File)
+      {
          return this->Is_This_Source_File;
       }
     }
@@ -221,35 +210,32 @@ bool Source_File_Determiner::Is_Source_File(std::string file_path){
 
 void Source_File_Determiner::Read_File(std::string path){
 
-     if(!this->File_Content.empty()){
-
-        this->File_Content.clear();
-     }
+     this->Clear_Vector_Memory(&this->File_Content);
 
      this->FileManager.SetFilePath(path);
 
      this->FileManager.FileOpen(Rf);
 
-     this->Memory_Delete_Condition = false;
 
      this->File_Content_Size = 0;
 
      do {
+          std::string file_line = this->FileManager.ReadLine();
 
-            std::string file_line = this->FileManager.ReadLine();
+          this->File_Content.push_back(file_line);
 
-            this->File_Content.push_back(file_line);
-
-            this->File_Content_Size++;
+          this->File_Content_Size++;
 
      }while(!this->FileManager.Control_Stop_Condition());
 
      this->FileManager.FileClose();
+
+     this->FileManager.Clear_Dynamic_Memory();
 }
 
 void Source_File_Determiner::Determine_Source_File_Name(std::string path){
 
-     this->Source_File_Name = "";
+     this->Clear_String_Memory(&this->Source_File_Name);
 
      size_t file_path_size = path.length();
 
@@ -274,13 +260,13 @@ void Source_File_Determiner::Determine_Source_File_Name(std::string path){
 
      for(size_t i=dir_size+1;i<file_path_size;i++){
 
-         this->Source_File_Name.append(1,path[i]);
+         this->Source_File_Name.push_back(path[i]);
      }
 }
 
-void Source_File_Determiner::Determine_File_Name_Without_Ext(std::string path){
-
-     this->File_Name_Witout_Ext ="";
+void Source_File_Determiner::Determine_File_Name_Without_Ext(std::string path)
+{
+     this->Clear_String_Memory(&this->File_Name_Witout_Ext);
 
      size_t file_path_size = path.length();
 
@@ -322,7 +308,9 @@ void Source_File_Determiner::Determine_File_Name_Without_Ext(std::string path){
 
      if(file_extention_start_point <= dir_size){
 
-        file_name_size = file_path_size - dir_size; // It is the case in which the file does not have extenton
+        file_name_size = file_path_size - dir_size;
+
+        // It is the case in which the file does not have extenton
      }
 
      if(file_extention_start_point > dir_size){
@@ -330,7 +318,6 @@ void Source_File_Determiner::Determine_File_Name_Without_Ext(std::string path){
         file_name_size = file_extention_start_point - dir_size;
      }
 
-     this->File_Name_Witout_Ext = "";
 
      size_t name_start_point = 0;
 
@@ -341,7 +328,7 @@ void Source_File_Determiner::Determine_File_Name_Without_Ext(std::string path){
 
      for(size_t i=name_start_point;i<file_extention_start_point;i++){
 
-         this->File_Name_Witout_Ext.append(1,path[i]);
+         this->File_Name_Witout_Ext.push_back(path[i]);
      }
 }
 
@@ -349,41 +336,73 @@ void Source_File_Determiner::Determine_Class_Function_Pattern(std::string file_n
 {
      size_t file_name_size = file_name.length();
 
-     this->Class_Function_Patern = "";
+     this->Clear_String_Memory(&this->Class_Function_Patern);
 
-     for(size_t i=0;i<file_name_size;i++){
-
-         this->Class_Function_Patern.append(1,file_name[i]);
+     for(size_t i=0;i<file_name_size;i++)
+     {
+         this->Class_Function_Patern.push_back(file_name[i]);
      }
 }
 
-void Source_File_Determiner::Delete_Spaces_on_String(std::string * pointer){
+void Source_File_Determiner::Delete_Spaces_on_String(std::string * str)
+{
+     size_t string_size = str->length();
 
-     size_t string_size = pointer->length();
+     bool search_cond = true;
 
-     int remove_index = 0;
+     do{
 
-     if(string_size>0){
+         search_cond = false;
 
-       for(size_t i=0;i<string_size;i++){
+         for(size_t i=0;i<str->length();i++){
 
-           if((*pointer)[i] == ' '){
+            if((*str)[i] == ' '){
 
-              for(size_t k=i;k<string_size;k++){
+              search_cond = true;
 
-                 (*pointer)[k] = (*pointer)[k+1];
-              }
+              str->erase(i,1);
+            }
+         }
 
-              remove_index++;
-           }
-       }
+     }while(search_cond);
 
-       for(int i=0;i<remove_index;i++){
+     str->shrink_to_fit();
+}
 
-          pointer->pop_back();
-       }
+
+
+void Source_File_Determiner::Clear_Vector_Memory(std::vector<std::string> * pointer){
+
+     std::vector<std::string>::iterator it;
+
+     auto begin = pointer->begin();
+     auto end   = pointer->end();
+
+     for(auto it=begin;it<end;it++){
+
+        if(!it->empty()){
+
+            it->clear();
+            it->shrink_to_fit();
+        }
+     }
+
+     if(!pointer->empty())
+     {
+         pointer->clear();
+         pointer->shrink_to_fit();
      }
 }
+
+void Source_File_Determiner::Clear_String_Memory(std::string * pointer){
+
+     if(!pointer->empty()){
+
+         pointer->clear();
+         pointer->shrink_to_fit();
+     }
+}
+
 
 std::string Source_File_Determiner::Get_Source_File_Name(){
 

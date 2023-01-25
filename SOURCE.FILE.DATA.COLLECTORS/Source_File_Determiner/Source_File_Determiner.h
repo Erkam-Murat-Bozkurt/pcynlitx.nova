@@ -36,12 +36,14 @@ protected:
  std::string Get_Class_Function_Pattern();
  void Delete_Spaces_on_String(std::string * pointer);
  void Clear_Dynamic_Memory();
+ void Clear_Vector_Memory(std::vector<std::string> * pointer);
+ void Clear_String_Memory(std::string * pointer);
  StringOperator StringManager;
  Cpp_FileOperations FileManager;
  std::vector<std::string> File_Content;
- std::string  Source_File_Name;
- std::string  Class_Function_Patern;
- std::string  File_Name_Witout_Ext;
+ std::string Source_File_Name;
+ std::string Class_Function_Patern;
+ std::string File_Name_Witout_Ext;
  int  File_Content_Size;
  bool Is_This_Source_File;
  bool Memory_Delete_Condition;
