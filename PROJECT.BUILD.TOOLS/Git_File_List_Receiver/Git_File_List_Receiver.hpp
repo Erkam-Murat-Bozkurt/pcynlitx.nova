@@ -32,6 +32,9 @@ protected:
  void Determine_Git_File_List_Path();
  void Determine_Git_Listing_Command();
  char * From_Std_String_To_Char(std::string str);
+ void Clear_Vector_Memory(std::vector<std::string> * pointer);
+ void Clear_String_Memory(std::string * pointer);
+ void Clear_CString_Buffer();
  Descriptor_File_Reader Des_Reader;
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;

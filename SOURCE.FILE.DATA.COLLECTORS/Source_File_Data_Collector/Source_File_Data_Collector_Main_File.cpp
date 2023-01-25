@@ -20,13 +20,13 @@ int main(int argc, char ** argv){
     }
 
 
-    std::string file_path = "";
+    std::string file_path;
 
     size_t path_size = strlen(argv[2]);
 
     for(size_t i=0;i<path_size;i++){
 
-         file_path.append(1,argv[2][i]);
+         file_path.push_back(argv[2][i]);
     }
 
     Build_System_Data Data;
@@ -34,6 +34,11 @@ int main(int argc, char ** argv){
     Source_File_Data_Collector Data_Collector(argv[1],'w');
 
     Data_Collector.Process_Source_File_Data(&Data,file_path);
+
+    file_path.clear();
+
+    file_path.shrink_to_fit();
+
 
     int Header_File_Number = Data_Collector.Get_Included_File_Number();
 
@@ -107,6 +112,13 @@ int main(int argc, char ** argv){
 
         std::cout << "\n Header File :" << *it;
     }
+
+    Data_Collector.Clear_Dynamic_Memory();
+
+    file_path.clear();
+
+    file_path.shrink_to_fit();
+
 
     return 0;
 }

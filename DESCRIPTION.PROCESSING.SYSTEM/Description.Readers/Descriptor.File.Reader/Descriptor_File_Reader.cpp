@@ -11,11 +11,9 @@ Descriptor_File_Reader::Descriptor_File_Reader(char * FilePATH) :
 
    size_t path_size = strlen(FilePATH);
 
-   this->descriptor_file_path = "";
-
    for(size_t i=0;i<path_size;i++){
 
-       this->descriptor_file_path.append(1,FilePATH[i]);
+       this->descriptor_file_path.push_back(FilePATH[i]);
    }
 
    this->Syntax_Controller.Control_Descriptor_File_Syntax();
@@ -23,7 +21,6 @@ Descriptor_File_Reader::Descriptor_File_Reader(char * FilePATH) :
    this->Syntax_Controller.Clear_Dynamic_Memory();
 
    this->Data_Collector.Collect_Descriptor_File_Data();
-
 }
 
 
@@ -34,6 +31,14 @@ Descriptor_File_Reader::Descriptor_File_Reader(std::string FilePATH) :
 {
 
    this->Initialize_Members();
+
+   size_t path_size = FilePATH.length();
+
+   for(size_t i=0;i<path_size;i++){
+
+       this->descriptor_file_path.push_back(FilePATH[i]);
+   }
+
 
    this->descriptor_file_path = FilePATH;
 
@@ -53,11 +58,6 @@ Descriptor_File_Reader::~Descriptor_File_Reader(){
 
 void Descriptor_File_Reader::Initialize_Members(){
 
-     this->root_dir  = "";
-     this->standard  = "";
-     this->options   = "";
-     this->warehouse_location   = "";
-     this->descriptor_file_path = "";
      this->include_dir_num     = 0;
      this->source_file_dir_num = 0;
      this->lib_dir_num         = 0;
@@ -72,33 +72,23 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         if(!this->Include_Directories.empty()){
+         this->Clear_Vectory_Memory(&this->Include_Directories);
 
-            this->Include_Directories.clear();
-         }
+         this->Clear_Vectory_Memory(&this->Source_File_Directories);
 
-         if(!this->Source_File_Directories.empty()){
+         this->Clear_Vectory_Memory(&this->Library_Directories);
 
-            this->Source_File_Directories.clear();
-         }
+         this->Clear_Vectory_Memory(&this->Library_Files);
 
-         if(!this->Library_Directories.empty()){
+         this->Clear_String_Memory(&this->standard);
 
-            this->Library_Directories.clear();
-         }
+         this->Clear_String_Memory(&this->options);
 
-         if(!this->Library_Files.empty()){
+         this->Clear_String_Memory(&this->warehouse_location);
 
-            this->Library_Files.clear();
-         }
+         this->Clear_String_Memory(&this->root_dir);
 
-         this->standard = "";
-
-         this->options = "";
-
-         this->warehouse_location = "";
-
-         this->root_dir = "";
+         this->Clear_String_Memory(&this->descriptor_file_path);
 
          this->Data_Collector.Clear_Dynamic_Memory();
 
@@ -302,7 +292,7 @@ void Descriptor_File_Reader::Read_Include_Directories(){
 
      int start_line = this->Data_Collector.Get_Include_Directories_Record_Area(0);
 
-     int end_line  = this->Data_Collector.Get_Include_Directories_Record_Area(1);
+     int end_line   = this->Data_Collector.Get_Include_Directories_Record_Area(1);
 
      this->include_dir_num = 0;
 
@@ -315,7 +305,6 @@ void Descriptor_File_Reader::Read_Include_Directories(){
             this->include_dir_num++;
          }
       }
-
 
       if(this->include_dir_num > 0){
 
@@ -351,6 +340,8 @@ void Descriptor_File_Reader::Read_Source_File_Directories(){
 
             this->source_file_dir_num++;
          }
+
+         this->Clear_String_Memory(&line);
      }
 
 
@@ -366,6 +357,8 @@ void Descriptor_File_Reader::Read_Source_File_Directories(){
 
                 this->Source_File_Directories.push_back(line);
             }
+
+            this->Clear_String_Memory(&line);
         }
      }
 }
@@ -388,6 +381,8 @@ void Descriptor_File_Reader::Read_Library_Directories(){
 
              this->lib_dir_num++;
          }
+
+         this->Clear_String_Memory(&line);
      }
 
      if(this->lib_dir_num > 0){
@@ -402,6 +397,8 @@ void Descriptor_File_Reader::Read_Library_Directories(){
 
               this->Library_Directories.push_back(line);
             }
+
+            this->Clear_String_Memory(&line);
         }
      }
 }
@@ -424,6 +421,8 @@ void Descriptor_File_Reader::Read_Library_Files(){
 
              this->lib_file_num++;
          }
+
+         this->Clear_String_Memory(&line);
      }
 
      if(this->lib_file_num > 0){
@@ -438,6 +437,8 @@ void Descriptor_File_Reader::Read_Library_Files(){
 
                this->Library_Files.push_back(line);
             }
+
+            this->Clear_String_Memory(&line);
         }
      }
 }
@@ -445,7 +446,6 @@ void Descriptor_File_Reader::Read_Library_Files(){
 
 
 void Descriptor_File_Reader::Read_Options(){
-
 
      int start_line = this->Data_Collector.Get_Options_Record_Area(0);
 
@@ -461,6 +461,8 @@ void Descriptor_File_Reader::Read_Options(){
 
             record_num++;
          }
+
+         this->Clear_String_Memory(&line);
       }
 
       if(record_num < 1){
@@ -478,10 +480,50 @@ void Descriptor_File_Reader::Read_Options(){
 
                   this->options = line;
 
+                  this->Clear_String_Memory(&line);
+
                   break;
                }
+
+               this->Clear_String_Memory(&line);
             }
       }
+}
+
+void Descriptor_File_Reader::Clear_Vectory_Memory(std::vector<std::string> * pointer){
+
+     std::vector<std::string>::iterator it;
+
+     auto begin = pointer->begin();
+
+     auto end   = pointer->end();
+
+     for(auto it=begin;it<end;it++){
+
+        if(!it->empty()){
+
+            it->clear();
+
+            it->shrink_to_fit();
+        }
+     }
+
+     if(!pointer->empty()){
+
+         pointer->clear();
+
+         pointer->shrink_to_fit();
+     }
+}
+
+void Descriptor_File_Reader::Clear_String_Memory(std::string * pointer){
+
+     if(!pointer->empty()){
+
+         pointer->clear();
+
+         pointer->shrink_to_fit();
+     }
 }
 
 std::string Descriptor_File_Reader::Get_Library_Directory(int i){

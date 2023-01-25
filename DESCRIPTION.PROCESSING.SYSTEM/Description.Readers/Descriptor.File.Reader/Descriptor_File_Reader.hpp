@@ -46,6 +46,8 @@ protected:
  void Read_Library_Directories();
  void Read_Library_Files();
  void Read_Options();
+ void Clear_String_Memory(std::string * ptr);
+ void Clear_Vectory_Memory(std::vector<std::string> * ptr);
  Descriptor_File_Data_Collector Data_Collector;
  Descriptor_File_Syntax_Controller Syntax_Controller;
  StringOperator StringManager;

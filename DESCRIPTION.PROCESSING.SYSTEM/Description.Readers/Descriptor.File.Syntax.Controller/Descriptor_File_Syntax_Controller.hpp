@@ -15,7 +15,7 @@
 #include <iostream>
 #include <vector>
 #include <windows.h>
-#include <algorithm>  
+#include <algorithm>
 #include "StringOperator.h"
 #include "Cpp_FileOperations.h"
 
@@ -34,6 +34,8 @@ protected:
  int  Determine_Repitation(std::string search_word);
  void Delete_Spaces_on_String(std::string * pointer);
  void Receive_Descriptor_File_Index();
+ void Clear_Vector_Memory(std::vector<std::string> * ptr);
+ void Clear_String_Memory(std::string * ptr);
  std::vector<std::string> File_Index;
  StringOperator StringManager;
  Cpp_FileOperations FileManager;

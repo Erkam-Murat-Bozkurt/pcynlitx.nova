@@ -40,6 +40,8 @@ void Header_File_Determiner::Clear_Dynamic_Memory(){
         this->Clear_String_Memory(&this->Header_File_Name_With_Extention);
 
         this->Clear_String_Memory(&this->Header_File_System_Path);
+
+        this->Clear_String_Memory(&this->Repo_Dir);
      }
 }
 
@@ -260,14 +262,10 @@ void Header_File_Determiner::Determine_Header_File_Directory(std::string path){
         }
      }
 
-     this->Header_File_Directory = new char [5*dir_size];
-
      for(size_t i=0;i<dir_size;i++){
 
-         this->Header_File_Directory[i] = path[i];
+         this->Header_File_Directory.append(1,path[i]);
      }
-
-     this->Header_File_Directory[dir_size] = '\0';
 }
 
 void Header_File_Determiner::Determine_Header_File_Name(std::string path){
@@ -517,6 +515,8 @@ void Header_File_Determiner::Clear_String_Memory(std::string * pointer){
      if(!pointer->empty()){
 
         pointer->clear();
+
+        pointer->shrink_to_fit();
      }
 }
 

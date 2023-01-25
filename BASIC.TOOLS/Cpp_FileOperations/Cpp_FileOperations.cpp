@@ -50,10 +50,7 @@ Cpp_FileOperations::Cpp_FileOperations(std::string FilePATH){
 
 Cpp_FileOperations::~Cpp_FileOperations(){
 
-     if(!this->Memory_Delete_Condition){
-
-        this->Clear_Dynamic_Memory();
-     }
+    this->Clear_Dynamic_Memory();
 
     // Destructor Function
 };
@@ -61,44 +58,33 @@ Cpp_FileOperations::~Cpp_FileOperations(){
 void Cpp_FileOperations::Initialize_Members(){
 
      this->File_line_Number = 0;
-
      this->Memory_Delete_Condition = false;
-
      this->Delete_Return_Status = 0;
-
      this->file_open_status = false;
-
      this->is_path_exist = false;
-
-     this->String_Line = "";
 }
 
 void Cpp_FileOperations::Clear_Dynamic_Memory(){
 
-      if(!this->Memory_Delete_Condition)
-      {
-          this->Memory_Delete_Condition = true;
+     this->Clear_Vector_Memory(&this->File_Content);
 
-          if(!this->File_Content.empty())
-          {
-              this->File_Content.clear();
-          }
+     if(!this->String_Line.empty())
+     {
+         this->String_Line.clear();
+         this->String_Line.shrink_to_fit();
+     }
 
-          if(!this->String_Line.empty())
-          {
-              this->String_Line.clear();
-          }
+     if(!this->string_word.empty())
+     {
+        this->string_word.clear();
+        this->string_word.shrink_to_fit();
+     }
 
-          if(!this->string_word.empty())
-          {
-              this->string_word.clear();
-          }
-
-          if(!this->FilePath.empty())
-          {
-             this->FilePath.clear();
-          }
-      }
+     if(!this->FilePath.empty())
+     {
+         this->FilePath.clear();
+         this->FilePath.shrink_to_fit();
+     }
 }
 
 void Cpp_FileOperations::SetFilePath(std::string FilePATH){
@@ -107,29 +93,23 @@ void Cpp_FileOperations::SetFilePath(std::string FilePATH){
 
      this->isFilePathReceive = true;
 
-     this->FilePath = "";
-
-     size_t Name_Size = FilePATH.length();
-
-     for(size_t i=0;i<Name_Size;i++){
-
-         this->FilePath.append(1,FilePATH[i]) ;
-     }
-}
-
-void Cpp_FileOperations::SetFilePath(char * String){
-
-     this->Memory_Delete_Condition = false;
-
-     this->isFilePathReceive = true;
-
-     this->FilePath = "";
-
-     size_t String_Size = strlen(String);
+     size_t String_Size = FilePATH.length();
 
      for(size_t i=0;i<String_Size;i++){
 
-         this->FilePath.append(1,String[i]);
+         this->FilePath.push_back(FilePATH[i]);
+     }
+}
+
+void Cpp_FileOperations::SetFilePath(char * FilePATH){
+
+     this->isFilePathReceive = true;
+
+     size_t String_Size = strlen(FilePATH);
+
+     for(size_t i=0;i<String_Size;i++){
+
+         this->FilePath.push_back(FilePATH[i]);
      }
 }
 
@@ -239,7 +219,7 @@ void Cpp_FileOperations::WriteToFile(const char * string_list){
 
      for(size_t i=0;i<String_Size;i++){
 
-         transfer_string.append(1,string_list[i]);
+         transfer_string.push_back(string_list[i]);
      }
 
      this->DataFile << transfer_string;
@@ -254,7 +234,7 @@ void Cpp_FileOperations::WriteToFile(char * string_list){
 
      for(size_t i=0;i<String_Size;i++){
 
-         transfer_string.append(1,string_list[i]);
+         transfer_string.push_back(string_list[i]);
      }
 
      this->DataFile << transfer_string;
@@ -263,6 +243,7 @@ void Cpp_FileOperations::WriteToFile(char * string_list){
 std::string Cpp_FileOperations::ReadLine(){
 
      this->String_Line.clear();
+     this->String_Line.shrink_to_fit();
 
      if(std::getline(this->DataFile,this->String_Line)){
 
@@ -333,12 +314,13 @@ void Cpp_FileOperations::MoveFile_Win(char * current_path, char * target_path){
 
 void Cpp_FileOperations::Read_File(char * path){
 
-     this->Memory_Delete_Condition = false;
-
      this->File_line_Number = 0;
 
      this->SetFilePath(path);
      this->FileOpen(Rf);
+
+     this->Clear_Vector_Memory(&this->File_Content);
+
 
      std::string new_line = "\n";
 
@@ -358,15 +340,9 @@ void Cpp_FileOperations::Read_File(char * path){
 
 void Cpp_FileOperations::Read_File(std::string path){
 
-     this->Memory_Delete_Condition = false;
-
      this->File_line_Number = 0;
 
-     if(!this->File_Content.empty())
-     {
-         this->File_Content.clear();
-     }
-
+     this->Clear_Vector_Memory(&this->File_Content);
 
      this->SetFilePath(path);
      this->FileOpen(Rf);
@@ -533,6 +509,43 @@ std::string Cpp_FileOperations::GetFileLine(int index){
 
             exit(0);
        }
+}
+
+
+void Cpp_FileOperations::Clear_Vector_Memory(std::vector<std::string> * pointer){
+
+     std::vector<std::string>::iterator it;
+
+     auto begin = pointer->begin();
+
+     auto end   = pointer->end();
+
+     for(auto it=begin;it<end;it++){
+
+        if(!it->empty()){
+
+            it->clear();
+
+            it->shrink_to_fit();
+        }
+     }
+
+     if(!pointer->empty()){
+
+         pointer->clear();
+
+         pointer->shrink_to_fit();
+     }
+}
+
+void Cpp_FileOperations::Clear_String_Memory(std::string * pointer){
+
+     if(!pointer->empty()){
+
+         pointer->clear();
+
+         pointer->shrink_to_fit();
+     }
 }
 
 int Cpp_FileOperations::GetFileSize() const {

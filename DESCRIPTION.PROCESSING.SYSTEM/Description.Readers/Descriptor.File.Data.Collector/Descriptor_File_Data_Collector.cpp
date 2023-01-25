@@ -8,8 +8,6 @@ Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(char * Descriptor
 
    size_t path_size = strlen(Descriptor_File_Path);
 
-   this->Descriptor_File_Path = "";
-
    for(size_t i=0;i<path_size;i++){
 
        this->Descriptor_File_Path.append(1,Descriptor_File_Path[i]);
@@ -58,8 +56,6 @@ void Descriptor_File_Data_Collector::Initialize_Members(){
      this->Source_File_Directories_Record_Number = 0;
      this->Include_Directories_Record_Number = 0;
      this->Memory_Delete_Condition = false;
-
-     this->Descriptor_File_Path = "";
 }
 
 void Descriptor_File_Data_Collector::Clear_Dynamic_Memory()
@@ -68,15 +64,9 @@ void Descriptor_File_Data_Collector::Clear_Dynamic_Memory()
 
          this->Memory_Delete_Condition = true;
 
-         if(!this->File_Index.empty()){
+         this->Clear_Vector_Memory(&this->File_Index);
 
-           this->File_Index.clear();
-         }
-
-         if(!this->Descriptor_File_Path.empty()){
-
-             this->Descriptor_File_Path.clear();
-         }
+         this->Clear_String_Memory(&this->Descriptor_File_Path);
 
          this->StringManager.Clear_Dynamic_Memory();
 
@@ -405,6 +395,44 @@ void Descriptor_File_Data_Collector::Delete_Spaces_on_String(std::string * str)
         }
 
   }while(search_cond);
+}
+
+
+void Descriptor_File_Data_Collector::Clear_Vector_Memory(std::vector<std::string> * pointer){
+
+     std::vector<std::string>::iterator it;
+
+     auto begin = pointer->begin();
+
+     auto end   = pointer->end();
+
+     for(auto it=begin;it<end;it++){
+
+        if(!it->empty()){
+
+            it->clear();
+
+            it->shrink_to_fit();
+        }
+     }
+
+     if(!pointer->empty()){
+
+         pointer->clear();
+
+         pointer->shrink_to_fit();
+     }
+}
+
+
+void Descriptor_File_Data_Collector::Clear_String_Memory(std::string * pointer){
+
+     if(!pointer->empty()){
+
+         pointer->clear();
+
+         pointer->shrink_to_fit();
+     }
 }
 
 

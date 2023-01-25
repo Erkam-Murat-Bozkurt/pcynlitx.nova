@@ -63,6 +63,8 @@ public:
  void Clear_Dynamic_Memory();
 private:
  void Initialize_Members();
+ void Clear_Vector_Memory(std::vector<std::string> * pointer);
+ void Clear_String_Memory(std::string * pointer);
  std::fstream DataFile;
  std::string String_Line;
  std::string string_word;

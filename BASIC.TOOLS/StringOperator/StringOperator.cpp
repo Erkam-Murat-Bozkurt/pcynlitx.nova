@@ -74,6 +74,15 @@ void StringOperator::Clear_Dynamic_Memory(){
          this->Memory_Delete_Condition = true;
 
          this->Cpp_File_Manager.Clear_Dynamic_Memory();
+
+         if(!this->StringBuffer.empty()){
+
+             this->StringBuffer.clear();
+
+             this->StringBuffer.shrink_to_fit();
+         }
+
+         this->CharacterOperations.Clear_Dynamic_Memory();
      }
 }
 
@@ -135,6 +144,13 @@ bool StringOperator::CheckStringLine(std::string readedline){
 
 
 void StringOperator::LoadStringBuffer(std::string ReadLine){
+
+     if(!this->StringBuffer.empty()){
+
+        this->StringBuffer.clear();
+
+        this->StringBuffer.shrink_to_fit();
+     }
 
      this->StringBuffer = ReadLine;
 }

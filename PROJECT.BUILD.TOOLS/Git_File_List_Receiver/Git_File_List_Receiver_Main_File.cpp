@@ -7,8 +7,6 @@
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
 
-void Place_String(char ** Pointer, char * String);
-
 int main(int argc, char ** argv){
 
     if(argc < 2){
@@ -23,7 +21,7 @@ int main(int argc, char ** argv){
     }
 
     Git_File_List_Receiver Receiver(argv[1]);
-    
+
     Receiver.Determine_Git_Repo_Info();
 
     int index_size = Receiver.Get_Git_File_Index_Size();

@@ -33,10 +33,11 @@ void Descriptor_File_Syntax_Controller::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         if(!this->File_Index.empty()){
+         this->Clear_Vector_Memory(&this->File_Index);
 
-             this->File_Index.clear();
-         }
+         this->Clear_String_Memory(&this->Descriptor_File_Path);
+
+         this->StringManager.Clear_Dynamic_Memory();
 
          this->FileManager.Clear_Dynamic_Memory();
      }
@@ -220,6 +221,43 @@ int Descriptor_File_Syntax_Controller::Determine_Repitation(std::string search_w
     }
 
     return this->repitation;
+}
+
+
+void Descriptor_File_Syntax_Controller::Clear_Vector_Memory(std::vector<std::string> * pointer){
+
+     std::vector<std::string>::iterator it;
+
+     auto begin = pointer->begin();
+
+     auto end   = pointer->end();
+
+     for(auto it=begin;it<end;it++){
+
+        if(!it->empty()){
+
+            it->clear();
+
+            it->shrink_to_fit();
+        }
+     }
+
+     if(!pointer->empty()){
+
+         pointer->clear();
+
+         pointer->shrink_to_fit();
+     }
+}
+
+void Descriptor_File_Syntax_Controller::Clear_String_Memory(std::string * pointer){
+
+     if(!pointer->empty()){
+
+         pointer->clear();
+
+         pointer->shrink_to_fit();
+     }
 }
 
 

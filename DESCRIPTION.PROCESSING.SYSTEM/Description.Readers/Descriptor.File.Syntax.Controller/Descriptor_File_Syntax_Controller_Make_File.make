@@ -1,6 +1,5 @@
 
 
-
 CPP_OPS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
 STRING_OPS=D:\pcynlitx.build\BASIC.TOOLS\StringOperator
 CHAR_OPS=D:\pcynlitx.build\BASIC.TOOLS\CharOperator

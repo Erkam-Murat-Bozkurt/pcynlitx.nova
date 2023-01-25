@@ -100,6 +100,8 @@ protected:
  void Determine_Include_Line_Number();
  void Read_Include_Files();
  void Delete_Spaces_on_String(std::string * pointer);
+ void Clear_Vector_Memory(std::vector<std::string> * pointer);
+ void Clear_String_Memory(std::string * pointer);
  Git_File_List_Receiver Git_Receiver;
  StringOperator StringManager;
  Cpp_FileOperations FileManager;

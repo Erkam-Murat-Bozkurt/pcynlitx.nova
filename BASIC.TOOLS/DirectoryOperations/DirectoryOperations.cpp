@@ -123,6 +123,8 @@ void DirectoryOperations::Clear_Dynamic_Memory(){
 
             delete [] this->File_List;
          }
+
+         this->CString_Operator.Clear_Dynamic_Memory();
      }
 }
 
