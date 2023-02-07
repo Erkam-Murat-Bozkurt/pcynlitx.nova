@@ -37,6 +37,7 @@ public:
  int  MakeDirectory(char * path);
  int  MakeSubDirectory(char * path);
  int  ChangeDirectory(char * path);
+ int  ChangeDirectory(const char * path);
  int  RemoveDirectory(char * path);
  int  GoToUpperDirectory();
  int  GoToSubDirectory(char * DirectoryName);

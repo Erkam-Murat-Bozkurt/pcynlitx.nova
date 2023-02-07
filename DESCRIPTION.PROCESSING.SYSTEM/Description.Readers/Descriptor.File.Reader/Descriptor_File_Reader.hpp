@@ -51,7 +51,6 @@ protected:
  Descriptor_File_Data_Collector Data_Collector;
  Descriptor_File_Syntax_Controller Syntax_Controller;
  StringOperator StringManager;
- Cpp_FileOperations FileManager;
  int include_dir_num;
  int source_file_dir_num;
  int lib_dir_num;

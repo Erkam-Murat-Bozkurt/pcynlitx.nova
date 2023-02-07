@@ -20,7 +20,7 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Git_File_List_Receiver Receiver(argv[1]);
+    Git_File_List_Receiver Receiver(argv[1],'w');
 
     Receiver.Determine_Git_Repo_Info();
 
@@ -28,7 +28,13 @@ int main(int argc, char ** argv){
 
     for(int i=0;i<index_size;i++){
 
+        std::cout << "\n";
+
         std::cout << "\n Git Record File -"  << i << " :" << Receiver.Get_Git_File_Index(i);
+
+        std::cout << "\n System path     -"  << i << " :" << Receiver.Get_File_System_Path(i);
+
+        std::cout << "\n";
     }
 
     std::cout << "\n Press eny key..";

@@ -16,6 +16,8 @@ Source_File_Determiner::~Source_File_Determiner()
 
 void Source_File_Determiner::Clear_Dynamic_Memory()
 {
+     this->File_Content_Size = 0;
+
      this->Clear_Vector_Memory(&this->File_Content);
 
      this->Clear_String_Memory(&this->Source_File_Name);
@@ -30,6 +32,8 @@ void Source_File_Determiner::Clear_Dynamic_Memory()
 }
 
 bool Source_File_Determiner::Is_Source_File(char * file_path){
+
+     this->Clear_Dynamic_Memory();
 
      char inclusion_guard [] = "#ifndef";
 
@@ -121,6 +125,8 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
 
 bool Source_File_Determiner::Is_Source_File(std::string file_path){
 
+     this->Clear_Dynamic_Memory();
+
      std::string inclusion_guard = "#ifndef";
 
      std::string main_file_key   = "main(";
@@ -211,6 +217,8 @@ bool Source_File_Determiner::Is_Source_File(std::string file_path){
 void Source_File_Determiner::Read_File(std::string path){
 
      this->Clear_Vector_Memory(&this->File_Content);
+
+     this->FileManager.Clear_Dynamic_Memory();
 
      this->FileManager.SetFilePath(path);
 

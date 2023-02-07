@@ -9,14 +9,11 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Descriptor_File_Reader.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Header_File_Determiner.h"
 #include "Source_File_Determiner.h"
 #include "Source_File_Data_Collector.hpp"
-#include "Project_Files_Data_Collector.hpp"
 #include "StringOperator.h"
-#include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
 
 
@@ -47,38 +44,31 @@ public:
  void Clear_Dynamic_Memory();
 protected:
  void Initialize_Members(char opr_sis);
- void Determine_Git_Record_Directories();
- void Determine_Git_Record_Dir(int data_num, char operating_sis);
- void Determine_Class_Header_Files();
- void Determine_Class_Header_File_Name(int data_num);
- void Determine_Source_File_Number();
- void Determine_Header_File_Number();
  void Collect_Source_Files_Data();
- void Initialize_Data_Structures();
  void Collect_Independent_Header_Files_Data();
- void Clear_Pointer_Memory(char ** pointer);
+ bool Is_This_Header_File_Included_Anywhere(std::string name);
+ void Determine_File_Name_With_Ext(std::string * ptr, std::string str);
  bool Check_String_Equality(std::string s1, std::string s2);
  bool CheckStringInclusion(std::string str, std::string word);
- void Place_Source_File_Headers_Data(Build_System_Data * Data);
- void Place_Headers_Data(Build_System_Data * Data, int hdr_num);
- void Place_Source_File_Data(Build_System_Data * Data, std::string file_path);
- Source_File_Data_Collector Src_Data_Col;
- Descriptor_File_Reader Des_Reader;
+ void Clear_Vector_Memory(std::vector<std::string> * pointer);
+ void Clear_Build_Data_Memory(std::vector<Build_System_Data> * pointer);
+ void Clear_String_Memory(std::string * pointer);
+ void Clear_Build_Data(Build_System_Data * pointer);
  Git_File_List_Receiver Git_Data_Receiver;
+ Source_File_Data_Collector Src_Data_Col;
  Header_File_Determiner Header_Determiner;
  Source_File_Determiner Source_Determiner;
- Project_Files_Data_Collector File_Data_Cltr;
  StringOperator StringManager;
- Cpp_FileOperations FileManager;
  std::string Repo_Dir;
  std::vector<Build_System_Data> Data;
  std::vector<std::string> independent_header_files;
+ std::vector<std::string> git_record_paths;
  int  independent_header_files_number;
  int  Source_File_Number;
- int  Header_File_Number;
  int  git_record_size;
  bool Memory_Delete_Condition;
  bool isStringsEqual;
+ bool is_this_file_included_anywhere;
  char operating_sis;
 };
 

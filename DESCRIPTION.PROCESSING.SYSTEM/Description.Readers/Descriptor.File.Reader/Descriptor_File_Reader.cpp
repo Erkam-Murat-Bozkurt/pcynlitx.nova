@@ -3,9 +3,7 @@
 
 Descriptor_File_Reader::Descriptor_File_Reader(char * FilePATH) :
 
-  Syntax_Controller(FilePATH), Data_Collector(FilePATH),
-  StringManager(FilePATH),     FileManager(FilePATH)
-
+  Syntax_Controller(FilePATH), Data_Collector(FilePATH)
 {
    this->Initialize_Members();
 
@@ -26,8 +24,7 @@ Descriptor_File_Reader::Descriptor_File_Reader(char * FilePATH) :
 
 Descriptor_File_Reader::Descriptor_File_Reader(std::string FilePATH) :
 
-  Syntax_Controller(FilePATH), Data_Collector(FilePATH),
-  StringManager(FilePATH),     FileManager(FilePATH)
+  Syntax_Controller(FilePATH), Data_Collector(FilePATH)
 {
 
    this->Initialize_Members();
@@ -95,8 +92,6 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
          this->Syntax_Controller.Clear_Dynamic_Memory();
 
          this->StringManager.Clear_Dynamic_Memory();
-
-         this->FileManager.Clear_Dynamic_Memory();
      }
 }
 

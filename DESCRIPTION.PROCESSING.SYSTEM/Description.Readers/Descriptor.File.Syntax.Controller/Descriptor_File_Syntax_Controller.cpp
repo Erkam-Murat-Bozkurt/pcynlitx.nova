@@ -4,18 +4,16 @@
 
 Descriptor_File_Syntax_Controller::Descriptor_File_Syntax_Controller(char * path) :
 
-  StringManager(path), FileManager(path)
+  FileManager(path)
 {
    this->Memory_Delete_Condition = false;
 }
 
 Descriptor_File_Syntax_Controller::Descriptor_File_Syntax_Controller(std::string path) :
 
-  StringManager(path), FileManager(path)
+  FileManager(path)
 {
-
   this->Memory_Delete_Condition = false;
-
 }
 
 Descriptor_File_Syntax_Controller::~Descriptor_File_Syntax_Controller(){

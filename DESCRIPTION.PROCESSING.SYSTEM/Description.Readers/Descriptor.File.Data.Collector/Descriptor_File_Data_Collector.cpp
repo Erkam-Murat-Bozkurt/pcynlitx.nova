@@ -3,7 +3,7 @@
 
 Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(char * Descriptor_File_Path) :
 
-  StringManager(Descriptor_File_Path), FileManager(Descriptor_File_Path)
+  FileManager(Descriptor_File_Path)
 {
 
    size_t path_size = strlen(Descriptor_File_Path);
@@ -19,7 +19,7 @@ Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(char * Descriptor
 
 Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(std::string Descriptor_File_Path) :
 
-  FileManager(Descriptor_File_Path), StringManager(Descriptor_File_Path)
+  FileManager(Descriptor_File_Path)
 
 {
    this->Initialize_Members();

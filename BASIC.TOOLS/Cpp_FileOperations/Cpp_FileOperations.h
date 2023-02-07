@@ -42,6 +42,7 @@ public:
  void SetFilePath(char * String);
  void MoveFile_Win(char * path, char * tr_path);  // Transfer file to another location in windows
  int  Delete_File(char * path);
+ int  Delete_File(const char * path);
  void FileOpen(char Open_Mode);
  void FileClose( );
  void WriteToFile(std::string string_list);

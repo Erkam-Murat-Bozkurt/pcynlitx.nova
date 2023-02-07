@@ -493,6 +493,57 @@ int Cpp_FileOperations::Delete_File(char * path){
 }
 
 
+
+int Cpp_FileOperations::Delete_File(const char * path)
+{
+     int path_length = strlen(path);
+
+     TCHAR * path_pointer = new TCHAR[5*path_length];
+
+     for(int i=0;i<path_length;i++){
+
+         path_pointer[i] = path[i];
+     }
+
+     path_pointer[path_length] = '\0';
+
+     path_pointer[path_length+1] = '\0';
+
+     if(this->Is_Path_Exist(path_pointer)){
+
+        SHFILEOPSTRUCT fileop;
+
+        fileop.wFunc = FO_DELETE;
+
+        fileop.pFrom = path_pointer;
+
+        fileop.pTo = NULL;
+
+        fileop.hwnd = NULL;
+
+        fileop.fFlags = FOF_FILESONLY | FOF_NOCONFIRMATION;
+
+        this->Delete_Return_Status = SHFileOperationA(&fileop);
+
+        if(this->Delete_Return_Status != 0) {
+
+          std::cout << "\n The file can not be removed ..";
+        }
+     }
+     else{
+
+          std::cout << "\n Error inside Cpp_FileOperations";
+
+          std::cout << "\n Inside Delete_File:";
+
+          std::cout << "\n The file " << path_pointer << " is not exist..";
+     }
+
+     delete [] path_pointer;
+
+     return this->Delete_Return_Status;
+}
+
 std::string Cpp_FileOperations::GetFileLine(int index){
 
        if(!this->File_Content.empty()){

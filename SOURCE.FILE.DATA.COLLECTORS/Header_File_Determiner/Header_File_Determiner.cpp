@@ -3,11 +3,11 @@
 
 Header_File_Determiner::Header_File_Determiner(char * DesPath, char opr_sis) :
 
-     Git_Receiver(DesPath)
+     Git_Receiver(DesPath,opr_sis)
 {
     this->git_record_size = this->Git_Receiver.Get_Git_File_Index_Size();
 
-    this->Repo_Dir        = this->Git_Receiver.Get_Git_Repo_Directory();
+    this->Repo_Dir  = this->Git_Receiver.Get_Git_Repo_Directory();
 
     this->operating_sis = opr_sis;
 
@@ -42,6 +42,10 @@ void Header_File_Determiner::Clear_Dynamic_Memory(){
         this->Clear_String_Memory(&this->Header_File_System_Path);
 
         this->Clear_String_Memory(&this->Repo_Dir);
+
+        this->StringManager.Clear_Dynamic_Memory();
+        this->FileManager.Clear_Dynamic_Memory();
+        this->Git_Receiver.Clear_Dynamic_Memory();
      }
 }
 

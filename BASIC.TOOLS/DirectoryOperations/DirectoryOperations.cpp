@@ -279,6 +279,44 @@ int DirectoryOperations::MakeDirectory(char * path){
     return this->ReturnCondition;
 };
 
+int DirectoryOperations::ChangeDirectory(const char * path){
+
+    this->DetermineCurrentDirectory();
+
+    char * CurrentDirectory = this->GetCurrentlyWorkingDirectory();
+
+    std::string CurrentDirectory_String;
+
+    std::string TargetDirectory_String;
+
+    int CurrentDirectory_Size = strlen(CurrentDirectory);
+
+    for(int i=0;i<CurrentDirectory_Size;i++){
+
+        CurrentDirectory_String.append(1,CurrentDirectory[i]);
+    }
+
+    CurrentDirectory_String.append(1,'\0');
+
+    int TargetDirectory_Size = strlen(path);
+
+    for(int i=0;i<TargetDirectory_Size;i++){
+
+       TargetDirectory_String.append(1,path[i]);
+    }
+
+    TargetDirectory_String.append(1,'\0');
+
+    this->ReturnCondition = 0;
+
+    if(TargetDirectory_String != CurrentDirectory_String){
+
+       this->ReturnCondition = SetCurrentDirectory(path);
+    }
+
+    return this->ReturnCondition;
+};
+
 int DirectoryOperations::ChangeDirectory(char * path){
 
     this->DetermineCurrentDirectory();

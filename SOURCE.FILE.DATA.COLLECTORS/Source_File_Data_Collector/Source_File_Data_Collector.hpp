@@ -17,7 +17,6 @@
 #include <windows.h>
 #include <vector>
 #include "Git_File_List_Receiver.hpp"
-#include "Project_Files_Data_Collector.hpp"
 #include "StringOperator.h"
 #include "Cpp_FileOperations.h"
 
@@ -36,7 +35,7 @@ struct Build_System_Data {
   std::string git_record_path;     // Header path in git record
   std::string git_record_dir;      // The git record directory
   std::string File_Directory;      // The directory of the file which is record constructed
-  std::string File_Path;           // Header file exact path ( System Path )
+  std::string File_Path;           // The file exact path ( System Path )
   std::string File_Name;           // The file name witout extentation
   std::string File_Name_With_Ext;  // The header file name with extention
   std::string class_header_file_name;
@@ -101,6 +100,7 @@ protected:
  void Read_Include_Files();
  void Delete_Spaces_on_String(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
+ void Clear_Include_File_Data(Include_File_Data * pointer);
  void Clear_String_Memory(std::string * pointer);
  Git_File_List_Receiver Git_Receiver;
  StringOperator StringManager;
