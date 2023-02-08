@@ -12,7 +12,6 @@ INT_TO_CHAR=D:\pcynlitx.build\BASIC.TOOLS\IntToCharTranslater
 DES_READER=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
 DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
 DES_FILE_SYNT_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
-MAKE_DATA_COL=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\MakeFile_Data_Collector
 GIT_LIST=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_File_List_Receiver
 FILE_DAT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Data_Collector
 SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
@@ -32,7 +31,6 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
   Project_Files_Data_Collector.cpp \
 	Source_File_Data_Collector.cpp \
 	Git_File_List_Receiver.cpp \
-	MakeFile_Data_Collector.cpp \
 	Source_File_Determiner.cpp \
 	Header_File_Determiner.cpp \
 	Descriptor_File_Reader.cpp \
@@ -49,7 +47,6 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 	Project_Files_Data_Collector.hpp \
 	Source_File_Data_Collector.cpp \
 	Git_File_List_Receiver.hpp \
-	MakeFile_Data_Collector.hpp \
 	Descriptor_File_Reader.hpp \
 	Descriptor_File_Data_Collector.hpp \
 	Descriptor_File_Syntax_Controller.hpp \
@@ -83,7 +80,6 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 		$(FILE_DAT_COL)\Project_Files_Data_Collector.cpp \
 		$(SRC_DT_COL)\Source_File_Data_Collector.cpp \
 		$(GIT_LIST)\Git_File_List_Receiver.cpp \
-		$(MAKE_DATA_COL)\MakeFile_Data_Collector.cpp \
 		$(SOURCE_DETR)\Source_File_Determiner.cpp \
 		$(DIR_ENUM)\Directory_Enumerator.cpp \
 		$(DES_READER)\Descriptor_File_Reader.cpp \
@@ -101,7 +97,6 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 		-include $(FILE_DAT_COL)\Project_Files_Data_Collector.hpp \
 		-include $(SRC_DT_COL)\Source_File_Data_Collector.hpp \
 		-include $(GIT_LIST)\Git_File_List_Receiver.hpp \
-		-include $(MAKE_DATA_COL)\MakeFile_Data_Collector.hpp \
 		-include $(DES_READER)\Descriptor_File_Reader.hpp \
 		-include $(DES_DATA_COL)\Descriptor_File_Data_Collector.hpp \
 		-include $(DES_FILE_SYNT_COL)\Descriptor_File_Syntax_Controller.hpp \

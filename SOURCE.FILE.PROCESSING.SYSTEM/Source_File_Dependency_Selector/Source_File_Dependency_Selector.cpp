@@ -24,13 +24,11 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Source_File_Dependency_Selector.hpp"
 
-Source_File_Dependency_Selector::Source_File_Dependency_Selector(char * des_file_path)
+Source_File_Dependency_Selector::Source_File_Dependency_Selector(char * des_file_path, char opr_sis)
 
-: Info_Collector(des_file_path){
-
-   this->Memory_Delete_Condition = true;
-
-   this->Dependent_List = nullptr;
+    : Info_Collector(des_file_path,opr_sis), Header_Determiner(des_file_path,opr_sis)
+{
+   this->Memory_Delete_Condition = false;
 
    this->Dep_Counter = 0;
 
@@ -38,44 +36,26 @@ Source_File_Dependency_Selector::Source_File_Dependency_Selector(char * des_file
 }
 
 
-Source_File_Dependency_Selector::~Source_File_Dependency_Selector(){
-
-   if(!this->Memory_Delete_Condition){
-
+Source_File_Dependency_Selector::~Source_File_Dependency_Selector()
+{
        this->Clear_Dynamic_Memory();
-   }
-
 }
 
 void Source_File_Dependency_Selector::Clear_Dynamic_Memory(){
 
-     if(!this->Memory_Delete_Condition){
+     this->Clear_Vector_Memory(&this->Dependent_List);
 
-         this->Memory_Delete_Condition = true;
+     this->Clear_String_Memory(&this->warehouse_head_dir);
 
-         std::cout << "\n this->Dep_Counter:" << this->Dep_Counter;
+     this->Clear_String_Memory(&this->descriptor_file_path);
 
-         std::cout << "\n this->header_file_number:" << this->header_file_number;
+     this->Info_Collector.Clear_Dynamic_Memory();
 
-         std::cin.get();
-
-         for(int i=0;i<this->Dep_Counter;i++){
-
-             delete [] this->Dependent_List[i].Header_Name;
-
-             delete [] this->Dependent_List[i].repo_warehouse_path;
-         }
-
-         if(this->Dependent_List != nullptr){
-
-            delete [] this->Dependent_List;
-         }
-
-         this->Dep_Counter = 0;
-     }
+     this->Dep_Counter = 0;
 }
 
-void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(char * path){
+
+void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::string path){
 
      this->Info_Collector.Collect_Make_File_Data();
 
@@ -84,20 +64,15 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(char * 
      this->Extract_Dependency_Data(path);
 }
 
+
 void Source_File_Dependency_Selector::Receive_Collector_Info(){
-
-     this->header_file_number = this->Info_Collector.Get_Compiler_Data_Size();
-
-     this->Data_Ptr_CString   = this->Info_Collector.Get_Compiler_Data();
 
      this->warehouse_head_dir = this->Info_Collector.Get_Warehouse_Headers_Dir();
 
      this->Memory_Delete_Condition = false;
-
-     this->Dependent_List = new Header_Dependency [5*this->header_file_number];
 }
 
-void Source_File_Dependency_Selector::Extract_Dependency_Data(char * path){
+void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
 
      int inclusion_number = 0;
 
@@ -105,21 +80,14 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(char * path){
 
      Cpp_FileOperations FileStream;
 
-     FileStream.Read_File_as_CString(path);
+     FileStream.Read_File(path);
 
      int FileSize = FileStream.GetFileSize();
 
+
      for(int k=0;k<FileSize;k++){
 
-         char * string = FileStream.GetFileLine(k);
-
-         // In order to remove possible spaces on the string
-
-         // a temporary string is constructed
-
-         char * tmp_string = nullptr;
-
-         this->Construct_Temporary_String(&tmp_string,string);
+         std::string tmp_string = FileStream.GetFileLine(k);
 
          this->Delete_Spaces_on_String(&tmp_string);
 
@@ -130,37 +98,31 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(char * path){
             inclusion_number++;
          }
 
-         this->Clear_Pointer_Memory(&tmp_string);
+         this->Clear_String_Memory(&tmp_string);
      }
+
+     /*  The inclusion number determined */
+
 
      if(inclusion_number>0){
 
-        FileStream.Read_File_as_CString(path);
+        FileStream.Read_File(path);
 
         int FileSize = FileStream.GetFileSize();
 
         for(int k=0;k<FileSize;k++){
 
-            char * string = FileStream.GetFileLine(k);
-
-            // In order to remove possible spaces on the string
-
-            // a temporary string is constructed
-
-            char * tmp_string = nullptr;
-
-            this->Construct_Temporary_String(&tmp_string,string);
+            std::string tmp_string = FileStream.GetFileLine(k);
 
             this->Delete_Spaces_on_String(&tmp_string);
-
 
             bool is_include_decleration = this->Include_Decleration_Test(tmp_string);
 
             if(is_include_decleration){
 
-               char * header_name = nullptr;
+               std::string header_name;
 
-               char * wrd_path = nullptr;
+               std::string wrd_path;
 
                this->Extract_Header_File_Name_From_Decleration(&header_name,tmp_string);
 
@@ -175,372 +137,382 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(char * path){
 
                if((is_repo_header_file) && (!is_already_searched)){
 
-                 this->Place_String(&this->Dependent_List[this->Dep_Counter].Header_Name,header_name);
+                 Header_Dependency temp;
 
-                 this->Place_String(&this->Dependent_List[this->Dep_Counter].repo_warehouse_path,wrd_path);
+                 this->Place_String(&temp.Header_Name,header_name);
 
-                 this->Dependent_List[this->Dep_Counter].rcr_srch_complated = true;
+                 this->Place_String(&temp.repo_warehouse_path,wrd_path);
+
+                 temp.rcr_srch_complated= true;
+
+                 this->Dependent_List.push_back(temp);
 
                  this->Dep_Counter++;
 
+                 this->Clear_String_Memory(&temp.Header_Name);
+
+                 this->Clear_String_Memory(&temp.repo_warehouse_path);
+
                  this->Extract_Dependency_Data(wrd_path);
                }
+
+
+               this->Clear_String_Memory(&header_name);
+
+               this->Clear_String_Memory(&wrd_path);
              }
 
-             this->Clear_Pointer_Memory(&tmp_string);
+             this->Clear_String_Memory(&tmp_string);
          }
       }
 
       FileStream.Clear_Dynamic_Memory();
-  }
-
-  bool Source_File_Dependency_Selector::Is_This_Repo_HeaderFile(char * path){
-
-       this->is_this_repo_header = false;
-
-       bool is_header = this->Header_Determiner.Is_Header(path);
-
-       int index_size = this->Info_Collector.Get_Compiler_Data_Size();
-
-       if(is_header){
-
-          //char * header_path = nullptr;
-
-          for(int i=0;i<index_size;i++){
-
-              char * repo_file_path = this->Data_Ptr_CString[i].repo_path;
-
-              bool is_equal = this->CompareString(repo_file_path,path);
-
-              if(is_equal){
-
-                 this->is_this_repo_header = true;
-
-                 return this->is_this_repo_header;
-              };
-          }
-      };
-
-      return this->is_this_repo_header;
-  }
+}
 
 
-  bool Source_File_Dependency_Selector::Is_This_File_Aready_Searched(char * name){
 
-       this->This_File_Exist = false;
+bool Source_File_Dependency_Selector::Is_This_Repo_HeaderFile(std::string path)
+{
+     this->is_this_repo_header = false;
 
-       for(int i=0;i<this->Dep_Counter;i++){
+     bool is_header = this->Header_Determiner.Is_Header(path);
 
-           bool is_exist_on_the_list =
+     int index_size = this->Info_Collector.Get_Compiler_Data_Size();
 
-           this->CompareString(name,this->Dependent_List[i].Header_Name);
+     if(is_header){
 
-           if(is_exist_on_the_list){
+       for(int i=0;i<index_size;i++){
 
-              this->This_File_Exist = true;
+           Compiler_Data temp_data = this->Info_Collector.Get_Compiler_Data(i);
 
-              return this->This_File_Exist;
+           std::string repo_file_path = temp_data.repo_path;
+
+           bool is_equal = this->CompareString(repo_file_path,path);
+
+           this->Clear_String_Memory(&repo_file_path);
+
+           if(is_equal){
+
+              this->is_this_repo_header = true;
+
+              return this->is_this_repo_header;
+           };
+        }
+     };
+
+     return this->is_this_repo_header;
+}
+
+
+bool Source_File_Dependency_Selector::Is_This_File_Aready_Searched(std::string name){
+
+     this->This_File_Exist = false;
+
+     size_t list_size = this->Dependent_List.size();
+
+     for(int i=0;i<list_size;i++){
+
+         bool is_exist_on_the_list =
+
+         this->CompareString(name,this->Dependent_List[i].Header_Name);
+
+         if(is_exist_on_the_list){
+
+            this->This_File_Exist = true;
+
+            return this->This_File_Exist;
+         }
+      }
+
+      return this->This_File_Exist;
+}
+
+
+
+void Source_File_Dependency_Selector::Determine_Header_Repo_Warehouse_Path(std::string * wrd_path,
+
+     std::string file_name, char opr_sis){
+
+     size_t name_size = file_name.length();
+
+     size_t wrd_path_size = this->warehouse_head_dir.length();
+
+     size_t path_size = name_size + wrd_path_size;
+
+     for(size_t i=0;i<wrd_path_size;i++){
+
+         wrd_path->push_back(this->warehouse_head_dir[i]);
+     }
+
+     if(opr_sis == 'w'){
+
+        wrd_path->push_back('\\');
+     }
+
+     if(opr_sis == 'l'){
+
+        wrd_path->push_back('/');
+     }
+
+     for(size_t i=0;i<name_size;i++){
+
+         wrd_path->push_back(file_name[i]);
+     }
+}
+
+
+
+void Source_File_Dependency_Selector::Extract_Header_File_Name_From_Decleration(std::string * header_name,
+
+       std::string string)
+{
+
+     size_t size = string.length();
+
+     int start_point = 0;
+
+
+     for(size_t k=0;k<size;k++){
+
+         if(string[k] == '\"'){
+
+            break;
+         }
+         else{
+
+            start_point++;
+         }
+     }
+
+     start_point = start_point + 1;
+
+     size_t end_point = start_point;
+
+     for(size_t k=start_point;k<size;k++){
+
+         if(string[k] == '\"'){
+
+            break;
+         }
+         else{
+
+              end_point++;
+         }
+     }
+
+     for(size_t i=start_point;i<end_point;i++){
+
+         header_name->push_back(string[i]);
+     }
+}
+
+void Source_File_Dependency_Selector::Delete_Spaces_on_String(std::string * str)
+{
+     size_t string_size = str->length();
+
+     bool search_cond = true;
+
+     do{
+
+         search_cond = false;
+
+         for(size_t i=0;i<str->length();i++){
+
+             if((*str)[i] == ' '){
+
+               search_cond = true;
+
+               str->erase(i,1);
+             }
+         }
+
+     }while(search_cond);
+
+     str->shrink_to_fit();
+}
+
+
+
+bool Source_File_Dependency_Selector::Include_Decleration_Test(std::string string)
+{
+     this->include_decleration_cond = false;
+
+     char include_key [] = "#include\"";  // double_quotation_mark
+
+     bool is_this_include_dec
+
+     = this->StringManager.CheckStringInclusion(string,include_key);
+
+     bool char_before_sharp = false; //  sharp symbol = #
+
+     if(string[0]!= '#'){
+
+        char_before_sharp = true;
+     }
+
+     // In metaprograms, #include key is used on the inside code
+
+     // Therefore, there may be false include therms which is used in the metaprograms
+
+     // in order to produce header files. If there is a character before the sharp symbol,
+
+     // it is a meta program code. ( simething like write{ #include \"sample.h\" })
+
+     if(!char_before_sharp){
+
+        if(is_this_include_dec){
+
+           this->include_decleration_cond = true;
+        }
+     }
+
+     return this->include_decleration_cond;
+}
+
+
+
+bool Source_File_Dependency_Selector::CompareString(std::string firstString, std::string secondString){
+
+     size_t firstStringLength  = firstString.length();
+
+     size_t secondStringLength = secondString.length();
+
+     if(firstStringLength==secondStringLength){
+
+        for(size_t i=0;i<firstStringLength;i++){
+
+            if(firstString[i]!=secondString[i]){
+
+               this->isStringsEqual = false;
+
+               return this->isStringsEqual;
             }
         }
 
-        return this->This_File_Exist;
-  }
-
-  void Source_File_Dependency_Selector::Determine_Header_Repo_Warehouse_Path(char ** wrd_path,
-
-       char * file_name, char opr_sis){
-
-       size_t name_size = strlen(file_name);
-
-       size_t wrd_path_size = strlen(this->warehouse_head_dir);
-
-       size_t path_size = name_size + wrd_path_size;
-
-       *wrd_path = new char [5*path_size];
-
-       size_t index = 0;
-
-       for(size_t i=0;i<wrd_path_size;i++){
-
-           (*wrd_path)[index] = this->warehouse_head_dir[i];
-
-           index++;
-       }
-
-       if(opr_sis == 'w'){
-
-         (*wrd_path)[index] = '\\';
-       }
-       else{
-
-         (*wrd_path)[index] = '/';
-       }
-
-       index++;
-
-       for(size_t i=0;i<name_size;i++){
-
-           (*wrd_path)[index] = file_name[i];
-
-           index++;
-       }
-
-       (*wrd_path)[index] = '\0';
-  }
-
-  void Source_File_Dependency_Selector::Extract_Header_File_Name_From_Decleration(char ** header_name,
-
-       char * string){
-
-       size_t size = strlen(string);
-
-       int start_point = 0;
-
-       for(size_t k=0;k<size;k++){
-
-           if(string[k] == '\"'){
-
-              break;
-           }
-           else{
-
-              start_point++;
-           }
-       }
-
-       start_point = start_point + 1;
-
-       int end_point = start_point;
-
-       for(size_t k=start_point;k<size;k++){
-
-          if(string[k] == '\"'){
-
-             break;
-          }
-          else{
-
-               end_point++;
-          }
-       }
-
-       int Name_Size = end_point - start_point;
-
-       *header_name = new char [5*Name_Size];
-
-       int index_counter = 0;
-
-       for(int i=start_point;i<end_point;i++){
-
-            (*header_name)[index_counter] = string[i];
-
-            index_counter++;
-       }
-
-       (*header_name)[index_counter] = '\0';
-  }
-
-
-  void Source_File_Dependency_Selector::Delete_Spaces_on_String(char ** pointer){
-
-       size_t string_size = strlen(*pointer);
-
-       int remove_index = 0;
-
-       for(size_t i=0;i<string_size;i++){
-
-           if((*pointer)[i] == ' '){
-
-              for(size_t k=i;k<string_size;k++){
-
-                 (*pointer)[k] = (*pointer)[k+1];
-              }
-
-              remove_index++;
-           }
-       }
-
-       (*pointer)[string_size - remove_index+1] = '\0';
-  }
-
-  void Source_File_Dependency_Selector::Construct_Temporary_String(char ** tmp_string,
-
-       char * string){
-
-       size_t string_size = strlen(string);
-
-       *tmp_string = new char [5*string_size];
-
-       for(size_t n=0;n<5*string_size;n++){
-
-          (*tmp_string)[n] = '\0';
-       }
-
-       for(size_t n=0;n<string_size;n++){
-
-          (*tmp_string)[n] = string[n];
-       }
-
-       (*tmp_string)[string_size] = '\0';
-  }
-
-
-  bool Source_File_Dependency_Selector::Include_Decleration_Test(char * string){
-
-       this->include_decleration_cond = false;
-
-       char include_key [] = "#include\"";  // double_quotation_mark
-
-       bool is_this_include_dec
-
-       = this->StringManager.CheckStringInclusion(string,include_key);
-
-       bool char_before_sharp = false; //  sharp symbol = #
-
-       if(string[0]!= '#'){
-
-          char_before_sharp = true;
-       }
-
-       // In metaprograms, #include key is used on the inside code
-
-       // Therefore, there may be false include therms which is used in the metaprograms
-
-       // in order to produce header files. If there is a character before the sharp symbol,
-
-       // it is a meta program code. ( simething like write{ #include \"sample.h\" })
-
-       if(!char_before_sharp){
-
-          if(is_this_include_dec){
-
-             this->include_decleration_cond = true;
-          }
-       }
-
-       return this->include_decleration_cond;
-  }
-
-
-  bool Source_File_Dependency_Selector::CompareString(char * firstString, char * secondString){
-
-       size_t firstStringLength  = this->CharListLength(firstString);
-
-       size_t secondStringLength = this->CharListLength(secondString);
-
-       if(firstStringLength==secondStringLength){
-
-          for(size_t i=0;i<firstStringLength;i++){
-
-              if(firstString[i]!=secondString[i]){
-
-                 this->isStringsEqual = false;
-
-                 return this->isStringsEqual;
-              }
-          }
-
-          this->isStringsEqual = true;
-
-          return this->isStringsEqual;
-       }
-       else{
+        this->isStringsEqual = true;
+
+        return this->isStringsEqual;
+     }
+     else{
 
             this->isStringsEqual = false;
 
             return this->isStringsEqual;
-       }
-  }
+     }
+}
 
-  size_t Source_File_Dependency_Selector::CharListLength(char * Characterlist){
 
-      this->ListLength = 0;
+void Source_File_Dependency_Selector::Place_String(std::string * str_pointer, std::string str)
+{
+     size_t string_size = str.length();
 
-      if((Characterlist[this->ListLength] != '\0') && (Characterlist[this->ListLength] != '\n') ){
+     for(size_t i=0;i<string_size;i++){
 
-          while((Characterlist[this->ListLength] != '\0') && (Characterlist[this->ListLength] != '\n')){
+         str_pointer->push_back(str[i]);
+     }
 
-               this->ListLength++;
-          }
+     str_pointer->shrink_to_fit();
+}
+
+
+void Source_File_Dependency_Selector::Print_Dependency_List()
+{
+     for(int i=0;i<this->Dep_Counter;i++){
+
+         std::cout << "\n list - " << i << " " << this->Dependent_List[i].Header_Name;
       }
-
-      return this->ListLength;
-  }
-
-  void Source_File_Dependency_Selector::Place_String(char ** str_pointer, char * string){
-
-       size_t string_size = strlen(string);
-
-       *str_pointer = new char [5*string_size];
-
-       for(size_t i=0;i<string_size;i++){
-
-           (*str_pointer)[i] = string[i];
-       }
-
-       (*str_pointer)[string_size] = '\0' ;
-  }
-
-  void Source_File_Dependency_Selector::Print_Dependency_List(){
-
-       for(int i=0;i<this->Dep_Counter;i++){
-
-           std::cout << "\n list - " << i << " " << this->Dependent_List[i].Header_Name;
-       }
-  }
-
-  void Source_File_Dependency_Selector::Clear_Pointer_Memory(char ** Pointer){
-
-       if(*Pointer != nullptr){
-
-          delete [] *Pointer;
-
-          *Pointer = nullptr;
-       }
-  }
-
-  Header_Dependency * Source_File_Dependency_Selector::Get_Header_Dependency_List(){
-
-        return this->Dependent_List;
-  }
+}
 
 
-  Compiler_Data_CString * Source_File_Dependency_Selector::Get_Compiler_Data(){
+void Source_File_Dependency_Selector::Clear_String_Memory(std::string * Pointer)
+{
+     if(!Pointer->empty()){
 
-    return this->Info_Collector.Get_Compiler_Data();
-  }
+         Pointer->clear();
 
-  int Source_File_Dependency_Selector::Get_Compiler_Data_Size(){
+         Pointer->shrink_to_fit();
+     }
+}
+
+void Source_File_Dependency_Selector::Clear_Vector_Memory(std::vector<Header_Dependency> * pointer){
+
+     std::vector<std::string>::iterator it;
+
+     auto begin = pointer->begin();
+     auto end   = pointer->end();
+
+     for(auto it=begin;it<end;it++){
+
+        if(!it->Header_Name.empty()){
+
+            it->Header_Name.clear();
+            it->Header_Name.shrink_to_fit();
+        }
+
+        if(!it->repo_warehouse_path.empty()){
+
+            it->repo_warehouse_path.clear();
+            it->repo_warehouse_path.shrink_to_fit();
+        }
+     }
+
+     if(!pointer->empty())
+     {
+         pointer->clear();
+         pointer->shrink_to_fit();
+     }
+}
+
+
+Header_Dependency Source_File_Dependency_Selector::Get_Header_Dependency_List(int i)
+{
+      return this->Dependent_List[i];
+}
+
+
+
+Compiler_Data Source_File_Dependency_Selector::Get_Compiler_Data(int num)
+{
+   return this->Info_Collector.Get_Compiler_Data(num);
+}
+
+
+
+int Source_File_Dependency_Selector::Get_Compiler_Data_Size(){
 
       return this->Info_Collector.Get_Compiler_Data_Size();
-  }
+}
 
-  char * Source_File_Dependency_Selector::Get_Dependent_Header(int i){
 
-        return this->Dependent_List[i].Header_Name;
-  }
+std::string Source_File_Dependency_Selector::Get_Dependent_Header(int i){
 
-  char * Source_File_Dependency_Selector::Get_Dependent_Header_Path(int i){
+      return this->Dependent_List[i].Header_Name;
+}
 
-        return this->Dependent_List[i].repo_warehouse_path;
-  }
 
-  int Source_File_Dependency_Selector::Get_Dependency_List_Size(){
+std::string Source_File_Dependency_Selector::Get_Dependent_Header_Path(int i){
 
-       return this->Dep_Counter;
-  }
+     return this->Dependent_List[i].repo_warehouse_path;
+}
 
-  char * Source_File_Dependency_Selector::Get_Warehouse_Headers_Dir(){
 
-      return this->Info_Collector.Get_Warehouse_Headers_Dir();
-  }
+size_t Source_File_Dependency_Selector::Get_Dependency_List_Size(){
 
-  char * Source_File_Dependency_Selector::Get_Warehouse_Objetcs_Dir(){
+    return this->Dependent_List.size();
+}
+
+
+std::string Source_File_Dependency_Selector::Get_Warehouse_Headers_Dir(){
+
+     return this->Info_Collector.Get_Warehouse_Headers_Dir();
+}
+
+std::string Source_File_Dependency_Selector::Get_Warehouse_Objetcs_Dir(){
 
      return this->Info_Collector.Get_Warehouse_Objetcs_Dir();
-  }
+}
 
-  char * Source_File_Dependency_Selector::Get_Warehouse_Path(){
+std::string Source_File_Dependency_Selector::Get_Warehouse_Path(){
 
-       return this->Info_Collector.Get_Warehouse_Path();
-  }
+      return this->Info_Collector.Get_Warehouse_Path();
+}

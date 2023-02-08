@@ -58,13 +58,11 @@ public:
  virtual ~Source_File_Information_Collector();
  void Collect_Make_File_Data();
  void Clear_Dynamic_Memory();
- void Print_Header_Data();
  Compiler_Data Get_Compiler_Data(int num);
- int  Get_Compiler_Data_Size();
+ size_t  Get_Compiler_Data_Size();
  std::string Get_Warehouse_Headers_Dir();
  std::string Get_Warehouse_Objetcs_Dir();
  std::string Get_Warehouse_Path();
- size_t Get_Data_Size();
 protected:
  void Determine_Header_File_List();
  void Determine_Warehouse_Object_Dir();
@@ -81,6 +79,9 @@ protected:
  bool is_this_independent_header(std::string name);
  void Extract_Header_File_Name_From_Path(std::string * name,
       std::string path);
+ void Clear_Vector_Memory(std::vector<std::string> * pointer);
+ void Clear_String_Memory(std::string * pointer);
+ void Clear_Headers_Data();
  StringOperator StringManager;
  CharOperator Char_Processor;
  Descriptor_File_Reader Des_Reader;

@@ -26,13 +26,34 @@ int main(int argc, char ** argv){
 
     Information_Collector.Collect_Make_File_Data();
 
-    Information_Collector.Print_Header_Data();
-
-
 
     size_t data_size = Information_Collector.Get_Data_Size();
 
-    Compiler_Data Data_Pointer = Information_Collector.Get_Compiler_Data(0);
+    for(size_t i=0;i<data_size;i++){
+
+        Compiler_Data Data_Pointer = Information_Collector.Get_Compiler_Data(i);
+
+        std::cout << "\n Data_Pointer.repo_path       :" << Data_Pointer.repo_path;
+        std::cout << "\n Data_Pointer.header_name     :" << Data_Pointer.header_name;
+        std::cout << "\n Data_Pointer.object_file_name:" << Data_Pointer.object_file_name;
+
+        int inc_num = Data_Pointer.inclusion_number;
+
+        for(int k=0;k<inc_num;k++){
+
+            std::cout << "\n includeded header:" << Data_Pointer.included_headers[k];
+        }
+
+        for(int k=0;k<inc_num;k++){
+
+            std::cout << "\n includeded header:" << Data_Pointer.included_headers_path[k];
+        }
+
+        std::cout << "\n priority:" << Data_Pointer.priority;
+        std::cout << "\n rcr_srch_complated:" << Data_Pointer.rcr_srch_complated;
+
+        std::cout << "\n\n\n";
+    }
 
     Information_Collector.Clear_Dynamic_Memory();
 

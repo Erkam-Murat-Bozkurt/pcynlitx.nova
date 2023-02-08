@@ -28,7 +28,7 @@ Source_File_Information_Collector::Source_File_Information_Collector(char * des_
 
    Des_Reader(des_file_path), File_Lister(des_file_path, opr_sis),
 
-   Git_Data_Receiver(des_file_path), Header_Determiner(des_file_path,opr_sis)
+   Git_Data_Receiver(des_file_path,opr_sis), Header_Determiner(des_file_path,opr_sis)
 {
 
    this->Memory_Delete_Condition = false;
@@ -64,19 +64,11 @@ void Source_File_Information_Collector::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         std::vector<Headers_Data>::iterator ith;
+         // Clearing the header data
 
-         if(!this->v_head_data.empty()){
+         this->Clear_Headers_Data();
 
-            for(auto ith=this->v_head_data.begin();ith<this->v_head_data.end();ith++){
-
-                if(ith->included_headers.empty()){
-                   ith->included_headers.clear();
-                }
-            }
-
-            this->v_head_data.clear();
-         }
+         // Clearing the Compiler Data
 
          std::vector<Compiler_Data>::iterator it;
 
@@ -84,13 +76,15 @@ void Source_File_Information_Collector::Clear_Dynamic_Memory(){
 
            for(auto it=this->Data.begin();it<this->Data.end();it++){
 
-              if(!it->included_headers.empty()){
-                 it->included_headers.clear();
-              }
+              this->Clear_Vector_Memory(&it->included_headers);
 
-              if(!it->included_headers_path.empty()){
-                  it->included_headers_path.clear();
-              }
+              this->Clear_Vector_Memory(&it->included_headers_path);
+
+              this->Clear_String_Memory(&it->repo_path);
+
+              this->Clear_String_Memory(&it->header_name);
+
+              this->Clear_String_Memory(&it->object_file_name);
            }
          }
 
@@ -198,9 +192,7 @@ void Source_File_Information_Collector::Extract_Compiler_Data(){
 
           if(this->v_head_data[i].inclusion_number > 1){
 
-
              Compiler_Data Temp_Data;
-
 
              Temp_Data.repo_path        = this->v_head_data[i].repo_path;
 
@@ -264,7 +256,7 @@ void Source_File_Information_Collector::Extract_Compiler_Data(){
           }
         }
 
-        this->v_head_data.clear();
+        this->Clear_Headers_Data();
 }
 
 
@@ -278,21 +270,22 @@ void Source_File_Information_Collector::Determine_Header_Repo_Warehouse_Path(std
 
      for(size_t i=0;i<wrd_path_size;i++){
 
-         (*wrd_path).append(1,this->warehouse_head_dir[i]);
+          wrd_path->push_back(this->warehouse_head_dir[i]);
      }
 
      if(opr_sis == 'w'){
 
-         (*wrd_path).append(1,'\\');
+         wrd_path->push_back('\\');
      }
-     else{
 
-         (*wrd_path).append(1,'/');
+     if(opr_sis == 'l'){
+
+        wrd_path->push_back('/');
      }
 
      for(size_t i=0;i<name_size;i++){
 
-        (*wrd_path).append(1,file_name[i]);
+         wrd_path->push_back(file_name[i]);
      }
 }
 
@@ -334,7 +327,7 @@ void Source_File_Information_Collector::Extract_Header_File_Name_From_Decleratio
 
      for(int i=start_point;i<end_point;i++){
 
-          (*header_name).append(1,string[i]);
+         header_name->push_back(string[i]);
      }
 }
 
@@ -415,49 +408,59 @@ void Source_File_Information_Collector::Determine_Warehouse_Header_Dir(){
 
      for(size_t i=0;i<warehouse_path_size;i++){
 
-        this->warehouse_head_dir.append(1,this->warehouse_path[i]);
+        this->warehouse_head_dir.push_back(this->warehouse_path[i]);
      }
+
+     size_t index =  this->warehouse_head_dir.size(); // The last character index
+
+     char last_character = this->warehouse_head_dir[index];
 
      if(this->operating_sis == 'w'){
 
-        if(this->warehouse_head_dir[warehouse_path_size-1] != '\\'){
+        if(last_character != '\\'){
 
-           this->warehouse_head_dir.append(1,'\\');
+           this->warehouse_head_dir.push_back('\\');
         }
      }
 
      if(this->operating_sis == 'l'){
 
-         if(this->warehouse_head_dir[warehouse_path_size-1] != '/'){
+         if(last_character!= '/'){
 
-           this->warehouse_head_dir.append(1,'/');
+            this->warehouse_head_dir.push_back('/');
          }
      }
 
      for(size_t i=0;i<wr_word_size;i++){
 
-         this->warehouse_head_dir.append(1,warehouse_word[i]);
+         this->warehouse_head_dir.push_back(warehouse_word[i]);
      }
+
+
+     index =  this->warehouse_head_dir.size(); // The last character index
+
+     last_character = this->warehouse_head_dir[index];
+
 
      if(this->operating_sis == 'w'){
 
-        if(this->warehouse_head_dir[warehouse_path_size-1] != '\\'){
+        if(last_character != '\\'){
 
-           this->warehouse_head_dir.append(1, '\\');
+           this->warehouse_head_dir.push_back('\\');
         }
      }
 
      if(this->operating_sis == 'l'){
 
-        if(this->warehouse_head_dir[warehouse_path_size-1] != '/'){
+        if(last_character != '/'){
 
-           this->warehouse_head_dir.append(1,'/');
+           this->warehouse_head_dir.push_back('/');
         }
      }
 
      for(size_t i=0;i<head_dir_size;i++){
 
-         this->warehouse_head_dir.append(1,header_directory[i]);
+         this->warehouse_head_dir.push_back(header_directory[i]);
      }
 }
 
@@ -480,184 +483,221 @@ void Source_File_Information_Collector::Determine_Warehouse_Object_Dir(){
          this->warehouse_obj_dir.append(1,this->warehouse_path[i]);
      }
 
+     size_t index =  this->warehouse_path.size(); // The last character index
+
+     char last_character = this->warehouse_path[index];
+
+
      if(this->operating_sis == 'w'){
 
-        if(this->warehouse_path[warehouse_path_size-1] != '\\'){
+        if(last_character != '\\'){
 
-           this->warehouse_obj_dir.append(1,'\\');
+           this->warehouse_obj_dir.push_back('\\');
         }
      }
 
      if(this->operating_sis == 'l'){
 
-        if(this->warehouse_path[warehouse_path_size-1] != '/'){
+        if(last_character != '/'){
 
-            this->warehouse_obj_dir.append(1,'/');
+            this->warehouse_obj_dir.push_back('/');
         }
      }
 
      for(size_t i=0;i<wr_word_size;i++){
 
-         this->warehouse_obj_dir.append(1,warehouse_word[i]);
+         this->warehouse_obj_dir.push_back(warehouse_word[i]);
      }
+
+
+     index =  this->warehouse_path.size(); // The last character index
+
+     last_character = this->warehouse_path[index];
 
      if(this->operating_sis == 'w'){
 
-        if(this->warehouse_path[warehouse_path_size-1] != '\\'){
+        if(last_character != '\\'){
 
-           this->warehouse_obj_dir.append(1,'\\');
+           this->warehouse_obj_dir.push_back('\\');
         }
      }
 
      if(this->operating_sis == 'l'){
 
-        if(this->warehouse_path[warehouse_path_size-1] != '/'){
+        if(last_character != '/'){
 
-           this->warehouse_obj_dir.append(1,'/');
+           this->warehouse_obj_dir.push_back('/');
         }
      }
 
      for(size_t i=0;i<object_dir_size;i++){
 
-         this->warehouse_obj_dir.append(1,object_directory[i]);
+         this->warehouse_obj_dir.push_back(object_directory[i]);
      }
 }
 
 
-void Source_File_Information_Collector::Print_Header_Data(){
+void Source_File_Information_Collector::Extract_Obj_File_Name_From_Header_Name(std::string * object_name,
+
+     std::string header_name){
+
+     size_t header_name_size = header_name.length();
+
+     for(size_t i=0;i<header_name_size;i++){
+
+         if(header_name[i] == '.'){
+
+            break;
+         }
+         else{
+
+               object_name->push_back(header_name[i]);
+         }
+     }
+
+     object_name->push_back('.');
+
+     object_name->push_back('o');
+
+     object_name->shrink_to_fit();
+}
 
 
 
-     for(size_t i=0;i<this->Data.size();i++){
+bool Source_File_Information_Collector::is_this_independent_header(std::string header_name)
+{
+     this->is_independent_header = false;
 
-         if(this->Data[i].inclusion_number > 0){
+     int ind_header_num = this->File_Lister.Get_Indenpendent_Header_Files_Number();
 
-            std::cout << "\n\n";
+     for(int i=0;i<ind_header_num;i++){
 
-            std::cout << "\n Header Number:" << i;
+         std::string ind_header_path = this->File_Lister.Get_Independent_Header_File(i);
 
-              std::cout << "\n repo_path:  "   << this->Data[i].repo_path;
+         std::string ind_header = "";
 
-              std::cout << "\n header_name:" << this->Data[i].header_name;
+         this->Extract_Header_File_Name_From_Path(&ind_header,ind_header_path);
 
-              std::cout << "\n inclusion_number:"
+         bool is_equal = this->Char_Processor.CompareString(header_name,ind_header);
 
-              <<  this->Data[i].inclusion_number;
+         if(is_equal){
 
-              std::cout << "\n\n";
+            this->is_independent_header = true;
 
+            break;
+         }
+      }
 
-              int inc_number = this->Data[i].inclusion_number;
-
-              for(int k=0;k<inc_number;k++){
-
-                  std::cout << "\n include header -" << k
-
-                  << ":" << this->Data[i].included_headers[k];
-
-                  std::cout << "\n include header path -" << k
-
-                  << ":" << this->Data[i].included_headers_path[k];
-
-                  std::cout << "\n\n";
-              }
-
-              std::cout << "\n\n";
-           }
-        }
-  }
+      return this->is_independent_header;
+}
 
 
-  void Source_File_Information_Collector::Extract_Obj_File_Name_From_Header_Name(std::string * object_name,
+void Source_File_Information_Collector::Extract_Header_File_Name_From_Path(std::string * name,
 
-       std::string header_name){
+     std::string path){
 
-       size_t header_name_size = header_name.length();
+     size_t string_size = path.length();
 
-       for(size_t i=0;i<header_name_size;i++){
+     size_t header_name_size = 0;
 
-          if(header_name[i] == '.'){
+     for(size_t i = string_size;i>0;i--){
 
-              break;
-          }
-          else{
+         if(this->operating_sis == 'w'){
 
-            (*object_name).append(1,header_name[i]);
-          }
-       }
-
-       (*object_name).append(1,'.');
-
-       (*object_name).append(1,'o');
-  }
-
-  bool Source_File_Information_Collector::is_this_independent_header(std::string header_name){
-
-       this->is_independent_header = false;
-
-       int ind_header_num = this->File_Lister.Get_Indenpendent_Header_Files_Number();
-
-       for(int i=0;i<ind_header_num;i++){
-
-           std::string ind_header_path = this->File_Lister.Get_Independent_Header_File(i);
-
-           std::string ind_header = "";
-
-           this->Extract_Header_File_Name_From_Path(&ind_header,ind_header_path);
-
-           bool is_equal = this->Char_Processor.CompareString(header_name,ind_header);
-
-           if(is_equal){
-
-               this->is_independent_header = true;
+            if(path[i] == '\\'){
 
                break;
-           }
-       }
-
-       return this->is_independent_header;
-  }
-
-  void Source_File_Information_Collector::Extract_Header_File_Name_From_Path(std::string * name,
-
-       std::string path){
-
-       size_t string_size = path.length();
-
-       size_t header_name_size = 0;
-
-       for(size_t i = string_size;i>0;i--){
-
-           if(this->operating_sis == 'w'){
-
-              if(path[i] == '\\'){
-
-                 break;
-              }
-           }
-           else{
+            }
+          }
+          else{
 
              if(path[i] == '/'){
 
                 break;
-             }
-           }
+              }
+          }
 
-           header_name_size++;
+          header_name_size++;
+      }
+
+      size_t start_point = string_size - header_name_size + 1;
+
+      for(size_t i = start_point;i<string_size;i++){
+
+           name->push_back(path[i]);
+      }
+
+      name->shrink_to_fit();
+  }
+
+
+void Source_File_Information_Collector::Clear_Headers_Data(){
+
+     std::vector<Headers_Data>::iterator ith;
+
+     if(!this->v_head_data.empty()){
+
+         for(auto ith=this->v_head_data.begin();
+
+             ith<this->v_head_data.end();ith++)
+         {
+
+             this->Clear_Vector_Memory(&ith->included_headers);
+
+             this->Clear_String_Memory(&ith->repo_path);
+
+             this->Clear_String_Memory(&ith->name);
+          }
+
+          this->v_head_data.clear();
+
+          this->v_head_data.shrink_to_fit();
+      }
+}
+
+
+  void Source_File_Information_Collector::Clear_Vector_Memory(std::vector<std::string> * pointer){
+
+       std::vector<std::string>::iterator it;
+
+       auto begin = pointer->begin();
+
+       auto end   = pointer->end();
+
+       for(auto it=begin;it<end;it++){
+
+          if(!it->empty()){
+
+              it->clear();
+
+              it->shrink_to_fit();
+          }
        }
 
-       size_t start_point = string_size - header_name_size + 1;
+       if(!pointer->empty()){
 
-       for(size_t i = start_point;i<string_size;i++){
+           pointer->clear();
 
-          (*name).append(1,path[i]);
+           pointer->shrink_to_fit();
        }
   }
 
 
+  void Source_File_Information_Collector::Clear_String_Memory(std::string * pointer){
+
+       if(!pointer->empty()){
+
+           pointer->clear();
+
+           pointer->shrink_to_fit();
+       }
+  }
+
+
+
   Compiler_Data Source_File_Information_Collector::Get_Compiler_Data(int num){
 
-    return this->Data[num];
+         return this->Data[num];
   }
 
 
@@ -676,7 +716,7 @@ void Source_File_Information_Collector::Print_Header_Data(){
          return this->warehouse_path;
   }
 
-  size_t Source_File_Information_Collector::Get_Data_Size(){
+  size_t Source_File_Information_Collector::Get_Compiler_Data_Size(){
 
         return this->Data.size();
   }

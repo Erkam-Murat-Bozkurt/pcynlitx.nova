@@ -93,6 +93,8 @@ void Cpp_FileOperations::SetFilePath(std::string FilePATH){
 
      this->isFilePathReceive = true;
 
+     this->Clear_String_Memory(&this->FilePath);
+
      size_t String_Size = FilePATH.length();
 
      for(size_t i=0;i<String_Size;i++){
@@ -104,6 +106,8 @@ void Cpp_FileOperations::SetFilePath(std::string FilePATH){
 void Cpp_FileOperations::SetFilePath(char * FilePATH){
 
      this->isFilePathReceive = true;
+
+     this->Clear_String_Memory(&this->FilePath);
 
      size_t String_Size = strlen(FilePATH);
 
