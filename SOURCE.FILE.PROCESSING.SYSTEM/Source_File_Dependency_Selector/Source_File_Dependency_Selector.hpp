@@ -53,9 +53,10 @@ public:
  std::string Get_Warehouse_Headers_Dir();
  std::string Get_Warehouse_Objetcs_Dir();
  std::string Get_Warehouse_Path();
+ std::vector<Compiler_Data> * Get_Compiler_Data_Address();
  Compiler_Data Get_Compiler_Data(int num);
  Header_Dependency Get_Header_Dependency_List(int num);
- int     Get_Compiler_Data_Size();
+ size_t  Get_Compiler_Data_Size();
  size_t  Get_Dependency_List_Size();
 protected:
  void Extract_Dependency_Data(std::string path);

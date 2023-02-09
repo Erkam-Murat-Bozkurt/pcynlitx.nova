@@ -33,22 +33,21 @@
 class Source_File_Dependency_Determiner
 {
 public:
- Source_File_Dependency_Determiner(char * des_file_path);
- Source_File_Dependency_Determiner(const Source_File_Dependency_Determiner & orig);
+ Source_File_Dependency_Determiner(char * des_file_path, char opr_sis);
  virtual ~Source_File_Dependency_Determiner();
- void Determine_Particular_Source_File_Dependencies(char * file_path);
+ void Determine_Particular_Source_File_Dependencies(std::string file_path);
  void Determine_Dependencies();
  void Print_Compiler_Orders();
  void Clear_Dynamic_Memory();
- Compiler_Data_CString   Get_Compiler_Data(int i);
- Compiler_Data_CString * Get_Compiler_Data_Pointer();
- Header_Dependency * Get_Header_Dependency_List();
+ Compiler_Data   Get_Compiler_Data(int i);
+ std::vector<Compiler_Data> * Get_Compiler_Data_Address();
+ Header_Dependency Get_Header_Dependency_List(int num);
  int    Get_Compiler_Data_Size();
- char * Get_Warehouse_Headers_Dir();
- char * Get_Warehouse_Objetcs_Dir();
- char * Get_Warehouse_Path();
- char * Get_Dependent_Header(int i);
- char * Get_Dependent_Header_Path(int i);
+ std::string Get_Warehouse_Headers_Dir();
+ std::string Get_Warehouse_Objetcs_Dir();
+ std::string Get_Warehouse_Path();
+ std::string Get_Dependent_Header(int i);
+ std::string Get_Dependent_Header_Path(int i);
  int  Get_Dependency_List_Size();
  void Print_Dependency_List();
 protected:
@@ -57,7 +56,7 @@ protected:
  void Receive_Collector_Info();
  void Order_Priorities();
  Source_File_Dependency_Selector DepSelector;
- Compiler_Data_CString * Data_Ptr_CString;
+ std::vector<Compiler_Data> * Compiler_Data_Ptr;
  CharOperator Char_Processor;
  int  header_file_number;
  bool Memory_Delete_Condition;

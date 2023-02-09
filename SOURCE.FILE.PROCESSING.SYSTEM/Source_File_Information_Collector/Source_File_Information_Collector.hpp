@@ -59,6 +59,7 @@ public:
  void Collect_Make_File_Data();
  void Clear_Dynamic_Memory();
  Compiler_Data Get_Compiler_Data(int num);
+ std::vector<Compiler_Data> * Get_Compiler_Data_Address();
  size_t  Get_Compiler_Data_Size();
  std::string Get_Warehouse_Headers_Dir();
  std::string Get_Warehouse_Objetcs_Dir();

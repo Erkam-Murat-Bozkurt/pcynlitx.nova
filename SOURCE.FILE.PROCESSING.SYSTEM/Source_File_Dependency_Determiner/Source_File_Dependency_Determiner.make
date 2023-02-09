@@ -13,7 +13,6 @@ INT_TO_CHAR=D:\pcynlitx.build\BASIC.TOOLS\IntToCharTranslater
 DES_READER=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
 DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
 DES_FILE_SYNT_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
-MAKE_DATA_COL=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\MakeFile_Data_Collector
 GIT_LIST=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_File_List_Receiver
 FILE_DAT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Data_Collector
 SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
@@ -25,7 +24,7 @@ VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 				$(SOURCE_DETR) $(DIR_ENUM) \
 				$(STRING_OPS) $(HEAD_DET) $(FILE_LISTER) \
 				$(INT_TO_CHAR) $(DES_DATA_COL) $(DES_READER) \
-				$(MAKE_DATA_COL) $(GIT_LIST) $(FILE_DAT_COL) \
+				$(GIT_LIST) $(FILE_DAT_COL) \
 				$(SRC_DT_COL) $(DES_FILE_SYNT_COL) $(SRC_INF_CL) \
 				$(SRC_DEP_SL)
 
@@ -37,7 +36,6 @@ Executable_MakeFile_Builder.exe: Source_File_Dependency_Determiner_Main_File.cpp
   Project_Files_Data_Collector.cpp \
 	Source_File_Data_Collector.cpp \
 	Git_File_List_Receiver.cpp \
-	MakeFile_Data_Collector.cpp \
 	Source_File_Determiner.cpp \
 	Header_File_Determiner.cpp \
 	Descriptor_File_Reader.cpp \
@@ -55,7 +53,6 @@ Executable_MakeFile_Builder.exe: Source_File_Dependency_Determiner_Main_File.cpp
 	Project_Files_Data_Collector.hpp \
 	Source_File_Data_Collector.cpp \
 	Git_File_List_Receiver.hpp \
-	MakeFile_Data_Collector.hpp \
 	Descriptor_File_Reader.hpp \
 	Descriptor_File_Data_Collector.hpp \
 	Descriptor_File_Syntax_Controller.hpp \
@@ -73,14 +70,14 @@ Executable_MakeFile_Builder.exe: Source_File_Dependency_Determiner_Main_File.cpp
 	 -I$(FILE_LISTER) -I$(SOURCE_DETR) -I$(GIT_LIST) \
 	 -I$(CLASS_SYNTAX) -I$(DIR_ENUM) -I$(INT_TO_CHAR) \
 	 -I$(DES_DATA_COL) -I$(DES_READER) \
-	 -I$(MAKE_DATA_COL) -I$(FILE_DAT_COL) \
+	 -I$(FILE_DAT_COL) \
 	 -I$(SRC_DT_COL) -I$(DES_FILE_SYNT_COL) \
 	 -I$(SRC_DEP_SL) \
 	 -L$(SRC_INF_CL) -L$(DIR_ENUM) -L$(DIR_OPS) -L$(CPP_OPS) \
 	 -L$(CHAR_OPS) -L$(INT_TO_CHAR) -L$(DES_DATA_COL) \
 	 -L$(DES_READER) -L$(STRING_OPS) \
 	 -L$(HEAD_DET) -L$(FILE_LISTER) \
-	 -L$(SOURCE_DETR) -L$(MAKE_DATA_COL) \
+	 -L$(SOURCE_DETR) \
 	 -L$(GIT_LIST) -L$(FILE_DAT_COL) \
 	 -L$(SRC_DT_COL) -L$(DES_FILE_SYNT_COL) -L$(SRC_DEP_SL) \
 		Source_File_Dependency_Determiner_Main_File.cpp \
@@ -91,7 +88,6 @@ Executable_MakeFile_Builder.exe: Source_File_Dependency_Determiner_Main_File.cpp
 		$(FILE_DAT_COL)\Project_Files_Data_Collector.cpp \
 		$(SRC_DT_COL)\Source_File_Data_Collector.cpp \
 		$(GIT_LIST)\Git_File_List_Receiver.cpp \
-		$(MAKE_DATA_COL)\MakeFile_Data_Collector.cpp \
 		$(SOURCE_DETR)\Source_File_Determiner.cpp \
 		$(DIR_ENUM)\Directory_Enumerator.cpp \
 		$(DES_READER)\Descriptor_File_Reader.cpp \
@@ -110,7 +106,6 @@ Executable_MakeFile_Builder.exe: Source_File_Dependency_Determiner_Main_File.cpp
 		-include $(FILE_DAT_COL)\Project_Files_Data_Collector.hpp \
 		-include $(SRC_DT_COL)\Source_File_Data_Collector.hpp \
 		-include $(GIT_LIST)\Git_File_List_Receiver.hpp \
-		-include $(MAKE_DATA_COL)\MakeFile_Data_Collector.hpp \
 		-include $(DES_READER)\Descriptor_File_Reader.hpp \
 		-include $(DES_DATA_COL)\Descriptor_File_Data_Collector.hpp \
 		-include $(DES_FILE_SYNT_COL)\Descriptor_File_Syntax_Controller.hpp \

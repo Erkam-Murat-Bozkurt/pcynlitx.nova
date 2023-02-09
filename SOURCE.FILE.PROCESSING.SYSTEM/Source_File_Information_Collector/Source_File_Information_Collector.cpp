@@ -701,6 +701,12 @@ void Source_File_Information_Collector::Clear_Headers_Data(){
   }
 
 
+  std::vector<Compiler_Data> * Source_File_Information_Collector::Get_Compiler_Data_Address(){
+
+      return &this->Data;
+  }
+
+
   std::string Source_File_Information_Collector::Get_Warehouse_Headers_Dir(){
 
          return this->warehouse_head_dir;
@@ -717,6 +723,8 @@ void Source_File_Information_Collector::Clear_Headers_Data(){
   }
 
   size_t Source_File_Information_Collector::Get_Compiler_Data_Size(){
+
+         std::cout << "\n this->Data.size():" << this->Data.size();
 
         return this->Data.size();
   }

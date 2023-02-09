@@ -231,7 +231,8 @@ bool Source_File_Dependency_Selector::Is_This_File_Aready_Searched(std::string n
 
 void Source_File_Dependency_Selector::Determine_Header_Repo_Warehouse_Path(std::string * wrd_path,
 
-     std::string file_name, char opr_sis){
+     std::string file_name, char opr_sis)
+{
 
      size_t name_size = file_name.length();
 
@@ -477,8 +478,16 @@ Compiler_Data Source_File_Dependency_Selector::Get_Compiler_Data(int num)
 }
 
 
+std::vector<Compiler_Data> * Source_File_Dependency_Selector::Get_Compiler_Data_Address()
+{
+      return this->Info_Collector.Get_Compiler_Data_Address();
+}
 
-int Source_File_Dependency_Selector::Get_Compiler_Data_Size(){
+size_t Source_File_Dependency_Selector::Get_Compiler_Data_Size(){
+
+       std::cout << "\n this->Info_Collector.Get_Compiler_Data_Size():"
+
+       << this->Info_Collector.Get_Compiler_Data_Size();
 
       return this->Info_Collector.Get_Compiler_Data_Size();
 }

@@ -23,13 +23,13 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_Reader;
+    Descriptor_File_Reader Des_Reader(argv[1]);
 
-    Des_Reader.Read_Descriptor_File(argv[1]);
+    Des_Reader.Read_Descriptor_File();
 
-    Project_Files_Lister Dir_Lister;
+    Project_Files_Lister Dir_Lister(argv[1],'w');
 
-    Dir_Lister.Determine_Git_Repo_Info(&Des_Reader);
+    Dir_Lister.Determine_Git_Repo_Info();
 
     int src_file_num = Dir_Lister.Get_Source_File_Number();
 
@@ -37,10 +37,10 @@ int main(int argc, char ** argv){
 
     std::cout << "\n TOTAL SOURCE FILE NUMBER:" << src_file_num;
 
-    char path [] = "D:\\PCYNLITX.BUILD.TEST\\WAREHOUSE\\PROJECT.HEADER.FILES\\Thread_Manager_Builder.h";
+    std::string path = "D:\\PCYNLITX.BUILD.TEST\\WAREHOUSE\\PROJECT.HEADER.FILES\\Thread_Manager_Builder.h";
 
 
-    Source_File_Dependency_Determiner Dep_Determiner(argv[1]);
+    Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
 
     if(src_file_num > 0){
 
