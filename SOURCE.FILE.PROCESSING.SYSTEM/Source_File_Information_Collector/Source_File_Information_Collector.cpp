@@ -26,9 +26,8 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Source_File_Information_Collector::Source_File_Information_Collector(char * des_file_path, char opr_sis) :
 
-   Des_Reader(des_file_path), File_Lister(des_file_path, opr_sis),
-
-   Git_Data_Receiver(des_file_path,opr_sis), Header_Determiner(des_file_path,opr_sis)
+   Des_Reader(des_file_path), Git_Data_Receiver(des_file_path,opr_sis),
+   Header_Determiner(des_file_path,opr_sis)
 {
 
    this->Memory_Delete_Condition = false;
@@ -44,8 +43,6 @@ Source_File_Information_Collector::Source_File_Information_Collector(char * des_
    this->Des_Reader.Clear_Dynamic_Memory();
 
    this->Git_Data_Receiver.Determine_Git_Repo_Info();   //  Git_File_List_Receiver instance
-
-   this->File_Lister.Determine_Git_Repo_Info();         // Project_Files_Lister instance
 }
 
 
@@ -58,55 +55,31 @@ Source_File_Information_Collector::~Source_File_Information_Collector(){
 }
 
 
-void Source_File_Information_Collector::Clear_Dynamic_Memory(){
-
+void Source_File_Information_Collector::Clear_Dynamic_Memory()
+{
      if(!this->Memory_Delete_Condition){
 
-         this->Memory_Delete_Condition = true;
+        this->Memory_Delete_Condition = true;
 
-         // Clearing the header data
+        // Clearing the header data
 
-         this->Clear_Headers_Data();
-
-         // Clearing the Compiler Data
-
-         std::vector<Compiler_Data>::iterator it;
-
-         if(!this->Data.empty()){
-
-           for(auto it=this->Data.begin();it<this->Data.end();it++){
-
-              this->Clear_Vector_Memory(&it->included_headers);
-
-              this->Clear_Vector_Memory(&it->included_headers_path);
-
-              this->Clear_String_Memory(&it->repo_path);
-
-              this->Clear_String_Memory(&it->header_name);
-
-              this->Clear_String_Memory(&it->object_file_name);
-           }
-         }
-
+        this->Clear_Headers_Data();
 
         this->Git_Data_Receiver.Clear_Dynamic_Memory();
-
-        this->File_Lister.Clear_Dynamic_Memory();
 
         this->Des_Reader.Clear_Dynamic_Memory();
      }
 }
 
-void Source_File_Information_Collector::Collect_Make_File_Data(){
-
+void Source_File_Information_Collector::Collect_Dependency_Data()
+{
      this->Determine_Warehouse_Header_Dir();
 
      this->Determine_Warehouse_Object_Dir();
 
      this->Determine_Header_File_List();
 
-     this->Extract_Compiler_Data();
-
+     this->Extract_Dependency_Data();
 }
 
 void Source_File_Information_Collector::Determine_Header_File_List(){
@@ -138,13 +111,20 @@ void Source_File_Information_Collector::Determine_Header_File_List(){
 
             Temp_Data.repo_path = header_path;
 
-            Temp_Data.name = head_name;
+            Temp_Data.header_name = head_name;
 
             Temp_Data.inclusion_number = 0;
 
             Temp_Data.priority = 0;
 
-            this->v_head_data.push_back(Temp_Data);
+            Temp_Data.rcr_srch_complated = false;
+
+            this->head_data.push_back(Temp_Data);
+
+
+            this->Clear_String_Memory(&Temp_Data.repo_path);
+
+            this->Clear_String_Memory(&Temp_Data.header_name);
          }
       }
 
@@ -153,15 +133,15 @@ void Source_File_Information_Collector::Determine_Header_File_List(){
       this->Header_Determiner.Clear_Dynamic_Memory();
 }
 
-void Source_File_Information_Collector::Extract_Compiler_Data(){
+void Source_File_Information_Collector::Extract_Dependency_Data(){
 
-     std::size_t dt_size = this->v_head_data.size();
+     std::size_t dt_size = this->head_data.size();
 
      this->Memory_Delete_Condition = false;
 
      for(std::size_t i = 0;i<dt_size;i++){
 
-         std::string path = this->v_head_data[i].repo_path;
+         std::string path = this->head_data[i].repo_path;
 
          this->FileManager.Clear_Dynamic_Memory();
 
@@ -181,82 +161,26 @@ void Source_File_Information_Collector::Extract_Compiler_Data(){
 
              bool is_include_decleration = this->Include_Decleration_Test(string);
 
-
              if(is_include_decleration){
 
-                 this->v_head_data[i].inclusion_number++;
-             }
-          }
+                std::string header_name = "";
 
+                this->Extract_Header_File_Name_From_Decleration(&header_name,string);
 
+                this->head_data[i].included_headers.push_back(header_name);
 
-          if(this->v_head_data[i].inclusion_number > 1){
+                std::string header_path_address;
 
-             Compiler_Data Temp_Data;
+                this->Determine_Header_Repo_Warehouse_Path(&header_path_address,header_name,'w');
 
-             Temp_Data.repo_path        = this->v_head_data[i].repo_path;
+                this->head_data[i].included_headers_paths.push_back(header_path_address);
 
-             Temp_Data.header_name      = this->v_head_data[i].name;
+                this->head_data[i].inclusion_number++;
 
-             Temp_Data.inclusion_number = this->v_head_data[i].inclusion_number;
-
-
-             bool is_indep = this->is_this_independent_header(Temp_Data.header_name);
-
-             if(is_indep){
-
-                Temp_Data.object_file_name = "";
-             }
-             else{
-
-                this->Extract_Obj_File_Name_From_Header_Name(&(Temp_Data.object_file_name),
-
-                 Temp_Data.header_name);
-             }
-
-             Temp_Data.priority = Temp_Data.inclusion_number;
-
-             int FileSize = this->FileManager.GetFileSize();
-
-
-             int inclusion_index = 0;
-
-             for(int k=0;k<FileSize;k++){
-
-                 std::string string = this->FileManager.GetFileLine(k);
-
-                 // In order to remove possible spaces on the string
-
-                 // a temporary string is constructed
-
-                 this->Delete_Spaces_on_String(&string);
-
-                 bool is_include_decleration = this->Include_Decleration_Test(string);
-
-
-                 if(is_include_decleration){
-
-                    std::string header_name = "";
-
-                    this->Extract_Header_File_Name_From_Decleration(&header_name,string);
-
-                    Temp_Data.included_headers.push_back(header_name);
-
-                    std::string header_path_address;
-
-                    this->Determine_Header_Repo_Warehouse_Path(&header_path_address,header_name,'w');
-
-                    Temp_Data.included_headers_path.push_back(header_path_address);
-
-                    inclusion_index++;
-                  }
+                this->head_data[i].priority = this->head_data[i].inclusion_number;
               }
-
-              this->Data.push_back(Temp_Data);
           }
-        }
-
-        this->Clear_Headers_Data();
+      }
 }
 
 
@@ -480,7 +404,7 @@ void Source_File_Information_Collector::Determine_Warehouse_Object_Dir(){
 
      for(size_t i=0;i<warehouse_path_size;i++){
 
-         this->warehouse_obj_dir.append(1,this->warehouse_path[i]);
+         this->warehouse_obj_dir.push_back(this->warehouse_path[i]);
      }
 
      size_t index =  this->warehouse_path.size(); // The last character index
@@ -537,121 +461,29 @@ void Source_File_Information_Collector::Determine_Warehouse_Object_Dir(){
 }
 
 
-void Source_File_Information_Collector::Extract_Obj_File_Name_From_Header_Name(std::string * object_name,
-
-     std::string header_name){
-
-     size_t header_name_size = header_name.length();
-
-     for(size_t i=0;i<header_name_size;i++){
-
-         if(header_name[i] == '.'){
-
-            break;
-         }
-         else{
-
-               object_name->push_back(header_name[i]);
-         }
-     }
-
-     object_name->push_back('.');
-
-     object_name->push_back('o');
-
-     object_name->shrink_to_fit();
-}
-
-
-
-bool Source_File_Information_Collector::is_this_independent_header(std::string header_name)
-{
-     this->is_independent_header = false;
-
-     int ind_header_num = this->File_Lister.Get_Indenpendent_Header_Files_Number();
-
-     for(int i=0;i<ind_header_num;i++){
-
-         std::string ind_header_path = this->File_Lister.Get_Independent_Header_File(i);
-
-         std::string ind_header = "";
-
-         this->Extract_Header_File_Name_From_Path(&ind_header,ind_header_path);
-
-         bool is_equal = this->Char_Processor.CompareString(header_name,ind_header);
-
-         if(is_equal){
-
-            this->is_independent_header = true;
-
-            break;
-         }
-      }
-
-      return this->is_independent_header;
-}
-
-
-void Source_File_Information_Collector::Extract_Header_File_Name_From_Path(std::string * name,
-
-     std::string path){
-
-     size_t string_size = path.length();
-
-     size_t header_name_size = 0;
-
-     for(size_t i = string_size;i>0;i--){
-
-         if(this->operating_sis == 'w'){
-
-            if(path[i] == '\\'){
-
-               break;
-            }
-          }
-          else{
-
-             if(path[i] == '/'){
-
-                break;
-              }
-          }
-
-          header_name_size++;
-      }
-
-      size_t start_point = string_size - header_name_size + 1;
-
-      for(size_t i = start_point;i<string_size;i++){
-
-           name->push_back(path[i]);
-      }
-
-      name->shrink_to_fit();
-  }
-
-
 void Source_File_Information_Collector::Clear_Headers_Data(){
 
      std::vector<Headers_Data>::iterator ith;
 
-     if(!this->v_head_data.empty()){
+     if(!this->head_data.empty()){
 
-         for(auto ith=this->v_head_data.begin();
+         for(auto ith=this->head_data.begin();
 
-             ith<this->v_head_data.end();ith++)
+             ith<this->head_data.end();ith++)
          {
 
              this->Clear_Vector_Memory(&ith->included_headers);
 
+             this->Clear_Vector_Memory(&ith->included_headers_paths);
+
              this->Clear_String_Memory(&ith->repo_path);
 
-             this->Clear_String_Memory(&ith->name);
+             this->Clear_String_Memory(&ith->header_name);
           }
 
-          this->v_head_data.clear();
+          this->head_data.clear();
 
-          this->v_head_data.shrink_to_fit();
+          this->head_data.shrink_to_fit();
       }
 }
 
@@ -694,18 +526,15 @@ void Source_File_Information_Collector::Clear_Headers_Data(){
   }
 
 
+  Headers_Data Source_File_Information_Collector::Get_Dependency_Data(int num){
 
-  Compiler_Data Source_File_Information_Collector::Get_Compiler_Data(int num){
-
-         return this->Data[num];
+         return this->head_data[num];
   }
 
-
-  std::vector<Compiler_Data> * Source_File_Information_Collector::Get_Compiler_Data_Address(){
-
-      return &this->Data;
+  std::vector<Headers_Data> * Source_File_Information_Collector::Get_Dependency_Data_Address()
+  {
+      return &this->head_data;
   }
-
 
   std::string Source_File_Information_Collector::Get_Warehouse_Headers_Dir(){
 
@@ -722,9 +551,9 @@ void Source_File_Information_Collector::Clear_Headers_Data(){
          return this->warehouse_path;
   }
 
-  size_t Source_File_Information_Collector::Get_Compiler_Data_Size(){
+  size_t Source_File_Information_Collector::Get_Dependency_Data_Size(){
 
-         std::cout << "\n this->Data.size():" << this->Data.size();
+         std::cout << "\n this->head_data.size():" << this->head_data.size();
 
-        return this->Data.size();
+        return this->head_data.size();
   }
