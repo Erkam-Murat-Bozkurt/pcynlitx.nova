@@ -47,6 +47,7 @@ public:
  Source_File_Information_Collector(char * des_file_path, char opr_sis);
  virtual ~Source_File_Information_Collector();
  void Collect_Dependency_Data();
+ void Extract_Dependency_Data(std::string path);
  void Clear_Dynamic_Memory();
  Headers_Data Get_Dependency_Data(int num);
  std::vector<Headers_Data> * Get_Dependency_Data_Address();
@@ -65,6 +66,7 @@ protected:
       std::string string);
  void Delete_Spaces_on_String(std::string * pointer);
  bool Include_Decleration_Test(std::string string);
+ void Clear_Buffer_Memory();
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
  void Clear_Headers_Data();
@@ -74,6 +76,7 @@ protected:
  Cpp_FileOperations FileManager;
  Header_File_Determiner Header_Determiner;
  std::vector<Headers_Data> head_data;
+ Headers_Data buffer;
  std::string warehouse_head_dir;
  std::string warehouse_obj_dir;
  std::string warehouse_path;
