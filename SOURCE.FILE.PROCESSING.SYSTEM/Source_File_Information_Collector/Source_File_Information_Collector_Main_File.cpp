@@ -37,8 +37,8 @@ int main(int argc, char ** argv){
 
         Headers_Data temp = (*vec_Pointer).at(i);
 
-        std::cout << "\n Data_Pointer.repo_path       :" << temp.repo_path;
-        std::cout << "\n Data_Pointer.header_name     :" << temp.header_name;
+        std::cout << "\n Repo path       :" << temp.repo_path;
+        std::cout << "\n Header name     :" << temp.header_name;
 
         int inc_num = temp.inclusion_number;
 
@@ -49,7 +49,7 @@ int main(int argc, char ** argv){
 
         for(int k=0;k<inc_num;k++){
 
-            std::cout << "\n includeded header:" << temp.included_headers_paths[k];
+            std::cout << "\n includeded header path:" << temp.included_headers_paths[k];
         }
 
         std::cout << "\n priority:" << temp.priority;
@@ -67,6 +67,8 @@ int main(int argc, char ** argv){
 
     data_size = Information_Collector.Get_Dependency_Data_Size();
 
+    std::cout << "\n Data size:" << data_size;
+
 
     vec_Pointer = Information_Collector.Get_Dependency_Data_Address();
 
@@ -75,8 +77,8 @@ int main(int argc, char ** argv){
 
         Headers_Data temp = (*vec_Pointer).at(i);
 
-        std::cout << "\n Data_Pointer.repo_path       :" << temp.repo_path;
-        std::cout << "\n Data_Pointer.header_name     :" << temp.header_name;
+        std::cout << "\n repo_path       :" << temp.repo_path;
+        std::cout << "\n header_name     :" << temp.header_name;
 
         int inc_num = temp.inclusion_number;
 
@@ -87,7 +89,7 @@ int main(int argc, char ** argv){
 
         for(int k=0;k<inc_num;k++){
 
-                std::cout << "\n includeded header:" << temp.included_headers_paths[k];
+                std::cout << "\n includeded header path:" << temp.included_headers_paths[k];
             }
 
             std::cout << "\n priority:" << temp.priority;

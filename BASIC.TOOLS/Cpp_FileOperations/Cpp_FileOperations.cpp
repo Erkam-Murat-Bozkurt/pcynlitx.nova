@@ -318,13 +318,12 @@ void Cpp_FileOperations::MoveFile_Win(char * current_path, char * target_path){
 
 void Cpp_FileOperations::Read_File(char * path){
 
+     this->Clear_Dynamic_Memory();
+
      this->File_line_Number = 0;
 
      this->SetFilePath(path);
      this->FileOpen(Rf);
-
-     this->Clear_Vector_Memory(&this->File_Content);
-
 
      std::string new_line = "\n";
 
@@ -344,9 +343,9 @@ void Cpp_FileOperations::Read_File(char * path){
 
 void Cpp_FileOperations::Read_File(std::string path){
 
-     this->File_line_Number = 0;
+     this->Clear_Dynamic_Memory();
 
-     this->Clear_Vector_Memory(&this->File_Content);
+     this->File_line_Number = 0;
 
      this->SetFilePath(path);
      this->FileOpen(Rf);

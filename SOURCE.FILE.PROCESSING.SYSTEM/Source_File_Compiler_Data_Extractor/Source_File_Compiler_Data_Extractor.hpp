@@ -51,7 +51,9 @@ public:
  virtual ~Source_File_Compiler_Data_Extractor();
  void Receive_Dependency_Data(std::vector<Headers_Data> * ptr, std::string wrd);
  void Extract_Compiler_Data();
+ void Extract_Compiler_Data(std::string path);
  void Clear_Dynamic_Memory();
+ void Clear_Object_Memory();
  Compiler_Data Get_Compiler_Data(int num);
  std::vector<Compiler_Data> * Get_Compiler_Data_Address();
  size_t Get_Compiler_Data_Size();
@@ -69,6 +71,7 @@ protected:
       std::string path);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
+ void Clear_Buffer_Memory(Compiler_Data * ptr);
  Source_File_Information_Collector * Info_Collector;
  StringOperator StringManager;
  CharOperator Char_Processor;
@@ -76,6 +79,7 @@ protected:
  Cpp_FileOperations FileManager;
  std::vector<Headers_Data> * headers_dt;
  std::vector<Compiler_Data> compiler_dt;
+ Compiler_Data buffer;
  std::string warehouse_head_dir;
  std::string warehouse_obj_dir;
  std::string warehouse_path;

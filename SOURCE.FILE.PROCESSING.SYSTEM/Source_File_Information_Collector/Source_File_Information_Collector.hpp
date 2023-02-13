@@ -49,6 +49,7 @@ public:
  void Collect_Dependency_Data();
  void Extract_Dependency_Data(std::string path);
  void Clear_Dynamic_Memory();
+ void Clear_Object_Memory();
  Headers_Data Get_Dependency_Data(int num);
  std::vector<Headers_Data> * Get_Dependency_Data_Address();
  size_t       Get_Dependency_Data_Size();

@@ -46,11 +46,16 @@ Source_File_Information_Collector::Source_File_Information_Collector(char * des_
 
 Source_File_Information_Collector::~Source_File_Information_Collector(){
 
-      this->Clear_Dynamic_Memory();
-
-      this->Clear_String_Memory(&this->warehouse_path);
+      this->Clear_Object_Memory();
 }
 
+
+void Source_File_Information_Collector::Clear_Object_Memory(){
+
+     this->Clear_Dynamic_Memory();
+
+     this->Clear_String_Memory(&this->warehouse_path);
+}
 
 void Source_File_Information_Collector::Clear_Dynamic_Memory()
 {
