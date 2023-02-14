@@ -53,10 +53,7 @@ public:
  std::string Get_Warehouse_Headers_Dir();
  std::string Get_Warehouse_Objetcs_Dir();
  std::string Get_Warehouse_Path();
- std::vector<Compiler_Data> * Get_Compiler_Data_Address();
- Compiler_Data Get_Compiler_Data(int num);
  Header_Dependency Get_Header_Dependency_List(int num);
- size_t  Get_Compiler_Data_Size();
  size_t  Get_Dependency_List_Size();
 protected:
  void Extract_Dependency_Data(std::string path);
@@ -77,14 +74,13 @@ protected:
  void Clear_Vector_Memory(std::vector<Header_Dependency> * pointer);
  Source_File_Information_Collector Info_Collector;
  std::vector<Header_Dependency> Dependent_List;
- Compiler_Data * Data_Ptr_CString;
  std::string warehouse_head_dir;
  std::string descriptor_file_path;
- Header_File_Determiner Header_Determiner;
- StringOperator StringManager;
+ Header_File_Determiner Header_Determiner; 
+ StringOperator StringManager; 
  int    header_file_number;
  size_t ListLength;
- int Dep_Counter;
+ int  Dep_Counter;
  bool Memory_Delete_Condition;
  bool is_this_repo_header;
  bool include_decleration_cond;

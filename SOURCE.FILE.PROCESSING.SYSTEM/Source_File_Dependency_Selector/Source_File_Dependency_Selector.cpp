@@ -41,8 +41,10 @@ Source_File_Dependency_Selector::~Source_File_Dependency_Selector()
        this->Clear_Dynamic_Memory();
 }
 
-void Source_File_Dependency_Selector::Clear_Dynamic_Memory(){
 
+
+void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
+{
      this->Clear_Vector_Memory(&this->Dependent_List);
 
      this->Clear_String_Memory(&this->warehouse_head_dir);
@@ -55,22 +57,16 @@ void Source_File_Dependency_Selector::Clear_Dynamic_Memory(){
 }
 
 
-void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::string path){
+void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::string path)
+{
+     this->Info_Collector.Collect_Dependency_Data();
 
-     this->Info_Collector.Collect_Make_File_Data();
-
-     this->Receive_Collector_Info();
+     this->warehouse_head_dir = this->Info_Collector.Get_Warehouse_Headers_Dir();
 
      this->Extract_Dependency_Data(path);
 }
 
 
-void Source_File_Dependency_Selector::Receive_Collector_Info(){
-
-     this->warehouse_head_dir = this->Info_Collector.Get_Warehouse_Headers_Dir();
-
-     this->Memory_Delete_Condition = false;
-}
 
 void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
 
@@ -177,13 +173,13 @@ bool Source_File_Dependency_Selector::Is_This_Repo_HeaderFile(std::string path)
 
      bool is_header = this->Header_Determiner.Is_Header(path);
 
-     int index_size = this->Info_Collector.Get_Compiler_Data_Size();
+     int index_size = this->Info_Collector.Get_Dependency_Data_Size();
 
-     if(is_header){
-
+     if(is_header)
+     {
        for(int i=0;i<index_size;i++){
 
-           Compiler_Data temp_data = this->Info_Collector.Get_Compiler_Data(i);
+           Headers_Data temp_data = this->Info_Collector.Get_Dependency_Data(i);
 
            std::string repo_file_path = temp_data.repo_path;
 
@@ -204,8 +200,8 @@ bool Source_File_Dependency_Selector::Is_This_Repo_HeaderFile(std::string path)
 }
 
 
-bool Source_File_Dependency_Selector::Is_This_File_Aready_Searched(std::string name){
-
+bool Source_File_Dependency_Selector::Is_This_File_Aready_Searched(std::string name)
+{
      this->This_File_Exist = false;
 
      size_t list_size = this->Dependent_List.size();
@@ -372,7 +368,9 @@ bool Source_File_Dependency_Selector::Include_Decleration_Test(std::string strin
 
 
 
-bool Source_File_Dependency_Selector::CompareString(std::string firstString, std::string secondString){
+bool Source_File_Dependency_Selector::CompareString(std::string firstString, 
+
+     std::string secondString){
 
      size_t firstStringLength  = firstString.length();
 
@@ -472,27 +470,6 @@ Header_Dependency Source_File_Dependency_Selector::Get_Header_Dependency_List(in
 
 
 
-Compiler_Data Source_File_Dependency_Selector::Get_Compiler_Data(int num)
-{
-   return this->Info_Collector.Get_Compiler_Data(num);
-}
-
-
-std::vector<Compiler_Data> * Source_File_Dependency_Selector::Get_Compiler_Data_Address()
-{
-      return this->Info_Collector.Get_Compiler_Data_Address();
-}
-
-size_t Source_File_Dependency_Selector::Get_Compiler_Data_Size(){
-
-       std::cout << "\n this->Info_Collector.Get_Compiler_Data_Size():"
-
-       << this->Info_Collector.Get_Compiler_Data_Size();
-
-      return this->Info_Collector.Get_Compiler_Data_Size();
-}
-
-
 std::string Source_File_Dependency_Selector::Get_Dependent_Header(int i){
 
       return this->Dependent_List[i].Header_Name;
@@ -509,7 +486,6 @@ size_t Source_File_Dependency_Selector::Get_Dependency_List_Size(){
 
     return this->Dependent_List.size();
 }
-
 
 std::string Source_File_Dependency_Selector::Get_Warehouse_Headers_Dir(){
 
