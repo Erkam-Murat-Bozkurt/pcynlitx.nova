@@ -24,13 +24,12 @@ int main(int argc, char ** argv){
 
     Source_File_Information_Collector Information_Collector(argv[1],'w');
 
-    Information_Collector.Collect_Dependency_Data();
-
+    Information_Collector.Extract_Dependency_Data();
 
     size_t data_size = Information_Collector.Get_Dependency_Data_Size();
 
 
-    std::vector<Headers_Data> * vec_Pointer = Information_Collector.Get_Dependency_Data_Address();
+    std::vector<Headers_Data> * vec_Pointer = Information_Collector.Get_Headers_Data_Address();
 
 
     for(size_t i=0;i<data_size;i++){
@@ -62,15 +61,12 @@ int main(int argc, char ** argv){
 
     std::string path = "D:\\PCYNLITX.BUILD.TEST\\WAREHOUSE\\PROJECT.HEADER.FILES\\Thread_Manager_Builder.h";
 
-    Information_Collector.Extract_Dependency_Data(path);
 
+    Information_Collector.Extract_Dependency_Data(path);
 
     data_size = Information_Collector.Get_Dependency_Data_Size();
 
-    std::cout << "\n Data size:" << data_size;
-
-
-    vec_Pointer = Information_Collector.Get_Dependency_Data_Address();
+    vec_Pointer = Information_Collector.Get_Headers_Data_Address();
 
 
     for(size_t i=0;i<data_size;i++){
@@ -89,14 +85,50 @@ int main(int argc, char ** argv){
 
         for(int k=0;k<inc_num;k++){
 
-                std::cout << "\n includeded header path:" << temp.included_headers_paths[k];
-            }
-
-            std::cout << "\n priority:" << temp.priority;
-            std::cout << "\n rcr_srch_complated:" << temp.rcr_srch_complated;
-
-            std::cout << "\n\n\n";
+            std::cout << "\n includeded header path:" << temp.included_headers_paths[k];
         }
+
+        std::cout << "\n priority:" << temp.priority;
+        std::cout << "\n rcr_srch_complated:" << temp.rcr_srch_complated;
+
+        std::cout << "\n\n\n";
+    }
+
+
+    Information_Collector.Clear_Dynamic_Memory();
+
+    Information_Collector.Extract_Dependency_Data();
+
+
+    data_size   = Information_Collector.Get_Dependency_Data_Size();
+
+    vec_Pointer = Information_Collector.Get_Headers_Data_Address();
+
+
+    for(size_t i=0;i<data_size;i++){
+
+        Headers_Data temp = (*vec_Pointer).at(i);
+
+        std::cout << "\n Repo path       :" << temp.repo_path;
+        std::cout << "\n Header name     :" << temp.header_name;
+
+        int inc_num = temp.inclusion_number;
+
+        for(int k=0;k<inc_num;k++){
+
+            std::cout << "\n includeded header:" << temp.included_headers[k];
+        }
+
+        for(int k=0;k<inc_num;k++){
+
+            std::cout << "\n includeded header path:" << temp.included_headers_paths[k];
+        }
+
+        std::cout << "\n priority:" << temp.priority;
+        std::cout << "\n rcr_srch_complated:" << temp.rcr_srch_complated;
+
+        std::cout << "\n\n\n";
+    }
 
     return 0;
 }

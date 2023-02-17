@@ -40,6 +40,7 @@ public:
  std::string Get_Header_File_Name_Without_Ext();
  std::string Get_Header_File_Name_With_Ext();
  void Clear_Dynamic_Memory();
+ void Clear_Object_Memory();
 protected:
  void Clear_String_Memory(std::string * pointer);
  StringOperator StringManager;

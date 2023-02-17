@@ -24,7 +24,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Source_File_Information_Collector.hpp"
 
-Source_File_Information_Collector::Source_File_Information_Collector(char * des_file_path, char opr_sis) :
+Source_File_Information_Collector::Source_File_Information_Collector(char * des_file_path, 
+
+   char opr_sis) :
 
    Des_Reader(des_file_path), Git_Data_Receiver(des_file_path,opr_sis),
    Header_Determiner(des_file_path,opr_sis)
@@ -36,7 +38,11 @@ Source_File_Information_Collector::Source_File_Information_Collector(char * des_
 
    this->warehouse_path
 
-   = this->Des_Reader.Get_Warehouse_Location();
+         = this->Des_Reader.Get_Warehouse_Location();
+
+   this->Determine_Warehouse_Header_Dir();
+
+   this->Determine_Warehouse_Object_Dir();
 
    this->Des_Reader.Clear_Dynamic_Memory();
 
@@ -50,48 +56,38 @@ Source_File_Information_Collector::~Source_File_Information_Collector(){
 }
 
 
-void Source_File_Information_Collector::Clear_Object_Memory(){
-
+void Source_File_Information_Collector::Clear_Object_Memory()
+{
      this->Clear_Dynamic_Memory();
 
      this->Clear_String_Memory(&this->warehouse_path);
+
+     this->Clear_String_Memory(&this->warehouse_head_dir);
+
+     this->Clear_String_Memory(&this->warehouse_obj_dir);
+
+     this->Git_Data_Receiver.Clear_Dynamic_Memory();
 }
+
+
 
 void Source_File_Information_Collector::Clear_Dynamic_Memory()
 {
         // Clearing the header data
 
-        this->Clear_Headers_Data();
-
-        this->Clear_String_Memory(&this->warehouse_head_dir);
-
-        this->Git_Data_Receiver.Clear_Dynamic_Memory();
-
-        this->Des_Reader.Clear_Dynamic_Memory();
+      this->Clear_Headers_Data();
 }
 
-void Source_File_Information_Collector::Collect_Dependency_Data()
+
+void Source_File_Information_Collector::Determine_Header_File_List()
 {
-     this->Determine_Warehouse_Header_Dir();
-
-     this->Determine_Warehouse_Object_Dir();
-
-     this->Determine_Header_File_List();
-
-     this->Extract_Dependency_Data();
-}
-
-void Source_File_Information_Collector::Determine_Header_File_List(){
-
-     size_t list_str_size = 0;
-
      int index_size = this->Git_Data_Receiver.Get_Git_File_Index_Size();
 
      for(int i=0;i<index_size;i++){
 
          std::string path = this->Git_Data_Receiver.Get_Git_File_Index(i);
 
-         bool is_header   = this->Header_Determiner.Is_Header(path);
+         bool is_header = this->Header_Determiner.Is_Header(path);
 
          if(is_header){
 
@@ -117,12 +113,14 @@ void Source_File_Information_Collector::Determine_Header_File_List(){
          }
       }
 
-      this->Git_Data_Receiver.Clear_Dynamic_Memory();
-
       this->Header_Determiner.Clear_Dynamic_Memory();
 }
 
 void Source_File_Information_Collector::Extract_Dependency_Data(){  // Data extraction for whole project
+
+     this->Clear_Dynamic_Memory();
+
+     this->Determine_Header_File_List();
 
      std::size_t dt_size = this->head_data.size();
 
@@ -176,9 +174,7 @@ void Source_File_Information_Collector::Extract_Dependency_Data(std::string path
 
      this->Clear_Dynamic_Memory();
 
-     this->Determine_Warehouse_Header_Dir();
-
-     this->Determine_Warehouse_Object_Dir();
+     this->Determine_Header_File_List();
 
 
      bool is_header = this->Header_Determiner.Is_Header(path);
@@ -194,7 +190,6 @@ void Source_File_Information_Collector::Extract_Dependency_Data(std::string path
         std::string header_path;
 
         this->Determine_Header_Repo_Warehouse_Path(&header_path,head_name,'w');
-
 
         this->buffer.repo_path = header_path;
         this->buffer.header_name = head_name;
@@ -563,23 +558,23 @@ void Source_File_Information_Collector::Clear_Buffer_Memory(){
 
   void Source_File_Information_Collector::Clear_Vector_Memory(std::vector<std::string> * pointer){
 
-       std::vector<std::string>::iterator it;
-
-       auto begin = pointer->begin();
-
-       auto end   = pointer->end();
-
-       for(auto it=begin;it<end;it++){
-
-          if(!it->empty()){
-
-              it->clear();
-
-              it->shrink_to_fit();
-          }
-       }
-
        if(!pointer->empty()){
+
+           std::vector<std::string>::iterator it;
+
+           auto begin = pointer->begin();
+
+           auto end   = pointer->end();
+
+           for(auto it=begin;it<end;it++){
+
+               if(!it->empty()){
+
+                   it->clear();
+
+                   it->shrink_to_fit();
+               }
+            }
 
            pointer->clear();
 
@@ -599,12 +594,12 @@ void Source_File_Information_Collector::Clear_Buffer_Memory(){
   }
 
 
-  Headers_Data Source_File_Information_Collector::Get_Dependency_Data(int num){
-
+  Headers_Data Source_File_Information_Collector::Get_Dependency_Data(int num)
+  {
          return this->head_data[num];
   }
 
-  std::vector<Headers_Data> * Source_File_Information_Collector::Get_Dependency_Data_Address()
+  std::vector<Headers_Data> * Source_File_Information_Collector::Get_Headers_Data_Address()
   {
       return &this->head_data;
   }

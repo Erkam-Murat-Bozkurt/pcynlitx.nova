@@ -21,32 +21,26 @@ Header_File_Determiner::Header_File_Determiner(char * DesPath, char opr_sis) :
 
 Header_File_Determiner::~Header_File_Determiner(){
 
-  if(!this->Memory_Delete_Condition){
+     this->Clear_Object_Memory();  
+}
+
+void Header_File_Determiner::Clear_Object_Memory(){
+
+     this->Git_Receiver.Clear_Dynamic_Memory();
 
      this->Clear_Dynamic_Memory();
-  }
 }
 
 void Header_File_Determiner::Clear_Dynamic_Memory(){
 
-     if(!this->Memory_Delete_Condition){
+     this->Clear_String_Memory(&this->Header_File_Directory);
+     this->Clear_String_Memory(&this->Header_File_Name);
+     this->Clear_String_Memory(&this->Header_File_Name_With_Extention);
+     this->Clear_String_Memory(&this->Header_File_System_Path);
+     this->Clear_String_Memory(&this->Repo_Dir);
 
-        this->Memory_Delete_Condition = true;
-
-        this->Clear_String_Memory(&this->Header_File_Directory);
-
-        this->Clear_String_Memory(&this->Header_File_Name);
-
-        this->Clear_String_Memory(&this->Header_File_Name_With_Extention);
-
-        this->Clear_String_Memory(&this->Header_File_System_Path);
-
-        this->Clear_String_Memory(&this->Repo_Dir);
-
-        this->StringManager.Clear_Dynamic_Memory();
-        this->FileManager.Clear_Dynamic_Memory();
-        this->Git_Receiver.Clear_Dynamic_Memory();
-     }
+     this->StringManager.Clear_Dynamic_Memory();
+     this->FileManager.Clear_Dynamic_Memory();   
 }
 
 bool Header_File_Determiner::Is_this_file_included_on_anywhere(std::string file_path){

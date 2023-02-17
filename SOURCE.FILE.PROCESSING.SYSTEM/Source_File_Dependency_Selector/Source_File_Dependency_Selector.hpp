@@ -35,6 +35,7 @@
 struct Header_Dependency
 {
   bool rcr_srch_complated;
+  std::string root_header; // The header file which its dependencies are researched 
   std::string Header_Name;
   std::string repo_warehouse_path;
 };
@@ -46,17 +47,21 @@ public:
  Source_File_Dependency_Selector(char * descriptor_file_path, char opr_sis);
  virtual ~Source_File_Dependency_Selector();
  void Determine_Source_File_Dependencies(std::string path);
+ void Determine_Source_File_Dependencies();
  void Print_Dependency_List();
  void Clear_Dynamic_Memory();
+ void Clear_Object_Memory();
  std::string Get_Dependent_Header(int i);
  std::string Get_Dependent_Header_Path(int i);
  std::string Get_Warehouse_Headers_Dir();
  std::string Get_Warehouse_Objetcs_Dir();
  std::string Get_Warehouse_Path();
  Header_Dependency Get_Header_Dependency_List(int num);
+ std::vector<Headers_Data> * Get_Headers_Data_Address();
  size_t  Get_Dependency_List_Size();
 protected:
  void Extract_Dependency_Data(std::string path);
+ void Extract_Dependency_Data();
  void Extract_Header_File_Name_From_Decleration(std::string * header_name,
       std::string string);
  void Determine_Warehouse_Header_Dir(char operating_sis);
@@ -67,13 +72,15 @@ protected:
  void Place_String(std::string * str_pointer, std::string string);
  void Search_Recursive_Include_Dependency(int index);
  bool Include_Decleration_Test(std::string string);
- void Receive_Collector_Info();
+ void Extract_File_Name_From_Path(std::string * ptr, std::string str);
  bool CompareString(std::string firstString, std::string secondString);
  bool Is_This_Repo_HeaderFile(std::string head_name);
  void Clear_String_Memory(std::string * Pointer);
  void Clear_Vector_Memory(std::vector<Header_Dependency> * pointer);
- Source_File_Information_Collector Info_Collector;
+ Source_File_Information_Collector Info_Collector; 
  std::vector<Header_Dependency> Dependent_List;
+ std::vector<Headers_Data> * Headers_Data_Ptr;
+ std::vector<std::vector<Header_Dependency>> Dependency_Data;
  std::string warehouse_head_dir;
  std::string descriptor_file_path;
  Header_File_Determiner Header_Determiner; 

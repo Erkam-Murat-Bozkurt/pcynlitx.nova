@@ -46,12 +46,13 @@ class Source_File_Information_Collector
 public:
  Source_File_Information_Collector(char * des_file_path, char opr_sis);
  virtual ~Source_File_Information_Collector();
- void Collect_Dependency_Data();
+ //void Collect_Dependency_Data();
  void Extract_Dependency_Data(std::string path);
+ void Extract_Dependency_Data();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
  Headers_Data Get_Dependency_Data(int num);
- std::vector<Headers_Data> * Get_Dependency_Data_Address();
+ std::vector<Headers_Data> * Get_Headers_Data_Address();
  size_t       Get_Dependency_Data_Size();
  std::string  Get_Warehouse_Headers_Dir();
  std::string  Get_Warehouse_Objetcs_Dir();
@@ -60,7 +61,6 @@ protected:
  void Determine_Header_File_List();
  void Determine_Warehouse_Object_Dir();
  void Determine_Warehouse_Header_Dir();
- void Extract_Dependency_Data();
  void Determine_Header_Repo_Warehouse_Path(std::string * wrd_path,
       std::string file_name, char opr_sis);
  void Extract_Header_File_Name_From_Decleration(std::string * header_name,
