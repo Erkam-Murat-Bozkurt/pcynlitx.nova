@@ -203,12 +203,14 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
                if((is_repo_header_file) && (!is_already_searched)){
 
                  Header_Dependency temp;
-
+                 
                  this->Place_String(&temp.Header_Name,header_name);
 
                  this->Place_String(&temp.repo_warehouse_path,wrd_path);
 
                  this->Place_String(&temp.root_header,root_header);
+
+                 this->Place_String(&temp.root_header_path,path);
 
                  temp.rcr_srch_complated= true;
 
@@ -217,6 +219,10 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
                  this->Dep_Counter++;
 
                  this->Clear_String_Memory(&temp.Header_Name);
+
+                 this->Clear_String_Memory(&temp.root_header);
+
+                 this->Clear_String_Memory(&temp.root_header_path);
 
                  this->Clear_String_Memory(&temp.repo_warehouse_path);
 
@@ -578,33 +584,21 @@ void Source_File_Dependency_Selector::Clear_Vector_Memory(std::vector<Header_Dep
 }
 
 
-std::vector<Headers_Data> * Source_File_Dependency_Selector::Get_Headers_Data_Address(){
-
-     return this->Info_Collector.Get_Headers_Data_Address();
-}
-
-
-Header_Dependency Source_File_Dependency_Selector::Get_Header_Dependency_List(int i)
+std::vector<std::vector<Header_Dependency>> * Source_File_Dependency_Selector::Get_Dependency_List_Adress()
 {
-      return this->Dependent_List[i];
+      return &this->Dependency_Data;
 }
 
 
-std::string Source_File_Dependency_Selector::Get_Dependent_Header(int i){
-
-      return this->Dependent_List[i].Header_Name;
-}
-
-
-std::string Source_File_Dependency_Selector::Get_Dependent_Header_Path(int i){
-
-     return this->Dependent_List[i].repo_warehouse_path;
+std::vector<Header_Dependency> * Source_File_Dependency_Selector::Get_Dependency_List_Element_Adress(int i)
+{
+      return &this->Dependency_Data[i];
 }
 
 
 size_t Source_File_Dependency_Selector::Get_Dependency_List_Size(){
 
-    return this->Dependent_List.size();
+    return this->Dependency_Data.size();
 }
 
 std::string Source_File_Dependency_Selector::Get_Warehouse_Headers_Dir(){

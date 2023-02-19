@@ -36,6 +36,7 @@ struct Header_Dependency
 {
   bool rcr_srch_complated;
   std::string root_header; // The header file which its dependencies are researched 
+  std::string root_header_path;
   std::string Header_Name;
   std::string repo_warehouse_path;
 };
@@ -51,13 +52,11 @@ public:
  void Print_Dependency_List();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
- std::string Get_Dependent_Header(int i);
- std::string Get_Dependent_Header_Path(int i);
  std::string Get_Warehouse_Headers_Dir();
  std::string Get_Warehouse_Objetcs_Dir();
  std::string Get_Warehouse_Path();
- Header_Dependency Get_Header_Dependency_List(int num);
- std::vector<Headers_Data> * Get_Headers_Data_Address();
+ std::vector<std::vector<Header_Dependency>> * Get_Dependency_List_Adress();
+ std::vector<Header_Dependency> * Get_Dependency_List_Element_Adress(int num);
  size_t  Get_Dependency_List_Size();
 protected:
  void Extract_Dependency_Data(std::string path);
@@ -70,7 +69,6 @@ protected:
  bool Is_This_File_Aready_Searched(std::string name);
  void Delete_Spaces_on_String(std::string * pointer);
  void Place_String(std::string * str_pointer, std::string string);
- void Search_Recursive_Include_Dependency(int index);
  bool Include_Decleration_Test(std::string string);
  void Extract_File_Name_From_Path(std::string * ptr, std::string str);
  bool CompareString(std::string firstString, std::string secondString);

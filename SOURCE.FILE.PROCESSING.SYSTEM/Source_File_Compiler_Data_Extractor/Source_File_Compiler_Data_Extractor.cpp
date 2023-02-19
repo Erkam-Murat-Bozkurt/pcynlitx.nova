@@ -61,11 +61,11 @@ void Source_File_Compiler_Data_Extractor::Clear_Dynamic_Memory(){
         for(auto it=this->compiler_dt.begin();
             it<this->compiler_dt.end();it++) {
 
-            this->Clear_Vector_Memory(&it->included_headers);
+            this->Clear_Vector_Memory(&it->dependent_headers);
 
-            this->Clear_Vector_Memory(&it->included_headers_paths);
+            this->Clear_Vector_Memory(&it->dependent_headers_paths);
 
-            this->Clear_String_Memory(&it->repo_path);
+            this->Clear_String_Memory(&it->header_repo_path);
 
             this->Clear_String_Memory(&it->header_name);
 
@@ -79,11 +79,11 @@ void Source_File_Compiler_Data_Extractor::Clear_Dynamic_Memory(){
 }
 
 
-void Source_File_Compiler_Data_Extractor::Receive_Dependency_Data(std::vector<Headers_Data> * ptr,
+void Source_File_Compiler_Data_Extractor::Receive_Dependency_Data(std::vector<std::vector<Header_Dependency>> * ptr,
 
      std::string wrd)
 {
-     this->headers_dt = ptr;
+     this->dep_data_ptr = ptr;
 
      this->warehouse_head_dir = wrd;
 }
@@ -91,247 +91,116 @@ void Source_File_Compiler_Data_Extractor::Receive_Dependency_Data(std::vector<He
 
 void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){ // Compiler data extraction for whole project
 
-     std::size_t dt_size = this->headers_dt->size();
+     std::size_t dt_size = this->dep_data_ptr->size();
 
      for(std::size_t i= 0;i<dt_size;i++){
 
-         std::string path = this->headers_dt->at(i).repo_path;
+         std::vector<Header_Dependency> * hdr_ptr = &this->dep_data_ptr->at(i);
 
-         this->FileManager.Read_File(path);
+         size_t data_size = hdr_ptr->size();
 
+         if(data_size>0){
 
-        if(this->headers_dt->at(i).inclusion_number > 1){
+            //Compiler_Data Temp;
 
-           this->buffer.repo_path         = this->headers_dt->at(i).repo_path;
+            this->buffer.header_name = hdr_ptr->at(0).root_header;
 
-           this->buffer.header_name       = this->headers_dt->at(i).header_name;
+            this->buffer.header_repo_path = hdr_ptr->at(0).root_header_path;
 
-           this->buffer.inclusion_number = this->headers_dt->at(i).inclusion_number;
+            this->buffer.priority = data_size;
+         
+            for(size_t k=0;k<data_size;k++){
+            
+                std::string hdr_name = hdr_ptr->at(k).Header_Name;
 
+                std::string hdr_path = hdr_ptr->at(k).repo_warehouse_path;
 
-           bool is_indep = this->is_this_independent_header(this->buffer.header_name);
+                this->buffer.dependent_headers.push_back(hdr_name);
 
-           if(!is_indep){
-
-              this->Extract_Obj_File_Name_From_Header_Name(&(this->buffer.object_file_name),
-
-              this->buffer.header_name);
-           }
-
-           this->buffer.priority = this->buffer.inclusion_number;
-
-           this->buffer.rcr_srch_complated = false;
-
-           int FileSize = this->FileManager.GetFileSize();
-
-
-           for(int k=0;k<FileSize;k++){
-
-               std::string string = this->FileManager.GetFileLine(k);
-
-               // In order to remove possible spaces on the string
-
-               // a temporary string is constructed
-
-               this->Delete_Spaces_on_String(&string);
-
-               bool is_include_decleration = this->Include_Decleration_Test(string);
-
-               if(is_include_decleration){
-
-                  std::string header_name;
-
-                  this->Extract_Header_File_Name_From_Decleration(&header_name,string);
-
-                  this->buffer.included_headers.push_back(header_name);
-
-                  std::string header_path_address;
-
-                  this->Determine_Header_Repo_Warehouse_Path(&header_path_address,header_name,'w');
-
-                  this->buffer.included_headers_paths.push_back(header_path_address);
-               }
+                this->buffer.dependent_headers_paths.push_back(hdr_path);                                                
             }
+
+
+            bool is_indep = this->is_this_independent_header(this->buffer.header_name);
+
+            if(!is_indep){
+
+               this->Extract_Obj_File_Name_From_Header_Name(&(this->buffer.object_file_name),
+
+               this->buffer.header_name);
+            }
+            
 
             this->compiler_dt.push_back(this->buffer);
 
             this->Clear_Buffer_Memory(&this->buffer);
-          }
+         }
       }
 }
 
 
 
 void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path)
-{
-     std::size_t dt_size = this->headers_dt->size();
+{ // Compiler data extraction for whole project
 
-     if(dt_size == 1){
+     std::size_t dt_size = this->dep_data_ptr->size();
 
-        this->FileManager.Read_File(path);
+     if(dt_size>1){
+     
+        std::cout << "\n The data size is greater than one (size > 1)";
 
-        if(this->headers_dt->back().inclusion_number > 1){
+        std::cout << "\n when compiler data dependency data is computed";
 
-           this->buffer.repo_path        = this->headers_dt->back().repo_path;
+        std::cout << "\n for a single header file defined on path:";
 
-           this->buffer.header_name      = this->headers_dt->back().header_name;
+        std::cout << "\n " << path;
 
-           this->buffer.inclusion_number = this->headers_dt->back().inclusion_number;
-
-
-           bool is_indep = this->is_this_independent_header(this->buffer.header_name);
-
-           if(!is_indep){
-
-               this->Extract_Obj_File_Name_From_Header_Name(&(this->buffer.object_file_name),
-
-               this->buffer.header_name);
-           }
-
-
-           this->buffer.priority = this->buffer.inclusion_number;
-
-           this->buffer.rcr_srch_complated = false;
-
-           int FileSize = this->FileManager.GetFileSize();
-
-           for(int k=0;k<FileSize;k++){
-
-               std::string string = this->FileManager.GetFileLine(k);
-
-               // In order to remove possible spaces on the string
-
-               // a temporary string is constructed
-
-               this->Delete_Spaces_on_String(&string);
-
-               bool is_include_decleration = this->Include_Decleration_Test(string);
-
-               if(is_include_decleration){
-
-                   std::string header_name;
-
-                   this->Extract_Header_File_Name_From_Decleration(&header_name,string);
-
-                   this->buffer.included_headers.push_back(header_name);
-
-                   std::string header_path_address;
-
-                   this->Determine_Header_Repo_Warehouse_Path(&header_path_address,header_name,'w');
-
-                   this->buffer.included_headers_paths.push_back(header_path_address);
-                }
-           }
-
-           this->compiler_dt.push_back(this->buffer);
-
-           this->Clear_Buffer_Memory(&this->buffer);
-         }
-       }
-       else{
-
-            std::cout << "\n There is an error on compiler data ";
-            std::cout << "\n construction for source file path:";
-            std::cout << path;
-
-            exit(EXIT_FAILURE);
-       }
-}
-
-
-void Source_File_Compiler_Data_Extractor::Determine_Header_Repo_Warehouse_Path(std::string * wrd_path,
-
-     std::string file_name, char opr_sis){
-
-     size_t name_size = file_name.length();
-
-     size_t wrd_path_size = this->warehouse_head_dir.length();
-
-     for(size_t i=0;i<wrd_path_size;i++){
-
-          wrd_path->push_back(this->warehouse_head_dir[i]);
+        exit(EXIT_FAILURE);
      }
+     else{
+     
+           std::vector<Header_Dependency> * hdr_ptr = &this->dep_data_ptr->at(0);
 
-     if(opr_sis == 'w'){
+           size_t data_size = hdr_ptr->size();
 
-         wrd_path->push_back('\\');
-     }
+           if(data_size>0){
 
-     if(opr_sis == 'l'){
+              //Compiler_Data buffer is definition of the member variable;              
 
-        wrd_path->push_back('/');
-     }
+              this->buffer.header_name = hdr_ptr->at(0).root_header;
 
-     for(size_t i=0;i<name_size;i++){
+              this->buffer.header_repo_path = hdr_ptr->at(0).root_header_path;
 
-         wrd_path->push_back(file_name[i]);
-     }
-}
+              this->buffer.priority = data_size;
+         
+              for(size_t k=0;k<data_size;k++){
+            
+                  std::string hdr_name = hdr_ptr->at(k).Header_Name;
 
-void Source_File_Compiler_Data_Extractor::Extract_Header_File_Name_From_Decleration(std::string * header_name,
+                  std::string hdr_path = hdr_ptr->at(k).repo_warehouse_path;
 
-     std::string string){
+                  this->buffer.dependent_headers.push_back(hdr_name);
 
-     size_t size = string.length();
-
-     int start_point = 0;
-
-     for(size_t k=0;k<size;k++){
-
-         if(string[k] == '\"'){
-
-            break;
-         }
-         else{
-
-            start_point++;
-         }
-     }
-
-     start_point = start_point + 1;
-
-     int end_point = start_point;
-
-     for(size_t k=start_point;k<size;k++){
-
-        if(string[k] == '\"'){
-
-           break;
-        }
-        else{
-
-             end_point++;
-        }
-     }
-
-     for(int i=start_point;i<end_point;i++)
-     {
-         header_name->push_back(string[i]);
-     }
-}
+                  this->buffer.dependent_headers_paths.push_back(hdr_path);                                                
+              }
 
 
-void Source_File_Compiler_Data_Extractor::Delete_Spaces_on_String(std::string * str)
-{
-     size_t string_size = str->length();
-     bool search_cond = true;
+              bool is_indep = this->is_this_independent_header(this->buffer.header_name);
 
-     do{
+              if(!is_indep){
 
-         search_cond = false;
+                  this->Extract_Obj_File_Name_From_Header_Name(&(this->buffer.object_file_name),
 
-         for(size_t i=0;i<str->length();i++){
+                  this->buffer.header_name);
+               }
+            
+               this->compiler_dt.push_back(this->buffer);
 
-            if((*str)[i] == ' '){
-
-               search_cond = true;
-
-               str->erase(i,1);
+               this->Clear_Buffer_Memory(&this->buffer);
             }
          }
-
-     }while(search_cond);
 }
+
 
 
 bool Source_File_Compiler_Data_Extractor::Include_Decleration_Test(std::string string)
@@ -468,11 +337,11 @@ void Source_File_Compiler_Data_Extractor::Extract_Header_File_Name_From_Path(std
 
 void Source_File_Compiler_Data_Extractor::Clear_Buffer_Memory(Compiler_Data * ptr){
 
-     this->Clear_Vector_Memory(&ptr->included_headers);
+     this->Clear_Vector_Memory(&ptr->dependent_headers);
 
-     this->Clear_Vector_Memory(&ptr->included_headers_paths);
+     this->Clear_Vector_Memory(&ptr->dependent_headers_paths);
 
-     this->Clear_String_Memory(&ptr->repo_path);
+     this->Clear_String_Memory(&ptr->header_repo_path);
 
      this->Clear_String_Memory(&ptr->header_name);
 
