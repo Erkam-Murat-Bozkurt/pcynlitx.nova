@@ -18,6 +18,7 @@
 #include <string>
 #include <fcntl.h>
 #include <windows.h>
+#include "Source_File_Compiler_Data_Extractor.hpp"
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Git_File_List_Receiver.hpp"
@@ -39,26 +40,22 @@ public:
  void Determine_Dependencies();
  void Print_Compiler_Orders();
  void Clear_Dynamic_Memory();
- Compiler_Data   Get_Compiler_Data(int i);
+ Compiler_Data Get_Compiler_Data(int i);
  std::vector<Compiler_Data> * Get_Compiler_Data_Address();
- Header_Dependency Get_Header_Dependency_List(int num);
- int    Get_Compiler_Data_Size();
+ void Collect_Dependency_Information();
+ void Collect_Dependency_Information(std::string path);
+ int  Get_Compiler_Data_Size();
  std::string Get_Warehouse_Headers_Dir();
  std::string Get_Warehouse_Objetcs_Dir();
  std::string Get_Warehouse_Path();
- std::string Get_Dependent_Header(int i);
- std::string Get_Dependent_Header_Path(int i);
- int  Get_Dependency_List_Size();
  void Print_Dependency_List();
 protected:
- void Search_Recursive_Include_Dependency(int index);
- void Determine_Compile_Order();
- void Receive_Collector_Info();
- void Order_Priorities();
+ void Order_Priorities(); 
  Source_File_Dependency_Selector DepSelector;
+ Source_File_Compiler_Data_Extractor Com_Data_Extractor;
  std::vector<Compiler_Data> * Compiler_Data_Ptr;
  CharOperator Char_Processor;
- int  header_file_number;
+ size_t  data_size;
  bool Memory_Delete_Condition;
 };
 

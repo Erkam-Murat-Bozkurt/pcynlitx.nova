@@ -46,7 +46,6 @@ class Source_File_Information_Collector
 public:
  Source_File_Information_Collector(char * des_file_path, char opr_sis);
  virtual ~Source_File_Information_Collector();
- //void Collect_Dependency_Data();
  void Extract_Dependency_Data(std::string path);
  void Extract_Dependency_Data();
  void Clear_Dynamic_Memory();

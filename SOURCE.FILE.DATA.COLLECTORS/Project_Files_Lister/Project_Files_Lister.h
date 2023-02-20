@@ -44,10 +44,12 @@ public:
  void Clear_Dynamic_Memory();
 protected:
  void Initialize_Members(char opr_sis);
+ bool Is_There_a_Source_File_With_Same_Name(std::string file_Name);
  void Collect_Source_Files_Data();
  void Collect_Independent_Header_Files_Data();
  bool Is_This_Header_File_Included_Anywhere(std::string name);
  void Determine_File_Name_With_Ext(std::string * ptr, std::string str);
+ void Determine_File_Name_Without_Ext(std::string * pointer, std::string path);
  bool Check_String_Equality(std::string s1, std::string s2);
  bool CheckStringInclusion(std::string str, std::string word);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
@@ -69,6 +71,7 @@ protected:
  bool Memory_Delete_Condition;
  bool isStringsEqual;
  bool is_this_file_included_anywhere;
+ bool Source_File_With_Same_Name;
  char operating_sis;
 };
 

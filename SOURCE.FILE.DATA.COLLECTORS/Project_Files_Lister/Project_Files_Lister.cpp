@@ -89,24 +89,20 @@ void Project_Files_Lister::Collect_Independent_Header_Files_Data()
 
          bool is_header_file = this->Header_Determiner.Is_Header(file_path);
 
+
          if(is_header_file){
 
             std::string file_name;
 
             this->Determine_File_Name_With_Ext(&file_name,file_path);
 
-            bool is_this_included_already =
+            bool src_file_ext = this->Is_There_a_Source_File_With_Same_Name(file_name);
 
-            this->Is_This_Header_File_Included_Anywhere(file_name);
+            if(!src_file_ext){
+            
+                this->independent_header_files.push_back(file_path);
 
-            if(!is_this_included_already)
-            {
-               if(this->operating_sis == 'w'){
-
-                   this->independent_header_files.push_back(file_path);
-
-                   this->independent_header_files_number++;
-               }
+                this->independent_header_files_number++;                                    
             }
          }
       }
@@ -152,6 +148,31 @@ bool Project_Files_Lister::Is_This_Header_File_Included_Anywhere(std::string fil
 }
 
 
+bool Project_Files_Lister::Is_There_a_Source_File_With_Same_Name(std::string file_Name){
+
+     std::string fileName;
+
+     this->Determine_File_Name_Without_Ext(&fileName,file_Name);
+
+
+     this->Source_File_With_Same_Name = false;          
+
+     for(int i=0;i<this->Get_Source_File_Number();i++){
+     
+         std::string src_path = this->Get_Source_File_Name(i);
+
+        if(this->Check_String_Equality(fileName,src_path)){
+                
+           this->Source_File_With_Same_Name = true; 
+
+           break;                 
+        }
+     }
+
+     return this->Source_File_With_Same_Name;          
+}
+
+
 void Project_Files_Lister::Determine_File_Name_With_Ext(std::string * pointer,
 
      std::string string_line){
@@ -178,6 +199,84 @@ void Project_Files_Lister::Determine_File_Name_With_Ext(std::string * pointer,
 
           pointer->push_back(string_line[i]);
      }
+}
+
+
+void Project_Files_Lister::Determine_File_Name_Without_Ext(std::string * pointer, 
+
+     std::string path){
+
+
+     /*   
+      
+        This function extracts the file name from given string.
+
+        If the string is a path, it extracts the string from the last
+
+        directory character to the point character. If the string is not a path, 
+
+        it extracts the string from the beginning of the string to the point 
+
+        chacter.
+      
+    */
+
+
+     size_t file_path_size = path.length();
+
+     size_t dir_size = file_path_size;
+
+     
+     bool is_path = false;
+
+     for(size_t i=file_path_size;i>0;i--){
+
+        if(((path[i] == '/') || (path[i] == '\\'))){
+
+            is_path = true;
+
+            break;
+        }
+     }
+
+     if(is_path){
+     
+        for(size_t i=file_path_size;i>0;i--){
+
+             if(((path[i] == '/') || (path[i] == '\\'))){
+
+                  break;
+             }
+             else{
+
+                    dir_size--;
+             }
+        }
+
+        for(size_t i=dir_size+1;i<file_path_size;i++){
+
+            if( path[i] == '.'){
+
+               break;
+            }
+
+            pointer->push_back(path[i]);          
+        }
+     }
+     else{
+     
+     
+            for(size_t i=0;i<file_path_size;i++){
+
+               if( path[i] == '.'){
+
+                  break;
+               }
+
+               pointer->push_back(path[i]);          
+            }
+     }
+         
 }
 
 void Project_Files_Lister::Clear_Dynamic_Memory()

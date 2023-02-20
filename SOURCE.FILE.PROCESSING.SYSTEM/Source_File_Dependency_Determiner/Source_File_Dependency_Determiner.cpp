@@ -26,121 +26,73 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_file_path, char opr_sis) :
 
-   DepSelector(des_file_path,opr_sis)
+   DepSelector(des_file_path,opr_sis), Com_Data_Extractor(des_file_path,opr_sis)
 {
 
 }
 
 Source_File_Dependency_Determiner::~Source_File_Dependency_Determiner(){
 
-   if(!this->Memory_Delete_Condition){
-
-       this->Clear_Dynamic_Memory();
-   }
+    this->Clear_Dynamic_Memory();
 }
 
 void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
 
      this->DepSelector.Clear_Dynamic_Memory();
+
+     this->Com_Data_Extractor.Clear_Dynamic_Memory();
 }
 
-void Source_File_Dependency_Determiner::Determine_Particular_Source_File_Dependencies(std::string file_path){
 
-     this->DepSelector.Clear_Dynamic_Memory();
+void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::string path){
 
-     this->DepSelector.Determine_Source_File_Dependencies(file_path);
-}
+     this->Clear_Dynamic_Memory();
 
-void Source_File_Dependency_Determiner::Determine_Dependencies(){
+      this->DepSelector.Determine_Source_File_Dependencies(path);
 
-     this->Receive_Collector_Info();
+      std::vector<std::vector<Header_Dependency>> * s_ptr  = this->DepSelector.Get_Dependency_List_Adress();
+ 
+      std::string wrd_hdr_dir = this->DepSelector.Get_Warehouse_Headers_Dir();
 
-     this->Determine_Compile_Order();
-}
+      this->Com_Data_Extractor.Receive_Dependency_Data(s_ptr,wrd_hdr_dir);
 
-void Source_File_Dependency_Determiner::Receive_Collector_Info(){
+      this->Com_Data_Extractor.Extract_Compiler_Data(path);
 
-      this->header_file_number = this->DepSelector.Get_Compiler_Data_Size();
+      this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
-      this->Compiler_Data_Ptr  = this->DepSelector.Get_Compiler_Data_Address();
-
-      std::cout << "\n this->header_file_number:" << this->header_file_number;
-
-      std::cout << "\n Data pointer assigned";
-
-      std::cin.get();
-}
-
-void Source_File_Dependency_Determiner::Determine_Compile_Order(){
-
-     for(int i=0;i<this->header_file_number;i++){
-
-         std::string repo_path = this->Compiler_Data_Ptr->at(i).repo_path;
-
-         std::cout << "\n repo_path:" << repo_path;
-
-         std::cin.get();
-
-         this->DepSelector.Determine_Source_File_Dependencies(repo_path);
-
-         int priority = this->DepSelector.Get_Dependency_List_Size();
-
-         std::cout << "\n priority:" << priority;
-
-         std::cin.get();
-
-         this->Compiler_Data_Ptr->at(i).priority = priority;
-
-         this->DepSelector.Clear_Dynamic_Memory();
-      }
+      this->data_size = this->Compiler_Data_Ptr->size();
 
       this->Order_Priorities();
 }
 
 
-void Source_File_Dependency_Determiner::Search_Recursive_Include_Dependency(int index){
+void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
-     int inc_num = this->Compiler_Data_Ptr->at(index).inclusion_number;
+      this->Clear_Dynamic_Memory();
 
-     if(inc_num>0){
+      this->DepSelector.Determine_Source_File_Dependencies();
 
-        for(int k=0;k<inc_num;k++){
+      std::vector<std::vector<Header_Dependency>> * s_ptr  = this->DepSelector.Get_Dependency_List_Adress();
 
-            std::string inc_header_name = this->Compiler_Data_Ptr->at(index).included_headers[k];
+      std::string wrd_hdr_dir = this->DepSelector.Get_Warehouse_Headers_Dir();
 
-            for(int j=0;j<this->header_file_number;j++){
+      this->Com_Data_Extractor.Receive_Dependency_Data(s_ptr,wrd_hdr_dir);
 
-                std::string repo_header = this->Compiler_Data_Ptr->at(j).header_name;
+      this->Com_Data_Extractor.Extract_Compiler_Data();
 
-                bool is_equal = this->Char_Processor.CompareString(inc_header_name,repo_header);
+      this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
-                if(is_equal){
+      this->data_size = this->Compiler_Data_Ptr->size();
 
-                   int priority = this->Compiler_Data_Ptr->at(j).priority;
-
-                   if(priority == 0){
-
-                      priority = 1;
-                   }
-
-                   this->Compiler_Data_Ptr->at(index).priority =
-
-                   this->Compiler_Data_Ptr->at(index).priority + priority;
-                }
-            }
-        }
-      }
-      else{
-
-           this->Compiler_Data_Ptr->at(index).rcr_srch_complated = true;
-      }
+      this->Order_Priorities();
 }
+
 
 void Source_File_Dependency_Determiner::Order_Priorities(){
 
-     for(int i=0;i<this->header_file_number;i++){
+     for(int i=0;i<this->data_size;i++){
 
-         for(int j=i;j<this->header_file_number;j++){
+         for(int j=i;j<this->data_size;j++){
 
              int dep_i = this->Compiler_Data_Ptr->at(i).priority;
 
@@ -165,11 +117,11 @@ void Source_File_Dependency_Determiner::Order_Priorities(){
 
 void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
 
-     for(int i=0;i<this->header_file_number;i++){
+     for(int i=0;i<this->data_size;i++){
 
          std::cout << "\n\n";
 
-         std::cout << "\n --------------------------------------------------------------------------";
+         std::cout << "\n ------------------------------------------";
 
          std::cout << "\n SOURCE FILE NUMBER:" << i;
 
@@ -181,9 +133,25 @@ void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
 
          <<  this->Compiler_Data_Ptr->at(i).priority;
 
-         std::cout << "\n INCLUSION NUMBER:"
+         std::vector<std::string> * Dep_Headers = &this->Compiler_Data_Ptr->at(i).dependent_headers;
 
-         <<  this->Compiler_Data_Ptr->at(i).inclusion_number;
+
+         size_t dep_size = Dep_Headers->size();
+
+         for(size_t k=0;k<dep_size;k++){
+         
+             std::cout << "\n Dependent header:" << Dep_Headers->at(k);
+         
+         }
+
+         std::vector<std::string> * Dep_Headers_Paths = &this->Compiler_Data_Ptr->at(i).dependent_headers_paths;
+
+
+         for(size_t k=0;k<dep_size;k++){
+         
+             std::cout << "\n Dependent header:" << Dep_Headers->at(k);
+         
+         }
 
          std::cout << "\n\n";
       }
@@ -206,7 +174,7 @@ std::vector<Compiler_Data> * Source_File_Dependency_Determiner::Get_Compiler_Dat
 
 int Source_File_Dependency_Determiner::Get_Compiler_Data_Size(){
 
-    return this->header_file_number;
+    return this->data_size;
 }
 
 std::string Source_File_Dependency_Determiner::Get_Warehouse_Headers_Dir(){
@@ -222,26 +190,4 @@ std::string Source_File_Dependency_Determiner::Get_Warehouse_Objetcs_Dir(){
 std::string Source_File_Dependency_Determiner::Get_Warehouse_Path(){
 
        return this->DepSelector.Get_Warehouse_Path();
-}
-
-
-Header_Dependency Source_File_Dependency_Determiner::Get_Header_Dependency_List(int num){
-
-      return this->DepSelector.Get_Header_Dependency_List(num);
-}
-
-
-std::string Source_File_Dependency_Determiner::Get_Dependent_Header(int i){
-
-       return this->DepSelector.Get_Dependent_Header(i);
-}
-
-std::string Source_File_Dependency_Determiner::Get_Dependent_Header_Path(int i){
-
-       return this->DepSelector.Get_Dependent_Header_Path(i);
-}
-
-int Source_File_Dependency_Determiner::Get_Dependency_List_Size(){
-
-      return this->DepSelector.Get_Dependency_List_Size();
 }

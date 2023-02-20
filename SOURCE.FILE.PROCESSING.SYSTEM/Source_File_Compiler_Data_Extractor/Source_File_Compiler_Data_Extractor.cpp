@@ -101,8 +101,6 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){ // Compiler d
 
          if(data_size>0){
 
-            //Compiler_Data Temp;
-
             this->buffer.header_name = hdr_ptr->at(0).root_header;
 
             this->buffer.header_repo_path = hdr_ptr->at(0).root_header_path;
@@ -128,20 +126,22 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){ // Compiler d
                this->Extract_Obj_File_Name_From_Header_Name(&(this->buffer.object_file_name),
 
                this->buffer.header_name);
+
+               this->compiler_dt.push_back(this->buffer);
+
             }
             
-
-            this->compiler_dt.push_back(this->buffer);
-
             this->Clear_Buffer_Memory(&this->buffer);
          }
       }
+
+      this->compiler_dt.shrink_to_fit();
 }
 
 
 
 void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path)
-{ // Compiler data extraction for whole project
+{ // Compiler data extraction for a particular source file
 
      std::size_t dt_size = this->dep_data_ptr->size();
 
@@ -199,6 +199,8 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
                this->Clear_Buffer_Memory(&this->buffer);
             }
          }
+      
+      this->compiler_dt.shrink_to_fit();
 }
 
 
@@ -273,7 +275,7 @@ bool Source_File_Compiler_Data_Extractor::is_this_independent_header(std::string
      this->is_independent_header = false;
 
      int ind_header_num = this->File_Lister.Get_Indenpendent_Header_Files_Number();
-
+     
      for(int i=0;i<ind_header_num;i++){
 
          std::string ind_header_path = this->File_Lister.Get_Independent_Header_File(i);

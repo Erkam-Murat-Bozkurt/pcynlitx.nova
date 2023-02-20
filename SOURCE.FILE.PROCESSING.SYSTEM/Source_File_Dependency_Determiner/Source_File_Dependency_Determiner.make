@@ -67,7 +67,7 @@ Executable_MakeFile_Builder.exe: Source_File_Dependency_Determiner_Main_File.cpp
 	CharOperator.h \
 	Cpp_FileOperations.h
 
-	g++ -std=c++17 -g -o Source_File_Dependency_Determiner.exe \
+	g++ -std=c++17 -static-libgcc -static-libstdc++ -ggdb -o Source_File_Dependency_Determiner.exe \
 	 -I$(DIR_OPS) -I$(CPP_OPS) -I$(CHAR_OPS) \
 	 -I$(SRC_INF_CL) -I$(STRING_OPS) -I$(HEAD_DET) \
 	 -I$(FILE_LISTER) -I$(SOURCE_DETR) -I$(GIT_LIST) \
