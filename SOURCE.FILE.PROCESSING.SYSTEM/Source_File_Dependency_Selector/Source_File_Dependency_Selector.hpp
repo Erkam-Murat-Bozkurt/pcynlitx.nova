@@ -39,6 +39,8 @@ struct Header_Dependency
   std::string root_header_path;
   std::string Header_Name;
   std::string repo_warehouse_path;
+  int included_file_hdr_num;
+  int base_included_hdr_num;
 };
 
 
@@ -61,6 +63,7 @@ public:
 protected:
  void Extract_Dependency_Data(std::string path);
  void Extract_Dependency_Data();
+ void Set_Included_Header_Number(std::vector<Header_Dependency> * ptr, int dep_num);
  void Extract_Header_File_Name_From_Decleration(std::string * header_name,
       std::string string);
  void Determine_Warehouse_Header_Dir(char operating_sis);
@@ -75,6 +78,7 @@ protected:
  bool Is_This_Repo_HeaderFile(std::string head_name);
  void Clear_String_Memory(std::string * Pointer);
  void Clear_Vector_Memory(std::vector<Header_Dependency> * pointer);
+ void Clear_Temporary_String_Memory(Header_Dependency * temp);
  Source_File_Information_Collector Info_Collector; 
  std::vector<Header_Dependency> Dependent_List;
  std::vector<Headers_Data> * Headers_Data_Ptr;

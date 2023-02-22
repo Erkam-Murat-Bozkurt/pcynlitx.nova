@@ -81,6 +81,8 @@ void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
 
 void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::string path)
 {
+     this->Clear_Dynamic_Memory();
+
      this->Info_Collector.Clear_Dynamic_Memory();
 
      this->Info_Collector.Extract_Dependency_Data(path);
@@ -88,6 +90,10 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
      this->warehouse_head_dir = this->Info_Collector.Get_Warehouse_Headers_Dir();
 
      this->Extract_Dependency_Data(path);
+
+     this->Set_Included_Header_Number(&this->Dependent_List,this->Dep_Counter);
+
+     this->Dep_Counter = 0;
 
      this->Dependency_Data.push_back(this->Dependent_List);
  
@@ -100,6 +106,8 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
 
 
 void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
+
+     this->Clear_Dynamic_Memory();
 
      this->Info_Collector.Clear_Dynamic_Memory();
 
@@ -125,6 +133,10 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(){
          std::string path =this->Headers_Data_Ptr->at(i).repo_path;
 
          this->Extract_Dependency_Data(path);
+
+         this->Set_Included_Header_Number(&this->Dependent_List,this->Dep_Counter);
+
+         this->Dep_Counter = 0;
 
          this->Dependency_Data.push_back(this->Dependent_List);
  
@@ -202,45 +214,77 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
 
                if((is_repo_header_file) && (!is_already_searched)){
 
-                 Header_Dependency temp;
+                   Header_Dependency temp;
                  
-                 this->Place_String(&temp.Header_Name,header_name);
+                   this->Place_String(&temp.Header_Name,header_name);
 
-                 this->Place_String(&temp.repo_warehouse_path,wrd_path);
+                   this->Place_String(&temp.repo_warehouse_path,wrd_path);
 
-                 this->Place_String(&temp.root_header,root_header);
+                   this->Place_String(&temp.root_header,root_header);
 
-                 this->Place_String(&temp.root_header_path,path);
+                   this->Place_String(&temp.root_header_path,path);
 
-                 temp.rcr_srch_complated= true;
+                   temp.rcr_srch_complated= true;
 
-                 this->Dependent_List.push_back(temp);
+                   this->Dependent_List.push_back(temp);
 
-                 this->Dep_Counter++;
+                   this->Dep_Counter++;
+     
+                   this->Clear_Temporary_String_Memory(&temp);
 
-                 this->Clear_String_Memory(&temp.Header_Name);
-
-                 this->Clear_String_Memory(&temp.root_header);
-
-                 this->Clear_String_Memory(&temp.root_header_path);
-
-                 this->Clear_String_Memory(&temp.repo_warehouse_path);
-
-                 this->Extract_Dependency_Data(wrd_path);
+                   this->Extract_Dependency_Data(wrd_path);
                }
 
                this->Clear_String_Memory(&header_name);
 
                this->Clear_String_Memory(&wrd_path);
+
+               this->Clear_String_Memory(&root_header);
              }
 
              this->Clear_String_Memory(&tmp_string);
-          }
         }
+      }
+      else{
+      
+             if(this->Dep_Counter == 0){
+             
+                Header_Dependency temp;
 
-        Custom_FileStream.Clear_Dynamic_Memory();
+                std::string root_header;
+
+                this->Extract_File_Name_From_Path(&root_header,path);
+                 
+                this->Place_String(&temp.root_header,root_header);
+
+                this->Place_String(&temp.root_header_path,path);
+
+                temp.rcr_srch_complated= true;
+
+                this->Dependent_List.push_back(temp);
+
+                this->Clear_Temporary_String_Memory(&temp);
+             
+             }
+      }
+
+
+      Custom_FileStream.Clear_Dynamic_Memory();
 }
 
+
+void Source_File_Dependency_Selector::Set_Included_Header_Number(std::vector<Header_Dependency> * ptr, 
+
+     int dep_num){
+
+     std::vector<Header_Dependency>::iterator it;
+
+     for(auto it=ptr->begin();it<ptr->end();it++){
+     
+         it->base_included_hdr_num = dep_num;
+         it->included_file_hdr_num = 0;
+     }     
+}
 
 
 bool Source_File_Dependency_Selector::Is_This_Repo_HeaderFile(std::string path)
@@ -539,6 +583,9 @@ void Source_File_Dependency_Selector::Print_Dependency_List()
 
                 counter++;
             }
+
+            std::cout << "\n INCLUDED HEADER FILES NUM FOR BASE FILE:" << ptr->at(0).base_included_hdr_num;
+            std::cout << "\n INCLUDED HEADER FILES NUM FOR INCL FILE:" << ptr->at(0).included_file_hdr_num;
          }
       }
 }
@@ -582,6 +629,21 @@ void Source_File_Dependency_Selector::Clear_Vector_Memory(std::vector<Header_Dep
          pointer->shrink_to_fit();
      }
 }
+
+
+
+ void Source_File_Dependency_Selector::Clear_Temporary_String_Memory(Header_Dependency * temp){
+ 
+
+       this->Clear_String_Memory(&temp->Header_Name);
+
+       this->Clear_String_Memory(&temp->root_header);
+
+       this->Clear_String_Memory(&temp->root_header_path);
+
+       this->Clear_String_Memory(&temp->repo_warehouse_path);
+
+ }
 
 
 std::vector<std::vector<Header_Dependency>> * Source_File_Dependency_Selector::Get_Dependency_List_Adress()
