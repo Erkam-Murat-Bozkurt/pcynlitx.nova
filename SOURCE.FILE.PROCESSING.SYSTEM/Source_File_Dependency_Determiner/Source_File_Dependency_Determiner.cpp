@@ -54,6 +54,10 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
  
       std::string wrd_hdr_dir = this->DepSelector.Get_Warehouse_Headers_Dir();
 
+      this->ReOrderer.Receive_Dependency_Data(s_ptr);
+
+      this->ReOrderer.Reorder_Dependency_Data();
+
       this->Com_Data_Extractor.Receive_Dependency_Data(s_ptr,wrd_hdr_dir);
 
       this->Com_Data_Extractor.Extract_Compiler_Data(path);
@@ -75,6 +79,10 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
       std::vector<std::vector<Header_Dependency>> * s_ptr  = this->DepSelector.Get_Dependency_List_Adress();
 
       std::string wrd_hdr_dir = this->DepSelector.Get_Warehouse_Headers_Dir();
+      
+      this->ReOrderer.Receive_Dependency_Data(s_ptr);
+
+      this->ReOrderer.Reorder_Dependency_Data();
 
       this->Com_Data_Extractor.Receive_Dependency_Data(s_ptr,wrd_hdr_dir);
 
@@ -102,11 +110,11 @@ void Source_File_Dependency_Determiner::Order_Priorities(){
 
              if( dep_i < dep_j){
 
-                 temp  = this->Compiler_Data_Ptr->at(j);
+                 temp  = this->Compiler_Data_Ptr->at(i);
 
-                 this->Compiler_Data_Ptr->at(j) = this->Compiler_Data_Ptr->at(i);
+                 this->Compiler_Data_Ptr->at(i) = this->Compiler_Data_Ptr->at(j);
 
-                 this->Compiler_Data_Ptr->at(i) = temp;
+                 this->Compiler_Data_Ptr->at(j) = temp;
               }
           }
       }
@@ -140,8 +148,7 @@ void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
 
          for(size_t k=0;k<dep_size;k++){
          
-             std::cout << "\n Dependent header:" << Dep_Headers->at(k);
-         
+             std::cout << "\n Dependent header:" << Dep_Headers->at(k);         
          }
 
          std::vector<std::string> * Dep_Headers_Paths = &this->Compiler_Data_Ptr->at(i).dependent_headers_paths;
@@ -149,7 +156,7 @@ void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
 
          for(size_t k=0;k<dep_size;k++){
          
-             std::cout << "\n Dependent header:" << Dep_Headers->at(k);
+             std::cout << "\n Dependent header path:" << Dep_Headers_Paths->at(k);
          
          }
 

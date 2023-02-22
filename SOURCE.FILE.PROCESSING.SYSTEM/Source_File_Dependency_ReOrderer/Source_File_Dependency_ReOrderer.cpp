@@ -114,6 +114,14 @@ int Source_File_Dependency_ReOrderer::Find_Header_Dependency(std::string hdr_nam
      return this->dependency;
 }
 
+void Source_File_Dependency_ReOrderer::Reorder_Dependency_Data(){
+
+     this->Determine_Headers_Dependencies();
+
+     this->Reorder_Data_Records();
+}
+
+
 void Source_File_Dependency_ReOrderer::Reorder_Data_Records(){
 
      size_t List_Size = this->Vector_List_ptr->size();
@@ -142,11 +150,11 @@ void Source_File_Dependency_ReOrderer::Reorder_Data_Records(std::vector<Header_D
 
              if( dep_i < dep_j){
 
-                 temp  = data_ptr->at(j);
+                 temp  = data_ptr->at(i);
 
-                 data_ptr->at(j) = data_ptr->at(i);
+                 data_ptr->at(i) = data_ptr->at(j);
 
-                 data_ptr->at(i) = temp;
+                 data_ptr->at(j) = temp;
               }
           }
      }

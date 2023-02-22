@@ -39,13 +39,14 @@ public:
  Source_File_Dependency_ReOrderer();
  virtual ~Source_File_Dependency_ReOrderer();
  void Receive_Dependency_Data(std::vector<std::vector<Header_Dependency>> * ptr);
- void Determine_Headers_Dependencies();
- void Reorder_Data_Records();
- void Reorder_Data_Records(std::vector<Header_Dependency> * searc_ptr);
+ void Reorder_Dependency_Data();
  void Print_Dependency_Data();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 protected:
+ void Determine_Headers_Dependencies();
+ void Reorder_Data_Records();
+ void Reorder_Data_Records(std::vector<Header_Dependency> * searc_ptr);
  std::vector<std::vector<Header_Dependency>> * Vector_List_ptr;
  std::vector<Header_Dependency> * Vector_ptr;
  std::vector<Header_Dependency> * Buffer_ptr;

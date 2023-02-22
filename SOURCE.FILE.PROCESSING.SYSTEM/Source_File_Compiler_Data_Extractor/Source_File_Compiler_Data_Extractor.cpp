@@ -89,15 +89,22 @@ void Source_File_Compiler_Data_Extractor::Receive_Dependency_Data(std::vector<st
 }
 
 
-void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){ // Compiler data extraction for whole project
+void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){ 
+
+     // Compiler data extraction for whole project
 
      std::size_t dt_size = this->dep_data_ptr->size();
-
+     
      for(std::size_t i= 0;i<dt_size;i++){
 
          std::vector<Header_Dependency> * hdr_ptr = &this->dep_data_ptr->at(i);
 
+         hdr_ptr->shrink_to_fit();
+
          size_t data_size = hdr_ptr->size();
+
+         this->Clear_Buffer_Memory(&this->buffer);
+
 
          if(data_size>0){
 
@@ -106,7 +113,8 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){ // Compiler d
             this->buffer.header_repo_path = hdr_ptr->at(0).root_header_path;
 
             this->buffer.priority = data_size;
-         
+
+
             for(size_t k=0;k<data_size;k++){
             
                 std::string hdr_name = hdr_ptr->at(k).Header_Name;
@@ -117,6 +125,10 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){ // Compiler d
 
                 this->buffer.dependent_headers_paths.push_back(hdr_path);                                                
             }
+
+            this->buffer.dependent_headers.shrink_to_fit();
+
+            this->buffer.dependent_headers_paths.shrink_to_fit();
 
 
             bool is_indep = this->is_this_independent_header(this->buffer.header_name);
@@ -163,6 +175,9 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
 
            size_t data_size = hdr_ptr->size();
 
+           this->Clear_Buffer_Memory(&this->buffer);
+
+
            if(data_size>0){
 
               //Compiler_Data buffer is definition of the member variable;              
@@ -185,6 +200,7 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
               }
 
 
+
               bool is_indep = this->is_this_independent_header(this->buffer.header_name);
 
               if(!is_indep){
@@ -192,9 +208,11 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
                   this->Extract_Obj_File_Name_From_Header_Name(&(this->buffer.object_file_name),
 
                   this->buffer.header_name);
+
+                  this->compiler_dt.push_back(this->buffer);
+
                }
             
-               this->compiler_dt.push_back(this->buffer);
 
                this->Clear_Buffer_Memory(&this->buffer);
             }

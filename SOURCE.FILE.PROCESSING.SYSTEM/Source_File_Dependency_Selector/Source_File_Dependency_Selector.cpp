@@ -263,10 +263,15 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
 
                 this->Dependent_List.push_back(temp);
 
+                this->Dependent_List.shrink_to_fit();
+
                 this->Clear_Temporary_String_Memory(&temp);
              
              }
       }
+
+
+     this->Dependent_List.shrink_to_fit();
 
 
       Custom_FileStream.Clear_Dynamic_Memory();

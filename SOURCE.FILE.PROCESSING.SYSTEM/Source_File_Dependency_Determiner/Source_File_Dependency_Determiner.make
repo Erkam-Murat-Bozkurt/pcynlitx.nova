@@ -19,7 +19,7 @@ SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collec
 SRC_INF_CL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector
 SRC_COM_DT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Compiler_Data_Extractor
 SRC_DEP_SL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector
-
+SRC_DER_RORD=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_ReOrderer
 
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 				$(SOURCE_DETR) $(DIR_ENUM) \
@@ -27,10 +27,11 @@ VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 				$(INT_TO_CHAR) $(DES_DATA_COL) $(DES_READER) \
 				$(GIT_LIST) $(FILE_DAT_COL) \
 				$(SRC_DT_COL) $(DES_FILE_SYNT_COL) $(SRC_INF_CL) \
-				$(SRC_DEP_SL) $(SRC_COM_DT_EXT)
+				$(SRC_DEP_SL) $(SRC_COM_DT_EXT) $(SRC_DER_RORD) \
 
-Executable_MakeFile_Builder.exe: Source_File_Dependency_Determiner_Main_File.cpp \
+Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_File.cpp \
 	Source_File_Dependency_Determiner.cpp \
+	Source_File_Dependency_ReOrderer.cpp \
 	Source_File_Dependency_Selector.cpp \
 	Source_File_Compiler_Data_Extractor.cpp \
 	Source_File_Information_Collector.cpp \
@@ -49,6 +50,7 @@ Executable_MakeFile_Builder.exe: Source_File_Dependency_Determiner_Main_File.cpp
 	CharOperator.cpp \
 	Cpp_FileOperations.cpp \
 	Source_File_Dependency_Determiner.hpp \
+	Source_File_Dependency_ReOrderer.hpp \
 	Source_File_Dependency_Selector.hpp\
 	Source_File_Compiler_Data_Extractor.hpp \
 	Source_File_Information_Collector.hpp\
@@ -75,7 +77,7 @@ Executable_MakeFile_Builder.exe: Source_File_Dependency_Determiner_Main_File.cpp
 	 -I$(DES_DATA_COL) -I$(DES_READER) \
 	 -I$(FILE_DAT_COL) \
 	 -I$(SRC_DT_COL) -I$(DES_FILE_SYNT_COL) \
-	 -I$(SRC_DEP_SL) -I$(SRC_COM_DT_EXT) \
+	 -I$(SRC_DEP_SL) -I$(SRC_COM_DT_EXT) -I$(SRC_DER_RORD) \
 	 -L$(SRC_INF_CL) -L$(DIR_ENUM) -L$(DIR_OPS) -L$(CPP_OPS) \
 	 -L$(CHAR_OPS) -L$(INT_TO_CHAR) -L$(DES_DATA_COL) \
 	 -L$(DES_READER) -L$(STRING_OPS) \
@@ -83,9 +85,10 @@ Executable_MakeFile_Builder.exe: Source_File_Dependency_Determiner_Main_File.cpp
 	 -L$(SOURCE_DETR) \
 	 -L$(GIT_LIST) -L$(FILE_DAT_COL) \
 	 -L$(SRC_DT_COL) -L$(DES_FILE_SYNT_COL) \
-	 -L$(SRC_COM_DT_EXT) -L$(SRC_DEP_SL) \
+	 -L$(SRC_COM_DT_EXT) -L$(SRC_DEP_SL) -L$(SRC_DER_RORD) \
 		Source_File_Dependency_Determiner_Main_File.cpp \
 		Source_File_Dependency_Determiner.cpp \
+		$(SRC_DER_RORD)\Source_File_Dependency_ReOrderer.cpp \
 		$(SRC_DEP_SL)\Source_File_Dependency_Selector.cpp \
 		$(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.cpp \
 		$(SRC_INF_CL)\Source_File_Information_Collector.cpp \
@@ -105,6 +108,7 @@ Executable_MakeFile_Builder.exe: Source_File_Dependency_Determiner_Main_File.cpp
 		$(CPP_OPS)\Cpp_FileOperations.cpp \
 		$(INT_TO_CHAR)\IntToCharTranslater.cpp \
 		-include Source_File_Dependency_Determiner.hpp \
+		-include $(SRC_DER_RORD)\Source_File_Dependency_ReOrderer.hpp \
 		-include $(SRC_DEP_SL)\Source_File_Dependency_Selector.hpp \
 		-include $(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.hpp \
 		-include $(SRC_INF_CL)\Source_File_Information_Collector.hpp \

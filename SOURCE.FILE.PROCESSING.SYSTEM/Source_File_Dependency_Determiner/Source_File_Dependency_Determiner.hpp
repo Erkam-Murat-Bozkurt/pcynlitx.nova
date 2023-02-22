@@ -19,6 +19,7 @@
 #include <fcntl.h>
 #include <windows.h>
 #include "Source_File_Compiler_Data_Extractor.hpp"
+#include "Source_File_Dependency_ReOrderer.hpp"
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Git_File_List_Receiver.hpp"
@@ -36,12 +37,6 @@ class Source_File_Dependency_Determiner
 public:
  Source_File_Dependency_Determiner(char * des_file_path, char opr_sis);
  virtual ~Source_File_Dependency_Determiner();
- void Determine_Particular_Source_File_Dependencies(std::string file_path);
- void Determine_Dependencies();
- void Print_Compiler_Orders();
- void Clear_Dynamic_Memory();
- Compiler_Data Get_Compiler_Data(int i);
- std::vector<Compiler_Data> * Get_Compiler_Data_Address();
  void Collect_Dependency_Information();
  void Collect_Dependency_Information(std::string path);
  int  Get_Compiler_Data_Size();
@@ -49,10 +44,15 @@ public:
  std::string Get_Warehouse_Objetcs_Dir();
  std::string Get_Warehouse_Path();
  void Print_Dependency_List();
+ void Print_Compiler_Orders();
+ void Clear_Dynamic_Memory();
+ Compiler_Data Get_Compiler_Data(int i);
+ std::vector<Compiler_Data> * Get_Compiler_Data_Address();
 protected:
  void Order_Priorities(); 
  Source_File_Dependency_Selector DepSelector;
  Source_File_Compiler_Data_Extractor Com_Data_Extractor;
+ Source_File_Dependency_ReOrderer ReOrderer;
  std::vector<Compiler_Data> * Compiler_Data_Ptr;
  CharOperator Char_Processor;
  size_t  data_size;

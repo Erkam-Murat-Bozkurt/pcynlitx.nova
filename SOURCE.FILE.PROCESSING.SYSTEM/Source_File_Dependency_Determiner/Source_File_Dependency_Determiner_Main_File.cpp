@@ -34,6 +34,8 @@ int main(int argc, char ** argv){
 
     Dep_Determiner.Print_Compiler_Orders();
 
+    std::cin.get();
+
     Dep_Determiner.Clear_Dynamic_Memory();
 
     std::cout << "\n\n ---------------------------------------------------------------";
@@ -44,7 +46,7 @@ int main(int argc, char ** argv){
 
     std::cout << "\n\n";
 
-    Dep_Determiner.Print_Dependency_List();
+    //Dep_Determiner.Print_Dependency_List();
 
     std::cout << "\n The end of the program";
 

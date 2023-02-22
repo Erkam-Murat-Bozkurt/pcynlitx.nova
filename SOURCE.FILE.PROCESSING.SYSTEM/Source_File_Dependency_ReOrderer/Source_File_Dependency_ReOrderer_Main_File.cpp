@@ -57,9 +57,7 @@ int main(int argc, char ** argv){
 
     ReOrderer.Receive_Dependency_Data(Dep_Selector.Get_Dependency_List_Adress());
 
-    ReOrderer.Determine_Headers_Dependencies();
-
-    ReOrderer.Reorder_Data_Records();
+    ReOrderer.Reorder_Dependency_Data();
 
     ReOrderer.Print_Dependency_Data();
 
