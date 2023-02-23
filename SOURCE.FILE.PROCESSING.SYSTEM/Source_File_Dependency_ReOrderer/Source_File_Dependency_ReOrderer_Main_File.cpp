@@ -33,10 +33,11 @@ int main(int argc, char ** argv){
 
     Source_File_Dependency_Selector Dep_Selector(argv[1],'w');
 
-    /*
 
     char path [] = "D:\\PCYNLITX.BUILD.TEST\\WAREHOUSE\\PROJECT.HEADER.FILES\\Thread_Manager_Builder.h";
 
+
+    /*
 
     if(src_file_num > 0){
 
@@ -49,11 +50,25 @@ int main(int argc, char ** argv){
     
     if(src_file_num > 0){
 
-      Dep_Selector.Determine_Source_File_Dependencies();
+      Dep_Selector.Determine_Source_File_Dependencies(path);
     }
 
 
     Source_File_Dependency_ReOrderer ReOrderer;
+
+    ReOrderer.Receive_Dependency_Data(Dep_Selector.Get_Dependency_List_Adress());
+
+    ReOrderer.Reorder_Dependency_Data();
+
+    ReOrderer.Print_Dependency_Data();
+
+    std::cin.get();
+
+    if(src_file_num > 0){
+
+      Dep_Selector.Determine_Source_File_Dependencies();
+    }
+
 
     ReOrderer.Receive_Dependency_Data(Dep_Selector.Get_Dependency_List_Adress());
 

@@ -68,9 +68,8 @@ void Source_File_Dependency_ReOrderer::Determine_Headers_Dependencies(){
               std::string _file = this->Vector_ptr->at(k).Header_Name;
 
               int dep_num = this->Find_Header_Dependency(_file);
-                            
+                                        
               this->Vector_ptr->at(k).included_file_hdr_num = dep_num;
-
          }
      }
 }
@@ -88,18 +87,16 @@ int Source_File_Dependency_ReOrderer::Find_Header_Dependency(std::string hdr_nam
 
          size_t vec_size = searc_ptr->size();
 
-
          std::string _file = searc_ptr->at(0).root_header;
 
          if(this->CompareString(hdr_name,_file)){
-                    
+
             for(size_t j=0;j<searc_ptr->size();j++){
             
                 this->dependency++;        
             }
 
-            if(this->dependency==1){
-            
+            if(this->dependency==1){            
             
                if(searc_ptr->at(0).Header_Name.empty()){
                

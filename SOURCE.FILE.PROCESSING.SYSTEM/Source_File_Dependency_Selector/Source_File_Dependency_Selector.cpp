@@ -99,6 +99,35 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
  
      this->Dependency_Data.shrink_to_fit();
 
+
+     // THE DEPENDENCIES COLLECTED FOR THE ROOT PATH
+
+     size_t list_size = this->Dependent_List.size();
+
+     std::vector<Header_Dependency> Temp_List = this->Dependent_List;
+
+     this->Clear_Vector_Memory(&this->Dependent_List);  
+
+
+     for(size_t i=0;i<list_size;i++){
+
+         Header_Dependency Data = Temp_List.at(i);
+
+         std::string sub_path = Data.repo_warehouse_path;
+
+         this->Extract_Dependency_Data(sub_path);
+
+         this->Set_Included_Header_Number(&this->Dependent_List,this->Dep_Counter);
+
+         this->Dep_Counter = 0;
+
+         this->Dependency_Data.push_back(this->Dependent_List);
+
+         this->Dependency_Data.shrink_to_fit();
+
+         this->Clear_Vector_Memory(&this->Dependent_List);  
+     }
+
      this->Clear_Vector_Memory(&this->Dependent_List);      
 
      this->Info_Collector.Clear_Dynamic_Memory();  
@@ -271,8 +300,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
       }
 
 
-     this->Dependent_List.shrink_to_fit();
-
+      this->Dependent_List.shrink_to_fit();
 
       Custom_FileStream.Clear_Dynamic_Memory();
 }

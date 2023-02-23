@@ -54,6 +54,7 @@ int main(int argc, char ** argv){
       Dep_Selector.Print_Dependency_List();
     }
 
+    /*
     
     if(src_file_num > 0){
 
@@ -62,6 +63,7 @@ int main(int argc, char ** argv){
       Dep_Selector.Print_Dependency_List();
     }
 
+    */
 
     std::cout << "\n\n THE END OF THE PROGRAM \n\n";
 
