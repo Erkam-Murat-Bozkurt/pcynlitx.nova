@@ -112,6 +112,14 @@ void print_compiler_data(std::vector<Compiler_Data> * data_ptr){
              std::cout << "\n included header:" << temp.dependent_headers[k];
          }
 
+
+         size_t obj_size = temp.dependent_objs.size();
+
+         for(int k=0;k<obj_size;k++){
+
+             std::cout << "\n included header:" << temp.dependent_objs[k];
+         }
+
          size_t path_size = temp.dependent_headers.size();
 
          std::cout << "\n";

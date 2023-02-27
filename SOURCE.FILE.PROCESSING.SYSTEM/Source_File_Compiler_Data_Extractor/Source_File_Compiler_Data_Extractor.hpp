@@ -38,6 +38,7 @@ struct Compiler_Data
   std::string  header_name;
   std::string  object_file_name;
   std::vector<std::string> dependent_headers;
+  std::vector<std::string> dependent_objs;
   std::vector<std::string> dependent_headers_paths;
   int  priority; // dependency
 };

@@ -24,8 +24,8 @@ public:
  Header_File_Determiner(char * DesPath, char opr_sis);
  virtual ~Header_File_Determiner();
  bool Is_Header(std::string file_path);
+ bool Is_This_Repo_Header(std::string file_path);
  bool Include_Decleration_Test(std::string string);
- bool Is_this_an_include_decleration(std::string string_line);
  bool Is_this_file_included_on_anywhere(std::string file_path);
  void Determine_Header_File_Directory(std::string path);
  void Determine_Header_File_Name(std::string path);
@@ -53,6 +53,7 @@ protected:
  std::string  Repo_Dir;
  char operating_sis;
  bool is_header_file;
+ bool is_this_repo_header;
  int  git_record_size;
  bool Memory_Delete_Condition;
  bool isStringsEqual;

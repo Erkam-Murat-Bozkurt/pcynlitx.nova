@@ -25,7 +25,7 @@ int main(int argc, char ** argv){
 
     Des_Reader.Read_Descriptor_File();
 
-    Git_File_List_Receiver Receiver(argv[1]);
+    Git_File_List_Receiver Receiver(argv[1],'w');
 
     Receiver.Determine_Git_Repo_Info();
 
@@ -41,9 +41,9 @@ int main(int argc, char ** argv){
 
        std::string header_system_path = "";
 
-       Header_Determiner.Clear_Dynamic_Memory();
-
        bool is_header = Header_Determiner.Is_Header(git_record_path);
+
+       bool is_repo_header = Header_Determiner.Is_This_Repo_Header(git_record_path);
 
        if(is_header){
 

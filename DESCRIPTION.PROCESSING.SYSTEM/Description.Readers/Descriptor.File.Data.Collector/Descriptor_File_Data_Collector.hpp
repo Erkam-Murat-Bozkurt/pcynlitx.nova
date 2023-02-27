@@ -38,6 +38,7 @@ public:
  int Get_Root_Directory_Record_Area(int index);
  int Get_Descriptor_File_Line_Number();
  std::string Get_Descriptor_File_Line(int line_number);
+ std::string Get_Descriptor_File_Line_With_Spaces(int line_number);
  void Print_Descriptor_File_Index();
 protected:
  void Initialize_Members();
@@ -62,6 +63,7 @@ protected:
  Cpp_FileOperations FileManager;
  std::string Descriptor_File_Path;
  std::vector<std::string> File_Index;
+ std::vector<std::string> File_Index_With_Spaces;
  int wordPosition;
  int File_Size;
  int Root_Directory_Record_Area[2];

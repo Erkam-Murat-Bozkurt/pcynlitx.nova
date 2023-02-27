@@ -27,26 +27,6 @@
 #include "DirectoryOperations.h"
 #include "IntToCharTranslater.h"
 
-struct Headers_Data
-{
-  std::string repo_path;
-  std::string name;
-  std::vector<std::string> included_headers;
-  int inclusion_number;
-  int priority;
-};
-
-struct Compiler_Data_CString
-{
-  char *  repo_path;
-  char *  header_name;
-  char *  object_file_name;
-  char ** included_headers;
-  char ** included_headers_path;
-  int  inclusion_number;
-  int  priority;
-  bool rcr_srch_complated;
-};
 
 
 class Executable_MakeFile_DataCollector

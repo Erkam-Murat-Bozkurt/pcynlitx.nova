@@ -65,6 +65,8 @@ void Source_File_Compiler_Data_Extractor::Clear_Dynamic_Memory(){
 
             this->Clear_Vector_Memory(&it->dependent_headers_paths);
 
+            this->Clear_Vector_Memory(&it->dependent_objs);
+
             this->Clear_String_Memory(&it->header_repo_path);
 
             this->Clear_String_Memory(&it->header_name);
@@ -155,68 +157,57 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){
 void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path)
 { // Compiler data extraction for a particular source file
 
-     std::size_t dt_size = this->dep_data_ptr->size();
+     std::vector<Header_Dependency> * hdr_ptr = &this->dep_data_ptr->at(0);
 
-     if(dt_size>1){
-     
-        std::cout << "\n The data size is greater than one (size > 1)";
+     size_t data_size = hdr_ptr->size();
 
-        std::cout << "\n when compiler data dependency data is computed";
-
-        std::cout << "\n for a single header file defined on path:";
-
-        std::cout << "\n " << path;
-
-        exit(EXIT_FAILURE);
-     }
-     else{
-     
-           std::vector<Header_Dependency> * hdr_ptr = &this->dep_data_ptr->at(0);
-
-           size_t data_size = hdr_ptr->size();
-
-           this->Clear_Buffer_Memory(&this->buffer);
+     this->Clear_Buffer_Memory(&this->buffer);
 
 
-           if(data_size>0){
+     if(data_size>0){
 
-              //Compiler_Data buffer is definition of the member variable;              
+        //Compiler_Data buffer is definition of the member variable;              
 
-              this->buffer.header_name = hdr_ptr->at(0).root_header;
+        this->buffer.header_name = hdr_ptr->at(0).root_header;
 
-              this->buffer.header_repo_path = hdr_ptr->at(0).root_header_path;
+        this->buffer.header_repo_path = hdr_ptr->at(0).root_header_path;
 
-              this->buffer.priority = data_size;
+        this->buffer.priority = data_size;
          
-              for(size_t k=0;k<data_size;k++){
+        for(size_t k=0;k<data_size;k++){
             
-                  std::string hdr_name = hdr_ptr->at(k).Header_Name;
+            std::string hdr_name = hdr_ptr->at(k).Header_Name;
 
-                  std::string hdr_path = hdr_ptr->at(k).repo_warehouse_path;
+            std::string hdr_path = hdr_ptr->at(k).repo_warehouse_path;
 
-                  this->buffer.dependent_headers.push_back(hdr_name);
+            std::string obj_name;
 
-                  this->buffer.dependent_headers_paths.push_back(hdr_path);                                                
-              }
+            this->Extract_Obj_File_Name_From_Header_Name(&obj_name,hdr_name);
 
+            this->buffer.dependent_headers.push_back(hdr_name);
 
+            this->buffer.dependent_headers_paths.push_back(hdr_path);
 
-              bool is_indep = this->is_this_independent_header(this->buffer.header_name);
-
-              if(!is_indep){
-
-                  this->Extract_Obj_File_Name_From_Header_Name(&(this->buffer.object_file_name),
-
-                  this->buffer.header_name);
-
-                  this->compiler_dt.push_back(this->buffer);
-
-               }
-            
-
-               this->Clear_Buffer_Memory(&this->buffer);
-            }
+            this->buffer.dependent_objs.push_back(obj_name);     
          }
+
+
+
+         bool is_indep = this->is_this_independent_header(this->buffer.header_name);
+
+         if(!is_indep){
+
+            this->Extract_Obj_File_Name_From_Header_Name(&(this->buffer.object_file_name),
+
+            this->buffer.header_name);
+
+            this->compiler_dt.push_back(this->buffer);
+
+         }
+            
+
+         this->Clear_Buffer_Memory(&this->buffer);
+      }
       
       this->compiler_dt.shrink_to_fit();
 }

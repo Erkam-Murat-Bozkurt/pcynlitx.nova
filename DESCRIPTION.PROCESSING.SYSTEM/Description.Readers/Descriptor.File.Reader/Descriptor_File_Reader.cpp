@@ -450,7 +450,7 @@ void Descriptor_File_Reader::Read_Options(){
 
      for(int i=start_line+1;i<end_line-1;i++){
 
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+         std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
 
          if(this->StringManager.CheckStringLine(line)){
 
@@ -462,18 +462,20 @@ void Descriptor_File_Reader::Read_Options(){
 
       if(record_num < 1){
 
-         this->options = "";   // There is no any decleration about the options
+         this->options.clear();   // There is no any decleration about the options
+
+         this->options.shrink_to_fit();
       }
       else{
 
 
            for(int i=start_line+1;i<end_line-1;i++){
 
-               std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+               std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
 
                if(this->StringManager.CheckStringLine(line)){
 
-                  this->options = line;
+                  this->options += line;
 
                   this->Clear_String_Memory(&line);
 

@@ -5,6 +5,8 @@ Header_File_Determiner::Header_File_Determiner(char * DesPath, char opr_sis) :
 
      Git_Receiver(DesPath,opr_sis)
 {
+    this->Git_Receiver.Determine_Git_Repo_Info();
+
     this->git_record_size = this->Git_Receiver.Get_Git_File_Index_Size();
 
     this->Repo_Dir  = this->Git_Receiver.Get_Git_Repo_Directory();
@@ -28,6 +30,9 @@ void Header_File_Determiner::Clear_Object_Memory(){
 
      this->Git_Receiver.Clear_Dynamic_Memory();
 
+     this->Clear_String_Memory(&this->Repo_Dir);
+
+
      this->Clear_Dynamic_Memory();
 }
 
@@ -37,7 +42,6 @@ void Header_File_Determiner::Clear_Dynamic_Memory(){
      this->Clear_String_Memory(&this->Header_File_Name);
      this->Clear_String_Memory(&this->Header_File_Name_With_Extention);
      this->Clear_String_Memory(&this->Header_File_System_Path);
-     this->Clear_String_Memory(&this->Repo_Dir);
 
      this->StringManager.Clear_Dynamic_Memory();
      this->FileManager.Clear_Dynamic_Memory();   
@@ -197,6 +201,43 @@ void Header_File_Determiner::Extract_Header_File_Name_From_Decleration(std::stri
           (*header_name).append(1,string[i]);
      }
 }
+
+ bool Header_File_Determiner::Is_This_Repo_Header(std::string file_path){
+ 
+
+      this->is_this_repo_header = false;
+
+      this->Determine_Header_File_Name_With_Extention(file_path);
+   
+      std::string file_name_wit_ext =this->Get_Header_File_Name_With_Ext();
+ 
+      if(this->Is_Header(file_path)){
+      
+         int size = this->Git_Receiver.Get_Git_File_Index_Size();
+
+         for(int i=0;i<size;i++){
+         
+             std::string repo_file_system_path = this->Git_Receiver.Get_File_System_Path(i);
+
+             this->Determine_Header_File_Name_With_Extention(repo_file_system_path);
+
+             std::string repo_file_name_with_ext = this->Get_Header_File_Name_With_Ext();
+
+             bool is_equal = this->CompareString(repo_file_name_with_ext,file_name_wit_ext);
+
+             if(is_equal){
+             
+                this->is_this_repo_header = true;
+
+                return this->is_this_repo_header;
+             }
+         }      
+      }
+
+      return this->is_this_repo_header; 
+ }
+
+
 
 
 bool Header_File_Determiner::Is_Header(std::string file_path){
@@ -425,7 +466,6 @@ void Header_File_Determiner::Determine_Git_Record_File_System_Path(std::string *
           }
        }
      }
-
 
      if(this->operating_sis =='w'){
 

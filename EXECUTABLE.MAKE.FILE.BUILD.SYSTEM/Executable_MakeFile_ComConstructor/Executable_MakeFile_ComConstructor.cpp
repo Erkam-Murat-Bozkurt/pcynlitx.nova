@@ -23,97 +23,67 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Executable_MakeFile_ComConstructor.hpp"
 
-Executable_MakeFile_ComConstructor::Executable_MakeFile_ComConstructor(){
+Executable_MakeFile_ComConstructor::Executable_MakeFile_ComConstructor(char * des_path, char opr_sis):
 
-   this->Memory_Delete_Condition = false;
+   Des_Reader(des_path), Dep_Determiner(des_path,opr_sis)
 
-   this->object_file_list = nullptr;
+{
+    this->Des_Reader.Read_Descriptor_File();
 
-   this->header_file_list = nullptr;
 
-   this->make_file_name = nullptr;
-
-   this->src_file_dir = nullptr;
-
-   this->git_src_dir = nullptr;
-
-   this->source_file_name = nullptr;
-
-   this->options = nullptr;
-
-   this->Exe_Name = nullptr;
-}
-
-Executable_MakeFile_ComConstructor::Executable_MakeFile_ComConstructor(const
-
-     Executable_MakeFile_ComConstructor & orig){
 
 }
 
 Executable_MakeFile_ComConstructor::~Executable_MakeFile_ComConstructor(){
 
-   if(!this->Memory_Delete_Condition){
-
        this->Clear_Dynamic_Memory();
-   }
 }
 
 
 void Executable_MakeFile_ComConstructor::Clear_Dynamic_Memory(){
 
-     if(!this->Memory_Delete_Condition){
+        this->Clear_Vector_Memory(&this->header_file_list);
 
-        this->Memory_Delete_Condition = true;
+        this->Clear_Vector_Memory(&this->object_file_list);
 
-        delete [] this->header_file_list;
+        this->Clear_String_Memory(&this->git_src_dir);
 
-        delete [] this->object_file_list;
+        this->Clear_String_Memory(&this->src_file_dir);
 
-        delete [] this->git_src_dir;
+        this->Clear_String_Memory(&this->source_file_name);
 
-        delete [] this->src_file_dir;
+        this->Clear_String_Memory(&this->make_file_name);
 
-        delete [] this->source_file_name;
+        this->Clear_String_Memory(&this->Compiler_System_Command);
 
-        delete [] this->make_file_name;
+        this->Dep_Determiner.Clear_Dynamic_Memory();
 
-        delete [] this->Compiler_System_Command;
-     }
+        this->Des_Reader.Clear_Dynamic_Memory();
 }
 
-void Executable_MakeFile_ComConstructor::Receive_Descriptor_File_Reader(Descriptor_File_Reader * pointer){
 
-     this->Des_Reader_Pointer = pointer;
+void Executable_MakeFile_ComConstructor::Receive_ExeFileName(std::string name){
+
+     this->Exe_Name = name;
 }
 
-void Executable_MakeFile_ComConstructor::Receive_ExeFileName(char * pointer){
 
-     this->Exe_Name = pointer;
-}
 
-void Executable_MakeFile_ComConstructor::Receive_DepDeterminer(Source_File_Dependency_Determiner * pointer){
-
-     this->Dep_Determiner = pointer;
-}
-
-void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(char * main_file_path){
+void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(std::string main_file_path){
 
      // Receiving the compiler data from the member objects
 
-     this->warehouse_head_dir = this->Dep_Determiner->Get_Warehouse_Headers_Dir();
-
-     this->warehouse_obj_dir  = this->Dep_Determiner->Get_Warehouse_Objetcs_Dir();
-
-     this->warehouse_path     = this->Dep_Determiner->Get_Warehouse_Path();
-
-     this->Data_Ptr_CString   = this->Dep_Determiner->Get_Compiler_Data_Pointer();
-
-     this->Data_Size = this->Dep_Determiner->Get_Compiler_Data_Size();
+     this->Dep_Determiner.Collect_Dependency_Information(main_file_path);
 
 
-     this->Dep_Determiner->Determine_Particular_Source_File_Dependencies(main_file_path);
+     this->warehouse_head_dir = this->Dep_Determiner.Get_Warehouse_Headers_Dir();
 
-     this->Header_Dependency_List =  this->Dep_Determiner->Get_Header_Dependency_List();
+     this->warehouse_obj_dir  = this->Dep_Determiner.Get_Warehouse_Objetcs_Dir();
+
+     this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
+
+
+     this->Comp_Data_ptr =  this->Dep_Determiner.Get_Compiler_Data_Address();
 
      this->Determine_Src_File_Dir(main_file_path,'w');
 
@@ -123,12 +93,6 @@ void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(char * main
 
      this->Determine_Source_File_Name(main_file_path);
 
-     this->Set_Header_File_Priorities();
-
-     this->Re_Order_Header_Files();
-
-     this->Determine_List_Sizes();
-
      this->Construct_Header_File_List();
 
      this->Construct_Object_File_List();
@@ -136,216 +100,71 @@ void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(char * main
      this->Determine_Compiler_System_Command();
 }
 
-void Executable_MakeFile_ComConstructor::Set_Header_File_Priorities(){
 
-     int list_size = this->Dep_Determiner->Get_Dependency_List_Size();
-
-     for(int i=0;i<list_size;i++){
-
-         for(int k=0;k<this->Data_Size;k++){
-
-             char * repo_header =  this->Data_Ptr_CString[k].repo_path;
-
-             char * list_header = this->Dep_Determiner->Get_Dependent_Header_Path(i);
-
-             bool is_equal = this->CharOpr.CompareString(repo_header,list_header);
-
-             if(is_equal){
-
-                this->Header_Dependency_List[i].priority
-
-                = this->Data_Ptr_CString[k].priority;
-
-                break;
-             }
-         }
-
-         char * path = this->Header_Dependency_List[i].repo_warehouse_path;
-
-         int priority = this->Header_Dependency_List[i].priority;
-     }
-}
-
-void Executable_MakeFile_ComConstructor::Re_Order_Header_Files(){
-
-     int list_size = this->Dep_Determiner->Get_Dependency_List_Size();
-
-     for(int i=0;i<list_size;i++){
-
-        for(int j=i;j<list_size;j++){
-
-          int dep_i = this->Header_Dependency_List[i].priority;
-
-          int dep_j = this->Header_Dependency_List[j].priority;
-
-          Header_Dependency temp;
-
-          if( dep_i < dep_j){
-
-              temp  = this->Header_Dependency_List[j];
-
-              this->Header_Dependency_List[j] = this->Header_Dependency_List[i];
-
-              this->Header_Dependency_List[i] = temp;
-           }
-       }
-   }
-}
-
-void Executable_MakeFile_ComConstructor::Determine_List_Sizes(){
-
-     size_t header_number = this->Dep_Determiner->Get_Dependency_List_Size();
-
-     size_t list_size = 0;
-
-     for(int i=0;i<header_number;i++){
-
-         char * head_name = this->Header_Dependency_List[i].Header_Name;
-
-         size_t head_name_size = strlen(head_name);
-
-         list_size = list_size + head_name_size;
-     }
-
-     this->header_file_list = new char [5*list_size];
-
-     this->object_file_list = new char [5*list_size];
-}
 
 void Executable_MakeFile_ComConstructor::Construct_Header_File_List(){
 
-     size_t list_size = this->Dep_Determiner->Get_Dependency_List_Size();
+     std::string space = " ";
 
-     int index = 0;
+     std::string include_command = "-include";
 
-     char space [] = " ";
+     std::string go_to_new_line = "\\\n\t";
 
-     char new_line [] = "\n";
+     Compiler_Data Data = this->Comp_Data_ptr->at(0);
 
-     char tab_char [] = "\t";
-
-     char include_command [] = "-include";
-
-     char slash [] = "\\";
+     size_t list_size = Data.dependent_headers.size();
 
      for(int i=0;i<list_size;i++){
 
-         char * header_name = this->Header_Dependency_List[i].Header_Name;
+         std::string header_name = Data.dependent_headers.at(i);
 
-         this->Add_String(&this->header_file_list,header_name,&index);
-
-         this->Add_String(&this->header_file_list,space,&index);
-
-         this->Add_String(&this->header_file_list,slash,&index);
-
-         this->Add_String(&this->header_file_list,new_line,&index);
-
-         this->Add_String(&this->header_file_list,tab_char,&index);
+         if(!header_name.empty()){
+                  
+            this->header_file_list.push_back(header_name);
+         }
      }
-
-     this->header_file_list[index-2] = '\0';
 }
 
 void Executable_MakeFile_ComConstructor::Construct_Object_File_List(){
 
-     size_t list_size = this->Dep_Determiner->Get_Dependency_List_Size();;
+     std::string space = " ";
 
-     int index = 0;
+     std::string go_to_new_line = "\\\n\t";
 
-     char space [] = " ";
+     size_t list_size = this->Comp_Data_ptr->at(0).dependent_objs.size();
 
-     char new_line [] = "\n";
-
-     char tab_char [] = "\t";
-
-     char slash [] = "\\";
+     size_t counter = 0;
 
      for(int i=0;i<list_size;i++){
 
-         char * header_name = this->Header_Dependency_List[i].Header_Name;
+         std::string Object_File_Name = this->Comp_Data_ptr->at(0).dependent_objs.at(i);
 
-         this->Determine_Object_File_Name(&this->Header_Dependency_List[i].Object_File_Name,header_name);
+         if(!Object_File_Name.empty()){
 
-         char * obj_name = this->Header_Dependency_List[i].Object_File_Name;
-
-         if(obj_name != nullptr){
-
-            this->Add_String(&this->object_file_list,obj_name,&index);
-
-            this->Add_String(&this->object_file_list,space,&index);
-
-            this->Add_String(&this->object_file_list,space,&index);
-
-            this->Add_String(&this->object_file_list,slash,&index);
-
-            this->Add_String(&this->object_file_list,new_line,&index);
-
-            this->Add_String(&this->object_file_list,tab_char,&index);
+            this->object_file_list.push_back(Object_File_Name);
          }
      }
-}
 
-void Executable_MakeFile_ComConstructor::Determine_Object_File_Name(char ** obj_name, char * header)
-{
-     size_t name_size = strlen(header);
-
-     char file_extention [] = ".o";
-
-     size_t extention_size = strlen(file_extention);
-
-     *obj_name = new char [5*name_size];
-
-     int index = 0;
-
-     for(size_t i=0;i<name_size;i++){
-
-        if(header[i] == '.'){
-
-           break;
-        }
-        else{
-
-              (*obj_name)[index] = header[i];
-
-              index++;
-        }
-     }
-
-     for(size_t i=0;i<extention_size;i++){
-
-        (*obj_name)[index] = file_extention[i];
-
-        index++;
-     }
-
-     (*obj_name)[index] = '\0';
+     this->object_file_list.shrink_to_fit();
 }
 
 void Executable_MakeFile_ComConstructor::Determine_Git_Src_Dir(){
 
-     size_t warehouse_path_size = strlen(this->warehouse_path);
+     size_t warehouse_path_size = this->warehouse_path.length();
 
-     size_t src_dir_size = strlen(this->src_file_dir);
-
-     size_t git_dr_size = src_dir_size - warehouse_path_size;
-
-     this->git_src_dir = new char [5*git_dr_size];
-
-     int index = 0;
+     size_t src_dir_size = this->src_file_dir.length();
 
      for(size_t i=warehouse_path_size+1;i<src_dir_size;i++){
 
-        this->git_src_dir[index] = this->src_file_dir[i];
-
-        index++;
+        this->git_src_dir.push_back(this->src_file_dir[i]);
      }
-
-     this->git_src_dir[index] = '\0';
 }
 
-void Executable_MakeFile_ComConstructor::Determine_Src_File_Dir(char * file_path, char opr_sis){
+void Executable_MakeFile_ComConstructor::Determine_Src_File_Dir(std::string file_path, 
 
-     size_t path_size = strlen(file_path);
+     char opr_sis){
+
+     size_t path_size = file_path.length();
 
      size_t dir_size = path_size;
 
@@ -376,36 +195,23 @@ void Executable_MakeFile_ComConstructor::Determine_Src_File_Dir(char * file_path
          }
      }
 
-     this->src_file_dir = new char [5*dir_size];
-
-     int index = 0;
-
      for(int i=0;i<dir_size;i++){
 
-         this->src_file_dir[index] = file_path[i];
-
-         index++;
+         this->src_file_dir.push_back(file_path[i]);
      }
-
-     this->src_file_dir[index] = '\0';
 }
 
 
-void Executable_MakeFile_ComConstructor::Determine_Make_File_Name(char * file_path){
-
+void Executable_MakeFile_ComConstructor::Determine_Make_File_Name(std::string file_path)
+{
      char file_ext [] = ".make";
 
      size_t ext_size  = strlen(file_ext);
 
-     size_t path_size = strlen(file_path);
+     size_t path_size = file_path.length();
 
-     size_t dir_size  = strlen(this->src_file_dir);
+     size_t dir_size  = this->src_file_dir.length();
 
-     size_t name_size = path_size - dir_size + ext_size;
-
-     this->make_file_name = new char [5*name_size];
-
-     int index = 0;
 
      for(size_t i=dir_size+1;i<path_size;i++){
 
@@ -415,38 +221,27 @@ void Executable_MakeFile_ComConstructor::Determine_Make_File_Name(char * file_pa
         }
         else{
 
-            this->make_file_name[index] = file_path[i];
-
-            index++;
+            this->make_file_name.push_back(file_path[i]);
         }
      }
 
      for(size_t i=0;i<ext_size;i++){
 
-         this->make_file_name[index] = file_ext[i];
-
-         index++;
+         this->make_file_name.push_back(file_ext[i]);
      }
-
-     this->make_file_name[index] ='\0';
 }
 
 
-void Executable_MakeFile_ComConstructor::Determine_Source_File_Name(char * file_path){
+void Executable_MakeFile_ComConstructor::Determine_Source_File_Name(std::string file_path){
 
      char file_ext [] = ".cpp";
 
      size_t ext_size  = strlen(file_ext);
 
-     size_t path_size = strlen(file_path);
+     size_t path_size = file_path.length();
 
-     size_t dir_size  = strlen(this->src_file_dir);
+     size_t dir_size  = this->src_file_dir.length();
 
-     size_t name_size = path_size - dir_size + ext_size;
-
-     this->source_file_name = new char [5*name_size];
-
-     int index = 0;
 
      for(size_t i=dir_size+1;i<path_size;i++){
 
@@ -456,20 +251,14 @@ void Executable_MakeFile_ComConstructor::Determine_Source_File_Name(char * file_
         }
         else{
 
-            this->source_file_name[index] = file_path[i];
-
-            index++;
+            this->source_file_name.push_back(file_path[i]);
         }
      }
 
      for(size_t i=0;i<ext_size;i++){
 
-         this->source_file_name[index] = file_ext[i];
-
-         index++;
+         this->source_file_name.push_back(file_ext[i]);
      }
-
-     this->source_file_name[index] ='\0';
 }
 
 void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
@@ -477,14 +266,14 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
      char compiler_input_command [] = "g++ -Wall -std=c++17 -o";
 
 
-     char * options = this->Des_Reader_Pointer->Get_Options();
+     options = this->Des_Reader.Get_Options();
+
 
      this->Divide_Options(options);
 
      char Include_Character [] = "-I";
 
      char Link_Character [] = "-L";
-
 
      char include_word [] = "-include";
 
@@ -497,15 +286,6 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
      char Source_Location []  ="$(SOURCE_LOCATION)";
 
 
-     size_t object_file_list_size = strlen(this->object_file_list);
-
-     size_t header_file_list_size = strlen(this->header_file_list);
-
-     size_t compiler_command_size = object_file_list_size + header_file_list_size;
-
-
-     this->Compiler_System_Command = new char [10*compiler_command_size];
-
      char slash [] = "\\";
 
      char new_line [] = "\n";
@@ -514,72 +294,66 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      int index_counter = 0;
 
-     this->Place_Information(&this->Compiler_System_Command,compiler_input_command,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,compiler_input_command);
 
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-     this->Place_Information(&this->Compiler_System_Command,this->Exe_Name,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,this->Exe_Name);
 
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,slash);
 
-     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,new_line);
 
-     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,tab);
 
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     if(!options.empty()){
 
-     if(options != nullptr){
+        this->Place_Information(&this->Compiler_System_Command,this->options);
 
-        this->Place_Information(&this->Compiler_System_Command,this->options,&index_counter);
+        this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-        this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+        this->Place_Information(&this->Compiler_System_Command,slash);
+
+        this->Place_Information(&this->Compiler_System_Command,new_line);
+
+        this->Place_Information(&this->Compiler_System_Command,tab);
      }
 
-     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
 
      // THE ADDITION OF INCLUDE DIRECTORIES PATHS
 
-     this->Place_Information(&this->Compiler_System_Command,Include_Character,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,Include_Character);
 
-     this->Place_Information(&this->Compiler_System_Command,Headers_Location,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,Headers_Location);
 
 
-     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,slash);
 
-     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,new_line);
 
-     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,tab);
 
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     //this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
 
-     this->Place_Information(&this->Compiler_System_Command,Include_Character,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,Include_Character);
 
-     this->Place_Information(&this->Compiler_System_Command,Source_Location,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,Source_Location);
 
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,slash);
 
-     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,new_line);
 
-     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,tab);
 
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     //this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-     int  included_dir_num = this->Des_Reader_Pointer->Get_Include_Directory_Number();
-
+     int  included_dir_num = this->Des_Reader.Get_Include_Directory_Number();
 
 
      char include_dir_symbol [] = "$(EXTERNAL_INCLUDE_DIR_";
@@ -590,202 +364,159 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      for(int i=0;i<included_dir_num;i++){
 
-         char * included_dir = this->Des_Reader_Pointer->Get_Include_Directories()[i];
+         std::string included_dir = this->Des_Reader.Get_Include_Directory(i);
 
-         char * dir_index = this->Translater.Translate(i);
+         std::string dir_index = this->Translater.Translate(i);
 
-         this->Place_Information(&this->Compiler_System_Command,Include_Character,&index_counter);
+         this->Place_Information(&this->Compiler_System_Command,Include_Character);
 
-         this->Place_Information(&this->Compiler_System_Command,include_dir_symbol,&index_counter);
+         this->Place_Information(&this->Compiler_System_Command,include_dir_symbol);
 
-         this->Place_Information(&this->Compiler_System_Command,dir_index,&index_counter);
+         this->Place_Information(&this->Compiler_System_Command,dir_index);
 
-         this->Place_Information(&this->Compiler_System_Command,makro_end,&index_counter);
+         this->Place_Information(&this->Compiler_System_Command,makro_end);
 
-         this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+         this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
          sizer++;
 
          if(sizer >= 1){
 
-            this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+            this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-            this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+            this->Place_Information(&this->Compiler_System_Command,slash);
 
-            this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
+            this->Place_Information(&this->Compiler_System_Command,new_line);
 
-            this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+            this->Place_Information(&this->Compiler_System_Command,tab);
 
             sizer = 0;
           }
      }
 
 
-     int  library_dir_num = this->Des_Reader_Pointer->Get_Library_Directory_Number();
+     int  library_dir_num = this->Des_Reader.Get_Library_Directory_Number();
 
-     this->Place_Information(&this->Compiler_System_Command,Link_Character,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,Link_Character);
 
-     this->Place_Information(&this->Compiler_System_Command,Objects_Location,&index_counter);
-
-
-     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,Objects_Location);
 
 
-     this->Place_Information(&this->Compiler_System_Command,Link_Character,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,slash);
 
-     this->Place_Information(&this->Compiler_System_Command,Source_Location,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,new_line);
+
+     this->Place_Information(&this->Compiler_System_Command,tab);
 
 
-     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,Link_Character);
 
-     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,Source_Location);
 
-     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
 
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,slash);
+
+     this->Place_Information(&this->Compiler_System_Command,new_line);
+
+     this->Place_Information(&this->Compiler_System_Command,tab);
 
 
      sizer = 0;
 
      for(int i=0;i<library_dir_num;i++){
 
-         char * library_dir = this->Des_Reader_Pointer->Get_Library_Directories()[i];
+         std::string library_dir = this->Des_Reader.Get_Library_Directory(i);
 
          char * dir_index = this->Translater.Translate(i);
 
-         this->Place_Information(&this->Compiler_System_Command,Link_Character,&index_counter);
+         this->Place_Information(&this->Compiler_System_Command,Link_Character);
 
-         this->Place_Information(&this->Compiler_System_Command,library_dir,&index_counter);
+         this->Place_Information(&this->Compiler_System_Command,library_dir);
 
-         this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+         this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
          sizer++;
 
          if(sizer >= 1){
 
-            this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+            this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-            this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+            this->Place_Information(&this->Compiler_System_Command,slash);
 
-            this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
+            this->Place_Information(&this->Compiler_System_Command,new_line);
 
-            this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+            this->Place_Information(&this->Compiler_System_Command,tab);
 
             sizer = 0;
           }
      }
 
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,this->source_file_name);
 
-     this->Place_Information(&this->Compiler_System_Command,this->source_file_name,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,slash);
 
-     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,new_line);
 
-     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     this->Place_Information(&this->Compiler_System_Command,tab);
 
 
-     int list_size = this->Dep_Determiner->Get_Dependency_List_Size();
+     size_t obj_list_size = this->object_file_list.size();
+
 
      // The include commands definition
 
+     std::string go_to_new_line = "\\\n\t";
 
-     for(int i=0;i<list_size;i++){
 
-         this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
 
-         this->Place_Information(&this->Compiler_System_Command,Objects_Location,&index_counter);
+     for(size_t i=0;i<obj_list_size;i++){
 
-         this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+         this->Place_Information(&this->Compiler_System_Command,Objects_Location);
 
-         this->Place_Information(&this->Compiler_System_Command,this->Header_Dependency_List[i].Object_File_Name,&index_counter);
+         this->Place_Information(&this->Compiler_System_Command,slash);
 
-         this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+         this->Place_Information(&this->Compiler_System_Command,this->object_file_list[i]);
 
-         sizer++;
+         this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-         if(((sizer >= 1) && (i!=(list_size -1)))){
-
-            this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-
-            sizer = 0;
-          }
+         this->Place_Information(&this->Compiler_System_Command,go_to_new_line);
      }
 
+     size_t hdr_list_size = this->header_file_list.size();
 
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     for(size_t i=0;i<hdr_list_size;i++){
 
-     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+         this->Place_Information(&this->Compiler_System_Command,include_word);
 
-     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
+         this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
+         this->Place_Information(&this->Compiler_System_Command,Headers_Location);
 
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+         this->Place_Information(&this->Compiler_System_Command,this->header_file_list[i]);
 
-     sizer = 0;
+         this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-     for(int i=0;i<list_size;i++){
-
-         this->Place_Information(&this->Compiler_System_Command,include_word,&index_counter);
-
-         this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-
-         this->Place_Information(&this->Compiler_System_Command,this->Header_Dependency_List[i].Header_Name,&index_counter);
-
-         this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-
-         sizer++;
-
-         if(((sizer >= 1) && (i!=(list_size -1)))){
-
-            this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-
-            sizer = 0;
-          }
+         if(i<(hdr_list_size-1)){
+         
+            this->Place_Information(&this->Compiler_System_Command,go_to_new_line);            
+         }
      }
-
-     this->Compiler_System_Command[index_counter] = '\0';
 }
 
-void Executable_MakeFile_ComConstructor::Divide_Options(char * options){
+void Executable_MakeFile_ComConstructor::Divide_Options(std::string options){
 
-     if(options != nullptr){
+     if(!options.empty()){
 
-        size_t options_size = strlen(options);
+        size_t options_size = options.length();
 
-        this->options = new char [5*options_size];
+        if(!this->options.empty()){
+        
+           this->options.clear();
+
+           this->options.shrink_to_fit();
+        }
 
         char space = ' ';
 
@@ -807,9 +538,7 @@ void Executable_MakeFile_ComConstructor::Divide_Options(char * options){
 
            for(size_t i=0;i<options_size;i++){
 
-               this->options[index] = options[i];
-
-               index++;
+               this->options.push_back(options[i]);
 
                if(options[i] == ' '){
 
@@ -818,126 +547,132 @@ void Executable_MakeFile_ComConstructor::Divide_Options(char * options){
 
                 if(space_counter>2){
 
-                   this->options[index] = '\\';
+                   this->options.push_back('\\');
 
-                   index++;
+                   this->options.push_back('\n');
 
-                   this->options[index] = '\n';
-
-                   index++;
-
-                   this->options[index] = '\t';
-
-                   index++;
-
-
-                   this->options[index] = ' ';
-
-                   index++;
+                   this->options.push_back('\t');
 
                    space_counter = 0;
                 }
 
             }
-
-            this->options[index] = '\0';
           }
        }
 }
 
 
-void Executable_MakeFile_ComConstructor::Add_String(char ** list, char * string, int * index){
-
-     size_t string_size = strlen(string);
-
-     for(size_t i=0;i<string_size;i++){
-
-         (*list)[(*index)] = string[i];
-
-         (*index)++;
-      }
-  }
-
-void Executable_MakeFile_ComConstructor::Place_String(std::string * str_pointer, char * string){
-
-     size_t string_size = strlen(string);
-
-     for(size_t i=0;i<string_size;i++){
-
-         (*str_pointer).append(1,string[i]) ;
-     }
-
-     (*str_pointer).append(1,'\0') ;
-}
-
-void Executable_MakeFile_ComConstructor::Place_CString(char ** str_pointer, std::string string){
+void Executable_MakeFile_ComConstructor::Add_String(std::string * list, std::string string){
 
      size_t string_size = string.length();
 
-     *str_pointer = new char [5*string_size];
+     for(size_t i=0;i<string_size;i++){
+
+         list->push_back(string[i]);
+      }
+  }
+
+void Executable_MakeFile_ComConstructor::Place_String(std::string * str_pointer,std::string str){
+
+     size_t string_size = str.length();
 
      for(size_t i=0;i<string_size;i++){
 
-         (*str_pointer)[i] = string[i];
+         str_pointer->push_back(str[i]) ;
      }
-
-     (*str_pointer)[string_size] = '\0' ;
 }
 
-void Executable_MakeFile_ComConstructor::Place_CString(char ** str_pointer, char * string){
 
-     size_t string_size = strlen(string);
+void Executable_MakeFile_ComConstructor::Place_Information(std::string * Pointer,
 
-     *str_pointer = new char [5*string_size];
-
-     for(size_t i=0;i<string_size;i++){
-
-         (*str_pointer)[i] = string[i];
-     }
-
-     (*str_pointer)[string_size] = '\0' ;
-}
-
-void Executable_MakeFile_ComConstructor::Place_Information(char ** Pointer,
-
-     char * Information, int * index_counter){
+     char * Information){
 
      int String_Size = strlen(Information);
 
      for(int i=0;i<String_Size;i++){
 
-         (*Pointer)[(*index_counter)] = Information[i];
+         Pointer->push_back(Information[i]);
+     }
+ }
+ 
 
-         (*index_counter)++;
+ void Executable_MakeFile_ComConstructor::Place_Information(std::string * Pointer,
+
+      std::string Information){
+
+      int String_Size = Information.length();
+
+      for(int i=0;i<String_Size;i++){
+
+          Pointer->push_back(Information[i]);
      }
  }
 
-char * Executable_MakeFile_ComConstructor::Get_Object_File_List(){
 
-       return this->object_file_list;
+void Executable_MakeFile_ComConstructor::Clear_String_Memory(std::string * pointer)
+{
+     if(!pointer->empty()){
+
+         pointer->clear();
+
+         pointer->shrink_to_fit();
+    }
 }
 
-char * Executable_MakeFile_ComConstructor::Get_Header_File_List(){
+void Executable_MakeFile_ComConstructor::Clear_Vector_Memory(std::vector<std::string> * pointer)
+{
 
-       return this->header_file_list;
+     if(!pointer->empty()){
+
+        std::vector<std::string>::iterator it;
+
+        auto begin = pointer->begin();
+
+        auto end   = pointer->end();
+
+        for(auto it=begin;it<end;it++){
+
+            if(!it->empty()){
+
+                it->clear();
+
+                it->shrink_to_fit();
+            }
+         }
+
+         pointer->clear();
+
+         pointer->shrink_to_fit();
+      }
+  }
+
+std::vector<std::string> * Executable_MakeFile_ComConstructor::Get_Object_File_List()
+{
+       return &this->object_file_list;
 }
 
-char * Executable_MakeFile_ComConstructor::Get_Src_File_Dr(){
+std::vector<std::string> * Executable_MakeFile_ComConstructor::Get_Header_File_List()
+{
+       return &this->header_file_list;
+}
+
+
+std::string Executable_MakeFile_ComConstructor::Get_Src_File_Dr(){
 
       return this->src_file_dir;
 }
 
-char * Executable_MakeFile_ComConstructor::Get_Git_Src_Dr(){
+std::string Executable_MakeFile_ComConstructor::Get_Git_Src_Dr(){
 
       return this->git_src_dir;
 }
 
-char * Executable_MakeFile_ComConstructor::Get_Make_File_Name(){
+std::string Executable_MakeFile_ComConstructor::Get_Make_File_Name(){
 
       return this->make_file_name;
 }
 
-char * Executable_MakeFile_ComConstructor::Get_Compiler_System_Command(){
+std::string Executable_MakeFile_ComConstructor::Get_Compiler_System_Command(){
 
        return this->Compiler_System_Command;
 }
