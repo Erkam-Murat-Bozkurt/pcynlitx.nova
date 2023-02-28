@@ -676,3 +676,21 @@ std::string Executable_MakeFile_ComConstructor::Get_Compiler_System_Command(){
 
        return this->Compiler_System_Command;
 }
+
+std::string Executable_MakeFile_ComConstructor::Get_Warehouse_Headers_Dir(){
+
+     return this->Dep_Determiner.Get_Warehouse_Headers_Dir();
+    
+}
+
+std::string Executable_MakeFile_ComConstructor::Get_Warehouse_Objetcs_Dir(){
+
+     return this->Dep_Determiner.Get_Warehouse_Objetcs_Dir();
+}
+
+
+std::string Executable_MakeFile_ComConstructor::Get_Warehouse_Path(){
+ 
+     return this->Dep_Determiner.Get_Warehouse_Path();
+ 
+}

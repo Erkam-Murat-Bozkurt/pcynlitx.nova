@@ -23,51 +23,34 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Executable_MakeFile_Builder.hpp"
 
-Executable_MakeFile_Builder::Executable_MakeFile_Builder(){
+Executable_MakeFile_Builder::Executable_MakeFile_Builder(char * des_path, char opr_sis):
 
-   this->Memory_Delete_Condition = false;
+Des_Reader(des_path), Dep_Determiner(des_path,opr_sis), ComConstructor(des_path,opr_sis)
 
-   this->object_file_list = nullptr;
+{
+     this->Des_Reader.Read_Descriptor_File();
 
-   this->header_file_list = nullptr;
-
-   this->Src_File_Dir = nullptr;
-
-   this->git_src_dir = nullptr;
-
-   this->Compiler_System_Command = nullptr;
+   
 }
 
-Executable_MakeFile_Builder::Executable_MakeFile_Builder(const
-
-     Executable_MakeFile_Builder & orig){
-
-}
 
 Executable_MakeFile_Builder::~Executable_MakeFile_Builder(){
 
-   if(!this->Memory_Delete_Condition){
-
        this->Clear_Dynamic_Memory();
-   }
+   
 }
 
 
 void Executable_MakeFile_Builder::Clear_Dynamic_Memory(){
 
-     if(!this->Memory_Delete_Condition){
+     this->Dep_Determiner.Clear_Dynamic_Memory();
 
-        this->Memory_Delete_Condition = true;
-
-        this->Info_Collector.Clear_Dynamic_Memory();
-
-        this->Dep_Determiner.Clear_Dynamic_Memory();
-
-        this->ComConstructor.Clear_Dynamic_Memory();
-     }
+     this->ComConstructor.Clear_Dynamic_Memory();
 }
 
-void Executable_MakeFile_Builder::Receive_Descriptor_File_Path(char * path){
+void Executable_MakeFile_Builder::Update_Warehaouse_Headers(char * path){
+
+     /*
 
      this->Initializer.Update_Warehaouse_Headers(path);
 
@@ -75,20 +58,12 @@ void Executable_MakeFile_Builder::Receive_Descriptor_File_Path(char * path){
 
      std::cout << "\n Project Warehouse Headers Updated ..";
 
-     std::cout << "\n\n";
-
-     this->Des_Reader.Read_Descriptor_File(path);
-
-     this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
+     */
 }
 
 void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_Name){
 
-     this->Dep_Determiner.Determine_Dependencies();
-
-     this->ComConstructor.Receive_DepDeterminer(&this->Dep_Determiner);
-
-     this->ComConstructor.Receive_Descriptor_File_Reader(&this->Des_Reader);
+     this->Dep_Determiner.Collect_Dependency_Information(mn_src_path);
 
      this->ComConstructor.Receive_ExeFileName(Exe_Name);
 
@@ -97,11 +72,11 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
 
      // Receiving the compiler data from the member objects
 
-     this->warehouse_head_dir = this->Dep_Determiner.Get_Warehouse_Headers_Dir();
+     this->warehouse_head_dir = this->ComConstructor.Get_Warehouse_Headers_Dir();
 
-     this->warehouse_obj_dir  = this->Dep_Determiner.Get_Warehouse_Objetcs_Dir();
+     this->warehouse_obj_dir  = this->ComConstructor.Get_Warehouse_Objetcs_Dir();
 
-     this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
+     this->warehouse_path     = this->ComConstructor.Get_Warehouse_Path();
 
      this->Src_File_Dir       = this->ComConstructor.Get_Src_File_Dr();
 
@@ -117,7 +92,7 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
 
 void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
-     this->DirectoryManager.ChangeDirectory(this->Src_File_Dir);
+     this->DirectoryManager.ChangeDirectory(this->Src_File_Dir.c_str());
 
      this->FileManager.SetFilePath(this->make_file_name);
 
@@ -152,7 +127,7 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
      this->FileManager.WriteToFile("SOURCE_LOCATION=$(REPO_DIRECTORY)");
 
 
-     if(strlen(this->Src_File_Dir) != 0){
+     if(!this->Src_File_Dir.empty()){
 
         this->FileManager.WriteToFile("\\");
 
@@ -171,7 +146,7 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
          this->FileManager.WriteToFile("\n");
 
-         char * included_dir = this->Des_Reader.Get_Include_Directories()[i];
+         std::string included_dir = this->Des_Reader.Get_Include_Directory(i);
 
          char * dir_index = this->Translater.Translate(i);
 
@@ -222,7 +197,7 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
          this->FileManager.WriteToFile("\n");
 
-         char * included_dir = this->Des_Reader.Get_Include_Directories()[i];
+         std::string included_dir = this->Des_Reader.Get_Include_Directory(i);
 
          char * dir_index = this->Translater.Translate(i);
 
@@ -253,14 +228,31 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      this->FileManager.WriteToFile(": ");
 
-     char * header_file_list = this->ComConstructor.Get_Header_File_List();
+     std::vector<std::string> * object_list = this->ComConstructor.Get_Object_File_List();
 
-     char * object_file_list = this->ComConstructor.Get_Object_File_List();
+     std::vector<std::string> * header_list = this->ComConstructor.Get_Header_File_List();
 
+     object_list->shrink_to_fit();
 
-     this->FileManager.WriteToFile(object_file_list);
+     header_list->shrink_to_fit();
 
-     this->FileManager.WriteToFile(header_file_list);
+     size_t object_list_size = object_list->size();
+
+     size_t header_list_size = header_list->size();
+
+     for(size_t i=0;i<object_list_size;i++){
+     
+         this->FileManager.WriteToFile(object_list->at(i));
+
+         this->FileManager.WriteToFile("\n\t");     
+     }
+
+     for(size_t i=0;i<header_list_size;i++){
+     
+         this->FileManager.WriteToFile(header_list->at(i));
+
+         this->FileManager.WriteToFile("\n\t");     
+     }
 
      this->FileManager.WriteToFile("\n\n");
 

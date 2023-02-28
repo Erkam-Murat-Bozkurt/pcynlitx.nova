@@ -39,6 +39,9 @@ public:
  std::string Get_Src_File_Dr();
  std::string Get_Git_Src_Dr();
  std::string Get_Make_File_Name();
+ std::string Get_Warehouse_Headers_Dir();
+ std::string Get_Warehouse_Objetcs_Dir();
+ std::string Get_Warehouse_Path();
 protected:
  void Clear_String_Memory(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
