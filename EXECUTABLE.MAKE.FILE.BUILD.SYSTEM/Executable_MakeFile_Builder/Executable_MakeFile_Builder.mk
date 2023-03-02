@@ -20,6 +20,8 @@ SRC_DEP_SL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependenc
 EXC_MKF_COM_CNSR=D:\pcynlitx.build\EXECUTABLE.MAKE.FILE.BUILD.SYSTEM\Executable_MakeFile_ComConstructor
 SRC_DER_RORD=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_ReOrderer
 SRC_COM_DT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Compiler_Data_Extractor
+RP_WAR_INIT=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Repo_Warehouse_Initializer
+
 
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 	    $(SOURCE_DETR) \
@@ -29,7 +31,8 @@ VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 	    $(SRC_DT_COL) $(DES_FILE_SYNT_COL) $(SRC_INF_COL) \
 	    $(SRC_DEP_DTR) $(SRC_DEP_SL) \
 	    $(EXC_MKF_COM_CNSR) \
-	    $(SRC_DER_RORD) $(SRC_COM_DT_EXT)
+	    $(SRC_DER_RORD) $(SRC_COM_DT_EXT) \
+		$(RP_WAR_INIT)
 
 
 Executable_MakeFile_Builder.exe: Executable_MakeFile_Builder_Main_File.cpp \
@@ -40,6 +43,7 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_Builder_Main_File.cpp \
 	Source_File_Dependency_ReOrderer.cpp \
 	Source_File_Dependency_Selector.cpp \
 	Source_File_Information_Collector.cpp \
+	Repo_Warehouse_Initializer.cpp \
 	Project_Files_Lister.cpp \
     Project_Files_Data_Collector.cpp \
 	Source_File_Data_Collector.cpp \
@@ -64,6 +68,7 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_Builder_Main_File.cpp \
 	Project_Files_Lister.h \
 	Project_Files_Data_Collector.hpp \
 	Source_File_Data_Collector.cpp \
+	Repo_Warehouse_Initializer.h \
 	Git_File_List_Receiver.hpp \
 	Descriptor_File_Reader.hpp \
 	Descriptor_File_Data_Collector.hpp \
@@ -78,24 +83,19 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_Builder_Main_File.cpp \
 
 	g++ -std=c++17 -g -o Executable_MakeFile_Builder.exe \
 	 -I$(DIR_OPS) -I$(CPP_OPS) -I$(CHAR_OPS) -I$(SRC_DEP_DTR) \
-	 -I$(SRC_INF_COL) -I$(STRING_OPS) -I$(HEAD_DET) \
-	 -I$(FILE_LISTER) -I$(SOURCE_DETR) -I$(GIT_LIST) \
-	 -I$(INT_TO_CHAR) \
-	 -I$(DES_DATA_COL) -I$(DES_READER) \
-	 -I$(FILE_DAT_COL) \
-	 -I$(SRC_DT_COL) -I$(DES_FILE_SYNT_COL) \
-	 -I$(EXC_MKF_COM_CNSR) -I$(SRC_DEP_SL) \
-	 -I$(SRC_DER_RORD) -I$(SRC_COM_DT_EXT) \
-	 -L$(SRC_INF_COL) -L$(DIR_OPS) -L$(CPP_OPS) \
-	 -L$(CHAR_OPS) -L$(INT_TO_CHAR) -L$(DES_DATA_COL) \
-	 -L$(DES_READER) -L$(STRING_OPS) \
-	 -L$(HEAD_DET) -L$(FILE_LISTER) \
-	 -L$(SOURCE_DETR) \
-	 -L$(GIT_LIST) -L$(FILE_DAT_COL) \
-	 -L$(SRC_DT_COL) -L$(DES_FILE_SYNT_COL) \
-	 -L$(SRC_DEP_DTR) -L$(EXC_MKF_COM_CNSR)\
-	 -L$(SRC_DEP_SL) \
-	 -L$(SRC_DER_RORD) -L$(SRC_COM_DT_EXT) \
+	 -I$(SRC_INF_COL)      -I$(STRING_OPS)   -I$(HEAD_DET) \
+	 -I$(FILE_LISTER)      -I$(SOURCE_DETR)  -I$(GIT_LIST) \
+	 -I$(INT_TO_CHAR)      -I$(DES_DATA_COL) -I$(DES_READER) \
+	 -I$(FILE_DAT_COL)     -I$(SRC_DT_COL)   -I$(DES_FILE_SYNT_COL) \
+	 -I$(EXC_MKF_COM_CNSR) -I$(SRC_DEP_SL)   -I$(SRC_DER_RORD) \
+	 -I$(SRC_COM_DT_EXT)   -I$(RP_WAR_INIT) \
+	 -L$(SRC_INF_COL)      -L$(DIR_OPS)          -L$(CPP_OPS) \
+	 -L$(CHAR_OPS)         -L$(INT_TO_CHAR)      -L$(DES_DATA_COL) \
+	 -L$(DES_READER)       -L$(STRING_OPS)       -L$(HEAD_DET) \
+	 -L$(FILE_LISTER)      -L$(SOURCE_DETR)      -L$(GIT_LIST) \
+	 -L$(FILE_DAT_COL)     -L$(SRC_DT_COL)       -L$(DES_FILE_SYNT_COL) \
+	 -L$(SRC_DEP_DTR)      -L$(EXC_MKF_COM_CNSR) -L$(SRC_DEP_SL) \
+	 -L$(SRC_DER_RORD)     -L$(SRC_COM_DT_EXT)   -L$(RP_WAR_INIT) \
 		Executable_MakeFile_Builder_Main_File.cpp \
 		Executable_MakeFile_Builder.cpp \
 		$(EXC_MKF_COM_CNSR)\Executable_MakeFile_ComConstructor.cpp \
@@ -104,6 +104,7 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_Builder_Main_File.cpp \
 	    $(SRC_DER_RORD)\Source_File_Dependency_ReOrderer.cpp \
 		$(SRC_DEP_SL)\Source_File_Dependency_Selector.cpp \
 		$(SRC_INF_COL)\Source_File_Information_Collector.cpp \
+		$(RP_WAR_INIT)\Repo_Warehouse_Initializer.cpp \
 		$(FILE_LISTER)\Project_Files_Lister.cpp \
 		$(FILE_DAT_COL)\Project_Files_Data_Collector.cpp \
 		$(SRC_DT_COL)\Source_File_Data_Collector.cpp \
@@ -125,6 +126,7 @@ Executable_MakeFile_Builder.exe: Executable_MakeFile_Builder_Main_File.cpp \
 	    -include $(SRC_DER_RORD)\Source_File_Dependency_ReOrderer.hpp \
 		-include $(SRC_DEP_SL)\Source_File_Dependency_Selector.hpp \
 		-include $(SRC_INF_COL)\Source_File_Information_Collector.hpp \
+		-include $(RP_WAR_INIT)\Repo_Warehouse_Initializer.h \
 		-include $(FILE_LISTER)\Project_Files_Lister.h \
 		-include $(FILE_DAT_COL)\Project_Files_Data_Collector.hpp \
 		-include $(SRC_DT_COL)\Source_File_Data_Collector.hpp \
