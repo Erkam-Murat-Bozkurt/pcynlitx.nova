@@ -137,6 +137,10 @@ void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
 
          <<  this->Compiler_Data_Ptr->at(i).header_name;
 
+         std::cout << "\n HEADER PATH:"
+
+         <<  this->Compiler_Data_Ptr->at(i).header_repo_path;
+
          std::cout << "\n PRIORITY:"
 
          <<  this->Compiler_Data_Ptr->at(i).priority;

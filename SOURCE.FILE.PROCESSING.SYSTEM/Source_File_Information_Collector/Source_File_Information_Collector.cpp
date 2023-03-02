@@ -87,6 +87,8 @@ void Source_File_Information_Collector::Determine_Header_File_List()
 
          std::string path = this->Git_Data_Receiver.Get_Git_File_Index(i);
 
+         std::string file_sys_path = this->Git_Data_Receiver.Get_File_System_Path(i);
+
          bool is_header = this->Header_Determiner.Is_Header(path);
 
          if(is_header){
@@ -95,11 +97,11 @@ void Source_File_Information_Collector::Determine_Header_File_List()
 
             std::string head_name = this->Header_Determiner.Get_Header_File_Name_With_Ext();
 
-            std::string header_path;
+            std::string header_path, header_sys_path;
 
             this->Determine_Header_Repo_Warehouse_Path(&header_path,head_name,'w');
-
-
+        
+            this->buffer.system_path = file_sys_path;
             this->buffer.repo_path = header_path;
             this->buffer.header_name = head_name;
             this->buffer.inclusion_number = 0;
@@ -187,10 +189,14 @@ void Source_File_Information_Collector::Extract_Dependency_Data(std::string path
 
         std::string head_name = this->Header_Determiner.Get_Header_File_Name_With_Ext();
 
-        std::string header_path;
+        std::string header_path, header_sys_path;
 
         this->Determine_Header_Repo_Warehouse_Path(&header_path,head_name,'w');
+        this->Determine_Header_System_Path(&header_sys_path,path);
+        
+        
 
+        this->buffer.system_path = header_sys_path;        
         this->buffer.repo_path = header_path;
         this->buffer.header_name = head_name;
         this->buffer.inclusion_number = 0;
@@ -270,6 +276,48 @@ void Source_File_Information_Collector::Determine_Header_Repo_Warehouse_Path(std
          wrd_path->push_back(file_name[i]);
      }
 }
+
+
+ void Source_File_Information_Collector::Determine_Header_System_Path(std::string * sys_path,std::string path)
+ {
+ 
+      int index_size = this->Git_Data_Receiver.Get_Git_File_Index_Size();
+
+      for(int i=0;i<index_size;i++){
+      
+          std::string file_sys_path = this->Git_Data_Receiver.Get_File_System_Path(i);
+
+          bool is_repo_hdr = this->Header_Determiner.Is_Header(file_sys_path);
+
+          if(is_repo_hdr){
+          
+             this->Header_Determiner.Determine_Header_File_Name_With_Extention(file_sys_path);       
+
+             std::string head_name = this->Header_Determiner.Get_Header_File_Name_With_Ext();
+
+             this->Header_Determiner.Determine_Header_File_Name_With_Extention(path);
+
+             std::string ref_hdr_name = this->Header_Determiner.Get_Header_File_Name_With_Ext();
+
+
+             if(this->CompareString(head_name,ref_hdr_name)){
+             
+                size_t file_size = file_sys_path.size();
+
+                for(size_t k=0;k<file_size;k++){
+                
+                    sys_path->push_back(file_sys_path[k]);
+                }
+
+                sys_path->shrink_to_fit();
+
+                break;               
+             }
+
+          }
+      }      
+ }
+
 
 void Source_File_Information_Collector::Extract_Header_File_Name_From_Decleration(std::string * header_name,
 
@@ -515,6 +563,39 @@ void Source_File_Information_Collector::Determine_Warehouse_Object_Dir(){
      for(size_t i=0;i<object_dir_size;i++){
 
          this->warehouse_obj_dir.push_back(object_directory[i]);
+     }
+}
+
+
+bool Source_File_Information_Collector::CompareString(std::string firstString, 
+
+     std::string secondString){
+
+     size_t firstStringLength  = firstString.length();
+
+     size_t secondStringLength = secondString.length();
+
+     if(firstStringLength==secondStringLength){
+
+        for(size_t i=0;i<firstStringLength;i++){
+
+            if(firstString[i]!=secondString[i]){
+
+               this->isStringsEqual = false;
+
+               return this->isStringsEqual;
+            }
+        }
+
+        this->isStringsEqual = true;
+
+        return this->isStringsEqual;
+     }
+     else{
+
+            this->isStringsEqual = false;
+
+            return this->isStringsEqual;
      }
 }
 

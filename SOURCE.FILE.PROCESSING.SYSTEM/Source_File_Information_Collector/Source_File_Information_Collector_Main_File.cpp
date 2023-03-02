@@ -24,6 +24,8 @@ int main(int argc, char ** argv){
 
     Source_File_Information_Collector Information_Collector(argv[1],'w');
 
+    /*
+
     Information_Collector.Extract_Dependency_Data();
 
     size_t data_size = Information_Collector.Get_Dependency_Data_Size();
@@ -59,14 +61,17 @@ int main(int argc, char ** argv){
 
     Information_Collector.Clear_Dynamic_Memory();
 
+    */
+
     std::string path = "D:\\PCYNLITX.BUILD.TEST\\WAREHOUSE\\PROJECT.HEADER.FILES\\Thread_Manager_Builder.h";
 
 
     Information_Collector.Extract_Dependency_Data(path);
 
-    data_size = Information_Collector.Get_Dependency_Data_Size();
+    size_t data_size = Information_Collector.Get_Dependency_Data_Size();
 
-    vec_Pointer = Information_Collector.Get_Headers_Data_Address();
+    std::vector<Headers_Data> * vec_Pointer = Information_Collector.Get_Headers_Data_Address();
+
 
 
     for(size_t i=0;i<data_size;i++){
@@ -75,6 +80,7 @@ int main(int argc, char ** argv){
 
         std::cout << "\n repo_path       :" << temp.repo_path;
         std::cout << "\n header_name     :" << temp.header_name;
+        std::cout << "\n Header system path     :" << temp.system_path;
 
         int inc_num = temp.inclusion_number;
 
@@ -109,8 +115,10 @@ int main(int argc, char ** argv){
 
         Headers_Data temp = (*vec_Pointer).at(i);
 
-        std::cout << "\n Repo path       :" << temp.repo_path;
-        std::cout << "\n Header name     :" << temp.header_name;
+        std::cout << "\n Repo path              :" << temp.repo_path;
+        std::cout << "\n Header name            :" << temp.header_name;
+        std::cout << "\n Header system path     :" << temp.system_path;
+
 
         int inc_num = temp.inclusion_number;
 

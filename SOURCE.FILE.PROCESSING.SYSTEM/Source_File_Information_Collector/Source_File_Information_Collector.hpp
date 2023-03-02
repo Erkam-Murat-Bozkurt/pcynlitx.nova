@@ -32,6 +32,7 @@
 struct Headers_Data
 {
   std::string repo_path;
+  std::string system_path;
   std::string header_name;
   std::vector<std::string> included_headers;       // Included header files data
   std::vector<std::string> included_headers_paths;
@@ -62,10 +63,13 @@ protected:
  void Determine_Warehouse_Header_Dir();
  void Determine_Header_Repo_Warehouse_Path(std::string * wrd_path,
       std::string file_name, char opr_sis);
+ void Determine_Header_System_Path(std::string * sys_path,std::string file_name, char opr_sis);
  void Extract_Header_File_Name_From_Decleration(std::string * header_name,
       std::string string);
+ void Determine_Header_System_Path(std::string * sys_path,std::string path);
  void Delete_Spaces_on_String(std::string * pointer);
  bool Include_Decleration_Test(std::string string);
+ bool CompareString(std::string sr1, std::string sr2);
  void Clear_Buffer_Memory();
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
@@ -84,6 +88,7 @@ protected:
  bool include_decleration_cond;
  bool Memory_Delete_Condition;
  bool is_independent_header;
+ bool isStringsEqual;
 };
 
 #endif /* SOURCE_FILE_INFORMATION_COLLECTOR_HPP */

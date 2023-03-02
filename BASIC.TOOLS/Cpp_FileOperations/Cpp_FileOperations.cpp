@@ -289,13 +289,18 @@ bool Cpp_FileOperations::Control_Stop_Condition(){
 }
 
 
-
 void Cpp_FileOperations::CpFile(char * path, char * target_path){
 
      this->Read_File(path);
      this->Record_File(target_path);
 }
 
+
+void Cpp_FileOperations::CpFile(std::string path, std::string target_path){
+
+     this->Read_File(path);
+     this->Record_File(target_path);
+}
 
 void Cpp_FileOperations::MoveFile_Win(char * current_path, char * target_path){
 
@@ -381,6 +386,19 @@ bool Cpp_FileOperations::Is_This_File_Empty(char * path){
 }
 
 void Cpp_FileOperations::Record_File(char * target_path){
+
+     this->SetFilePath(target_path);
+     this->FileOpen(RWCf);
+
+     for(int  i=0;i<this->File_line_Number;i++){
+
+         this->WriteToFile(this->File_Content[i]);
+     }
+
+     this->FileClose();
+}
+
+void Cpp_FileOperations::Record_File(std::string target_path){
 
      this->SetFilePath(target_path);
      this->FileOpen(RWCf);

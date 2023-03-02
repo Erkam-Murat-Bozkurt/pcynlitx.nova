@@ -3,7 +3,6 @@
 #include <iostream>
 #include <cstring>
 #include "Repo_Warehouse_Initializer.h"
-#include "Descriptor_File_Reader.hpp"
 
 
 int main(int argc, char ** argv){
@@ -17,13 +16,13 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Repo_Warehouse_Initializer Initializer;
+    Repo_Warehouse_Initializer Initializer(argv[1],'w');
 
     if(argv[2][0] == 'b'){
 
        // The project warehouse will be builded
 
-       Initializer.Build_Project_Warehouse(argv[1]);
+       Initializer.Build_Project_Warehouse();
 
        std::cout << "\n Project Warehouse Constructed ..";
 
@@ -36,7 +35,7 @@ int main(int argc, char ** argv){
 
           if(argv[2][0] == 'u'){
 
-              Initializer.Update_Warehaouse_Headers(argv[1]);
+              Initializer.Update_Warehaouse_Headers();
           }
 
           std::cout << "\n Project Header Files Updated ..";

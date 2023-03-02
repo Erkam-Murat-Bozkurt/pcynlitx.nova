@@ -36,6 +36,7 @@ public:
  void Clear_Dynamic_Memory();
  int  MakeDirectory(char * path);
  int  MakeSubDirectory(char * path);
+ int  MakeDirectory(std::string path);
  int  ChangeDirectory(char * path);
  int  ChangeDirectory(const char * path);
  int  RemoveDirectory(char * path);
@@ -56,6 +57,8 @@ private:
  void   Place_String(char ** Pointer, char * String, int String_Size);
  void   Place_Information(char ** Pointer, const char * Information, int * index_counter);
  void   Place_Information(char ** Pointer, char * Information, int * index_counter);
+ void Clear_Pointer_Memory(char ** ptr);
+ void Clear_String_Memory(std::string ** ptr);
  CharOperator CString_Operator;
  bool   Memory_Delete_Condition;
  std::string * File_List;
@@ -64,6 +67,7 @@ private:
  char * Sub_Directory;
  char * Upper_Directory;
  char * RecordDirectoryPATH;
+ char * c_str;
  bool   File_Exist_Condition;
  int    ReturnCondition;
  int    File_Number;

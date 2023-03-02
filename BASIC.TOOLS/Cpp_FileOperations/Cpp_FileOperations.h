@@ -38,6 +38,7 @@ public:
  Cpp_FileOperations(std::string FilePATH);
  virtual ~Cpp_FileOperations();
  void CpFile(char * path, char * target_path);
+ void CpFile(std::string path, std::string target_path);
  void SetFilePath(std::string FilePATH);
  void SetFilePath(char * String);
  void MoveFile_Win(char * path, char * tr_path);  // Transfer file to another location in windows
@@ -54,6 +55,7 @@ public:
  void Read_File(char * path);
  void Read_File(std::string path);
  void Record_File(char * path); // It reads whole of file in therms of cstring
+ void Record_File(std::string target_path);
  bool Is_Path_Exist(std::string path);
  bool Is_Path_Exist(char * path);
  bool Is_This_File_Empty(char * path);

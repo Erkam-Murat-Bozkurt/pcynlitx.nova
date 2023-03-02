@@ -71,6 +71,8 @@ void DirectoryOperations::Initialize_Mermbers(){
 
      this->File_List = nullptr;
 
+     this->c_str = nullptr;
+
      this->Memory_Delete_Condition = false;
 
      this->ReturnCondition = 0;
@@ -84,58 +86,47 @@ void DirectoryOperations::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         if(this->CurrentDirectory != nullptr){
+         this->Clear_Pointer_Memory(&this->CurrentDirectory);
 
-            delete [] this->CurrentDirectory;
+         this->Clear_Pointer_Memory(&this->Sub_Directory);
 
-            this->CurrentDirectory = nullptr;
-         }
+         this->Clear_Pointer_Memory(&this->Upper_Directory);
 
-         if(this->Sub_Directory != nullptr){
+         this->Clear_Pointer_Memory(&this->RecordDirectoryPATH);
 
-            delete [] this->Sub_Directory;
+         this->Clear_Pointer_Memory(&this->SystemCommand);
 
-            this->Sub_Directory = nullptr;
-         }
+         this->Clear_String_Memory(&this->File_List);
 
-         if(this->Upper_Directory != nullptr){
-
-            delete [] this->Upper_Directory;
-
-            this->Upper_Directory = nullptr;
-         }
-
-         if(this->RecordDirectoryPATH != nullptr){
-
-            delete [] this->RecordDirectoryPATH;
-
-            this->RecordDirectoryPATH = nullptr;
-         }
-
-         if(this->SystemCommand != nullptr){
-
-            delete [] this->SystemCommand;
-
-            this->SystemCommand = nullptr;
-         }
-
-         if(this->File_List != nullptr){
-
-            delete [] this->File_List;
-         }
+         this->Clear_Pointer_Memory(&this->c_str);
 
          this->CString_Operator.Clear_Dynamic_Memory();
      }
 }
 
+void DirectoryOperations::Clear_Pointer_Memory(char ** ptr){
+
+     if(*ptr != nullptr){
+               
+        delete [] *ptr;
+
+        *ptr = nullptr;
+     }
+}
+
+void DirectoryOperations::Clear_String_Memory(std::string ** ptr)
+{
+     if(*ptr != nullptr){
+               
+        delete [] *ptr;
+
+        *ptr = nullptr;
+     }
+}
+
 void DirectoryOperations::DetermineCurrentDirectory(){
 
-     if(this->CurrentDirectory != nullptr){
-
-         delete [] this->CurrentDirectory;
-
-         this->CurrentDirectory = nullptr;
-     }
+     this->Clear_Pointer_Memory(&this->CurrentDirectory);
 
      CHAR Buffer[BUFSIZE];
 
@@ -154,12 +145,7 @@ void DirectoryOperations::DetermineCurrentDirectory(){
 
 void DirectoryOperations::DetermineSubDirectoryName(char * DirectoryName){
 
-     if(this->Sub_Directory != nullptr){
-
-        delete [] this->Sub_Directory;
-
-        this->Sub_Directory = nullptr;
-     }
+     this->Clear_Pointer_Memory(&this->Sub_Directory);
 
      this->DetermineCurrentDirectory();
 
@@ -188,12 +174,7 @@ void DirectoryOperations::DetermineSubDirectoryName(char * DirectoryName){
 
 void DirectoryOperations::DetermineUpperDirectoryName(){
 
-     if(this->Upper_Directory != nullptr){
-
-        delete [] this->Upper_Directory;
-
-        this->Upper_Directory = nullptr;
-     }
+     this->Clear_Pointer_Memory(&this->Upper_Directory);
 
      this->DetermineCurrentDirectory();
 
@@ -275,6 +256,44 @@ int DirectoryOperations::MakeDirectory(char * path){
 
             this->ReturnCondition = CreateDirectoryA(path,NULL);
     }
+
+    return this->ReturnCondition;
+};
+
+int DirectoryOperations::MakeDirectory(std::string std_string_path){
+
+    std::cout << "\n path:" << std_string_path;
+    
+    size_t length = std_string_path.length();
+
+    char * path = new char [5*length];  // Converting std::string to cstring
+
+    for(size_t i=0;i<length;i++){
+    
+        path[i] = std_string_path[i];
+    }
+
+    path[length] = '\0';
+
+    int return_condition = this->ChangeDirectory(path);
+
+    if(return_condition == 0){
+
+       std::cout << "\n Directory will be created.";
+
+
+       this->ReturnCondition = CreateDirectoryA(path,NULL);
+    }
+    else{
+
+            std::cout << "\n Directory will be removed.";
+
+            this->RemoveDirectory(path);
+
+            this->ReturnCondition = CreateDirectoryA(path,NULL);
+    }
+
+    this->Clear_Pointer_Memory(&path);
 
     return this->ReturnCondition;
 };
@@ -382,12 +401,7 @@ int DirectoryOperations::GoToSubDirectory(char * DirectoryName){
 
 void DirectoryOperations::LoadSystemFunctionCommand(char * Command,char * DirectoryName){
 
-     if(this->SystemCommand != nullptr){
-
-        delete [] this->SystemCommand;
-
-        this->SystemCommand = nullptr;
-     }
+     this->Clear_Pointer_Memory(&this->SystemCommand);
 
      int command_name_size   = strlen(Command);
 
@@ -410,12 +424,7 @@ void DirectoryOperations::LoadSystemFunctionCommand(char * Command,char * Direct
 
 void DirectoryOperations::RecordCurrentDirectoryPATH(){
 
-     if(this->RecordDirectoryPATH != nullptr){
-
-        delete [] this->RecordDirectoryPATH;
-
-        this->RecordDirectoryPATH = nullptr;
-     }
+     this->Clear_Pointer_Memory(&this->RecordDirectoryPATH);
 
      this->DetermineCurrentDirectory();
 
@@ -442,13 +451,7 @@ void DirectoryOperations::Determine_File_List_In_Directory(char * Directory_Name
 
      this->Memory_Delete_Condition = false;
 
-     if(this->File_List != nullptr){
-
-        delete [] this->File_List;
-
-        this->File_List = nullptr;
-     }
-
+     this->Clear_String_Memory(&this->File_List);
 
      this->File_Number = 0;
 
