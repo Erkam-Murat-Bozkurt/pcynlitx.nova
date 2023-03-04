@@ -39,6 +39,7 @@ public:
  int  MakeDirectory(std::string path);
  int  ChangeDirectory(char * path);
  int  ChangeDirectory(const char * path);
+ int  ChangeDirectory(std::string path);
  int  RemoveDirectory(char * path);
  int  GoToUpperDirectory();
  int  GoToSubDirectory(char * DirectoryName);
@@ -54,11 +55,12 @@ public:
  int  Get_File_Number_In_Directory();
 private:
  void Initialize_Mermbers();
- void   Place_String(char ** Pointer, char * String, int String_Size);
- void   Place_Information(char ** Pointer, const char * Information, int * index_counter);
- void   Place_Information(char ** Pointer, char * Information, int * index_counter);
+ void Place_String(char ** Pointer, char * String, int String_Size);
+ void Place_Information(char ** Pointer, const char * Information, int * index_counter);
+ void Place_Information(char ** Pointer, char * Information, int * index_counter);
  void Clear_Pointer_Memory(char ** ptr);
  void Clear_String_Memory(std::string ** ptr);
+ char * Convert_Std_String_To_CString(std::string st);
  CharOperator CString_Operator;
  bool   Memory_Delete_Condition;
  std::string * File_List;

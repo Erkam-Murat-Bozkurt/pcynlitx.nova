@@ -16,30 +16,19 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_Reader;
 
-    Des_Reader.Read_Descriptor_File(argv[1]);
 
-    char * project_repo_dir = Des_Reader.Get_Repo_Directory_Location();
+    Project_Files_Lister File_Lister(argv[1],'w');
 
-    char * warehouse_path   = Des_Reader.Get_Warehouse_Location();
-
-    Project_Files_Lister File_Lister;
-
-    File_Lister.Determine_Git_Repo_Info(&Des_Reader);
+    File_Lister.Determine_Git_Repo_Info();
 
     int dir_number = File_Lister.Get_Source_File_Number();
 
-    Make_File_Builder File_Builder;
+    Make_File_Builder File_Builder(argv[1],'w');
 
     if(dir_number > 0){
 
-       File_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
-
-       File_Builder.Receive_Git_Record_Data(&File_Lister);
-
        File_Builder.Build_MakeFile(0);
-
     }
 
     return 0;

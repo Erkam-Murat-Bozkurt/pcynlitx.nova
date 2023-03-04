@@ -336,6 +336,8 @@ int DirectoryOperations::ChangeDirectory(const char * path){
     return this->ReturnCondition;
 };
 
+
+
 int DirectoryOperations::ChangeDirectory(char * path){
 
     this->DetermineCurrentDirectory();
@@ -373,6 +375,13 @@ int DirectoryOperations::ChangeDirectory(char * path){
 
     return this->ReturnCondition;
 };
+
+
+int DirectoryOperations::ChangeDirectory(std::string path){
+
+    return this->ChangeDirectory(path.c_str());
+};
+
 
 int DirectoryOperations::RemoveDirectory(char * path){
 
@@ -719,7 +728,9 @@ void DirectoryOperations::Place_String(char ** Pointer, char * String, int Strin
      (*Pointer)[String_Size] = '\0';
 }
 
-void DirectoryOperations::Place_Information(char ** Pointer, char * Information, int * index_counter){
+void DirectoryOperations::Place_Information(char ** Pointer, char * Information, 
+
+     int * index_counter){
 
      int Information_Size = strlen(Information);
 
@@ -731,7 +742,9 @@ void DirectoryOperations::Place_Information(char ** Pointer, char * Information,
      }
 }
 
-void DirectoryOperations::Place_Information(char ** Pointer, const char * Information, int * index_counter){
+void DirectoryOperations::Place_Information(char ** Pointer, const char * Information, 
+
+     int * index_counter){
 
      int Information_Size = strlen(Information);
 
@@ -741,6 +754,29 @@ void DirectoryOperations::Place_Information(char ** Pointer, const char * Inform
 
         (*index_counter)++;
      }
+}
+
+char * DirectoryOperations::Convert_Std_String_To_CString(std::string st)
+{
+       this->Clear_Pointer_Memory(&this->c_str);
+
+       size_t string_size = st.length();
+
+       this->c_str = new char [5*string_size];
+
+       for(size_t i=0;i<5*string_size;i++){
+       
+           this->c_str[i] = '\0';    
+       }
+
+       for(size_t i=0;i<string_size;i++){
+       
+           this->c_str[i] = st[i];
+       }
+
+       this->c_str[string_size] = '\0';
+
+       return this->c_str;
 }
 
 char * DirectoryOperations::GetCurrentlyWorkingDirectory(){
