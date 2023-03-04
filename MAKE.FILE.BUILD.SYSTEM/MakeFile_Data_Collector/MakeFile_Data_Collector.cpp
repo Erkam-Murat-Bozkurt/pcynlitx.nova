@@ -23,102 +23,73 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "MakeFile_Data_Collector.hpp"
 
-MakeFile_Data_Collector::MakeFile_Data_Collector(){
+MakeFile_Data_Collector::MakeFile_Data_Collector(char * Des_Path, char opr_sis) :
 
-   this->Memory_Delete_Condition = false;
+File_Lister(Des_Path,opr_sis), Des_Reader(Des_Path)
 
-   this->Compiler_System_Command = nullptr;
+{
+     this->Des_Reader.Read_Descriptor_File();
 
-   this->Object_File_Name = nullptr;
+     this->File_Lister.Determine_Git_Repo_Info();
 
-   this->Source_File_Name_With_Ext = nullptr;
+     this->warehouse_path = this->Des_Reader.Get_Warehouse_Location();
 
-   this->Included_Header_Files = nullptr;
+     this->repo_dir = this->Des_Reader.Get_Repo_Directory_Location();
 
-   this->Dependency_Code_Line = nullptr;
+     this->opr_sis = opr_sis;
+     
 
-   this->Header_File_Directory = nullptr;
-
-   this->Make_File_Name = nullptr;
-
-   this->warehouse_head_dir = nullptr;
-
-   this->warehouse_obj_dir = nullptr;
-
-   this->Header_File_Exact_Path = nullptr;
-
-   this->Header_File_Name_With_Ext = nullptr;
-
-   this->Included_Header_Files_Number = 0;
+     this->Included_Header_Files_Number = 0;
 }
 
-MakeFile_Data_Collector::MakeFile_Data_Collector(const MakeFile_Data_Collector & orig){
-
-}
 
 MakeFile_Data_Collector::~MakeFile_Data_Collector(){
 
-   if(!this->Memory_Delete_Condition){
-
-       this->Clear_Dynamic_Memory();
-   }
+     this->Clear_Dynamic_Memory();
+   
 }
 
 void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
 
-     if(!this->Memory_Delete_Condition){
+     this->Clear_Vector_Memory(&this->Included_Header_Files);
 
-         this->Memory_Delete_Condition = true;
+     this->Clear_Vector_Memory(&this->Included_Header_Directories);
 
-         this->Clear_Pointer_Memory(&this->Source_File_Name_With_Ext);
+     this->Clear_Vector_Memory(&this->Included_Header_Files_System_Paths);
 
-         this->Clear_Pointer_Memory(&this->Object_File_Name);
+     this->Clear_Vector_Memory(&this->Included_Header_Files_Git_Record_Paths);
 
-         this->Clear_Pointer_Memory(&this->Compiler_System_Command);
+     this->Clear_Vector_Memory(&this->Included_Header_Files_Git_Record_Dir);
 
-         if(this->Included_Header_Files != nullptr){
+     this->Clear_String_Memory(&this->Source_File_Name_With_Ext);
 
-            for(int i=0;i<this->Included_Header_Files_Number;i++){
+     this->Clear_String_Memory(&this->Object_File_Name);
 
-                this->Clear_Pointer_Memory(&(this->Included_Header_Files[i]));
-            }
+     this->Clear_String_Memory(&this->Compiler_System_Command);
 
-            delete [] this->Included_Header_Files;
+     this->Clear_String_Memory(&this->Dependency_Code_Line);
 
-            this->Included_Header_Files = nullptr;
+     this->Clear_String_Memory(&this->Make_File_Name);
 
-            this->Included_Header_Files_Number = 0;
-         }
+     this->Clear_String_Memory(&this->warehouse_head_dir);
 
-         this->Clear_Pointer_Memory(&this->Dependency_Code_Line);
+     this->Clear_String_Memory(&this->warehouse_obj_dir);
 
-         this->Clear_Pointer_Memory(&this->Make_File_Name);
+     this->Clear_String_Memory(&this->Header_File_Exact_Path);
 
-         this->Clear_Pointer_Memory(&this->warehouse_head_dir);
+     this->Des_Reader.Clear_Dynamic_Memory();
 
-         this->Clear_Pointer_Memory(&this->warehouse_obj_dir);
-
-         this->Clear_Pointer_Memory(&this->Header_File_Exact_Path);
-     }
-}
-
-void MakeFile_Data_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Pointer){
-
-     this->Des_Reader_Pointer = Pointer;
-
-     this->warehouse_path = this->Des_Reader_Pointer->Get_Warehouse_Location();
-
-     this->repo_dir = this->Des_Reader_Pointer->Get_Repo_Directory_Location();
+     this->File_Lister.Clear_Dynamic_Memory();
 }
 
 
-void MakeFile_Data_Collector::Collect_Make_File_Data(Project_Files_Lister * Pointer, int git_index){
+void MakeFile_Data_Collector::Collect_Make_File_Data(int git_index){
 
-     this->Determine_Warehouse_Header_Dir('w');
+     this->Determine_Warehouse_Header_Dir();
 
-     this->Determine_Warehouse_Object_Dir('w');
+     this->Determine_Warehouse_Object_Dir();
 
-     this->Receive_Git_Record_Data(Pointer,git_index);
+     this->Receive_Git_Record_Data(git_index);
 
      this->Collect_Header_Files_Information();
 
@@ -131,208 +102,164 @@ void MakeFile_Data_Collector::Collect_Make_File_Data(Project_Files_Lister * Poin
      this->Determine_Make_File_Name();
 }
 
-void MakeFile_Data_Collector::Receive_Git_Record_Data(Project_Files_Lister * Pointer, int git_index){
+void MakeFile_Data_Collector::Determine_Warehouse_Header_Dir(){
 
-     this->File_Lister_Pointer  = Pointer;
+     std::string warehouse_word = "WAREHOUSE";
 
-     this->Git_Record_Index = git_index;
+     std::string header_directory= "PROJECT.HEADER.FILES";
 
-     this->Source_File_Name
+     size_t wrd_path_size = this->warehouse_path.length();
 
-     = this->File_Lister_Pointer->Get_Source_File_Name(git_index);
+     size_t head_dir_size = header_directory.length();
 
-     this->Source_File_Name_With_Ext
+     size_t wr_word_size  = warehouse_word.length();
 
-     = this->File_Lister_Pointer->Get_Source_File_Name_With_Ext(git_index);
 
-     this->Source_File_Git_Recort_Path
+     for(size_t i=0;i<wrd_path_size;i++){
 
-     = this->File_Lister_Pointer->Get_Source_File_Git_Record_Path(git_index);
-
-     this->Source_File_Directory
-
-     = this->File_Lister_Pointer->Get_Source_File_Directory(git_index);
-
-     this->Header_File_Directory
-
-     = this->File_Lister_Pointer->Get_Source_File_Directory(git_index);
-}
-
-void MakeFile_Data_Collector::Determine_Warehouse_Header_Dir(char operating_sis){
-
-     char warehouse_word   [] = "WAREHOUSE";
-
-     char header_directory [] = "PROJECT.HEADER.FILES";
-
-     size_t warehouse_path_size = strlen(this->warehouse_path);
-
-     size_t head_dir_size = strlen(header_directory);
-
-     size_t wr_word_size  = strlen(warehouse_word);
-
-     size_t path_size = warehouse_path_size + head_dir_size + wr_word_size;
-
-     this->warehouse_head_dir = new char [5*path_size];
-
-     int index = 0;
-
-     for(size_t i=0;i<warehouse_path_size;i++){
-
-        this->warehouse_head_dir[index] = this->warehouse_path[i];
-
-        index++;
+        this->warehouse_head_dir.push_back(this->warehouse_path[i]);        
      }
 
-     if(operating_sis == 'w'){
+     if(this->opr_sis == 'w'){
 
-        if(this->warehouse_head_dir[warehouse_path_size-1] != '\\'){
+        if(this->warehouse_head_dir.back()!='\\'){
 
-           this->warehouse_head_dir[index] = '\\';
-
-           index++;
+           this->warehouse_head_dir.push_back('\\');           
         }
      }
 
-     if(operating_sis == 'l'){
+     if(this->opr_sis == 'l'){
 
-         if(this->warehouse_head_dir[warehouse_path_size-1] != '/'){
+        if(this->warehouse_head_dir.back()!='/'){
 
-            this->warehouse_head_dir[index] = '/';
-
-            index++;
-         }
+           this->warehouse_head_dir.push_back('/');           
+        }
      }
 
      for(size_t i=0;i<wr_word_size;i++){
 
-         this->warehouse_head_dir[index] = warehouse_word[i];
-
-         index++;
+         this->warehouse_head_dir.push_back(warehouse_word[i]);
      }
 
 
-     if(operating_sis == 'w'){
+     if(this->opr_sis == 'w'){
 
-        if(this->warehouse_head_dir[warehouse_path_size-1] != '\\'){
+        if(this->warehouse_head_dir.back() != '\\'){
 
-           this->warehouse_head_dir[index] = '\\';
-
-           index++;
+           this->warehouse_head_dir.push_back('\\');           
         }
      }
 
-     if(operating_sis == 'l'){
+     if(this->opr_sis == 'l'){
 
-        if(this->warehouse_head_dir[warehouse_path_size-1] != '/'){
+        if(this->warehouse_head_dir.back() != '/'){
 
-           this->warehouse_head_dir[index] = '/';
-
-           index++;
+           this->warehouse_head_dir.push_back('/');           
         }
      }
 
      for(size_t i=0;i<head_dir_size;i++){
 
-         this->warehouse_head_dir[index] = header_directory[i];
-
-         index++;
+         this->warehouse_head_dir.push_back(header_directory[i]);
      }
-
-     this->warehouse_head_dir[index] = '\0';
 }
 
-void MakeFile_Data_Collector::Determine_Warehouse_Object_Dir(char operating_sis){
-
-     char object_directory [] = "PROJECT.OBJECT.FILES";
-
-     char warehouse_word   [] = "WAREHOUSE";
-
-     size_t warehouse_path_size = strlen(this->warehouse_path);
-
-     size_t object_dir_size = strlen(object_directory);
-
-     size_t wr_word_size  = strlen(warehouse_word);
 
 
-     size_t path_size = warehouse_path_size
+void MakeFile_Data_Collector::Determine_Warehouse_Object_Dir(){
 
-            + object_dir_size + wr_word_size;
+     std::string object_directory = "PROJECT.OBJECT.FILES";
 
+     std::string warehouse_word = "WAREHOUSE";
 
-     this->warehouse_obj_dir = new char [5*path_size];
+     size_t wrd_path_size = this->warehouse_path.length();
 
-     int index = 0;
+     size_t object_dir_size = object_directory.length();
 
-     for(size_t i=0;i<warehouse_path_size;i++){
+     size_t wr_word_size  = warehouse_word.length();
 
-         this->warehouse_obj_dir[index] = this->warehouse_path[i];
+     for(size_t i=0;i<wrd_path_size;i++){
 
-         index++;
+         this->warehouse_obj_dir.push_back(this->warehouse_path[i]);
      }
 
-     if(operating_sis == 'w'){
+     if(this->opr_sis== 'w'){
 
-        if(this->warehouse_path[warehouse_path_size-1] != '\\'){
+        if(this->warehouse_obj_dir.back() != '\\'){
 
-           this->warehouse_obj_dir[index] = '\\';
-
-           index++;
+           this->warehouse_obj_dir.push_back('\\');           
         }
      }
 
-     if(operating_sis == 'l'){
+     if(this->opr_sis == 'l'){
 
-        if(this->warehouse_path[warehouse_path_size-1] != '/'){
+        if(this->warehouse_obj_dir.back() != '/'){
 
-            this->warehouse_obj_dir[index] = '/';
-
-            index++;
+           this->warehouse_obj_dir.push_back('/');           
         }
      }
 
      for(size_t i=0;i<wr_word_size;i++){
 
-         this->warehouse_obj_dir[index] = warehouse_word[i];
-
-         index++;
+         this->warehouse_obj_dir.push_back(warehouse_word[i]);
      }
 
 
-     if(operating_sis == 'w'){
+     if(this->opr_sis == 'w'){
 
-        if(this->warehouse_path[warehouse_path_size-1] != '\\'){
+        if(this->warehouse_obj_dir.back() != '\\'){
 
-           this->warehouse_obj_dir[index] = '\\';
-
-           index++;
+           this->warehouse_obj_dir.push_back('\\');           
         }
      }
 
-     if(operating_sis == 'l'){
+     if(this->opr_sis == 'l'){
 
-        if(this->warehouse_path[warehouse_path_size-1] != '/'){
+        if(this->warehouse_obj_dir.back() != '/'){
 
-           this->warehouse_obj_dir[index] = '/';
-
-           index++;
+           this->warehouse_obj_dir.push_back('/');           
         }
      }
 
      for(size_t i=0;i<object_dir_size;i++){
 
-         this->warehouse_obj_dir[index] = object_directory[i];
-
-         index++;
-     }
-
-     this->warehouse_obj_dir[index] = '\0';
+         this->warehouse_obj_dir.push_back(object_directory[i]);         
+     }   
 }
+
+
+void MakeFile_Data_Collector::Receive_Git_Record_Data(int git_index){
+
+     this->Git_Record_Index = git_index;
+
+     this->Source_File_Name
+
+     = this->File_Lister.Get_Source_File_Name(git_index);
+
+
+     this->Source_File_Name_With_Ext
+
+     = this->File_Lister.Get_Source_File_Name_With_Ext(git_index);
+
+
+     this->Source_File_Git_Recort_Path
+
+     = this->File_Lister.Get_Source_File_Git_Record_Path(git_index);
+
+     this->Source_File_Directory
+
+     = this->File_Lister.Get_Source_File_Directory(git_index);
+
+     this->Header_File_Directory
+
+     = this->File_Lister.Get_Source_File_Directory(git_index);
+}
+
+
 
 void MakeFile_Data_Collector::Collect_Header_Files_Information(){
 
      this->Receive_Included_Header_Files_Number();
-
-     this->Initialize_Header_Data_Pointers();
 
      this->Receive_Header_Files_Data();
 }
@@ -341,48 +268,9 @@ void MakeFile_Data_Collector::Receive_Included_Header_Files_Number(){
 
     this->Included_Header_Files_Number
 
-    = this->File_Lister_Pointer->Get_Source_File_Include_File_Number(this->Git_Record_Index);
+    = this->File_Lister.Get_Source_File_Include_File_Number(this->Git_Record_Index);
 }
 
-void MakeFile_Data_Collector::Initialize_Header_Data_Pointers(){
-
-      this->Included_Header_Directories
-
-      = new char * [5*this->Included_Header_Files_Number];
-
-
-      this->Included_Header_Files
-
-      = new char * [5*this->Included_Header_Files_Number];
-
-
-      this->Included_Header_Files_System_Paths
-
-      = new char * [5*this->Included_Header_Files_Number];
-
-
-      this->Included_Header_Files_Git_Record_Paths
-
-      = new char * [5*this->Included_Header_Files_Number];
-
-
-      this->Included_Header_Files_Git_Record_Dir
-
-      = new char * [5*this->Included_Header_Files_Number];
-
-      for(int i=0;i<5*this->Included_Header_Files_Number;i++){
-
-          this->Included_Header_Directories[i] = nullptr;
-
-          this->Included_Header_Files[i] = nullptr;
-
-          this->Included_Header_Files_System_Paths[i] = nullptr;
-
-          this->Included_Header_Files_Git_Record_Paths[i] = nullptr;
-
-          this->Included_Header_Files_Git_Record_Dir[i] = nullptr;
-      }
-}
 
 void MakeFile_Data_Collector::Receive_Header_Files_Data(){
 
@@ -401,11 +289,9 @@ void MakeFile_Data_Collector::Receive_Source_File_Header_Directory(){
 
      for(int i=0;i<header_num;i++){
 
-         char * dir = nullptr;
+         std::string dir = this->File_Lister.Get_Source_File_Header_Directory(this->Git_Record_Index,i);
 
-         dir = this->File_Lister_Pointer->Get_Source_File_Header_Directory(this->Git_Record_Index,i);
-
-         this->Place_String(&(this->Included_Header_Directories[i]),dir);
+         this->Included_Header_Directories.push_back(dir);
      }
 }
 
@@ -415,11 +301,9 @@ void MakeFile_Data_Collector::Receive_Source_File_Header_System_Path(){
 
      for(int i=0;i<header_num;i++){
 
-         char * path = nullptr;
+         std::string path = this->File_Lister.Get_Source_File_Header_System_Path(this->Git_Record_Index,i);
 
-         path = this->File_Lister_Pointer->Get_Source_File_Header_System_Path(this->Git_Record_Index,i);
-
-         this->Place_String(&(this->Included_Header_Files_System_Paths[i]),path);
+         this->Included_Header_Files_System_Paths.push_back(path);
      }
 }
 
@@ -429,11 +313,9 @@ void MakeFile_Data_Collector::Receive_Source_File_Header_Git_Record_Path(){
 
      for(int i=0;i<header_num;i++){
 
-         char * path = nullptr;
+         std::string path = this->File_Lister.Get_Source_File_Header_Git_Record_Path(this->Git_Record_Index,i);
 
-         path = this->File_Lister_Pointer->Get_Source_File_Header_Git_Record_Path(this->Git_Record_Index,i);
-
-         this->Place_String(&(this->Included_Header_Files_Git_Record_Paths[i]),path);
+         this->Included_Header_Files_Git_Record_Paths.push_back(path);              
      }
 }
 
@@ -444,9 +326,7 @@ void MakeFile_Data_Collector::Receive_Source_File_Header_Git_Record_Dir(){
 
      for(int i=0;i<header_num;i++){
 
-         char * dir = nullptr;
-
-         dir = this->File_Lister_Pointer->Get_Source_File_Header_Git_Record_Dir(this->Git_Record_Index,i);
+         std::string  dir = this->File_Lister.Get_Source_File_Header_Git_Record_Dir(this->Git_Record_Index,i);
 
          this->Place_String(&(this->Included_Header_Files_Git_Record_Dir[i]),dir);
      }
@@ -458,171 +338,104 @@ void MakeFile_Data_Collector::Receive_Header_File_Name(){
 
      for(int i=0;i<header_num;i++){
 
-         char * name = nullptr;
+         std::string name = this->File_Lister.Get_Source_File_Header(this->Git_Record_Index,i);
 
-         name = this->File_Lister_Pointer->Get_Source_File_Header(this->Git_Record_Index,i);
-
-         this->Place_String(&(this->Included_Header_Files[i]),name);
+         this->Included_Header_Files.push_back(name);         
      }
 }
 
 void MakeFile_Data_Collector::Find_Object_File_Name(){
 
-     size_t Source_File_Name_Size = strlen(this->Source_File_Name);
+     size_t Source_File_Name_Size = this->Source_File_Name.length();
 
-     this->Object_File_Name = new char [5*Source_File_Name_Size];
-
-     int index = 0;
+     // The source file name witout extantion
 
      for(int i=0;i<Source_File_Name_Size;i++){
 
-         this->Object_File_Name[index] = this->Source_File_Name[i];
-
-         index++;
+         this->Object_File_Name.push_back( this->Source_File_Name[i]);
      }
 
-     this->Object_File_Name[index] = '.';
+     this->Object_File_Name.push_back('.');
 
-     index++;
-
-     this->Object_File_Name[Source_File_Name_Size+1] = 'o';
-
-     index++;
-
-     this->Object_File_Name[Source_File_Name_Size+2] = '\0';
+     this->Object_File_Name.push_back('o');
 }
 
 void MakeFile_Data_Collector::Determine_Make_File_Name(){
 
-     char make_file_extention [] = ".make";
+     std::string make_file_extention = ".make";
 
-     size_t class_name_size = strlen(this->Source_File_Name);
+     size_t class_name_size = this->Source_File_Name.length();
 
-     size_t extention_size = strlen(make_file_extention);
-
-     size_t file_name_size = class_name_size + extention_size;
-
-     this->Make_File_Name = new char [5*file_name_size];
-
-     int index = 0;
+     size_t extention_size = make_file_extention.length();
 
      for(size_t i=0;i<class_name_size;i++){
 
-         this->Make_File_Name[index] = this->Source_File_Name[i];
-
-         index++;
+         this->Make_File_Name.push_back(this->Source_File_Name[i]);         
      }
 
      for(size_t i=0;i<extention_size;i++){
 
-         this->Make_File_Name[index] = make_file_extention[i];
-
-         index++;
+         this->Make_File_Name.push_back(make_file_extention[i]);         
      }
-
-     this->Make_File_Name[index] = '\0';
 }
 
 void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
-     char compiler_input_command [] = "g++ -Wall -c -std=c++17";
+     std::string compiler_input_command = "g++ -Wall -c -std=c++17";
 
 
-     char * options = this->Des_Reader_Pointer->Get_Options();
+     std::string options = this->Des_Reader.Get_Options();
 
-     char Include_Character [] = "-I";
+     std::string Include_Character = "-I";
 
-     char include_word [] = "-include";
+     std::string include_word = "-include";
 
-     char Space_Character [] = {' ','\0'};
+     std::string Headers_Location ="$(PROJECT_HEADERS_LOCATION)";
 
-     char Headers_Location [] ="$(PROJECT_HEADERS_LOCATION)";
-
-     char Source_Location [] ="$(SOURCE_LOCATION)";
+     std::string Source_Location  ="$(SOURCE_LOCATION)";
 
      char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
 
-     size_t Include_Directory_Name_Size = strlen(this->Header_File_Directory);
 
-     size_t Source_File_Name_Size = strlen(this->Source_File_Name_With_Ext);
+     std::string Space_Character = " ";
 
-     size_t Header_File_Name_Size = strlen(this->Source_File_Name_With_Ext);
+     std::string go_to_new_line = "\\\n\t";
 
-     size_t Current_Directory_Name_Size = strlen(Current_Directory);
+     char slash_w [] = "\\";
 
-     int Included_Header_Files_Name_Size = 0;
+     char slash_l [] = "/";
 
-     for(int i=0;i<this->Included_Header_Files_Number;i++){
+     this->Place_String(&this->Compiler_System_Command,compiler_input_command);
 
-         Included_Header_Files_Name_Size = Included_Header_Files_Name_Size
+     this->Place_String(&this->Compiler_System_Command,go_to_new_line);
 
-          + strlen(this->Included_Header_Files[i]);
+     if(!options.empty()){
+
+        this->Place_String(&this->Compiler_System_Command,options);
+
+        this->Place_String(&this->Compiler_System_Command,go_to_new_line);
      }
-
-     size_t compiler_input_command_size = strlen(compiler_input_command);
-
-     size_t compiler_command_size = Include_Directory_Name_Size + Current_Directory_Name_Size +
-
-                                    Header_File_Name_Size + Source_File_Name_Size +
-
-                                    compiler_input_command_size +
-
-                                    + Included_Header_Files_Name_Size;
-
-     this->Compiler_System_Command = new char [10*compiler_command_size];
-
-     char slash [] = "\\";
-
-     char new_line [] = "\n";
-
-     char tab [] = "\t";
-
-     int index_counter = 0;
-
-     this->Place_Information(&this->Compiler_System_Command,compiler_input_command,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-
-     if(options != nullptr){
-
-        this->Place_Information(&this->Compiler_System_Command,options,&index_counter);
-
-        this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-     }
-
-     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     
 
 
      // THE ADDITION OF INCLUDE DIRECTORIES PATHS
 
-     this->Place_Information(&this->Compiler_System_Command,Include_Character,&index_counter);
+     this->Place_String(&this->Compiler_System_Command,Include_Character);
 
-     this->Place_Information(&this->Compiler_System_Command,Headers_Location,&index_counter);
+     this->Place_String(&this->Compiler_System_Command,Headers_Location);
 
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     this->Place_String(&this->Compiler_System_Command,Space_Character);
 
-     this->Place_Information(&this->Compiler_System_Command,Include_Character,&index_counter);
+     this->Place_String(&this->Compiler_System_Command,Include_Character);
 
-     this->Place_Information(&this->Compiler_System_Command,Source_Location,&index_counter);
+     this->Place_String(&this->Compiler_System_Command,Source_Location);
 
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     this->Place_String(&this->Compiler_System_Command,go_to_new_line);
 
 
-     int  included_dir_num = this->Des_Reader_Pointer->Get_Include_Directory_Number();
+
+
+     int  included_dir_num = this->Des_Reader.Get_Include_Directory_Number();
 
      char include_dir_symbol [] = "$(EXTERNAL_INCLUDE_DIR_";
 
@@ -632,89 +445,73 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      for(int i=0;i<included_dir_num;i++){
 
-         char * included_dir = this->Des_Reader_Pointer->Get_Include_Directories()[i];
+         std::string included_dir = this->Des_Reader.Get_Include_Directory(i);
 
          char * dir_index = this->Translater.Translate(i);
 
-         this->Place_Information(&this->Compiler_System_Command,Include_Character,&index_counter);
+         this->Place_String(&this->Compiler_System_Command,Include_Character);
 
-         this->Place_Information(&this->Compiler_System_Command,include_dir_symbol,&index_counter);
+         this->Place_String(&this->Compiler_System_Command,include_dir_symbol);
 
-         this->Place_Information(&this->Compiler_System_Command,dir_index,&index_counter);
+         this->Place_CString(&this->Compiler_System_Command,dir_index);
 
-         this->Place_Information(&this->Compiler_System_Command,makro_end,&index_counter);
+         this->Place_CString(&this->Compiler_System_Command,makro_end);
 
-         this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+         this->Place_String(&this->Compiler_System_Command,Space_Character);
 
-
-         if(((sizer >= 4) && (i!=(included_dir_num -1)))){
-
-            this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
-
-            sizer = 0;
-          }
+         this->Place_String(&this->Compiler_System_Command,go_to_new_line);
      }
 
-     this->Place_Information(&this->Compiler_System_Command,Source_Location,&index_counter);
+     this->Place_String(&this->Compiler_System_Command,Source_Location);
 
-     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
+     if(this->opr_sis == 'w'){
+     
+        this->Place_String(&this->Compiler_System_Command,slash_w);
+     }
+     else{
+     
+         if(this->opr_sis =='l'){
+         
+           this->Place_String(&this->Compiler_System_Command,slash_l);
+         }
+     }
 
 
-     this->Place_Information(&this->Compiler_System_Command,this->Source_File_Name_With_Ext,&index_counter);
+     this->Place_String(&this->Compiler_System_Command,this->Source_File_Name_With_Ext);
 
 
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     this->Place_String(&this->Compiler_System_Command,Space_Character);
 
-     this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
-
-     this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+     this->Place_String(&this->Compiler_System_Command,go_to_new_line);
 
 
      // The include commands definition
 
      sizer = 0;
 
-     for(int i=0;i<this->Included_Header_Files_Number;i++){
+     size_t included_hdr_num = this->Included_Header_Files.size();
 
-         this->Place_Information(&this->Compiler_System_Command,include_word,&index_counter);
+     for(int i=0;i<included_hdr_num;i++){
 
-         this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+         this->Place_String(&this->Compiler_System_Command,include_word);
 
-         this->Place_Information(&this->Compiler_System_Command,this->Included_Header_Files[i],&index_counter);
+         this->Place_String(&this->Compiler_System_Command,Space_Character);
 
-         this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+         this->Place_String(&this->Compiler_System_Command,this->Included_Header_Files[i]);
+
+         this->Place_String(&this->Compiler_System_Command,Space_Character);
 
          sizer++;
 
          if(((sizer >= 2) && (i!=(this->Included_Header_Files_Number -1)))){
 
-            this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+            this->Place_String(&this->Compiler_System_Command,Space_Character);
 
-            this->Place_Information(&this->Compiler_System_Command,slash,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,new_line,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,tab,&index_counter);
-
-            this->Place_Information(&this->Compiler_System_Command,Space_Character,&index_counter);
+            this->Place_String(&this->Compiler_System_Command,go_to_new_line);
 
             sizer = 0;
           }
      }
-
-     this->Compiler_System_Command[index_counter] = '\0';
 }
 
 
@@ -722,178 +519,165 @@ void MakeFile_Data_Collector::Determine_Dependency_Code_Line(){
 
      char double_quotes [] = " : ";
 
-     char space [] = " ";
+     size_t Object_File_Name_Size = this->Object_File_Name.length();
 
-     size_t Object_File_Name_Size = strlen(this->Object_File_Name);
+     size_t Header_File_Name_Size = this->Source_File_Name_With_Ext.length();
 
-     size_t Header_File_Name_Size = strlen(this->Source_File_Name_With_Ext);
+     size_t Source_File_Name_Size = this->Source_File_Name_With_Ext.length();
 
-     size_t Source_File_Name_Size = strlen(this->Source_File_Name_With_Ext);
-
-     size_t Included_Header_Files_Name_Size = 0;
-
-
-     for(int i=0;i<this->Included_Header_Files_Number;i++){
-
-        Included_Header_Files_Name_Size = Included_Header_Files_Name_Size +
-
-          strlen(this->Included_Header_Files[i]);
-     }
-
-
-     size_t Code_Line_Size = Object_File_Name_Size + Source_File_Name_Size +
-
-                          Header_File_Name_Size + Included_Header_Files_Name_Size;
-
-     this->Dependency_Code_Line =  new char [10*Code_Line_Size];
-
-     int index_counter = 0;
 
      int  sizer = 0;
 
-     char slash [] = "\\";
+     std::string Space_Character = " ";
 
-     char new_line [] = "\n";
+     std::string go_to_new_line = "\\\n\t";
 
-     char tab [] = "\t";
+     this->Place_String(&this->Dependency_Code_Line,this->Object_File_Name);
 
-     this->Place_Information(&this->Dependency_Code_Line,this->Object_File_Name,&index_counter);
+     this->Place_String(&this->Dependency_Code_Line,double_quotes);
 
-     this->Place_Information(&this->Dependency_Code_Line,double_quotes,&index_counter);
-
-     this->Place_Information(&this->Dependency_Code_Line,this->Source_File_Name_With_Ext,&index_counter);
+     this->Place_String(&this->Dependency_Code_Line,this->Source_File_Name_With_Ext);
 
 
-     this->Place_Information(&this->Dependency_Code_Line,space,&index_counter);
+     this->Place_String(&this->Dependency_Code_Line,Space_Character);
 
-     this->Place_Information(&this->Dependency_Code_Line,slash,&index_counter);
-
-     this->Place_Information(&this->Dependency_Code_Line,new_line,&index_counter);
-
-     this->Place_Information(&this->Dependency_Code_Line,tab,&index_counter);
+     this->Place_String(&this->Dependency_Code_Line,go_to_new_line);
 
 
      for(int i=0;i<this->Included_Header_Files_Number;i++){
 
-         this->Place_Information(&this->Dependency_Code_Line,space,&index_counter);
+         this->Place_String(&this->Dependency_Code_Line,Space_Character);
 
-         this->Place_Information(&this->Dependency_Code_Line,this->Included_Header_Files[i],&index_counter);
+         this->Place_String(&this->Dependency_Code_Line,this->Included_Header_Files[i]);
 
          sizer++;
 
          if(((sizer >= 2) && (i!=(this->Included_Header_Files_Number -1)))){
 
-            this->Place_Information(&this->Dependency_Code_Line,space,&index_counter);
-
-            this->Place_Information(&this->Dependency_Code_Line,slash,&index_counter);
-
-            this->Place_Information(&this->Dependency_Code_Line,new_line,&index_counter);
-
-            this->Place_Information(&this->Dependency_Code_Line,tab,&index_counter);
+            this->Place_String(&this->Dependency_Code_Line,Space_Character);
+            
+            this->Place_String(&this->Dependency_Code_Line,go_to_new_line);
 
             sizer = 0;
          }
      }
-
-     this->Dependency_Code_Line[index_counter] = '\0';
 }
 
-void MakeFile_Data_Collector::Place_Information(char ** Pointer,
+void MakeFile_Data_Collector::Place_String(std::string * pointer,
 
-     char * Information, int * index_counter){
+     std::string Information){
 
-     int String_Size = strlen(Information);
+     int String_Size = Information.length();
 
      for(int i=0;i<String_Size;i++){
 
-         (*Pointer)[(*index_counter)] = Information[i];
-
-         (*index_counter)++;
+         pointer->push_back(Information[i]);
      }
- }
+}
 
- void MakeFile_Data_Collector::Place_String(char ** pointer, char * string){
+void MakeFile_Data_Collector::Place_CString(std::string * pointer, 
+
+     char * string){
 
      size_t string_size = strlen(string);
 
-     *pointer = new char [5*string_size];
-
      for(size_t i=0;i<string_size;i++){
 
-         (*pointer)[i] = string[i];
+         pointer->push_back(string[i]);
+     }
+}
+
+void MakeFile_Data_Collector::Clear_Vector_Memory(std::vector<std::string> * pointer){
+
+     std::vector<std::string>::iterator it;
+
+     auto begin = pointer->begin();
+     auto end   = pointer->end();
+
+     for(auto it=begin;it<end;it++){
+
+        if(!it->empty()){
+
+            it->clear();
+            it->shrink_to_fit();
+        }
      }
 
-     (*pointer)[string_size] = '\0';
- }
+     if(!pointer->empty())
+     {
+         pointer->clear();
+         pointer->shrink_to_fit();
+     }
+}
 
- void MakeFile_Data_Collector::Clear_Pointer_Memory(char ** Pointer){
+void MakeFile_Data_Collector::Clear_String_Memory(std::string * ptr)
+{
+     if(!ptr->empty()){
 
-      if(*Pointer != nullptr){
+         ptr->clear();
 
-          delete [] *Pointer;
+         ptr->shrink_to_fit();
+     }
+}
 
-          *Pointer = nullptr;
-      }
- }
+std::string MakeFile_Data_Collector::Get_Source_File_Name(){
 
- char * MakeFile_Data_Collector::Get_Source_File_Name(){
+     return this->Source_File_Name;
+}
 
-       return this->Source_File_Name;
- }
+std::string MakeFile_Data_Collector::Get_Make_File_Name(){
 
- char * MakeFile_Data_Collector::Get_Make_File_Name(){
+     return this->Make_File_Name;
+}
 
-        return this->Make_File_Name;
- }
+std::string MakeFile_Data_Collector::Get_Compiler_System_Command(){
 
- char * MakeFile_Data_Collector::Get_Compiler_System_Command(){
+     return this->Compiler_System_Command;
+}
 
-       return this->Compiler_System_Command;
- }
+std::string MakeFile_Data_Collector::Get_Dependency_Code_Line(){
 
- char * MakeFile_Data_Collector::Get_Dependency_Code_Line(){
+     return this->Dependency_Code_Line;
+}
 
-       return this->Dependency_Code_Line;
- }
+std::string MakeFile_Data_Collector::Get_Object_File_Name(){
 
- char * MakeFile_Data_Collector::Get_Object_File_Name(){
+     return this->Object_File_Name;
+}
 
-       return this->Object_File_Name;
- }
+std::string MakeFile_Data_Collector::Get_Source_File_Name_With_Extention(){
 
- char * MakeFile_Data_Collector::Get_Source_File_Name_With_Extention(){
+     return this->Source_File_Name_With_Ext;
+}
 
-       return this->Source_File_Name_With_Ext;
- }
+std::vector<std::string> MakeFile_Data_Collector::Get_Included_Header_Files(){
 
- char ** MakeFile_Data_Collector::Get_Included_Header_Files(){
+     return this->Included_Header_Files;
+}
 
-        return this->Included_Header_Files;
- }
+std::string MakeFile_Data_Collector::Get_Repo_Dir(){
 
- char * MakeFile_Data_Collector::Get_Repo_Dir(){
+     return this->repo_dir;
+}
 
-        return this->repo_dir;
- }
+std::string MakeFile_Data_Collector::Get_Warehouse_Header_Dir(){
 
- char * MakeFile_Data_Collector::Get_Warehouse_Header_Dir(){
+     return this->warehouse_head_dir;
+}
 
-        return this->warehouse_head_dir;
- }
+std::string MakeFile_Data_Collector::Get_Warehouse_Object_Dir(){
 
- char * MakeFile_Data_Collector::Get_Warehouse_Object_Dir(){
+     return this->warehouse_obj_dir;
+}
 
-        return this->warehouse_obj_dir;
- }
+std::string MakeFile_Data_Collector::Get_Warehouse_Path(){
 
- char * MakeFile_Data_Collector::Get_Warehouse_Path(){
+     return this->warehouse_path;
+}
 
-        return this->warehouse_path;
- }
+std::string MakeFile_Data_Collector::Get_System_Header_File_Dir(){
 
-char * MakeFile_Data_Collector::Get_System_Header_File_Dir(){
-
-       return this->Header_File_Directory;
+     return this->Header_File_Directory;
 }
 
  int MakeFile_Data_Collector::Get_Included_Header_Files_Number(){

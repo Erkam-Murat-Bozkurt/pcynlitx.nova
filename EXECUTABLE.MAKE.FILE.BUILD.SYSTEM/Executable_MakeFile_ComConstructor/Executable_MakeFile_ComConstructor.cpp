@@ -269,8 +269,6 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
      options = this->Des_Reader.Get_Options();
 
 
-     this->Divide_Options(options);
-
      char Include_Character [] = "-I";
 
      char Link_Character [] = "-L";
@@ -504,63 +502,6 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
          }
      }
 }
-
-void Executable_MakeFile_ComConstructor::Divide_Options(std::string options){
-
-     if(!options.empty()){
-
-        size_t options_size = options.length();
-
-        if(!this->options.empty()){
-        
-           this->options.clear();
-
-           this->options.shrink_to_fit();
-        }
-
-        char space = ' ';
-
-        int space_counter = 0;
-
-        for(int i=0;i<options_size;i++){
-
-           if(options[i] == ' '){
-
-              space_counter++;
-            }
-        }
-
-        int index = 0;
-
-        if(space_counter>2){
-
-           space_counter = 0;
-
-           for(size_t i=0;i<options_size;i++){
-
-               this->options.push_back(options[i]);
-
-               if(options[i] == ' '){
-
-                  space_counter++;
-                }
-
-                if(space_counter>2){
-
-                   this->options.push_back('\\');
-
-                   this->options.push_back('\n');
-
-                   this->options.push_back('\t');
-
-                   space_counter = 0;
-                }
-
-            }
-          }
-       }
-}
-
 
 void Executable_MakeFile_ComConstructor::Add_String(std::string * list, std::string string){
 

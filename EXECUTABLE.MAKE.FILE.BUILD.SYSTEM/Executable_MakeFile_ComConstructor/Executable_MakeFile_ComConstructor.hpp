@@ -52,7 +52,6 @@ protected:
  void Determine_Src_File_Dir(std::string file_path, char opr_sis);
  void Determine_Make_File_Name(std::string file_path);
  void Determine_Source_File_Name(std::string file_path);
- void Divide_Options(std::string options);
  void Add_String(std::string * list, std::string string);
  void Place_String(std::string * pointer, std::string string);
  void Place_Information(std::string * ptr,std::string in);

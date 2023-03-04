@@ -17,27 +17,17 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_Reader;
+    Project_Files_Lister File_Lister(argv[1],'w');
 
-    Des_Reader.Read_Descriptor_File(argv[1]);
-
-    char * warehouse_path   = Des_Reader.Get_Warehouse_Location();
-
-    char * project_repo_dir = Des_Reader.Get_Repo_Directory_Location();
-
-    Project_Files_Lister File_Lister;
-
-    File_Lister.Determine_Git_Repo_Info(&Des_Reader);
+    File_Lister.Determine_Git_Repo_Info();
 
     int src_file_num = File_Lister.Get_Source_File_Number();
 
-    MakeFile_Data_Collector Data_Collector;
+    MakeFile_Data_Collector Data_Collector(argv[1],'w');
 
     if(src_file_num > 0){
 
-       Data_Collector.Receive_Descriptor_File_Reader(&Des_Reader);
-
-       Data_Collector.Collect_Make_File_Data(&File_Lister,0);
+       Data_Collector.Collect_Make_File_Data(0);
     }
     else{
 
@@ -58,7 +48,7 @@ int main(int argc, char ** argv){
 
     for(int i=0;i<inhd_flnr;i++){
 
-        std::cout << "\n Header [" << i << "]:" << Data_Collector.Get_Included_Header_Files()[i];
+        std::cout << "\n Header [" << i << "]:" << Data_Collector.Get_Included_Header_Files().at(i);
     }
 
     std::cout << "\n\n";

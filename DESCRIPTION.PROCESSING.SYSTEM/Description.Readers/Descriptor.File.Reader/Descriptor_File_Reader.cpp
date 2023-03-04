@@ -485,7 +485,70 @@ void Descriptor_File_Reader::Read_Options(){
                this->Clear_String_Memory(&line);
             }
       }
+
+      this->Divide_Options();
 }
+
+
+void Descriptor_File_Reader::Divide_Options(){
+
+     if(!this->options.empty()){
+
+        std::string temp_opts = this->options;
+
+        
+        if(!this->options.empty()){
+        
+           this->options.clear();
+
+           this->options.shrink_to_fit();
+        }
+
+
+        size_t options_size = temp_opts.length();
+
+        char space = ' ';
+
+        int space_counter = 0;
+
+        for(int i=0;i<options_size;i++){
+
+           if(temp_opts[i] == ' '){
+
+              space_counter++;
+            }
+        }
+
+        int index = 0;
+
+        if(space_counter>2){
+
+           space_counter = 0;
+
+           for(size_t i=0;i<options_size;i++){
+
+               this->options.push_back(temp_opts[i]);
+
+               if(temp_opts[i] == ' '){
+
+                  space_counter++;
+                }
+
+                if(space_counter>2){
+
+                   this->options.push_back('\\');
+
+                   this->options.push_back('\n');
+
+                   this->options.push_back('\t');
+
+                   space_counter = 0;
+                }
+            }
+          }
+       }
+}
+
 
 void Descriptor_File_Reader::Clear_Vectory_Memory(std::vector<std::string> * pointer){
 
