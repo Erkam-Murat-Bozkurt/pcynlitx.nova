@@ -24,15 +24,17 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Make_File_Cleaner.hpp"
 
-Make_File_Cleaner::Make_File_Cleaner(){
+Make_File_Cleaner::Make_File_Cleaner(char * DesPath, char opr_sis) :
 
+  File_Lister(DesPath,opr_sis)
+{
    this->Memory_Delete_Condition = false;
 
+   this->opr_sis = opr_sis;
+
+   this->File_Lister.Determine_Git_Repo_Info();
 }
 
-Make_File_Cleaner::Make_File_Cleaner(const Make_File_Cleaner & orig){
-
-}
 
 Make_File_Cleaner::~Make_File_Cleaner(){
 
@@ -48,43 +50,36 @@ void Make_File_Cleaner::Clear_Dynamic_Memory(){
      if(!this->Memory_Delete_Condition){
 
          this->Memory_Delete_Condition = true;
+
+         this->File_Lister.Clear_Dynamic_Memory();
      }
 }
 
 
-void Make_File_Cleaner::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader){
-
-     this->Des_Reader_Pointer = Des_Reader;
-}
-
-void Make_File_Cleaner::Receive_File_Lister(Project_Files_Lister * File_Lister){
-
-     this->File_Lister_Pointer = File_Lister;
-}
 
 void Make_File_Cleaner::Clear_Make_Files_Exist_On_Repo(){
 
-     int src_file_num = this->File_Lister_Pointer->Get_Source_File_Number();
+     int src_file_num = this->File_Lister.Get_Source_File_Number();
 
      for(int i=0;i<src_file_num;i++){
 
-         char * dir =  this->File_Lister_Pointer->Get_Source_File_Directory(i);
+         std::string dir =  this->File_Lister.Get_Source_File_Directory(i);
 
          this->Enumerator.List_Files_On_Directory(dir);
 
          int file_num = this->Enumerator.Get_File_Number();
 
-         char **  file_list = this->Enumerator.Get_File_List();
+         std::vector<std::string> *  file_list = this->Enumerator.Get_File_List_As_StdStr();
 
-         for(int i=0;i<file_num;i++){
+         for(int k=0;k<file_num;k++){
 
-             bool is_make_file  = this->Is_This_MakeFile(file_list[i]);
+             bool is_make_file  = this->Is_This_MakeFile(file_list->at(k));
 
              if(is_make_file){
 
-                char * file_path = nullptr;
+                std::string file_path;
 
-                this->Determine_File_Path(&file_path,dir,file_list[i],'w');
+                this->Determine_File_Path(&file_path,dir,file_list->at(k));
 
                 this->FileManager.Delete_File(file_path);
              }
@@ -92,70 +87,57 @@ void Make_File_Cleaner::Clear_Make_Files_Exist_On_Repo(){
      }
 }
 
-void Make_File_Cleaner::Determine_File_Path(char ** path, char * dir, char * name,
+void Make_File_Cleaner::Determine_File_Path(std::string * path, std::string dir, 
 
-     char operating_sis){
+     std::string name){
 
-     size_t dir_size = strlen(dir);
+     size_t dir_size  = dir.length();
 
-     size_t name_size = strlen(name);
-
-     size_t path_size = dir_size + name_size;
-
-     *path = new char [5*path_size];
-
-     int index = 0;
+     size_t name_size = name.length();
 
      for(size_t i=0;i<dir_size;i++){
 
-         (*path)[index] = dir[i];
-
-         index++;
+         path->push_back(dir[i]);         
      }
 
-     if(operating_sis == 'w'){
+     if(this->opr_sis == 'w'){
 
-        (*path)[index] = '\\';
-
-        index++;
+        if(path->back()!= '\\'){
+        
+           path->push_back('\\');
+        }
      }
 
-     if(operating_sis == 'l'){
+     if(this->opr_sis == 'l'){
 
-        (*path)[index] = '/';
-
-        index++;
+        if(path->back()!= '/'){
+        
+           path->push_back('\\');
+        }
      }
 
      for(size_t i=0;i<name_size;i++){
 
-        (*path)[index] = name[i];
-
-        index++;
-     }
-
-     (*path)[index] = '\0';
+         path->push_back(name[i]);
+     }     
 }
 
-bool Make_File_Cleaner::Is_This_MakeFile(char * file_name){
+bool Make_File_Cleaner::Is_This_MakeFile(std::string file_name){
 
      this->Is_MakeFile = true;
 
-     char make_ext [] = ".make";
+     std::string make_ext = ".make";
 
-     char file_ext [] = {'\0','\0','\0','\0','\0','\0'};
+     std::string file_ext;
 
-     size_t ext_size = strlen(make_ext);
+     size_t ext_size = make_ext.length();
 
-     size_t name_size = strlen(file_name);
+     size_t name_size = file_name.length();
 
-     int index = 5;
 
-     for(size_t i=name_size;i>0;i--){
+     for(size_t i=name_size-ext_size;i<name_size;i++){
 
-         file_ext[index] = file_name[i];
-
-         index--;
+         file_ext.push_back(file_name[i]);
      }
 
      for(size_t i=0;i<ext_size;i++){

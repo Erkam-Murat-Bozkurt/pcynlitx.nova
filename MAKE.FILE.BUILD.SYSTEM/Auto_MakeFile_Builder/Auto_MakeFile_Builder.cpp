@@ -2,24 +2,23 @@
 
 #include "Auto_MakeFile_Builder.h"
 
-Auto_MakeFile_Builder::Auto_MakeFile_Builder(){
-
+Auto_MakeFile_Builder::Auto_MakeFile_Builder(char * DesPath, char opr_sis) :
+   
+   File_Lister(DesPath,opr_sis),  Mk_Builder(DesPath,opr_sis), 
+   Mk_File_Clnr(DesPath,opr_sis), Des_Reader(DesPath)
+{
      this->Memory_Delete_Condition = true;
 
-     this->Warehouse_Path = nullptr;
+     this->opr_sis;
 
-     this->Repo_Dir = nullptr;
+     this->File_Lister.Determine_Git_Repo_Info();
 
-     this->repo_head_dir = nullptr;
+     this->Des_Reader.Read_Descriptor_File();
 
-     this->repo_obj_dir = nullptr;
+     this->Warehouse_Path = this->Des_Reader.Get_Warehouse_Location();
+
+     this->Repo_Dir = this->Des_Reader.Get_Repo_Directory_Location();
 }
-
-Auto_MakeFile_Builder::Auto_MakeFile_Builder(const Auto_MakeFile_Builder & orig){
-
-
-}
-
 
 Auto_MakeFile_Builder::~Auto_MakeFile_Builder(){
 
@@ -35,48 +34,20 @@ void Auto_MakeFile_Builder::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         if(this->repo_head_dir != nullptr){
+         this->Clear_String_Memory(&this->repo_head_dir);
 
-            delete [] this->repo_head_dir;
-
-            this->repo_head_dir = nullptr;
-         }
-
-         if(this->repo_obj_dir != nullptr){
-
-            delete [] this->repo_obj_dir;
-
-            this->repo_obj_dir = nullptr;
-         }
+         this->Clear_String_Memory(&this->repo_obj_dir);
      }
 }
 
-
-void Auto_MakeFile_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader){
-
-     this->Memory_Delete_Condition = false;
-
-     this->Des_Reader_Pointer = Des_Reader;
-
-     this->Warehouse_Path = this->Des_Reader_Pointer->Get_Warehouse_Location();
-
-     this->Repo_Dir = this->Des_Reader_Pointer->Get_Repo_Directory_Location();
-}
 
 void Auto_MakeFile_Builder::Build_Make_Files(){
 
      // Determination of the directories recorded on the git repo
 
-     this->File_Lister.Determine_Git_Repo_Info(this->Des_Reader_Pointer);
-
-     this->Mk_File_Clnr.Receive_Descriptor_File_Reader(this->Des_Reader_Pointer);
-
-     this->Mk_File_Clnr.Receive_File_Lister(&this->File_Lister);
-
      this->Mk_File_Clnr.Clear_Make_Files_Exist_On_Repo();
 
-
-     // Determination of the
+     std::cout << "\n The current make files on the project have been cleaned";
 
      this->Determine_Project_Directories();
 
@@ -85,15 +56,9 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
 
      for(int i=0;i<src_num;i++){
 
-         char * source_file_name = this->File_Lister.Get_Source_File_Name(i);
+         std::string source_file_name = this->File_Lister.Get_Source_File_Name(i);
 
-         if(source_file_name != nullptr){
-
-            this->Mk_Builder.Clear_Dynamic_Memory();
-
-            this->Mk_Builder.Receive_Descriptor_File_Reader(this->Des_Reader_Pointer);
-
-            this->Mk_Builder.Receive_Git_Record_Data(&this->File_Lister);
+         if(!source_file_name.empty()){
 
             this->Mk_Builder.Build_MakeFile(i);
          }
@@ -104,49 +69,84 @@ void Auto_MakeFile_Builder::Determine_Project_Directories(){
 
      this->Memory_Delete_Condition = false;
 
-     char Headers_Folder [] = "PROJECT.HEADER.FILES";
+     std::string Headers_Folder = "PROJECT.HEADER.FILES";
 
-     char Objects_Folder [] = "PROJECT.OBJECT.FILES";
-
-     size_t Warehouse_Path_Size = strlen(this->Warehouse_Path);
-
-     this->repo_head_dir = new char [5*Warehouse_Path_Size];
-
-     this->repo_obj_dir =  new char [5*Warehouse_Path_Size];
+     std::string Objects_Folder = "PROJECT.OBJECT.FILES";
 
      this->Construct_Path(&(this->repo_head_dir),Headers_Folder,this->Warehouse_Path);
 
      this->Construct_Path(&(this->repo_obj_dir),Objects_Folder,this->Warehouse_Path);
 }
 
-void Auto_MakeFile_Builder::Construct_Path(char ** pointer, char * string, char * warehouse_path){
+void Auto_MakeFile_Builder::Construct_Path(std::string * pointer, std::string string, 
+
+     std::string warehouse_path){
 
      int index = 0;
 
-     size_t warehouse_path_size = strlen(warehouse_path);
+     size_t warehouse_path_size = warehouse_path.length();
 
      for(size_t i=0;i<warehouse_path_size;i++){
 
-         (*pointer)[index] = warehouse_path[i];
-
-         index++;
+         pointer->push_back(warehouse_path[i]);
      }
 
-     if(warehouse_path[warehouse_path_size-1] != '\\'){
-
-        (*pointer)[index] = '\\';
-
-        index++;
+     if(this->opr_sis == 'w'){
+      
+        if(pointer->back() != '\\'){
+         
+           pointer->push_back('\\');         
+        }      
+     }
+     else{
+      
+          if(this->opr_sis == 'l'){
+           
+            if(pointer->back() != '/'){
+         
+               pointer->push_back('/');         
+            }      
+         }      
      }
 
-     size_t string_size = strlen(string);
+     size_t string_size = string.length();
 
      for(size_t i=0;i<string_size;i++){
 
-        (*pointer)[index] = string[i];
+         pointer->push_back(string[i]);
+     }
+}
 
-        index++;
+
+void Auto_MakeFile_Builder::Clear_Vector_Memory(std::vector<std::string> * pointer){
+
+     std::vector<std::string>::iterator it;
+
+     auto begin = pointer->begin();
+     auto end   = pointer->end();
+
+     for(auto it=begin;it<end;it++){
+
+        if(!it->empty()){
+
+            it->clear();
+            it->shrink_to_fit();
+        }
      }
 
-     (*pointer)[index] = '\0';
+     if(!pointer->empty())
+     {
+         pointer->clear();
+         pointer->shrink_to_fit();
+     }
+}
+
+void Auto_MakeFile_Builder::Clear_String_Memory(std::string * ptr)
+{
+     if(!ptr->empty()){
+
+         ptr->clear();
+
+         ptr->shrink_to_fit();
+     }
 }

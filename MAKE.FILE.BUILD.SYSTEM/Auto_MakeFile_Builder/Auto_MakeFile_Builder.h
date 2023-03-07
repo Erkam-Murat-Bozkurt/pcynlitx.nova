@@ -21,24 +21,25 @@
 class Auto_MakeFile_Builder
 {
 public:
- Auto_MakeFile_Builder();
- Auto_MakeFile_Builder(const Auto_MakeFile_Builder & orig);
+ Auto_MakeFile_Builder(char * DesPath, char opr_sis);
  virtual ~Auto_MakeFile_Builder();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Reader_Pointer);
  void Build_Make_Files();
 protected:
  void Determine_Project_Directories();
  void Write_Make_Files();
  void Clear_Dynamic_Memory();
- void Construct_Path(char ** pointer, char * string, char * warehouse_path);
+ void Clear_Vector_Memory(std::vector<std::string> * pointer);
+ void Clear_String_Memory(std::string * ptr);
+ void Construct_Path(std::string * ptr, std::string str, std::string wrd);
  Project_Files_Lister File_Lister;
  Make_File_Builder Mk_Builder;
  Make_File_Cleaner Mk_File_Clnr;
- Descriptor_File_Reader * Des_Reader_Pointer;
- char * Warehouse_Path;
- char * Repo_Dir;
- char * repo_head_dir;
- char * repo_obj_dir;
+ Descriptor_File_Reader Des_Reader;
+ std::string Warehouse_Path;
+ std::string Repo_Dir;
+ std::string repo_head_dir;
+ std::string repo_obj_dir;
+ char opr_sis;
  bool Memory_Delete_Condition;
 };
 

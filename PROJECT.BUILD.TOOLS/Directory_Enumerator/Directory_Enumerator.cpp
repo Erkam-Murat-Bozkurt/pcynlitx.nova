@@ -34,14 +34,13 @@ Directory_Enumerator::Directory_Enumerator(){
 
      this->List_Index = 0;
 
-     this->Memory_Delete_Condition = true;
+     this->Memory_Delete_Condition = false;
 
      this->File_List = nullptr;
+
+     this->c_str = nullptr;
 };
 
-Directory_Enumerator::Directory_Enumerator(const Directory_Enumerator & orig){
-
-};
 
 Directory_Enumerator::~Directory_Enumerator(){
 
@@ -57,28 +56,31 @@ void Directory_Enumerator::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         for(int i=0;i<this->Directory_Number;i++){
-
-            delete [] this->Directory_List[i];
-         }
-
-         delete [] this->Directory_List;
+         this->Clear_Pointer_List(&this->Directory_List,this->Directory_Number);
 
          this->Directory_Number = 0;
 
-         if(this->File_List != nullptr){
 
-            for(int i=0;i<this->File_Number;i++){
-
-                delete [] this->File_List[i];
-            }
-
-            delete [] this->File_List;
-         }
+         this->Clear_Pointer_List(&this->File_List,this->File_Number);
 
          this->File_Number = 0;
 
+
+         this->Clear_CString_Memory(&this->c_str);
+
          this->List_Index = 0;
+     
+         
+         if(!this->std_str.empty()){
+       
+            this->std_str.clear();
+
+            this->std_str.shrink_to_fit();
+         }
+
+         this->Clear_Vector_Memory(&this->File_List_StdStr);
+
+         this->Clear_Vector_Memory(&this->Directory_List_StdStr);
      }
 }
 
@@ -157,10 +159,8 @@ void Directory_Enumerator::Determine_Sub_Directory_Number(char * Directory_Path)
          };
      }
 
-     if(dir_path != nullptr){
+     this->Clear_CString_Memory(&dir_path);
 
-        delete [] dir_path;
-     }
 
      if(search_path != nullptr){
 
@@ -171,6 +171,8 @@ void Directory_Enumerator::Determine_Sub_Directory_Number(char * Directory_Path)
 }
 
 void Directory_Enumerator::Determine_Sub_Directories(char * Directory_Path){
+
+     this->Memory_Delete_Condition = false;
 
      WIN32_FIND_DATA ffd;
 
@@ -228,10 +230,8 @@ void Directory_Enumerator::Determine_Sub_Directories(char * Directory_Path){
         };
      }
 
-     if(dir_path != nullptr){
+     this->Clear_CString_Memory(&dir_path);
 
-        delete [] dir_path;
-     }
 
      if(search_path != nullptr){
 
@@ -239,11 +239,24 @@ void Directory_Enumerator::Determine_Sub_Directories(char * Directory_Path){
      }
 
      FindClose(hFind);
+
+     
+     this->Clear_Vector_Memory(&this->Directory_List_StdStr);
+
+
+     for(int i=0;i<this->Directory_Number;i++){
+     
+        this->Directory_List_StdStr.push_back(this->Directory_List[i]);          
+     }
+
+     this->Directory_List_StdStr.shrink_to_fit();
 }
 
 void Directory_Enumerator::Construct_Directory_List_Element(char ** list_element,
 
      char * Dir_Name, char * dir_path){
+
+     this->Memory_Delete_Condition = false;
 
      size_t dir_name_size = strlen(Dir_Name);
 
@@ -282,6 +295,8 @@ void Directory_Enumerator::Construct_Directory_List_Element(char ** list_element
 void Directory_Enumerator::Receive_Directory_Path(char * Directory_Path,
 
      char ** dir_path){
+
+     this->Memory_Delete_Condition = false;
 
      size_t dir_path_size = strlen(Directory_Path);
 
@@ -345,7 +360,9 @@ void Directory_Enumerator::Determine_Search_Path(char * path, TCHAR ** pointer){
      }
 }
 
-void Directory_Enumerator::Find_Sub_Directory_Path(char * dir_root_path, char * dir_name, char ** sub_dir_path){
+void Directory_Enumerator::Find_Sub_Directory_Path(char * dir_root_path, char * dir_name,
+
+     char ** sub_dir_path){
 
      size_t dir_root_path_size = strlen(dir_root_path);
 
@@ -387,19 +404,20 @@ void Directory_Enumerator::Find_Sub_Directory_Path(char * dir_root_path, char * 
 }
 
 
+void Directory_Enumerator::List_Files_On_Directory(std::string dir_path){
+
+     char * path = this->Convert_StdStr_CStr(dir_path);
+
+     this->List_Files_On_Directory(path);
+}
+
 void Directory_Enumerator::List_Files_On_Directory(char * dir_path){
+     
+     this->Memory_Delete_Condition = false;
+     
+     this->Clear_Pointer_List(&this->File_List,this->File_Number);
 
-    if(this->File_List != nullptr){
-
-       for(int i=0;i<this->File_Number;i++){
-
-           delete [] this->File_List[i];
-       }
-
-       delete [] this->File_List;
-    }
-
-    this->File_Number = 0;
+     this->File_Number = 0;
 
 
      WIN32_FIND_DATA ffd;
@@ -488,6 +506,16 @@ void Directory_Enumerator::List_Files_On_Directory(char * dir_path){
 
         delete [] search_path;
      }
+
+     this->Clear_Vector_Memory(&this->File_List_StdStr);
+
+
+     for(int i=0;i<this->File_Number;i++){
+     
+        this->File_List_StdStr.push_back(this->File_List[i]);          
+     }
+
+     this->File_List_StdStr.shrink_to_fit();
 }
 
 
@@ -521,6 +549,101 @@ bool Directory_Enumerator::CompareString(char * firstString, char * secondString
      }
 }
 
+char * Directory_Enumerator::Convert_StdStr_CStr(std::string string)
+{
+
+       this->Clear_CString_Memory(&this->c_str);
+
+       size_t str_size = string.length();
+
+       this->c_str = new char [2*str_size];
+
+       for(size_t i=0;i<str_size;i++){
+       
+           this->c_str[i] = string[i];
+       }
+
+       this->c_str[str_size] = '\0';
+
+       return this->c_str;
+}
+
+std::string Directory_Enumerator::Convert_CStr_StdStr(char * string) 
+{
+       if(!this->std_str.empty()){
+       
+           this->std_str.clear();
+
+           this->std_str.shrink_to_fit();
+       }
+
+       size_t str_size = strlen(string);
+
+       for(size_t i=0;i<str_size;i++){
+       
+           this->std_str.push_back(string[i]);
+       
+       }
+
+       return this->std_str;
+}
+
+void Directory_Enumerator::Clear_CString_Memory(char ** ptr){
+
+     if(*ptr != nullptr){
+     
+        delete [] *ptr;
+
+        *ptr = nullptr;
+     }
+}
+
+void Directory_Enumerator::Clear_Pointer_List(char *** ptr, int list_size)
+{     
+     if(*ptr != nullptr){
+
+         for(int i=0;i<list_size;i++){
+
+            if((*ptr)[i] != nullptr){
+     
+              delete [] (*ptr)[i];
+
+              (*ptr)[i] = nullptr;
+            }
+         }
+
+         delete [] (*ptr);
+      }
+}
+
+void Directory_Enumerator::Clear_Vector_Memory(std::vector<std::string> * pointer){
+
+     if(!pointer->empty()){
+
+         std::vector<std::string>::iterator it;
+
+         auto begin = pointer->begin();
+
+         auto end   = pointer->end();
+
+         for(auto it=begin;it<end;it++){
+
+             if(!it->empty()){
+
+                 it->clear();
+
+                 it->shrink_to_fit();
+              }
+          }
+
+          pointer->clear();
+
+          pointer->shrink_to_fit();
+     }
+  }
+
+
+
 bool Directory_Enumerator::getStringEquality(){
 
      return this->isStringsEqual;
@@ -531,6 +654,12 @@ char * Directory_Enumerator::Get_Directory_List_Element(int num) const
     return this->Directory_List[num];
 }
 
+std::string Directory_Enumerator::Get_Directory_List_Element_As_StdStr(int num) const {
+
+     return this->Directory_List_StdStr[num];
+}
+
+
 int Directory_Enumerator::Get_Directory_Number_In_Directory() const
 {
    return this->Directory_Number;
@@ -539,6 +668,11 @@ int Directory_Enumerator::Get_Directory_Number_In_Directory() const
 char ** Directory_Enumerator::Get_File_List(){
 
      return this->File_List;
+}
+
+std::vector<std::string> * Directory_Enumerator::Get_File_List_As_StdStr()
+{
+     return &this->File_List_StdStr;
 }
 
 int Directory_Enumerator::Get_File_Number(){

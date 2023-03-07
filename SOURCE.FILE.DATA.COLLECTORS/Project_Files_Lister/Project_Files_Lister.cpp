@@ -76,6 +76,8 @@ void Project_Files_Lister::Collect_Source_Files_Data()
             this->Clear_Build_Data(&Temp_Data);
          }
      }
+
+     this->Data.shrink_to_fit();     
 }
 
 
@@ -88,7 +90,6 @@ void Project_Files_Lister::Collect_Independent_Header_Files_Data()
          std::string file_path = this->git_record_paths[i];
 
          bool is_header_file = this->Header_Determiner.Is_Header(file_path);
-
 
          if(is_header_file){
 
@@ -135,7 +136,7 @@ bool Project_Files_Lister::Is_This_Header_File_Included_Anywhere(std::string fil
 
              this->is_this_file_included_anywhere
 
-                = this->CheckStringInclusion(file_name,included_file_name);
+             = this->CheckStringInclusion(file_name,included_file_name);
 
              if(this->is_this_file_included_anywhere){
 
@@ -373,6 +374,11 @@ void Project_Files_Lister::Clear_Build_Data(Build_System_Data * pointer){
 }
 
 
+std::vector<Build_System_Data> * Project_Files_Lister::Get_Build_System_Data_Address(){
+
+     return &this->Data;
+}
+
 
 int Project_Files_Lister::Get_Source_File_Number(){
 
@@ -381,32 +387,32 @@ int Project_Files_Lister::Get_Source_File_Number(){
 
 std::string Project_Files_Lister::Get_Source_File_Directory(int num){
 
-    return this->Data[num].File_Directory;
+    return this->Data.at(num).File_Directory;
 }
 
 std::string Project_Files_Lister::Get_Source_File_Git_Record_Path(int num){
 
-    return this->Data[num].git_record_path;
+    return this->Data.at(num).git_record_path;
 }
 
 std::string Project_Files_Lister::Get_Source_File_System_Path(int num){
 
-    return this->Data[num].File_Path;
+    return this->Data.at(num).File_Path;
 }
 
 std::string Project_Files_Lister::Get_Source_File_Name(int num){
 
-    return this->Data[num].File_Name;
+    return this->Data.at(num).File_Name;
 }
 
 std::string Project_Files_Lister::Get_Source_File_Name_With_Ext(int num){
 
-    return this->Data[num].File_Name_With_Ext;
+    return this->Data.at(num).File_Name_With_Ext;
 }
 
 int  Project_Files_Lister::Get_Source_File_Include_File_Number(int num){
 
-     return this->Data[num].Included_Header_Files_Number;
+     return this->Data.at(num).Included_Header_Files_Number;
 }
 
 int Project_Files_Lister::Get_Indenpendent_Header_Files_Number(){
@@ -416,37 +422,37 @@ int Project_Files_Lister::Get_Indenpendent_Header_Files_Number(){
 
 std::string Project_Files_Lister::Get_Source_File_Header(int src_num, int hdr_num){
 
-    return this->Data[src_num].Included_Header_Files[hdr_num];
+    return this->Data.at(src_num).Included_Header_Files[hdr_num];
 }
 
 std::string Project_Files_Lister::Get_Source_File_Header_Directory(int src_num, int hdr_num){
 
-    return this->Data[src_num].Included_Header_Files_Directories[hdr_num];
+    return this->Data.at(src_num).Included_Header_Files_Directories[hdr_num];
 }
 
 std::string Project_Files_Lister::Get_Source_File_Header_System_Path(int src_num, int hdr_num){
 
-    return this->Data[src_num].Included_Header_Files_System_Path[hdr_num];
+    return this->Data.at(src_num).Included_Header_Files_System_Path[hdr_num];
 }
 
 std::string Project_Files_Lister::Get_Class_File_Header_System_Path(int src_num){
 
-    return this->Data[src_num].class_header_file_path;
+    return this->Data.at(src_num).class_header_file_path;
 }
 
 std::string Project_Files_Lister::Get_Class_File_Header_Name(int src_num){
 
-    return this->Data[src_num].class_header_file_name;
+    return this->Data.at(src_num).class_header_file_name;
 }
 
 std::string Project_Files_Lister::Get_Source_File_Header_Git_Record_Path(int src_num, int hdr_num){
 
-    return this->Data[src_num].Included_Header_Files_Git_Record_Path[hdr_num];
+    return this->Data.at(src_num).Included_Header_Files_Git_Record_Path[hdr_num];
 }
 
 std::string Project_Files_Lister::Get_Source_File_Header_Git_Record_Dir(int src_num, int hdr_num){
 
-    return this->Data[src_num].Included_Header_Files_Git_Record_Dir[hdr_num];
+    return this->Data.at(src_num).Included_Header_Files_Git_Record_Dir[hdr_num];
 }
 
 std::string Project_Files_Lister::Get_Independent_Header_File(int num){
@@ -456,5 +462,5 @@ std::string Project_Files_Lister::Get_Independent_Header_File(int num){
 
 std::string Project_Files_Lister::Get_Source_File_Git_Record_Directory(int src_num){
 
-    return this->Data[src_num].git_record_dir;
+    return this->Data.at(src_num).git_record_dir;
 }

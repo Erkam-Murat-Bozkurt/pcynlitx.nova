@@ -17,27 +17,16 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_Reader;
 
-    Des_Reader.Read_Descriptor_File(argv[1]);
+    Project_Files_Lister File_Lister(argv[1],'w');
 
-    char * project_repo_dir = Des_Reader.Get_Repo_Directory_Location();
-
-    char * warehouse_path   = Des_Reader.Get_Warehouse_Location();
-
-    Project_Files_Lister File_Lister;
-
-    File_Lister.Determine_Git_Repo_Info(&Des_Reader);
+    File_Lister.Determine_Git_Repo_Info();
 
     int dir_number = File_Lister.Get_Source_File_Number();
 
-    Make_File_Cleaner Mk_Cleaner;
+    Make_File_Cleaner Mk_Cleaner(argv[1],'w');
 
     if(dir_number > 0){
-
-       Mk_Cleaner.Receive_Descriptor_File_Reader(&Des_Reader);
-
-       Mk_Cleaner.Receive_File_Lister(&File_Lister);
 
        Mk_Cleaner.Clear_Make_Files_Exist_On_Repo();
 

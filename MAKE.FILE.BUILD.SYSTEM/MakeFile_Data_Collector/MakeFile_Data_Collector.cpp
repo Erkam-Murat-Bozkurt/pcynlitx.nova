@@ -34,11 +34,10 @@ File_Lister(Des_Path,opr_sis), Des_Reader(Des_Path)
 
      this->warehouse_path = this->Des_Reader.Get_Warehouse_Location();
 
-     this->repo_dir = this->Des_Reader.Get_Repo_Directory_Location();
+     this->repo_dir  = this->Des_Reader.Get_Repo_Directory_Location();
 
      this->opr_sis = opr_sis;
      
-
      this->Included_Header_Files_Number = 0;
 }
 
@@ -47,6 +46,15 @@ MakeFile_Data_Collector::~MakeFile_Data_Collector(){
 
      this->Clear_Dynamic_Memory();
    
+}
+
+void MakeFile_Data_Collector::Clear_Object_Memory(){
+
+     this->Clear_Dynamic_Memory();
+
+     this->Des_Reader.Clear_Dynamic_Memory();
+
+     this->File_Lister.Clear_Dynamic_Memory();
 }
 
 void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
@@ -76,14 +84,12 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
      this->Clear_String_Memory(&this->warehouse_obj_dir);
 
      this->Clear_String_Memory(&this->Header_File_Exact_Path);
-
-     this->Des_Reader.Clear_Dynamic_Memory();
-
-     this->File_Lister.Clear_Dynamic_Memory();
 }
 
 
 void MakeFile_Data_Collector::Collect_Make_File_Data(int git_index){
+
+     this->Clear_Dynamic_Memory();
 
      this->Determine_Warehouse_Header_Dir();
 
@@ -224,7 +230,7 @@ void MakeFile_Data_Collector::Determine_Warehouse_Object_Dir(){
      for(size_t i=0;i<object_dir_size;i++){
 
          this->warehouse_obj_dir.push_back(object_directory[i]);         
-     }   
+     }
 }
 
 
@@ -242,17 +248,22 @@ void MakeFile_Data_Collector::Receive_Git_Record_Data(int git_index){
      = this->File_Lister.Get_Source_File_Name_With_Ext(git_index);
 
 
+
      this->Source_File_Git_Recort_Path
 
      = this->File_Lister.Get_Source_File_Git_Record_Path(git_index);
+
+
 
      this->Source_File_Directory
 
      = this->File_Lister.Get_Source_File_Directory(git_index);
 
+
      this->Header_File_Directory
 
      = this->File_Lister.Get_Source_File_Directory(git_index);
+
 }
 
 

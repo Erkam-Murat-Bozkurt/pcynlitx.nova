@@ -42,6 +42,7 @@ public:
  std::vector<std::string> Get_Included_Header_Files();
  int  Get_Included_Header_Files_Number();
  void Clear_Dynamic_Memory(); 
+ void Clear_Object_Memory();
 private:
  void Clear_String_Memory(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);

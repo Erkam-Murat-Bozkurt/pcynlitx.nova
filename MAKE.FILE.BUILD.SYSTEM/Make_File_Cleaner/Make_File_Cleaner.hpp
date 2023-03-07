@@ -25,22 +25,19 @@
 class Make_File_Cleaner
 {
 public:
- Make_File_Cleaner();
- Make_File_Cleaner(const Make_File_Cleaner & orig);
+ Make_File_Cleaner(char * DesPath, char opr_sis);
  virtual ~Make_File_Cleaner();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader);
- void Receive_File_Lister(Project_Files_Lister * File_Lister);
  void Clear_Make_Files_Exist_On_Repo();
  void Clear_Dynamic_Memory();
 private:
- bool Is_This_MakeFile(char * file_name);
- void Determine_File_Path(char ** path, char * dir, char * name, char operating_sis);
- Descriptor_File_Reader * Des_Reader_Pointer;
- Project_Files_Lister * File_Lister_Pointer;
+ bool Is_This_MakeFile(std::string file_name);
+ void Determine_File_Path(std::string * path, std::string dir, std::string name); 
+ Project_Files_Lister File_Lister;
  Cpp_FileOperations FileManager;
- Directory_Enumerator Enumerator;
+ Directory_Enumerator Enumerator; 
  bool Is_MakeFile;
  bool Memory_Delete_Condition;
+ char opr_sis;
 };
 
 #endif /* MAKE_FILE_CLEANER_H */

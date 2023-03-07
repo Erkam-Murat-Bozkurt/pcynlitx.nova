@@ -62,11 +62,15 @@ void Cpp_FileOperations::Initialize_Members(){
      this->Delete_Return_Status = 0;
      this->file_open_status = false;
      this->is_path_exist = false;
+     this->c_str = nullptr;
 }
 
 void Cpp_FileOperations::Clear_Dynamic_Memory(){
 
      this->Clear_Vector_Memory(&this->File_Content);
+
+     this->Clear_CString_Memory(&this->c_str);
+
 
      if(!this->String_Line.empty())
      {
@@ -565,6 +569,15 @@ int Cpp_FileOperations::Delete_File(const char * path)
      return this->Delete_Return_Status;
 }
 
+
+
+int Cpp_FileOperations::Delete_File(std::string path){
+
+    char * cpath = this->Convert_Std_String_To_CString(path);
+
+    return this->Delete_File(cpath);
+}
+
 std::string Cpp_FileOperations::GetFileLine(int index){
 
        if(!this->File_Content.empty()){
@@ -583,6 +596,39 @@ std::string Cpp_FileOperations::GetFileLine(int index){
        }
 }
 
+
+char * Cpp_FileOperations::Convert_Std_String_To_CString(std::string st)
+{
+       this->Clear_CString_Memory(&this->c_str);
+
+       size_t string_size = st.length();
+
+       this->c_str = new char [5*string_size];
+
+       for(size_t i=0;i<5*string_size;i++){
+       
+           this->c_str[i] = '\0';    
+       }
+
+       for(size_t i=0;i<string_size;i++){
+       
+           this->c_str[i] = st[i];
+       }
+
+       this->c_str[string_size] = '\0';
+
+       return this->c_str;
+}
+
+void Cpp_FileOperations::Clear_CString_Memory(char ** pointer){
+
+     if(*pointer!= nullptr){
+     
+        delete [] *pointer;
+
+        *pointer = nullptr;     
+     }
+}
 
 void Cpp_FileOperations::Clear_Vector_Memory(std::vector<std::string> * pointer){
 

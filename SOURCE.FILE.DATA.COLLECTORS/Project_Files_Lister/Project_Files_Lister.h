@@ -39,6 +39,7 @@ public:
  std::string Get_Class_File_Header_System_Path(int src_num);
  std::string Get_Class_File_Header_Name(int src_num);
  std::string Get_Source_File_Git_Record_Directory(int src_num);
+ std::vector<Build_System_Data> * Get_Build_System_Data_Address();
  int  Get_Source_File_Include_File_Number(int num);
  int  Get_Indenpendent_Header_Files_Number();
  void Clear_Dynamic_Memory();

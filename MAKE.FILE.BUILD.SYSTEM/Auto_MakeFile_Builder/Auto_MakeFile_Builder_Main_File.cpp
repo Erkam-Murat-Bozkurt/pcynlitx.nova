@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cstring>
+#include "Auto_MakeFile_Builder.h"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 
@@ -18,13 +19,7 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_Reader;
-
-    Des_Reader.Read_Descriptor_File(argv[1]);
-
-    Auto_MakeFile_Builder Make_Builder;
-
-    Make_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
+    Auto_MakeFile_Builder Make_Builder(argv[1],'w');
 
     Make_Builder.Build_Make_Files();
 

@@ -93,11 +93,9 @@ protected:
  bool Character_Inclusion_Check(std::string string, char chr);
  void Receive_Include_File_Names();
  void Receive_Include_File_Name(std::string * pointer, std::string string);
- void Receive_Include_File_Directory(std::string * pointer, std::string string);
  bool Control_Include_Syntax(std::string string);
  void Read_File(std::string path);
  void Determine_Include_Line_Number();
- void Read_Include_Files();
  void Delete_Spaces_on_String(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_Include_File_Data(Include_File_Data * pointer);

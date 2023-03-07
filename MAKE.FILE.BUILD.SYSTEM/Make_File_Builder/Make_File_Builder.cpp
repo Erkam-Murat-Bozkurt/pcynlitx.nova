@@ -26,7 +26,7 @@ Make_File_Builder::Make_File_Builder(char * DesPath, char opr_sis) :
 
     Data_Collector(DesPath,opr_sis), Header_Determiner(DesPath,opr_sis), 
 
-    File_Lister(DesPath,opr_sis), Des_Reader(DesPath)
+    File_Lister(DesPath,opr_sis), Des_Reader(DesPath) 
 {
 
    this->Memory_Delete_Condition = false;
@@ -34,7 +34,6 @@ Make_File_Builder::Make_File_Builder(char * DesPath, char opr_sis) :
    this->Des_Reader.Read_Descriptor_File();
 
    this->File_Lister.Determine_Git_Repo_Info();
-
 }
 
 
@@ -53,7 +52,7 @@ void Make_File_Builder::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         this->Data_Collector.Clear_Dynamic_Memory();
+         this->Data_Collector.Clear_Object_Memory();
          this->File_Lister.Clear_Dynamic_Memory();
          this->Des_Reader.Clear_Dynamic_Memory();
          this->DirectoryManager.Clear_Dynamic_Memory();
