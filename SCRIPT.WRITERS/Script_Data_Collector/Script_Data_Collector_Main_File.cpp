@@ -18,7 +18,6 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Des_File_Reader.Read_Descriptor_File(argv[1]);
 
     Script_Data_Collector Scr_Data;
 

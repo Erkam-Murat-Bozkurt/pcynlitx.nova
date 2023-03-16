@@ -8,22 +8,22 @@
 #include "Source_File_Dependency_Determiner.hpp"
 #include "Project_Files_Lister.h"
 #include "Descriptor_File_Reader.hpp"
-#include "Include_Dependency_Counter.hpp"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
 #include "Directory_Enumerator.h"
 
+
 struct Script_Data
 {
-  char ** header_files_git_dir;
-  char ** header_file_names;
-  char * object_file_name;
-  char * object_file_path;
-  char * source_file_name;
-  char * source_file_dir;
-  char * source_file_git_record_dir;
-  char * make_file_name;
-  char * warehouse_path;
+  std::vector<std::string> header_files_git_dir;
+  std::vector<std::string> header_file_names;
+  std::string object_file_name;
+  std::string object_file_path;
+  std::string source_file_name;
+  std::string source_file_dir;
+  std::string source_file_git_record_dir;
+  std::string make_file_name;
+  std::string warehouse_path;
   int included_header_num;
   int compile_oder;
   int dependency;
@@ -32,30 +32,31 @@ struct Script_Data
 class Script_Data_Collector
 {
 public:
- Script_Data_Collector();
- Script_Data_Collector(const Script_Data_Collector & orig);
+ Script_Data_Collector(char * DesPATH, char opr_sis);
  virtual ~Script_Data_Collector();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader);
- void Receive_Script_Data(Script_Data * Pointer);
- void Initialize_Data_Structure(Script_Data * Src_Data_Pointer, int src_num);
+ void Receive_Compiler_Data(Compiler_Data * dt);
  void Determine_Source_File_Compilation_Information(Script_Data * Src_Data_Pointer,
-      int dir_num, char operating_sis);
+      int dir_num);
  void Determine_Header_Files_Inclusion_Number(Script_Data * Src_Data_Pointer,
       int src_num);
  void Determine_Make_File_Name(Script_Data * Src_Data_Pointer,
       int src_num);
- void Delete_Spaces_on_String(char ** pointer);
- void Clear_Data_Memory(Script_Data * Src_Data_Pointer, int src_num);
+ void Delete_Spaces_on_String(std::string * pointer);
+ void Clear_Data_Memory(Script_Data * Src_Data_Pointer, int src_num); 
 protected:
- void Place_String(char ** pointer, char * string);
+ void Place_String(std::string * pointer, std::string string);
+ void Clear_String_Memory(std::string * pointer);
+ void Clear_Vector_Memory(std::vector<std::string> * pointer);
  Source_File_Dependency_Determiner Dep_Determiner;
- Descriptor_File_Reader * Des_File_Reader;
+ Descriptor_File_Reader Des_File_Reader;
  Project_Files_Lister Dir_Lister;
  Script_Data * Src_Data_Pointer;
- char * warehouse_path;
+ Compiler_Data * Cmp_Data_Ptr;
+ std::string warehouse_path;
  bool Include_Line_Condition;
  int  Included_Header_Files_Number;
  bool Memory_Delete_Condition;
+ char opr_sis;
 };
 
 #endif /* SCRIPT_DATA_COLLECTOR_H */

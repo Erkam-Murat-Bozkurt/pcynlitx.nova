@@ -303,7 +303,7 @@ std::string Git_File_List_Receiver::Get_Git_Repo_Directory(){
        return this->Repo_Dir;
 }
 
-int Git_File_List_Receiver::Get_Git_File_Index_Size(){
+size_t Git_File_List_Receiver::Get_Git_File_Index_Size(){
 
-    return this->File_Line_Number;
+    return this->File_System_Paths.size();
 }

@@ -9,45 +9,48 @@
 #include <cstdio>
 #include <iostream>
 #include <string>
-#include "Descriptor_File_Reader.hpp"
-#include "DirectoryOperations.h"
-#include "Cpp_FileOperations.h"
+#include <vector>
 #include "Source_File_Script_Writer.hpp"
 #include "Script_Data_Collector.hpp"
 #include "Source_File_Dependency_Determiner.hpp"
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
+#include "Descriptor_File_Reader.hpp"
+#include "DirectoryOperations.h"
+#include "Cpp_FileOperations.h"
 
 
 class Script_Data_Processor
 {
 public:
- Script_Data_Processor();
- Script_Data_Processor(const Script_Data_Processor & orig);
+ Script_Data_Processor(char * DesPATH, char opr_sis);
  virtual ~Script_Data_Processor();
- void Process_Script_Data(Descriptor_File_Reader * Des_File_Reader);
+ void Process_Script_Data();
  Script_Data Get_SrcFile_Script_Data(char * file_git_path);
- Script_Data * Get_Script_Data();
- int Get_Source_File_Number();
+ std::vector<Script_Data> * Get_Script_Data_Address();
+ int  Get_Source_File_Number();
  void Clear_Dynamic_Memory();
+ void Clear_Object_Memory();
 protected:
  void Determine_Script_Information();
- void Initialize_Data_Structures();
- void Determine_Header_Files_Inclusion_Number();
  void Determine_Script_Order();
- void Determine_Project_Script_Path(char * paths);
- void Determine_Make_File_Names();
- void Construct_Path(char ** pointer, char * string, char * warehouse_path);
+ void Clear_Script_Data(std::vector<Script_Data> * ptr);
+ void Clear_String_Memory(std::string * ptr);
+ void Clear_String_Vector(std::vector<std::string> * ptr);
+ void Clear_Script_Data(Script_Data * ptr);
  Script_Data_Collector Data_Collector;
- Project_Files_Lister Dir_Lister;
+ Source_File_Dependency_Determiner Dep_Determiner;
+ Project_Files_Lister File_Lister;
+ Descriptor_File_Reader Des_Reader;
  Cpp_FileOperations FileManager;
  CharOperator CString_Proccessor;
+ std::vector<Script_Data> Data;
+ Script_Data Temp_Data;
  std::string String_Line;
+ std::string warehouse_path;
+ std::string project_repo_dir;
+ std::string script_path;
  int source_file_num;
- Script_Data * Data_Pointer;
- char * warehouse_path;
- char * project_repo_dir;
- char * script_path;
  bool Memory_Delete_Condition;
 };
 

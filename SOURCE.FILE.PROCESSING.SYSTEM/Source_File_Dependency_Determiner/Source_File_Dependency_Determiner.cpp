@@ -48,25 +48,25 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Clear_Dynamic_Memory();
 
-      this->DepSelector.Determine_Source_File_Dependencies(path);
+     this->DepSelector.Determine_Source_File_Dependencies(path);
 
-      std::vector<std::vector<Header_Dependency>> * s_ptr  = this->DepSelector.Get_Dependency_List_Adress();
+     std::vector<std::vector<Header_Dependency>> * s_ptr  = this->DepSelector.Get_Dependency_List_Adress();
  
-      std::string wrd_hdr_dir = this->DepSelector.Get_Warehouse_Headers_Dir();
+     std::string wrd_hdr_dir = this->DepSelector.Get_Warehouse_Headers_Dir();
 
-      this->ReOrderer.Receive_Dependency_Data(s_ptr);
+     this->ReOrderer.Receive_Dependency_Data(s_ptr);
 
-      this->ReOrderer.Reorder_Dependency_Data();
+     this->ReOrderer.Reorder_Dependency_Data();
 
-      this->Com_Data_Extractor.Receive_Dependency_Data(s_ptr,wrd_hdr_dir);
+     this->Com_Data_Extractor.Receive_Dependency_Data(s_ptr,wrd_hdr_dir);
 
-      this->Com_Data_Extractor.Extract_Compiler_Data(path);
+     this->Com_Data_Extractor.Extract_Compiler_Data(path);
 
-      this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
+     this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
-      this->data_size = this->Compiler_Data_Ptr->size();
+     this->data_size = this->Compiler_Data_Ptr->size();
 
-      this->Order_Priorities();
+     this->Order_Priorities();
 }
 
 
@@ -160,8 +160,7 @@ void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
 
          for(size_t k=0;k<dep_size;k++){
          
-             std::cout << "\n Dependent header path:" << Dep_Headers_Paths->at(k);
-         
+             std::cout << "\n Dependent header path:" << Dep_Headers_Paths->at(k);         
          }
 
          std::cout << "\n\n";

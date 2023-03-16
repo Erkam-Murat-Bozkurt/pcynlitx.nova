@@ -7,8 +7,6 @@ DIR_OPS=D:\pcynlitx.build\BASIC.TOOLS\DirectoryOperations
 STRING_OPS=D:\pcynlitx.build\BASIC.TOOLS\StringOperator
 CHAR_OPS=D:\pcynlitx.build\BASIC.TOOLS\CharOperator
 FILE_OPRS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
-NAME_READER=D:\pcynlitx.build\BASIC.TOOLS\ClassNameReader
-SYNTAX_READER=D:\pcynlitx.build\BASIC.TOOLS\ClassSyntaxControl
 HEADER_DET=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
 SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
 SRC_DAT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
@@ -24,25 +22,29 @@ DEP_CNTR=D:\pcynlitx.build\SCRIPT.WRITERS\Include_Dependency_Counter
 SRC_INF_CL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector
 SRC_DEP_SL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector
 SRC_DEP_DT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Determiner
+SRC_COM_DT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Compiler_Data_Extractor
+SRC_DER_RORD=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_ReOrderer
+
 
 
 VPATH = $(DIR_LIST) $(REPO_DET) $(DIR_ENUM) $(DIR_TREE) \
-				$(DIR_OPS) $(STRING_OPS) $(CHAR_OPS) $(FILE_OPRS) \
-				$(NAME_READER) $(SYNTAX_READER) $(DESCR_READ) $(SRC_DAT_COL) \
-				$(HEADER_DET) $(SOURCE_DETR) $(DESCR_DAT_COL) \
-				$(GIT_REC) $(SRC_DAT_COL) $(PRO_FILES_DAT_COL) \
-				$(SCRIPT_DAT) $(SRC_SCRIPT_WRT) $(INT_CHAR) $(DEP_CNTR) \
-				$(DESCR_SYNT_COL) $(SRC_DEP_DT) $(SRC_DEP_SL) $(SRC_INF_CL)
+		$(DIR_OPS) $(STRING_OPS) $(CHAR_OPS) $(FILE_OPRS) \
+	    $(DESCR_READ) $(SRC_DAT_COL) \
+	    $(HEADER_DET) $(SOURCE_DETR) $(DESCR_DAT_COL) \
+	    $(GIT_REC) $(SRC_DAT_COL) $(PRO_FILES_DAT_COL) \
+	    $(SCRIPT_DAT) $(SRC_SCRIPT_WRT) $(INT_CHAR) $(DEP_CNTR) \
+	    $(DESCR_SYNT_COL) $(SRC_DEP_DT) $(SRC_DEP_SL) $(SRC_INF_CL) \
+	    $(SRC_COM_DT_EXT) $(SRC_DER_RORD)
 
 
 Script_Data_Processor.exe: Script_Data_Processor_Main_File.cpp \
 	Script_Data_Processor.cpp \
-	Source_File_Script_Writer.cpp \
 	Source_File_Dependency_Determiner.cpp \
+	Source_File_Dependency_ReOrderer.cpp \
 	Source_File_Dependency_Selector.cpp \
+	Source_File_Compiler_Data_Extractor.cpp \
 	Source_File_Information_Collector.cpp \
 	Script_Data_Collector.cpp \
-	Include_Dependency_Counter.cpp \
 	Project_Files_Lister.cpp \
 	Project_Files_Data_Collector.cpp \
 	Git_File_List_Receiver.cpp \
@@ -55,19 +57,17 @@ Script_Data_Processor.exe: Script_Data_Processor_Main_File.cpp \
 	Directory_Enumerator.cpp \
 	Directory_Enumerator.cpp \
 	Directory_Tree_Size_Determiner.cpp \
-	ClassNameReader.cpp \
-	ClassSyntaxControl.cpp \
 	StringOperator.cpp \
-  Cpp_FileOperations.cpp \
+    Cpp_FileOperations.cpp \
 	CharOperator.cpp \
 	IntToCharTranslater.cpp \
 	Script_Data_Processor.hpp \
-	Source_File_Script_Writer.hpp \
 	Script_Data_Collector.hpp \
-	Include_Dependency_Counter.hpp \
 	Source_File_Dependency_Determiner.hpp \
+	Source_File_Dependency_ReOrderer.hpp \
 	Source_File_Dependency_Selector.hpp \
 	Source_File_Information_Collector.hpp \
+	Source_File_Compiler_Data_Extractor.hpp \
 	Project_Files_Lister.h \
 	Project_Files_Data_Collector.hpp \
 	Git_File_List_Receiver.hpp \
@@ -77,8 +77,6 @@ Script_Data_Processor.exe: Script_Data_Processor_Main_File.cpp \
 	Header_File_Determiner.h \
 	Repo_Dir_Determiner.h \
 	Directory_Enumerator.h \
-	ClassNameReader.h \
-	ClassSyntaxControl.h \
 	StringOperator.h  \
 	DirectoryOperations.h \
 	CharOperator.h \
@@ -86,40 +84,42 @@ Script_Data_Processor.exe: Script_Data_Processor_Main_File.cpp \
 	Cpp_FileOperations.h
 
 	g++ -std=c++17 -g -o Script_Data_Processor.exe \
-	 -I$(DIR_LIST) -I$(DIR_ENUM) \
-	 -I$(REPO_DET) -I$(SOURCE_DETR) \
-	 -I$(DIR_TREE) -I$(DIR_OPS) \
+	 -I$(DIR_LIST)   -I$(DIR_ENUM) \
+	 -I$(REPO_DET)   -I$(SOURCE_DETR) \
+	 -I$(DIR_TREE)   -I$(DIR_OPS) \
 	 -I$(STRING_OPS) -I$(CHAR_OPS) \
-	 -I$(FILE_OPRS) -I$(NAME_READER) \
+	 -I$(FILE_OPRS)  \
 	 -I$(DESCR_READ) -I$(DESCR_DAT_COL) \
-	 -I$(SYNTAX_READER) -I$(GIT_REC) \
+	 -I$(GIT_REC) \
 	 -I$(SRC_DAT_COL) -I$(SRC_SCRIPT_WRT) \
 	 -I$(SCRIPT_DAT) -I$(HEADER_DET) \
 	 -I$(PRO_FILES_DAT_COL) -I$(INT_CHAR) \
 	 -I$(DEP_CNTR) -I$(DESCR_SYNT_COL) \
 	 -I$(SRC_DEP_DT) -I$(SRC_DEP_SL) -I$(SRC_INF_CL) \
+	 -I$(SRC_COM_DT_EXT) -I$(SRC_DER_RORD) \
 	 -L$(DIR_LIST) -L$(DIR_ENUM) \
 	 -L$(DESCR_READ) -L$(DESCR_DAT_COL) \
 	 -L$(PRO_FILES_DAT_COL) -L$(REPO_DET) \
 	 -L$(DIR_TREE) -L$(DIR_OPS) \
 	 -L$(STRING_OPS) -L$(CHAR_OPS) -L$(FILE_OPRS) \
-	 -L$(NAME_READER) -L$(SYNTAX_READER) \
 	 -L$(HEADER_DET) -L$(SOURCE_DETR) \
 	 -L$(GIT_REC) -L$(SRC_SCRIPT_WRT) \
 	 -L$(SRC_DAT_COL) -L$(INT_CHAR) \
 	 -L$(DEP_CNTR) -L$(DESCR_SYNT_COL) \
-	 -L$(SRC_DEP_DT) -L$(SRC_DEP_SL) -L$(SRC_INF_CL) \
+	 -L$(SRC_DEP_DT) -L$(SRC_DEP_SL) \
+	 -L$(SRC_INF_CL) -L$(SRC_COM_DT_EXT) \
+	 -L$(SRC_DER_RORD) \
 		Script_Data_Processor_Main_File.cpp \
 		Script_Data_Processor.cpp \
-		$(SRC_SCRIPT_WRT)\Source_File_Script_Writer.cpp \
 		$(SCRIPT_DAT)\Script_Data_Collector.cpp \
 		$(SRC_DEP_DT)\Source_File_Dependency_Determiner.cpp \
 		$(SRC_DEP_SL)\Source_File_Dependency_Selector.cpp \
+		$(SRC_DER_RORD)\Source_File_Dependency_ReOrderer.cpp \
+		$(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.cpp \
 		$(SRC_INF_CL)\Source_File_Information_Collector.cpp \
 		$(DIR_LIST)\Project_Files_Lister.cpp \
 		$(PRO_FILES_DAT_COL)\Project_Files_Data_Collector.cpp \
 		$(SRC_DAT_COL)\Source_File_Data_Collector.cpp \
-		$(DEP_CNTR)\Include_Dependency_Counter.cpp \
 		$(GIT_REC)\Git_File_List_Receiver.cpp \
 		$(DESCR_READ)\Descriptor_File_Reader.cpp \
 		$(DESCR_DAT_COL)\Descriptor_File_Data_Collector.cpp \
@@ -129,20 +129,18 @@ Script_Data_Processor.exe: Script_Data_Processor_Main_File.cpp \
 		$(REPO_DET)\Repo_Dir_Determiner.cpp \
 		$(DIR_ENUM)\Directory_Enumerator.cpp \
 		$(DIR_TREE)\Directory_Tree_Size_Determiner.cpp \
-		$(NAME_READER)\ClassNameReader.cpp \
-		$(SYNTAX_READER)\ClassSyntaxControl.cpp \
 		$(DIR_OPS)\DirectoryOperations.cpp \
 		$(STRING_OPS)\StringOperator.cpp \
 		$(CHAR_OPS)\CharOperator.cpp \
 		$(FILE_OPRS)\Cpp_FileOperations.cpp \
 		$(INT_CHAR)\IntToCharTranslater.cpp \
 		-include Script_Data_Processor.hpp \
-		-include $(SRC_SCRIPT_WRT)\Source_File_Script_Writer.hpp \
 		-include $(SCRIPT_DAT)\Script_Data_Collector.hpp \
-		-include $(DEP_CNTR)\Include_Dependency_Counter.hpp \
 		-include $(SRC_DEP_DT)\Source_File_Dependency_Determiner.hpp \
+		-include $(SRC_DER_RORD)\Source_File_Dependency_ReOrderer.hpp \
 		-include $(SRC_DEP_SL)\Source_File_Dependency_Selector.hpp \
 		-include $(SRC_INF_CL)\Source_File_Information_Collector.hpp \
+		-include $(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.hpp \
 		-include $(DIR_LIST)\Project_Files_Lister.h \
 		-include $(PRO_FILES_DAT_COL)\Project_Files_Data_Collector.hpp \
 		-include $(SRC_DAT_COL)\Source_File_Data_Collector.hpp \
@@ -155,10 +153,8 @@ Script_Data_Processor.exe: Script_Data_Processor_Main_File.cpp \
 		-include $(REPO_DET)\Repo_Dir_Determiner.h \
 		-include $(DIR_ENUM)\Directory_Enumerator.h \
 		-include $(DIR_TREE)\Directory_Tree_Size_Determiner.h \
-		-include $(NAME_READER)\ClassNameReader.h \
-		-include $(SYNTAX_READER)\ClassSyntaxControl.h \
 		-include $(STRING_OPS)\StringOperator.h \
-	  -include $(DIR_OPS)\DirectoryOperations.h \
+	    -include $(DIR_OPS)\DirectoryOperations.h \
 		-include $(CHAR_OPS)\CharOperator.h \
 		-include $(INT_CHAR)\IntToCharTranslater.h \
 		-include $(FILE_OPRS)\Cpp_FileOperations.h

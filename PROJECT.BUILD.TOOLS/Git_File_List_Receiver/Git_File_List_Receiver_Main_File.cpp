@@ -24,9 +24,9 @@ int main(int argc, char ** argv){
 
     Receiver.Determine_Git_Repo_Info();
 
-    int index_size = Receiver.Get_Git_File_Index_Size();
+    size_t index_size = Receiver.Get_Git_File_Index_Size();
 
-    for(int i=0;i<index_size;i++){
+    for(size_t i=0;i<index_size;i++){
 
         std::cout << "\n";
 
@@ -40,8 +40,6 @@ int main(int argc, char ** argv){
     std::cout << "\n Press eny key..";
 
     std::cin.get();
-
-    std::cout << "\n\n";
 
     return 0;
 }

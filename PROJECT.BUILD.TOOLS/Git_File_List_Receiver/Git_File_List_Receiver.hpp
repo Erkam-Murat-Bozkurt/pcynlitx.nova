@@ -21,7 +21,7 @@ public:
  Git_File_List_Receiver(std::string DesPath, char opr_sis);
  virtual ~Git_File_List_Receiver();
  void Determine_Git_Repo_Info();
- int  Get_Git_File_Index_Size();
+ size_t  Get_Git_File_Index_Size();
  std::string Get_Git_File_Index(int num);
  std::string Get_File_System_Path(int num);
  std::string Get_Git_Repo_Directory();
