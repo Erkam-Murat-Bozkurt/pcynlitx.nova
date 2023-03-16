@@ -20,6 +20,7 @@
 #include <fcntl.h>
 #include <windows.h>
 #include <vector>
+#include "Project_Src_Code_Rdr.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
@@ -47,6 +48,7 @@ class Source_File_Information_Collector
 public:
  Source_File_Information_Collector(char * des_file_path, char opr_sis);
  virtual ~Source_File_Information_Collector();
+ void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Extract_Dependency_Data(std::string path);
  void Extract_Dependency_Data();
  void Clear_Dynamic_Memory();
@@ -74,6 +76,7 @@ protected:
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
  void Clear_Headers_Data();
+ Project_Src_Code_Rdr * Code_Rdr;
  StringOperator StringManager;
  Descriptor_File_Reader Des_Reader;
  Git_File_List_Receiver Git_Data_Receiver;

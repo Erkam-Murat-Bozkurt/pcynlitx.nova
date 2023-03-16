@@ -4,8 +4,9 @@
 
 Project_Src_Code_Rdr::Project_Src_Code_Rdr(char * DesPath, char opr_sis)
 {
-   this->Hdr_Determiner = new Header_File_Determiner * [8];
+   this->Memory_Delete_Condition = false;
 
+   this->Hdr_Determiner = new Header_File_Determiner * [8];
    this->Src_Determiner = new Source_File_Determiner * [8];
 
    for(int i=0;i<8;i++){
@@ -20,11 +21,39 @@ Project_Src_Code_Rdr::Project_Src_Code_Rdr(char * DesPath, char opr_sis)
 
 Project_Src_Code_Rdr::~Project_Src_Code_Rdr(){
 
+    if(!this->Memory_Delete_Condition){
+    
+        this->Clear_Object_Memory();       
+    }   
+}
 
+void Project_Src_Code_Rdr::Clear_Object_Memory(){
+
+     if(!this->Memory_Delete_Condition){
+     
+         this->Memory_Delete_Condition = true;
+
+         this->Clear_Dynamic_Memory();
+
+         for(int i=0;i<8;i++){
+     
+             delete this->Hdr_Determiner[i];
+         }
+
+         delete [] this->Hdr_Determiner;
+
+     
+         for(int i=0;i<8;i++){
+     
+             delete this->Src_Determiner[i];
+         }
+
+         delete [] this->Src_Determiner;
+     }
 }
 
 void Project_Src_Code_Rdr::Clear_Dynamic_Memory(){
-
+     
      std::vector<FileData>::iterator it;
 
      for(auto it=this->Src_Code_Dt.begin();it<this->Src_Code_Dt.end();it++){
@@ -34,6 +63,8 @@ void Project_Src_Code_Rdr::Clear_Dynamic_Memory(){
      }
 
      this->Src_Code_Dt.clear();
+
+     this->Src_Code_Dt.shrink_to_fit();
 }
 
 void Project_Src_Code_Rdr::Receive_Git_Repo_Information(Git_File_List_Receiver * ptr){
@@ -52,6 +83,8 @@ void Project_Src_Code_Rdr::Receive_File_Paths(){
 
          this->FilePaths.push_back(file_sys_path);
      }
+
+     this->FilePaths.shrink_to_fit();
 }
 
 void Project_Src_Code_Rdr::Read_Project_Source_Code_Files(){
@@ -82,6 +115,8 @@ void Project_Src_Code_Rdr::Read_Project_Source_Code_Files(){
      
            this->Read_Source_Code_Single_Thread();
      }
+
+     this->Src_Code_Dt.shrink_to_fit();
 }
 
 
@@ -91,18 +126,7 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
 
      mt.unlock();
 
-     std::thread::id this_id = std::this_thread::get_id();
-
      
-     mt.lock();
-
-     std::cout << "\n THREAD ID:" << this_id << " ACTIVATED";
-
-     //std::cin.get();
-
-     mt.unlock();
-
-
      for(int i=start_point;i<end_point;i++){
      
          std::string file_sys_path = this->FilePaths.at(i);

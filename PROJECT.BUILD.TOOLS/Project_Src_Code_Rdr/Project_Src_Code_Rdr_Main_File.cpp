@@ -71,6 +71,8 @@ int main(int argc, char ** argv){
 
     std::cout << "\n\n";
 
+    Code_Rd.Clear_Object_Memory();
+
     return 0;
 }
 

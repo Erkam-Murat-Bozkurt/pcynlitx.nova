@@ -39,6 +39,7 @@ public:
  std::string Get_File_Path(int i);
  size_t Get_Project_Files_Number();
  void   Clear_Dynamic_Memory();
+ void   Clear_Object_Memory();
 protected:
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * ptr);

@@ -79,6 +79,12 @@ void Source_File_Information_Collector::Clear_Dynamic_Memory()
 }
 
 
+void Source_File_Information_Collector::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
+
+     this->Code_Rdr = ptr;
+}
+
+
 void Source_File_Information_Collector::Determine_Header_File_List()
 {
      int index_size = this->Git_Data_Receiver.Get_Git_File_Index_Size();
