@@ -6,6 +6,7 @@
 #include <cstring>
 #include <vector>
 #include "Source_File_Information_Collector.hpp"
+#include "Project_Src_Code_Rdr.hpp"
 #include "Project_Files_Lister.h"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
@@ -22,7 +23,24 @@ int main(int argc, char ** argv){
     }
 
 
+    Git_File_List_Receiver Receiver(argv[1],'w');
+
+    Receiver.Determine_Git_Repo_Info();
+
+    int index_size = Receiver.Get_Git_File_Index_Size();
+
+
+    Project_Src_Code_Rdr Code_Rd(argv[1],'w');
+
+    Code_Rd.Receive_Git_Repo_Information(&Receiver);
+
+    Code_Rd.Read_Project_Source_Code_Files();
+
+    std::cout << "\n The project source codes readed..";
+
     Source_File_Information_Collector Information_Collector(argv[1],'w');
+
+    Information_Collector.Receive_Source_Code_Reader(&Code_Rd);
 
     /*
 

@@ -14,8 +14,6 @@ Project_Src_Code_Rdr::Project_Src_Code_Rdr(char * DesPath, char opr_sis)
        this->Hdr_Determiner[i] = new Header_File_Determiner(DesPath,opr_sis);
        this->Src_Determiner[i] = new Source_File_Determiner;
    }   
-
-   this->fptr = &Project_Src_Code_Rdr::Read_Source_Code;
 }
 
 
@@ -149,6 +147,8 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
          
                 std::string string_line = this->FileManager[trn].GetFileLine(k);
 
+                this->Delete_Spaces_on_String(&string_line);
+
                 Temp.FileContent.push_back(string_line);
             }
 
@@ -207,6 +207,31 @@ void Project_Src_Code_Rdr::Read_Source_Code_Single_Thread(){
 }
 
 
+
+void Project_Src_Code_Rdr::Delete_Spaces_on_String(std::string * str){
+
+    size_t string_size = str->length();
+
+    bool search_cond = true;
+
+    do{
+
+      search_cond = false;
+
+      for(size_t i=0;i<str->length();i++){
+
+          if((*str)[i] == ' '){
+
+            search_cond = true;
+
+            str->erase(i,1);
+          }
+        }
+
+    }while(search_cond);
+}
+
+
 std::vector<std::string> * Project_Src_Code_Rdr::Get_File_Content(int i)
 {    
      return &this->Src_Code_Dt.at(i).FileContent;
@@ -217,6 +242,62 @@ std::string Project_Src_Code_Rdr::Get_File_Path(int i){
      return this->Src_Code_Dt.at(i).sys_path;
 
 }
+
+std::vector<std::string> * Project_Src_Code_Rdr::Find_File_Source_Code(std::string path)
+{
+     size_t listSize = this->Src_Code_Dt.size();
+
+     for(size_t i=0;i<listSize;i++){
+     
+         std::string file_path = this->Src_Code_Dt.at(i).sys_path;
+
+
+         bool is_equal = this->CompareString(path,file_path);
+     
+         if(is_equal){
+         
+            return &this->Src_Code_Dt.at(i).FileContent;
+         }
+     }
+
+     std::cout << "\n the file located on " << path << " can not find!.\n";
+
+     exit(EXIT_FAILURE);
+}
+
+
+bool Project_Src_Code_Rdr::CompareString(std::string firstString, std::string secondString){
+
+     int firstStringLength  = firstString.length();
+
+     int secondStringLength = secondString.length();
+
+     this->isStringsEqual = false;
+
+     if(firstStringLength==secondStringLength){
+
+        for(int i=0;i<firstStringLength;i++){
+
+            if(firstString[i]!=secondString[i]){
+
+               this->isStringsEqual = false;
+
+               return this->isStringsEqual;
+            }
+        }
+
+        this->isStringsEqual = true;
+
+        return this->isStringsEqual;
+     }
+     else{
+
+          this->isStringsEqual = false;
+
+          return this->isStringsEqual;
+     }
+}
+
 
 size_t Project_Src_Code_Rdr::Get_Project_Files_Number(){
 

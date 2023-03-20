@@ -24,7 +24,7 @@
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
-#include "Header_File_Determiner.h"
+#include "Header_File_Processor.hpp"
 #include "StringOperator.h"
 #include "Cpp_FileOperations.h"
 #include "DirectoryOperations.h"
@@ -81,7 +81,7 @@ protected:
  Descriptor_File_Reader Des_Reader;
  Git_File_List_Receiver Git_Data_Receiver;
  Cpp_FileOperations FileManager;
- Header_File_Determiner Header_Determiner;
+ Header_File_Processor Header_Processor;
  std::vector<Headers_Data> head_data;
  Headers_Data buffer;
  std::string warehouse_head_dir;

@@ -76,4 +76,5 @@ Header_File_Processor.exe: Header_File_Processor_Main_File.cpp \
 		-include $(DIR_OPS)\DirectoryOperations.h \
 		-include $(STRING_OPS)\StringOperator.h \
 		-include $(CHAR_OPS)\CharOperator.h \
-		-include $(FILE_OPRS)\Cpp_FileOperations.h
+		-include $(FILE_OPRS)\Cpp_FileOperations.h \
+		-lpthread

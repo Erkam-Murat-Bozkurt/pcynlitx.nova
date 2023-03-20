@@ -29,7 +29,7 @@ Source_File_Information_Collector::Source_File_Information_Collector(char * des_
    char opr_sis) :
 
    Des_Reader(des_file_path), Git_Data_Receiver(des_file_path,opr_sis),
-   Header_Determiner(des_file_path,opr_sis)
+   Header_Processor(des_file_path,opr_sis)
 {
 
    this->operating_sis = opr_sis;
@@ -50,8 +50,8 @@ Source_File_Information_Collector::Source_File_Information_Collector(char * des_
 }
 
 
-Source_File_Information_Collector::~Source_File_Information_Collector(){
-
+Source_File_Information_Collector::~Source_File_Information_Collector()
+{
       this->Clear_Object_Memory();
 }
 
@@ -82,32 +82,32 @@ void Source_File_Information_Collector::Clear_Dynamic_Memory()
 void Source_File_Information_Collector::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
 
      this->Code_Rdr = ptr;
+
+     this->Header_Processor.Receive_Source_Code_Reader(ptr);
 }
 
 
 void Source_File_Information_Collector::Determine_Header_File_List()
 {
-     int index_size = this->Git_Data_Receiver.Get_Git_File_Index_Size();
+     size_t fileNum = this->Code_Rdr->Get_Project_Files_Number();
 
-     for(int i=0;i<index_size;i++){
+     for(int i=0;i<fileNum;i++){
 
-         std::string path = this->Git_Data_Receiver.Get_Git_File_Index(i);
+         std::string path = this->Code_Rdr->Get_File_Path(i);
 
-         std::string file_sys_path = this->Git_Data_Receiver.Get_File_System_Path(i);
-
-         bool is_header = this->Header_Determiner.Is_Header(path);
+         bool is_header = this->Header_Processor.Is_Header(path);
 
          if(is_header){
 
-            this->Header_Determiner.Determine_Header_File_Name_With_Extention(path);
+            this->Header_Processor.Determine_Header_File_Name_With_Extention(path);
 
-            std::string head_name = this->Header_Determiner.Get_Header_File_Name_With_Ext();
+            std::string head_name = this->Header_Processor.Get_Header_File_Name_With_Ext();
 
             std::string header_path, header_sys_path;
 
             this->Determine_Header_Repo_Warehouse_Path(&header_path,head_name,'w');
         
-            this->buffer.system_path = file_sys_path;
+            this->buffer.system_path = path;
             this->buffer.repo_path = header_path;
             this->buffer.header_name = head_name;
             this->buffer.inclusion_number = 0;
@@ -121,7 +121,7 @@ void Source_File_Information_Collector::Determine_Header_File_List()
          }
       }
 
-      this->Header_Determiner.Clear_Dynamic_Memory();
+      this->Header_Processor.Clear_Dynamic_Memory();
 }
 
 void Source_File_Information_Collector::Extract_Dependency_Data(){  // Data extraction for whole project
@@ -132,24 +132,23 @@ void Source_File_Information_Collector::Extract_Dependency_Data(){  // Data extr
 
      std::size_t dt_size = this->head_data.size();
 
+
      for(std::size_t i = 0;i<dt_size;i++){
 
-         std::string path = this->head_data[i].repo_path;
+         std::string path = this->head_data[i].system_path;
 
-         this->FileManager.Clear_Dynamic_Memory();
-         this->FileManager.Read_File(path);
+         std::vector<std::string> * src_code = this->Code_Rdr->Find_File_Source_Code(path);
 
-         int FileSize = this->FileManager.GetFileSize();
 
-         for(int k=0;k<FileSize;k++){
+         size_t line_num = src_code->size();
 
-             std::string string = this->FileManager.GetFileLine(k);
+         for(size_t k=0;k<line_num;k++){
+
+             std::string string = src_code->at(k);
 
              // In order to remove possible spaces on the string
 
              // a temporary string is constructed
-
-             this->Delete_Spaces_on_String(&string);
 
              bool is_include_decleration = this->Include_Decleration_Test(string);
 
@@ -185,23 +184,21 @@ void Source_File_Information_Collector::Extract_Dependency_Data(std::string path
      this->Determine_Header_File_List();
 
 
-     bool is_header = this->Header_Determiner.Is_Header(path);
+     bool is_header = this->Header_Processor.Is_Header(path);
 
      if(is_header){
 
         this->Memory_Delete_Condition = false;
 
-        this->Header_Determiner.Determine_Header_File_Name_With_Extention(path);
+        this->Header_Processor.Determine_Header_File_Name_With_Extention(path);
 
-        std::string head_name = this->Header_Determiner.Get_Header_File_Name_With_Ext();
+        std::string head_name = this->Header_Processor.Get_Header_File_Name_With_Ext();
 
         std::string header_path, header_sys_path;
 
         this->Determine_Header_Repo_Warehouse_Path(&header_path,head_name,'w');
         this->Determine_Header_System_Path(&header_sys_path,path);
-        
-        
-
+                
 
         this->buffer.system_path = header_sys_path;        
         this->buffer.repo_path = header_path;
@@ -211,21 +208,19 @@ void Source_File_Information_Collector::Extract_Dependency_Data(std::string path
         this->buffer.rcr_srch_complated = false;
 
 
+        std::vector<std::string> * src_code = this->Code_Rdr->Find_File_Source_Code(header_sys_path);
 
-        this->FileManager.Clear_Dynamic_Memory();
-        this->FileManager.Read_File(path);
+        size_t line_num = src_code->size();
 
-        int FileSize = this->FileManager.GetFileSize();
 
-        for(int k=0;k<FileSize;k++){
+        for(size_t k=0;k<line_num;k++){
 
-            std::string string_line = this->FileManager.GetFileLine(k);
+            std::string string_line = src_code->at(k);
 
             // In order to remove possible spaces on the string
 
             // a temporary string is constructed
 
-            this->Delete_Spaces_on_String(&string_line);
 
             bool is_include_decleration = this->Include_Decleration_Test(string_line);
 
@@ -287,24 +282,23 @@ void Source_File_Information_Collector::Determine_Header_Repo_Warehouse_Path(std
 
  void Source_File_Information_Collector::Determine_Header_System_Path(std::string * sys_path,std::string path)
  {
- 
       int index_size = this->Git_Data_Receiver.Get_Git_File_Index_Size();
 
       for(int i=0;i<index_size;i++){
       
           std::string file_sys_path = this->Git_Data_Receiver.Get_File_System_Path(i);
 
-          bool is_repo_hdr = this->Header_Determiner.Is_Header(file_sys_path);
+          bool is_repo_hdr = this->Header_Processor.Is_Header(file_sys_path);
 
           if(is_repo_hdr){
           
-             this->Header_Determiner.Determine_Header_File_Name_With_Extention(file_sys_path);       
+             this->Header_Processor.Determine_Header_File_Name_With_Extention(file_sys_path);       
 
-             std::string head_name = this->Header_Determiner.Get_Header_File_Name_With_Ext();
+             std::string head_name = this->Header_Processor.Get_Header_File_Name_With_Ext();
 
-             this->Header_Determiner.Determine_Header_File_Name_With_Extention(path);
+             this->Header_Processor.Determine_Header_File_Name_With_Extention(path);
 
-             std::string ref_hdr_name = this->Header_Determiner.Get_Header_File_Name_With_Ext();
+             std::string ref_hdr_name = this->Header_Processor.Get_Header_File_Name_With_Ext();
 
 
              if(this->CompareString(head_name,ref_hdr_name)){
@@ -367,31 +361,6 @@ void Source_File_Information_Collector::Extract_Header_File_Name_From_Decleratio
          header_name->push_back(string[i]);
      }
 }
-
-
-void Source_File_Information_Collector::Delete_Spaces_on_String(std::string * str){
-
-     size_t string_size = str->length();
-
-     bool search_cond = true;
-
-     do{
-
-         search_cond = false;
-
-         for(size_t i=0;i<str->length();i++){
-
-            if((*str)[i] == ' '){
-
-               search_cond = true;
-
-               str->erase(i,1);
-            }
-         }
-
-     }while(search_cond);
-}
-
 
 
 bool Source_File_Information_Collector::Include_Decleration_Test(std::string string){
@@ -607,8 +576,8 @@ bool Source_File_Information_Collector::CompareString(std::string firstString,
 }
 
 
-void Source_File_Information_Collector::Clear_Headers_Data(){
-
+void Source_File_Information_Collector::Clear_Headers_Data()
+{
      std::vector<Headers_Data>::iterator ith;
 
      if(!this->head_data.empty()){
@@ -633,8 +602,8 @@ void Source_File_Information_Collector::Clear_Headers_Data(){
       }
 }
 
-void Source_File_Information_Collector::Clear_Buffer_Memory(){
-
+void Source_File_Information_Collector::Clear_Buffer_Memory()
+{
      this->Clear_Vector_Memory(&this->buffer.included_headers);
 
      this->Clear_Vector_Memory(&this->buffer.included_headers_paths);

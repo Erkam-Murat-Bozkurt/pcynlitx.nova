@@ -74,9 +74,7 @@ bool Header_File_Processor::Is_this_file_included_on_anywhere(std::string file_p
              // In order to remove possible spaces on the string
 
              // a temporary string is constructed
-
-             this->Delete_Spaces_on_String(&file_line);
-
+             
              bool is_include_decleration = this->Include_Decleration_Test(file_line);
 
 
@@ -380,30 +378,6 @@ bool Header_File_Processor::CompareString(std::string firstString, std::string s
           return this->isStringsEqual;
      }
 }
-
-void Header_File_Processor::Delete_Spaces_on_String(std::string * str){
-
-    size_t string_size = str->length();
-
-    bool search_cond = true;
-
-    do{
-
-      search_cond = false;
-
-      for(size_t i=0;i<str->length();i++){
-
-          if((*str)[i] == ' '){
-
-            search_cond = true;
-
-            str->erase(i,1);
-          }
-        }
-
-    }while(search_cond);
-}
-
 
 void Header_File_Processor::Clear_String_Memory(std::string * pointer){
 
