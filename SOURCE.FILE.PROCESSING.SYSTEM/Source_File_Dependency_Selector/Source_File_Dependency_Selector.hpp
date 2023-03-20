@@ -21,6 +21,8 @@
 #include <fcntl.h>
 #include <windows.h>
 #include "Source_File_Information_Collector.hpp"
+#include "Project_Src_Code_Rdr.hpp"
+#include "Header_File_Processor.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
@@ -49,6 +51,7 @@ class Source_File_Dependency_Selector
 public:
  Source_File_Dependency_Selector(char * descriptor_file_path, char opr_sis);
  virtual ~Source_File_Dependency_Selector();
+ void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Determine_Source_File_Dependencies(std::string path);
  void Determine_Source_File_Dependencies();
  void Print_Dependency_List();
@@ -85,7 +88,7 @@ protected:
  std::vector<std::vector<Header_Dependency>> Dependency_Data;
  std::string warehouse_head_dir;
  std::string descriptor_file_path;
- Header_File_Determiner Header_Determiner; 
+ Header_File_Processor Header_Processor; 
  StringOperator StringManager; 
  int    header_file_number;
  size_t ListLength;

@@ -7,6 +7,7 @@
 #include <cstring>
 #include <vector>
 #include "Source_File_Dependency_Selector.hpp"
+#include "Project_Src_Code_Rdr.hpp"
 #include "Project_Files_Lister.h"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
@@ -42,12 +43,19 @@ int main(int argc, char ** argv){
     int src_file_num = Dir_Lister.Get_Source_File_Number();
 
 
+    Project_Src_Code_Rdr Code_Rd(argv[1],'w');
+
+    Code_Rd.Receive_Git_Repo_Information(&Git_Data_Receiver);
+
+    Code_Rd.Read_Project_Source_Code_Files();
 
     char path [] = "D:\\PCYNLITX.BUILD.TEST\\WAREHOUSE\\PROJECT.HEADER.FILES\\Thread_Manager_Builder.h";
 
     Source_File_Dependency_Selector Dep_Selector(argv[1],'w');
 
     if(src_file_num > 0){
+
+      Dep_Selector.Receive_Source_Code_Reader(&Code_Rd);
 
       Dep_Selector.Determine_Source_File_Dependencies(path);
 

@@ -26,7 +26,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Source_File_Dependency_Selector::Source_File_Dependency_Selector(char * des_file_path, char opr_sis)
 
-    : Info_Collector(des_file_path,opr_sis), Header_Determiner(des_file_path,opr_sis)
+    : Info_Collector(des_file_path,opr_sis), Header_Processor(des_file_path,opr_sis)
 {
    this->Memory_Delete_Condition = false;
 
@@ -76,6 +76,14 @@ void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
      this->Info_Collector.Clear_Dynamic_Memory();
 
      this->Dep_Counter = 0;
+}
+
+
+void Source_File_Dependency_Selector::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
+
+     this->Info_Collector.Receive_Source_Code_Reader(ptr);
+
+     this->Header_Processor.Receive_Source_Code_Reader(ptr);
 }
 
 
@@ -324,7 +332,7 @@ bool Source_File_Dependency_Selector::Is_This_Repo_HeaderFile(std::string path)
 {
      this->is_this_repo_header = false;
 
-     bool is_header = this->Header_Determiner.Is_Header(path);
+     bool is_header = this->Header_Processor.Is_Header(path);
 
      int index_size = this->Info_Collector.Get_Dependency_Data_Size();
 
