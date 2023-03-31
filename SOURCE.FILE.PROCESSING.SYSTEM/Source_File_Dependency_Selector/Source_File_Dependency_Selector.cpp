@@ -84,6 +84,8 @@ void Source_File_Dependency_Selector::Receive_Source_Code_Reader(Project_Src_Cod
      this->Info_Collector.Receive_Source_Code_Reader(ptr);
 
      this->Header_Processor.Receive_Source_Code_Reader(ptr);
+
+     this->Code_Rd = ptr;
 }
 
 
@@ -121,7 +123,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
 
          Header_Dependency Data = Temp_List.at(i);
 
-         std::string sub_path = Data.repo_warehouse_path;
+         std::string sub_path = Data.root_header_path;
 
          this->Extract_Dependency_Data(sub_path);
 
@@ -167,7 +169,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(){
 
      for(size_t i=0;i<data_size;i++){
      
-         std::string path =this->Headers_Data_Ptr->at(i).repo_path;
+         std::string path =this->Headers_Data_Ptr->at(i).system_path;
 
          this->Extract_Dependency_Data(path);
 
@@ -187,18 +189,17 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
 
      int inclusion_number = 0;
 
+     FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Path(path);
+
      /*  Determination of the inclusion number */
 
-     Cpp_FileOperations Custom_FileStream;
 
-     Custom_FileStream.Read_File(path);
-
-     int FileSize = Custom_FileStream.GetFileSize();
+     size_t FileSize = FileDtPtr->FileContent.size();
 
 
-     for(int k=0;k<FileSize;k++){
+     for(size_t k=0;k<FileSize;k++){
 
-         std::string tmp_string = Custom_FileStream.GetFileLine(k);
+         std::string tmp_string = FileDtPtr->FileContent.at(k);
 
          this->Delete_Spaces_on_String(&tmp_string);
 
@@ -216,13 +217,9 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
 
      if(inclusion_number>0){
 
-        Custom_FileStream.Read_File(path);
+        for(size_t k=0;k<FileSize;k++){
 
-        int FileSize = Custom_FileStream.GetFileSize();
-
-        for(int k=0;k<FileSize;k++){
-
-            std::string tmp_string = Custom_FileStream.GetFileLine(k);
+            std::string tmp_string =  FileDtPtr->FileContent.at(k);
 
             this->Delete_Spaces_on_String(&tmp_string);
 
@@ -269,7 +266,9 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
      
                    this->Clear_Temporary_String_Memory(&temp);
 
-                   this->Extract_Dependency_Data(wrd_path);
+                   FileData * Ptr = this->Code_Rd->Find_File_Data_From_Name(header_name);
+
+                   this->Extract_Dependency_Data(Ptr->sys_path);
                }
 
                this->Clear_String_Memory(&header_name);
@@ -309,8 +308,6 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
 
 
       this->Dependent_List.shrink_to_fit();
-
-      Custom_FileStream.Clear_Dynamic_Memory();
 }
 
 

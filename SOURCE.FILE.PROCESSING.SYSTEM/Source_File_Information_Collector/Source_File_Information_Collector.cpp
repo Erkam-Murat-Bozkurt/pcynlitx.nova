@@ -137,14 +137,14 @@ void Source_File_Information_Collector::Extract_Dependency_Data(){  // Data extr
 
          std::string path = this->head_data[i].system_path;
 
-         std::vector<std::string> * src_code = this->Code_Rdr->Find_File_Source_Code(path);
+         FileData * src_code = this->Code_Rdr->Find_File_Data_From_Path(path);
 
 
-         size_t line_num = src_code->size();
+         size_t line_num = src_code->FileContent.size();
 
          for(size_t k=0;k<line_num;k++){
 
-             std::string string = src_code->at(k);
+             std::string string = src_code->FileContent.at(k);
 
              // In order to remove possible spaces on the string
 
@@ -208,14 +208,14 @@ void Source_File_Information_Collector::Extract_Dependency_Data(std::string path
         this->buffer.rcr_srch_complated = false;
 
 
-        std::vector<std::string> * src_code = this->Code_Rdr->Find_File_Source_Code(header_sys_path);
+        FileData * src_code = this->Code_Rdr->Find_File_Data_From_Path(header_sys_path);
 
-        size_t line_num = src_code->size();
+        size_t line_num = src_code->FileContent.size();
 
 
         for(size_t k=0;k<line_num;k++){
 
-            std::string string_line = src_code->at(k);
+            std::string string_line = src_code->FileContent.at(k);
 
             // In order to remove possible spaces on the string
 

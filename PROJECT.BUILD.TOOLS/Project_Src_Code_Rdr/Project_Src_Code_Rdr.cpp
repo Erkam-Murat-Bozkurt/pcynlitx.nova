@@ -155,13 +155,18 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
             Temp.FileContent.shrink_to_fit();
 
 
+            this->Determine_File_Name(file_sys_path,Temp.file_name);
+
+
             mt.lock();
 
-            this->Src_Code_Dt.push_back(Temp);    
+            this->Src_Code_Dt.push_back(Temp);
 
             this->Clear_Vector_Memory(&Temp.FileContent);
 
             this->Clear_String_Memory(&Temp.sys_path);
+
+            this->Clear_String_Memory(&Temp.file_name);
 
             mt.unlock();
          }
@@ -194,6 +199,9 @@ void Project_Src_Code_Rdr::Read_Source_Code_Single_Thread(){
 
                 Temp.FileContent.push_back(string_line);
             }
+
+            
+            this->Determine_File_Name(file_sys_path,Temp.file_name);
 
             Temp.FileContent.shrink_to_fit();
 
@@ -232,6 +240,37 @@ void Project_Src_Code_Rdr::Delete_Spaces_on_String(std::string * str){
 }
 
 
+void Project_Src_Code_Rdr::Determine_File_Name(std::string path, std::string & file_name){
+
+     this->Clear_String_Memory(&file_name);
+
+     size_t file_path_size = path.length();
+
+     size_t dir_size = file_path_size;
+
+
+     for(size_t i=file_path_size;i>0;i--){
+
+        if((path[i] == '/') || (path[i] == '\\')){
+
+          break;
+        }
+        else{
+
+            dir_size--;
+        }
+     }
+
+     size_t file_name_size = file_path_size - dir_size;
+
+     int index = 0;
+
+     for(size_t i=dir_size+1;i<file_path_size;i++){
+
+         file_name.push_back(path[i]);
+     }
+}
+
 std::vector<std::string> * Project_Src_Code_Rdr::Get_File_Content(int i)
 {    
      return &this->Src_Code_Dt.at(i).FileContent;
@@ -243,7 +282,12 @@ std::string Project_Src_Code_Rdr::Get_File_Path(int i){
 
 }
 
-std::vector<std::string> * Project_Src_Code_Rdr::Find_File_Source_Code(std::string path)
+std::string Project_Src_Code_Rdr::Get_File_Name(int i){
+
+     return this->Src_Code_Dt.at(i).file_name;
+}
+
+FileData * Project_Src_Code_Rdr::Find_File_Data_From_Path(std::string path)
 {
      size_t listSize = this->Src_Code_Dt.size();
 
@@ -251,12 +295,11 @@ std::vector<std::string> * Project_Src_Code_Rdr::Find_File_Source_Code(std::stri
      
          std::string file_path = this->Src_Code_Dt.at(i).sys_path;
 
-
          bool is_equal = this->CompareString(path,file_path);
      
          if(is_equal){
          
-            return &this->Src_Code_Dt.at(i).FileContent;
+            return &this->Src_Code_Dt.at(i);
          }
      }
 
@@ -264,6 +307,28 @@ std::vector<std::string> * Project_Src_Code_Rdr::Find_File_Source_Code(std::stri
 
      exit(EXIT_FAILURE);
 }
+
+
+FileData * Project_Src_Code_Rdr::Find_File_Data_From_Name(std::string name){
+ 
+    size_t listSize = this->Src_Code_Dt.size();
+
+    for(size_t i=0;i<listSize;i++){
+     
+        std::string file_name = this->Src_Code_Dt.at(i).file_name;
+
+        bool is_equal = this->CompareString(name,file_name);
+     
+        if(is_equal){
+         
+           return &this->Src_Code_Dt.at(i);
+        }
+    }
+
+    std::cout << "\n the file with name " << name << " can not find!.\n";
+
+    exit(EXIT_FAILURE);
+ }
 
 
 bool Project_Src_Code_Rdr::CompareString(std::string firstString, std::string secondString){
@@ -338,5 +403,4 @@ void Project_Src_Code_Rdr::Clear_String_Memory(std::string * ptr){
 
         ptr->shrink_to_fit();
     }
-
 }

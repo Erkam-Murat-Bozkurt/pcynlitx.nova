@@ -83,6 +83,7 @@ protected:
  void Clear_Vector_Memory(std::vector<Header_Dependency> * pointer);
  void Clear_Temporary_String_Memory(Header_Dependency * temp);
  Source_File_Information_Collector Info_Collector; 
+ Project_Src_Code_Rdr * Code_Rd;
  std::vector<Header_Dependency> Dependent_List;
  std::vector<Headers_Data> * Headers_Data_Ptr;
  std::vector<std::vector<Header_Dependency>> Dependency_Data;
