@@ -18,6 +18,8 @@ FILE_DAT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Data_Co
 SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
 SRC_INF_COL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector
 SRC_DEP_EL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector
+HDR_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
+SRC_READER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Src_Code_Rdr
 
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 				$(SOURCE_DETR) $(DIR_ENUM) \
@@ -25,12 +27,15 @@ VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 				$(INT_TO_CHAR) $(DES_DATA_COL) $(DES_READER) \
 				$(GIT_LIST) $(FILE_DAT_COL) \
 				$(SRC_DT_COL) $(DES_FILE_SYNT_COL) \
-				$(SRC_INF_COL) $(SRC_DEP_EL)
+				$(SRC_INF_COL) $(SRC_DEP_EL) \
+				$(HDR_PROC) $(SRC_READER)
 
 Source_File_Compiler_Data_Extractor.exe: Source_File_Compiler_Data_Extractor_Main_File.cpp \
 	Source_File_Compiler_Data_Extractor.cpp \
 	Source_File_Dependency_Selector.cpp \
 	Source_File_Information_Collector.cpp \
+	Header_File_Processor.cpp \
+	Project_Src_Code_Rdr.cpp \
 	Project_Files_Lister.cpp \
     Project_Files_Data_Collector.cpp \
 	Source_File_Data_Collector.cpp \
@@ -48,6 +53,8 @@ Source_File_Compiler_Data_Extractor.exe: Source_File_Compiler_Data_Extractor_Mai
 	Source_File_Compiler_Data_Extractor.hpp \
 	Source_File_Dependency_Selector.hpp \
 	Source_File_Information_Collector.hpp \
+	Header_File_Processor.hpp \
+	Project_Src_Code_Rdr.hpp \
 	Project_Files_Lister.h \
 	Project_Files_Data_Collector.hpp \
 	Source_File_Data_Collector.cpp \
@@ -71,19 +78,21 @@ Source_File_Compiler_Data_Extractor.exe: Source_File_Compiler_Data_Extractor_Mai
 	 -I$(DES_DATA_COL) -I$(DES_READER) \
 	 -I$(FILE_DAT_COL) -I$(SRC_INF_COL) \
 	 -I$(SRC_DT_COL) -I$(DES_FILE_SYNT_COL) \
-	 -I$(SRC_DEP_EL) \
+	 -I$(SRC_DEP_EL)  -I$(SRC_READER) -I$(HDR_PROC) \
 	 -L$(DIR_ENUM) -L$(DIR_OPS) -L$(CPP_OPS) \
 	 -L$(CHAR_OPS) -L$(INT_TO_CHAR) -L$(DES_DATA_COL) \
 	 -L$(DES_READER) -L$(STRING_OPS) \
 	 -L$(HEAD_DET) -L$(FILE_LISTER) \
-	 -L$(SOURCE_DETR) \
+	 -L$(SOURCE_DETR)  -L$(SRC_READER) \
 	 -L$(GIT_LIST) -L$(FILE_DAT_COL) \
 	 -L$(SRC_DT_COL) -L$(DES_FILE_SYNT_COL) \
-	 -L$(SRC_INF_COL) -L$(SRC_DEP_EL) \
+	 -L$(SRC_INF_COL) -L$(SRC_DEP_EL) -L$(HDR_PROC) \
 		Source_File_Compiler_Data_Extractor_Main_File.cpp \
 		Source_File_Compiler_Data_Extractor.cpp \
 		$(SRC_DEP_EL)\Source_File_Dependency_Selector.cpp \
 		$(SRC_INF_COL)\Source_File_Information_Collector.cpp \
+		$(HDR_PROC)\Header_File_Processor.cpp \
+		$(SRC_READER)\Project_Src_Code_Rdr.cpp \
 		$(FILE_LISTER)\Project_Files_Lister.cpp \
 		$(FILE_DAT_COL)\Project_Files_Data_Collector.cpp \
 		$(SRC_DT_COL)\Source_File_Data_Collector.cpp \
@@ -102,6 +111,8 @@ Source_File_Compiler_Data_Extractor.exe: Source_File_Compiler_Data_Extractor_Mai
 		-include Source_File_Compiler_Data_Extractor.hpp \
 		-include $(SRC_DEP_EL)\Source_File_Dependency_Selector.hpp \
 		-include $(SRC_INF_COL)\Source_File_Information_Collector.hpp \
+		-include $(HDR_PROC)\Header_File_Processor.hpp \
+		-include $(SRC_READER)\Project_Src_Code_Rdr.hpp \
 		-include $(FILE_LISTER)\Project_Files_Lister.h \
 		-include $(FILE_DAT_COL)\Project_Files_Data_Collector.hpp \
 		-include $(SRC_DT_COL)\Source_File_Data_Collector.hpp \
@@ -114,6 +125,7 @@ Source_File_Compiler_Data_Extractor.exe: Source_File_Compiler_Data_Extractor_Mai
 		-include $(HEAD_DET)\Header_File_Determiner.h \
 		-include $(STRING_OPS)\StringOperator.h \
 		-include $(DIR_OPS)\DirectoryOperations.h \
-	  -include $(CHAR_OPS)\CharOperator.h \
+	    -include $(CHAR_OPS)\CharOperator.h \
 		-include $(CPP_OPS)\Cpp_FileOperations.h \
-		-include $(INT_TO_CHAR)\IntToCharTranslater.h
+		-include $(INT_TO_CHAR)\IntToCharTranslater.h \
+		-lpthread

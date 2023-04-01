@@ -201,7 +201,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
 
          std::string tmp_string = FileDtPtr->FileContent.at(k);
 
-         this->Delete_Spaces_on_String(&tmp_string);
+         //this->Delete_Spaces_on_String(&tmp_string);
 
          bool is_include_decleration = this->Include_Decleration_Test(tmp_string);
 
@@ -221,7 +221,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
 
             std::string tmp_string =  FileDtPtr->FileContent.at(k);
 
-            this->Delete_Spaces_on_String(&tmp_string);
+            //this->Delete_Spaces_on_String(&tmp_string);
 
             bool is_include_decleration = this->Include_Decleration_Test(tmp_string);
 
@@ -622,8 +622,13 @@ void Source_File_Dependency_Selector::Print_Dependency_List()
                 counter++;
             }
 
-            std::cout << "\n INCLUDED HEADER FILES NUM FOR BASE FILE:" << ptr->at(0).base_included_hdr_num;
-            std::cout << "\n INCLUDED HEADER FILES NUM FOR INCL FILE:" << ptr->at(0).included_file_hdr_num;
+            std::cout << "\n INCLUDED HEADER FILES NUM FOR BASE FILE:" 
+            
+            << ptr->at(0).base_included_hdr_num;
+
+            std::cout << "\n INCLUDED HEADER FILES NUM FOR INCL FILE:" 
+            
+            << ptr->at(0).included_file_hdr_num;
          }
       }
 }

@@ -31,7 +31,29 @@ int main(int argc, char ** argv){
     }
 
 
+
+    Git_File_List_Receiver Git_Data_Receiver(argv[1],'w');
+
+    Git_Data_Receiver.Determine_Git_Repo_Info();
+
+
+    Project_Files_Lister Dir_Lister(argv[1],'w');
+
+    Dir_Lister.Determine_Git_Repo_Info();
+
+    int src_file_num = Dir_Lister.Get_Source_File_Number();
+
+
+    Project_Src_Code_Rdr Code_Rd(argv[1],'w');
+
+    Code_Rd.Receive_Git_Repo_Information(&Git_Data_Receiver);
+
+    Code_Rd.Read_Project_Source_Code_Files();
+
+
     Source_File_Dependency_Selector Dep_Selector(argv[1],'w');
+
+    Dep_Selector.Receive_Source_Code_Reader(&Code_Rd);
 
     Dep_Selector.Determine_Source_File_Dependencies();
 
@@ -62,7 +84,7 @@ int main(int argc, char ** argv){
 
 
 
-    std::string path = "D:\\PCYNLITX.BUILD.TEST\\WAREHOUSE\\PROJECT.HEADER.FILES\\Thread_Manager_Builder.h";
+    std::string path = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.h";
 
     Dep_Selector.Determine_Source_File_Dependencies(path);
 
@@ -77,7 +99,7 @@ int main(int argc, char ** argv){
 
 
     data_ptr = Compiler_Data_Extractor.Get_Compiler_Data_Address();
-
+    
     std::cout << "\n\n DATA FOR PATH:" << path;
 
     print_compiler_data(data_ptr);
@@ -117,7 +139,7 @@ void print_compiler_data(std::vector<Compiler_Data> * data_ptr){
 
          for(int k=0;k<obj_size;k++){
 
-             std::cout << "\n included header:" << temp.dependent_objs[k];
+             std::cout << "\n included class object:" << temp.dependent_objs[k];
          }
 
          size_t path_size = temp.dependent_headers.size();
