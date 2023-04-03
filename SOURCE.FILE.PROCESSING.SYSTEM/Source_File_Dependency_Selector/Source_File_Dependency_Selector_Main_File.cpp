@@ -23,14 +23,6 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_Reader(argv[1]);
-
-    Des_Reader.Read_Descriptor_File();
-
-    std::string project_repo_dir = Des_Reader.Get_Repo_Directory_Location();
-
-    std::string warehouse_path   = Des_Reader.Get_Warehouse_Location();
-
     Git_File_List_Receiver Git_Data_Receiver(argv[1],'w');
 
     Git_Data_Receiver.Determine_Git_Repo_Info();

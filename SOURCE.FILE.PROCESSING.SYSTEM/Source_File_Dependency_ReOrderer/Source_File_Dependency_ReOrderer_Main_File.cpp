@@ -31,28 +31,33 @@ int main(int argc, char ** argv){
     int src_file_num = Dir_Lister.Get_Source_File_Number();
 
 
+    Git_File_List_Receiver Git_Data_Receiver(argv[1],'w');
+
+    Git_Data_Receiver.Determine_Git_Repo_Info();
+
+
+    Project_Src_Code_Rdr Code_Rd(argv[1],'w');
+
+    Code_Rd.Receive_Git_Repo_Information(&Git_Data_Receiver);
+
+    Code_Rd.Read_Project_Source_Code_Files();
+
+
+
+
     Source_File_Dependency_Selector Dep_Selector(argv[1],'w');
 
 
-    char path [] = "D:\\PCYNLITX.BUILD.TEST\\WAREHOUSE\\PROJECT.HEADER.FILES\\Thread_Manager_Builder.h";
-
-
-    /*
+    char path [] = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.h";
 
     if(src_file_num > 0){
 
-      Dep_Selector.Determine_Source_File_Dependencies(path);
+      Dep_Selector.Receive_Source_Code_Reader(&Code_Rd);
 
-      Dep_Selector.Print_Dependency_List();
+      Dep_Selector.Determine_Source_File_Dependencies(path);
     }
 
-     */
     
-    if(src_file_num > 0){
-
-      Dep_Selector.Determine_Source_File_Dependencies(path);
-    }
-
 
     Source_File_Dependency_ReOrderer ReOrderer;
 
@@ -62,19 +67,6 @@ int main(int argc, char ** argv){
 
     ReOrderer.Print_Dependency_Data();
 
-    std::cin.get();
-
-    if(src_file_num > 0){
-
-      Dep_Selector.Determine_Source_File_Dependencies();
-    }
-
-
-    ReOrderer.Receive_Dependency_Data(Dep_Selector.Get_Dependency_List_Adress());
-
-    ReOrderer.Reorder_Dependency_Data();
-
-    ReOrderer.Print_Dependency_Data();
 
     std::cout << "\n\n THE END OF THE PROGRAM \n\n";
 
