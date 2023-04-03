@@ -55,11 +55,19 @@ void Source_File_Compiler_Data_Extractor::Clear_Dynamic_Memory(){
 
      std::vector<Compiler_Data>::iterator it;
 
+     this->Clear_Data_Memory(&this->compiler_data);
+}
 
-     if(!this->compiler_dt.empty()){
 
-        for(auto it=this->compiler_dt.begin();
-            it<this->compiler_dt.end();it++) {
+void Source_File_Compiler_Data_Extractor::Clear_Data_Memory(std::vector<Compiler_Data> * Data)
+{
+     // Clearing the Compiler Data
+
+     std::vector<Compiler_Data>::iterator it;
+
+     if(!Data->empty()){
+
+        for(auto it=Data->begin();it<Data->end();it++){
 
             this->Clear_Vector_Memory(&it->dependent_headers);
 
@@ -75,10 +83,11 @@ void Source_File_Compiler_Data_Extractor::Clear_Dynamic_Memory(){
         }
       }
 
-      this->compiler_dt.clear();
+      Data->clear();
 
-      this->compiler_dt.shrink_to_fit();
+      Data->shrink_to_fit();
 }
+
 
 
 void Source_File_Compiler_Data_Extractor::Receive_Dependency_Data(std::vector<std::vector<Header_Dependency>> * ptr,
@@ -97,6 +106,50 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){
 
      std::size_t dt_size = this->dep_data_ptr->size();
      
+     if(dt_size >= 8)
+     {   
+        int division = dt_size/8;
+        
+        for(int i=0;i<8;i++){
+
+            int str  = i*division;
+
+            int end  = (i+1)*division;
+                 
+            this->threads[i] = std::thread(Source_File_Compiler_Data_Extractor::Process_Compiler_Data,this,i,str,end);     
+        }
+    
+        for(int i=0;i<8;i++){
+     
+            this->threads[i].join();
+        }
+
+        for(int i=0;i<8;i++){                     
+        
+            size_t d_size = this->compiler_dt[i].size();
+
+            for(int k=0;k<d_size;k++){
+              
+                this->compiler_data.push_back(this->compiler_dt[i].at(k));
+            }
+
+            this->Clear_Data_Memory(&this->compiler_dt[i]);              
+        }
+
+        this->compiler_data.shrink_to_fit();
+
+
+     }else{
+     
+           this->Extract_Compiler_Data_For_Single_Thread();
+     }
+}
+
+
+void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Thread(){ 
+
+     std::size_t dt_size = this->dep_data_ptr->size();
+
      for(std::size_t i= 0;i<dt_size;i++){
 
          std::vector<Header_Dependency> * hdr_ptr = &this->dep_data_ptr->at(i);
@@ -105,16 +158,15 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){
 
          size_t data_size = hdr_ptr->size();
 
-         this->Clear_Buffer_Memory(&this->buffer);
-
+         Compiler_Data buffer;
 
          if(data_size>0){
 
-            this->buffer.header_name = hdr_ptr->at(0).root_header;
+            buffer.header_name = hdr_ptr->at(0).root_header;
 
-            this->buffer.header_repo_path = hdr_ptr->at(0).root_header_path;
+            buffer.header_repo_path = hdr_ptr->at(0).root_header_path;
 
-            this->buffer.priority = data_size;
+            buffer.priority = data_size;
 
 
             for(size_t k=0;k<data_size;k++){
@@ -123,39 +175,43 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){
 
                 std::string hdr_path = hdr_ptr->at(k).repo_warehouse_path;
 
-                this->buffer.dependent_headers.push_back(hdr_name);
+                buffer.dependent_headers.push_back(hdr_name);
 
-                this->buffer.dependent_headers_paths.push_back(hdr_path);                                                
+                buffer.dependent_headers_paths.push_back(hdr_path);                                                
             }
 
-            this->buffer.dependent_headers.shrink_to_fit();
+            buffer.dependent_headers.shrink_to_fit();
 
-            this->buffer.dependent_headers_paths.shrink_to_fit();
+            buffer.dependent_headers_paths.shrink_to_fit();
 
 
-            bool is_indep = this->is_this_independent_header(this->buffer.header_name);
+            bool is_indep = this->is_this_independent_header(buffer.header_name);
 
             if(!is_indep){
 
-               this->Extract_Obj_File_Name_From_Header_Name(&(this->buffer.object_file_name),
+               this->Extract_Obj_File_Name_From_Header_Name(&(buffer.object_file_name),
 
-               this->buffer.header_name);
+               buffer.header_name);
 
-               this->compiler_dt.push_back(this->buffer);
+               this->compiler_data.push_back(buffer);
 
             }
             
-            this->Clear_Buffer_Memory(&this->buffer);
+            this->Clear_Buffer_Memory(&buffer);
          }
       }
 
-      this->compiler_dt.shrink_to_fit();
+      this->compiler_data.shrink_to_fit();
 }
 
 
-
 void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path)
-{ // Compiler data extraction for a particular source file
+{ 
+
+     this->Clear_Dynamic_Memory();
+
+     // Compiler data extraction for a particular source file
+
 
      std::vector<Header_Dependency> * hdr_ptr = &this->dep_data_ptr->at(0);
 
@@ -201,16 +257,121 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
 
             this->buffer.header_name);
 
-            this->compiler_dt.push_back(this->buffer);
-
+            this->compiler_data.push_back(this->buffer);
          }
             
 
          this->Clear_Buffer_Memory(&this->buffer);
       }
       
-      this->compiler_dt.shrink_to_fit();
+      this->compiler_data.shrink_to_fit();
+      
 }
+
+
+
+
+void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int start, int end){
+
+     for(std::size_t i=start;i<end;i++){
+
+         std::vector<Header_Dependency> * hdr_ptr = &this->dep_data_ptr->at(i);
+
+         hdr_ptr->shrink_to_fit();
+
+         size_t data_size = hdr_ptr->size();
+
+         Compiler_Data buffer;
+
+         if(data_size>0){
+
+            buffer.header_name = hdr_ptr->at(0).root_header;
+
+            buffer.header_repo_path = hdr_ptr->at(0).root_header_path;            
+
+            buffer.priority = data_size;
+
+
+            for(size_t k=0;k<data_size;k++){
+            
+                std::string hdr_name = hdr_ptr->at(k).Header_Name;
+
+                std::string hdr_path = hdr_ptr->at(k).repo_warehouse_path;
+
+                buffer.dependent_headers.push_back(hdr_name);
+
+                buffer.dependent_headers_paths.push_back(hdr_path);                                                
+            }
+
+            buffer.dependent_headers.shrink_to_fit();
+
+            buffer.dependent_headers_paths.shrink_to_fit();
+
+
+            bool is_indep = this->is_this_independent_header(buffer.header_name);
+
+            if(!is_indep){
+
+               this->Extract_Obj_File_Name_From_Header_Name(&(buffer.object_file_name),
+
+               buffer.header_name);
+
+               this->compiler_dt[thm].push_back(buffer);
+
+            }
+            
+            this->Clear_Buffer_Memory(&buffer);
+         }
+      }
+
+      this->compiler_dt[thm].shrink_to_fit();
+}
+
+
+
+void Source_File_Compiler_Data_Extractor::Process_Data(int thm, 
+
+     int start, int end)
+{
+     std::vector<Header_Dependency> * hdr_ptr = &this->dep_data_ptr->at(0);     
+
+     size_t data_size = hdr_ptr->size();
+
+
+     Compiler_Data buffer;
+
+     buffer.header_name = hdr_ptr->at(0).root_header;
+
+     buffer.header_repo_path = hdr_ptr->at(0).root_header_path;
+
+     buffer.priority = data_size;
+         
+             
+     for(size_t k=start;k<end;k++){
+            
+         std::string hdr_name = hdr_ptr->at(k).Header_Name;
+
+         std::string hdr_path = hdr_ptr->at(k).repo_warehouse_path;
+
+         std::string obj_name;
+
+         this->Extract_Obj_File_Name_From_Header_Name(&obj_name,hdr_name);
+
+         buffer.dependent_headers.push_back(hdr_name);
+
+         buffer.dependent_headers_paths.push_back(hdr_path);
+
+         buffer.dependent_objs.push_back(obj_name);     
+      }
+
+      this->compiler_dt[thm].push_back(buffer);
+
+      this->Clear_Buffer_Memory(&buffer);
+}
+
+
+
+
 
 
 
@@ -251,6 +412,7 @@ bool Source_File_Compiler_Data_Extractor::Include_Decleration_Test(std::string s
 }
 
 
+
 void Source_File_Compiler_Data_Extractor::Extract_Obj_File_Name_From_Header_Name(std::string * object_name,
 
      std::string header_name){
@@ -274,7 +436,6 @@ void Source_File_Compiler_Data_Extractor::Extract_Obj_File_Name_From_Header_Name
      object_name->push_back('o');
 
      object_name->shrink_to_fit();
-
 }
 
 
@@ -399,11 +560,11 @@ void Source_File_Compiler_Data_Extractor::Clear_String_Memory(std::string * poin
 
 Compiler_Data Source_File_Compiler_Data_Extractor::Get_Compiler_Data(int num){
 
-     return this->compiler_dt[num];
+     return this->compiler_data[num];
 }
 
 
 std::vector<Compiler_Data> * Source_File_Compiler_Data_Extractor::Get_Compiler_Data_Address(){
 
-     return &this->compiler_dt;
+     return &this->compiler_data;
 }

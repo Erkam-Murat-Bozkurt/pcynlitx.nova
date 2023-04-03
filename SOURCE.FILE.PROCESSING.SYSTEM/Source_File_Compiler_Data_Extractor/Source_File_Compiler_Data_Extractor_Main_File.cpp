@@ -76,6 +76,10 @@ int main(int argc, char ** argv){
 
     print_compiler_data(data_ptr);
 
+    std::cout << "\n Project Data Collected..\n\n";
+
+    std::cin.get();
+
     Compiler_Data_Extractor.Clear_Dynamic_Memory();
 
     Dep_Selector.Clear_Dynamic_Memory();

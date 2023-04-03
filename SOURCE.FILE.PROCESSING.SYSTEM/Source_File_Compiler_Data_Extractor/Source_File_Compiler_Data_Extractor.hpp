@@ -20,6 +20,8 @@
 #include <fcntl.h>
 #include <windows.h>
 #include <vector>
+#include <mutex>
+#include <thread>
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Git_File_List_Receiver.hpp"
@@ -57,18 +59,20 @@ public:
  Compiler_Data Get_Compiler_Data(int num);
  std::vector<Compiler_Data> * Get_Compiler_Data_Address();
  size_t Get_Compiler_Data_Size();
-protected:
- void Extract_Header_File_Name_From_Decleration(std::string * header_name,
-      std::string string);
+protected:    
  void Extract_Obj_File_Name_From_Header_Name(std::string * object_name,
       std::string header_name);
  bool Include_Decleration_Test(std::string string);
  bool is_this_independent_header(std::string name);
  void Extract_Header_File_Name_From_Path(std::string * name,
       std::string path);
+ void Process_Compiler_Data(int start, int end, int thm);
+ void Process_Data(int start, int end, int thm);
+ void Extract_Compiler_Data_For_Single_Thread();
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
  void Clear_Buffer_Memory(Compiler_Data * ptr);
+ void Clear_Data_Memory(std::vector<Compiler_Data> * ptr);
  Source_File_Information_Collector * Info_Collector;
  StringOperator StringManager;
  CharOperator Char_Processor;
@@ -76,7 +80,10 @@ protected:
  Cpp_FileOperations FileManager;
  std::vector<std::vector<Header_Dependency>> * dep_data_ptr;
  std::vector<Headers_Data> * headers_dt;
- std::vector<Compiler_Data> compiler_dt;
+ std::vector<Compiler_Data> compiler_dt[8];
+ std::vector<Compiler_Data> compiler_data;
+ std::thread threads[8];
+ std::mutex mtx;
  Compiler_Data buffer;
  std::string warehouse_head_dir;
  std::string warehouse_obj_dir;
