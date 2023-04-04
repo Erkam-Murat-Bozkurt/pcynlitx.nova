@@ -164,7 +164,7 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Threa
 
             buffer.header_name = hdr_ptr->at(0).root_header;
 
-            buffer.header_repo_path = hdr_ptr->at(0).root_header_path;
+            buffer.header_repo_path = hdr_ptr->at(0).repo_warehouse_path;
 
             buffer.priority = data_size;
 
@@ -226,7 +226,7 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
 
         this->buffer.header_name = hdr_ptr->at(0).root_header;
 
-        this->buffer.header_repo_path = hdr_ptr->at(0).root_header_path;
+        this->buffer.header_repo_path = hdr_ptr->at(0).repo_warehouse_path;
 
         this->buffer.priority = data_size;
          
@@ -287,7 +287,7 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
 
             buffer.header_name = hdr_ptr->at(0).root_header;
 
-            buffer.header_repo_path = hdr_ptr->at(0).root_header_path;            
+            buffer.header_repo_path = hdr_ptr->at(0).repo_warehouse_path;            
 
             buffer.priority = data_size;
 
@@ -342,7 +342,7 @@ void Source_File_Compiler_Data_Extractor::Process_Data(int thm,
 
      buffer.header_name = hdr_ptr->at(0).root_header;
 
-     buffer.header_repo_path = hdr_ptr->at(0).root_header_path;
+     buffer.header_repo_path = hdr_ptr->at(0).repo_warehouse_path;
 
      buffer.priority = data_size;
          

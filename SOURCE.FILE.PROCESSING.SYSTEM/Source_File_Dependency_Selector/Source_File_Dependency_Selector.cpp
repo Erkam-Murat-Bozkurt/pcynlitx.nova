@@ -201,8 +201,6 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
 
          std::string tmp_string = FileDtPtr->FileContent.at(k);
 
-         //this->Delete_Spaces_on_String(&tmp_string);
-
          bool is_include_decleration = this->Include_Decleration_Test(tmp_string);
 
          if(is_include_decleration){
@@ -212,6 +210,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
 
          this->Clear_String_Memory(&tmp_string);
      }
+
 
      /*  The inclusion number determined */
 
