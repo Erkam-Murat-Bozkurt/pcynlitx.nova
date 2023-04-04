@@ -44,6 +44,15 @@ void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
 }
 
 
+void Source_File_Dependency_Determiner::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
+
+     this->Code_Rd = ptr;
+
+     this->DepSelector.Receive_Source_Code_Reader(ptr);
+}
+
+
+
 void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::string path){
 
      this->Clear_Dynamic_Memory();
