@@ -5,24 +5,8 @@
 Source_File_Script_Writer::Source_File_Script_Writer(){
 
      this->Memory_Delete_Condition = true;
-
-     this->Src_Data_Pointer = nullptr;
-
-     this->script_path = nullptr;
-
-     this->compiler_output_location = nullptr;
-
-     this->headers_locations = nullptr;
-
-     this->object_files_location = nullptr;
-
-     this->Repo_Rood_Dir = nullptr;
 }
 
-Source_File_Script_Writer::Source_File_Script_Writer(const Source_File_Script_Writer & orig){
-
-
-}
 
 Source_File_Script_Writer::~Source_File_Script_Writer(){
 
@@ -31,37 +15,29 @@ Source_File_Script_Writer::~Source_File_Script_Writer(){
       this->Memory_Delete_Condition = true;
 
       this->Clear_Dynamic_Memory();
-
-      std::cout << "\n after Source_File_Script_Writer::Clear_Dynamic_Memory()";
-
-      std::cin.get();
    }
 }
 
-void Source_File_Script_Writer::Clear_Pointer_Memory(char ** pointer){
+void Source_File_Script_Writer::Clear_String_memory(std::string & str)
+{
+     if(!str.empty()){
 
-     if(*pointer != nullptr){
-
-        delete [] *pointer;
-
-        *pointer = nullptr;
+         str.clear();
+         str.shrink_to_fit();        
      }
 }
 
 void Source_File_Script_Writer::Clear_Dynamic_Memory(){
 
-     if(!this->Memory_Delete_Condition){
 
-        this->Memory_Delete_Condition = true;
+     this->Clear_String_memory(this->script_path);
 
-        this->Clear_Pointer_Memory(&this->script_path);
+     this->Clear_String_memory(this->headers_locations);
 
-        this->Clear_Pointer_Memory(&this->headers_locations);
+     this->Clear_String_memory(this->object_files_location);
 
-        this->Clear_Pointer_Memory(&this->object_files_location);
-
-        this->Clear_Pointer_Memory(&this->script_path);
-     }
+     this->Clear_String_memory(this->script_path);
+     
 }
 
 
@@ -139,6 +115,7 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->FileManager.WriteToFile("\n");
 
+     /*
 
      if(this->Src_Data_Pointer->included_header_num > 0){
 
@@ -164,6 +141,7 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
         }
      }
 
+     */
 
      this->FileManager.WriteToFile("\n");
 
@@ -238,6 +216,8 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile("\n");
 
 
+     /*
+
      if(this->Src_Data_Pointer->included_header_num > 0){
 
         int head_num = this->Src_Data_Pointer->included_header_num;
@@ -269,6 +249,8 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
            this->FileManager.WriteToFile("\n");
         }
       }
+
+      */
 
       this->FileManager.WriteToFile("\n");
 
@@ -380,208 +362,148 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
 void Source_File_Script_Writer::Determine_Script_Path(char opr_sis){
 
-     if(this->script_path != nullptr){
-
-        delete [] this->script_path;
-
-        this->script_path = nullptr;
-     }
-
+     this->Clear_String_memory(this->script_path);
 
      this->Memory_Delete_Condition = false;
 
 
-     char script_add_win [] = ".ps1";
+     std::string script_add_win = ".ps1";
 
-     char script_add_bash [] = ".sh";
-
-
-     char * src_dir  = this->Src_Data_Pointer->source_file_dir;
-
-     char * src_name = this->Src_Data_Pointer->source_file_name;
+     std::string script_add_bash = ".sh";
 
 
+     std::string src_dir  = this->Src_Data_Pointer->source_file_dir;
 
-     size_t name_size = strlen(src_name);
+     std::string src_name = this->Src_Data_Pointer->source_file_name;
 
-     size_t dir_size = strlen(src_dir);
 
-     size_t path_size = name_size + dir_size;
 
-     this->script_path = new char [5*path_size];
+     size_t name_size = src_name.length();
+
+     size_t dir_size = src_dir.length();
 
      int index = 0;
 
      for(size_t i=0;i<dir_size;i++){
 
-         this->script_path[index] = src_dir[i];
-
-         index++;
+         this->script_path.push_back(src_dir[i]);         
      }
 
      if(opr_sis == 'w'){
 
-        this->script_path[index] = '\\';
-
-        index++;
+        this->script_path.push_back('\\');
      }
 
      if(opr_sis == 'l'){
 
-        this->script_path[index] = '/';
-
-        index++;
+        this->script_path.push_back('/');        
      }
 
      for(size_t i=0;i<name_size;i++){
 
-        this->script_path[index] = src_name[i];
-
-        index++;
+        this->script_path.push_back(src_name[i]);        
      }
 
      if(opr_sis == 'w'){
 
-        size_t add_size = strlen(script_add_win);
+        size_t add_size = script_add_win.length();
 
         for(size_t i=0;i<add_size;i++){
 
-           this->script_path[index] = script_add_win[i];
-
-           index++;
+           this->script_path.push_back(script_add_win[i]);           
         }
      }
 
      if(opr_sis == 'l'){
 
-        size_t add_size = strlen(script_add_bash);
+        size_t add_size = script_add_bash.length();
 
         for(size_t i=0;i<add_size;i++){
 
-            this->script_path[index] = script_add_bash[i];
-
-            index++;
+            this->script_path.push_back(script_add_bash[i]);            
         }
      }
 
-     this->script_path[index] = '\0';
+     this->script_path.shrink_to_fit();
 }
 
 
 
 void Source_File_Script_Writer::Determine_Warehouse_Paths(char opr_sis){
 
-     size_t warehouse_path_size = strlen(this->warehouse_path);
+     std::string headers_location_add = "PROJECT.HEADER.FILES";
 
-     char headers_location_add [] = "PROJECT.HEADER.FILES";
+     std::string object_files_location_add = "PROJECT.OBJECT.FILES";
 
-     char object_files_location_add [] = "PROJECT.OBJECT.FILES";
-
-     char compiler_output_location_add [] = "Compiler_Output.txt";
-
-
-     size_t headers_location_size = warehouse_path_size +
-
-            strlen(headers_location_add);
-
-     size_t object_files_location_size = warehouse_path_size +
-
-            strlen(object_files_location_add);
-
-     size_t compiler_output_location_size = warehouse_path_size +
-
-            strlen(compiler_output_location_add);
+     std::string compiler_output_location_add = "Compiler_Output.txt";
 
 
      this->Memory_Delete_Condition = false;
 
-     this->headers_locations = new char [5*headers_location_size];
+     this->Construct_Path(this->headers_locations,headers_location_add,opr_sis);
 
-     this->object_files_location = new char [5*object_files_location_size];
+     this->Construct_Path(this->object_files_location,object_files_location_add,opr_sis);
 
-     this->compiler_output_location = new char [5*compiler_output_location_size];
-
-
-     this->Construct_Path(&this->headers_locations,headers_location_add,opr_sis);
-
-     this->Construct_Path(&this->object_files_location,object_files_location_add,opr_sis);
-
-     this->Construct_Path(&this->compiler_output_location,compiler_output_location_add,opr_sis);
+     this->Construct_Path(this->compiler_output_location,compiler_output_location_add,opr_sis);
 }
 
 
-void Source_File_Script_Writer::Construct_Path(char ** pointer,
+void Source_File_Script_Writer::Construct_Path(std::string & path,
 
-     char * string, char opr_sis){
+     std::string string, char opr_sis){
 
-     int index = 0;
+     std::string warehouse_word = "WAREHOUSE";
 
-     char warehouse_word [] = "WAREHOUSE";
-
-     size_t warehouse_path_size = strlen(this->warehouse_path);
+     size_t warehouse_path_size = this->warehouse_path.length();
 
      for(size_t i=0;i<warehouse_path_size;i++){
 
-         (*pointer)[index] = warehouse_path[i];
-
-         index++;
+         path.push_back(this->warehouse_path[i]);         
      }
 
      if(opr_sis == 'w'){
 
-       if(warehouse_path[warehouse_path_size-1] != '\\'){
+       if(this->warehouse_path.back() != '\\'){
 
-          (*pointer)[index] = '\\';
-
-          index++;
+          path.push_back('\\');
        }
      }
 
 
      if(opr_sis == 'l'){
 
-       if(warehouse_path[warehouse_path_size-1] != '/'){
+       if(this->warehouse_path.back() != '/'){
 
-          (*pointer)[index] = '/';
-
-          index++;
+          path.push_back('/');          
        }
      }
 
-     size_t warehouse_word_size = strlen(warehouse_word);
+     size_t warehouse_word_size = warehouse_word.length();
 
      for(size_t i=0;i<warehouse_word_size;i++){
 
-         (*pointer)[index] = warehouse_word[i];
-
-         index++;
+         path.push_back(warehouse_word[i]);         
      }
 
 
      if(opr_sis == 'w'){
 
-        (*pointer)[index] = '\\';
-
-        index++;
+        path.push_back('\\');        
      }
 
 
      if(opr_sis == 'l'){
 
-        (*pointer)[index] = '/';
-
-        index++;
+        path.push_back('/');        
      }
 
 
-     size_t string_size = strlen(string);
+     size_t string_size = string.length();
 
      for(size_t i=0;i<string_size;i++){
 
-        (*pointer)[index] = string[i];
-
-        index++;
+        path.push_back(string[i]);        
      }
 
-     (*pointer)[index] = '\0';
+     path.shrink_to_fit();
 }

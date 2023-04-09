@@ -19,21 +19,11 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_File_Reader;
+    Project_Script_Writer Script_Writer(argv[1],'w');
 
-    Des_File_Reader.Read_Descriptor_File(argv[1]);
-
-    Project_Script_Writer Script_Writer;
-
-    Script_Writer.Build_Compiler_Script(&Des_File_Reader);
+    Script_Writer.Build_Compiler_Script();
 
     Script_Writer.Clear_Dynamic_Memory();
-
-    Des_File_Reader.Clear_Dynamic_Memory();
-
-    std::cout << "\n After Des_File_Reader.Clear_Dynamic_Memory()";
-
-    std::cin.get();
 
     std::cout << "\n The project compiler script has been constructed";
 

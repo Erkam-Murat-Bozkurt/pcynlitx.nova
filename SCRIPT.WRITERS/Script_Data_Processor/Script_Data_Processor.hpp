@@ -16,6 +16,7 @@
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Descriptor_File_Reader.hpp"
+#include "Git_File_List_Receiver.hpp"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
 
@@ -26,6 +27,7 @@ public:
  Script_Data_Processor(char * DesPATH, char opr_sis);
  virtual ~Script_Data_Processor();
  void Process_Script_Data();
+ void Receive_Git_File_List_Info(Git_File_List_Receiver * ptr);
  Script_Data Get_SrcFile_Script_Data(char * file_git_path);
  std::vector<Script_Data> * Get_Script_Data_Address();
  int  Get_Source_File_Number();
@@ -40,10 +42,10 @@ protected:
  void Clear_Script_Data(Script_Data * ptr);
  Script_Data_Collector Data_Collector;
  Source_File_Dependency_Determiner Dep_Determiner;
- Project_Files_Lister File_Lister;
  Descriptor_File_Reader Des_Reader;
  Cpp_FileOperations FileManager;
  CharOperator CString_Proccessor;
+ Git_File_List_Receiver * GitReceiver;
  std::vector<Script_Data> Data;
  Script_Data Temp_Data;
  std::string String_Line;

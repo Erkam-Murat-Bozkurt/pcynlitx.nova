@@ -26,8 +26,17 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_file_path, char opr_sis) :
 
-   DepSelector(des_file_path,opr_sis), Com_Data_Extractor(des_file_path,opr_sis)
+   DepSelector(des_file_path,opr_sis), Com_Data_Extractor(des_file_path,opr_sis),
+   Git_Data_Receiver(des_file_path,opr_sis), Code_Rd(des_file_path,opr_sis)
 {
+
+    this->Git_Data_Receiver.Determine_Git_Repo_Info();
+
+    this->Code_Rd.Receive_Git_Repo_Information(&this->Git_Data_Receiver);
+
+    this->Code_Rd.Read_Project_Source_Code_Files();
+
+    this->DepSelector.Receive_Source_Code_Reader(&this->Code_Rd);
 
 }
 
@@ -43,14 +52,14 @@ void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
      this->Com_Data_Extractor.Clear_Dynamic_Memory();
 }
 
-
+/*
 void Source_File_Dependency_Determiner::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
 
      this->Code_Rd = ptr;
 
      this->DepSelector.Receive_Source_Code_Reader(ptr);
 }
-
+*/
 
 
 void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::string path){

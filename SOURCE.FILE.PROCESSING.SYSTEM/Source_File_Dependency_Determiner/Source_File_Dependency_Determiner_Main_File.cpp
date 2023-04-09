@@ -23,6 +23,8 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
+    /*
+
     Git_File_List_Receiver Git_Data_Receiver(argv[1],'w');
 
     Git_Data_Receiver.Determine_Git_Repo_Info();
@@ -34,13 +36,13 @@ int main(int argc, char ** argv){
 
     Code_Rd.Read_Project_Source_Code_Files();
 
-
+    */
 
     char path [] = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.h";
 
     Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
 
-    Dep_Determiner.Receive_Source_Code_Reader(&Code_Rd);
+    //Dep_Determiner.Receive_Source_Code_Reader(&Code_Rd);
 
     Dep_Determiner.Collect_Dependency_Information();
 

@@ -4,30 +4,28 @@
 
 Script_Data_Processor::Script_Data_Processor(char * DesPATH, char opr_sis) :
 
- File_Lister(DesPATH,opr_sis), Des_Reader(DesPATH),
-
- Data_Collector(DesPATH,opr_sis), Dep_Determiner(DesPATH,opr_sis)
+ Des_Reader(DesPATH), Data_Collector(DesPATH,opr_sis), Dep_Determiner(DesPATH,opr_sis)
 
 {
-     this->Memory_Delete_Condition = true;
+     this->Memory_Delete_Condition = false;
 
      this->source_file_num = 0;
 
      this->Des_Reader.Read_Descriptor_File();
 
-     this->File_Lister.Determine_Git_Repo_Info();
-
-     this->source_file_num 
-     
-     = this->File_Lister.Get_Source_File_Number();
-
      this->Dep_Determiner.Collect_Dependency_Information();
+
+     std::vector<Compiler_Data> * ptr = this->Dep_Determiner.Get_Compiler_Data_Address();
+
+     this->source_file_num = ptr->size();
 }
 
 
 Script_Data_Processor::~Script_Data_Processor(){
 
    if(!this->Memory_Delete_Condition){
+
+       this->Memory_Delete_Condition = true;
 
        this->Clear_Object_Memory();
    }
@@ -40,8 +38,15 @@ void Script_Data_Processor::Clear_Object_Memory(){
 
      this->Des_Reader.Clear_Dynamic_Memory();
 
-     this->File_Lister.Clear_Dynamic_Memory();     
+     this->Dep_Determiner.Clear_Dynamic_Memory();
 }
+
+
+ void Script_Data_Processor::Receive_Git_File_List_Info(Git_File_List_Receiver * ptr){
+ 
+      this->GitReceiver = ptr;
+ }
+
 
 
 void Script_Data_Processor::Process_Script_Data(){
@@ -54,13 +59,6 @@ void Script_Data_Processor::Process_Script_Data(){
         exit(0);
      }
 
-     this->File_Lister.Clear_Dynamic_Memory();
-
-     std::cout << "\n this->source_file_num:" 
-
-     << this->source_file_num;
-
-     std::cin.get();
 
      if(this->source_file_num > 0){
 
@@ -68,13 +66,11 @@ void Script_Data_Processor::Process_Script_Data(){
 
         this->Determine_Script_Order();
      }
-     
-     std::cout << "\n The end of Process_Script_Data";
 
-     std::cin.get();
 }
 
 void Script_Data_Processor::Determine_Script_Information(){
+
 
      for(int i=0;i<this->source_file_num;i++){
 
@@ -82,32 +78,16 @@ void Script_Data_Processor::Determine_Script_Information(){
 
         this->Data_Collector.Receive_Compiler_Data(&Cmp_Dt);
 
-        this->Data_Collector.Determine_Source_File_Compilation_Information(&this->Temp_Data,i);
-
-        std::cout << "\n --1";
+        this->Data_Collector.Determine_Source_File_Compilation_Information(&this->Temp_Data,Cmp_Dt.header_name);
 
         this->Data_Collector.Determine_Header_Files_Inclusion_Number(&this->Temp_Data,i);
 
-        std::cout << "\n --2";
-
         this->Data_Collector.Determine_Make_File_Name(&this->Temp_Data,i);
-
-        std::cout << "\n --3";
 
         this->Data.push_back(this->Temp_Data);
 
-        std::cout << "\n --4";
-
         this->Clear_Script_Data(&this->Temp_Data);
-
-        std::cout << "\n --5";
-
-        std::cout << "\n temp data loaded";
      }
-
-     std::cout << "\n this->Data.size():" << this->Data.size();
-
-     std::cin.get();
 }
 
 
@@ -178,9 +158,13 @@ void Script_Data_Processor::Clear_Script_Data(std::vector<Script_Data> * ptr){
 
      for(size_t i=0;i<data_size;i++){
      
+         /*
+
          this->Clear_String_Vector(&ptr->at(i).header_files_git_dir);
 
          this->Clear_String_Vector(&ptr->at(i).header_file_names);
+
+          */
 
          this->Clear_String_Memory(&ptr->at(i).object_file_name);
          
@@ -226,9 +210,13 @@ void Script_Data_Processor::Clear_String_Memory(std::string * ptr){
 
 void Script_Data_Processor::Clear_Script_Data(Script_Data * ptr){
 
+     /*
+
      this->Clear_String_Vector(&this->Temp_Data.header_files_git_dir);
 
      this->Clear_String_Vector(&this->Temp_Data.header_file_names);
+  
+     */
   
      this->Clear_String_Memory(&this->Temp_Data.object_file_name);
 

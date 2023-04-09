@@ -5,6 +5,7 @@
 #include <cstring>
 #include "Descriptor_File_Reader.hpp"
 #include "Script_Data_Processor.hpp"
+#include "Git_File_List_Receiver.hpp"
 
 int main(int argc, char ** argv){
 
@@ -18,7 +19,14 @@ int main(int argc, char ** argv){
     }
 
 
+    Git_File_List_Receiver Receiver(argv[1],'w');
+
+    Receiver.Determine_Git_Repo_Info();
+
+
     Script_Data_Processor Srt_Data_Processor(argv[1],'w');
+
+    Srt_Data_Processor.Receive_Git_File_List_Info(&Receiver);
 
     Srt_Data_Processor.Process_Script_Data();
 

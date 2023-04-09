@@ -5,6 +5,7 @@ Descriptor_File_Reader::Descriptor_File_Reader(char * FilePATH) :
 
   Syntax_Controller(FilePATH), Data_Collector(FilePATH)
 {
+
    this->Initialize_Members();
 
    size_t path_size = strlen(FilePATH);

@@ -34,6 +34,10 @@ int main(int argc, char ** argv){
 
         std::cout << "\n System path     -"  << i << " :" << Receiver.Get_File_System_Path(i);
 
+        std::cout << "\n Git Record dir  -"  << i << " :" << Receiver.Get_Git_Record_Directory(i);
+
+        std::cout << "\n File Name  -"       << i << " :" << Receiver.Get_File_Name(i);
+
         std::cout << "\n";
     }
 

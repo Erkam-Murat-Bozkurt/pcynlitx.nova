@@ -115,7 +115,12 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){
             int str  = i*division;
 
             int end  = (i+1)*division;
-                 
+
+            if(i==7){
+            
+               end = dt_size;
+            }
+
             this->threads[i] = std::thread(Source_File_Compiler_Data_Extractor::Process_Compiler_Data,this,i,str,end);     
         }
     
@@ -149,7 +154,7 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){
 void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Thread(){ 
 
      std::size_t dt_size = this->dep_data_ptr->size();
-
+     
      for(std::size_t i= 0;i<dt_size;i++){
 
          std::vector<Header_Dependency> * hdr_ptr = &this->dep_data_ptr->at(i);

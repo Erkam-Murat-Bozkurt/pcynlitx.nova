@@ -23,25 +23,25 @@
 class Project_Script_Writer
 {
 public:
- Project_Script_Writer();
- Project_Script_Writer(const Project_Script_Writer & orig);
+ Project_Script_Writer(char * DesPATH, char opr_sis);
  virtual ~Project_Script_Writer();
- void Build_Compiler_Script(Descriptor_File_Reader * pointer);
+ void Build_Compiler_Script();
  void Clear_Dynamic_Memory();
 protected:
- void Determine_Script_Information();
- void Initialize_Data_Structures();
  void Write_Source_File_Scripts();
  void Write_The_Project_Script();
- void Determine_Project_Script_Path(char * paths);
- void Construct_Path(char ** pointer, char * string, char * warehouse_path);
+ void Determine_Project_Script_Path(std::string paths);
+ void Construct_Path(std::string & path, std::string str, std::string wp);
+ Git_File_List_Receiver Git_Receiver;
+ Descriptor_File_Reader Des_Reader;
  Script_Data_Processor Src_Data_Processor;
  Source_File_Script_Writer Src_Script_Writer;
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
  int source_file_num;
- Script_Data * Data_Pointer;
- char * script_path;
+ std::vector<Script_Data> * Data_Pointer;
+ std::string script_path;
+ char opr_sis;
  bool Memory_Delete_Condition;
 };
 

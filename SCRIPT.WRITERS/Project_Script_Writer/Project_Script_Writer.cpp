@@ -2,45 +2,47 @@
 
 #include "Project_Script_Writer.h"
 
-Project_Script_Writer::Project_Script_Writer(){
+Project_Script_Writer::Project_Script_Writer(char * DesPATH, char opr_sis) :
 
+    Src_Data_Processor(DesPATH,opr_sis), Git_Receiver(DesPATH,opr_sis), Des_Reader(DesPATH)
+{
      this->Memory_Delete_Condition = true;
 
      this->source_file_num = 0;
 
-     this->script_path = nullptr;
-
      this->Data_Pointer = nullptr;
+
+     this->opr_sis = opr_sis;
+
+     this->Des_Reader.Read_Descriptor_File();
+
+     this->Git_Receiver.Determine_Git_Repo_Info();
+
+     this->Src_Data_Processor.Receive_Git_File_List_Info(&this->Git_Receiver);    
 }
 
-Project_Script_Writer::Project_Script_Writer(const Project_Script_Writer & orig){
-
-
-}
 
 Project_Script_Writer::~Project_Script_Writer(){
 
    if(!this->Memory_Delete_Condition){
+    
+       this->Memory_Delete_Condition = true;
 
        this->Clear_Dynamic_Memory();
-
-       std::cout << "\n after Project_Script_Writer::Clear_Dynamic_Memory";
-
-       std::cin.get();
    }
 }
 
-void Project_Script_Writer::Build_Compiler_Script(Descriptor_File_Reader * Des_File_Reader){
+void Project_Script_Writer::Build_Compiler_Script(){
 
-    this->Src_Data_Processor.Process_Script_Data(Des_File_Reader);
+    this->Src_Data_Processor.Process_Script_Data();
 
-    this->Src_Script_Writer.Receive_Descriptor_File_Reader(Des_File_Reader);
+    this->Src_Script_Writer.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
-    this->Data_Pointer    = this->Src_Data_Processor.Get_Script_Data();
+    this->Data_Pointer    = this->Src_Data_Processor.Get_Script_Data_Address();
 
     this->source_file_num = this->Src_Data_Processor.Get_Source_File_Number();
 
-    char * warehouse_path = Des_File_Reader->Get_Warehouse_Location();
+    std::string warehouse_path = this->Des_Reader.Get_Warehouse_Location();
 
     this->Determine_Project_Script_Path(warehouse_path);
 
@@ -49,19 +51,13 @@ void Project_Script_Writer::Build_Compiler_Script(Descriptor_File_Reader * Des_F
     this->Write_The_Project_Script();
 }
 
-void Project_Script_Writer::Determine_Project_Script_Path(char * warehouse_path){
+void Project_Script_Writer::Determine_Project_Script_Path(std::string warehouse_path){
 
-     size_t warehouse_path_size = strlen(warehouse_path);
-
-     char script_path_add [] = "Project_Build_Script.ps1";
-
-     size_t script_path_size = warehouse_path_size + strlen(script_path_add);
+     std::string script_path_add = "Project_Build_Script.ps1";
 
      this->Memory_Delete_Condition = false;
 
-     this->script_path = new char [5*script_path_size];
-
-     this->Construct_Path(&this->script_path,script_path_add,warehouse_path);
+     this->Construct_Path(this->script_path,script_path_add,warehouse_path);
 }
 
 
@@ -69,13 +65,13 @@ void Project_Script_Writer::Write_Source_File_Scripts(){
 
      for(int i=0;i<this->source_file_num;i++){
 
-        char * src_dir = this->Data_Pointer[i].source_file_dir;
+        std::string src_dir = this->Data_Pointer->at(i).source_file_dir;
 
         this->DirectoryManager.ChangeDirectory(src_dir);
 
         this->Src_Script_Writer.Clear_Dynamic_Memory();
 
-        this->Src_Script_Writer.Receive_Script_Data(&this->Data_Pointer[i]);
+        this->Src_Script_Writer.Receive_Script_Data(&this->Data_Pointer->at(i));
 
         this->Src_Script_Writer.Write_Source_File_Script('w');
      }
@@ -133,13 +129,13 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile(" ");
 
-         this->FileManager.WriteToFile(this->Data_Pointer[i].source_file_dir);
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
 
          this->FileManager.WriteToFile("\n\n");
 
          this->FileManager.WriteToFile("PowerShell .\\");
 
-         this->FileManager.WriteToFile(this->Data_Pointer[i].source_file_name);
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_name);
 
          this->FileManager.WriteToFile(".ps1");
 
@@ -147,7 +143,7 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("# Dependency: ");
 
-         std::string dep = std::to_string(this->Data_Pointer[i].dependency);
+         std::string dep = std::to_string(this->Data_Pointer->at(i).dependency);
 
          this->FileManager.WriteToFile(dep);
 
@@ -191,44 +187,31 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
 void Project_Script_Writer::Clear_Dynamic_Memory(){
 
-     if(!this->Memory_Delete_Condition){
-
-         this->Memory_Delete_Condition = true;
-
-         this->Src_Data_Processor.Clear_Dynamic_Memory();
-     }
+     this->Src_Data_Processor.Clear_Dynamic_Memory();             
 }
 
-void Project_Script_Writer::Construct_Path(char ** pointer,
+void Project_Script_Writer::Construct_Path(std::string & path,
 
-    char * string, char * warehouse_path){
+     std::string string, std::string warehouse_path){
 
      int index = 0;
 
-     size_t warehouse_path_size = strlen(warehouse_path);
+     size_t warehouse_path_size = warehouse_path.length();
 
      for(size_t i=0;i<warehouse_path_size;i++){
 
-         (*pointer)[index] = warehouse_path[i];
-
-         index++;
+         path.push_back(warehouse_path[i]);
      }
 
-     if(warehouse_path[warehouse_path_size-1] != '\\'){
+     if(warehouse_path.back() != '\\'){
 
-        (*pointer)[index] = '\\';
-
-        index++;
+        path.push_back('\\');        
      }
 
-     size_t string_size = strlen(string);
+     size_t string_size = string.length();
 
      for(size_t i=0;i<string_size;i++){
 
-        (*pointer)[index] = string[i];
-
-        index++;
-     }
-
-     (*pointer)[index] = '\0';
+        path.push_back(string[i]);        
+     }     
 }
