@@ -99,7 +99,7 @@ void Script_Data_Processor::Determine_Script_Order(){
 
              int dep_i = this->Data.at(i).dependency;
 
-             int dep_j = this->Data.at(i).dependency;
+             int dep_j = this->Data.at(j).dependency;
 
              Script_Data temp;
 
@@ -107,9 +107,9 @@ void Script_Data_Processor::Determine_Script_Order(){
 
                  temp  = this->Data.at(i);
 
-                 this->Data.at(i) = this->Data.at(i);
+                 this->Data.at(i) = this->Data.at(j);
 
-                 this->Data.at(i) = temp;
+                 this->Data.at(j) = temp;
              }
            }
      }
