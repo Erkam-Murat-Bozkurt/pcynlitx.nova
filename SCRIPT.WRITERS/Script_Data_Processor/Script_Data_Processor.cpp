@@ -71,7 +71,6 @@ void Script_Data_Processor::Process_Script_Data(){
 
 void Script_Data_Processor::Determine_Script_Information(){
 
-
      for(int i=0;i<this->source_file_num;i++){
 
         Compiler_Data Cmp_Dt = this->Dep_Determiner.Get_Compiler_Data(i);
@@ -87,6 +86,7 @@ void Script_Data_Processor::Determine_Script_Information(){
         this->Data.push_back(this->Temp_Data);
 
         this->Clear_Script_Data(&this->Temp_Data);
+
      }
 }
 
@@ -179,6 +179,9 @@ void Script_Data_Processor::Clear_Script_Data(std::vector<Script_Data> * ptr){
          this->Clear_String_Memory(&ptr->at(i).make_file_name);
 
          this->Clear_String_Memory(&ptr->at(i).warehouse_path);
+
+         this->Clear_String_Memory(&ptr->at(i).src_name_without_ext);
+
      }
  
 }
@@ -232,4 +235,7 @@ void Script_Data_Processor::Clear_Script_Data(Script_Data * ptr){
      this->Clear_String_Memory(&this->Temp_Data.make_file_name);
 
      this->Clear_String_Memory(&this->Temp_Data.warehouse_path);
+
+     this->Clear_String_Memory(&this->Temp_Data.src_name_without_ext);
+
 }

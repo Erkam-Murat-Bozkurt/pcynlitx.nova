@@ -190,7 +190,8 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Threa
             buffer.dependent_headers_paths.shrink_to_fit();
 
 
-            bool is_indep = this->is_this_independent_header(buffer.header_name);
+            bool is_indep = false;
+            this->is_this_independent_header(buffer.header_name,is_indep);
 
             if(!is_indep){
 
@@ -254,7 +255,8 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
 
 
 
-         bool is_indep = this->is_this_independent_header(this->buffer.header_name);
+         bool is_indep = false;
+         this->is_this_independent_header(this->buffer.header_name,is_indep);
 
          if(!is_indep){
 
@@ -313,7 +315,9 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
             buffer.dependent_headers_paths.shrink_to_fit();
 
 
-            bool is_indep = this->is_this_independent_header(buffer.header_name);
+            bool is_indep = false;
+            
+            this->is_this_independent_header(buffer.header_name,is_indep);
 
             if(!is_indep){
 
@@ -445,12 +449,12 @@ void Source_File_Compiler_Data_Extractor::Extract_Obj_File_Name_From_Header_Name
 
 
 
-bool Source_File_Compiler_Data_Extractor::is_this_independent_header(std::string header_name)
+void Source_File_Compiler_Data_Extractor::is_this_independent_header(std::string header_name, bool & is_ind)
 {
-     this->is_independent_header = false;
+     is_ind = false;
 
      int ind_header_num = this->File_Lister.Get_Indenpendent_Header_Files_Number();
-     
+          
      for(int i=0;i<ind_header_num;i++){
 
          std::string ind_header_path = this->File_Lister.Get_Independent_Header_File(i);
@@ -463,13 +467,11 @@ bool Source_File_Compiler_Data_Extractor::is_this_independent_header(std::string
 
          if(is_equal){
 
-            this->is_independent_header = true;
+            is_ind = true;
 
             break;
          }
       }
-
-      return this->is_independent_header;
 }
 
 

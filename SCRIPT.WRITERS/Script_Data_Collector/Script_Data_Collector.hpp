@@ -20,6 +20,7 @@ struct Script_Data
   std::string object_file_name;
   std::string object_file_path;
   std::string source_file_name;
+  std::string src_name_without_ext;
   std::string source_file_dir;
   std::string source_file_git_record_dir;
   std::string make_file_name;

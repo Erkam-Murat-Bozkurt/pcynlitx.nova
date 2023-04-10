@@ -22,6 +22,7 @@
 #include <vector>
 #include <mutex>
 #include <thread>
+#include <chrono>
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Git_File_List_Receiver.hpp"
@@ -32,6 +33,8 @@
 #include "Cpp_FileOperations.h"
 #include "DirectoryOperations.h"
 #include "IntToCharTranslater.h"
+
+using namespace std::chrono_literals;
 
 
 struct Compiler_Data
@@ -63,7 +66,7 @@ protected:
  void Extract_Obj_File_Name_From_Header_Name(std::string * object_name,
       std::string header_name);
  bool Include_Decleration_Test(std::string string);
- bool is_this_independent_header(std::string name);
+ void is_this_independent_header(std::string name, bool & is_ind);
  void Extract_Header_File_Name_From_Path(std::string * name,
       std::string path);
  void Process_Compiler_Data(int start, int end, int thm);

@@ -91,6 +91,12 @@ void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script
 
      this->Place_String(&ptr->source_file_dir,src_dir);
 
+
+     std::string src_name_without_ext = this->Build_Dt->at(record_index).File_Name;
+
+     this->Place_String(&ptr->src_name_without_ext,src_name_without_ext);
+
+
      /*
 
      std::string Hdr_Name = this->Build_Dt->at(src_num).class_header_file_name;
@@ -277,6 +283,7 @@ void Script_Data_Collector::Find_Data_Record_Index(std::string header_name, int 
 
          std::string FileName = this->Build_Dt->at(i).File_Name;
 
+
          bool is_equal = this->CompareString(search_name,FileName);
 
          if(is_equal){
@@ -325,10 +332,6 @@ void Script_Data_Collector::Find_Git_Record_Dir(std::string header_name, std::st
      for(size_t i=0;i<data_size;i++){
      
          std::string FileName = this->Build_Dt->at(i).File_Name_With_Ext;
-
-         std::cout << "\n FileName:" << FileName;
-
-         std::cin.get();
 
          std::string head_name = this->Build_Dt->at(i).class_header_file_name;
 

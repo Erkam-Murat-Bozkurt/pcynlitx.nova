@@ -135,7 +135,7 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("PowerShell .\\");
 
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_name);
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).src_name_without_ext);
 
          this->FileManager.WriteToFile(".ps1");
 
