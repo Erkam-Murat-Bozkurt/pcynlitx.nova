@@ -48,7 +48,6 @@ protected:
  void Clear_String_Memory(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  bool CompareString(std::string str1, std::string Str2);
- Source_File_Dependency_Determiner Dep_Determiner;
  Descriptor_File_Reader Des_File_Reader;
  Project_Files_Lister Dir_Lister;
  std::vector<Build_System_Data> * Build_Dt;

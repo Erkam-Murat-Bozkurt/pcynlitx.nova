@@ -50,7 +50,6 @@ protected:
  std::vector<std::vector<Header_Dependency>> * Vector_List_ptr;
  std::vector<Header_Dependency> * Vector_ptr;
  std::vector<Header_Dependency> * Buffer_ptr;
- void Set_Priorities(std::vector<Header_Dependency> * ptr);
  int  Find_Header_Dependency(std::string hdr_name);
  bool CompareString(std::string Str_1, std::string Str_2);
  bool isStringsEqual;

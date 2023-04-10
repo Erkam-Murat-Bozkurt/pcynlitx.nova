@@ -13,7 +13,7 @@ Project_Src_Code_Rdr::Project_Src_Code_Rdr(char * DesPath, char opr_sis)
    
        this->Hdr_Determiner[i] = new Header_File_Determiner(DesPath,opr_sis);
        this->Src_Determiner[i] = new Source_File_Determiner;
-   }   
+   }
 }
 
 
@@ -115,6 +115,10 @@ void Project_Src_Code_Rdr::Read_Project_Source_Code_Files(){
      }
 
      this->Src_Code_Dt.shrink_to_fit();
+
+     std::cout << "\n\n The project source code has been read";  
+
+     std::cout << "\n";
 }
 
 
@@ -211,7 +215,10 @@ void Project_Src_Code_Rdr::Read_Source_Code_Single_Thread(){
 
             this->Clear_String_Memory(&Temp.sys_path);
          }
-     } 
+     }
+
+     std::cout << "\n\n The project source code has been read";
+     std::cout << "\n";     
 }
 
 

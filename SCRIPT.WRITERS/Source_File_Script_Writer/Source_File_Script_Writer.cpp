@@ -29,7 +29,6 @@ void Source_File_Script_Writer::Clear_String_memory(std::string & str)
 
 void Source_File_Script_Writer::Clear_Dynamic_Memory(){
 
-
      this->Clear_String_memory(this->script_path);
 
      this->Clear_String_memory(this->headers_locations);
@@ -430,6 +429,13 @@ void Source_File_Script_Writer::Determine_Script_Path(char opr_sis){
 
 
 void Source_File_Script_Writer::Determine_Warehouse_Paths(char opr_sis){
+
+     this->Clear_String_memory(this->headers_locations);
+
+     this->Clear_String_memory(this->object_files_location);
+
+     this->Clear_String_memory(this->compiler_output_location);
+
 
      std::string headers_location_add = "PROJECT.HEADER.FILES";
 

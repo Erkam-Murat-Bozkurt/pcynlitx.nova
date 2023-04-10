@@ -3,9 +3,7 @@
 
 Script_Data_Collector::Script_Data_Collector(char * DesPATH, char opr_sis) :
   
-  Dep_Determiner(DesPATH,opr_sis), Des_File_Reader(DesPATH),
-
-  Dir_Lister(DesPATH,opr_sis)
+   Des_File_Reader(DesPATH), Dir_Lister(DesPATH,opr_sis)
 {
      this->Memory_Delete_Condition = false;
 
@@ -27,8 +25,6 @@ Script_Data_Collector::~Script_Data_Collector(){
    if(!this->Memory_Delete_Condition){
 
       this->Memory_Delete_Condition = true;
-
-      this->Dep_Determiner.Clear_Dynamic_Memory();
 
       this->Dir_Lister.Clear_Dynamic_Memory();      
    }
