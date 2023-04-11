@@ -69,11 +69,9 @@ protected:
  void Set_Included_Header_Number(std::vector<Header_Dependency> * ptr, int dep_num);
  void Extract_Header_File_Name_From_Decleration(std::string * header_name,
       std::string string);
- void Determine_Warehouse_Header_Dir(char operating_sis);
  void Determine_Header_Repo_Warehouse_Path( std::string * wrd_path,
       std::string file_name, char opr_sis);
  bool Is_This_File_Aready_Searched(std::string name);
- void Delete_Spaces_on_String(std::string * pointer);
  void Place_String(std::string * str_pointer, std::string string);
  bool Include_Decleration_Test(std::string string);
  void Extract_File_Name_From_Path(std::string * ptr, std::string str);

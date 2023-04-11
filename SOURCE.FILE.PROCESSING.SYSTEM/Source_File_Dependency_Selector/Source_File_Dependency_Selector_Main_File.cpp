@@ -41,7 +41,7 @@ int main(int argc, char ** argv){
 
     Code_Rd.Read_Project_Source_Code_Files();
 
-    char path [] = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.h";
+    char path [] = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\CLASS.DECLERATION.READER\\Tools\\StringOperator\\StringOperator.h";
 
     Source_File_Dependency_Selector Dep_Selector(argv[1],'w');
 
@@ -52,18 +52,9 @@ int main(int argc, char ** argv){
       Dep_Selector.Determine_Source_File_Dependencies(path);
 
       Dep_Selector.Print_Dependency_List();
+
+      std::cout << "\n Dependency size:" << Dep_Selector.Get_Dependency_List_Size();
     }
-
-    /*
-    
-    if(src_file_num > 0){
-
-      Dep_Selector.Determine_Source_File_Dependencies();
-
-      Dep_Selector.Print_Dependency_List();
-    }
-
-    */
 
     std::cout << "\n\n THE END OF THE PROGRAM \n\n";
 

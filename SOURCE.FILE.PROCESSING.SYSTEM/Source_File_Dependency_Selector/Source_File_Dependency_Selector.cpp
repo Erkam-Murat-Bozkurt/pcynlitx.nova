@@ -110,37 +110,48 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
      this->Dependency_Data.shrink_to_fit();
 
 
+     
+
+     int inc_header_num = this->Dependent_List.at(0).base_included_hdr_num ;
+
+
+     if(inc_header_num > 0){
+     
+        size_t list_size = this->Dependent_List.size();
+
+        std::vector<Header_Dependency> Temp_List = this->Dependent_List;
+
+        this->Clear_Vector_Memory(&this->Dependent_List);  
+
+
+        for(size_t i=0;i<list_size;i++){
+
+            Header_Dependency Data = Temp_List.at(i);
+
+            std::string sub_path = Data.root_header_path;
+
+            this->Extract_Dependency_Data(sub_path);
+
+            this->Set_Included_Header_Number(&this->Dependent_List,this->Dep_Counter);
+
+            this->Dep_Counter = 0;
+
+            this->Dependency_Data.push_back(this->Dependent_List);
+
+            this->Dependency_Data.shrink_to_fit();
+
+            this->Clear_Vector_Memory(&this->Dependent_List);  
+        }
+     }
+
      // THE DEPENDENCIES COLLECTED FOR THE ROOT PATH
 
-     size_t list_size = this->Dependent_List.size();
 
-     std::vector<Header_Dependency> Temp_List = this->Dependent_List;
-
-     this->Clear_Vector_Memory(&this->Dependent_List);  
-
-
-     for(size_t i=0;i<list_size;i++){
-
-         Header_Dependency Data = Temp_List.at(i);
-
-         std::string sub_path = Data.root_header_path;
-
-         this->Extract_Dependency_Data(sub_path);
-
-         this->Set_Included_Header_Number(&this->Dependent_List,this->Dep_Counter);
-
-         this->Dep_Counter = 0;
-
-         this->Dependency_Data.push_back(this->Dependent_List);
-
-         this->Dependency_Data.shrink_to_fit();
-
-         this->Clear_Vector_Memory(&this->Dependent_List);  
-     }
 
      this->Clear_Vector_Memory(&this->Dependent_List);      
 
      this->Info_Collector.Clear_Dynamic_Memory();  
+
 }
 
 
@@ -178,7 +189,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(){
          this->Dep_Counter = 0;
 
          this->Dependency_Data.push_back(this->Dependent_List);
- 
+
          this->Dependency_Data.shrink_to_fit();
 
          this->Clear_Vector_Memory(&this->Dependent_List);  
@@ -211,7 +222,6 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
          this->Clear_String_Memory(&tmp_string);
      }
 
-
      /*  The inclusion number determined */
 
      if(inclusion_number>0){
@@ -219,8 +229,6 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
         for(size_t k=0;k<FileSize;k++){
 
             std::string tmp_string =  FileDtPtr->FileContent.at(k);
-
-            //this->Delete_Spaces_on_String(&tmp_string);
 
             bool is_include_decleration = this->Include_Decleration_Test(tmp_string);
 
@@ -258,6 +266,8 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
                    this->Place_String(&temp.root_header_path,path);
 
                    temp.rcr_srch_complated= true;
+                   temp.base_included_hdr_num++;
+
 
                    this->Dependent_List.push_back(temp);
 
@@ -295,13 +305,14 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
                 this->Place_String(&temp.root_header_path,path);
 
                 temp.rcr_srch_complated= true;
+                temp.included_file_hdr_num = 0;
+                temp.base_included_hdr_num = 0;
 
                 this->Dependent_List.push_back(temp);
 
                 this->Dependent_List.shrink_to_fit();
 
-                this->Clear_Temporary_String_Memory(&temp);
-             
+                this->Clear_Temporary_String_Memory(&temp);            
              }
       }
 
@@ -458,31 +469,6 @@ void Source_File_Dependency_Selector::Extract_Header_File_Name_From_Decleration(
 
          header_name->push_back(string[i]);
      }
-}
-
-void Source_File_Dependency_Selector::Delete_Spaces_on_String(std::string * str)
-{
-     size_t string_size = str->length();
-
-     bool search_cond = true;
-
-     do{
-
-         search_cond = false;
-
-         for(size_t i=0;i<str->length();i++){
-
-             if((*str)[i] == ' '){
-
-               search_cond = true;
-
-               str->erase(i,1);
-             }
-         }
-
-     }while(search_cond);
-
-     str->shrink_to_fit();
 }
 
 
@@ -676,7 +662,6 @@ void Source_File_Dependency_Selector::Clear_Vector_Memory(std::vector<Header_Dep
 
  void Source_File_Dependency_Selector::Clear_Temporary_String_Memory(Header_Dependency * temp){
  
-
        this->Clear_String_Memory(&temp->Header_Name);
 
        this->Clear_String_Memory(&temp->root_header);

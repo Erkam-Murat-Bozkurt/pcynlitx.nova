@@ -373,7 +373,7 @@ void Source_File_Script_Writer::Determine_Script_Path(char opr_sis){
 
      std::string src_dir  = this->Src_Data_Pointer->source_file_dir;
 
-     std::string src_name = this->Src_Data_Pointer->source_file_name;
+     std::string src_name = this->Src_Data_Pointer->src_name_without_ext;
 
 
 

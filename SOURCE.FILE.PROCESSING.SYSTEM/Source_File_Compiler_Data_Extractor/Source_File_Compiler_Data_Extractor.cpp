@@ -24,7 +24,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Source_File_Compiler_Data_Extractor.hpp"
 
-Source_File_Compiler_Data_Extractor::Source_File_Compiler_Data_Extractor(char * des_file_path, char opr_sis) :
+Source_File_Compiler_Data_Extractor::Source_File_Compiler_Data_Extractor(char * des_file_path, 
+
+    char opr_sis) :
 
     File_Lister(des_file_path, opr_sis)
 {
@@ -234,7 +236,7 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
 
         this->buffer.header_repo_path = hdr_ptr->at(0).repo_warehouse_path;
 
-        this->buffer.priority = data_size;
+        this->buffer.priority = hdr_ptr->at(0).base_included_hdr_num;
          
         for(size_t k=0;k<data_size;k++){
             
@@ -296,7 +298,7 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
 
             buffer.header_repo_path = hdr_ptr->at(0).repo_warehouse_path;            
 
-            buffer.priority = data_size;
+            buffer.priority = hdr_ptr->at(0).base_included_hdr_num;
 
 
             for(size_t k=0;k<data_size;k++){
@@ -353,7 +355,7 @@ void Source_File_Compiler_Data_Extractor::Process_Data(int thm,
 
      buffer.header_repo_path = hdr_ptr->at(0).repo_warehouse_path;
 
-     buffer.priority = data_size;
+     buffer.priority = hdr_ptr->at(0).base_included_hdr_num;
          
              
      for(size_t k=start;k<end;k++){
