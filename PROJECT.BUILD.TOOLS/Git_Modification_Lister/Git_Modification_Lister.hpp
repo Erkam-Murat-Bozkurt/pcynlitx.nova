@@ -21,13 +21,14 @@
 class Git_Modification_Lister
 {
 public:
- Git_Modification_Lister(char * DesPath);
- Git_Modification_Lister(std::string DesPath);
- virtual ~Git_Modification_Lister();
+ Git_Modification_Lister(char * DesPath, char opr_sis);
+ Git_Modification_Lister(std::string DesPath, char opr_sis);
+ virtual ~Git_Modification_Lister(); 
  void Write_Git_Modification_File();
  void Clear_Dynamic_Memory();
 protected:
  void Initialize_Mermbers();
+ void Determine_Warehouse_Path();
  void Execute_System_Call(char * cmd);
  void List_Files_in_Repo();
  void Determine_Git_Modification_File_Path();
@@ -40,9 +41,11 @@ protected:
  Cpp_FileOperations FileManager;
  Custom_System_Interface System_Interface;
  std::string Warehouse;
+ std::string warehouse_path;
  std::string modification_file_path;
  std::string git_listing_command;
  std::string Repo_Dir;
+ char opr_sis;
  char * CString;
  int  File_Line_Number;
  bool Memory_Delete_Condition;

@@ -22,13 +22,11 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Git_Modification_Lister Lister(argv[1]);
+    Git_Modification_Lister Lister(argv[1],'w');
 
     Lister.Write_Git_Modification_File();
 
     std::cout << "\n Modification file list constructed..";
-
-    std::cin.get();
 
     std::cout << "\n\n";
 

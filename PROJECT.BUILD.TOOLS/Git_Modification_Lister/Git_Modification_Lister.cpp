@@ -3,7 +3,7 @@
 #include "Git_Modification_Lister.hpp"
 
 
-Git_Modification_Lister::Git_Modification_Lister(char * DesPath) :
+Git_Modification_Lister::Git_Modification_Lister(char * DesPath, char opr_sis) :
 
     Des_Reader(DesPath)
 {
@@ -27,11 +27,13 @@ Git_Modification_Lister::Git_Modification_Lister(char * DesPath) :
     }
 
     this->Des_Reader.Clear_Dynamic_Memory();
+
+    this->opr_sis = opr_sis;
 }
 
 
 
-Git_Modification_Lister::Git_Modification_Lister(std::string DesPath) :
+Git_Modification_Lister::Git_Modification_Lister(std::string DesPath, char opr_sis) :
 
     Des_Reader(DesPath)
 {
@@ -72,6 +74,8 @@ void Git_Modification_Lister::Clear_Dynamic_Memory()
 
          this->Clear_String_Memory(&this->Warehouse);
 
+         this->Clear_String_Memory(&this->warehouse_path);
+
          this->Clear_String_Memory(&this->Repo_Dir);
 
          this->Clear_String_Memory(&this->modification_file_path);
@@ -96,11 +100,54 @@ void Git_Modification_Lister::Write_Git_Modification_File()
 {
      this->Memory_Delete_Condition = false;
 
+     this->Determine_Warehouse_Path();
+
      this->Determine_Git_Modification_File_Path();
 
      this->Determine_Git_Listing_Command();
 
      this->List_Files_in_Repo();
+}
+
+
+void Git_Modification_Lister::Determine_Warehouse_Path(){
+
+     std::string warehouse_word  ="WAREHOUSE";
+
+     size_t word_size = warehouse_word.length();
+
+     size_t wr_location_size = this->Warehouse.length();
+
+     for(size_t i=0;i<wr_location_size;i++){
+
+         this->warehouse_path.push_back(this->Warehouse[i]);
+     }
+
+
+     if(this->opr_sis == 'w'){
+
+        if(this->Warehouse.back()!= '\\'){
+        
+           this->warehouse_path.push_back('\\');        
+        }        
+     }
+     else{
+
+          if(this->opr_sis == 'l'){
+
+             if(this->Warehouse.back()!='/'){
+                         
+                this->warehouse_path.push_back('/');        
+             }             
+          }
+     }
+
+     for(size_t i=0;i<word_size;i++){
+
+         this->warehouse_path.push_back(warehouse_word[i]);
+     }
+
+     this->warehouse_path.shrink_to_fit();
 }
 
 
@@ -110,22 +157,21 @@ void Git_Modification_Lister::Determine_Git_Modification_File_Path()
 
      size_t file_name_size = file_name.length();
 
-     size_t warehouse_path_size = this->Warehouse.length();
-
+     size_t warehouse_path_size = this->warehouse_path.length();
 
      for(size_t i=0;i<warehouse_path_size;i++){
 
-         this->modification_file_path.push_back(this->Warehouse[i]) ;
+         this->modification_file_path.push_back(this->warehouse_path[i]) ;
      }
 
-     if(this->Warehouse[warehouse_path_size-1] != '\\'){
+     if(this->Warehouse.back() != '\\'){
 
         this->modification_file_path.push_back('\\') ;
      }
 
      for(size_t i=0;i<file_name_size;i++){
 
-        this->modification_file_path.push_back(file_name[i]) ;
+        this->modification_file_path.push_back(file_name[i]);
      }
 }
 
