@@ -10,9 +10,8 @@
 class DataRecorder
 {
 public:
-  DataRecorder();
+  DataRecorder(char * Path);
   virtual ~DataRecorder();
-  void SetFilePath(char * Data_File_Path);
   void Add_Data_Record(char * Data_Type, char * Data_Record);
   void Clear_Data_Record(char * Data_Type);
   void Replace_Data_Record(char * Data_Record);
@@ -36,7 +35,7 @@ public:
   int Get_Record_Point();
   int Get_Data_Record_Start_Point();
 private:
-  bool Determine_Is_This_Line_A_Record_Line(char * File_Line);
+  bool Determine_Is_This_Line_A_Record_Line(std::string File_Line);
   bool Is_This_First_Brace(char * string);
   bool Is_This_Last_Brace(char * string);
   bool Is_This_Inside_of_Record_Area(char * string);

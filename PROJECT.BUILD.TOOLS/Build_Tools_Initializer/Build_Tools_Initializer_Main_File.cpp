@@ -19,10 +19,10 @@ int main(int argc, char ** argv){
     }
 
 
-    Build_Tools_Initializer Initializer;
+    Build_Tools_Initializer Initializer(argv[1],'w');
 
 
-    Initializer.Setup_Build_Tools(argv[1]);
+    Initializer.Setup_Build_Tools();
 
     std::cout << "\n The end of the program ..";
 

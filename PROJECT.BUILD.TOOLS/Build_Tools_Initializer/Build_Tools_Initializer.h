@@ -21,10 +21,9 @@
 class Build_Tools_Initializer
 {
 public:
- Build_Tools_Initializer();
- Build_Tools_Initializer(const Build_Tools_Initializer & orig);
+ Build_Tools_Initializer(char * DesPATH, char opr_sis);
  virtual ~Build_Tools_Initializer();
- void Setup_Build_Tools(char * descriptor_file_path);
+ void Setup_Build_Tools();
 protected:
  void Clear_Dynamic_Memory();
  Repo_Warehouse_Initializer Rep_Init;

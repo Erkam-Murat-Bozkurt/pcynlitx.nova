@@ -22,26 +22,19 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Library_Updater.h"
 
-Library_Updater::Library_Updater(){
+Library_Updater::Library_Updater(char * DesPATH, char opr_sis):
+
+    Des_Reader(DesPATH)
+{
+
+    this->opr_sis = opr_sis;
+
+    this->Des_Reader.Read_Descriptor_File();
 
     this->Memory_Delete_Condition = false;
-
-    this->Object_File_List = nullptr;
-
-    this->Archive_Build_Command = nullptr;
-
-    this->warehouse_obj_dir = nullptr;
-
-    this->warehouse_path = nullptr;
-
-    this->library_name = nullptr;
-
-    this->Current_Library_Path = nullptr;
 }
 
-Library_Updater::Library_Updater(const Library_Updater & orig){
 
-}
 
 Library_Updater::~Library_Updater(){
 
@@ -57,21 +50,16 @@ void Library_Updater::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         this->Clear_Pointer_Memory(&this->Object_File_List);
+         this->Clear_String_Memory(this->Object_File_List);
 
-         this->Clear_Pointer_Memory(&this->Archive_Build_Command);
+         this->Clear_String_Memory(this->Archive_Build_Command);
 
-         this->Clear_Pointer_Memory(&this->warehouse_obj_dir);
+         this->Clear_String_Memory(this->warehouse_obj_dir);
 
-         this->Clear_Pointer_Memory(&this->library_name);
+         this->Clear_String_Memory(this->library_name);
      }
 }
 
-
-void Library_Updater::Receive_Descriptor_File(char * descriptor_file){
-
-     this->Des_Reader.Read_Descriptor_File(descriptor_file);
-}
 
 void Library_Updater::Build_Library(char * Library_Name){
 
@@ -81,7 +69,7 @@ void Library_Updater::Build_Library(char * Library_Name){
 
      this->warehouse_path = this->Des_Reader.Get_Warehouse_Location();
 
-     this->Determine_Warehouse_Object_Dir('w');
+     this->Determine_Warehouse_Object_Dir();
 
      this->Determine_Current_Library_Path();
 
@@ -89,13 +77,13 @@ void Library_Updater::Build_Library(char * Library_Name){
 
      this->Memory_Delete_Condition = false;
 
-     DIR *d;
+     DIR * d;
 
      struct dirent *dir;
 
      int list_character_size = 0;
 
-     d = opendir(this->warehouse_obj_dir);
+     d = opendir(this->warehouse_obj_dir.c_str());
 
      if (d){
 
@@ -117,11 +105,9 @@ void Library_Updater::Build_Library(char * Library_Name){
 
      char Space_Character [] = {' ','\0'};
 
-     this->Object_File_List = new char [5*list_character_size];
-
      int index_counter = 0;
 
-     d = opendir(this->warehouse_obj_dir);
+     d = opendir(this->warehouse_obj_dir.c_str());
 
      if (d){
 
@@ -134,9 +120,9 @@ void Library_Updater::Build_Library(char * Library_Name){
 
             if(((name[file_name_size-1] == 'o') && (name[file_name_size-2] == '.'))){
 
-                this->Place_Information(&this->Object_File_List,name,&index_counter);
+                this->Place_Information(this->Object_File_List,name);
 
-                this->Place_Information(&this->Object_File_List,Space_Character,&index_counter);
+                this->Place_Information(this->Object_File_List,Space_Character);
             }
         }
 
@@ -149,146 +135,101 @@ void Library_Updater::Build_Library(char * Library_Name){
 
      char Library_Add_word [] = {'.','a','\0'};
 
-     index_counter = 0; // Reset index counter value
 
-     int Object_File_List_Character_Size = strlen(this->Object_File_List);
+     this->Place_Information(this->Archive_Build_Command,Library_Construction_Command);
 
-     this->Archive_Build_Command = new char [5*Object_File_List_Character_Size];
+     this->Place_Information(this->Archive_Build_Command,Library_Name);
 
-     this->Place_Information(&this->Archive_Build_Command,Library_Construction_Command,&index_counter);
+     this->Place_Information(this->Archive_Build_Command,Library_Add_word);
 
-     this->Place_Information(&this->Archive_Build_Command,Library_Name,&index_counter);
+     this->Place_Information(this->Archive_Build_Command,Space_Character);
 
-     this->Place_Information(&this->Archive_Build_Command,Library_Add_word,&index_counter);
+     this->Place_Information(this->Archive_Build_Command,this->Object_File_List);
 
-     this->Place_Information(&this->Archive_Build_Command,Space_Character,&index_counter);
+     chdir(this->warehouse_obj_dir.c_str());
 
-     this->Place_Information(&this->Archive_Build_Command,this->Object_File_List,&index_counter);
+     size_t cmd_size = this->Archive_Build_Command.length();
+    
+     char * cmd = new char [5*cmd_size];
 
-     this->Archive_Build_Command[index_counter-1] = '\0';
+     for(size_t i=0;i<cmd_size;i++){
 
-     chdir(this->warehouse_obj_dir);
+         cmd[i] = this->Archive_Build_Command[i];         
+     }
 
-     this->System_Interface.System_Function(this->Archive_Build_Command);
+     cmd[cmd_size] = '\0';
+
+     this->System_Interface.System_Function(cmd);     
 
      this->Send_Library_To_Libraries_Location();
+
+     delete [] cmd;
+
+     this->Clear_String_Memory(this->Archive_Build_Command);
 }
 
 
 
-void Library_Updater::Determine_Warehouse_Object_Dir(char operating_sis){
+void Library_Updater::Determine_Warehouse_Object_Dir(){
 
      char object_directory [] = "PROJECT.OBJECT.FILES";
 
      char warehouse_word   [] = "WAREHOUSE";
 
-     size_t warehouse_path_size = strlen(this->warehouse_path);
+     size_t warehouse_path_size = this->warehouse_path.length();
 
      size_t object_dir_size = strlen(object_directory);
 
-     size_t wr_word_size  = strlen(warehouse_word);
+     size_t wr_word_size    = strlen(warehouse_word);
 
-
-     size_t path_size = warehouse_path_size
-
-            + object_dir_size + wr_word_size;
-
-     this->warehouse_obj_dir = new char [5*path_size];
-
-     int index = 0;
 
      for(size_t i=0;i<warehouse_path_size;i++){
 
-         this->warehouse_obj_dir[index] = this->warehouse_path[i];
-
-         index++;
+         this->warehouse_obj_dir.push_back(this->warehouse_path[i]);
      }
 
-     if(operating_sis == 'w'){
 
-        if(this->warehouse_path[warehouse_path_size-1] != '\\'){
+     this->Add_Directory_Character(this->warehouse_obj_dir);
 
-           this->warehouse_obj_dir[index] = '\\';
-
-           index++;
-        }
-     }
-
-     if(operating_sis == 'l'){
-
-        if(this->warehouse_path[warehouse_path_size-1] != '/'){
-
-            this->warehouse_obj_dir[index] = '/';
-
-            index++;
-        }
-     }
 
      for(size_t i=0;i<wr_word_size;i++){
 
-         this->warehouse_obj_dir[index] = warehouse_word[i];
-
-         index++;
+         this->warehouse_obj_dir.push_back(warehouse_word[i]);
      }
 
 
-     if(operating_sis == 'w'){
+    this->Add_Directory_Character(this->warehouse_obj_dir);
 
-        if(this->warehouse_path[warehouse_path_size-1] != '\\'){
-
-           this->warehouse_obj_dir[index] = '\\';
-
-           index++;
-        }
-     }
-
-     if(operating_sis == 'l'){
-
-        if(this->warehouse_path[warehouse_path_size-1] != '/'){
-
-           this->warehouse_obj_dir[index] = '/';
-
-           index++;
-        }
-     }
 
      for(size_t i=0;i<object_dir_size;i++){
 
-         this->warehouse_obj_dir[index] = object_directory[i];
-
-         index++;
+         this->warehouse_obj_dir.push_back(object_directory[i]);         
      }
 
-     this->warehouse_obj_dir[index] = '\0';
+     this->warehouse_obj_dir.shrink_to_fit();
 }
 
 
 void Library_Updater::Determine_Target_Library_Path(){
 
-     size_t Library_Name_Size = strlen(this->library_name);
 
      char library_prefix [] = {'l','i','b','\0'};
 
      char library_subfix [] = {'.','a','\0'};
 
-     char * Library_File_Name = new char [5*Library_Name_Size];
 
-     int index_counter = 0;
+     this->Place_Information(this->Library_File_Name,library_prefix);
 
-     this->Place_Information(&Library_File_Name,library_prefix,&index_counter);
+     this->Place_Information(this->Library_File_Name,this->library_name);
 
-     this->Place_Information(&Library_File_Name,this->library_name,&index_counter);
-
-     this->Place_Information(&Library_File_Name,library_subfix,&index_counter);
-
-     Library_File_Name[index_counter] = '\0';
+     this->Place_Information(this->Library_File_Name,library_subfix);
 
 
      char warehouse_word [] = "WAREHOUSE";
 
      char directory_folder_name [] = "PROJECT.LIBRARY.FILES";
 
-     size_t warehouse_path_size = strlen(this->warehouse_path);
+     size_t warehouse_path_size = this->warehouse_path.length();
 
      size_t name_size= strlen(directory_folder_name);
 
@@ -298,188 +239,192 @@ void Library_Updater::Determine_Target_Library_Path(){
 
      size_t library_dir_size = warehouse_path_size + name_size + wr_word_size;
 
-     this->Target_Library_Path = new char [5*library_dir_size];
 
-     int index = 0;
 
      for(size_t i=0;i<warehouse_path_size;i++){
 
-         this->Target_Library_Path[index] = this->warehouse_path[i];
-
-         index++;
+         this->Target_Library_Path.push_back(this->warehouse_path[i]);
      }
 
-     this->Target_Library_Path[index] = '\\';
 
-     index++;
+     this->Add_Directory_Character(this->warehouse_path);
+
+
 
      for(size_t i=0;i<wr_word_size;i++){
 
-        this->Target_Library_Path[index] = warehouse_word[i];
-
-        index++;
+        this->Target_Library_Path.push_back(warehouse_word[i]);        
      }
 
-     this->Target_Library_Path[index] = '\\';
 
-     index++;
+     this->Add_Directory_Character(this->warehouse_path);
+
 
      for(size_t i=0;i<name_size;i++){
 
-         this->Target_Library_Path[index] = directory_folder_name[i];
-
-         index++;
+         this->Target_Library_Path.push_back(directory_folder_name[i]);         
      }
 
 
-     this->Target_Library_Path[index] = '\\';
+     this->Add_Directory_Character(this->warehouse_path);
 
-     index++;
 
-     size_t library_name_size = strlen(Library_File_Name);
+     size_t library_name_size = this->Library_File_Name.length();
 
      for(size_t i=0;i<library_name_size;i++){
 
-         this->Target_Library_Path[index] = Library_File_Name[i];
-
-         index++;
+         this->Target_Library_Path.push_back(this->Library_File_Name[i]);         
      }
-
-     this->Target_Library_Path[index] = '\0';
-
-     delete[] Library_File_Name;
 }
 
 
 void Library_Updater::Determine_Current_Library_Path(){
 
-     size_t Library_Name_Size = strlen(this->library_name);
 
      char library_prefix [] = {'l','i','b','\0'};
 
      char library_subfix [] = {'.','a','\0'};
 
-     char * Library_File_Name = new char [5*Library_Name_Size];
 
-     int index_counter = 0;
+     this->Place_Information(this->Library_File_Name,library_prefix);
 
-     this->Place_Information(&Library_File_Name,library_prefix,&index_counter);
+     this->Place_Information(this->Library_File_Name,this->library_name);
 
-     this->Place_Information(&Library_File_Name,this->library_name,&index_counter);
-
-     this->Place_Information(&Library_File_Name,library_subfix,&index_counter);
-
-     Library_File_Name[index_counter] = '\0';
-
+     this->Place_Information(this->Library_File_Name,library_subfix);
 
 
      char object_directory_folder_name [] = "PROJECT.OBJECT.FILES";
 
      char warehouse_word [] = "WAREHOUSE";
 
-     size_t warehouse_path_size = strlen(this->warehouse_path);
+     size_t warehouse_path_size = this->warehouse_path.length();
 
-     size_t object_folder_size= strlen(object_directory_folder_name);
+     size_t object_folder_size = strlen(object_directory_folder_name);
 
      size_t warehouse_word_size = strlen(warehouse_word);
 
-     size_t object_dir_size = warehouse_path_size + object_folder_size
-                             + warehouse_word_size;
+     size_t library_name_size = this->Library_File_Name.length();
 
-     this->Current_Library_Path = new char [5*object_dir_size];
-
-     int index = 0;
 
      for(size_t i=0;i<warehouse_path_size;i++){
 
-         this->Current_Library_Path[index] = this->warehouse_path[i];
-
-         index++;
+         this->Current_Library_Path.push_back(this->warehouse_path[i]);         
      }
 
-     this->Current_Library_Path[index] = '\\';
 
-     index++;
+     this->Add_Directory_Character(this->Current_Library_Path);
+
+
 
      for(size_t i=0;i<warehouse_word_size;i++){
 
-         this->Current_Library_Path[index] = warehouse_word[i];
-
-         index++;
+         this->Current_Library_Path.push_back(warehouse_word[i]);         
      }
 
-     this->Current_Library_Path[index] = '\\';
-
-     index++;
+     this->Add_Directory_Character(this->Current_Library_Path);
 
 
      for(size_t i=0;i<object_folder_size;i++){
 
-         this->Current_Library_Path[index] = object_directory_folder_name[i];
-
-         index++;
+         this->Current_Library_Path.push_back(object_directory_folder_name[i]);         
      }
 
-     this->Current_Library_Path[index] = '\\';
 
-     index++;
+     this->Add_Directory_Character(this->Current_Library_Path);
 
-     size_t library_name_size = strlen(Library_File_Name);
 
      for(size_t i=0;i<library_name_size;i++){
 
-         this->Current_Library_Path[index] = Library_File_Name[i];
-
-         index++;
+         this->Current_Library_Path.push_back(this->Library_File_Name[i]);
      }
 
-     this->Current_Library_Path[index] = '\0';
-
-     delete[] Library_File_Name;
 }
 
 void Library_Updater::Send_Library_To_Libraries_Location(){
 
-     this->FileManager.MoveFile_Win(this->Current_Library_Path,this->Target_Library_Path);
+     char * cur_dir = nullptr;
+     char * tar_dir = nullptr;
+
+     this->Place_CString(&cur_dir,this->Current_Library_Path);
+
+     this->Place_CString(&tar_dir,this->Target_Library_Path);
+
+     this->FileManager.MoveFile_Win(cur_dir,tar_dir);
 }
 
 void Library_Updater::Receive_Library_Name(char * lib_name){
 
      size_t name_size = strlen(lib_name);
 
-     this->library_name = new char [5*name_size];
-
-     for(size_t i=0;i<5*name_size;i++){
-
-         this->library_name[i] = '\0';
-     }
-
      for(size_t i=0;i<name_size;i++){
 
-         this->library_name[i] = lib_name[i];
+         this->library_name.push_back(lib_name[i]);
      }
 
-     this->library_name[name_size] = '\0';
+     this->library_name.shrink_to_fit();
 }
 
-void Library_Updater::Place_Information(char ** Pointer, char * Information, int * index_counter){
 
-     int String_Size = strlen(Information);
+void Library_Updater::Add_Directory_Character(std::string & str){
+
+     if(this->opr_sis == 'w'){
+
+        if(str.back() != '\\'){
+
+            str.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+         if(str.back() != '/'){
+
+            str.push_back('/');
+        }
+     }
+}
+
+void Library_Updater::Place_Information(std::string & Pointer, std::string Information){
+
+     size_t String_Size = Information.length();
 
      for(int i=0;i<String_Size;i++){
-
-         (*Pointer)[(*index_counter)] = Information[i];
-
-         (*index_counter)++;
+         
+         Pointer.push_back(Information[i]);         
      }
- }
+}
 
-void Library_Updater::Clear_Pointer_Memory(char ** pointer){
+void Library_Updater::Place_CString(char ** str, std::string s){
 
-     if( *pointer != nullptr ){
+     size_t length = s.length();
 
-        delete [] *pointer;
+     *str = new char [5*length];
 
-        *pointer = nullptr;
+     for(size_t i=0;i<length;i++){
+
+         (*str)[i] = s[i];
+     }
+
+     (*str)[length] = '\0';
+}
+
+
+void Library_Updater::Clear_CString(char ** str){
+
+     if(*str!= nullptr){
+
+        delete [] (*str);
+
+        *str = nullptr;
+     }
+}
+
+void Library_Updater::Clear_String_Memory(std::string & str){
+
+     if(!str.empty()){
+
+         str.clear();
+        
+         str.shrink_to_fit();
      }
 }

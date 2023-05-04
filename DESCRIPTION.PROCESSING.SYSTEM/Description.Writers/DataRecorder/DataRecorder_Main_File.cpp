@@ -1,7 +1,8 @@
 
 #include "DataRecorder.h"
 
-int main(int argc, char ** argv){
+int main(int argc, char ** argv)
+{
 
     if(argc < 3){
 
@@ -9,9 +10,7 @@ int main(int argc, char ** argv){
 
     }
 
-    DataRecorder Recorder;
-
-    Recorder.SetFilePath(argv[1]);
+    DataRecorder Recorder(argv[1]);
 
     Recorder.Add_Data_Record(argv[2],argv[3]);
 

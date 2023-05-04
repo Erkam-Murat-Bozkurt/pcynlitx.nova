@@ -21,7 +21,10 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "DataRecorder.h"
 
-DataRecorder::DataRecorder(){
+DataRecorder::DataRecorder(char * Path) : StringOperations(Path)
+
+{
+    this->File_Manager.SetFilePath(Path);
 
     this->Up_Record = nullptr;
 
@@ -106,12 +109,6 @@ void DataRecorder::Clear_Dynamic_Memory(){
      }
 }
 
-void DataRecorder::SetFilePath(char * TargetFilePath){
-
-     this->StringOperations.SetFilePath(TargetFilePath);
-
-     this->File_Manager.SetFilePath(TargetFilePath);
-}
 
 void DataRecorder::Add_Data_Record(char * Data_Type, char * Data_Record){
 
@@ -397,7 +394,7 @@ int DataRecorder::Determine_Record_Point(char * Data_Type){
 
      Read_Point = End_Point -1;
 
-     char * File_Line = this->StringOperations.ReadFileLine(Read_Point);
+     std::string File_Line = this->StringOperations.ReadFileLine(Read_Point);
 
      while(!this->Determine_Is_This_Line_A_Record_Line(File_Line)){
 
@@ -458,9 +455,9 @@ void DataRecorder::Read_Data_Records(char * Data_Type){
 
         for(int i=Start_Point;i<End_Point;i++){
 
-            char * File_Line = this->StringOperations.ReadFileLine(i);
+            std::string File_Line = this->StringOperations.ReadFileLine(i);
 
-            int String_Size = strlen(File_Line);
+            int String_Size = File_Line.length();
 
             if(this->Determine_Is_This_Line_A_Record_Line(File_Line)){
 
@@ -516,9 +513,9 @@ void DataRecorder::Read_Before_Record_Point(int read_start_point){
 
      for(int i=0;i<this->Up_Record_Number;i++){
 
-         char * File_Line = this->StringOperations.ReadFileLine(i+1);
+         std::string File_Line = this->StringOperations.ReadFileLine(i+1);
 
-         int File_Line_Size = strlen(File_Line);
+         int File_Line_Size = File_Line.length();
 
          if(File_Line_Size == 0){
 
@@ -553,7 +550,7 @@ void DataRecorder::Read_After_Record_Point(int read_start_point){
 
      this->End_of_File = 0;
 
-     while(!this->File_Manager.Control_End_of_File()){
+     while(!this->File_Manager.Control_Stop_Condition()){
 
            this->File_Manager.ReadLine();
 
@@ -570,9 +567,9 @@ void DataRecorder::Read_After_Record_Point(int read_start_point){
 
      for(int i=read_start_point;i<this->End_of_File;i++){
 
-         char * File_Line = this->StringOperations.ReadFileLine(i+1);
+         std::string File_Line = this->StringOperations.ReadFileLine(i+1);
 
-         int File_Line_Size = strlen(File_Line);
+         int File_Line_Size = File_Line.length();
 
          if(File_Line_Size == 0){
 
@@ -619,7 +616,7 @@ void DataRecorder::Determine_Data_Type_Record_Number(char * Data_Type){
 
      for(int i=Start_Point;i<End_Point;i++){
 
-         char * File_Line = this->StringOperations.ReadFileLine(i);
+         std::string File_Line = this->StringOperations.ReadFileLine(i);
 
          if(this->Determine_Is_This_Line_A_Record_Line(File_Line)){
 
@@ -628,11 +625,11 @@ void DataRecorder::Determine_Data_Type_Record_Number(char * Data_Type){
      }
 }
 
-bool DataRecorder::Determine_Is_This_Line_A_Record_Line(char * File_Line){
+bool DataRecorder::Determine_Is_This_Line_A_Record_Line(std::string File_Line){
 
      this->is_this_a_record_line = false;
 
-     int Line_Size = strlen(File_Line);
+     int Line_Size = File_Line.length();
 
      for(int i=0;i<Line_Size;i++){
 
