@@ -114,33 +114,7 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->FileManager.WriteToFile("\n");
 
-     /*
 
-     if(this->Src_Data_Pointer->included_header_num > 0){
-
-        int head_num = this->Src_Data_Pointer->included_header_num;
-
-        for(int i=0;i<head_num;i++){
-
-            this->FileManager.WriteToFile("\n");
-
-            this->FileManager.WriteToFile("$Header_Location_");
-
-            this->FileManager.WriteToFile(this->Translater.Translate(i));
-
-            this->FileManager.WriteToFile("=\"");
-
-            this->FileManager.WriteToFile(this->Src_Data_Pointer->header_files_git_dir[i]);
-
-            this->FileManager.WriteToFile("\"");
-
-            this->FileManager.WriteToFile("\n");
-
-            this->FileManager.WriteToFile("\n");
-        }
-     }
-
-     */
 
      this->FileManager.WriteToFile("\n");
 
@@ -214,42 +188,6 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->FileManager.WriteToFile("\n");
 
-
-     /*
-
-     if(this->Src_Data_Pointer->included_header_num > 0){
-
-        int head_num = this->Src_Data_Pointer->included_header_num;
-
-        for(int i=0;i<head_num;i++){
-
-           this->FileManager.WriteToFile("\n");
-
-           this->FileManager.WriteToFile("Copy-Item ");
-
-           this->FileManager.WriteToFile("\"$Repo_Root_Dir\\");
-
-           this->FileManager.WriteToFile("$Header_Location_");
-
-           this->FileManager.WriteToFile(this->Translater.Translate(i));
-
-           this->FileManager.WriteToFile("\\");
-
-           this->FileManager.WriteToFile(this->Src_Data_Pointer->header_file_names[i]);
-
-           this->FileManager.WriteToFile("\"");
-
-           this->FileManager.WriteToFile(" -Destination ");
-
-           this->FileManager.WriteToFile("\"$Project_Headers");
-
-           this->FileManager.WriteToFile("\"");
-
-           this->FileManager.WriteToFile("\n");
-        }
-      }
-
-      */
 
       this->FileManager.WriteToFile("\n");
 

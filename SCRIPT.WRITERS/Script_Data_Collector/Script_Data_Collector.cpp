@@ -47,26 +47,6 @@ void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script
 
      this->Find_Data_Record_Index(header_name,record_index);
 
-     /*
-
-     std::cout << "\n src_hd_git_dir:" << this->Build_Dt->at(record_index).git_record_dir;
-
-     std::cout << "\n File_Name:" << this->Build_Dt->at(record_index).File_Name;
-
-     std::cout << "\n is_this_a_source_file:" << this->Build_Dt->at(record_index).is_this_a_source_file;
-
-     std::cout << "\n is_this_a_header_file:" << this->Build_Dt->at(record_index).is_this_a_header_file;
-
-     std::cout << "\n File_Name_With_Ext:" << this->Build_Dt->at(record_index).File_Name_With_Ext;
-
-     std::cout << "\n class_header_file_name:" << this->Build_Dt->at(record_index).class_header_file_name;
-
-     std::cout << "\n class_header_file_path:" << this->Build_Dt->at(record_index).class_header_file_path;
-
-     std::cin.get();         
-
-     */
-
 
      std::string git_record_dir = this->Build_Dt->at(record_index).git_record_dir;
 
@@ -99,9 +79,13 @@ void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script
      for(size_t k=0;k<src_name_size;k++){
 
          ptr->object_file_name.push_back(src_file_name[k]);
+
+         if(src_file_name[k]=='.'){
+
+            break;
+         }
      }
 
-     ptr->object_file_name.push_back('.');
      ptr->object_file_name.push_back('o');
      ptr->object_file_name.shrink_to_fit();
 
@@ -136,9 +120,12 @@ void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script
      for(size_t k=0;k<src_name_size;k++){
 
         ptr->object_file_path.push_back(src_file_name[k]);
-     }
 
-     ptr->object_file_path.push_back('.');
+        if(src_file_name[k]=='.'){
+
+          break;
+        }
+     }
 
      ptr->object_file_path.push_back('o');     
 
