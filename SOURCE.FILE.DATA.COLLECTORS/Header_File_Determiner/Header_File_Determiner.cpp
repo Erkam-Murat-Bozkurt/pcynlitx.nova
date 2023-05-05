@@ -112,12 +112,6 @@ bool Header_File_Determiner::Is_this_file_included_on_anywhere(std::string file_
                 }
             }
          }
-         else{
-
-                std::cout << "\n the git repo file " << record_sys_path <<
-
-                 "\n can not find on the repo directory !..";
-         }
       }
 
       return this->Is_this_file_included_on_somewhere;
@@ -275,8 +269,17 @@ bool Header_File_Determiner::Is_Header(std::string file_path){
 
     if(this->Is_this_file_included_on_anywhere(file_path)){
 
-      this->is_header_file = true;
+       this->is_header_file = true;
     }
+    
+    /*
+
+
+    std::cout << "\n this->is_header_file:" << this->is_header_file;
+
+    std::cin.get();
+
+    */
 
     return this->is_header_file;
 }

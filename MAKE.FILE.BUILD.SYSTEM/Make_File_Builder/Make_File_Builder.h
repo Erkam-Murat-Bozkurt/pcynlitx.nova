@@ -12,7 +12,6 @@
 #include <fstream>
 #include <string>
 #include <fcntl.h>
-#include <windows.h>
 #include "MakeFile_Data_Collector.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"

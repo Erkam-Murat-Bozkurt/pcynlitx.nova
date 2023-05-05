@@ -12,7 +12,7 @@
 #include <cstdio>
 #include <iostream>
 #include <fcntl.h>
-#include <windows.h>
+#include <stdlib.h>     //for using the function sleep
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 #include "Make_File_Builder.h"

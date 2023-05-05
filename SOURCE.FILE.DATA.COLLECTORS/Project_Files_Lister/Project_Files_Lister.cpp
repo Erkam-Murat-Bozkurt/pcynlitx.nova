@@ -91,6 +91,7 @@ void Project_Files_Lister::Collect_Independent_Header_Files_Data()
 
          bool is_header_file = this->Header_Determiner.Is_Header(file_path);
 
+
          if(is_header_file){
 
             std::string file_name;

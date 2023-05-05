@@ -6,7 +6,6 @@
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 
-void Place_String(char ** Pointer, char * String);
 
 int main(int argc, char ** argv){
 
@@ -23,7 +22,7 @@ int main(int argc, char ** argv){
 
     Make_Builder.Build_Make_Files();
 
-    std::cout << "\n The end of the program ..";
+    std::cout << "\n\nThe end of the program ..";
 
     std::cout << "\n\n";
 

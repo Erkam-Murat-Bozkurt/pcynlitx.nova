@@ -45,6 +45,12 @@ add_executable(Executable_MakeFile_Builder
         ${CMAKE_CURRENT_SOURCE_DIR}/EXECUTABLE.MAKE.FILE.BUILD.SYSTEM/Executable_MakeFile_Builder/Executable_MakeFile_Builder_Main_File.cpp)
 
 
+
+add_executable(Auto_MakeFile_Builder  
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Auto_MakeFile_Builder/Auto_MakeFile_Builder_Main_File.cpp)
+
+
 target_link_libraries(Project_Script_Writer PUBLIC 
 
         src_dat_col src_proc_sys proj_bld_tools des_reader basic_tools )
@@ -57,3 +63,6 @@ target_link_libraries(Build_Tools_Initializer PUBLIC
 
      
 target_link_libraries(Executable_MakeFile_Builder PUBLIC exec_make_bld )
+
+
+target_link_libraries(Auto_MakeFile_Builder PUBLIC make_fbld_sys proj_bld_tools des_reader basic_tools)

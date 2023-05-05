@@ -47,12 +47,15 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
 
      this->Mk_File_Clnr.Clear_Make_Files_Exist_On_Repo();
 
-     std::cout << "\n The current make files on the project have been cleaned";
+     std::cout << "\n\e[1;32mThe current make files on the project have been cleaned..\e[0m\n";
+     sleep(0.5);
 
      this->Determine_Project_Directories();
 
 
      int src_num = this->File_Lister.Get_Source_File_Number();
+
+
 
      for(int i=0;i<src_num;i++){
 
@@ -61,8 +64,19 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
          if(!source_file_name.empty()){
 
             this->Mk_Builder.Build_MakeFile(i);
+
+            std::cout << "\n\e[0;37m[\e[1;32m+\e[0m] Target make file: [\e[0;33m " << source_file_name << ".make \e[0m]";
+            std::cout << "\n\n    The construction complated.";
+            std::cout << "\n\n";
+
+            sleep(0.5);
          }
      }
+
+     std::cout << "\n";
+
+     std::cout << "\n\e[1;32mThe new makefiles have been constructed..\e[0m";
+     sleep(0.5);
 }
 
 void Auto_MakeFile_Builder::Determine_Project_Directories(){
