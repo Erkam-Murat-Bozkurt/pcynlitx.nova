@@ -115,10 +115,6 @@ void Project_Src_Code_Rdr::Read_Project_Source_Code_Files(){
      }
 
      this->Src_Code_Dt.shrink_to_fit();
-
-     std::cout << "\n\n The project source code has been read";  
-
-     std::cout << "\n";
 }
 
 

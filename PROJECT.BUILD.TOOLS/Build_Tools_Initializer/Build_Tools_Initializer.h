@@ -29,7 +29,6 @@ protected:
  Repo_Warehouse_Initializer Rep_Init;
  Auto_MakeFile_Builder Mk_Builder;
  Project_Script_Writer Script_Writer;
- Descriptor_File_Reader Des_Reader;
  bool Memory_Delete_Condition;
 };
 

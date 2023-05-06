@@ -24,11 +24,10 @@ int main(int argc, char ** argv){
 
     Initializer.Setup_Build_Tools();
 
-    std::cout << "\n The end of the program ..";
+    std::cout << "\n";
 
-    std::cout << "\n\n";
+    std::cout << "\n\e[1;32mTHE CONSTRUCTION COMPLATED\e[0m\n\n";
 
     return 0;
 }
 
-// The Function that places the location Informations listed in below

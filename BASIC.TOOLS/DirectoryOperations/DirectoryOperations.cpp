@@ -237,20 +237,13 @@ int DirectoryOperations::RemoveSubDirectory(char * DirectoryName){
 
 int DirectoryOperations::MakeDirectory(char * path){
 
-    std::cout << "\n path:" << path;
-
     int return_condition = this->ChangeDirectory(path);
 
     if(return_condition == 0){
 
-       std::cout << "\n Directory will be created.";
-
-
        this->ReturnCondition = CreateDirectoryA(path,NULL);
     }
     else{
-
-            std::cout << "\n Directory will be removed.";
 
             this->RemoveDirectory(path);
 
@@ -261,8 +254,6 @@ int DirectoryOperations::MakeDirectory(char * path){
 };
 
 int DirectoryOperations::MakeDirectory(std::string std_string_path){
-
-    std::cout << "\n path:" << std_string_path;
     
     size_t length = std_string_path.length();
 
@@ -279,14 +270,10 @@ int DirectoryOperations::MakeDirectory(std::string std_string_path){
 
     if(return_condition == 0){
 
-       std::cout << "\n Directory will be created.";
-
 
        this->ReturnCondition = CreateDirectoryA(path,NULL);
     }
     else{
-
-            std::cout << "\n Directory will be removed.";
 
             this->RemoveDirectory(path);
 
