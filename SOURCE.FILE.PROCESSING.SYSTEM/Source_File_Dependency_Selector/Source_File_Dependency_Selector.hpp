@@ -40,7 +40,7 @@ struct Header_Dependency
   std::string root_header; // The header file which its dependencies are researched 
   std::string root_header_path;
   std::string Header_Name;
-  std::string repo_warehouse_path;
+  std::string header_sys_path;
   int included_file_hdr_num;
   int base_included_hdr_num;
 };
@@ -67,8 +67,7 @@ protected:
  void Extract_Dependency_Data(std::string path);
  void Extract_Dependency_Data();
  void Set_Included_Header_Number(std::vector<Header_Dependency> * ptr, int dep_num);
- void Extract_Header_File_Name_From_Decleration(std::string * header_name,
-      std::string string);
+ std::string Find_Header_Name(std::string string);
  void Determine_Header_Repo_Warehouse_Path( std::string * wrd_path,
       std::string file_name, char opr_sis);
  bool Is_This_File_Aready_Searched(std::string name);
@@ -76,10 +75,13 @@ protected:
  bool Include_Decleration_Test(std::string string);
  void Extract_File_Name_From_Path(std::string * ptr, std::string str);
  bool CompareString(std::string firstString, std::string secondString);
- bool Is_This_Repo_HeaderFile(std::string path, std::string head_name);
+ bool Is_This_Repo_HeaderFile(std::string head_name);
  void Clear_String_Memory(std::string * Pointer);
  void Clear_Vector_Memory(std::vector<Header_Dependency> * pointer);
  void Clear_Temporary_String_Memory(Header_Dependency * temp);
+ int Determine_Inclusion_Number(std::string path);
+ void Determine_Header_System_Path(std::string & path, std::string name);
+ void Set_Dependency_Data(Header_Dependency & data, std::string path, std::string header_name);
  Source_File_Information_Collector Info_Collector; 
  Project_Src_Code_Rdr * Code_Rd;
  std::vector<Header_Dependency> Dependent_List;
