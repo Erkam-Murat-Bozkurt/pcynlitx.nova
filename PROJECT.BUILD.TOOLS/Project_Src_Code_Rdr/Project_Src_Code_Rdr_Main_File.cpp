@@ -54,6 +54,32 @@ int main(int argc, char ** argv){
 
     size_t src_file_num = Code_Rd.Get_Project_Files_Number();
 
+    
+    for(size_t i=0;i<src_file_num;i++){
+    
+       std::string path = Code_Rd.Get_File_Path(i);
+
+       FileData * Data = Code_Rd.Find_File_Data_From_Path(path);
+
+       std::cout << "\n Path:" << Data->sys_path;
+       //std::cout << "\n Name:" << Data->file_name;
+
+       std::string name = Data->file_name;
+
+       
+
+       FileData * Data_Name = Code_Rd.Find_File_Data_From_Name(name);
+
+
+       std::cout << "\n Name:" << Data_Name->file_name;
+
+       
+
+       std::cout << "\n\n ";           
+    }
+
+    /*
+
     for(size_t i=0;i<src_file_num;i++){
     
        std::vector<std::string> * src_code = Code_Rd.Get_File_Content(i);
@@ -68,6 +94,9 @@ int main(int argc, char ** argv){
 
        print_file(src_code);
     }
+
+
+    */
 
     std::cout << "\n\n";
 

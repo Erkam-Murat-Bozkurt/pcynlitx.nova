@@ -23,10 +23,6 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Git_File_List_Receiver Git_Data_Receiver(argv[1],'w');
-
-    Git_Data_Receiver.Determine_Git_Repo_Info();
-
 
     Project_Files_Lister Dir_Lister(argv[1],'w');
 
@@ -35,13 +31,20 @@ int main(int argc, char ** argv){
     int src_file_num = Dir_Lister.Get_Source_File_Number();
 
 
+    Git_File_List_Receiver Git_Data_Receiver(argv[1],'w');
+
+    Git_Data_Receiver.Determine_Git_Repo_Info();
+
+
     Project_Src_Code_Rdr Code_Rd(argv[1],'w');
 
     Code_Rd.Receive_Git_Repo_Information(&Git_Data_Receiver);
 
     Code_Rd.Read_Project_Source_Code_Files();
 
-    char path [] = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\CLASS.DECLERATION.READER\\Tools\\StringOperator\\StringOperator.h";
+    std::cout << "\n Code reading complated..";
+
+    char path [] =  "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.h";
 
     Source_File_Dependency_Selector Dep_Selector(argv[1],'w');
 

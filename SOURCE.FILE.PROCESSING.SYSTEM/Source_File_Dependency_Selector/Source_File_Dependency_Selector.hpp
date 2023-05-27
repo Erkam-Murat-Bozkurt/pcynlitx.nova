@@ -76,7 +76,7 @@ protected:
  bool Include_Decleration_Test(std::string string);
  void Extract_File_Name_From_Path(std::string * ptr, std::string str);
  bool CompareString(std::string firstString, std::string secondString);
- bool Is_This_Repo_HeaderFile(std::string head_name);
+ bool Is_This_Repo_HeaderFile(std::string path, std::string head_name);
  void Clear_String_Memory(std::string * Pointer);
  void Clear_Vector_Memory(std::vector<Header_Dependency> * pointer);
  void Clear_Temporary_String_Memory(Header_Dependency * temp);

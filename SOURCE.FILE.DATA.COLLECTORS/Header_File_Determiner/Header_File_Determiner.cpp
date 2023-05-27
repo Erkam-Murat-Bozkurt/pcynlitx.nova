@@ -121,11 +121,20 @@ bool Header_File_Determiner::Include_Decleration_Test(std::string string){
 
      this->include_decleration_cond = false;
 
-     char include_key [] = "#include\"";  // double_quotation_mark
+     char include_key_1 [] = "#include\"";  // double_quotation_mark
+     char include_key_2 [] = "#include<";  // left bracked
 
-     bool is_this_include_dec
 
-     = this->StringManager.CheckStringInclusion(string,include_key);
+     bool is_this_include_dec_1
+
+     = this->StringManager.CheckStringInclusion(string,include_key_1);
+
+
+
+     bool is_this_include_dec_2
+
+     = this->StringManager.CheckStringInclusion(string,include_key_2);
+
 
      bool char_before_sharp = false; //  sharp symbol = #
 
@@ -144,7 +153,7 @@ bool Header_File_Determiner::Include_Decleration_Test(std::string string){
 
      if(!char_before_sharp){
 
-        if(is_this_include_dec){
+        if(is_this_include_dec_1 || is_this_include_dec_2){
 
            this->include_decleration_cond = true;
         }
@@ -172,6 +181,16 @@ void Header_File_Determiner::Extract_Header_File_Name_From_Decleration(std::stri
 
             start_point++;
          }
+
+
+         if(string[k] == '<'){
+
+            break;
+         }
+         else{
+
+            start_point++;
+         }
      }
 
      start_point = start_point + 1;
@@ -188,11 +207,22 @@ void Header_File_Determiner::Extract_Header_File_Name_From_Decleration(std::stri
 
              end_point++;
         }
+
+
+
+        if(string[k] == '>'){
+
+            break;
+        }
+        else{
+
+            end_point++;
+        }
      }
 
      for(int i=start_point;i<end_point;i++){
 
-          (*header_name).append(1,string[i]);
+          header_name->push_back(string[i]);
      }
 }
 

@@ -38,7 +38,7 @@ void Project_Script_Writer::Build_Compiler_Script(){
 
     this->Src_Script_Writer.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
-    this->Data_Pointer    = this->Src_Data_Processor.Get_Script_Data_Address();
+    this->Data_Pointer = this->Src_Data_Processor.Get_Script_Data_Address();
 
     this->source_file_num = this->Src_Data_Processor.Get_Source_File_Number();
 
@@ -67,10 +67,17 @@ void Project_Script_Writer::Write_Source_File_Scripts(){
 
         std::string src_dir = this->Data_Pointer->at(i).source_file_dir;
 
+        std::cout << "\n this->Data_Pointer->at(" << i << ").dependency:" << this->Data_Pointer->at(i).dependency;
+        std::cout << "\n this->Data_Pointer->at(" << i << ").source_file_name:"  << this->Data_Pointer->at(i).source_file_name;
+        std::cout << "\n this->Data_Pointer->at(" << i << ").source_file_dir:"  << this->Data_Pointer->at(i).source_file_dir;
+
+        std::cin.get();
+
+
         this->DirectoryManager.ChangeDirectory(src_dir);
 
         this->Src_Script_Writer.Clear_Dynamic_Memory();
-
+         
         this->Src_Script_Writer.Receive_Script_Data(&this->Data_Pointer->at(i));
 
         this->Src_Script_Writer.Write_Source_File_Script('w');

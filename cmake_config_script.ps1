@@ -1,2 +1,2 @@
 
-cmake -S . -B D:\PCYNLITX_BUILD_CONFIGS -G "MinGW Makefiles"
+cmake -DCMAKE_BUILD_TYPE=Debug -S . -B D:\PCYNLITX_BUILD_CONFIGS -G "MinGW Makefiles"

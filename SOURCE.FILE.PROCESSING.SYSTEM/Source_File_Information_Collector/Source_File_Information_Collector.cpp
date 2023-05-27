@@ -130,7 +130,9 @@ void Source_File_Information_Collector::Extract_Dependency_Data(){  // Data extr
 
      this->Determine_Header_File_List();
 
+
      std::size_t dt_size = this->head_data.size();
+     
 
 
      for(std::size_t i = 0;i<dt_size;i++){
@@ -142,9 +144,12 @@ void Source_File_Information_Collector::Extract_Dependency_Data(){  // Data extr
 
          size_t line_num = src_code->FileContent.size();
 
+
+
          for(size_t k=0;k<line_num;k++){
 
              std::string string = src_code->FileContent.at(k);
+
 
              // In order to remove possible spaces on the string
 
@@ -186,6 +191,7 @@ void Source_File_Information_Collector::Extract_Dependency_Data(std::string path
 
      bool is_header = this->Header_Processor.Is_Header(path);
 
+
      if(is_header){
 
         this->Memory_Delete_Condition = false;
@@ -206,12 +212,12 @@ void Source_File_Information_Collector::Extract_Dependency_Data(std::string path
         this->buffer.inclusion_number = 0;
         this->buffer.priority = 0;
         this->buffer.rcr_srch_complated = false;
-
-
+    
         FileData * src_code = this->Code_Rdr->Find_File_Data_From_Path(header_sys_path);
 
-        size_t line_num = src_code->FileContent.size();
 
+        size_t line_num = src_code->FileContent.size();
+   
 
         for(size_t k=0;k<line_num;k++){
 
@@ -367,11 +373,18 @@ bool Source_File_Information_Collector::Include_Decleration_Test(std::string str
 
      this->include_decleration_cond = false;
 
-     std::string include_key = "#include\"";  // double_quotation_mark
+     std::string include_key_1 = "#include\"";  // double_quotation_mark
+     std::string include_key_2 = "#include<";  // double_quotation_mark
 
-     bool is_this_include_dec
 
-     = this->StringManager.CheckStringInclusion(string,include_key);
+     bool is_this_include_dec_1
+
+     = this->StringManager.CheckStringInclusion(string,include_key_1);
+
+     bool is_this_include_dec_2
+
+     = this->StringManager.CheckStringInclusion(string,include_key_2);
+
 
      bool char_before_sharp = false; //  sharp symbol = #
 
@@ -390,7 +403,7 @@ bool Source_File_Information_Collector::Include_Decleration_Test(std::string str
 
      if(!char_before_sharp){
 
-        if(is_this_include_dec){
+        if(is_this_include_dec_1 || is_this_include_dec_2){
 
            this->include_decleration_cond = true;
         }

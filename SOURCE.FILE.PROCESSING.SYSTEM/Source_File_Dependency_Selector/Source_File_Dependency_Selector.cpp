@@ -234,57 +234,55 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
 
             if(is_include_decleration){
 
-               std::string root_header;
-
-               std::string header_name;
-
-               std::string wrd_path;
+               std::string root_header, header_name, wrd_path;
 
                this->Extract_File_Name_From_Path(&root_header,path);
 
                this->Extract_Header_File_Name_From_Decleration(&header_name,tmp_string);
 
-               this->Determine_Header_Repo_Warehouse_Path(&wrd_path,
+               this->Determine_Header_Repo_Warehouse_Path(&wrd_path,header_name,'w');
 
-                    header_name,'w');
+               bool is_repo_header_file = this->Is_This_Repo_HeaderFile(wrd_path,header_name);
 
-               bool is_repo_header_file = this->Is_This_Repo_HeaderFile(wrd_path);
+               if(is_repo_header_file){
 
-               bool is_already_searched = this->Is_This_File_Aready_Searched(header_name);
+                  bool is_already_searched = this->Is_This_File_Aready_Searched(header_name);
 
+                  if(!is_already_searched){
 
-               if((is_repo_header_file) && (!is_already_searched)){
-
-                   Header_Dependency temp;
+                      Header_Dependency temp;
                  
-                   this->Place_String(&temp.Header_Name,header_name);
+                      this->Place_String(&temp.Header_Name,header_name);
 
-                   this->Place_String(&temp.repo_warehouse_path,wrd_path);
+                      this->Place_String(&temp.repo_warehouse_path,wrd_path);
 
-                   this->Place_String(&temp.root_header,root_header);
+                      this->Place_String(&temp.root_header,root_header);
 
-                   this->Place_String(&temp.root_header_path,path);
+                      this->Place_String(&temp.root_header_path,path);
 
-                   temp.rcr_srch_complated= true;
-                   temp.base_included_hdr_num++;
+                      temp.rcr_srch_complated= true;
+                      temp.base_included_hdr_num++;
 
 
-                   this->Dependent_List.push_back(temp);
+                      this->Dependent_List.push_back(temp);
 
-                   this->Dep_Counter++;
+                      this->Dep_Counter++;
      
-                   this->Clear_Temporary_String_Memory(&temp);
+                      this->Clear_Temporary_String_Memory(&temp);
 
-                   FileData * Ptr = this->Code_Rd->Find_File_Data_From_Name(header_name);
+                      FileData * Ptr = this->Code_Rd->Find_File_Data_From_Name(header_name);
 
-                   this->Extract_Dependency_Data(Ptr->sys_path);
+                      this->Extract_Dependency_Data(Ptr->sys_path);
+                   }
+
+                   this->Clear_String_Memory(&header_name);
+
+                   this->Clear_String_Memory(&wrd_path);
+
+                   this->Clear_String_Memory(&root_header);
+
                }
 
-               this->Clear_String_Memory(&header_name);
-
-               this->Clear_String_Memory(&wrd_path);
-
-               this->Clear_String_Memory(&root_header);
              }
 
              this->Clear_String_Memory(&tmp_string);
@@ -335,34 +333,19 @@ void Source_File_Dependency_Selector::Set_Included_Header_Number(std::vector<Hea
 }
 
 
-bool Source_File_Dependency_Selector::Is_This_Repo_HeaderFile(std::string path)
+bool Source_File_Dependency_Selector::Is_This_Repo_HeaderFile(std::string path, std::string name)
 {
      this->is_this_repo_header = false;
 
      bool is_header = this->Header_Processor.Is_Header(path);
 
-     int index_size = this->Info_Collector.Get_Dependency_Data_Size();
+     if(is_header){
 
-     if(is_header)
-     {
-       for(int i=0;i<index_size;i++){
+        if(this->Code_Rd->Check_Repo_File_Status(name)){
 
-           Headers_Data temp_data = this->Info_Collector.Get_Dependency_Data(i);
-
-           std::string repo_file_path = temp_data.repo_path;
-
-           bool is_equal = this->CompareString(repo_file_path,path);
-
-           this->Clear_String_Memory(&repo_file_path);
-
-           if(is_equal){
-
-              this->is_this_repo_header = true;
-
-              return this->is_this_repo_header;
-           };
+            this->is_this_repo_header = true;
         }
-     };
+     }
 
      return this->is_this_repo_header;
 }
