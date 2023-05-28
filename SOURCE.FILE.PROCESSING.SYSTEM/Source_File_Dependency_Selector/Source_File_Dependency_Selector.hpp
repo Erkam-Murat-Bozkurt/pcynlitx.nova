@@ -70,6 +70,7 @@ protected:
  std::string Find_Header_Name(std::string string);
  void Determine_Header_Repo_Warehouse_Path( std::string * wrd_path,
       std::string file_name, char opr_sis);
+ bool Find_New_Dependency(std::string path);
  bool Is_This_File_Aready_Searched(std::string name);
  void Place_String(std::string * str_pointer, std::string string);
  bool Include_Decleration_Test(std::string string);
@@ -82,6 +83,8 @@ protected:
  int Determine_Inclusion_Number(std::string path);
  void Determine_Header_System_Path(std::string & path, std::string name);
  void Set_Dependency_Data(Header_Dependency & data, std::string path, std::string header_name);
+ std::vector<std::string> * Get_File_Content(std::string path);
+ std::string Get_Header_System_Path(std::string header_name);
  Source_File_Information_Collector Info_Collector; 
  Project_Src_Code_Rdr * Code_Rd;
  std::vector<Header_Dependency> Dependent_List;
