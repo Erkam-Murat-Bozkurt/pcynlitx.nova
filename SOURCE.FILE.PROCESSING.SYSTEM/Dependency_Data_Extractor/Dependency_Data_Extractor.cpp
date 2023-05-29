@@ -29,26 +29,37 @@ Dependency_Data_Extractor::Dependency_Data_Extractor(char * des_file_path, char 
     : Header_Processor(des_file_path,opr_sis)
 {
    this->Memory_Delete_Condition = false;
-
-   this->descriptor_file_path = des_file_path;
 }
 
 
 Dependency_Data_Extractor::~Dependency_Data_Extractor()
 {
-    this->Clear_Dynamic_Memory();
+    if(!this->Memory_Delete_Condition){
+
+        this->Memory_Delete_Condition = true;
+
+        this->Clear_Object_Memory();
+    }    
 }
 
 
 void Dependency_Data_Extractor::Clear_Object_Memory(){
 
      this->Clear_Dynamic_Memory();
+
+     this->Header_Processor.Clear_Object_Memory();
 }
 
 void Dependency_Data_Extractor::Clear_Dynamic_Memory()
 {
+     for(size_t i=0;i<this->searched_paths.size();i++){
 
+         this->Clear_String_Memory(this->searched_paths.at(i).path);
+         this->Clear_String_Memory(this->searched_paths.at(i).name);
+     }
 
+     this->searched_paths.clear();
+     this->searched_paths.shrink_to_fit();
 }
 
 
@@ -83,14 +94,6 @@ void Dependency_Data_Extractor::Extract_Dependency_Tree(std::string path){
             i=0;
          }
     }
-
-    for(size_t i=0;i<this->searched_paths.size();i++){
-
-        std::cout << "\n Dependency File <" << i << ">:" << this->searched_paths.at(i).name;
-    }
-
-    exit(0);
-
 }
 
 
@@ -102,8 +105,6 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data, std::
      /*  The inclusion number determined */
 
     Src_Data.search_complated = true;
-
-
 
     if(inclusion_number>0){
 
@@ -191,7 +192,7 @@ int Dependency_Data_Extractor::Determine_Inclusion_Number(std::string path){
             inclusion_number++;
          }
 
-         this->Clear_String_Memory(&string_line);
+         this->Clear_String_Memory(string_line);
      }
 
      return inclusion_number;
@@ -409,13 +410,18 @@ std::string Dependency_Data_Extractor::Get_Header_System_Path(std::string header
      return sys_path;
 }
 
-void Dependency_Data_Extractor::Clear_String_Memory(std::string * Pointer)
+void Dependency_Data_Extractor::Clear_String_Memory(std::string & str)
 {
-     if(!Pointer->empty()){
+     if(!str.empty()){
 
-         Pointer->clear();
+         str.clear();
 
-         Pointer->shrink_to_fit();
+         str.shrink_to_fit();
      }
 }
 
+
+std::vector<Search_Data> * Dependency_Data_Extractor::Get_Search_Data(){
+
+      return &this->searched_paths;
+}

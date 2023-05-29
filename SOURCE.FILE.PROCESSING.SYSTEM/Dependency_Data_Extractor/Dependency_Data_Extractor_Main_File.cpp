@@ -57,6 +57,14 @@ int main(int argc, char ** argv){
       Dep_Determiner.Extract_Dependency_Tree(path);
     }
 
+    std::vector<Search_Data> * Data_Ptr = Dep_Determiner.Get_Search_Data();
+
+    for(size_t i=0;i<Data_Ptr->size();i++){
+
+        std::cout << "\n Dependency File <" << i << ">:" << Data_Ptr->at(i).name;
+    }
+
+
     std::cout << "\n\n THE END OF THE PROGRAM \n\n";
 
 
