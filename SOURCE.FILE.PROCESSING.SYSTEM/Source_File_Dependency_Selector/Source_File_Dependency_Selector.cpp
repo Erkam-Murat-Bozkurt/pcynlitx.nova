@@ -99,7 +99,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
 
      this->warehouse_head_dir = this->Info_Collector.Get_Warehouse_Headers_Dir();
 
-     this->Extract_Dependency_Data(path);
+     this->Extract_Dependency_Tree(path);
 
      this->Set_Included_Header_Number(&this->Dependent_List,this->Dep_Counter);
 
@@ -128,7 +128,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
 
             std::string sub_path = Data.header_sys_path;
 
-            this->Extract_Dependency_Data(sub_path);
+            this->Extract_Dependency_Tree(sub_path);
 
             this->Set_Included_Header_Number(&this->Dependent_List,this->Dep_Counter);
 
@@ -149,7 +149,6 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
      this->Clear_Vector_Memory(&this->Dependent_List);      
 
      this->Info_Collector.Clear_Dynamic_Memory();  
-
 }
 
 
@@ -182,7 +181,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(){
      
          std::string path =this->Headers_Data_Ptr->at(i).system_path;
 
-         this->Extract_Dependency_Data(path);
+         this->Extract_Dependency_Tree(path);
 
          this->Set_Included_Header_Number(&this->Dependent_List,this->Dep_Counter);
 
@@ -198,71 +197,83 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(){
 
 
 
-void Source_File_Dependency_Selector::Extract_Dependency_Data(std::string path){
+void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path){
 
-     int inclusion_number = this->Determine_Inclusion_Number(path);
+     Search_Data Head;
 
-     /*  The inclusion number determined */     
+     Head.path = path;
+     Head.search_complated = false;
 
-     if(inclusion_number>0){
-
-        std::vector<std::string> * FileContent = this->Get_File_Content(path);
-
-        size_t FileSize = FileContent->size();
-
-        for(size_t k=0;k<FileSize;k++){
-
-            std::string string_line = FileContent->at(k);
-
-            bool is_new_dep = this->Find_New_Dependency(string_line);
-
-            std::string header_name = this->Find_Header_Name(string_line);
-
-            if(is_new_dep){
-
-               Header_Dependency Data;
-                 
-               this->Set_Dependency_Data(Data,path,header_name);
-
-               this->Dependent_List.push_back(Data);
-
-               this->Dep_Counter++;
-     
-               this->Clear_Temporary_String_Memory(&Data);
+     int inc_num = this->Search_Dependencies(Head,this->searched_paths);
 
 
-               std::string hdr_sys_path =  this->Get_Header_System_Path(header_name);
+    for(size_t i=0;i<this->searched_paths.size();i++){
 
-               this->Extract_Dependency_Data(hdr_sys_path);
-            }
-        }
+        if(!this->searched_paths.at(i).search_complated){
+
+            inc_num = this->Search_Dependencies(this->searched_paths.at(i),this->searched_paths);
+
+            this->searched_paths.at(i).search_complated = true;
+
+            i=0;
+         }
+    }
+
+    for(size_t i=0;i<this->searched_paths.size();i++){
+
+        std::cout << "\n Dependency File <" << i << ">:" << this->searched_paths.at(i).name;
+    }
+
+    exit(0);
+
+}
+
+
+int Source_File_Dependency_Selector::Search_Dependencies(Search_Data & Src_Data, std::vector<Search_Data> & data)
+{
+
+    int inclusion_number = this->Determine_Inclusion_Number(Src_Data.path);
+
+     /*  The inclusion number determined */
+
+    Src_Data.search_complated = true;
+
+
+
+    if(inclusion_number>0){
+
+       std::vector<std::string> * FileContent = this->Get_File_Content(Src_Data.path);
+
+       size_t FileSize = FileContent->size();
+
+       for(size_t k=0;k<FileSize;k++){
+
+           std::string string_line = FileContent->at(k);
+
+           bool is_new_dep = this->Find_New_Dependency(string_line);
+
+           std::string header_name = this->Find_Header_Name(string_line);
+
+           if(is_new_dep){
+
+              std::string hdr_sys_path =  this->Get_Header_System_Path(header_name);
+
+              Search_Data temp;
+
+            
+              temp.path = hdr_sys_path;
+              temp.name = header_name;
+              temp.search_complated = false;
+
+              data.push_back(temp);
+           }            
+        }        
       }
-      else{
       
-             if(this->Dep_Counter == 0){
-             
-                Header_Dependency temp;
 
-                std::string root_header;
+      data.shrink_to_fit();
 
-                this->Extract_File_Name_From_Path(&root_header,path);
-                 
-                this->Place_String(&temp.root_header,root_header);
-
-                this->Place_String(&temp.root_header_path,path);
-
-                temp.rcr_srch_complated= true;
-                temp.included_file_hdr_num = 0;
-                temp.base_included_hdr_num = 0;
-
-                this->Dependent_List.push_back(temp);
-
-                this->Clear_Temporary_String_Memory(&temp);            
-             }
-      }
-
-
-      this->Dependent_List.shrink_to_fit();
+      return inclusion_number;
 }
 
 
@@ -399,13 +410,13 @@ bool Source_File_Dependency_Selector::Is_This_File_Aready_Searched(std::string n
 {
      this->This_File_Exist = false;
 
-     size_t list_size = this->Dependent_List.size();
+     size_t list_size = this->searched_paths.size();
 
      for(int i=0;i<list_size;i++){
 
          bool is_exist_on_the_list =
-
-         this->CompareString(name,this->Dependent_List[i].Header_Name);
+    
+         this->CompareString(name,this->searched_paths.at(i).name);
 
          if(is_exist_on_the_list){
 

@@ -45,6 +45,12 @@ struct Header_Dependency
   int base_included_hdr_num;
 };
 
+struct Search_Data
+{
+  std::string path;
+  std::string name;
+  bool search_complated;
+};
 
 class Source_File_Dependency_Selector
 {
@@ -64,7 +70,7 @@ public:
  std::vector<Header_Dependency> * Get_Dependency_List_Element_Adress(int num);
  size_t  Get_Dependency_List_Size();
 protected:
- void Extract_Dependency_Data(std::string path);
+ void Extract_Dependency_Tree(std::string path);
  void Extract_Dependency_Data();
  void Set_Included_Header_Number(std::vector<Header_Dependency> * ptr, int dep_num);
  std::string Find_Header_Name(std::string string);
@@ -83,6 +89,7 @@ protected:
  int Determine_Inclusion_Number(std::string path);
  void Determine_Header_System_Path(std::string & path, std::string name);
  void Set_Dependency_Data(Header_Dependency & data, std::string path, std::string header_name);
+ int  Search_Dependencies(Search_Data & Src_Data, std::vector<Search_Data> & dt);
  std::vector<std::string> * Get_File_Content(std::string path);
  std::string Get_Header_System_Path(std::string header_name);
  Source_File_Information_Collector Info_Collector; 
@@ -90,6 +97,7 @@ protected:
  std::vector<Header_Dependency> Dependent_List;
  std::vector<Headers_Data> * Headers_Data_Ptr;
  std::vector<std::vector<Header_Dependency>> Dependency_Data;
+ std::vector<Search_Data> searched_paths;
  std::string warehouse_head_dir;
  std::string descriptor_file_path;
  Header_File_Processor Header_Processor; 
