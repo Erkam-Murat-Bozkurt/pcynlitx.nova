@@ -26,7 +26,8 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Source_File_Dependency_Selector::Source_File_Dependency_Selector(char * des_file_path, char opr_sis)
 
-    : Info_Collector(des_file_path,opr_sis), Header_Processor(des_file_path,opr_sis)
+    : Dep_Data_Collector(des_file_path,opr_sis)  ,
+      Info_Collector(des_file_path,opr_sis), Header_Processor(des_file_path,opr_sis)
 {
    this->Memory_Delete_Condition = false;
 
@@ -85,6 +86,8 @@ void Source_File_Dependency_Selector::Receive_Source_Code_Reader(Project_Src_Cod
 
      this->Header_Processor.Receive_Source_Code_Reader(ptr);
 
+     this->Dep_Data_Collector.Receive_Source_Code_Reader(ptr);
+
      this->Code_Rd = ptr;
 }
 
@@ -109,18 +112,13 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
  
      this->Dependency_Data.shrink_to_fit();
 
+     size_t list_size = this->Dependent_List.size();
 
-     int inc_header_num = this->Dependent_List.at(0).base_included_hdr_num ;
-
-
-     if(inc_header_num > 0){
-     
-        size_t list_size = this->Dependent_List.size();
+     if(list_size > 0){     
 
         std::vector<Header_Dependency> Temp_List = this->Dependent_List;
 
         this->Clear_Vector_Memory(&this->Dependent_List);  
-
 
         for(size_t i=0;i<list_size;i++){
 
@@ -199,138 +197,26 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(){
 
 void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path){
 
-     Search_Data Head;
+     this->Dep_Data_Collector.Extract_Dependency_Tree(path);
 
-     Head.path = path;
-     Head.search_complated = false;
+     std::vector<Search_Data> * Dep_Data_Ptr = this->Dep_Data_Collector.Get_Search_Data();
 
-     int inc_num = this->Search_Dependencies(Head,this->searched_paths);
+     size_t data_size = Dep_Data_Ptr->size();
 
+     for(size_t i=0;i<data_size;i++){
 
-    for(size_t i=0;i<this->searched_paths.size();i++){
+         Header_Dependency Data;
 
-        if(!this->searched_paths.at(i).search_complated){
+         std::string header_name = Dep_Data_Ptr->at(i).name;
 
-            inc_num = this->Search_Dependencies(this->searched_paths.at(i),this->searched_paths);
+         this->Set_Dependency_Data(Data,path,header_name);
 
-            this->searched_paths.at(i).search_complated = true;
-
-            i=0;
-         }
-    }
-
-    for(size_t i=0;i<this->searched_paths.size();i++){
-
-        std::cout << "\n Dependency File <" << i << ">:" << this->searched_paths.at(i).name;
-    }
-
-    exit(0);
-
-}
-
-
-int Source_File_Dependency_Selector::Search_Dependencies(Search_Data & Src_Data, std::vector<Search_Data> & data)
-{
-
-    int inclusion_number = this->Determine_Inclusion_Number(Src_Data.path);
-
-     /*  The inclusion number determined */
-
-    Src_Data.search_complated = true;
-
-
-
-    if(inclusion_number>0){
-
-       std::vector<std::string> * FileContent = this->Get_File_Content(Src_Data.path);
-
-       size_t FileSize = FileContent->size();
-
-       for(size_t k=0;k<FileSize;k++){
-
-           std::string string_line = FileContent->at(k);
-
-           bool is_new_dep = this->Find_New_Dependency(string_line);
-
-           std::string header_name = this->Find_Header_Name(string_line);
-
-           if(is_new_dep){
-
-              std::string hdr_sys_path =  this->Get_Header_System_Path(header_name);
-
-              Search_Data temp;
-
-            
-              temp.path = hdr_sys_path;
-              temp.name = header_name;
-              temp.search_complated = false;
-
-              data.push_back(temp);
-           }            
-        }        
-      }
-      
-
-      data.shrink_to_fit();
-
-      return inclusion_number;
-}
-
-
-bool Source_File_Dependency_Selector::Find_New_Dependency(std::string string_line){
-
-     bool is_new_dependency = false;
-
-     bool is_include_decleration = this->Include_Decleration_Test(string_line);
-
-     if(is_include_decleration){
-
-        std::string header_name  = this->Find_Header_Name(string_line);
-
-        bool is_repo_header_file = this->Is_This_Repo_HeaderFile(header_name);
-
-        if(is_repo_header_file){
-
-           bool is_already_searched = this->Is_This_File_Aready_Searched(header_name);
-
-          if(!is_already_searched){
-
-              is_new_dependency = true;
-
-              return is_new_dependency;
-          }
-        }
+         this->Dependent_List.push_back(Data);
      }
-
-     return is_new_dependency;
 }
 
 
-int Source_File_Dependency_Selector::Determine_Inclusion_Number(std::string path){
 
-     int inclusion_number = 0;
-
-     std::vector<std::string> * FileContent = this->Get_File_Content(path);
-
-     size_t FileSize = FileContent->size();
-
-
-     for(size_t k=0;k<FileSize;k++){
-
-         std::string string_line = FileContent->at(k);
-
-         bool is_include_decleration = this->Include_Decleration_Test(string_line);
-
-         if(is_include_decleration){
-
-            inclusion_number++;
-         }
-
-         this->Clear_String_Memory(&string_line);
-     }
-
-     return inclusion_number;
-}
 
 
 
@@ -386,49 +272,6 @@ void Source_File_Dependency_Selector::Set_Included_Header_Number(std::vector<Hea
 }
 
 
-bool Source_File_Dependency_Selector::Is_This_Repo_HeaderFile(std::string name)
-{
-     this->is_this_repo_header = false;
-
-     FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Name(name);
-
-     bool is_header = this->Header_Processor.Is_Header(FileDtPtr->sys_path);
-
-     if(is_header){
-
-        if(this->Code_Rd->Check_Repo_File_Status(name)){
-
-            this->is_this_repo_header = true;
-        }
-     }
-
-     return this->is_this_repo_header;
-}
-
-
-bool Source_File_Dependency_Selector::Is_This_File_Aready_Searched(std::string name)
-{
-     this->This_File_Exist = false;
-
-     size_t list_size = this->searched_paths.size();
-
-     for(int i=0;i<list_size;i++){
-
-         bool is_exist_on_the_list =
-    
-         this->CompareString(name,this->searched_paths.at(i).name);
-
-         if(is_exist_on_the_list){
-
-            this->This_File_Exist = true;
-
-            return this->This_File_Exist;
-         }
-      }
-
-      return this->This_File_Exist;
-}
-
 
 
 void Source_File_Dependency_Selector::Determine_Header_Repo_Warehouse_Path(std::string * wrd_path,
@@ -465,91 +308,6 @@ void Source_File_Dependency_Selector::Determine_Header_Repo_Warehouse_Path(std::
 
 
 
-std::string Source_File_Dependency_Selector::Find_Header_Name(std::string string)
-{
-
-     size_t size = string.length();
-
-     int start_point = 0;
-
-
-     for(size_t k=0;k<size;k++){
-
-         if(string[k] == '\"'){
-
-            break;
-         }
-         else{
-
-            start_point++;
-         }
-     }
-
-     start_point = start_point + 1;
-
-     size_t end_point = start_point;
-
-     for(size_t k=start_point;k<size;k++){
-
-         if(string[k] == '\"'){
-
-            break;
-         }
-         else{
-
-              end_point++;
-         }
-     }
-
-     std::string header_name;
-
-     for(size_t i=start_point;i<end_point;i++){
-
-         header_name.push_back(string[i]);
-     }
-
-     return header_name;
-}
-
-
-
-bool Source_File_Dependency_Selector::Include_Decleration_Test(std::string string)
-{
-     this->include_decleration_cond = false;
-
-     char include_key [] = "#include\"";  // double_quotation_mark
-
-     bool is_this_include_dec
-
-     = this->StringManager.CheckStringInclusion(string,include_key);
-
-     bool char_before_sharp = false; //  sharp symbol = #
-
-     if(string[0]!= '#'){
-
-        char_before_sharp = true;
-     }
-
-     // In metaprograms, #include key is used on the inside code
-
-     // Therefore, there may be false include therms which is used in the metaprograms
-
-     // in order to produce header files. If there is a character before the sharp symbol,
-
-     // it is a meta program code. ( simething like write{ #include \"sample.h\" })
-
-     if(!char_before_sharp){
-
-        if(is_this_include_dec){
-
-           this->include_decleration_cond = true;
-        }
-     }
-
-     return this->include_decleration_cond;
-}
-
-
 
 void Source_File_Dependency_Selector::Extract_File_Name_From_Path(std::string * pointer,
 
@@ -572,39 +330,6 @@ void Source_File_Dependency_Selector::Extract_File_Name_From_Path(std::string * 
      for(size_t i=start_point;i<string_size;i++)
      {
          pointer->push_back(string[i]) ;
-     }
-}
-
-
-bool Source_File_Dependency_Selector::CompareString(std::string firstString, 
-
-     std::string secondString){
-
-     size_t firstStringLength  = firstString.length();
-
-     size_t secondStringLength = secondString.length();
-
-     if(firstStringLength==secondStringLength){
-
-        for(size_t i=0;i<firstStringLength;i++){
-
-            if(firstString[i]!=secondString[i]){
-
-               this->isStringsEqual = false;
-
-               return this->isStringsEqual;
-            }
-        }
-
-        this->isStringsEqual = true;
-
-        return this->isStringsEqual;
-     }
-     else{
-
-            this->isStringsEqual = false;
-
-            return this->isStringsEqual;
      }
 }
 
