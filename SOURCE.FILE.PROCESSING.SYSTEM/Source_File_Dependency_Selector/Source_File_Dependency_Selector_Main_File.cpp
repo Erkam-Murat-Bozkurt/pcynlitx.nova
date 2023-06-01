@@ -59,6 +59,31 @@ int main(int argc, char ** argv){
       std::cout << "\n Dependency size:" << Dep_Selector.Get_Dependency_List_Size();
     }
 
+    std::vector<std::vector<Header_Dependency>> * Data_Ptr = Dep_Selector.Get_Dependency_List_Adress();
+    
+    size_t data_size = Data_Ptr->size();
+
+    for(size_t i=0;i<data_size;i++){
+
+        std::vector<Header_Dependency> * Sub_Data_Ptr =  &Data_Ptr->at(i);
+
+        if(Sub_Data_Ptr->empty()){
+
+            std::cout << "\n vector empty";
+            std::cin.get();
+        }
+
+        std::cout << "\n\n";
+
+        for(size_t k=0;k<Sub_Data_Ptr->size();k++){
+
+            std::cout << "\n root_header: " << Sub_Data_Ptr->at(k).root_header;
+            std::cout << "\n Header_Name: " << Sub_Data_Ptr->at(k).Header_Name;
+        }      
+
+        std::cout << "\n\n";
+    }
+
     std::cout << "\n\n THE END OF THE PROGRAM \n\n";
 
 

@@ -56,6 +56,7 @@ public:
 protected:
  std::string Find_Header_Name(std::string string);
  bool Find_New_Dependency(std::string path);
+ bool Find_New_Dependency_From_Path(std::string path);
  bool Is_This_File_Aready_Searched(std::string name);
  bool Include_Decleration_Test(std::string string);
  void Extract_File_Name_From_Path(std::string * ptr, std::string str);

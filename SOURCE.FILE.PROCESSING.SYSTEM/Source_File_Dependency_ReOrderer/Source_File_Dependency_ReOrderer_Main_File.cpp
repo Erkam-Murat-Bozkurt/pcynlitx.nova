@@ -55,9 +55,12 @@ int main(int argc, char ** argv){
       Dep_Selector.Receive_Source_Code_Reader(&Code_Rd);
 
       Dep_Selector.Determine_Source_File_Dependencies(path);
+
+      Dep_Selector.Print_Dependency_List();
     }
 
-    
+    std::cout << "\n Dependency Data collected..";
+    std::cin.get();
 
     Source_File_Dependency_ReOrderer ReOrderer;
 

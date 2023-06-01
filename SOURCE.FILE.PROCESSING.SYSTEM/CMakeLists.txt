@@ -16,6 +16,9 @@ add_library(src_proc_sys
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Dependency_Determiner/Source_File_Dependency_Determiner.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Dependency_Determiner/Source_File_Dependency_Determiner.hpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Extractor/Dependency_Data_Extractor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Extractor/Dependency_Data_Extractor.hpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Dependency_Selector/Source_File_Dependency_Selector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Dependency_Selector/Source_File_Dependency_Selector.hpp
 
@@ -50,6 +53,9 @@ target_include_directories(src_proc_sys PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Dependency_ReOrderer
     
+    ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Extractor
+
+
 
 
     ${CMAKE_SOURCE_DIR}/SOURCE.FILE.DATA.COLLECTORS/Header_File_Determiner
@@ -119,6 +125,10 @@ target_link_directories(src_proc_sys PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Processor
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Dependency_ReOrderer
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Extractor
+
+
 
 
     

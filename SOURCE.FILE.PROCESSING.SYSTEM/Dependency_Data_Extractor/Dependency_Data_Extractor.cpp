@@ -125,7 +125,6 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data, std::
               std::string hdr_sys_path =  this->Get_Header_System_Path(header_name);
 
               Search_Data temp;
-
             
               temp.path = hdr_sys_path;
               temp.name = header_name;
@@ -135,7 +134,24 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data, std::
            }            
         }        
       }
-      
+      else{
+
+             if(this->Find_New_Dependency_From_Path(Src_Data.path)){
+
+               FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Path(Src_Data.path);
+
+               std::string hdr_sys_path =  this->Get_Header_System_Path(FileDtPtr->file_name);
+
+               Search_Data temp;
+            
+               temp.path = hdr_sys_path;
+               temp.name = FileDtPtr->file_name;
+               temp.search_complated = false;
+
+               data.push_back(temp);
+            }
+      }
+
 
       data.shrink_to_fit();
 
@@ -165,6 +181,30 @@ bool Dependency_Data_Extractor::Find_New_Dependency(std::string string_line){
 
               return is_new_dependency;
           }
+        }
+     }
+
+     return is_new_dependency;
+}
+
+bool Dependency_Data_Extractor::Find_New_Dependency_From_Path(std::string path){
+
+     bool is_new_dependency = false;
+
+     FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Path(path);
+
+     bool is_header = this->Header_Processor.Is_Header(FileDtPtr->sys_path);
+
+     if(is_header){
+
+        if(this->Code_Rd->Is_This_Repo_File(FileDtPtr->sys_path)){
+
+            if(!this->Is_This_File_Aready_Searched(FileDtPtr->file_name)){
+
+               is_new_dependency = true;
+
+               return is_new_dependency;
+            }
         }
      }
 

@@ -45,14 +45,21 @@ Source_File_Dependency_Selector::~Source_File_Dependency_Selector()
 
 void Source_File_Dependency_Selector::Clear_Object_Memory(){
 
-     this->Clear_Dynamic_Memory();
+     if(!this->Memory_Delete_Condition){
 
-     this->Info_Collector.Clear_Object_Memory();
+        this->Memory_Delete_Condition = true;
+        
+        this->Clear_Dynamic_Memory();
+
+        this->Info_Collector.Clear_Object_Memory();
+
+        this->Dep_Data_Collector.Clear_Object_Memory();
+     }
+
 }
 
 void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
 {
-
     if(!this->Dependency_Data.empty()){
     
         std::vector<std::vector<Header_Dependency>>::iterator it;
@@ -75,6 +82,8 @@ void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
      this->Clear_String_Memory(&this->descriptor_file_path);
 
      this->Info_Collector.Clear_Dynamic_Memory();
+
+     this->Dep_Data_Collector.Clear_Dynamic_Memory();
 
      this->Dep_Counter = 0;
 }
@@ -104,7 +113,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
 
      this->Extract_Dependency_Tree(path);
 
-     this->Set_Included_Header_Number(&this->Dependent_List,this->Dep_Counter);
+     this->Set_Included_Header_Number(&this->Dependent_List);
 
      this->Dep_Counter = 0;
 
@@ -128,9 +137,8 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
 
             this->Extract_Dependency_Tree(sub_path);
 
-            this->Set_Included_Header_Number(&this->Dependent_List,this->Dep_Counter);
 
-            this->Dep_Counter = 0;
+            this->Set_Included_Header_Number(&this->Dependent_List);
 
             this->Dependency_Data.push_back(this->Dependent_List);
 
@@ -147,6 +155,9 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
      this->Clear_Vector_Memory(&this->Dependent_List);      
 
      this->Info_Collector.Clear_Dynamic_Memory();  
+
+     this->Dependency_Data.shrink_to_fit();
+
 }
 
 
@@ -181,7 +192,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(){
 
          this->Extract_Dependency_Tree(path);
 
-         this->Set_Included_Header_Number(&this->Dependent_List,this->Dep_Counter);
+         this->Set_Included_Header_Number(&this->Dependent_List);
 
          this->Dep_Counter = 0;
 
@@ -203,20 +214,20 @@ void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path){
 
      size_t data_size = Dep_Data_Ptr->size();
 
-     for(size_t i=0;i<data_size;i++){
+     if(data_size>0){   // The header file have dependencies
 
-         Header_Dependency Data;
+        for(size_t i=0;i<data_size;i++){
 
-         std::string header_name = Dep_Data_Ptr->at(i).name;
+            Header_Dependency Data;
 
-         this->Set_Dependency_Data(Data,path,header_name);
+            std::string header_name = Dep_Data_Ptr->at(i).name;
 
-         this->Dependent_List.push_back(Data);
+            this->Set_Dependency_Data(Data,path,header_name);
+
+            this->Dependent_List.push_back(Data);
+        }
      }
 }
-
-
-
 
 
 
@@ -258,15 +269,13 @@ void Source_File_Dependency_Selector::Determine_Header_System_Path(std::string &
 }
 
 
-void Source_File_Dependency_Selector::Set_Included_Header_Number(std::vector<Header_Dependency> * ptr, 
-
-     int dep_num){
+void Source_File_Dependency_Selector::Set_Included_Header_Number(std::vector<Header_Dependency> * ptr){
 
      std::vector<Header_Dependency>::iterator it;
 
      for(auto it=ptr->begin();it<ptr->end();it++){
      
-         it->base_included_hdr_num = dep_num;
+         it->base_included_hdr_num = ptr->size();
          it->included_file_hdr_num = 0;
      }     
 }

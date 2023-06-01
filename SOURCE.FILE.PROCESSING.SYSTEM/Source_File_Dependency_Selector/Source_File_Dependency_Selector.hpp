@@ -66,7 +66,7 @@ public:
 protected:
  void Extract_Dependency_Tree(std::string path);
  void Extract_Dependency_Data();
- void Set_Included_Header_Number(std::vector<Header_Dependency> * ptr, int dep_num);
+ void Set_Included_Header_Number(std::vector<Header_Dependency> * ptr);
  void Determine_Header_Repo_Warehouse_Path( std::string * wrd_path,
       std::string file_name, char opr_sis);
  void Place_String(std::string * str_pointer, std::string string);

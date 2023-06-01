@@ -19,18 +19,23 @@ SRC_INF_COL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Informat
 SRC_DEP_SEL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector
 HDR_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
 SRC_READER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Src_Code_Rdr
+DEP_DAT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Extractor
+
+
 
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
-				$(SOURCE_DETR) $(DIR_ENUM) \
-				$(STRING_OPS) $(HEAD_DET) $(FILE_LISTER) \
-				$(INT_TO_CHAR) $(DES_DATA_COL) $(DES_READER) \
-				$(MAKE_DATA_COL) $(GIT_LIST) $(FILE_DAT_COL) \
-				$(SRC_DT_COL) $(DES_FILE_SYNT_COL) $(SRC_INF_COL) \
-				$(SRC_DEP_SEL) $(HDR_PROC) $(SRC_READER)
+		$(SOURCE_DETR) $(DIR_ENUM) \
+		$(STRING_OPS) $(HEAD_DET) $(FILE_LISTER) \
+	    $(INT_TO_CHAR) $(DES_DATA_COL) $(DES_READER) \
+		$(MAKE_DATA_COL) $(GIT_LIST) $(FILE_DAT_COL) \
+		$(SRC_DT_COL) $(DES_FILE_SYNT_COL) $(SRC_INF_COL) \
+		$(SRC_DEP_SEL) $(HDR_PROC) $(SRC_READER) \
+	    $(DEP_DAT_EXT)
 
 Source_File_Dependency_ReOrderer.exe: Source_File_Dependency_ReOrderer_Main_File.cpp \
     Source_File_Dependency_ReOrderer.cpp \
 	Source_File_Dependency_Selector.cpp \
+	Dependency_Data_Extractor.cpp \
 	Source_File_Information_Collector.cpp \
 	Header_File_Processor.cpp \
 	Project_Src_Code_Rdr.cpp \
@@ -50,6 +55,7 @@ Source_File_Dependency_ReOrderer.exe: Source_File_Dependency_ReOrderer_Main_File
 	Cpp_FileOperations.cpp \
     Source_File_Dependency_ReOrderer.hpp \
 	Source_File_Dependency_Selector.hpp \
+	Dependency_Data_Extractor.hpp \
 	Source_File_Information_Collector.hpp \
 	Header_File_Processor.hpp \
 	Project_Src_Code_Rdr.hpp \
@@ -68,7 +74,7 @@ Source_File_Dependency_ReOrderer.exe: Source_File_Dependency_ReOrderer_Main_File
 	CharOperator.h \
 	Cpp_FileOperations.h
 
-	g++ -std=c++17 -g -o Source_File_Dependency_ReOrderer.exe \
+	g++ -g -o Source_File_Dependency_ReOrderer.exe \
 	 -I$(DIR_OPS) -I$(CPP_OPS) -I$(CHAR_OPS) \
 	 -I$(SRC_INF_COL) -I$(STRING_OPS) -I$(HEAD_DET) \
 	 -I$(FILE_LISTER) -I$(SOURCE_DETR) -I$(GIT_LIST) \
@@ -76,7 +82,8 @@ Source_File_Dependency_ReOrderer.exe: Source_File_Dependency_ReOrderer_Main_File
 	 -I$(DES_DATA_COL) -I$(DES_READER) \
 	 -I$(MAKE_DATA_COL) -I$(FILE_DAT_COL) \
 	 -I$(SRC_DT_COL)  -I$(DES_FILE_SYNT_COL) \
-	 -I$(SRC_DEP_SEL) -I$(HDR_PROC) -I$(SRC_READER) \
+	 -I$(SRC_DEP_SEL) -I$(HDR_PROC) \
+	 -I$(SRC_READER)  -I$(DEP_DAT_EXT) \
 	 -L$(SRC_INF_COL) -L$(DIR_ENUM) -L$(DIR_OPS) -L$(CPP_OPS) \
 	 -L$(CHAR_OPS) -L$(INT_TO_CHAR) -L$(DES_DATA_COL) \
 	 -L$(DES_READER) -L$(STRING_OPS) \
@@ -84,10 +91,12 @@ Source_File_Dependency_ReOrderer.exe: Source_File_Dependency_ReOrderer_Main_File
 	 -L$(SOURCE_DETR) -L$(MAKE_DATA_COL) \
 	 -L$(GIT_LIST) -L$(FILE_DAT_COL) \
 	 -L$(SRC_DT_COL) -L$(DES_FILE_SYNT_COL) \
-	 -L$(SRC_DEP_SEL) -L$(HDR_PROC) -L$(SRC_READER) \
+	 -L$(SRC_DEP_SEL) -L$(HDR_PROC) \
+	 -L$(SRC_READER) -L$(DEP_DAT_EXT) \
 		Source_File_Dependency_ReOrderer_Main_File.cpp \
 		Source_File_Dependency_ReOrderer.cpp \
 		$(SRC_DEP_SEL)\Source_File_Dependency_Selector.cpp \
+		$(DEP_DAT_EXT)\Dependency_Data_Extractor.cpp \
 		$(SRC_INF_COL)\Source_File_Information_Collector.cpp \
 		$(HDR_PROC)\Header_File_Processor.cpp \
 		$(SRC_READER)\Project_Src_Code_Rdr.cpp \
@@ -108,6 +117,7 @@ Source_File_Dependency_ReOrderer.exe: Source_File_Dependency_ReOrderer_Main_File
 		$(INT_TO_CHAR)\IntToCharTranslater.cpp \
 	    -include Source_File_Dependency_ReOrderer.hpp \
 		-include $(SRC_DEP_SEL)\Source_File_Dependency_Selector.hpp \
+		-include $(DEP_DAT_EXT)\Dependency_Data_Extractor.hpp \
 		-include $(SRC_INF_COL)\Source_File_Information_Collector.hpp \
 	    -include $(HDR_PROC)\Header_File_Processor.hpp \
 		-include $(SRC_READER)\Project_Src_Code_Rdr.hpp \

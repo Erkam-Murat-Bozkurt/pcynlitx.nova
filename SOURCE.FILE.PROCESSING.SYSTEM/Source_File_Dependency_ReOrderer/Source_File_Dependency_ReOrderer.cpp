@@ -36,8 +36,8 @@ Source_File_Dependency_ReOrderer::~Source_File_Dependency_ReOrderer()
 }
 
 
-void Source_File_Dependency_ReOrderer::Clear_Object_Memory(){
-
+void Source_File_Dependency_ReOrderer::Clear_Object_Memory()
+{
 
 }
 
@@ -53,23 +53,33 @@ void Source_File_Dependency_ReOrderer::Receive_Dependency_Data(std::vector<std::
 }
 
 
+
+void Source_File_Dependency_ReOrderer::Reorder_Dependency_Data(){
+
+     this->Determine_Headers_Dependencies();
+
+     this->Reorder_Data_Records();
+}
+
+
+
 void Source_File_Dependency_ReOrderer::Determine_Headers_Dependencies(){
 
      size_t List_Size = this->Vector_List_ptr->size();
  
      for(size_t i=0;i<List_Size;i++){
 
-         this->Vector_ptr = &this->Vector_List_ptr->at(i);
+         std::vector<Header_Dependency> * ptr = &this->Vector_List_ptr->at(i);
 
-         size_t sub_list_size = this->Vector_ptr->size();
+         size_t sub_list_size = ptr->size();
 
          for(size_t k=0;k<sub_list_size;k++){
-                     
-              std::string _file = this->Vector_ptr->at(k).Header_Name;
 
-              int dep_num = this->Find_Header_Dependency(_file);
-                                        
-              this->Vector_ptr->at(k).included_file_hdr_num = dep_num;
+             std::string _file = ptr->at(k).Header_Name;
+
+             int dep_num = this->Find_Header_Dependency(_file);
+
+             ptr->at(k).included_file_hdr_num = dep_num;
          }
      }
 }
@@ -84,21 +94,21 @@ int Source_File_Dependency_ReOrderer::Find_Header_Dependency(std::string hdr_nam
      for(size_t i=0;i<List_Size;i++){
      
          std::vector<Header_Dependency> * searc_ptr = &this->Vector_List_ptr->at(i);
-
+        
          size_t vec_size = searc_ptr->size();
 
          std::string _file = searc_ptr->at(0).root_header;
 
          if(this->CompareString(hdr_name,_file)){
 
-            for(size_t j=0;j<searc_ptr->size();j++){
-            
-                this->dependency++;        
-            }
+            this->dependency = searc_ptr->size();
 
-            if(this->dependency==1){            
+            if(this->dependency==1){
             
-               if(searc_ptr->at(0).Header_Name.empty()){
+               std::string root_header = searc_ptr->at(0).root_header;
+               std::string header_name = searc_ptr->at(0).Header_Name;
+
+               if(this->CompareString(root_header,header_name)){
                
                   this->dependency = 0;
                }            
@@ -109,13 +119,6 @@ int Source_File_Dependency_ReOrderer::Find_Header_Dependency(std::string hdr_nam
      }
 
      return this->dependency;
-}
-
-void Source_File_Dependency_ReOrderer::Reorder_Dependency_Data(){
-
-     this->Determine_Headers_Dependencies();
-
-     this->Reorder_Data_Records();
 }
 
 

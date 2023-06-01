@@ -21,6 +21,7 @@
 #include <fcntl.h>
 #include <windows.h>
 #include "Source_File_Dependency_Selector.hpp"
+#include "Dependency_Data_Extractor.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
