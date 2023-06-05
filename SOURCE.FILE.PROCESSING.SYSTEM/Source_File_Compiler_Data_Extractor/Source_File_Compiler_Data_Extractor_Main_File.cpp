@@ -51,13 +51,17 @@ int main(int argc, char ** argv){
     Code_Rd.Read_Project_Source_Code_Files();
 
 
+    std::string path = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.h";
+
+
     Source_File_Dependency_Selector Dep_Selector(argv[1],'w');
 
     Dep_Selector.Receive_Source_Code_Reader(&Code_Rd);
 
-    Dep_Selector.Determine_Source_File_Dependencies();
+    Dep_Selector.Determine_Source_File_Dependencies(path);
 
-    
+    std::cout << "\n Project Data Collected..\n\n";
+
 
     std::vector<std::vector<Header_Dependency>> * ptr = Dep_Selector.Get_Dependency_List_Adress();
 
@@ -69,44 +73,19 @@ int main(int argc, char ** argv){
 
     Compiler_Data_Extractor.Receive_Dependency_Data(ptr,wr_hdr);
 
-    Compiler_Data_Extractor.Extract_Compiler_Data();
+    Compiler_Data_Extractor.Extract_Compiler_Data(path);
 
 
     std::vector<Compiler_Data> * data_ptr = Compiler_Data_Extractor.Get_Compiler_Data_Address();
 
+
+    std::cout << "\n\n DATA FOR PATH:" << path;
+
     print_compiler_data(data_ptr);
-
-    std::cout << "\n Project Data Collected..\n\n";
-
-    std::cin.get();
 
     Compiler_Data_Extractor.Clear_Dynamic_Memory();
 
     Dep_Selector.Clear_Dynamic_Memory();
-
-
-
-
-
-    std::string path = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.h";
-
-    Dep_Selector.Determine_Source_File_Dependencies(path);
-
-    
-    std::vector<std::vector<Header_Dependency>> * s_ptr  = Dep_Selector.Get_Dependency_List_Adress();
-
-
-    Compiler_Data_Extractor.Receive_Dependency_Data(s_ptr,wr_hdr);
-
-    Compiler_Data_Extractor.Extract_Compiler_Data(path);
-
-
-
-    data_ptr = Compiler_Data_Extractor.Get_Compiler_Data_Address();
-    
-    std::cout << "\n\n DATA FOR PATH:" << path;
-
-    print_compiler_data(data_ptr);
 
 
     Compiler_Data_Extractor.Clear_Object_Memory();

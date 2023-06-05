@@ -220,7 +220,6 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
 
      // Compiler data extraction for a particular source file
 
-
      std::vector<Header_Dependency> * hdr_ptr = &this->dep_data_ptr->at(0);
 
      size_t data_size = hdr_ptr->size();
@@ -328,7 +327,6 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
                buffer.header_name);
 
                this->compiler_dt[thm].push_back(buffer);
-
             }
             
             this->Clear_Buffer_Memory(&buffer);
@@ -379,49 +377,6 @@ void Source_File_Compiler_Data_Extractor::Process_Data(int thm,
 
       this->Clear_Buffer_Memory(&buffer);
 }
-
-
-
-
-
-
-
-bool Source_File_Compiler_Data_Extractor::Include_Decleration_Test(std::string string)
-{
-     this->include_decleration_cond = false;
-
-     std::string include_key = "#include\"";  // double_quotation_mark
-
-     bool is_this_include_dec
-
-     = this->StringManager.CheckStringInclusion(string,include_key);
-
-     bool char_before_sharp = false; //  sharp symbol = #
-
-     if(string[0]!= '#'){
-
-        char_before_sharp = true;
-     }
-
-     // In metaprograms, #include key is used on the inside code
-
-     // Therefore, there may be false include therms which is used in the metaprograms
-
-     // in order to produce header files. If there is a character before the sharp symbol,
-
-     // it is a meta program code. ( simething like write{ #include \"sample.h\" })
-
-     if(!char_before_sharp){
-
-        if(is_this_include_dec){
-
-           this->include_decleration_cond = true;
-        }
-     }
-
-     return this->include_decleration_cond;
-}
-
 
 
 void Source_File_Compiler_Data_Extractor::Extract_Obj_File_Name_From_Header_Name(std::string * object_name,

@@ -26,14 +26,25 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Source_File_Dependency_Selector::Source_File_Dependency_Selector(char * des_file_path, char opr_sis)
 
-    : Dep_Data_Collector(des_file_path,opr_sis)  ,
-      Info_Collector(des_file_path,opr_sis), Header_Processor(des_file_path,opr_sis)
+    : Info_Collector(des_file_path,opr_sis), 
+      Header_Processor(des_file_path,opr_sis)
 {
    this->Memory_Delete_Condition = false;
 
-   this->Dep_Counter = 0;
+   size_t dep_path_size = strlen(des_file_path);
 
-   this->descriptor_file_path = des_file_path;
+   this->dep_path = new char [5*dep_path_size];
+
+   for(size_t i=0;i<dep_path_size;i++){
+
+       this->dep_path[i] = des_file_path[i];
+   }
+
+   this->dep_path[dep_path_size] = '\0';
+
+   this->opr_sis = opr_sis;
+
+   this->Dep_Data_Collectors = nullptr;
 }
 
 
@@ -52,10 +63,7 @@ void Source_File_Dependency_Selector::Clear_Object_Memory(){
         this->Clear_Dynamic_Memory();
 
         this->Info_Collector.Clear_Object_Memory();
-
-        this->Dep_Data_Collector.Clear_Object_Memory();
      }
-
 }
 
 void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
@@ -76,16 +84,11 @@ void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
         this->Dependency_Data.shrink_to_fit();
     }
 
-
      this->Clear_String_Memory(&this->warehouse_head_dir);
 
      this->Clear_String_Memory(&this->descriptor_file_path);
 
      this->Info_Collector.Clear_Dynamic_Memory();
-
-     this->Dep_Data_Collector.Clear_Dynamic_Memory();
-
-     this->Dep_Counter = 0;
 }
 
 
@@ -94,8 +97,6 @@ void Source_File_Dependency_Selector::Receive_Source_Code_Reader(Project_Src_Cod
      this->Info_Collector.Receive_Source_Code_Reader(ptr);
 
      this->Header_Processor.Receive_Source_Code_Reader(ptr);
-
-     this->Dep_Data_Collector.Receive_Source_Code_Reader(ptr);
 
      this->Code_Rd = ptr;
 }
@@ -111,53 +112,84 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
 
      this->warehouse_head_dir = this->Info_Collector.Get_Warehouse_Headers_Dir();
 
-     this->Extract_Dependency_Tree(path);
+     this->Dep_Data_Collectors = new Dependency_Data_Extractor * [8];   
 
-     this->Set_Included_Header_Number(&this->Dependent_List);
+     for(int i=0;i<8;i++){
 
-     this->Dep_Counter = 0;
+        this->Dep_Data_Collectors[i] = nullptr;
+     }
 
-     this->Dependency_Data.push_back(this->Dependent_List);
+
+     this->Extract_Dependency_Tree(path,0);
+
+     this->Set_Included_Header_Number(&this->Dependent_List[0]);
+
+     this->Dependency_Data.push_back(this->Dependent_List[0]);
  
      this->Dependency_Data.shrink_to_fit();
 
-     size_t list_size = this->Dependent_List.size();
+     size_t list_size = this->Dependent_List[0].size();
 
-     if(list_size > 0){     
+     if(list_size>0){
 
-        std::vector<Header_Dependency> Temp_List = this->Dependent_List;
+        this->Dependent_List_Buffer = this->Dependent_List[0];
+        
+        this->Clear_Vector_Memory(&this->Dependent_List[0]);  
+   
+        if(list_size>8){
 
-        this->Clear_Vector_Memory(&this->Dependent_List);  
+            int division = list_size/8;
 
-        for(size_t i=0;i<list_size;i++){
+            for(int i=0;i<8;i++){
 
-            Header_Dependency Data = Temp_List.at(i);
+                int str  = i*division;
 
-            std::string sub_path = Data.header_sys_path;
-
-            this->Extract_Dependency_Tree(sub_path);
-
-
-            this->Set_Included_Header_Number(&this->Dependent_List);
-
-            this->Dependency_Data.push_back(this->Dependent_List);
-
-            this->Dependency_Data.shrink_to_fit();
-
-            this->Clear_Vector_Memory(&this->Dependent_List);  
+                int end  = (i+1)*division;
+                 
+                this->threads[i] 
+                
+                = std::thread(Source_File_Dependency_Selector::Process_Dependency_Data,this,i,str,end);     
+            }
+    
+            for(int i=0;i<8;i++){
+     
+                this->threads[i].join();
+            }
         }
+        else{
+
+            this->Process_Dependency_Data(0,0,list_size);
+        }
+
+        this->Clear_Vector_Memory(&this->Dependent_List_Buffer);
      }
 
      // THE DEPENDENCIES COLLECTED FOR THE ROOT PATH
 
-
-
-     this->Clear_Vector_Memory(&this->Dependent_List);      
-
      this->Info_Collector.Clear_Dynamic_Memory();  
 
      this->Dependency_Data.shrink_to_fit();
+}
 
+
+void Source_File_Dependency_Selector::Process_Dependency_Data(int thr_num, int start, int end)
+{    
+     for(size_t i=start;i<end;i++){
+
+         Header_Dependency Data = this->Dependent_List_Buffer.at(i);
+
+         std::string sub_path = Data.header_sys_path;
+
+         this->Extract_Dependency_Tree(sub_path,thr_num);
+
+         this->Set_Included_Header_Number(&this->Dependent_List[thr_num]);
+
+         this->Dependency_Data.push_back(this->Dependent_List[thr_num]);
+
+         this->Dependency_Data.shrink_to_fit();
+
+         this->Clear_Vector_Memory(&this->Dependent_List[thr_num]);  
+    }
 }
 
 
@@ -190,27 +222,28 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(){
      
          std::string path =this->Headers_Data_Ptr->at(i).system_path;
 
-         this->Extract_Dependency_Tree(path);
+         this->Extract_Dependency_Tree(path,0);
 
-         this->Set_Included_Header_Number(&this->Dependent_List);
+         this->Set_Included_Header_Number(&this->Dependent_List[0]);
 
-         this->Dep_Counter = 0;
-
-         this->Dependency_Data.push_back(this->Dependent_List);
+         this->Dependency_Data.push_back(this->Dependent_List[0]);
 
          this->Dependency_Data.shrink_to_fit();
 
-         this->Clear_Vector_Memory(&this->Dependent_List);  
+         this->Clear_Vector_Memory(&this->Dependent_List[0]);  
      }     
 }
 
 
+void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,int thr_num){
 
-void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path){
+     this->Dep_Data_Collectors[thr_num] = new Dependency_Data_Extractor(this->dep_path,this->opr_sis);
 
-     this->Dep_Data_Collector.Extract_Dependency_Tree(path);
+     this->Dep_Data_Collectors[thr_num]->Receive_Source_Code_Reader(this->Code_Rd);
 
-     std::vector<Search_Data> * Dep_Data_Ptr = this->Dep_Data_Collector.Get_Search_Data();
+     this->Dep_Data_Collectors[thr_num]->Extract_Dependency_Tree(path);
+
+     std::vector<Search_Data> * Dep_Data_Ptr = this->Dep_Data_Collectors[thr_num]->Get_Search_Data();
 
      size_t data_size = Dep_Data_Ptr->size();
 
@@ -224,7 +257,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path){
 
             this->Set_Dependency_Data(Data,path,header_name);
 
-            this->Dependent_List.push_back(Data);
+            this->Dependent_List[thr_num].push_back(Data);
         }
      }
 }
@@ -250,6 +283,8 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Header_Dependency & da
      this->Place_String(&data.header_sys_path,hdr_sys_path);
 
      this->Place_String(&data.root_header_path,path);
+
+     this->Place_String(&data.repo_warehouse_path,wrd_path);
 
      data.rcr_srch_complated= true;
      data.base_included_hdr_num++;
@@ -418,6 +453,28 @@ void Source_File_Dependency_Selector::Clear_String_Memory(std::string * Pointer)
          Pointer->clear();
 
          Pointer->shrink_to_fit();
+     }
+}
+
+void Source_File_Dependency_Selector::Clear_Dependency_Data_Extractors(){
+
+     if(this->Dep_Data_Collectors!=nullptr){
+
+        for(int i=0;i<8;i++){
+
+            if(this->Dep_Data_Collectors[i]!= nullptr){
+
+               this->Dep_Data_Collectors[i]->Clear_Dynamic_Memory();
+
+               delete this->Dep_Data_Collectors[i];
+
+               this->Dep_Data_Collectors[i] = nullptr;
+           }
+        }
+
+        delete [] this->Dep_Data_Collectors;
+
+        this->Dep_Data_Collectors = nullptr;
      }
 }
 

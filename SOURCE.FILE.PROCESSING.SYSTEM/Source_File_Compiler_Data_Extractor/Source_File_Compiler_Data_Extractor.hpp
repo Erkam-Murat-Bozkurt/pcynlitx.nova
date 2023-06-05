@@ -24,6 +24,7 @@
 #include <thread>
 #include <chrono>
 #include "Source_File_Dependency_Selector.hpp"
+#include "Dependency_Data_Extractor.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
@@ -59,11 +60,9 @@ public:
  void Clear_Object_Memory();
  Compiler_Data Get_Compiler_Data(int num);
  std::vector<Compiler_Data> * Get_Compiler_Data_Address();
- size_t Get_Compiler_Data_Size();
 protected:    
  void Extract_Obj_File_Name_From_Header_Name(std::string * object_name,
       std::string header_name);
- bool Include_Decleration_Test(std::string string);
  void is_this_independent_header(std::string name, bool & is_ind);
  void Extract_Header_File_Name_From_Path(std::string * name,
       std::string path);
