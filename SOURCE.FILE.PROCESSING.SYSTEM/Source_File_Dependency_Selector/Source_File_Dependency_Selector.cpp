@@ -43,7 +43,7 @@ Source_File_Dependency_Selector::Source_File_Dependency_Selector(char * des_file
    this->dep_path[dep_path_size] = '\0';
 
    this->opr_sis = opr_sis;
-
+   
    this->Dep_Data_Collectors = nullptr;
 }
 
@@ -112,13 +112,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
 
      this->warehouse_head_dir = this->Info_Collector.Get_Warehouse_Headers_Dir();
 
-     this->Dep_Data_Collectors = new Dependency_Data_Extractor * [8];   
-
-     for(int i=0;i<8;i++){
-
-        this->Dep_Data_Collectors[i] = nullptr;
-     }
-
+     this->Construct_Dependency_Data_Extractors();
 
      this->Extract_Dependency_Tree(path,0);
 
@@ -168,12 +162,20 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
 
      this->Info_Collector.Clear_Dynamic_Memory();  
 
+     this->Clear_Dependency_Data_Extractors();
+
      this->Dependency_Data.shrink_to_fit();
 }
 
 
 void Source_File_Dependency_Selector::Process_Dependency_Data(int thr_num, int start, int end)
 {    
+
+     std::unique_lock<std::mutex> mt(this->mtx);
+
+     mt.unlock();
+
+
      for(size_t i=start;i<end;i++){
 
          Header_Dependency Data = this->Dependent_List_Buffer.at(i);
@@ -184,9 +186,13 @@ void Source_File_Dependency_Selector::Process_Dependency_Data(int thr_num, int s
 
          this->Set_Included_Header_Number(&this->Dependent_List[thr_num]);
 
+         mt.lock();
+
          this->Dependency_Data.push_back(this->Dependent_List[thr_num]);
 
          this->Dependency_Data.shrink_to_fit();
+
+         mt.unlock();
 
          this->Clear_Vector_Memory(&this->Dependent_List[thr_num]);  
     }
@@ -205,32 +211,68 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
 
      this->Headers_Data_Ptr   = this->Info_Collector.Get_Headers_Data_Address();
 
-     this->Extract_Dependency_Data();
-
-     this->Dependency_Data.shrink_to_fit();   
-
-     this->Info_Collector.Clear_Dynamic_Memory();    
-}
-
-
-
-void Source_File_Dependency_Selector::Extract_Dependency_Data(){
+     this->Construct_Dependency_Data_Extractors();
 
      size_t data_size = this->Headers_Data_Ptr->size();
 
-     for(size_t i=0;i<data_size;i++){
+    if(data_size>8){
+
+       int division = data_size/8;
+
+       for(int i=0;i<8;i++){
+
+           int str  = i*division;
+
+           int end  = (i+1)*division;
+
+           this->threads[i] 
+                
+                = std::thread(Source_File_Dependency_Selector::Extract_Dependency_Data,this,i,str,end);     
+       }
+    
+       for(int i=0;i<8;i++){
+     
+          this->threads[i].join();
+       }
+    }
+    else{
+
+        this->Extract_Dependency_Data(0,0,data_size);
+    }
+
+    this->Dependency_Data.shrink_to_fit();   
+
+    this->Info_Collector.Clear_Dynamic_Memory();    
+
+    this->Clear_Dependency_Data_Extractors();
+}
+
+
+void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int start, int end){
+
+     std::unique_lock<std::mutex> mt(this->mtx);
+
+     mt.unlock();
+
+     for(size_t i=start;i<end;i++){
      
          std::string path =this->Headers_Data_Ptr->at(i).system_path;
 
-         this->Extract_Dependency_Tree(path,0);
+         this->Extract_Dependency_Tree(path,thr_num);
 
-         this->Set_Included_Header_Number(&this->Dependent_List[0]);
+         this->Set_Included_Header_Number(&this->Dependent_List[thr_num]);
 
-         this->Dependency_Data.push_back(this->Dependent_List[0]);
+
+         mt.lock();
+
+         this->Dependency_Data.push_back(this->Dependent_List[thr_num]);
 
          this->Dependency_Data.shrink_to_fit();
 
-         this->Clear_Vector_Memory(&this->Dependent_List[0]);  
+         mt.unlock();
+
+
+         this->Clear_Vector_Memory(&this->Dependent_List[thr_num]);  
      }     
 }
 
@@ -453,6 +495,16 @@ void Source_File_Dependency_Selector::Clear_String_Memory(std::string * Pointer)
          Pointer->clear();
 
          Pointer->shrink_to_fit();
+     }
+}
+
+void Source_File_Dependency_Selector::Construct_Dependency_Data_Extractors(){
+
+     this->Dep_Data_Collectors = new Dependency_Data_Extractor * [8];   
+
+     for(int i=0;i<8;i++){
+
+        this->Dep_Data_Collectors[i] = nullptr;
      }
 }
 

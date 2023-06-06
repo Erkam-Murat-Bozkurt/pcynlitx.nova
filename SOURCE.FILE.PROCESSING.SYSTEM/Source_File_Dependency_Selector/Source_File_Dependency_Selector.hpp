@@ -68,7 +68,7 @@ public:
  size_t  Get_Dependency_List_Size();
 protected:
  void Extract_Dependency_Tree(std::string path, int thr_num);
- void Extract_Dependency_Data();
+ void Extract_Dependency_Data(int thr_num, int start, int end);
  void Set_Included_Header_Number(std::vector<Header_Dependency> * ptr);
  void Determine_Header_Repo_Warehouse_Path( std::string * wrd_path,
       std::string file_name, char opr_sis);
@@ -83,6 +83,7 @@ protected:
  std::string Get_Header_System_Path(std::string header_name);
  void Process_Dependency_Data(int thr_num, int start, int end);
  void Clear_Dependency_Data_Extractors();
+ void Construct_Dependency_Data_Extractors();
  Source_File_Information_Collector Info_Collector; 
  Dependency_Data_Extractor ** Dep_Data_Collectors;
  Project_Src_Code_Rdr * Code_Rd;

@@ -52,7 +52,7 @@ int main(int argc, char ** argv){
 
       Dep_Selector.Receive_Source_Code_Reader(&Code_Rd);
 
-      Dep_Selector.Determine_Source_File_Dependencies(path);
+      Dep_Selector.Determine_Source_File_Dependencies();
 
       Dep_Selector.Print_Dependency_List();
 
