@@ -58,7 +58,7 @@ int main(int argc, char ** argv){
 
     Dep_Selector.Receive_Source_Code_Reader(&Code_Rd);
 
-    Dep_Selector.Determine_Source_File_Dependencies(path);
+    Dep_Selector.Determine_Source_File_Dependencies();
 
     std::cout << "\n Project Data Collected..\n\n";
 
@@ -73,7 +73,7 @@ int main(int argc, char ** argv){
 
     Compiler_Data_Extractor.Receive_Dependency_Data(ptr,wr_hdr);
 
-    Compiler_Data_Extractor.Extract_Compiler_Data(path);
+    Compiler_Data_Extractor.Extract_Compiler_Data();
 
 
     std::vector<Compiler_Data> * data_ptr = Compiler_Data_Extractor.Get_Compiler_Data_Address();

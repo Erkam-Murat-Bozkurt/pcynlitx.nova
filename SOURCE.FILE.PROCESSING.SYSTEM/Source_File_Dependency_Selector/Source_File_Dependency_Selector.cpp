@@ -329,7 +329,6 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Header_Dependency & da
      this->Place_String(&data.repo_warehouse_path,wrd_path);
 
      data.rcr_srch_complated= true;
-     data.base_included_hdr_num++;
 
      this->Clear_String_Memory(&hdr_sys_path);
 

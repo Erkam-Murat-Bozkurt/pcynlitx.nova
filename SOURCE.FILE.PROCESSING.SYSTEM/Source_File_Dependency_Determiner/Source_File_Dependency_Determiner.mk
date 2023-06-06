@@ -29,6 +29,7 @@ SRC_COM_DT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Compi
 SRC_DEP_SL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector
 SRC_DER_RORD=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_ReOrderer
 HDR_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
+DEP_DAT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Extractor
 
 
 
@@ -39,12 +40,13 @@ VPATH = $(DIR_OPS)      $(CPP_OPS) $(CHAR_OPS) \
 	    $(GIT_LIST)     $(FILE_DAT_COL) \
 	    $(SRC_DT_COL)   $(SYNT_COL) $(SRC_INF_CL) \
 	    $(SRC_DEP_SL)   $(SRC_COM_DT_EXT) $(SRC_DER_RORD) \
-	    $(HDR_PROC)     $(SRC_READER)
+	    $(HDR_PROC)     $(SRC_READER)  $(DEP_DAT_EXT)
 
 Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_File.cpp \
 	Source_File_Dependency_Determiner.cpp \
 	Source_File_Dependency_ReOrderer.cpp \
 	Source_File_Dependency_Selector.cpp \
+	Dependency_Data_Extractor.cpp \
 	Source_File_Compiler_Data_Extractor.cpp \
 	Source_File_Information_Collector.cpp \
 	Header_File_Processor.cpp \
@@ -67,6 +69,7 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 	Source_File_Dependency_ReOrderer.hpp \
 	Source_File_Dependency_Selector.hpp\
 	Source_File_Compiler_Data_Extractor.hpp \
+	Dependency_Data_Extractor.hpp \
 	Source_File_Information_Collector.hpp\
 	Header_File_Processor.hpp \
 	Project_Src_Code_Rdr.hpp \
@@ -95,7 +98,7 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 	 	-I$(DES_DATA_COL)   -I$(DES_READER)  -I$(SRC_DER_RORD) \
 	 	-I$(FILE_DAT_COL)   -I$(HDR_PROC)    -I$(SRC_READER) \
 	 	-I$(SRC_DT_COL)     -I$(SYNT_COL) \
-	 	-I$(SRC_DEP_SL)     -I$(SRC_COM_DT_EXT) \
+	 	-I$(SRC_DEP_SL)     -I$(SRC_COM_DT_EXT) -I$(DEP_DAT_EXT)\
 	 	-L$(SRC_INF_CL)     -L$(DIR_ENUM)    -L$(DIR_OPS)  \
 	 	-L$(CHAR_OPS)       -L$(INT_TO_CHAR) -L$(DES_DATA_COL) \
 	 	-L$(DES_READER)     -L$(STRING_OPS)  -L$(CPP_OPS) \
@@ -103,12 +106,13 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 	 	-L$(SOURCE_DETR)    -L$(GIT_LIST)    -L$(SRC_DER_RORD)  \
 	 	-L$(SRC_DT_COL)     -L$(SYNT_COL)   \
 	 	-L$(SRC_COM_DT_EXT) -L$(SRC_DEP_SL) \
-	 	-L$(HDR_PROC)       -L$(SRC_READER) \
+	 	-L$(HDR_PROC)       -L$(SRC_READER) -L$(DEP_DAT_EXT)\
 	  	Source_File_Dependency_Determiner_Main_File.cpp \
 	  	Source_File_Dependency_Determiner.cpp \
 	  	$(SRC_DER_RORD)\Source_File_Dependency_ReOrderer.cpp \
 		$(SRC_DEP_SL)\Source_File_Dependency_Selector.cpp \
 		$(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.cpp \
+		$(DEP_DAT_EXT)\Dependency_Data_Extractor.cpp \
 		$(SRC_INF_CL)\Source_File_Information_Collector.cpp \
 		$(HDR_PROC)\Header_File_Processor.cpp \
 		$(SRC_READER)\Project_Src_Code_Rdr.cpp \
@@ -131,6 +135,7 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 		-include $(SRC_DER_RORD)\Source_File_Dependency_ReOrderer.hpp \
 		-include $(SRC_DEP_SL)\Source_File_Dependency_Selector.hpp \
 		-include $(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.hpp \
+		-include $(DEP_DAT_EXT)\Dependency_Data_Extractor.hpp \
 		-include $(SRC_INF_CL)\Source_File_Information_Collector.hpp \
 		-include $(HDR_PROC)\Header_File_Processor.hpp \
 		-include $(SRC_READER)\Project_Src_Code_Rdr.hpp \
