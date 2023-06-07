@@ -26,6 +26,8 @@ public:
  virtual ~Source_File_Determiner();
  bool Is_Source_File(std::string file_path);
  bool Is_Source_File(char * file_path);
+ bool Is_Main_File(std::string file_path);
+ bool Is_Main_File(char * file_path);
  void Determine_Source_File_Name(std::string path);
  void Determine_File_Name_Without_Ext(std::string path);
  std::string Get_Source_File_Name();
@@ -46,6 +48,7 @@ protected:
  std::string File_Name_Witout_Ext;
  int  File_Content_Size;
  bool Is_This_Source_File;
+ bool Is_This_Main_File;
  bool Memory_Delete_Condition;
 };
 

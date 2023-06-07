@@ -48,6 +48,7 @@ struct Build_System_Data {
   int  Included_Header_Files_Number;  // The number of the header file included if the file is a source file
   bool is_this_a_source_file;
   bool is_this_a_header_file;
+  bool is_this_a_main_file;
 };
 
 

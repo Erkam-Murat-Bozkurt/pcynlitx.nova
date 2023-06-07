@@ -6,6 +6,8 @@ Source_File_Determiner::Source_File_Determiner()
     this->File_Content_Size = 0;
 
     this->Is_This_Source_File = false;
+
+    this->Is_This_Main_File = false;
 }
 
 
@@ -97,11 +99,15 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
                 return this->Is_This_Source_File;
             }
 
+            this->Is_This_Main_File = false;
+
             is_this_main_file = this->StringManager.CheckStringInclusion(this->File_Content[k],main_file_key);
 
             if(is_this_main_file){
 
-               this->Is_This_Source_File = false;
+               this->Is_This_Source_File = true;
+
+               this->Is_This_Main_File = true;
 
                return this->Is_This_Source_File;
             }
@@ -193,7 +199,7 @@ bool Source_File_Determiner::Is_Source_File(std::string file_path){
 
             if(is_this_main_file){
 
-               this->Is_This_Source_File = false;
+               this->Is_This_Source_File = true;
 
                return this->Is_This_Source_File;
             }
@@ -212,6 +218,42 @@ bool Source_File_Determiner::Is_Source_File(std::string file_path){
 
     return this->Is_This_Source_File;
 }
+
+
+bool Source_File_Determiner::Is_Main_File(std::string path){
+
+     this->Is_This_Main_File = false;
+
+     bool is_source_file = this->Is_Source_File(path);
+     
+     if(is_source_file){
+
+         return this->Is_This_Main_File;
+     }
+     else{
+
+          this->Is_This_Main_File = false;
+
+          return this->Is_This_Main_File;
+     }
+}
+
+bool Source_File_Determiner::Is_Main_File(char * path){
+
+     bool is_source_file = this->Is_Source_File(path);
+     
+     if(is_source_file){
+
+         return this->Is_This_Main_File;
+     }
+     else{
+
+          this->Is_This_Main_File = false;
+
+          return this->Is_This_Main_File;
+     }
+}
+
 
 
 void Source_File_Determiner::Read_File(std::string path){

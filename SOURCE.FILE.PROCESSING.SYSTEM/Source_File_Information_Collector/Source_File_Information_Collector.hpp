@@ -65,11 +65,9 @@ protected:
  void Determine_Warehouse_Header_Dir();
  void Determine_Header_Repo_Warehouse_Path(std::string * wrd_path,
       std::string file_name, char opr_sis);
- void Determine_Header_System_Path(std::string * sys_path,std::string file_name, char opr_sis);
  void Extract_Header_File_Name_From_Decleration(std::string * header_name,
       std::string string);
  void Determine_Header_System_Path(std::string * sys_path,std::string path);
- void Delete_Spaces_on_String(std::string * pointer);
  bool Include_Decleration_Test(std::string string);
  bool CompareString(std::string sr1, std::string sr2);
  void Clear_Buffer_Memory();

@@ -129,9 +129,11 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
      
          std::string file_sys_path = this->FilePaths.at(i);
 
+
          bool is_header   = this->Hdr_Determiner[trn]->Is_Header(file_sys_path);
 
          bool is_src_file = this->Src_Determiner[trn]->Is_Source_File(file_sys_path);
+
 
          if(is_header || is_src_file){
                              
@@ -217,10 +219,7 @@ void Project_Src_Code_Rdr::Read_Source_Code_Single_Thread(){
 
             this->Clear_String_Memory(&Temp.sys_path);
          }
-     }
-
-     std::cout << "\n\n The project source code has been read";
-     std::cout << "\n";     
+     }    
 }
 
 

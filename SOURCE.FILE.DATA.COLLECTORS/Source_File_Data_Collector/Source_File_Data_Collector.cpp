@@ -335,7 +335,11 @@ void Source_File_Data_Collector::Determine_Git_Record_Header_File_Path(std::stri
 
         std::cerr << "\n is not macth with the git records :";
 
-        std::cerr << "\n please check header decleration";
+        std::cerr << "\n please check header decleration on the path:";
+
+        std::cerr << "\n ";
+
+        std::cerr << this->FilePATH;
 
         std::cerr << "\n\n";
 
