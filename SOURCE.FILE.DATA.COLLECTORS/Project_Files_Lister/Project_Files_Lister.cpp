@@ -63,18 +63,24 @@ void Project_Files_Lister::Collect_Source_Files_Data()
 
          bool is_source_file   = this->Source_Determiner.Is_Source_File(file_path);
 
-         if(is_source_file)
-         {
-            this->Source_File_Number++;
+         if(is_source_file){
 
-            Build_System_Data Temp_Data;
+            bool is_main_file = this->Source_Determiner.Is_Main_File(file_path);
 
-            this->Src_Data_Col.Process_Source_File_Data(&Temp_Data,file_path);
+            if(!is_main_file){
 
-            this->Data.push_back(Temp_Data);
+                this->Source_File_Number++;
 
-            this->Clear_Build_Data(&Temp_Data);
+                Build_System_Data Temp_Data;
+
+                this->Src_Data_Col.Process_Source_File_Data(&Temp_Data,file_path);
+
+                this->Data.push_back(Temp_Data);
+
+                this->Clear_Build_Data(&Temp_Data);
+            }
          }
+
      }
 
      this->Data.shrink_to_fit();     
