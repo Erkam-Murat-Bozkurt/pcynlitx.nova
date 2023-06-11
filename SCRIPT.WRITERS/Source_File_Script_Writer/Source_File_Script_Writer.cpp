@@ -122,6 +122,12 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->FileManager.WriteToFile("$Source_File_Location=\"");
 
+     /*
+     std::cout << "\n Inside Source_File_Script_Writer::Write_Source_File_Script..";
+     std::cout << "\n Src_Data_Pointer->source_file_git_record_dir:" << Src_Data_Pointer->source_file_git_record_dir;
+     std::cin.get();
+     */
+    
      this->FileManager.WriteToFile(Src_Data_Pointer->source_file_git_record_dir);
 
      this->FileManager.WriteToFile("\"");
@@ -160,6 +166,14 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->FileManager.WriteToFile("Write-Output \"");
 
+
+     /*
+     
+     std::cout << "\n this->Src_Data_Pointer->source_file_name:" << this->Src_Data_Pointer->source_file_name;
+     std::cin.get();
+     */
+
+
      this->FileManager.WriteToFile(this->Src_Data_Pointer->source_file_name);
 
      this->FileManager.WriteToFile(" class object file construction started\"");
@@ -179,6 +193,12 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("mingw32-make -f ");
+
+
+     /*
+     std::cout << "\n this->Src_Data_Pointer->make_file_name:" << this->Src_Data_Pointer->make_file_name;
+     std::cin.get();
+     */
 
      this->FileManager.WriteToFile(this->Src_Data_Pointer->make_file_name);
 

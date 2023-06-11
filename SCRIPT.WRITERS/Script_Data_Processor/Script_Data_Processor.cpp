@@ -81,7 +81,7 @@ void Script_Data_Processor::Determine_Script_Information(){
 
         this->Data_Collector.Determine_Header_Files_Inclusion_Number(&this->Temp_Data,i);
 
-        this->Data_Collector.Determine_Make_File_Name(&this->Temp_Data,i);
+        this->Data_Collector.Determine_Make_File_Name(&this->Temp_Data);
 
         this->Data.push_back(this->Temp_Data);
 

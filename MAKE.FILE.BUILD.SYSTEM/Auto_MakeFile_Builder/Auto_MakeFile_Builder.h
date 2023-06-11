@@ -26,7 +26,6 @@ public:
  void Build_Make_Files();
 protected:
  void Determine_Project_Directories();
- void Write_Make_Files();
  void Clear_Dynamic_Memory();
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * ptr);

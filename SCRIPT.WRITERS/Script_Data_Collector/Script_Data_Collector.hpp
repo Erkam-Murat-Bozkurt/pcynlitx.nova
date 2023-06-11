@@ -38,7 +38,7 @@ public:
  void Receive_Compiler_Data(Compiler_Data * dt);
  void Determine_Source_File_Compilation_Information(Script_Data * ptr, std::string str);
  void Determine_Header_Files_Inclusion_Number(Script_Data * ptr, int num);
- void Determine_Make_File_Name(Script_Data * ptr, int num);
+ void Determine_Make_File_Name(Script_Data * ptr);
  void Find_Git_Record_Dir(std::string header_name, std::string & dir); 
  void Clear_Data_Memory(Script_Data * Src_Data_Pointer, int src_num); 
 protected:

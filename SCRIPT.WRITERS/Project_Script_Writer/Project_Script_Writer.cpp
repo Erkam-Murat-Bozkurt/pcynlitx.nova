@@ -66,7 +66,7 @@ void Project_Script_Writer::Write_Source_File_Scripts(){
      for(int i=0;i<this->source_file_num;i++){
 
         std::string src_dir = this->Data_Pointer->at(i).source_file_dir;
-        
+
         this->DirectoryManager.ChangeDirectory(src_dir);
 
         this->Src_Script_Writer.Clear_Dynamic_Memory();

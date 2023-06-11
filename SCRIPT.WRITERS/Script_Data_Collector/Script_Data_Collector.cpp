@@ -36,6 +36,8 @@ void Script_Data_Collector::Receive_Compiler_Data(Compiler_Data * ptr){
      this->Cmp_Data_Ptr = ptr;
 }
 
+
+
 void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script_Data * ptr,
 
      std::string header_name){
@@ -46,7 +48,6 @@ void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script
      int record_index = 0;
 
      this->Find_Data_Record_Index(header_name,record_index);
-
 
      std::string git_record_dir = this->Build_Dt->at(record_index).git_record_dir;
 
@@ -151,9 +152,10 @@ void Script_Data_Collector::Determine_Header_Files_Inclusion_Number(Script_Data 
 }
 
 
-void Script_Data_Collector::Determine_Make_File_Name(Script_Data * ptr, int src_num){
+void Script_Data_Collector::Determine_Make_File_Name(Script_Data * ptr){
 
-     std::string src_name = this->Dir_Lister.Get_Source_File_Name(src_num);
+   
+     std::string src_name = ptr->src_name_without_ext;
 
      std::string make_ext = ".make";
 
@@ -188,7 +190,6 @@ void Script_Data_Collector::Find_Data_Record_Index(std::string header_name, int 
          this->Find_File_Name(header_name,search_name);
 
          std::string FileName = this->Build_Dt->at(i).File_Name;
-
 
          bool is_equal = this->CompareString(search_name,FileName);
 
