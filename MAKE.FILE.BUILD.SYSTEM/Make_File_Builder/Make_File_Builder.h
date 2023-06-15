@@ -12,7 +12,13 @@
 #include <fstream>
 #include <string>
 #include <fcntl.h>
+#include <map>
+#include <unordered_map>
+#include <iterator>
 #include "MakeFile_Data_Collector.hpp"
+#include "Source_File_Dependency_Determiner.hpp"
+#include "Source_File_Dependency_Selector.hpp"
+#include "Source_File_Information_Collector.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 #include "Header_File_Determiner.h"
@@ -26,8 +32,12 @@ public:
  Make_File_Builder(char * DesPath, char opr_sis);
  virtual ~Make_File_Builder();
  void Build_MakeFile(int git_index);
+ void Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr);
+ void Construct_Data_Map();
  void Clear_Dynamic_Memory();
 private:
+ Compiler_Data * Find_Compiler_Data_From_Index(int index);
+ Compiler_Data * Find_Compiler_Data_From_Header_Name(std::string name);
  MakeFile_Data_Collector Data_Collector;
  Header_File_Determiner Header_Determiner;
  Project_Files_Lister File_Lister;
@@ -35,6 +45,8 @@ private:
  Cpp_FileOperations FileManager;
  DirectoryOperations DirectoryManager;
  IntToCharTranslater Translater;
+ std::unordered_map<std::string, Compiler_Data> DataMap;
+ std::vector<Compiler_Data> * Comp_Data_Ptr;
  char opr_sis;
  bool Include_Line_Condition;
  bool Memory_Delete_Condition;

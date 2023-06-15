@@ -225,6 +225,12 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
 
            int end  = (i+1)*division;
 
+
+           if(i==7){
+            
+               end = data_size;
+           }
+
            this->threads[i] 
                 
                 = std::thread(Source_File_Dependency_Selector::Extract_Dependency_Data,this,i,str,end);     

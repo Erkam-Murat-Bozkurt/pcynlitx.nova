@@ -22,6 +22,7 @@
 #include "Source_File_Dependency_ReOrderer.hpp"
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
+#include "Source_File_Processor.hpp"
 #include "Header_File_Processor.hpp"
 #include "Project_Src_Code_Rdr.hpp"
 #include "Git_File_List_Receiver.hpp"
@@ -39,9 +40,9 @@ class Source_File_Dependency_Determiner
 public:
  Source_File_Dependency_Determiner(char * des_file_path, char opr_sis);
  virtual ~Source_File_Dependency_Determiner();
- //void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Collect_Dependency_Information();
  void Collect_Dependency_Information(std::string path);
+ bool Is_Source_File(std::string spath);
  int  Get_Compiler_Data_Size();
  std::string Get_Warehouse_Headers_Dir();
  std::string Get_Warehouse_Objetcs_Dir();
@@ -58,6 +59,7 @@ protected:
  Source_File_Dependency_Selector DepSelector;
  Source_File_Compiler_Data_Extractor Com_Data_Extractor;
  Source_File_Dependency_ReOrderer ReOrderer;
+ Source_File_Processor Src_Processor;
  std::vector<Compiler_Data> * Compiler_Data_Ptr;
  CharOperator Char_Processor;
  size_t  data_size;

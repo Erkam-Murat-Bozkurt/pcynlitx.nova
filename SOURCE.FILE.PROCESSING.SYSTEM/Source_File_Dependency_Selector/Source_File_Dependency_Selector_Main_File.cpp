@@ -54,10 +54,12 @@ int main(int argc, char ** argv){
 
       Dep_Selector.Determine_Source_File_Dependencies();
 
-      Dep_Selector.Print_Dependency_List();
+      //Dep_Selector.Print_Dependency_List();
 
       std::cout << "\n Dependency size:" << Dep_Selector.Get_Dependency_List_Size();
     }
+
+    /*
 
     std::vector<std::vector<Header_Dependency>> * Data_Ptr = Dep_Selector.Get_Dependency_List_Adress();
     
@@ -83,6 +85,8 @@ int main(int argc, char ** argv){
 
         std::cout << "\n\n";
     }
+
+    */
 
     std::cout << "\n\n THE END OF THE PROGRAM \n\n";
 

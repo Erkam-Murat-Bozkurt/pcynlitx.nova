@@ -80,7 +80,6 @@ void Project_Files_Lister::Collect_Source_Files_Data()
                 this->Clear_Build_Data(&Temp_Data);
             }
          }
-
      }
 
      this->Data.shrink_to_fit();     
@@ -96,7 +95,6 @@ void Project_Files_Lister::Collect_Independent_Header_Files_Data()
          std::string file_path = this->git_record_paths[i];
 
          bool is_header_file = this->Header_Determiner.Is_Header(file_path);
-
 
          if(is_header_file){
 

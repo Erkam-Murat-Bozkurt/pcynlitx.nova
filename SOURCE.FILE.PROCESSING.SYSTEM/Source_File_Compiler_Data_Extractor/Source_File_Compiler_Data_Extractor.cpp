@@ -108,6 +108,8 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){
 
      std::size_t dt_size = this->dep_data_ptr->size();
      
+     this->dep_data_ptr->shrink_to_fit();
+
      if(dt_size >= 8)
      {   
         int division = dt_size/8;
@@ -122,6 +124,7 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){
             
                end = dt_size;
             }
+
 
             this->threads[i] = std::thread(Source_File_Compiler_Data_Extractor::Process_Compiler_Data,this,i,str,end);     
         }
@@ -320,6 +323,7 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
             
             this->is_this_independent_header(buffer.header_name,is_indep);
 
+            
             if(!is_indep){
 
                this->Extract_Obj_File_Name_From_Header_Name(&(buffer.object_file_name),

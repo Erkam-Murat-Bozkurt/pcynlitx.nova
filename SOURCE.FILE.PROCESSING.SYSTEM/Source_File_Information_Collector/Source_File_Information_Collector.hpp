@@ -20,6 +20,7 @@
 #include <fcntl.h>
 #include <windows.h>
 #include <vector>
+#include "Source_File_Processor.hpp"
 #include "Project_Src_Code_Rdr.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
@@ -30,11 +31,10 @@
 #include "DirectoryOperations.h"
 #include "IntToCharTranslater.h"
 
-struct Headers_Data
+struct Source_File_Data
 {
-  std::string repo_path;
+  std::string source_file_name;
   std::string system_path;
-  std::string header_name;
   std::vector<std::string> included_headers;       // Included header files data
   std::vector<std::string> included_headers_paths;
   int inclusion_number;
@@ -53,14 +53,14 @@ public:
  void Extract_Dependency_Data();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
- Headers_Data Get_Dependency_Data(int num);
- std::vector<Headers_Data> * Get_Headers_Data_Address();
+ Source_File_Data Get_Dependency_Data(int num);
+ std::vector<Source_File_Data> * Get_Headers_Data_Address();
  size_t       Get_Dependency_Data_Size();
  std::string  Get_Warehouse_Headers_Dir();
  std::string  Get_Warehouse_Objetcs_Dir();
  std::string  Get_Warehouse_Path();
 protected:
- void Determine_Header_File_List();
+ void Determine_Source_File_List();
  void Determine_Warehouse_Object_Dir();
  void Determine_Warehouse_Header_Dir();
  void Determine_Header_Repo_Warehouse_Path(std::string * wrd_path,
@@ -78,10 +78,11 @@ protected:
  StringOperator StringManager;
  Descriptor_File_Reader Des_Reader;
  Git_File_List_Receiver Git_Data_Receiver;
+ Source_File_Processor Src_File_Pr;
  Cpp_FileOperations FileManager;
  Header_File_Processor Header_Processor;
- std::vector<Headers_Data> head_data;
- Headers_Data buffer;
+ std::vector<Source_File_Data> Src_Data_Holder;
+ Source_File_Data buffer;
  std::string warehouse_head_dir;
  std::string warehouse_obj_dir;
  std::string warehouse_path;

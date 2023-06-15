@@ -19,7 +19,7 @@ HDR_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
 SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
 HEAD_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
 SRC_READER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Src_Code_Rdr
-
+SRC_FILE_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Processor
 
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 	    $(SOURCE_DETR) $(DIR_ENUM) \
@@ -27,10 +27,11 @@ VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 	    $(INT_TO_CHAR) $(DES_DATA_COL) $(DES_READER) \
 	    $(GIT_LIST) $(FILE_DAT_COL) \
 	    $(SRC_DT_COL) $(DES_FILE_SYNT_COL) \
-		$(HDR_PROC) $(SRC_READER)  
+		$(HDR_PROC) $(SRC_READER) $(SRC_FILE_PROC)
 
 Source_File_Information_Collector.exe: Source_File_Information_Collector_Main_File.cpp \
 	Source_File_Information_Collector.cpp \
+	Source_File_Processor.cpp \
 	Header_File_Processor.cpp \
 	Project_Src_Code_Rdr.cpp \
 	Project_Files_Lister.cpp \
@@ -48,6 +49,7 @@ Source_File_Information_Collector.exe: Source_File_Information_Collector_Main_Fi
 	CharOperator.cpp \
 	Cpp_FileOperations.cpp \
 	Source_File_Information_Collector.hpp \
+	Source_File_Processor.hpp \
 	Header_File_Processor.hpp \
 	Project_Src_Code_Rdr.hpp \
 	Project_Files_Lister.h \
@@ -73,16 +75,19 @@ Source_File_Information_Collector.exe: Source_File_Information_Collector_Main_Fi
 	 -I$(CLASS_SYNTAX) -I$(DIR_ENUM) -I$(INT_TO_CHAR) \
 	 -I$(DES_DATA_COL) -I$(DES_READER) \
 	 -I$(FILE_DAT_COL) -I$(HDR_PROC) \
-	 -I$(SRC_DT_COL)   -I$(DES_FILE_SYNT_COL) -I$(SRC_READER) \
+	 -I$(SRC_DT_COL)   -I$(DES_FILE_SYNT_COL) \
+	 -I$(SRC_READER)   -I$(SRC_FILE_PROC) \
 	 -L$(DIR_ENUM)     -L$(DIR_OPS)     -L$(CPP_OPS) \
 	 -L$(CHAR_OPS)     -L$(INT_TO_CHAR) -L$(DES_DATA_COL) \
 	 -L$(DES_READER)   -L$(STRING_OPS) \
 	 -L$(HEAD_DET)     -L$(FILE_LISTER) \
 	 -L$(SOURCE_DETR)  -L$(HDR_PROC) \
 	 -L$(GIT_LIST)     -L$(FILE_DAT_COL) \
-	 -L$(SRC_DT_COL)   -L$(DES_FILE_SYNT_COL) -L$(SRC_READER)\
+	 -L$(SRC_DT_COL)   -L$(DES_FILE_SYNT_COL) \
+	 -L$(SRC_READER)   -L$(SRC_FILE_PROC) \
 		Source_File_Information_Collector_Main_File.cpp \
 		Source_File_Information_Collector.cpp \
+		$(SRC_FILE_PROC)\Source_File_Processor.cpp \
 		$(HDR_PROC)\Header_File_Processor.cpp \
 		$(SRC_READER)\Project_Src_Code_Rdr.cpp \
 		$(FILE_LISTER)\Project_Files_Lister.cpp \
@@ -101,6 +106,7 @@ Source_File_Information_Collector.exe: Source_File_Information_Collector_Main_Fi
 		$(CPP_OPS)\Cpp_FileOperations.cpp \
 		$(INT_TO_CHAR)\IntToCharTranslater.cpp \
 		-include Source_File_Information_Collector.hpp \
+		-include $(SRC_FILE_PROC)\Source_File_Processor.hpp \
 		-include $(HDR_PROC)\Header_File_Processor.hpp \
 		-include $(SRC_READER)\Project_Src_Code_Rdr.hpp \
 		-include $(FILE_LISTER)\Project_Files_Lister.h \

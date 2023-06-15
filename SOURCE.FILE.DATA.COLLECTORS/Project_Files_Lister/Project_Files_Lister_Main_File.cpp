@@ -30,6 +30,8 @@ int main(int argc, char ** argv){
 
     std::cout << "\n src_file_num:" << src_file_num;
 
+    std::cin.get();
+
     std::cout << "\n";
 
     for(int i=0;i<src_file_num;i++){

@@ -14,6 +14,9 @@
 #include <string>
 #include <fcntl.h>
 #include <windows.h>
+#include "Source_File_Dependency_Determiner.hpp"
+#include "Source_File_Dependency_Selector.hpp"
+#include "Source_File_Information_Collector.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 #include "Header_File_Determiner.h"
@@ -28,6 +31,7 @@ public:
  virtual ~MakeFile_Data_Collector();
  void Collect_Make_File_Data(int git_index);
  void Receive_Git_Record_Data(int git_index);
+ void Receive_Compiler_Data_Pointer(Compiler_Data * ptr);
  std::string Get_Source_File_Name();
  std::string Get_Make_File_Name();
  std::string Get_Compiler_System_Command();
@@ -45,7 +49,7 @@ public:
  void Clear_Object_Memory();
 private:
  void Clear_String_Memory(std::string * pointer);
- void Clear_Vector_Memory(std::vector<std::string> * pointer);
+ void Clear_Vector_Memory(std::vector<std::string> * pointer); 
  void Collect_Header_Files_Information();
  void Receive_Included_Header_Files_Number();
  void Determine_Make_File_Name();
@@ -66,7 +70,7 @@ private:
  IntToCharTranslater Translater;
  Descriptor_File_Reader Des_Reader;
  Project_Files_Lister File_Lister;
-
+ Compiler_Data * Compiler_Data_Ptr;
  std::string repo_dir;
  std::string warehouse_head_dir;
  std::string warehouse_obj_dir;

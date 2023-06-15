@@ -37,6 +37,8 @@ Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_
     this->Code_Rd.Read_Project_Source_Code_Files();
 
     this->DepSelector.Receive_Source_Code_Reader(&this->Code_Rd);
+
+    this->Src_Processor.Receive_Source_Code_Reader(&this->Code_Rd);
 }
 
 Source_File_Dependency_Determiner::~Source_File_Dependency_Determiner(){
@@ -50,15 +52,6 @@ void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
 
      this->Com_Data_Extractor.Clear_Dynamic_Memory();
 }
-
-/*
-void Source_File_Dependency_Determiner::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
-
-     this->Code_Rd = ptr;
-
-     this->DepSelector.Receive_Source_Code_Reader(ptr);
-}
-*/
 
 
 void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::string path){
@@ -137,7 +130,10 @@ void Source_File_Dependency_Determiner::Order_Priorities(){
       }
 }
 
+ bool Source_File_Dependency_Determiner::Is_Source_File(std::string path){
 
+      return this->Src_Processor.Is_Source_File(path);
+ }
 
 
 void Source_File_Dependency_Determiner::Print_Compiler_Orders(){

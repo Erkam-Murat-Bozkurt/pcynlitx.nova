@@ -87,6 +87,12 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
 }
 
 
+ void MakeFile_Data_Collector::Receive_Compiler_Data_Pointer(Compiler_Data * ptr){
+
+      this->Compiler_Data_Ptr = ptr;
+ }
+
+
 void MakeFile_Data_Collector::Collect_Make_File_Data(int git_index){
 
      this->Clear_Dynamic_Memory();
@@ -130,7 +136,7 @@ void MakeFile_Data_Collector::Determine_Warehouse_Header_Dir(){
 
         if(this->warehouse_head_dir.back()!='\\'){
 
-           this->warehouse_head_dir.push_back('\\');           
+           this->warehouse_head_dir.push_back('\\');
         }
      }
 
@@ -442,13 +448,6 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      this->Place_String(&this->Compiler_System_Command,Space_Character);
 
-     this->Place_String(&this->Compiler_System_Command,Include_Character);
-
-     this->Place_String(&this->Compiler_System_Command,Source_Location);
-
-     this->Place_String(&this->Compiler_System_Command,go_to_new_line);
-
-
 
 
      int  included_dir_num = this->Des_Reader.Get_Include_Directory_Number();
@@ -478,6 +477,15 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
          this->Place_String(&this->Compiler_System_Command,go_to_new_line);
      }
 
+     this->Place_String(&this->Compiler_System_Command,Include_Character);
+
+     this->Place_String(&this->Compiler_System_Command,Source_Location);
+
+     this->Place_String(&this->Compiler_System_Command,Space_Character);
+
+     this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+
+
      this->Place_String(&this->Compiler_System_Command,Source_Location);
 
      if(this->opr_sis == 'w'){
@@ -495,13 +503,50 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      this->Place_String(&this->Compiler_System_Command,this->Source_File_Name_With_Ext);
 
-
      this->Place_String(&this->Compiler_System_Command,Space_Character);
 
      this->Place_String(&this->Compiler_System_Command,go_to_new_line);
 
 
+     this->Place_String(&this->Compiler_System_Command,include_word);
+
+     this->Place_String(&this->Compiler_System_Command,Space_Character);
+
+     this->Place_String(&this->Compiler_System_Command,this->Compiler_Data_Ptr->header_name);
+
+     this->Place_String(&this->Compiler_System_Command,Space_Character);
+
+     size_t dep_header_size = this->Compiler_Data_Ptr->dependent_headers.size();
+
+     sizer = 0;
+
+     for(size_t i=0;i<dep_header_size;i++){
+
+          std::string header_name = this->Compiler_Data_Ptr->dependent_headers.at(i);
+
+          this->Place_String(&this->Compiler_System_Command,include_word);
+
+          this->Place_String(&this->Compiler_System_Command,Space_Character);
+
+          this->Place_String(&this->Compiler_System_Command,header_name);
+
+          this->Place_String(&this->Compiler_System_Command,Space_Character);
+
+          sizer++;
+
+         if(((sizer >= 2) && (i!=(this->Included_Header_Files_Number -1)))){
+
+            this->Place_String(&this->Compiler_System_Command,Space_Character);
+
+            this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+
+            sizer = 0;
+          }
+     }
+
      // The include commands definition
+
+     /*
 
      sizer = 0;
 
@@ -528,6 +573,8 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
             sizer = 0;
           }
      }
+
+     */
 }
 
 

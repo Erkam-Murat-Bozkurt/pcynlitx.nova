@@ -60,7 +60,51 @@ void Make_File_Builder::Clear_Dynamic_Memory(){
 }
 
 
+void Make_File_Builder::Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr){
+
+     this->Comp_Data_Ptr = ptr;
+}
+
+void Make_File_Builder::Construct_Data_Map(){
+
+     for(size_t i=0;i<this->Comp_Data_Ptr->size();i++){
+
+         std::string header_name = this->Comp_Data_Ptr->at(i).header_name;
+         std::cout << "\n Header Name:" << header_name << "#";
+
+         this->DataMap.insert(std::make_pair(header_name,this->Comp_Data_Ptr->at(i)));
+     }
+}
+
+
+Compiler_Data * Make_File_Builder::Find_Compiler_Data_From_Header_Name(std::string name)
+{
+    try {        
+
+         return  &this->DataMap.at(name);
+    }
+    catch (const std::out_of_range & oor) {
+        
+         std::cerr << "\n Out of Range error: " << oor.what() << '\n';
+
+         std::cout << "\n the file named " << name << " can not find on Make_File_Builder object!.\n";
+
+         exit(EXIT_FAILURE);
+    }     
+}
+
+Compiler_Data * Make_File_Builder::Find_Compiler_Data_From_Index(int index){
+
+     std::string header_name = this->File_Lister.Get_Class_File_Header_Name(index);
+
+     return this->Find_Compiler_Data_From_Header_Name(header_name);
+}
+
 void Make_File_Builder::Build_MakeFile(int git_index){
+
+     Compiler_Data * Data_Ptr = this->Find_Compiler_Data_From_Index(git_index);
+
+     this->Data_Collector.Receive_Compiler_Data_Pointer(Data_Ptr);
 
      this->Data_Collector.Collect_Make_File_Data(git_index);
 
