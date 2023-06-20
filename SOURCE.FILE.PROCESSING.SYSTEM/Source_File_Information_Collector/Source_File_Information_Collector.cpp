@@ -47,9 +47,6 @@ Source_File_Information_Collector::Source_File_Information_Collector(char * des_
    this->Des_Reader.Clear_Dynamic_Memory();
 
    this->Git_Data_Receiver.Determine_Git_Repo_Info();   //  Git_File_List_Receiver instance
-
-   std::cout << "\n The end of the constructor..";
-   std::cin.get();
 }
 
 
@@ -89,9 +86,6 @@ void Source_File_Information_Collector::Receive_Source_Code_Reader(Project_Src_C
      this->Header_Processor.Receive_Source_Code_Reader(ptr);
 
      this->Src_File_Pr.Receive_Source_Code_Reader(ptr);
-
-     std::cout << "\n Source Code Reader received ..";
-     std::cin.get();
 }
 
 
@@ -138,8 +132,6 @@ void Source_File_Information_Collector::Extract_Dependency_Data(){  // Data extr
 
      std::size_t dt_size = this->Src_Data_Holder.size();
      
-
-
      for(std::size_t i = 0;i<dt_size;i++){
 
          std::string path = this->Src_Data_Holder[i].system_path;
@@ -149,8 +141,6 @@ void Source_File_Information_Collector::Extract_Dependency_Data(){  // Data extr
 
          size_t line_num = src_code->FileContent.size();
 
-
-         std::cout << "\n\n";
 
          for(size_t k=0;k<line_num;k++){
 
@@ -167,11 +157,7 @@ void Source_File_Information_Collector::Extract_Dependency_Data(){  // Data extr
 
                 std::string header_name;
 
-                std::cout << "\n string:" << string;
-
                 this->Extract_Header_File_Name_From_Decleration(&header_name,string);
-
-                std::cout << "\n header_name:" << header_name;
 
                 this->Src_Data_Holder[i].included_headers.push_back(header_name);
 
@@ -198,13 +184,8 @@ void Source_File_Information_Collector::Extract_Dependency_Data(std::string path
 
      this->Clear_Dynamic_Memory();
 
-     std::cout << "\n Inside Extract_Dependency_Data(std::string path)";
-     std::cin.get();
-
 
      bool is_source_file = this->Src_File_Pr.Is_Source_File(path);
-
-     std::cout << "\n is_source_file:" << is_source_file;
 
 
      if(is_source_file){
@@ -494,6 +475,7 @@ void Source_File_Information_Collector::Determine_Warehouse_Header_Dir(){
 }
 
 
+
 void Source_File_Information_Collector::Determine_Warehouse_Object_Dir(){
 
      std::string object_directory  = "PROJECT.OBJECT.FILES";
@@ -623,6 +605,8 @@ void Source_File_Information_Collector::Clear_Headers_Data()
       }
 }
 
+
+
 void Source_File_Information_Collector::Clear_Buffer_Memory()
 {
      this->Clear_Vector_Memory(&this->buffer.included_headers);
@@ -632,9 +616,11 @@ void Source_File_Information_Collector::Clear_Buffer_Memory()
      this->Clear_String_Memory(&this->buffer.source_file_name);
 }
 
-  void Source_File_Information_Collector::Clear_Vector_Memory(std::vector<std::string> * pointer){
 
-       if(!pointer->empty()){
+
+void Source_File_Information_Collector::Clear_Vector_Memory(std::vector<std::string> * pointer)
+{
+      if(!pointer->empty()){
 
            std::vector<std::string>::iterator it;
 
@@ -655,8 +641,8 @@ void Source_File_Information_Collector::Clear_Buffer_Memory()
            pointer->clear();
 
            pointer->shrink_to_fit();
-       }
-  }
+      }
+}
 
 
   void Source_File_Information_Collector::Clear_String_Memory(std::string * pointer){

@@ -121,9 +121,13 @@ int main(int argc, char ** argv){
 
         std::cout << "\n\n\n";
     }
-
+    
 
     Information_Collector.Clear_Dynamic_Memory();
+
+    std::cout << "\n New search will started ..";
+
+    std::cin.get();
 
     Information_Collector.Extract_Dependency_Data();
 
@@ -131,6 +135,9 @@ int main(int argc, char ** argv){
     data_size   = Information_Collector.Get_Dependency_Data_Size();
 
     vec_Pointer = Information_Collector.Get_Headers_Data_Address();
+
+    std::cout << "\n Data size:" << data_size;
+    std::cin.get();
 
 
     for(size_t i=0;i<data_size;i++){

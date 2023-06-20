@@ -19,6 +19,9 @@ SRC_INF_COL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Informat
 HDR_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
 SRC_READER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Src_Code_Rdr
 DEP_DAT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Extractor
+SRC_PROCESSOR=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Processor
+
+
 
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 		$(SOURCE_DETR) $(DIR_ENUM) \
@@ -26,7 +29,8 @@ VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 		$(INT_TO_CHAR) $(DES_DATA_COL) $(DES_READER) \
 		$(MAKE_DATA_COL) $(GIT_LIST) $(FILE_DAT_COL) \
 		$(SRC_DT_COL) $(DES_FILE_SYNT_COL) $(SRC_INF_COL) \
-		$(HDR_PROC) $(SRC_READER) $(DEP_DAT_EXT)
+		$(HDR_PROC) $(SRC_READER) $(DEP_DAT_EXT) \
+		$(SRC_PROCESSOR)
 
 Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.cpp \
 	Source_File_Dependency_Selector.cpp \
@@ -76,7 +80,8 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 	 -I$(DES_DATA_COL)  -I$(DES_READER) \
 	 -I$(MAKE_DATA_COL) -I$(FILE_DAT_COL) \
 	 -I$(SRC_DT_COL)    -I$(DES_FILE_SYNT_COL) \
-	 -I$(HDR_PROC)      -I$(SRC_READER)  -I$(DEP_DAT_EXT)\
+	 -I$(HDR_PROC)      -I$(SRC_READER)  \
+	 -I$(DEP_DAT_EXT)	-I$(SRC_PROCESSOR) \
 	 -L$(SRC_INF_COL)   -L$(DIR_ENUM) \
 	 -L$(DIR_OPS)       -L$(CPP_OPS) \
 	 -L$(CHAR_OPS)      -L$(INT_TO_CHAR) \
@@ -86,11 +91,13 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 	 -L$(SOURCE_DETR)   -L$(MAKE_DATA_COL) \
 	 -L$(GIT_LIST)      -L$(FILE_DAT_COL) \
 	 -L$(SRC_DT_COL)    -L$(DES_FILE_SYNT_COL) \
-	 -L$(HDR_PROC)      -L$(SRC_READER) -L$(DEP_DAT_EXT)\
+	 -L$(HDR_PROC)      -L$(SRC_READER) \
+	 -L$(DEP_DAT_EXT)	-L$(SRC_PROCESSOR) \
 		Source_File_Dependency_Selector_Main_File.cpp \
 		Source_File_Dependency_Selector.cpp \
 		$(DEP_DAT_EXT)\Dependency_Data_Extractor.cpp \
 		$(SRC_INF_COL)\Source_File_Information_Collector.cpp \
+		$(SRC_PROCESSOR)\Source_File_Processor.cpp \
 		$(HDR_PROC)\Header_File_Processor.cpp \
 		$(SRC_READER)\Project_Src_Code_Rdr.cpp \
 		$(FILE_LISTER)\Project_Files_Lister.cpp \
@@ -111,6 +118,7 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 		-include Source_File_Dependency_Selector.hpp \
 		-include $(DEP_DAT_EXT)\Dependency_Data_Extractor.hpp \
 		-include $(SRC_INF_COL)\Source_File_Information_Collector.hpp \
+		-include $(SRC_PROCESSOR)\Source_File_Processor.hpp \
 		-include $(HDR_PROC)\Header_File_Processor.hpp \
 		-include $(SRC_READER)\Project_Src_Code_Rdr.hpp \
 		-include $(FILE_LISTER)\Project_Files_Lister.h \

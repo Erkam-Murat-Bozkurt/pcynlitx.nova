@@ -20,6 +20,7 @@
 #include <fcntl.h>
 #include <windows.h>
 #include <vector>
+
 #include "Source_File_Processor.hpp"
 #include "Project_Src_Code_Rdr.hpp"
 #include "Git_File_List_Receiver.hpp"
@@ -43,8 +44,10 @@ struct Source_File_Data
 };
 
 
+
 class Source_File_Information_Collector
 {
+
 public:
  Source_File_Information_Collector(char * des_file_path, char opr_sis);
  virtual ~Source_File_Information_Collector();
@@ -59,6 +62,7 @@ public:
  std::string  Get_Warehouse_Headers_Dir();
  std::string  Get_Warehouse_Objetcs_Dir();
  std::string  Get_Warehouse_Path();
+
 protected:
  void Determine_Source_File_List();
  void Determine_Warehouse_Object_Dir();

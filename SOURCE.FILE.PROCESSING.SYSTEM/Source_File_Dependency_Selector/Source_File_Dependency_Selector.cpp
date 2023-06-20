@@ -70,11 +70,11 @@ void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
 {
     if(!this->Dependency_Data.empty()){
     
-        std::vector<std::vector<Header_Dependency>>::iterator it;
+        std::vector<std::vector<Source_File_Dependency>>::iterator it;
 
         for(auto it=this->Dependency_Data.begin();it<this->Dependency_Data.end();it++){
      
-            std::vector<Header_Dependency> * ptr = &(*it);
+            std::vector<Source_File_Dependency> * ptr = &(*it);
 
             this->Clear_Vector_Memory(ptr);     
         }
@@ -178,7 +178,7 @@ void Source_File_Dependency_Selector::Process_Dependency_Data(int thr_num, int s
 
      for(size_t i=start;i<end;i++){
 
-         Header_Dependency Data = this->Dependent_List_Buffer.at(i);
+         Source_File_Dependency Data = this->Dependent_List_Buffer.at(i);
 
          std::string sub_path = Data.header_sys_path;
 
@@ -299,7 +299,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,i
 
         for(size_t i=0;i<data_size;i++){
 
-            Header_Dependency Data;
+            Source_File_Dependency Data;
 
             std::string header_name = Dep_Data_Ptr->at(i).name;
 
@@ -312,33 +312,35 @@ void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,i
 
 
 
-void Source_File_Dependency_Selector::Set_Dependency_Data(Header_Dependency & data,
+void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency & data,
 
      std::string path, std::string header_name){
     
-     std::string root_header, wrd_path, hdr_sys_path;
+     std::string src_file_name, wrd_path, hdr_sys_path;
 
-     this->Extract_File_Name_From_Path(&root_header,path);
+     this->Extract_File_Name_From_Path(&src_file_name,path);
 
      this->Determine_Header_Repo_Warehouse_Path(&wrd_path,header_name,'w');
 
      this->Determine_Header_System_Path(hdr_sys_path,header_name);
 
-     this->Place_String(&data.root_header,root_header);
+     this->Place_String(&data.source_file_name,src_file_name);
 
      this->Place_String(&data.Header_Name,header_name);
 
      this->Place_String(&data.header_sys_path,hdr_sys_path);
 
-     this->Place_String(&data.root_header_path,path);
+     this->Place_String(&data.source_file_path,path);
 
      this->Place_String(&data.repo_warehouse_path,wrd_path);
 
      data.rcr_srch_complated= true;
 
-     this->Clear_String_Memory(&hdr_sys_path);
+     this->Clear_String_Memory(&src_file_name);
 
-     this->Clear_String_Memory(&root_header);
+     this->Clear_String_Memory(&wrd_path);
+
+     this->Clear_String_Memory(&hdr_sys_path);
      
 }
 
@@ -351,9 +353,9 @@ void Source_File_Dependency_Selector::Determine_Header_System_Path(std::string &
 }
 
 
-void Source_File_Dependency_Selector::Set_Included_Header_Number(std::vector<Header_Dependency> * ptr){
+void Source_File_Dependency_Selector::Set_Included_Header_Number(std::vector<Source_File_Dependency> * ptr){
 
-     std::vector<Header_Dependency>::iterator it;
+     std::vector<Source_File_Dependency>::iterator it;
 
      for(auto it=ptr->begin();it<ptr->end();it++){
      
@@ -444,15 +446,15 @@ void Source_File_Dependency_Selector::Print_Dependency_List()
 
      for(size_t i=0;i<data_size;i++){
 
-         std::vector<Header_Dependency> * ptr = &this->Dependency_Data.at(i);
+         std::vector<Source_File_Dependency> * ptr = &this->Dependency_Data.at(i);
 
          std::cout << "\n\n\n";
 
          if(ptr->size()>0){
          
-            std::cout << "\n FILE RESEARCHED:" << ptr->at(0).root_header;
+            std::cout << "\n FILE RESEARCHED:" << ptr->at(0).source_file_name;
 
-            std::vector<Header_Dependency>::iterator it;         
+            std::vector<Source_File_Dependency>::iterator it;         
 
             int counter=0;
 
@@ -535,7 +537,7 @@ void Source_File_Dependency_Selector::Clear_Dependency_Data_Extractors(){
      }
 }
 
-void Source_File_Dependency_Selector::Clear_Vector_Memory(std::vector<Header_Dependency> * pointer){
+void Source_File_Dependency_Selector::Clear_Vector_Memory(std::vector<Source_File_Dependency> * pointer){
 
      std::vector<std::string>::iterator it;
 
@@ -566,26 +568,26 @@ void Source_File_Dependency_Selector::Clear_Vector_Memory(std::vector<Header_Dep
 
 
 
- void Source_File_Dependency_Selector::Clear_Temporary_String_Memory(Header_Dependency * temp){
+ void Source_File_Dependency_Selector::Clear_Temporary_String_Memory(Source_File_Dependency * temp){
  
        this->Clear_String_Memory(&temp->Header_Name);
 
-       this->Clear_String_Memory(&temp->root_header);
+       this->Clear_String_Memory(&temp->source_file_name);
 
-       this->Clear_String_Memory(&temp->root_header_path);
+       this->Clear_String_Memory(&temp->source_file_path);
 
        this->Clear_String_Memory(&temp->header_sys_path);
 
  }
 
 
-std::vector<std::vector<Header_Dependency>> * Source_File_Dependency_Selector::Get_Dependency_List_Adress()
+std::vector<std::vector<Source_File_Dependency>> * Source_File_Dependency_Selector::Get_Dependency_List_Adress()
 {
       return &this->Dependency_Data;
 }
 
 
-std::vector<Header_Dependency> * Source_File_Dependency_Selector::Get_Dependency_List_Element_Adress(int i)
+std::vector<Source_File_Dependency> * Source_File_Dependency_Selector::Get_Dependency_List_Element_Adress(int i)
 {
       return &this->Dependency_Data[i];
 }

@@ -46,7 +46,7 @@ int main(int argc, char ** argv){
 
     std::cout << "\n Code reading complated..";
 
-    std::string path =  "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.h";
+    std::string path =  "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
 
     Dependency_Data_Extractor Dep_Determiner(argv[1],'w');
 
@@ -62,6 +62,8 @@ int main(int argc, char ** argv){
     for(size_t i=0;i<Data_Ptr->size();i++){
 
         std::cout << "\n Dependency File <" << i << ">:" << Data_Ptr->at(i).name;
+        std::cout << "\n Dependency File <" << i << ">:" << Data_Ptr->at(i).path;
+
     }
 
 

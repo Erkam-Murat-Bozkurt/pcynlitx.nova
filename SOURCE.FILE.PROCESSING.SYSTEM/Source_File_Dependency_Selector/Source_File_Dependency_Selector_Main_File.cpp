@@ -44,7 +44,6 @@ int main(int argc, char ** argv){
 
     std::cout << "\n Code reading complated..";
 
-    char path [] =  "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.h";
 
     Source_File_Dependency_Selector Dep_Selector(argv[1],'w');
 
@@ -54,39 +53,28 @@ int main(int argc, char ** argv){
 
       Dep_Selector.Determine_Source_File_Dependencies();
 
-      //Dep_Selector.Print_Dependency_List();
+      Dep_Selector.Print_Dependency_List();
 
       std::cout << "\n Dependency size:" << Dep_Selector.Get_Dependency_List_Size();
     }
 
-    /*
 
-    std::vector<std::vector<Header_Dependency>> * Data_Ptr = Dep_Selector.Get_Dependency_List_Adress();
-    
-    size_t data_size = Data_Ptr->size();
 
-    for(size_t i=0;i<data_size;i++){
+    char path [] =  "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
 
-        std::vector<Header_Dependency> * Sub_Data_Ptr =  &Data_Ptr->at(i);
 
-        if(Sub_Data_Ptr->empty()){
+    std::cout << "\n\n";
+    std::cout << "\n\n ----------------------------------------------------";
+    std::cout << "\n Dependency determination for a single file ..";
+    std::cin.get();
 
-            std::cout << "\n vector empty";
-            std::cin.get();
-        }
+    Dep_Selector.Determine_Source_File_Dependencies(path);
 
-        std::cout << "\n\n";
+    Dep_Selector.Print_Dependency_List();
 
-        for(size_t k=0;k<Sub_Data_Ptr->size();k++){
 
-            std::cout << "\n root_header: " << Sub_Data_Ptr->at(k).root_header;
-            std::cout << "\n Header_Name: " << Sub_Data_Ptr->at(k).Header_Name;
-        }      
 
-        std::cout << "\n\n";
-    }
-
-    */
+    std::cout << "\n Dependency size:" << Dep_Selector.Get_Dependency_List_Size();
 
     std::cout << "\n\n THE END OF THE PROGRAM \n\n";
 

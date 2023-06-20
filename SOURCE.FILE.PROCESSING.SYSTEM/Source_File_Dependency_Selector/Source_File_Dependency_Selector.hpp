@@ -37,11 +37,11 @@
 #include "IntToCharTranslater.h"
 
 
-struct Header_Dependency
+struct Source_File_Dependency
 {
   bool rcr_srch_complated;
-  std::string root_header; // The header file which its dependencies are researched 
-  std::string root_header_path;
+  std::string source_file_name; // The header file which its dependencies are researched 
+  std::string source_file_path;
   std::string Header_Name;
   std::string header_sys_path;
   std::string repo_warehouse_path;
@@ -63,22 +63,22 @@ public:
  std::string Get_Warehouse_Headers_Dir();
  std::string Get_Warehouse_Objetcs_Dir();
  std::string Get_Warehouse_Path();
- std::vector<std::vector<Header_Dependency>> * Get_Dependency_List_Adress();
- std::vector<Header_Dependency> * Get_Dependency_List_Element_Adress(int num);
+ std::vector<std::vector<Source_File_Dependency>> * Get_Dependency_List_Adress();
+ std::vector<Source_File_Dependency> * Get_Dependency_List_Element_Adress(int num);
  size_t  Get_Dependency_List_Size();
 protected:
  void Extract_Dependency_Tree(std::string path, int thr_num);
  void Extract_Dependency_Data(int thr_num, int start, int end);
- void Set_Included_Header_Number(std::vector<Header_Dependency> * ptr);
+ void Set_Included_Header_Number(std::vector<Source_File_Dependency> * ptr);
  void Determine_Header_Repo_Warehouse_Path( std::string * wrd_path,
       std::string file_name, char opr_sis);
  void Place_String(std::string * str_pointer, std::string string);
  void Extract_File_Name_From_Path(std::string * ptr, std::string str);
  void Clear_String_Memory(std::string * Pointer);
- void Clear_Vector_Memory(std::vector<Header_Dependency> * pointer);
- void Clear_Temporary_String_Memory(Header_Dependency * temp);
+ void Clear_Vector_Memory(std::vector<Source_File_Dependency> * pointer);
+ void Clear_Temporary_String_Memory(Source_File_Dependency * temp);
  void Determine_Header_System_Path(std::string & path, std::string name);
- void Set_Dependency_Data(Header_Dependency & data, std::string path, std::string header_name);
+ void Set_Dependency_Data(Source_File_Dependency & data, std::string path, std::string header_name);
  std::vector<std::string> * Get_File_Content(std::string path);
  std::string Get_Header_System_Path(std::string header_name);
  void Process_Dependency_Data(int thr_num, int start, int end);
@@ -87,10 +87,10 @@ protected:
  Source_File_Information_Collector Info_Collector; 
  Dependency_Data_Extractor ** Dep_Data_Collectors;
  Project_Src_Code_Rdr * Code_Rd;
- std::vector<Header_Dependency> Dependent_List[8];
- std::vector<Header_Dependency> Dependent_List_Buffer;
- std::vector<Headers_Data> * Headers_Data_Ptr;
- std::vector<std::vector<Header_Dependency>> Dependency_Data;
+ std::vector<Source_File_Dependency> Dependent_List[8];
+ std::vector<Source_File_Dependency> Dependent_List_Buffer;
+ std::vector<Source_File_Data> * Headers_Data_Ptr;
+ std::vector<std::vector<Source_File_Dependency>> Dependency_Data;
  std::vector<Search_Data> * searched_paths;
  std::string warehouse_head_dir;
  std::string descriptor_file_path;
