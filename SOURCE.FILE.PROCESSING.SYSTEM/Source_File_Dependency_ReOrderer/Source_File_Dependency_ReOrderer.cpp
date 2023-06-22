@@ -47,7 +47,7 @@ void Source_File_Dependency_ReOrderer::Clear_Dynamic_Memory()
 
 }
 
-void Source_File_Dependency_ReOrderer::Receive_Dependency_Data(std::vector<std::vector<Header_Dependency>> * ptr){
+void Source_File_Dependency_ReOrderer::Receive_Dependency_Data(std::vector<std::vector<Source_File_Dependency>> * ptr){
  
       this->Vector_List_ptr = ptr;
 }
@@ -69,7 +69,7 @@ void Source_File_Dependency_ReOrderer::Determine_Headers_Dependencies(){
  
      for(size_t i=0;i<List_Size;i++){
 
-         std::vector<Header_Dependency> * ptr = &this->Vector_List_ptr->at(i);
+         std::vector<Source_File_Dependency> * ptr = &this->Vector_List_ptr->at(i);
 
          size_t sub_list_size = ptr->size();
 
@@ -93,11 +93,11 @@ int Source_File_Dependency_ReOrderer::Find_Header_Dependency(std::string hdr_nam
 
      for(size_t i=0;i<List_Size;i++){
      
-         std::vector<Header_Dependency> * searc_ptr = &this->Vector_List_ptr->at(i);
+         std::vector<Source_File_Dependency> * searc_ptr = &this->Vector_List_ptr->at(i);
         
          size_t vec_size = searc_ptr->size();
 
-         std::string _file = searc_ptr->at(0).root_header;
+         std::string _file = searc_ptr->at(0).source_file_name;
 
          if(this->CompareString(hdr_name,_file)){
 
@@ -105,7 +105,7 @@ int Source_File_Dependency_ReOrderer::Find_Header_Dependency(std::string hdr_nam
 
             if(this->dependency==1){
             
-               std::string root_header = searc_ptr->at(0).root_header;
+               std::string root_header = searc_ptr->at(0).source_file_name;
                std::string header_name = searc_ptr->at(0).Header_Name;
 
                if(this->CompareString(root_header,header_name)){
@@ -128,13 +128,38 @@ void Source_File_Dependency_ReOrderer::Reorder_Data_Records(){
 
      for(size_t i=0;i<List_Size;i++){
      
-         std::vector<Header_Dependency> * searc_ptr = &this->Vector_List_ptr->at(i);
+         std::vector<Source_File_Dependency> * searc_ptr = &this->Vector_List_ptr->at(i);
 
          this->Reorder_Data_Records(searc_ptr);
      }
+
+     //std::vector<Source_File_Dependency>::iterator it_i;
+
+     for(size_t i=0;i<this->Vector_List_ptr->size();i++){
+
+         //std::vector<Source_File_Dependency>::iterator it_j;
+  
+         for(size_t j=0;j<this->Vector_List_ptr->size();j++){
+                          
+             size_t dep_size_i = this->Vector_List_ptr->at(i).size();
+
+             size_t dep_size_j = this->Vector_List_ptr->at(j).size();
+
+             if(dep_size_i > dep_size_j){
+
+                std::vector<Source_File_Dependency> temp =  this->Vector_List_ptr->at(i);
+
+                this->Vector_List_ptr->at(i) = this->Vector_List_ptr->at(j);
+
+                this->Vector_List_ptr->at(j) = temp;
+             }
+
+             size_t List_Size = this->Vector_List_ptr->size();
+         }
+     }
 }
 
-void Source_File_Dependency_ReOrderer::Reorder_Data_Records(std::vector<Header_Dependency> * data_ptr){
+void Source_File_Dependency_ReOrderer::Reorder_Data_Records(std::vector<Source_File_Dependency> * data_ptr){
  
      size_t data_size = data_ptr->size();
 
@@ -146,7 +171,7 @@ void Source_File_Dependency_ReOrderer::Reorder_Data_Records(std::vector<Header_D
 
              int dep_j = data_ptr->at(j).included_file_hdr_num;
 
-             Header_Dependency temp;
+             Source_File_Dependency temp;
 
              if( dep_i < dep_j){
 
@@ -202,17 +227,17 @@ void Source_File_Dependency_ReOrderer::Print_Dependency_Data(){
 
      for(size_t i=0;i<data_size;i++){
 
-         std::vector<Header_Dependency> * ptr = &this->Vector_List_ptr->at(i);
+         std::vector<Source_File_Dependency> * ptr = &this->Vector_List_ptr->at(i);
 
          std::cout << "\n\n\n";
 
-         std::vector<Header_Dependency>::iterator it;         
+         std::vector<Source_File_Dependency>::iterator it;
 
          if(ptr->size()>0){
          
             std::cout << "\n *****************************************************";
 
-            std::cout << "\n FILE RESEARCHED:" << ptr->at(0).root_header;
+            std::cout << "\n FILE RESEARCHED:" << ptr->at(0).source_file_name;
 
             int counter=0;
 
