@@ -51,7 +51,7 @@ int main(int argc, char ** argv){
     Code_Rd.Read_Project_Source_Code_Files();
 
 
-    std::string path = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.h";
+    std::string path = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
 
 
     Source_File_Dependency_Selector Dep_Selector(argv[1],'w');
@@ -63,7 +63,7 @@ int main(int argc, char ** argv){
     std::cout << "\n Project Data Collected..\n\n";
 
 
-    std::vector<std::vector<Header_Dependency>> * ptr = Dep_Selector.Get_Dependency_List_Adress();
+    std::vector<std::vector<Source_File_Dependency>> * ptr = Dep_Selector.Get_Dependency_List_Adress();
 
     std::string wr_hdr =  Dep_Selector.Get_Warehouse_Headers_Dir();
 
@@ -105,8 +105,8 @@ void print_compiler_data(std::vector<Compiler_Data> * data_ptr){
 
          Compiler_Data temp = data_ptr->at(i);
 
-         std::cout << "\n repo_path            :" << temp.header_repo_path;
-         std::cout << "\n header_name          :" << temp.header_name;
+         std::cout << "\n source file path     :" << temp.source_file_path;
+         std::cout << "\n source file name     :" << temp.source_file_name;
          std::cout << "\n object_file_name     :" << temp.object_file_name;
 
          std::cout << "\n";

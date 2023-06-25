@@ -38,8 +38,8 @@
 
 struct Compiler_Data
 {
-  std::string  header_repo_path;
-  std::string  header_name;
+  std::string  source_file_path;
+  std::string  source_file_name;
   std::string  object_file_name;
   std::vector<std::string> dependent_headers;
   std::vector<std::string> dependent_objs;
@@ -53,7 +53,7 @@ class Source_File_Compiler_Data_Extractor
 public:
  Source_File_Compiler_Data_Extractor(char * des_file_path, char opr_sis);
  virtual ~Source_File_Compiler_Data_Extractor();
- void Receive_Dependency_Data(std::vector<std::vector<Header_Dependency>> * ptr, std::string wrd);
+ void Receive_Dependency_Data(std::vector<std::vector<Source_File_Dependency>> * ptr, std::string wrd);
  void Extract_Compiler_Data();
  void Extract_Compiler_Data(std::string path);
  void Clear_Dynamic_Memory();
@@ -61,13 +61,12 @@ public:
  Compiler_Data Get_Compiler_Data(int num);
  std::vector<Compiler_Data> * Get_Compiler_Data_Address();
 protected:    
- void Extract_Obj_File_Name_From_Header_Name(std::string * object_name,
+ void Extract_Obj_File_Name_From_File_Name(std::string * object_name,
       std::string header_name);
  void is_this_independent_header(std::string name, bool & is_ind);
  void Extract_Header_File_Name_From_Path(std::string * name,
       std::string path);
  void Process_Compiler_Data(int start, int end, int thm);
- void Process_Data(int start, int end, int thm);
  void Extract_Compiler_Data_For_Single_Thread();
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
@@ -78,8 +77,7 @@ protected:
  CharOperator Char_Processor;
  Project_Files_Lister File_Lister;
  Cpp_FileOperations FileManager;
- std::vector<std::vector<Header_Dependency>> * dep_data_ptr;
- std::vector<Headers_Data> * headers_dt;
+ std::vector<std::vector<Source_File_Dependency>> * dep_data_ptr;
  std::vector<Compiler_Data> compiler_dt[8];
  std::vector<Compiler_Data> compiler_data;
  std::thread threads[8];
