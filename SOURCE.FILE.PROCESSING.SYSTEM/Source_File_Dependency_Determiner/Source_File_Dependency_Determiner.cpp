@@ -60,7 +60,7 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->DepSelector.Determine_Source_File_Dependencies(path);
 
-     std::vector<std::vector<Header_Dependency>> * s_ptr  = this->DepSelector.Get_Dependency_List_Adress();
+     std::vector<std::vector<Source_File_Dependency>> * s_ptr  = this->DepSelector.Get_Dependency_List_Adress();
  
      std::string wrd_hdr_dir = this->DepSelector.Get_Warehouse_Headers_Dir();
 
@@ -86,7 +86,7 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
       this->DepSelector.Determine_Source_File_Dependencies();
 
-      std::vector<std::vector<Header_Dependency>> * s_ptr  = this->DepSelector.Get_Dependency_List_Adress();
+      std::vector<std::vector<Source_File_Dependency>> * s_ptr  = this->DepSelector.Get_Dependency_List_Adress();
 
       std::string wrd_hdr_dir = this->DepSelector.Get_Warehouse_Headers_Dir();
       
@@ -148,11 +148,11 @@ void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
 
          std::cout << "\n HEADER NAME:"
 
-         <<  this->Compiler_Data_Ptr->at(i).header_name;
+         <<  this->Compiler_Data_Ptr->at(i).source_file_name;
 
          std::cout << "\n HEADER PATH:"
 
-         <<  this->Compiler_Data_Ptr->at(i).header_repo_path;
+         <<  this->Compiler_Data_Ptr->at(i).source_file_path;
 
          std::cout << "\n PRIORITY:"
 

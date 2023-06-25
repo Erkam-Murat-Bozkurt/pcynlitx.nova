@@ -126,7 +126,9 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){
             }
 
 
-            this->threads[i] = std::thread(Source_File_Compiler_Data_Extractor::Process_Compiler_Data,this,i,str,end);     
+            this->threads[i] = std::thread(Source_File_Compiler_Data_Extractor::Process_Compiler_Data,
+            
+                            this,i,str,end);     
         }
     
         for(int i=0;i<8;i++){
@@ -264,14 +266,6 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
 
 
 void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int start, int end){
-
-     /*
-
-     std::unique_lock<std::mutex> mt(this->mtx);
-
-     mt.unlock();
-
-     */
     
      for(std::size_t i=start;i<end;i++){
 
@@ -293,13 +287,9 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
             buffer.priority = src_ptr->at(0).base_included_hdr_num;
   
 
-            //mt.lock();
-
             this->Extract_Obj_File_Name_From_File_Name(&(buffer.object_file_name),
             
                 buffer.source_file_name);
-
-            //mt.unlock();
 
 
 
