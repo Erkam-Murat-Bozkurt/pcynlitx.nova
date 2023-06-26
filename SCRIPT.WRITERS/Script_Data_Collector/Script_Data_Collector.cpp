@@ -301,10 +301,6 @@ void Script_Data_Collector::Clear_Data_Memory(Script_Data * ptr, int src_num){
 
      ptr->dependency = 0;
 
-     //this->Clear_Vector_Memory(&ptr->header_files_git_dir);
-
-     //this->Clear_Vector_Memory(&ptr->header_file_names);
-
      this->Clear_String_Memory(&ptr->object_file_name);
 
      this->Clear_String_Memory(&ptr->object_file_path);

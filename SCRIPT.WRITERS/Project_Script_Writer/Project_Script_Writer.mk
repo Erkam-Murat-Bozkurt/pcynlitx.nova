@@ -27,6 +27,9 @@ HDR_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
 SRC_READER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Src_Code_Rdr
 SRC_COM_DT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Compiler_Data_Extractor
 SRC_DER_RORD=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_ReOrderer
+DEP_DAT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Extractor
+SRC_PROCESSOR=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Processor
+
 
 
 VPATH = $(DIR_LIST) $(REPO_DET) $(DIR_ENUM) $(DIR_TREE) \
@@ -37,7 +40,8 @@ VPATH = $(DIR_LIST) $(REPO_DET) $(DIR_ENUM) $(DIR_TREE) \
 		$(SCRIPT_DAT) $(SRC_SCRIPT_WRT) $(INT_CHAR) \
 		$(DESCR_SYNT_COL) $(SRC_DEP_DT) $(SRC_DEP_SL) $(SRC_INF_CL) \
 		$(SRCRIPT_DATA_PR) $(HDR_PROC) $(SRC_READER) \
-		$(SRC_COM_DT_EXT) $(SRC_DER_RORD)
+		$(SRC_COM_DT_EXT) $(SRC_DER_RORD) $(DEP_DAT_EXT) \
+		$(SRC_PROCESSOR)
 
 
 Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
@@ -49,6 +53,8 @@ Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
 	Source_File_Compiler_Data_Extractor.cpp \
 	Source_File_Dependency_Selector.cpp \
 	Source_File_Information_Collector.cpp \
+	Source_File_Processor.cpp \
+	Dependency_Data_Extractor.cpp \
 	Header_File_Processor.cpp \
 	Project_Src_Code_Rdr.cpp \
 	Script_Data_Collector.cpp \
@@ -77,6 +83,8 @@ Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
 	Source_File_Compiler_Data_Extractor.hpp \
 	Source_File_Dependency_Selector.hpp \
 	Source_File_Information_Collector.hpp \
+	Dependency_Data_Extractor.hpp \
+	Source_File_Processor.hpp \
 	Header_File_Processor.hpp \
 	Project_Src_Code_Rdr.hpp \
 	Project_Files_Lister.h \
@@ -99,9 +107,9 @@ Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
 	 -I$(REPO_DET)   -I$(SOURCE_DETR) \
 	 -I$(DIR_TREE)   -I$(DIR_OPS) \
 	 -I$(STRING_OPS) -I$(CHAR_OPS) \
-	 -I$(FILE_OPRS) \
+	 -I$(FILE_OPRS)  -I$(DEP_DAT_EXT) \
 	 -I$(DESCR_READ) -I$(DESCR_DAT_COL) \
-	 -I$(GIT_REC) \
+	 -I$(GIT_REC) 	 -I$(SRC_PROCESSOR) \
 	 -I$(SRC_DAT_COL) -I$(SRC_SCRIPT_WRT) \
 	 -I$(SCRIPT_DAT)  -I$(HEADER_DET) \
 	 -I$(PRO_FILES_DAT_COL) -I$(INT_CHAR) \
@@ -118,11 +126,12 @@ Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
 	 -L$(HEADER_DET) -L$(SOURCE_DETR) \
 	 -L$(GIT_REC) -L$(SRC_SCRIPT_WRT) \
 	 -L$(SRC_DAT_COL) -L$(INT_CHAR) \
-     -L$(DESCR_SYNT_COL) \
+     -L$(DESCR_SYNT_COL) -L$(DEP_DAT_EXT) \
 	 -L$(SRC_DEP_DT) -L$(SRC_DEP_SL) \
 	 -L$(SRC_INF_CL) -L$(SRCRIPT_DATA_PR) \
 	 -L$(HDR_PROC)   -L$(SRC_READER) \
 	 -L$(SRC_COM_DT_EXT) -L$(SRC_DER_RORD) \
+	 -L$(SRC_PROCESSOR)\
 		Project_Script_Writer_Main_File.cpp \
 		Project_Script_Writer.cpp \
 		$(SRCRIPT_DATA_PR)\Script_Data_Processor.cpp \
@@ -133,6 +142,8 @@ Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
 		$(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.cpp \
 		$(SRC_DEP_SL)\Source_File_Dependency_Selector.cpp \
 		$(SRC_INF_CL)\Source_File_Information_Collector.cpp \
+		$(DEP_DAT_EXT)\Dependency_Data_Extractor.cpp \
+		$(SRC_PROCESSOR)\Source_File_Processor.cpp \
 		$(HDR_PROC)\Header_File_Processor.cpp \
 		$(SRC_READER)\Project_Src_Code_Rdr.cpp \
 		$(DIR_LIST)\Project_Files_Lister.cpp \
@@ -161,6 +172,8 @@ Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
 		-include $(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.hpp \
 		-include $(SRC_DEP_SL)\Source_File_Dependency_Selector.hpp \
 		-include $(SRC_INF_CL)\Source_File_Information_Collector.hpp \
+		-include $(DEP_DAT_EXT)\Dependency_Data_Extractor.hpp \
+		-include $(SRC_PROCESSOR)\Source_File_Processor.hpp \
 	    -include $(HDR_PROC)\Header_File_Processor.hpp \
 		-include $(SRC_READER)\Project_Src_Code_Rdr.hpp \
 		-include $(DIR_LIST)\Project_Files_Lister.h \

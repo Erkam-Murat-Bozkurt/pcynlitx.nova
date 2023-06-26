@@ -15,8 +15,6 @@
 
 struct Script_Data
 {
-  //std::vector<std::string> header_files_git_dir;
-  //std::vector<std::string> header_file_names;
   std::string object_file_name;
   std::string object_file_path;
   std::string source_file_name;
