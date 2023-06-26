@@ -26,6 +26,8 @@ SRC_COM_DT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Compi
 SRC_DER_RORD=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_ReOrderer
 HDR_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
 SRC_READER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Src_Code_Rdr
+DEP_DAT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Extractor
+SRC_PROCESSOR=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Processor
 
 
 
@@ -37,7 +39,8 @@ VPATH = $(DIR_LIST) $(REPO_DET) $(DIR_ENUM) $(DIR_TREE) \
 	    $(GIT_REC) $(SRC_DAT_COL) $(PRO_FILES_DAT_COL) \
 	    $(SCRIPT_DAT) $(SRC_SCRIPT_WRT) $(INT_CHAR) $(DEP_CNTR) \
 	    $(DESCR_SYNT_COL) $(SRC_DEP_DT) $(SRC_DEP_SL) $(SRC_INF_CL) \
-	    $(SRC_COM_DT_EXT) $(SRC_DER_RORD) $(HDR_PROC) $(SRC_READER)
+	    $(SRC_COM_DT_EXT) $(SRC_DER_RORD) $(HDR_PROC) $(SRC_READER) \
+		$(SRC_PROCESSOR) $(DEP_DAT_EXT) \
 
 
 Script_Data_Processor.exe: Script_Data_Processor_Main_File.cpp \
@@ -48,6 +51,8 @@ Script_Data_Processor.exe: Script_Data_Processor_Main_File.cpp \
 	Source_File_Compiler_Data_Extractor.cpp \
 	Source_File_Information_Collector.cpp \
 	Script_Data_Collector.cpp \
+	Dependency_Data_Extractor.cpp \
+	Source_File_Processor.cpp \
 	Header_File_Processor.cpp \
 	Project_Src_Code_Rdr.cpp \
 	Project_Files_Lister.cpp \
@@ -73,7 +78,9 @@ Script_Data_Processor.exe: Script_Data_Processor_Main_File.cpp \
 	Source_File_Dependency_Selector.hpp \
 	Source_File_Information_Collector.hpp \
 	Source_File_Compiler_Data_Extractor.hpp \
+	Dependency_Data_Extractor.hpp \
 	Header_File_Processor.hpp \
+	Source_File_Processor.hpp \
 	Project_Src_Code_Rdr.hpp \
 	Project_Files_Lister.h \
 	Project_Files_Data_Collector.hpp \
@@ -95,9 +102,9 @@ Script_Data_Processor.exe: Script_Data_Processor_Main_File.cpp \
 	 -I$(REPO_DET)   -I$(SOURCE_DETR) \
 	 -I$(DIR_TREE)   -I$(DIR_OPS) \
 	 -I$(STRING_OPS) -I$(CHAR_OPS) \
-	 -I$(FILE_OPRS)  \
+	 -I$(FILE_OPRS)  -I$(SRC_PROCESSOR) \
 	 -I$(DESCR_READ) -I$(DESCR_DAT_COL) \
-	 -I$(GIT_REC) \
+	 -I$(GIT_REC)    -I$(DEP_DAT_EXT) \
 	 -I$(SRC_DAT_COL) -I$(SRC_SCRIPT_WRT) \
 	 -I$(SCRIPT_DAT)  -I$(HEADER_DET) \
 	 -I$(PRO_FILES_DAT_COL) -I$(INT_CHAR) \
@@ -105,7 +112,7 @@ Script_Data_Processor.exe: Script_Data_Processor_Main_File.cpp \
 	 -I$(SRC_DEP_DT) -I$(SRC_DEP_SL) -I$(SRC_INF_CL) \
 	 -I$(SRC_COM_DT_EXT) -I$(SRC_DER_RORD) \
 	 -I$(HDR_PROC)       -I$(SRC_READER) \
-	 -L$(DIR_LIST) -L$(DIR_ENUM) \
+	 -L$(DIR_LIST) 	  -L$(DIR_ENUM) \
 	 -L$(DESCR_READ) -L$(DESCR_DAT_COL) \
 	 -L$(PRO_FILES_DAT_COL) -L$(REPO_DET) \
 	 -L$(DIR_TREE) -L$(DIR_OPS) \
@@ -117,7 +124,8 @@ Script_Data_Processor.exe: Script_Data_Processor_Main_File.cpp \
 	 -L$(SRC_DEP_DT) -L$(SRC_DEP_SL) \
 	 -L$(SRC_INF_CL) -L$(SRC_COM_DT_EXT) \
 	 -L$(HDR_PROC)   -L$(SRC_READER) \
-	 -L$(SRC_DER_RORD) \
+	 -L$(SRC_DER_RORD) -L$(SRC_PROCESSOR) \
+	 -L$(DEP_DAT_EXT) \
 		Script_Data_Processor_Main_File.cpp \
 		Script_Data_Processor.cpp \
 		$(SCRIPT_DAT)\Script_Data_Collector.cpp \
@@ -126,6 +134,8 @@ Script_Data_Processor.exe: Script_Data_Processor_Main_File.cpp \
 		$(SRC_DER_RORD)\Source_File_Dependency_ReOrderer.cpp \
 		$(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.cpp \
 		$(SRC_INF_CL)\Source_File_Information_Collector.cpp \
+		$(DEP_DAT_EXT)\Dependency_Data_Extractor.cpp \
+		$(SRC_PROCESSOR)\Source_File_Processor.cpp \
 	    $(HDR_PROC)\Header_File_Processor.cpp \
 		$(SRC_READER)\Project_Src_Code_Rdr.cpp \
 		$(DIR_LIST)\Project_Files_Lister.cpp \
@@ -152,6 +162,8 @@ Script_Data_Processor.exe: Script_Data_Processor_Main_File.cpp \
 		-include $(SRC_DEP_SL)\Source_File_Dependency_Selector.hpp \
 		-include $(SRC_INF_CL)\Source_File_Information_Collector.hpp \
 		-include $(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.hpp \
+		-include $(DEP_DAT_EXT)\Dependency_Data_Extractor.hpp \
+		-include $(SRC_PROCESSOR)\Source_File_Processor.hpp \
         -include $(HDR_PROC)\Header_File_Processor.hpp \
 		-include $(SRC_READER)\Project_Src_Code_Rdr.hpp \
 		-include $(DIR_LIST)\Project_Files_Lister.h \

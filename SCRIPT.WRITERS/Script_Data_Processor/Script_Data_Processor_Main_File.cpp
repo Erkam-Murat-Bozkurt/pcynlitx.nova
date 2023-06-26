@@ -30,18 +30,17 @@ int main(int argc, char ** argv){
 
     Srt_Data_Processor.Process_Script_Data();
 
-    char File_Name [] ="Kernel";
+    char File_Name [] ="Kernel.cpp";
 
     Script_Data Data = Srt_Data_Processor.Get_SrcFile_Script_Data(File_Name);
 
-    int head_num = Data.included_header_num;
-
-    for(int i=0;i<head_num;i++)
-    {
-        std::cout << "\n Header name:" << Data.header_file_names[i];
-
-        std::cout << "\n Header file git location:" << Data.header_files_git_dir[i];
-    }
+    std::cout << "\n object_file_name:" << Data.object_file_name;
+    std::cout << "\n object_file_path:" << Data.object_file_path;
+    std::cout << "\n source_file_name:" << Data.source_file_name;
+    std::cout << "\n source_file_dir:"  << Data.source_file_dir;
+    std::cout << "\n source_file_git_record_dir:" << Data.source_file_git_record_dir;
+    std::cout << "\n make_file_name:" << Data.make_file_name;
+    std::cout << "\n warehouse_path:" << Data.warehouse_path;
 
     std::cout << "\n Dependency:" << Data.dependency;
 
