@@ -73,7 +73,7 @@ int main(int argc, char ** argv){
 
     Compiler_Data_Extractor.Receive_Dependency_Data(ptr,wr_hdr);
 
-    Compiler_Data_Extractor.Extract_Compiler_Data();
+    Compiler_Data_Extractor.Extract_Compiler_Data(path);
 
 
     std::vector<Compiler_Data> * data_ptr = Compiler_Data_Extractor.Get_Compiler_Data_Address();

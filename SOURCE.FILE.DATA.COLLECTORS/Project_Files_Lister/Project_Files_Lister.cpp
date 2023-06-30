@@ -72,8 +72,10 @@ void Project_Files_Lister::Collect_Source_Files_Data()
                 this->Source_File_Number++;
 
                 Build_System_Data Temp_Data;
-
+                
                 this->Src_Data_Col.Process_Source_File_Data(&Temp_Data,file_path);
+
+                this->DataMap.insert(std::make_pair(Temp_Data.File_Name_With_Ext,Temp_Data));
 
                 this->Data.push_back(Temp_Data);
 
@@ -307,6 +309,24 @@ void Project_Files_Lister::Clear_Dynamic_Memory()
       }
 }
 
+
+Build_System_Data * Project_Files_Lister::Get_Build_System_Data(std::string name){
+
+    try {        
+
+         return  &this->DataMap.at(name);
+    }
+    catch (const std::out_of_range & oor) {
+        
+         std::cerr << "\n Out of Range error: " << oor.what() << '\n';
+
+         std::cout << "\n Inside Project_File_Lister instance,";
+
+         std::cout << "\n the information abuot file: " << name << " can not find!.\n";
+
+         exit(EXIT_FAILURE);
+    }   
+}
 
 void Project_Files_Lister::Clear_Vector_Memory(std::vector<std::string> * pointer)
 {

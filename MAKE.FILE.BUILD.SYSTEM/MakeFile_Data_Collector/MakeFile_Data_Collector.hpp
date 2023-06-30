@@ -29,8 +29,9 @@ class MakeFile_Data_Collector
 public:
  MakeFile_Data_Collector(char * Des_Path, char opr_sis);
  virtual ~MakeFile_Data_Collector();
- void Collect_Make_File_Data(int git_index);
+ void Collect_Make_File_Data(std::string fileName);
  void Receive_Git_Record_Data(int git_index);
+ void Receive_Git_Record_Data(std::string file_name);
  void Receive_Compiler_Data_Pointer(Compiler_Data * ptr);
  std::string Get_Source_File_Name();
  std::string Get_Make_File_Name();

@@ -9,6 +9,9 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unordered_map>
+#include <iterator>
+#include <utility>      // std::pair, std::make_pair
 #include "Git_File_List_Receiver.hpp"
 #include "Header_File_Determiner.h"
 #include "Source_File_Determiner.h"
@@ -40,6 +43,7 @@ public:
  std::string Get_Class_File_Header_Name(int src_num);
  std::string Get_Source_File_Git_Record_Directory(int src_num);
  std::vector<Build_System_Data> * Get_Build_System_Data_Address();
+ Build_System_Data *  Get_Build_System_Data(std::string name);
  int  Get_Source_File_Include_File_Number(int num);
  int  Get_Indenpendent_Header_Files_Number();
  void Clear_Dynamic_Memory();
@@ -63,6 +67,7 @@ protected:
  Source_File_Determiner Source_Determiner;
  StringOperator StringManager;
  std::string Repo_Dir;
+ std::unordered_map<std::string, Build_System_Data> DataMap;
  std::vector<Build_System_Data> Data;
  std::vector<std::string> independent_header_files;
  std::vector<std::string> git_record_paths;

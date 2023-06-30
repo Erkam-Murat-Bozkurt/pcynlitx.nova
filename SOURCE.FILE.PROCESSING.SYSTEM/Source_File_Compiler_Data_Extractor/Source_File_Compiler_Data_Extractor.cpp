@@ -178,7 +178,9 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Threa
 
             buffer.source_file_path = hdr_ptr->at(0).source_file_path;
 
-            this->Extract_Obj_File_Name_From_File_Name(&(buffer.object_file_name),buffer.source_file_name);
+            this->Extract_Obj_File_Name_From_File_Name(&(buffer.object_file_name),
+            
+            buffer.source_file_name);
 
             buffer.priority = data_size;
 
@@ -246,11 +248,11 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
 
             this->Extract_Obj_File_Name_From_File_Name(&obj_name,hdr_name);
 
-            this->buffer.dependent_headers.push_back(hdr_name);
+            buffer.dependent_headers.push_back(hdr_name);
 
-            this->buffer.dependent_headers_paths.push_back(hdr_path);
+            buffer.dependent_headers_paths.push_back(hdr_path);
 
-            this->buffer.dependent_objs.push_back(obj_name);     
+            buffer.dependent_objs.push_back(obj_name);     
          }
 
          this->compiler_data.push_back(buffer);
@@ -349,7 +351,10 @@ void Source_File_Compiler_Data_Extractor::Extract_Obj_File_Name_From_File_Name(s
 
 
 
-void Source_File_Compiler_Data_Extractor::is_this_independent_header(std::string header_name, bool & is_ind)
+void Source_File_Compiler_Data_Extractor::is_this_independent_header(std::string header_name, 
+
+bool & is_ind)
+
 {
      is_ind = false;
 

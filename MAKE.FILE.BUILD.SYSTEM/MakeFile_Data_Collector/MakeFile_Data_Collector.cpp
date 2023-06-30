@@ -93,7 +93,7 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
  }
 
 
-void MakeFile_Data_Collector::Collect_Make_File_Data(int git_index){
+void MakeFile_Data_Collector::Collect_Make_File_Data(std::string fileName){
 
      this->Clear_Dynamic_Memory();
 
@@ -101,7 +101,7 @@ void MakeFile_Data_Collector::Collect_Make_File_Data(int git_index){
 
      this->Determine_Warehouse_Object_Dir();
 
-     this->Receive_Git_Record_Data(git_index);
+     this->Receive_Git_Record_Data(fileName);
 
      this->Collect_Header_Files_Information();
 
@@ -238,6 +238,22 @@ void MakeFile_Data_Collector::Determine_Warehouse_Object_Dir(){
          this->warehouse_obj_dir.push_back(object_directory[i]);         
      }
 }
+
+
+ void MakeFile_Data_Collector::Receive_Git_Record_Data(std::string file_name){
+
+      Build_System_Data * ptr = this->File_Lister.Get_Build_System_Data(file_name);
+
+      this->Source_File_Name = ptr->File_Name;
+
+      this->Source_File_Name_With_Ext = ptr->File_Name_With_Ext;
+
+      this->Source_File_Git_Recort_Path = ptr->git_record_path;     
+
+      this->Source_File_Directory = ptr->File_Directory;
+
+      this->Header_File_Directory = ptr->File_Directory;      
+ }
 
 
 void MakeFile_Data_Collector::Receive_Git_Record_Data(int git_index){
@@ -398,7 +414,7 @@ void MakeFile_Data_Collector::Determine_Make_File_Name(){
 
 void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
-     std::string compiler_input_command = "g++ -Wall -c -std=c++17";
+     std::string compiler_input_command = "g++ -Wall -c -std=c++17 ";
 
 
      std::string options = this->Des_Reader.Get_Options();
@@ -428,18 +444,11 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      if(!options.empty()){
 
-        if(options[0]!= ' '){
-
-           this->Place_String(&this->Compiler_System_Command,Space_Character);
-        }
-
         this->Place_String(&this->Compiler_System_Command,options);
 
         this->Place_String(&this->Compiler_System_Command,go_to_new_line);
      }
      
-
-
      // THE ADDITION OF INCLUDE DIRECTORIES PATHS
 
      this->Place_String(&this->Compiler_System_Command,Include_Character);
@@ -448,6 +457,7 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      this->Place_String(&this->Compiler_System_Command,Space_Character);
 
+     this->Place_String(&this->Compiler_System_Command,go_to_new_line);
 
 
      int  included_dir_num = this->Des_Reader.Get_Include_Directory_Number();
@@ -508,17 +518,7 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
      this->Place_String(&this->Compiler_System_Command,go_to_new_line);
 
 
-     this->Place_String(&this->Compiler_System_Command,include_word);
-
-     this->Place_String(&this->Compiler_System_Command,Space_Character);
-
-     this->Place_String(&this->Compiler_System_Command,this->Compiler_Data_Ptr->header_name);
-
-     this->Place_String(&this->Compiler_System_Command,Space_Character);
-
      size_t dep_header_size = this->Compiler_Data_Ptr->dependent_headers.size();
-
-     sizer = 0;
 
      for(size_t i=0;i<dep_header_size;i++){
 
@@ -532,49 +532,9 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
           this->Place_String(&this->Compiler_System_Command,Space_Character);
 
-          sizer++;
-
-         if(((sizer >= 2) && (i!=(this->Included_Header_Files_Number -1)))){
-
-            this->Place_String(&this->Compiler_System_Command,Space_Character);
-
-            this->Place_String(&this->Compiler_System_Command,go_to_new_line);
-
-            sizer = 0;
-          }
+          this->Place_String(&this->Compiler_System_Command,go_to_new_line);
      }
-
-     // The include commands definition
-
-     /*
-
-     sizer = 0;
-
-     size_t included_hdr_num = this->Included_Header_Files.size();
-
-     for(int i=0;i<included_hdr_num;i++){
-
-         this->Place_String(&this->Compiler_System_Command,include_word);
-
-         this->Place_String(&this->Compiler_System_Command,Space_Character);
-
-         this->Place_String(&this->Compiler_System_Command,this->Included_Header_Files[i]);
-
-         this->Place_String(&this->Compiler_System_Command,Space_Character);
-
-         sizer++;
-
-         if(((sizer >= 2) && (i!=(this->Included_Header_Files_Number -1)))){
-
-            this->Place_String(&this->Compiler_System_Command,Space_Character);
-
-            this->Place_String(&this->Compiler_System_Command,go_to_new_line);
-
-            sizer = 0;
-          }
-     }
-
-     */
+     
 }
 
 

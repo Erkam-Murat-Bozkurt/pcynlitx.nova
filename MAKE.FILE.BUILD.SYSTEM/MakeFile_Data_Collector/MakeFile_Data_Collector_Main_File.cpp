@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstring>
 #include "MakeFile_Data_Collector.hpp"
+#include "Source_File_Dependency_Determiner.hpp"
 #include "Project_Files_Lister.h"
 
 int main(int argc, char ** argv){
@@ -23,11 +24,26 @@ int main(int argc, char ** argv){
 
     int src_file_num = File_Lister.Get_Source_File_Number();
 
+    Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
+
+    Dep_Determiner.Collect_Dependency_Information();
+
+
     MakeFile_Data_Collector Data_Collector(argv[1],'w');
+
+    std::vector<Compiler_Data> * vec_ptr = Dep_Determiner.Get_Compiler_Data_Address();
+
+    Compiler_Data ptr = vec_ptr->at(0);
+
+    Data_Collector.Receive_Compiler_Data_Pointer(&ptr);
+
+    std::cout << "\n src_file_num:" << src_file_num;
+
+    std::string source_file_name = "Kernel.cpp";
 
     if(src_file_num > 0){
 
-       Data_Collector.Collect_Make_File_Data(0);
+       Data_Collector.Collect_Make_File_Data(source_file_name);
     }
     else{
 
@@ -39,6 +55,8 @@ int main(int argc, char ** argv){
     }
 
     int inhd_flnr = Data_Collector.Get_Included_Header_Files_Number();
+
+    std::cout << "\n SOURCE FILE NAME:" << source_file_name;
 
     std::cout << "\n INCLUDED HEADER FILES NUMBER:";
 
@@ -52,21 +70,24 @@ int main(int argc, char ** argv){
     }
 
     std::cout << "\n\n";
-    std::cout << "\n Data_Collector.Get_Compiler_System_Command() :" << Data_Collector.Get_Compiler_System_Command();
+    std::cout << "\n Compiler_System_Command :";
+
+    std::cout << "\n " << Data_Collector.Get_Compiler_System_Command();
+
 
     std::cout << "\n\n";
-    std::cout << "\n Data_Collector.Get_Dependency_Code_Line()    :" << Data_Collector.Get_Dependency_Code_Line();
+    std::cout << "\n Dependency_Code_Line    :" << Data_Collector.Get_Dependency_Code_Line();
 
     std::cout << "\n\n";
 
-    std::cout << "\n Data_Collector.Get_Source_File_Name()                :" << Data_Collector.Get_Source_File_Name();
-    std::cout << "\n Data_Collector.Get_Make_File_Name()                  :" << Data_Collector.Get_Make_File_Name();
-    std::cout << "\n Data_Collector.Get_Object_File_Name()                :" << Data_Collector.Get_Object_File_Name();
-    std::cout << "\n Data_Collector.Get_Source_File_Name_With_Extention() :" << Data_Collector.Get_Source_File_Name_With_Extention();
-    std::cout << "\n Data_Collector.Get_Repo_Dir()                        :" << Data_Collector.Get_Repo_Dir();
-    std::cout << "\n Data_Collector.Get_Warehouse_Header_Dir()            :" << Data_Collector.Get_Warehouse_Header_Dir();
-    std::cout << "\n Data_Collector.Get_Warehouse_Object_Dir()            :" << Data_Collector.Get_Warehouse_Object_Dir();
-    std::cout << "\n Data_Collector.Get_Warehouse_Path()                  :" << Data_Collector.Get_Warehouse_Path();
+    std::cout << "\n Source File Name                :" << Data_Collector.Get_Source_File_Name();
+    std::cout << "\n Make File Name                  :" << Data_Collector.Get_Make_File_Name();
+    std::cout << "\n Object File Name                :" << Data_Collector.Get_Object_File_Name();
+    std::cout << "\n Source File Name With Extention :" << Data_Collector.Get_Source_File_Name_With_Extention();
+    std::cout << "\n Repo Dir                        :" << Data_Collector.Get_Repo_Dir();
+    std::cout << "\n Warehouse Header Dir            :" << Data_Collector.Get_Warehouse_Header_Dir();
+    std::cout << "\n Warehouse Object Dir            :" << Data_Collector.Get_Warehouse_Object_Dir();
+    std::cout << "\n Warehouse Path                  :" << Data_Collector.Get_Warehouse_Path();
 
     std::cout << "\n\n";
     std::cout << "\n The end of the program ..\n\n";
