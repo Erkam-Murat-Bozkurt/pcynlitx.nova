@@ -233,9 +233,9 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
 
         this->Extract_Obj_File_Name_From_File_Name(&buffer.object_file_name,
         
-                                                    buffer.source_file_name);
+                                                    buffer.source_file_name);        
 
-        buffer.priority = src_ptr->at(0).base_included_hdr_num;
+        buffer.priority = data_size;
          
 
         for(size_t k=0;k<data_size;k++){
@@ -252,7 +252,7 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
 
             buffer.dependent_headers_paths.push_back(hdr_path);
 
-            buffer.dependent_objs.push_back(obj_name);     
+            buffer.dependent_objs.push_back(obj_name);
          }
 
          this->compiler_data.push_back(buffer);

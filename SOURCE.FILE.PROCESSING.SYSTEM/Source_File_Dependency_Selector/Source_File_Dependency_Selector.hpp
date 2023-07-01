@@ -47,6 +47,7 @@ struct Source_File_Dependency
   std::string repo_warehouse_path;
   int included_file_hdr_num;
   int base_included_hdr_num;
+  int priority;
 };
 
 class Source_File_Dependency_Selector

@@ -63,6 +63,10 @@ void Project_Src_Code_Rdr::Clear_Dynamic_Memory(){
      this->Src_Code_Dt.clear();
 
      this->Src_Code_Dt.shrink_to_fit();
+
+     this->CodeBase.clear();
+
+     this->CodeBase_Name.clear();
 }
 
 void Project_Src_Code_Rdr::Receive_Git_Repo_Information(Git_File_List_Receiver * ptr){

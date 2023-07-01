@@ -256,40 +256,6 @@ void MakeFile_Data_Collector::Determine_Warehouse_Object_Dir(){
  }
 
 
-void MakeFile_Data_Collector::Receive_Git_Record_Data(int git_index){
-
-     this->Git_Record_Index = git_index;
-
-     this->Source_File_Name
-
-     = this->File_Lister.Get_Source_File_Name(git_index);
-
-
-     this->Source_File_Name_With_Ext
-
-     = this->File_Lister.Get_Source_File_Name_With_Ext(git_index);
-
-
-
-     this->Source_File_Git_Recort_Path
-
-     = this->File_Lister.Get_Source_File_Git_Record_Path(git_index);
-
-
-
-     this->Source_File_Directory
-
-     = this->File_Lister.Get_Source_File_Directory(git_index);
-
-
-     this->Header_File_Directory
-
-     = this->File_Lister.Get_Source_File_Directory(git_index);
-
-}
-
-
-
 void MakeFile_Data_Collector::Collect_Header_Files_Information(){
 
      this->Receive_Included_Header_Files_Number();
@@ -533,8 +499,7 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
           this->Place_String(&this->Compiler_System_Command,Space_Character);
 
           this->Place_String(&this->Compiler_System_Command,go_to_new_line);
-     }
-     
+     }     
 }
 
 

@@ -22,8 +22,6 @@ void Source_File_Processor::Clear_Dynamic_Memory()
      this->Clear_String_Memory(&this->File_Name_Witout_Ext);
 
      this->StringManager.Clear_Dynamic_Memory();
-
-     this->FileManager.Clear_Dynamic_Memory();
 }
 
 
@@ -176,8 +174,8 @@ bool Source_File_Processor::Is_Source_File(std::string file_path){
 
     bool is_this_main_file = false;
 
-    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext)){
-       
+    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext))
+    {       
        std::vector<std::string> * Source_Code = this->Get_File_Source_Code(file_path);
 
        size_t line_num = Source_Code->size();
@@ -208,7 +206,7 @@ bool Source_File_Processor::Is_Source_File(std::string file_path){
 
       this->Is_This_Source_File
 
-          = this->StringManager.CheckStringInclusion(file_path,source_file_ext);
+         = this->StringManager.CheckStringInclusion(file_path,source_file_ext);
 
       if(this->Is_This_Source_File)
       {
@@ -384,37 +382,6 @@ void Source_File_Processor::Delete_Spaces_on_String(std::string * str)
 }
 
 
-bool Source_File_Processor::CompareString(std::string firstString, std::string secondString)
-{
-     int firstStringLength  = firstString.length();
-
-     int secondStringLength = secondString.length();
-
-     this->isStringsEqual = false;
-
-     if(firstStringLength==secondStringLength){
-
-        for(int i=0;i<firstStringLength;i++){
-
-            if(firstString[i]!=secondString[i]){
-
-               this->isStringsEqual = false;
-
-               return this->isStringsEqual;
-            }
-        }
-
-        this->isStringsEqual = true;
-
-        return this->isStringsEqual;
-     }
-     else{
-
-          this->isStringsEqual = false;
-
-          return this->isStringsEqual;
-     }
-}
 
 std::vector<std::string> * Source_File_Processor::Get_File_Source_Code(char * path)
 {
@@ -429,53 +396,18 @@ std::vector<std::string> * Source_File_Processor::Get_File_Source_Code(char * pa
 
      std_path.shrink_to_fit();
 
-     size_t file_num = this->Code_Rdr->Get_Project_Files_Number();
 
-     for(size_t i=0;i<file_num;i++){
-      
-          std::string file_path = this->Code_Rdr->Get_File_Path(i);
+     FileData * Data = this->Code_Rdr->Find_File_Data_From_Path(std_path);
 
-          bool is_equal = this->CompareString(file_path,std_path);
-
-          if(is_equal){
-          
-             this->File_Content = this->Code_Rdr->Get_File_Content(i);
-
-             return this->File_Content;
-          }
-     }
-
-     std::cout << "\n The source code for the file located " << path 
-     
-     << " can not be find";
-
-     exit(EXIT_FAILURE);
+     return  &Data->FileContent;   
 }
 
 
 std::vector<std::string> * Source_File_Processor::Get_File_Source_Code(std::string path){
 
-     size_t file_num = this->Code_Rdr->Get_Project_Files_Number();
+     FileData * Data = this->Code_Rdr->Find_File_Data_From_Path(path);
 
-     for(size_t i=0;i<file_num;i++){
-      
-          std::string file_path = this->Code_Rdr->Get_File_Path(i);
-
-          bool is_equal = this->CompareString(file_path,path);
-
-          if(is_equal){
-          
-             this->File_Content = this->Code_Rdr->Get_File_Content(i);
-
-             return this->File_Content;
-          }
-     }
-
-     std::cout << "\n The source code for the file located " << path 
-     
-     << " can not be find";
-
-     exit(EXIT_FAILURE);
+     return  &Data->FileContent; 
 }
 
 void Source_File_Processor::Clear_Vector_Memory(std::vector<std::string> * pointer){

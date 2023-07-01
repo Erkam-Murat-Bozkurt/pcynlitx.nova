@@ -60,13 +60,20 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->DepSelector.Determine_Source_File_Dependencies(path);
 
-     std::vector<std::vector<Source_File_Dependency>> * s_ptr  = this->DepSelector.Get_Dependency_List_Adress();
+     std::vector<std::vector<Source_File_Dependency>> * s_ptr  
+     
+               = this->DepSelector.Get_Dependency_List_Adress();
  
      std::string wrd_hdr_dir = this->DepSelector.Get_Warehouse_Headers_Dir();
+
+
+     /*
 
      this->ReOrderer.Receive_Dependency_Data(s_ptr);
 
      this->ReOrderer.Reorder_Dependency_Data();
+
+     */
 
      this->Com_Data_Extractor.Receive_Dependency_Data(s_ptr,wrd_hdr_dir);
 
@@ -76,7 +83,7 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->data_size = this->Compiler_Data_Ptr->size();
 
-     this->Order_Priorities();
+     //this->Order_Priorities();
 }
 
 
@@ -86,7 +93,9 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
       this->DepSelector.Determine_Source_File_Dependencies();
 
-      std::vector<std::vector<Source_File_Dependency>> * s_ptr  = this->DepSelector.Get_Dependency_List_Adress();
+      std::vector<std::vector<Source_File_Dependency>> * s_ptr  
+      
+      = this->DepSelector.Get_Dependency_List_Adress();
 
       std::string wrd_hdr_dir = this->DepSelector.Get_Warehouse_Headers_Dir();
       

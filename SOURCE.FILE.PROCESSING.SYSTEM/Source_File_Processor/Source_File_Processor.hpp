@@ -41,17 +41,14 @@ protected:
  void Clear_Dynamic_Memory();
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
- bool CompareString(std::string firstString, std::string secondString);
  Project_Src_Code_Rdr * Code_Rdr;
  StringOperator StringManager;
- Cpp_FileOperations FileManager;
  std::vector<std::string> * File_Content;
  std::string Source_File_Name;
  std::string Class_Function_Patern;
  std::string File_Name_Witout_Ext;
  int  File_Content_Size;
  bool Is_This_Source_File;
- bool isStringsEqual;
  bool Memory_Delete_Condition;
 };
 

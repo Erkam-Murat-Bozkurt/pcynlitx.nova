@@ -40,6 +40,7 @@ struct Search_Data
   std::string path;
   std::string name;
   bool search_complated;
+  int dep_counter;
 };
 
 class Dependency_Data_Extractor
@@ -53,10 +54,12 @@ public:
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 protected:
+ void Re_Order_Dependencies();
+ int  Recursive_Dependency_Determination(std::string path, std::vector<Search_Data> & data);
  std::string Find_Header_Name(std::string string);
- bool Find_New_Dependency(std::string path);
- bool Find_New_Dependency_From_Path(std::string path);
- bool Is_This_File_Aready_Searched(std::string name);
+ bool Find_New_Dependency(std::string path, std::vector<Search_Data> & data);
+ bool Find_New_Dependency_From_Path(std::string path, std::vector<Search_Data> & data);
+ bool Is_This_File_Aready_Searched(std::string name, std::vector<Search_Data> & data);
  bool Include_Decleration_Test(std::string string);
  void Extract_File_Name_From_Path(std::string * ptr, std::string str);
  bool CompareString(std::string firstString, std::string secondString);

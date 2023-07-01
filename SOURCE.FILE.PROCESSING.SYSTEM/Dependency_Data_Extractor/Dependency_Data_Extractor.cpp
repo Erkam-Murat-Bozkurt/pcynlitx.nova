@@ -75,25 +75,82 @@ void Dependency_Data_Extractor::Extract_Dependency_Tree(std::string path){
 
      this->Clear_Dynamic_Memory();
 
+     this->Recursive_Dependency_Determination(path,this->searched_paths);
+
+     this->Re_Order_Dependencies();     
+}
+
+int Dependency_Data_Extractor::Recursive_Dependency_Determination(std::string path, 
+
+     std::vector<Search_Data> & data){
+
+     
      Search_Data Head;
 
      Head.path = path;
      Head.search_complated = false;
 
-     int inc_num = this->Search_Dependencies(Head,this->searched_paths);
+     int inc_num = this->Search_Dependencies(Head,data);
 
 
-    for(size_t i=0;i<this->searched_paths.size();i++){
+     for(size_t i=0;i<data.size();i++){
 
-        if(!this->searched_paths.at(i).search_complated){
+        if(!data.at(i).search_complated){
 
-            inc_num = this->Search_Dependencies(this->searched_paths.at(i),this->searched_paths);
+            inc_num =  inc_num +  this->Search_Dependencies(data.at(i),data);
 
-            this->searched_paths.at(i).search_complated = true;
+            data.at(i).search_complated = true;
 
             i=0;
          }
-    }
+     }
+
+     
+     return inc_num;
+}
+
+void Dependency_Data_Extractor::Re_Order_Dependencies(){
+
+     for(size_t i=0;i<this->searched_paths.size();i++){
+
+         std::string sub_path = this->searched_paths.at(i).path;
+
+         std::vector<Search_Data> temp_vec;
+
+         int inc_num = this->Recursive_Dependency_Determination(sub_path,temp_vec);
+
+         if(inc_num != 0){
+
+             this->searched_paths.at(i).dep_counter = temp_vec.size();
+         }
+         else{
+
+               this->searched_paths.at(i).dep_counter = 0;              
+         }
+
+         temp_vec.clear();
+         temp_vec.shrink_to_fit();                  
+     }
+
+
+     for(size_t i=0;i<this->searched_paths.size();i++){
+
+         for(size_t j=0;j<this->searched_paths.size();j++){
+
+             int dep_i = this->searched_paths.at(i).dep_counter;
+
+             int dep_j = this->searched_paths.at(j).dep_counter;
+
+             if(dep_j<dep_i){
+
+                Search_Data temp = this->searched_paths.at(i);
+
+                this->searched_paths.at(i) = this->searched_paths.at(j);
+
+                this->searched_paths.at(j) = temp;
+             }
+         }                
+     }
 }
 
 
@@ -112,18 +169,19 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data, std::
 
        size_t FileSize = FileContent->size();
 
+
        for(size_t k=0;k<FileSize;k++){
 
            std::string string_line = FileContent->at(k);
 
-           bool is_new_dep = this->Find_New_Dependency(string_line);
+           bool is_new_dep = this->Find_New_Dependency(string_line,data);
 
            std::string header_name = this->Find_Header_Name(string_line);
 
            if(is_new_dep){
 
               std::string hdr_sys_path =  this->Get_Header_System_Path(header_name);
-
+             
               Search_Data temp;
             
               temp.path = hdr_sys_path;
@@ -136,7 +194,7 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data, std::
       }
       else{
 
-             if(this->Find_New_Dependency_From_Path(Src_Data.path)){
+             if(this->Find_New_Dependency_From_Path(Src_Data.path,data)){
 
                FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Path(Src_Data.path);
 
@@ -159,7 +217,7 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data, std::
 }
 
 
-bool Dependency_Data_Extractor::Find_New_Dependency(std::string string_line){
+bool Dependency_Data_Extractor::Find_New_Dependency(std::string string_line, std::vector<Search_Data> & data){
 
      bool is_new_dependency = false;
 
@@ -173,7 +231,7 @@ bool Dependency_Data_Extractor::Find_New_Dependency(std::string string_line){
 
         if(is_repo_header_file){
 
-           bool is_already_searched = this->Is_This_File_Aready_Searched(header_name);
+           bool is_already_searched = this->Is_This_File_Aready_Searched(header_name,data);
 
           if(!is_already_searched){
 
@@ -188,7 +246,9 @@ bool Dependency_Data_Extractor::Find_New_Dependency(std::string string_line){
 }
 
 
-bool Dependency_Data_Extractor::Find_New_Dependency_From_Path(std::string path){
+bool Dependency_Data_Extractor::Find_New_Dependency_From_Path(std::string path, 
+
+     std::vector<Search_Data> & data){
 
      bool is_new_dependency = false;
 
@@ -200,7 +260,7 @@ bool Dependency_Data_Extractor::Find_New_Dependency_From_Path(std::string path){
 
         if(this->Code_Rd->Is_This_Repo_File(FileDtPtr->sys_path)){
 
-            if(!this->Is_This_File_Aready_Searched(FileDtPtr->file_name)){
+            if(!this->Is_This_File_Aready_Searched(FileDtPtr->file_name,data)){
 
                is_new_dependency = true;
 
@@ -261,17 +321,17 @@ bool Dependency_Data_Extractor::Is_This_Repo_HeaderFile(std::string name)
 }
 
 
-bool Dependency_Data_Extractor::Is_This_File_Aready_Searched(std::string name)
+bool Dependency_Data_Extractor::Is_This_File_Aready_Searched(std::string name, std::vector<Search_Data> & data)
 {
      this->This_File_Exist = false;
 
-     size_t list_size = this->searched_paths.size();
+     size_t list_size = data.size();
 
      for(int i=0;i<list_size;i++){
 
          bool is_exist_on_the_list =
     
-         this->CompareString(name,this->searched_paths.at(i).name);
+         this->CompareString(name,data.at(i).name);
 
          if(is_exist_on_the_list){
 
