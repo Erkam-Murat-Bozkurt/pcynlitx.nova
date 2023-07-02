@@ -44,7 +44,7 @@ int main(int argc, char ** argv){
 
     */
 
-    Dep_Determiner.Collect_Dependency_Information(path);
+    Dep_Determiner.Collect_Dependency_Information();
 
     //Dep_Determiner.Print_Compiler_Orders();
 
@@ -54,12 +54,16 @@ int main(int argc, char ** argv){
 
      for(size_t i=0;i<ptr->size();i++){
 
+
+        std::cout << " \n\n\n";
         std::cout << "\n source file name:" << ptr->at(i).source_file_name;
         std::cout << "\n object file name:" << ptr->at(i).object_file_name;
         std::cout << "\n source file path:" << ptr->at(i).source_file_path;
 
         size_t header_number = ptr->at(i).dependent_headers.size();
         
+        std::cout << "\n header_number:" << header_number;        
+
         std::cout << "\n dependent headers:";
 
         for(size_t j=0;j<header_number;j++){

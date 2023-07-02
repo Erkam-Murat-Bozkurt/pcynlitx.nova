@@ -58,7 +58,7 @@ int main(int argc, char ** argv){
 
     Dep_Selector.Receive_Source_Code_Reader(&Code_Rd);
 
-    Dep_Selector.Determine_Source_File_Dependencies();
+    Dep_Selector.Determine_Source_File_Dependencies(path);
 
     std::cout << "\n Project Data Collected..\n\n";
 
@@ -66,6 +66,7 @@ int main(int argc, char ** argv){
     std::vector<std::vector<Source_File_Dependency>> * ptr = Dep_Selector.Get_Dependency_List_Adress();
 
     std::string wr_hdr =  Dep_Selector.Get_Warehouse_Headers_Dir();
+
 
 
 
@@ -101,6 +102,10 @@ void print_compiler_data(std::vector<Compiler_Data> * data_ptr){
 
      size_t data_size = data_ptr->size();
 
+     std::cout << "\n data_size:" << data_size;
+
+     std::cin.get();
+
      for(size_t i=0;i<data_size;i++){
 
          Compiler_Data temp = data_ptr->at(i);
@@ -112,6 +117,7 @@ void print_compiler_data(std::vector<Compiler_Data> * data_ptr){
          std::cout << "\n";
 
          size_t head_size = temp.dependent_headers.size();
+
 
          for(int k=0;k<head_size;k++){
 

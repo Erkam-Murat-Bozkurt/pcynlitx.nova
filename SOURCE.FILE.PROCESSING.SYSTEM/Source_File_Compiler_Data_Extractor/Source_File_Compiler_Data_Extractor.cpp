@@ -223,6 +223,7 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
 
      Compiler_Data buffer;
 
+
      if(data_size>0){
 
         //Compiler_Data buffer is definition of the member variable;              
@@ -255,6 +256,13 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
             buffer.dependent_objs.push_back(obj_name);
          }
 
+
+         buffer.dependent_headers.shrink_to_fit();
+
+         buffer.dependent_headers_paths.shrink_to_fit();
+
+         buffer.dependent_objs.shrink_to_fit();
+
          this->compiler_data.push_back(buffer);
 
          this->Clear_Buffer_Memory(&buffer);
@@ -281,12 +289,11 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
 
          if(data_size>0){
 
-
             buffer.source_file_name = src_ptr->at(0).source_file_name;
 
             buffer.source_file_path = src_ptr->at(0).source_file_path;          
 
-            buffer.priority = src_ptr->at(0).base_included_hdr_num;
+            buffer.priority = data_size;
   
 
             this->Extract_Obj_File_Name_From_File_Name(&(buffer.object_file_name),
