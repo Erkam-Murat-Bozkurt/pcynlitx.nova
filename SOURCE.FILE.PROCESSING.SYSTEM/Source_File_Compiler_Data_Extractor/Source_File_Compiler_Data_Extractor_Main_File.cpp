@@ -144,6 +144,17 @@ void print_compiler_data(std::vector<Compiler_Data> * data_ptr){
 
          std::cout << "\n";
 
+
+         size_t dir_num = temp.dependent_headers_dir.size();
+
+
+         for(int k=0;k<dir_num;k++){
+
+             std::cout << "\n included header path:" << temp.dependent_headers_dir[k];
+         } 
+
+         std::cout << "\n";
+
          std::cout << "\n priority:" << temp.priority;
 
          std::cout << "\n\n\n\n\n";

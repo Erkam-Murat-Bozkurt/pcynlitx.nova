@@ -316,7 +316,13 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
 
      std::string path, std::string header_name){
     
-     std::string src_file_name, wrd_path, hdr_sys_path;
+     std::string src_file_name, wrd_path, hdr_sys_path, file_dir;
+
+     FileData * Data = this->Code_Rd->Find_File_Data_From_Name(header_name);
+
+     std::string file_path = Data->sys_path;
+
+     this->Extract_Directory_From_Path(file_path,file_dir);
 
      this->Extract_File_Name_From_Path(&src_file_name,path);
 
@@ -334,6 +340,8 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
 
      this->Place_String(&data.repo_warehouse_path,wrd_path);
 
+     this->Place_String(&data.dir,file_dir);
+
      data.rcr_srch_complated= true;
 
      this->Clear_String_Memory(&src_file_name);
@@ -343,6 +351,51 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
      this->Clear_String_Memory(&hdr_sys_path);
      
 }
+
+
+
+
+void Source_File_Dependency_Selector::Extract_Directory_From_Path(std::string path, std::string & dir){
+
+     size_t path_size = path.size();
+
+     size_t end_point = path_size;
+
+     for(size_t i=path_size;i>0;i--){
+
+         if(this->opr_sis == 'w'){
+
+            if(path[i]== '\\'){
+
+                break;
+            }
+            else{
+
+                 end_point--;
+            }
+         }
+
+         if(this->opr_sis == 'l'){
+
+            if(path[i]== '/'){
+
+                break;
+            }
+            else{
+
+                 end_point--;
+            }
+         }         
+    }
+
+    for(size_t i=0;i<end_point;i++)
+    {
+        dir.push_back(path[i]);
+    }
+
+    dir.shrink_to_fit();    
+}
+
 
 
 void Source_File_Dependency_Selector::Determine_Header_System_Path(std::string & path, std::string name){
@@ -461,6 +514,8 @@ void Source_File_Dependency_Selector::Print_Dependency_List()
             for(auto it=ptr->begin();it<ptr->end();it++){
          
                 std::cout << "\n list - " << counter << " " << it->Header_Name;     
+
+                std::cout << "\n list - " << counter << " " << it->dir;     
 
                 counter++;
             }

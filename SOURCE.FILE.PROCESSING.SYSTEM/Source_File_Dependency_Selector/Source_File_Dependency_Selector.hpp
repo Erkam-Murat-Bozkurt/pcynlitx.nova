@@ -45,6 +45,7 @@ struct Source_File_Dependency
   std::string Header_Name;
   std::string header_sys_path;
   std::string repo_warehouse_path;
+  std::string dir;
   int included_file_hdr_num;
   int base_included_hdr_num;
   int priority;
@@ -68,6 +69,7 @@ public:
  std::vector<Source_File_Dependency> * Get_Dependency_List_Element_Adress(int num);
  size_t  Get_Dependency_List_Size();
 protected:
+ void Extract_Directory_From_Path(std::string path, std::string & dir);
  void Extract_Dependency_Tree(std::string path, int thr_num);
  void Extract_Dependency_Data(int thr_num, int start, int end);
  void Set_Included_Header_Number(std::vector<Source_File_Dependency> * ptr);

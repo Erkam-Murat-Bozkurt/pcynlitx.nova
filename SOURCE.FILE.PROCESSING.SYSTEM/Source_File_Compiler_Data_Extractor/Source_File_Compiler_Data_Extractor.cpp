@@ -178,6 +178,7 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Threa
 
             buffer.source_file_path = hdr_ptr->at(0).source_file_path;
 
+
             this->Extract_Obj_File_Name_From_File_Name(&(buffer.object_file_name),
             
             buffer.source_file_name);
@@ -190,6 +191,11 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Threa
                 std::string hdr_name = hdr_ptr->at(k).Header_Name;
 
                 std::string hdr_path = hdr_ptr->at(k).repo_warehouse_path;
+
+                std::string hdr_dir =  hdr_ptr->at(k).dir;            
+                            
+                buffer.dependent_headers_dir.push_back(hdr_dir);
+
 
                 buffer.dependent_headers.push_back(hdr_name);
 
@@ -245,6 +251,10 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
 
             std::string hdr_path = src_ptr->at(k).repo_warehouse_path;
 
+            std::string hdr_dir =  src_ptr->at(k).dir;            
+                            
+
+
             std::string obj_name;
 
             this->Extract_Obj_File_Name_From_File_Name(&obj_name,hdr_name);
@@ -254,6 +264,9 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
             buffer.dependent_headers_paths.push_back(hdr_path);
 
             buffer.dependent_objs.push_back(obj_name);
+
+            buffer.dependent_headers_dir.push_back(hdr_dir);
+
          }
 
 
@@ -301,16 +314,19 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
                 buffer.source_file_name);
 
 
-
             for(size_t k=0;k<data_size;k++){
             
                 std::string hdr_name = src_ptr->at(k).Header_Name;
 
                 std::string hdr_path = src_ptr->at(k).repo_warehouse_path;
 
+                std::string hdr_dir =  src_ptr->at(k).dir;            
+
                 buffer.dependent_headers.push_back(hdr_name);
 
-                buffer.dependent_headers_paths.push_back(hdr_path);                                                
+                buffer.dependent_headers_paths.push_back(hdr_path);  
+
+                buffer.dependent_headers_dir.push_back(hdr_dir);                                              
             }
 
 

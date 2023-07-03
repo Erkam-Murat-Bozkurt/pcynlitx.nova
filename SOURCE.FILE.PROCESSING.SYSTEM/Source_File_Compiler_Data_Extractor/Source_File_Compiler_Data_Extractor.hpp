@@ -44,6 +44,7 @@ struct Compiler_Data
   std::vector<std::string> dependent_headers;
   std::vector<std::string> dependent_objs;
   std::vector<std::string> dependent_headers_paths;
+  std::vector<std::string> dependent_headers_dir;
   int  priority; // dependency
 };
 

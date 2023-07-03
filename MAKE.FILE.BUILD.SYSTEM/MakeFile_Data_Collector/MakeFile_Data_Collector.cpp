@@ -462,6 +462,28 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
      this->Place_String(&this->Compiler_System_Command,go_to_new_line);
 
 
+
+
+     std::string source_file_name = this->Compiler_Data_Ptr->source_file_name;
+
+     std::vector<std::string> * header_directories = &this->Compiler_Data_Ptr->dependent_headers_dir;
+
+     size_t hdr_dir_size = header_directories->size();
+
+     
+     for(size_t i=0;i<hdr_dir_size;i++){
+
+          std::string dir = header_directories->at(i);
+          
+          this->Place_String(&this->Compiler_System_Command,Include_Character);
+
+          this->Place_String(&this->Compiler_System_Command,dir);
+
+          this->Place_String(&this->Compiler_System_Command,Space_Character);
+
+          this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+     }   
+
      this->Place_String(&this->Compiler_System_Command,Source_Location);
 
      if(this->opr_sis == 'w'){
