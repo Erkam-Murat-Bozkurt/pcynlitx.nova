@@ -306,6 +306,8 @@ void Project_Files_Lister::Clear_Dynamic_Memory()
          this->Header_Determiner.Clear_Dynamic_Memory();
 
          this->StringManager.Clear_Dynamic_Memory();
+
+         this->DataMap.clear();
       }
 }
 

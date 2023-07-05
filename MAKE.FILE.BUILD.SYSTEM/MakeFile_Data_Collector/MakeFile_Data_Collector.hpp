@@ -30,9 +30,9 @@ public:
  MakeFile_Data_Collector(char * Des_Path, char opr_sis);
  virtual ~MakeFile_Data_Collector();
  void Collect_Make_File_Data(std::string fileName);
- void Receive_Git_Record_Data(int git_index);
  void Receive_Git_Record_Data(std::string file_name);
  void Receive_Compiler_Data_Pointer(Compiler_Data * ptr);
+ void Receive_File_Lister_Pointer(Project_Files_Lister * ptr);
  std::string Get_Source_File_Name();
  std::string Get_Make_File_Name();
  std::string Get_Compiler_System_Command();
@@ -51,26 +51,18 @@ public:
 private:
  void Clear_String_Memory(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer); 
- void Collect_Header_Files_Information();
- void Receive_Included_Header_Files_Number();
  void Determine_Make_File_Name();
  void Determine_Dependency_Code_Line();
  void Place_String(std::string * ptr, std::string Information);
  void Place_CString(std::string * ptr, char * Information);
- void Receive_Source_File_Header_System_Path();
  void Find_Object_File_Name();
- void Receive_Header_Files_Data();
- void Receive_Header_File_Name();
  void Determine_Compiler_System_Command();
- void Receive_Source_File_Header_Git_Record_Path();
- void Receive_Source_File_Header_Git_Record_Dir();
- void Receive_Source_File_Header_Directory();
  void Determine_Warehouse_Header_Dir();
  void Determine_Warehouse_Object_Dir();
  DirectoryOperations DirectoryManager;
  IntToCharTranslater Translater;
  Descriptor_File_Reader Des_Reader;
- Project_Files_Lister File_Lister;
+ Project_Files_Lister * File_Lister;
  Compiler_Data * Compiler_Data_Ptr;
  std::string repo_dir;
  std::string warehouse_head_dir;

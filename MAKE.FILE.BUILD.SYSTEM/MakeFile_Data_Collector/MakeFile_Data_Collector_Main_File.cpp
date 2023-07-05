@@ -37,7 +37,14 @@ int main(int argc, char ** argv){
 
     Data_Collector.Receive_Compiler_Data_Pointer(&ptr);
 
+    Data_Collector.Receive_File_Lister_Pointer(&File_Lister);
+
+    std::cout << "\n The initialization data collected..";
+
     std::cout << "\n src_file_num:" << src_file_num;
+
+    std::cin.get();
+
 
     std::string source_file_name = "Kernel.cpp";
 
@@ -76,7 +83,9 @@ int main(int argc, char ** argv){
 
 
     std::cout << "\n\n";
-    std::cout << "\n Dependency_Code_Line    :" << Data_Collector.Get_Dependency_Code_Line();
+    std::cout << "\n Dependency_Code_Line    :";
+    
+    std::cout << "\n " << Data_Collector.Get_Dependency_Code_Line();
 
     std::cout << "\n\n";
 
