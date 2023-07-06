@@ -71,7 +71,6 @@ private:
  std::string Make_File_Name;
 
  std::string Dependency_Code_Line;
- std::string Header_File_Exact_Path;
  std::string Header_File_Directory;
  std::string Header_File_Name_With_Ext;
 
@@ -84,9 +83,6 @@ private:
  std::string Compiler_System_Command;
  std::vector<std::string> Included_Header_Files;
  std::vector<std::string> Included_Header_Directories;
- std::vector<std::string> Included_Header_Files_System_Paths;
- std::vector<std::string> Included_Header_Files_Git_Record_Paths;
- std::vector<std::string> Included_Header_Files_Git_Record_Dir;
  int  Included_Header_Files_Number;
  int  Git_Record_Index;
  char opr_sis;

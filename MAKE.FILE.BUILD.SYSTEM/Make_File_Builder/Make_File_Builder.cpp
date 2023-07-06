@@ -26,14 +26,12 @@ Make_File_Builder::Make_File_Builder(char * DesPath, char opr_sis) :
 
     Data_Collector(DesPath,opr_sis), Header_Determiner(DesPath,opr_sis), 
 
-    File_Lister(DesPath,opr_sis), Des_Reader(DesPath) 
+    Des_Reader(DesPath) 
 {
 
    this->Memory_Delete_Condition = false;
 
    this->Des_Reader.Read_Descriptor_File();
-
-   this->File_Lister.Determine_Git_Repo_Info();
 }
 
 
@@ -53,31 +51,39 @@ void Make_File_Builder::Clear_Dynamic_Memory(){
          this->Memory_Delete_Condition = true;
 
          this->Data_Collector.Clear_Object_Memory();
-         this->File_Lister.Clear_Dynamic_Memory();
          this->Des_Reader.Clear_Dynamic_Memory();
          this->DirectoryManager.Clear_Dynamic_Memory();
      }
 }
 
 
-void Make_File_Builder::Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr){
-
+void Make_File_Builder::Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr)
+{
      this->Comp_Data_Ptr = ptr;
+
 }
+
+
+void Make_File_Builder::Receive_File_Lister_Pointer(Project_Files_Lister * ptr){
+
+     this->File_Lister = ptr;
+
+     this->Data_Collector.Receive_File_Lister_Pointer(ptr);
+}
+
 
 void Make_File_Builder::Construct_Data_Map(){
 
      for(size_t i=0;i<this->Comp_Data_Ptr->size();i++){
 
-         std::string header_name = this->Comp_Data_Ptr->at(i).header_name;
-         std::cout << "\n Header Name:" << header_name << "#";
+         std::string source_file_name = this->Comp_Data_Ptr->at(i).source_file_name;
 
-         this->DataMap.insert(std::make_pair(header_name,this->Comp_Data_Ptr->at(i)));
+         this->DataMap.insert(std::make_pair(source_file_name,this->Comp_Data_Ptr->at(i)));
      }
 }
 
 
-Compiler_Data * Make_File_Builder::Find_Compiler_Data_From_Header_Name(std::string name)
+Compiler_Data * Make_File_Builder::Find_Compiler_Data_From_Source_File_Name(std::string name)
 {
     try {        
 
@@ -95,18 +101,24 @@ Compiler_Data * Make_File_Builder::Find_Compiler_Data_From_Header_Name(std::stri
 
 Compiler_Data * Make_File_Builder::Find_Compiler_Data_From_Index(int index){
 
-     std::string header_name = this->File_Lister.Get_Class_File_Header_Name(index);
+     std::string header_name = this->File_Lister->Get_Source_File_Name_With_Ext(index);
 
-     return this->Find_Compiler_Data_From_Header_Name(header_name);
+     return this->Find_Compiler_Data_From_Source_File_Name(header_name);
 }
 
+
+
 void Make_File_Builder::Build_MakeFile(int git_index){
+
+     this->Construct_Data_Map();
 
      Compiler_Data * Data_Ptr = this->Find_Compiler_Data_From_Index(git_index);
 
      this->Data_Collector.Receive_Compiler_Data_Pointer(Data_Ptr);
 
-     this->Data_Collector.Collect_Make_File_Data(git_index);
+     std::string Source_File_Name = Data_Ptr->source_file_name;
+
+     this->Data_Collector.Collect_Make_File_Data(Source_File_Name);
 
      std::string Header_File_Directory = this->Data_Collector.Get_System_Header_File_Dir();
 
@@ -152,7 +164,7 @@ void Make_File_Builder::Build_MakeFile(int git_index){
 
      std::string source_file_dir =
 
-     this->File_Lister.Get_Source_File_Git_Record_Directory(git_index);
+     this->File_Lister->Get_Source_File_Git_Record_Directory(git_index);
 
 
 

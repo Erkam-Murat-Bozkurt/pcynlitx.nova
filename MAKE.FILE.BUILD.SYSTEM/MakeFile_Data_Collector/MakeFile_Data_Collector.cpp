@@ -59,12 +59,6 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
 
      this->Clear_Vector_Memory(&this->Included_Header_Directories);
 
-     this->Clear_Vector_Memory(&this->Included_Header_Files_System_Paths);
-
-     this->Clear_Vector_Memory(&this->Included_Header_Files_Git_Record_Paths);
-
-     this->Clear_Vector_Memory(&this->Included_Header_Files_Git_Record_Dir);
-
      this->Clear_String_Memory(&this->Source_File_Name_With_Ext);
 
      this->Clear_String_Memory(&this->Object_File_Name);
@@ -78,8 +72,6 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
      this->Clear_String_Memory(&this->warehouse_head_dir);
 
      this->Clear_String_Memory(&this->warehouse_obj_dir);
-
-     this->Clear_String_Memory(&this->Header_File_Exact_Path);
 }
 
 

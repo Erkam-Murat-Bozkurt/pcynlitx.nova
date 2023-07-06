@@ -31,16 +31,17 @@ class Make_File_Builder
 public:
  Make_File_Builder(char * DesPath, char opr_sis);
  virtual ~Make_File_Builder();
- void Build_MakeFile(int git_index);
+ void Build_MakeFile(int index);
  void Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr);
+ void Receive_File_Lister_Pointer(Project_Files_Lister * ptr);
  void Construct_Data_Map();
  void Clear_Dynamic_Memory();
 private:
  Compiler_Data * Find_Compiler_Data_From_Index(int index);
- Compiler_Data * Find_Compiler_Data_From_Header_Name(std::string name);
+ Compiler_Data * Find_Compiler_Data_From_Source_File_Name(std::string name);
  MakeFile_Data_Collector Data_Collector;
  Header_File_Determiner Header_Determiner;
- Project_Files_Lister File_Lister;
+ Project_Files_Lister * File_Lister;
  Descriptor_File_Reader Des_Reader;
  Cpp_FileOperations FileManager;
  DirectoryOperations DirectoryManager;

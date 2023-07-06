@@ -19,7 +19,6 @@
 #include <fcntl.h>
 #include <windows.h>
 #include "Source_File_Compiler_Data_Extractor.hpp"
-#include "Source_File_Dependency_ReOrderer.hpp"
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Source_File_Processor.hpp"
@@ -58,7 +57,6 @@ protected:
  Project_Src_Code_Rdr Code_Rd;
  Source_File_Dependency_Selector DepSelector;
  Source_File_Compiler_Data_Extractor Com_Data_Extractor;
- Source_File_Dependency_ReOrderer ReOrderer;
  Source_File_Processor Src_Processor;
  std::vector<Compiler_Data> * Compiler_Data_Ptr;
  CharOperator Char_Processor;
