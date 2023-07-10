@@ -19,18 +19,42 @@ SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
 HEAD_DETER=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
 
 
+
+SRC_INF_CL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector
+SRC_DEP_SL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector
+SRC_DEP_DT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Determiner
+HDR_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
+SRC_READER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Src_Code_Rdr
+SRC_COM_DT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Compiler_Data_Extractor
+SRC_DER_RORD=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_ReOrderer
+DEP_DAT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Extractor
+SRC_PROCESSOR=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Processor
+
+
+
 VPATH = $(INT_TO_CHAR)    $(FILE_OPRS)    $(DIR_OPS)   \
 	    $(STRING_OPS)     $(CHAR_OPS)     $(MAKE_BLD)   \
 	    $(MAKE_DATA_COL)  $(MK_FILE_CLNR) $(HEAD_DETER) \
 	    $(SOURCE_DETR)    $(DES_READER)   $(DES_DATA_COL) \
 	    $(DES_SYN_CON)    $(GIT_LIST)     $(SRC_DT_COL) \
-		$(DIR_LIST)       $(FILE_DAT_COL) $(DIR_ENUM) 
+		$(DIR_LIST)       $(FILE_DAT_COL) $(DIR_ENUM) \
+		$(SRC_INF_CL)     $(SRC_DEP_SL)   $(SRC_DEP_DT) \
+		$(HDR_PROC)       $(SRC_READER)   $(SRC_COM_DT_EXT) \
+		$(SRC_DER_RORD)   $(DEP_DAT_EXT)  $(SRC_PROCESSOR)  
 	    
 
 Auto_MakeFile_Builder.exe: Auto_MakeFile_Builder_Main_File.cpp \
 	Auto_MakeFile_Builder.cpp \
 	Make_File_Builder.cpp \
 	MakeFile_Data_Collector.cpp \
+	Source_File_Dependency_Determiner.cpp \
+	Source_File_Compiler_Data_Extractor.cpp \
+	Source_File_Dependency_Selector.cpp \
+	Source_File_Information_Collector.cpp \
+	Dependency_Data_Extractor.cpp \
+	Source_File_Processor.cpp \
+	Header_File_Processor.cpp \
+	Project_Src_Code_Rdr.cpp \
 	Make_File_Cleaner.cpp \
 	Project_Files_Lister.cpp \
 	Project_Files_Data_Collector.cpp \
@@ -50,6 +74,14 @@ Auto_MakeFile_Builder.exe: Auto_MakeFile_Builder_Main_File.cpp \
 	Auto_MakeFile_Builder.h \
 	Make_File_Builder.h \
 	MakeFile_Data_Collector.hpp \
+	Source_File_Dependency_Determiner.hpp \
+	Source_File_Compiler_Data_Extractor.hpp \
+	Source_File_Dependency_Selector.hpp \
+	Source_File_Information_Collector.hpp \
+	Dependency_Data_Extractor.hpp \
+	Source_File_Processor.hpp \
+	Header_File_Processor.hpp \
+	Project_Src_Code_Rdr.hpp \
 	Make_File_Cleaner.hpp \
 	Source_File_Determiner.h \
 	Source_File_Data_Collector.hpp \
@@ -86,6 +118,15 @@ Auto_MakeFile_Builder.exe: Auto_MakeFile_Builder_Main_File.cpp \
 	-I$(SRC_DT_COL) \
 	-I$(FILE_DAT_COL) \
     -I$(FILE_OPRS) \
+	-I$(SRC_INF_CL) \
+	-I$(SRC_DEP_SL) \
+	-I$(SRC_DEP_DT) \
+	-I$(HDR_PROC) \
+	-I$(SRC_READER) \
+	-I$(SRC_COM_DT_EXT) \
+	-I$(SRC_DER_RORD) \
+	-I$(DEP_DAT_EXT) \
+	-I$(SRC_PROCESSOR) \
 	-L$(DIR_LIST) \
 	-L$(MAKE_BLD) \
 	-L$(MAKE_DATA_COL) \
@@ -104,10 +145,27 @@ Auto_MakeFile_Builder.exe: Auto_MakeFile_Builder_Main_File.cpp \
 	-L$(SOURCE_DETR) \
 	-L$(SRC_DT_COL) \
 	-L$(FILE_DAT_COL) \
+	-L$(SRC_INF_CL) \
+	-L$(SRC_DEP_SL) \
+	-L$(SRC_DEP_DT) \
+	-L$(HDR_PROC) \
+	-L$(SRC_READER) \
+	-L$(SRC_COM_DT_EXT) \
+	-L$(SRC_DER_RORD) \
+	-L$(DEP_DAT_EXT) \
+	-L$(SRC_PROCESSOR) \
 	Auto_MakeFile_Builder_Main_File.cpp \
 	Auto_MakeFile_Builder.cpp \
 	$(MAKE_BLD)\Make_File_Builder.cpp \
 	$(MAKE_DATA_COL)\MakeFile_Data_Collector.cpp  \
+	$(SRC_DEP_DT)\Source_File_Dependency_Determiner.cpp \
+	$(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.cpp \
+	$(SRC_DEP_SL)\Source_File_Dependency_Selector.cpp \
+	$(SRC_INF_CL)\Source_File_Information_Collector.cpp \
+	$(DEP_DAT_EXT)\Dependency_Data_Extractor.cpp \
+	$(SRC_PROCESSOR)\Source_File_Processor.cpp \
+	$(HDR_PROC)\Header_File_Processor.cpp \
+	$(SRC_READER)\Project_Src_Code_Rdr.cpp \
 	$(MK_FILE_CLNR)\Make_File_Cleaner.cpp \
 	$(DES_READER)\Descriptor_File_Reader.cpp \
 	$(DES_DATA_COL)\Descriptor_File_Data_Collector.cpp \
@@ -127,6 +185,14 @@ Auto_MakeFile_Builder.exe: Auto_MakeFile_Builder_Main_File.cpp \
 	-include Auto_MakeFile_Builder.h \
 	-include $(MAKE_BLD)\Make_File_Builder.h \
 	-include $(MAKE_DATA_COL)\MakeFile_Data_Collector.hpp  \
+	-include $(SRC_DEP_DT)\Source_File_Dependency_Determiner.hpp \
+	-include $(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.hpp \
+	-include $(SRC_DEP_SL)\Source_File_Dependency_Selector.hpp \
+	-include $(SRC_INF_CL)\Source_File_Information_Collector.hpp \
+	-include $(DEP_DAT_EXT)\Dependency_Data_Extractor.hpp \
+	-include $(SRC_PROCESSOR)\Source_File_Processor.hpp \
+	-include $(HDR_PROC)\Header_File_Processor.hpp \
+	-include $(SRC_READER)\Project_Src_Code_Rdr.hpp \
 	-include $(MK_FILE_CLNR)\Make_File_Cleaner.hpp \
 	-include $(DIR_LIST)\Project_Files_Lister.h \
 	-include $(FILE_DAT_COL)\Project_Files_Data_Collector.hpp \
@@ -142,4 +208,5 @@ Auto_MakeFile_Builder.exe: Auto_MakeFile_Builder_Main_File.cpp \
 	-include $(DIR_OPS)\DirectoryOperations.h \
 	-include $(INT_TO_CHAR)\IntToCharTranslater.h \
 	-include $(CHAR_OPS)\CharOperator.h \
-	-include $(FILE_OPRS)\Cpp_FileOperations.h
+	-include $(FILE_OPRS)\Cpp_FileOperations.h \
+	-lpthread

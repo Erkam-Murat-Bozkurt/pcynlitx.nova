@@ -419,9 +419,29 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
           std::string header_name = this->Compiler_Data_Ptr->dependent_headers.at(i);
 
+          std::string dir = header_directories->at(i);
+
           this->Place_String(&this->Compiler_System_Command,include_word);
 
           this->Place_String(&this->Compiler_System_Command,Space_Character);
+
+          this->Place_String(&this->Compiler_System_Command,dir);
+
+          if(this->opr_sis == 'w'){
+
+             if(dir.back()!= '\\'){
+
+                 this->Compiler_System_Command.push_back('\\');
+             }
+          }
+          
+          if(this->opr_sis == 'l'){
+
+             if(dir.back()!= '\\'){
+
+                 this->Compiler_System_Command.push_back('\\');
+             }
+          }
 
           this->Place_String(&this->Compiler_System_Command,header_name);
 
@@ -488,6 +508,54 @@ void MakeFile_Data_Collector::Determine_Dependency_Code_Line(){
 
           this->Place_String(&this->Dependency_Code_Line,go_to_new_line);
      }   
+}
+
+
+void MakeFile_Data_Collector::Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path){
+
+     std::string root_dir = this->Des_Reader.Get_Repo_Directory_Location();
+
+     size_t path_size = sys_path.length();
+     size_t end_point = path_size;
+     size_t start_point = root_dir.length()+1;
+
+     for(size_t i=path_size;i>0;i--){
+
+         if(this->opr_sis == 'w'){
+
+            if(sys_path[i]== '\\'){
+
+               break;
+          
+            }
+            else{
+
+                  end_point--;
+            }
+         }
+
+
+         if(this->opr_sis == 'l'){
+
+            if(sys_path[i]== '/'){
+
+               break;
+            }
+            else{
+
+                  end_point--;
+            }
+         }
+     }
+
+
+     for(size_t i=start_point;i<end_point;i++){
+
+         git_dir.push_back(sys_path[i]);
+     }
+
+     git_dir.shrink_to_fit();
+
 }
 
 void MakeFile_Data_Collector::Place_String(std::string * pointer,

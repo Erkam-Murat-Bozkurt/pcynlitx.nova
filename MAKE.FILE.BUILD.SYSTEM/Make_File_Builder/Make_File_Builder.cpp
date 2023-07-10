@@ -32,6 +32,8 @@ Make_File_Builder::Make_File_Builder(char * DesPath, char opr_sis) :
    this->Memory_Delete_Condition = false;
 
    this->Des_Reader.Read_Descriptor_File();
+
+   this->opr_sis = opr_sis;
 }
 
 
@@ -108,15 +110,15 @@ Compiler_Data * Make_File_Builder::Find_Compiler_Data_From_Index(int index){
 
 
 
-void Make_File_Builder::Build_MakeFile(int git_index){
+void Make_File_Builder::Build_MakeFile(std::string file_name){
 
      this->Construct_Data_Map();
 
-     Compiler_Data * Data_Ptr = this->Find_Compiler_Data_From_Index(git_index);
+     this->Data_Ptr = this->Find_Compiler_Data_From_Source_File_Name(file_name);
 
-     this->Data_Collector.Receive_Compiler_Data_Pointer(Data_Ptr);
+     this->Data_Collector.Receive_Compiler_Data_Pointer(this->Data_Ptr);
 
-     std::string Source_File_Name = Data_Ptr->source_file_name;
+     std::string Source_File_Name = this->Data_Ptr->source_file_name;
 
      this->Data_Collector.Collect_Make_File_Data(Source_File_Name);
 
@@ -151,7 +153,7 @@ void Make_File_Builder::Build_MakeFile(int git_index){
      this->FileManager.WriteToFile("\n");
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("REPO_DIRECTORY=");
+     this->FileManager.WriteToFile("REPO_DIR=");
 
      std::string project_repo_dir = this->Data_Collector.Get_Repo_Dir();
 
@@ -160,13 +162,19 @@ void Make_File_Builder::Build_MakeFile(int git_index){
      this->FileManager.WriteToFile("\n");
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("SOURCE_LOCATION=$(REPO_DIRECTORY)");
-
-     std::string source_file_dir =
-
-     this->File_Lister->Get_Source_File_Git_Record_Directory(git_index);
+     this->FileManager.WriteToFile("SOURCE_LOCATION=$(REPO_DIR)");
 
 
+     //this->Write_Header_Paths_Shorts_Cuts();
+
+     std::string sys_path = this->Data_Ptr->source_file_path;
+
+
+
+     std::string source_file_dir;
+
+     this->Determine_Git_Record_Directory(source_file_dir,sys_path);
+     
 
      if(!source_file_dir.empty()){
 
@@ -280,4 +288,74 @@ void Make_File_Builder::Build_MakeFile(int git_index){
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.FileClose();
+}
+
+
+void Make_File_Builder::Write_Header_Paths_Shorts_Cuts(){
+
+     
+     std::vector<std::string> * header_directories = &this->Data_Ptr->dependent_headers_dir;
+
+     std::vector<std::string> * header_names = &this->Data_Ptr->dependent_headers;
+
+     size_t hdr_dir_size = header_directories->size();
+
+
+     for(size_t i=0;i<hdr_dir_size;i++){
+
+          std::string dir = header_directories->at(i);
+          std::string name = header_names->at(i);
+          
+          this->FileManager.WriteToFile(name);
+          this->FileManager.WriteToFile("_Path=");
+          this->FileManager.WriteToFile(dir);
+          this->FileManager.WriteToFile("\n\n");        ;
+     }   
+}
+
+void Make_File_Builder::Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path){
+
+     std::string root_dir = this->Des_Reader.Get_Repo_Directory_Location();
+
+     size_t path_size = sys_path.length();
+     size_t end_point = path_size;
+     size_t start_point = root_dir.length()+1;
+
+     for(size_t i=path_size;i>0;i--){
+
+         if(this->opr_sis == 'w'){
+
+            if(sys_path[i]== '\\'){
+
+               break;
+          
+            }
+            else{
+
+                  end_point--;
+            }
+         }
+
+
+         if(this->opr_sis == 'l'){
+
+            if(sys_path[i]== '/'){
+
+               break;
+            }
+            else{
+
+                  end_point--;
+            }
+         }
+     }
+
+
+     for(size_t i=start_point;i<end_point;i++){
+
+         git_dir.push_back(sys_path[i]);
+     }
+
+     git_dir.shrink_to_fit();
+
 }

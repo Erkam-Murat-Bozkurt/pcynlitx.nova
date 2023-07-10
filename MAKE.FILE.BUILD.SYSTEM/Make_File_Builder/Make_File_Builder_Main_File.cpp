@@ -32,6 +32,9 @@ int main(int argc, char ** argv){
     std::vector<Compiler_Data> * vec_ptr = Dep_Determiner.Get_Compiler_Data_Address();
 
 
+
+    std::string src_file_name = "DataBaseBuilder.cpp";
+
     Make_File_Builder File_Builder(argv[1],'w');
 
     if(file_num > 0){
@@ -40,7 +43,7 @@ int main(int argc, char ** argv){
 
        File_Builder.Receive_Compiler_Data_Pointer(vec_ptr);
 
-       File_Builder.Build_MakeFile(0);
+       File_Builder.Build_MakeFile(src_file_name);
     }
 
     std::cout << "\n The make file constructed";

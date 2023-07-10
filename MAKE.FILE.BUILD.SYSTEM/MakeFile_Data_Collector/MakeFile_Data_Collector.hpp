@@ -49,6 +49,7 @@ public:
  void Clear_Dynamic_Memory(); 
  void Clear_Object_Memory();
 private:
+ void Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path);
  void Clear_String_Memory(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer); 
  void Determine_Make_File_Name();

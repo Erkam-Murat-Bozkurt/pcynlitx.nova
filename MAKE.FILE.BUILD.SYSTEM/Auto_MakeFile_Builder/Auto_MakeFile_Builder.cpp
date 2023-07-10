@@ -4,14 +4,11 @@
 
 Auto_MakeFile_Builder::Auto_MakeFile_Builder(char * DesPath, char opr_sis) :
    
-   File_Lister(DesPath,opr_sis),  Mk_Builder(DesPath,opr_sis), 
-   Mk_File_Clnr(DesPath,opr_sis), Des_Reader(DesPath)
+   Mk_Builder(DesPath,opr_sis), Mk_File_Clnr(DesPath,opr_sis), Des_Reader(DesPath)
 {
      this->Memory_Delete_Condition = true;
 
-     this->opr_sis;
-
-     this->File_Lister.Determine_Git_Repo_Info();
+     this->opr_sis = opr_sis;
 
      this->Des_Reader.Read_Descriptor_File();
 
@@ -41,6 +38,20 @@ void Auto_MakeFile_Builder::Clear_Dynamic_Memory(){
 }
 
 
+void Auto_MakeFile_Builder::Receive_Project_Files_Lister(Project_Files_Lister * ptr){
+
+     this->File_Lister = ptr;
+
+     this->Mk_Builder.Receive_File_Lister_Pointer(ptr);
+}
+
+void Auto_MakeFile_Builder::Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dep_ptr){
+
+     this->Dep_Determiner = dep_ptr;
+
+     this->Mk_Builder.Receive_Compiler_Data_Pointer(dep_ptr->Get_Compiler_Data_Address());
+}
+
 void Auto_MakeFile_Builder::Build_Make_Files(){
 
      // Determination of the directories recorded on the git repo
@@ -48,28 +59,50 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
      this->Mk_File_Clnr.Clear_Make_Files_Exist_On_Repo();
 
      std::cout << "\n\e[1;32mThe current make files on the project have been cleaned..\e[0m\n";
-     sleep(0.5);
+     //sleep(0.5);
 
      this->Determine_Project_Directories();
 
+     std::cout << "\n The project directories determined ..";
 
-     int src_num = this->File_Lister.Get_Source_File_Number();
+     std::cin.get();
 
 
+     int src_num = this->File_Lister->Get_Source_File_Number();
+
+     std::cout << "\n src_num:" << src_num;
+     std::cin.get();
 
      for(int i=0;i<src_num;i++){
 
-         std::string source_file_name = this->File_Lister.Get_Source_File_Name(i);
+         std::string source_file_name = this->File_Lister->Get_Source_File_Name(i);
 
+         std::cout << "\n source_file_name:" << source_file_name;
+         std::cin.get();
+         
          if(!source_file_name.empty()){
 
-            this->Mk_Builder.Build_MakeFile(i);
+             std::string file_path = this->File_Lister->Get_Source_File_System_Path(i);
 
-            std::cout << "\n\e[0;37m[\e[1;32m+\e[0m] Target make file: [\e[0;33m " << source_file_name << ".make \e[0m]";
-            std::cout << "\n\n    The construction complated.";
-            std::cout << "\n\n";
+             std::cout << "\n file_path:" << file_path;
+             std::cin.get();
+            
+             bool is_source_file = this->Src_Processor.Is_Source_File(file_path);
+             
+             std::cout << "\n is_source_file:" << is_source_file;
+             std::cin.get();
+            
 
-            sleep(0.5);
+             if(is_source_file){
+
+                this->Mk_Builder.Build_MakeFile(i);
+
+                std::cout << "\n\e[0;37m[\e[1;32m+\e[0m] Target make file: [\e[0;33m " << source_file_name << ".make \e[0m]";
+                std::cout << "\n\n    The construction complated.";
+                std::cout << "\n\n";
+
+                //sleep(0.5);
+             }
          }
      }
 
@@ -78,7 +111,7 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
      std::cout << "\n\e[1;32mThe new makefiles have been constructed..\e[0m";
      std::cout << "\n";
 
-     sleep(0.5);
+     //sleep(0.5);
 }
 
 void Auto_MakeFile_Builder::Determine_Project_Directories(){
@@ -92,6 +125,12 @@ void Auto_MakeFile_Builder::Determine_Project_Directories(){
      this->Construct_Path(&(this->repo_head_dir),Headers_Folder,this->Warehouse_Path);
 
      this->Construct_Path(&(this->repo_obj_dir),Objects_Folder,this->Warehouse_Path);
+
+     std::cout << "\n this->repo_head_dir:" << this->repo_head_dir;
+
+     std::cout << "\n this->repo_obj_dir:" << this->repo_obj_dir;
+
+     std::cin.get();
 }
 
 void Auto_MakeFile_Builder::Construct_Path(std::string * pointer, std::string string, 

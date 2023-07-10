@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstring>
 #include "Auto_MakeFile_Builder.h"
+
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 
@@ -18,7 +19,22 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
+
+    Project_Files_Lister File_Lister(argv[1],'w');
+
+    File_Lister.Determine_Git_Repo_Info();
+
+
+    Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
+
+    Dep_Determiner.Collect_Dependency_Information();
+
+
     Auto_MakeFile_Builder Make_Builder(argv[1],'w');
+
+    Make_Builder.Receive_Project_Files_Lister(&File_Lister);
+
+    Make_Builder.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
 
     Make_Builder.Build_Make_Files();
 

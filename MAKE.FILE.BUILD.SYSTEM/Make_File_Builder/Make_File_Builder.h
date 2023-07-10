@@ -31,7 +31,7 @@ class Make_File_Builder
 public:
  Make_File_Builder(char * DesPath, char opr_sis);
  virtual ~Make_File_Builder();
- void Build_MakeFile(int index);
+ void Build_MakeFile(std::string file_name);
  void Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr);
  void Receive_File_Lister_Pointer(Project_Files_Lister * ptr);
  void Construct_Data_Map();
@@ -39,6 +39,8 @@ public:
 private:
  Compiler_Data * Find_Compiler_Data_From_Index(int index);
  Compiler_Data * Find_Compiler_Data_From_Source_File_Name(std::string name);
+ void Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path);
+ void Write_Header_Paths_Shorts_Cuts();
  MakeFile_Data_Collector Data_Collector;
  Header_File_Determiner Header_Determiner;
  Project_Files_Lister * File_Lister;
@@ -48,6 +50,7 @@ private:
  IntToCharTranslater Translater;
  std::unordered_map<std::string, Compiler_Data> DataMap;
  std::vector<Compiler_Data> * Comp_Data_Ptr;
+ Compiler_Data * Data_Ptr;
  char opr_sis;
  bool Include_Line_Condition;
  bool Memory_Delete_Condition;
