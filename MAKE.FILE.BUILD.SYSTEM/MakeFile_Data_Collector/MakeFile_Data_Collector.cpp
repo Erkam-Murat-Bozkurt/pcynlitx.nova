@@ -308,6 +308,8 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
         this->Place_String(&this->Compiler_System_Command,options);
 
+        this->Place_String(&this->Compiler_System_Command,Space_Character);
+
         this->Place_String(&this->Compiler_System_Command,go_to_new_line);
      }
      
