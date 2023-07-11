@@ -20,19 +20,15 @@ int main(int argc, char ** argv){
     }
 
 
-    Project_Files_Lister File_Lister(argv[1],'w');
-
-    File_Lister.Determine_Git_Repo_Info();
-
-
     Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
 
     Dep_Determiner.Collect_Dependency_Information();
 
 
-    Auto_MakeFile_Builder Make_Builder(argv[1],'w');
+    std::cout << "\n\e[1;32mDependency information have been determined..\e[0m\n";
 
-    Make_Builder.Receive_Project_Files_Lister(&File_Lister);
+
+    Auto_MakeFile_Builder Make_Builder(argv[1],'w');
 
     Make_Builder.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
 

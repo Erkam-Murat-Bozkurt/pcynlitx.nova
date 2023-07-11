@@ -39,12 +39,20 @@ Make_File_Builder::Make_File_Builder(char * DesPath, char opr_sis) :
 
 Make_File_Builder::~Make_File_Builder(){
 
-   if(!this->Memory_Delete_Condition){
-
-       this->Clear_Dynamic_Memory();
-   }
+    this->Clear_Object_Memory();
 }
 
+
+void Make_File_Builder::Clear_Object_Memory(){
+
+     this->Data_Collector.Clear_Object_Memory();
+
+     this->Des_Reader.Clear_Dynamic_Memory();
+
+     this->DataMap.clear();
+
+     this->Clear_Dynamic_Memory();
+}
 
 void Make_File_Builder::Clear_Dynamic_Memory(){
 
@@ -52,8 +60,8 @@ void Make_File_Builder::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         this->Data_Collector.Clear_Object_Memory();
-         this->Des_Reader.Clear_Dynamic_Memory();
+         this->Data_Collector.Clear_Dynamic_Memory();
+
          this->DirectoryManager.Clear_Dynamic_Memory();
      }
 }
@@ -63,16 +71,8 @@ void Make_File_Builder::Receive_Compiler_Data_Pointer(std::vector<Compiler_Data>
 {
      this->Comp_Data_Ptr = ptr;
 
+     this->Construct_Data_Map();
 }
-
-
-void Make_File_Builder::Receive_File_Lister_Pointer(Project_Files_Lister * ptr){
-
-     this->File_Lister = ptr;
-
-     this->Data_Collector.Receive_File_Lister_Pointer(ptr);
-}
-
 
 void Make_File_Builder::Construct_Data_Map(){
 
@@ -101,18 +101,10 @@ Compiler_Data * Make_File_Builder::Find_Compiler_Data_From_Source_File_Name(std:
     }     
 }
 
-Compiler_Data * Make_File_Builder::Find_Compiler_Data_From_Index(int index){
-
-     std::string header_name = this->File_Lister->Get_Source_File_Name_With_Ext(index);
-
-     return this->Find_Compiler_Data_From_Source_File_Name(header_name);
-}
-
-
 
 void Make_File_Builder::Build_MakeFile(std::string file_name){
 
-     this->Construct_Data_Map();
+     this->Data_Collector.Clear_Dynamic_Memory();
 
      this->Data_Ptr = this->Find_Compiler_Data_From_Source_File_Name(file_name);
 
@@ -122,15 +114,15 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
 
      this->Data_Collector.Collect_Make_File_Data(Source_File_Name);
 
-     std::string Header_File_Directory = this->Data_Collector.Get_System_Header_File_Dir();
+     std::string Source_File_Directory = this->Data_Collector.Get_Source_File_System_Directory();
 
-     this->DirectoryManager.ChangeDirectory(Header_File_Directory);
+     this->DirectoryManager.ChangeDirectory(Source_File_Directory);
 
      std::string Make_File_Name = this->Data_Collector.Get_Make_File_Name();
 
      this->FileManager.SetFilePath(Make_File_Name);
 
-     this->FileManager.FileOpen(RWCf);
+     this->FileManager.FileOpen(RWCf);     
 
      this->FileManager.WriteToFile("\n");
 
@@ -165,8 +157,6 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
      this->FileManager.WriteToFile("SOURCE_LOCATION=$(REPO_DIR)");
 
 
-     //this->Write_Header_Paths_Shorts_Cuts();
-
      std::string sys_path = this->Data_Ptr->source_file_path;
 
 
@@ -175,7 +165,6 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
 
      this->Determine_Git_Record_Directory(source_file_dir,sys_path);
      
-
      if(!source_file_dir.empty()){
 
         this->FileManager.WriteToFile("\\");
@@ -211,7 +200,6 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
      }
 
      char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
-
 
 
      char PathSpecifier [] = {'v','p','a','t','h',' ','%','\0'};
@@ -275,7 +263,6 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
      std::string Dependency_Code_Line    = this->Data_Collector.Get_Dependency_Code_Line();
 
      std::string Compiler_System_Command = this->Data_Collector.Get_Compiler_System_Command();
-
 
      this->FileManager.WriteToFile(Dependency_Code_Line);
 

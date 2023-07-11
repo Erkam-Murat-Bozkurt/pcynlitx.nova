@@ -37,8 +37,6 @@ int main(int argc, char ** argv){
 
     Data_Collector.Receive_Compiler_Data_Pointer(&ptr);
 
-    Data_Collector.Receive_File_Lister_Pointer(&File_Lister);
-
     std::cout << "\n The initialization data collected..";
 
     std::cout << "\n src_file_num:" << src_file_num;

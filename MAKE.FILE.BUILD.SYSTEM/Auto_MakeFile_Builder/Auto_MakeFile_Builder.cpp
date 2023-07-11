@@ -17,6 +17,7 @@ Auto_MakeFile_Builder::Auto_MakeFile_Builder(char * DesPath, char opr_sis) :
      this->Repo_Dir = this->Des_Reader.Get_Repo_Directory_Location();
 }
 
+
 Auto_MakeFile_Builder::~Auto_MakeFile_Builder(){
 
    if(!this->Memory_Delete_Condition){
@@ -24,6 +25,7 @@ Auto_MakeFile_Builder::~Auto_MakeFile_Builder(){
        this->Clear_Dynamic_Memory();
    }
 }
+
 
 void Auto_MakeFile_Builder::Clear_Dynamic_Memory(){
 
@@ -38,14 +40,9 @@ void Auto_MakeFile_Builder::Clear_Dynamic_Memory(){
 }
 
 
-void Auto_MakeFile_Builder::Receive_Project_Files_Lister(Project_Files_Lister * ptr){
+void Auto_MakeFile_Builder::Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner 
 
-     this->File_Lister = ptr;
-
-     this->Mk_Builder.Receive_File_Lister_Pointer(ptr);
-}
-
-void Auto_MakeFile_Builder::Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dep_ptr){
+     * dep_ptr){
 
      this->Dep_Determiner = dep_ptr;
 
@@ -63,15 +60,30 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
 
      this->Determine_Project_Directories();
 
-     std::cout << "\n The project directories determined ..";
+     std::vector<Compiler_Data> * Com_Data = this->Dep_Determiner->Get_Compiler_Data_Address();
 
-     std::cin.get();
+     Com_Data->shrink_to_fit();
+
+     size_t data_size = Com_Data->size();
+    
+     
+     for(size_t i=0;i<data_size;i++){
+
+         std::string source_file_name = Com_Data->at(i).source_file_name;
 
 
-     int src_num = this->File_Lister->Get_Source_File_Number();
+         this->Mk_Builder.Build_MakeFile(source_file_name);
 
-     std::cout << "\n src_num:" << src_num;
-     std::cin.get();
+         std::cout << "\n\e[0;37m[\e[1;32m+\e[0m] Target make file: [\e[0;33m " << source_file_name << ".make \e[0m]";
+         std::cout << "\n\n    The construction complated.";
+         std::cout << "\n\n";
+
+         this->Mk_Builder.Clear_Dynamic_Memory();
+     }
+
+
+     /*
+
 
      for(int i=0;i<src_num;i++){
 
@@ -106,6 +118,8 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
          }
      }
 
+     */
+
      std::cout << "\n";
 
      std::cout << "\n\e[1;32mThe new makefiles have been constructed..\e[0m";
@@ -125,12 +139,6 @@ void Auto_MakeFile_Builder::Determine_Project_Directories(){
      this->Construct_Path(&(this->repo_head_dir),Headers_Folder,this->Warehouse_Path);
 
      this->Construct_Path(&(this->repo_obj_dir),Objects_Folder,this->Warehouse_Path);
-
-     std::cout << "\n this->repo_head_dir:" << this->repo_head_dir;
-
-     std::cout << "\n this->repo_obj_dir:" << this->repo_obj_dir;
-
-     std::cin.get();
 }
 
 void Auto_MakeFile_Builder::Construct_Path(std::string * pointer, std::string string, 

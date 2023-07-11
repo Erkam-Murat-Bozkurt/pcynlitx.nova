@@ -33,9 +33,9 @@ public:
  virtual ~Make_File_Builder();
  void Build_MakeFile(std::string file_name);
  void Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr);
- void Receive_File_Lister_Pointer(Project_Files_Lister * ptr);
  void Construct_Data_Map();
  void Clear_Dynamic_Memory();
+ void Clear_Object_Memory();
 private:
  Compiler_Data * Find_Compiler_Data_From_Index(int index);
  Compiler_Data * Find_Compiler_Data_From_Source_File_Name(std::string name);

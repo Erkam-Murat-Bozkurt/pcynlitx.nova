@@ -31,9 +31,9 @@ public:
  virtual ~MakeFile_Data_Collector();
  void Collect_Make_File_Data(std::string fileName);
  void Receive_Git_Record_Data(std::string file_name);
- void Receive_Compiler_Data_Pointer(Compiler_Data * ptr);
- void Receive_File_Lister_Pointer(Project_Files_Lister * ptr);
+ void Receive_Compiler_Data_Pointer(Compiler_Data * ptr); 
  std::string Get_Source_File_Name();
+ std::string Get_Source_File_System_Directory();
  std::string Get_Make_File_Name();
  std::string Get_Compiler_System_Command();
  std::string Get_Dependency_Code_Line();
@@ -44,12 +44,12 @@ public:
  std::string Get_Warehouse_Header_Dir();
  std::string Get_Warehouse_Object_Dir();
  std::string Get_Warehouse_Path();
- std::vector<std::string> Get_Included_Header_Files();
- int  Get_Included_Header_Files_Number();
  void Clear_Dynamic_Memory(); 
  void Clear_Object_Memory();
 private:
  void Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path);
+ void Determine_Source_File_Directory(std::string & git_path, std::string sys_path);
+ void Determine_File_Name_Without_Ext(std::string & file_name, std::string file_name_wit_ext);
  void Clear_String_Memory(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer); 
  void Determine_Make_File_Name();
@@ -63,7 +63,6 @@ private:
  DirectoryOperations DirectoryManager;
  IntToCharTranslater Translater;
  Descriptor_File_Reader Des_Reader;
- Project_Files_Lister * File_Lister;
  Compiler_Data * Compiler_Data_Ptr;
  std::string repo_dir;
  std::string warehouse_head_dir;
@@ -82,9 +81,6 @@ private:
 
  std::string Object_File_Name;
  std::string Compiler_System_Command;
- std::vector<std::string> Included_Header_Files;
- std::vector<std::string> Included_Header_Directories;
- int  Included_Header_Files_Number;
  int  Git_Record_Index;
  char opr_sis;
  bool Include_Line_Condition;
