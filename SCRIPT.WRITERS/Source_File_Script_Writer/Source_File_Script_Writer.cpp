@@ -202,12 +202,17 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->FileManager.WriteToFile(this->Src_Data_Pointer->make_file_name);
 
+
+     
+
      this->FileManager.WriteToFile(" > ");
 
      this->FileManager.WriteToFile(this->compiler_output_location);
 
      this->FileManager.WriteToFile("\n");
 
+
+     /*
 
       this->FileManager.WriteToFile("\n");
 
@@ -265,11 +270,15 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
       this->FileManager.WriteToFile("   }");
 
-      this->FileManager.WriteToFile("\n");
+      */
 
       this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile("   Move-Item -Path ");
+      this->FileManager.WriteToFile("\n");
+
+      /*
+
+      this->FileManager.WriteToFile("Move-Item -Path ");
 
 
       this->FileManager.WriteToFile("$Repo_Root_Dir");
@@ -287,11 +296,19 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
       this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile("}");
+      //this->FileManager.WriteToFile("}");
+
+   */
 
       this->FileManager.WriteToFile("\n");
 
       this->FileManager.WriteToFile("\n");
+
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("\n");
+
 
       this->FileManager.WriteToFile("Write-Output \"  # ");
 

@@ -460,6 +460,11 @@ void MakeFile_Data_Collector::Determine_Dependency_Code_Line(){
 
      std::string go_to_new_line = "\\\n\t";
 
+
+     std::string objects_location = "$(PROJECT_OBJECTS_LOCATION)\\";
+
+     this->Place_String(&this->Dependency_Code_Line,objects_location);
+
      this->Place_String(&this->Dependency_Code_Line,this->Object_File_Name);
 
      this->Place_String(&this->Dependency_Code_Line,double_quotes);
