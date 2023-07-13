@@ -241,12 +241,16 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
      
          this->FileManager.WriteToFile(object_list->at(i));
 
+         this->FileManager.WriteToFile(" \\");
+
          this->FileManager.WriteToFile("\n\t");     
      }
 
      for(size_t i=0;i<header_list_size;i++){
      
          this->FileManager.WriteToFile(header_list->at(i));
+
+         this->FileManager.WriteToFile(" \\");
 
          this->FileManager.WriteToFile("\n\t");     
      }
