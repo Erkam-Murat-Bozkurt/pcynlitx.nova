@@ -32,6 +32,8 @@ protected:
  void Write_The_Project_Script();
  void Determine_Project_Script_Path(std::string paths);
  void Construct_Path(std::string & path, std::string str, std::string wp);
+  void Construct_Path(std::string & pointer,
+      std::string string, char opr_sis);
  Git_File_List_Receiver Git_Receiver;
  Descriptor_File_Reader Des_Reader;
  Script_Data_Processor Src_Data_Processor;

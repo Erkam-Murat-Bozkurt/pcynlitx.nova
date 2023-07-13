@@ -131,13 +131,31 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
 
-         this->FileManager.WriteToFile("\n\n");
+         this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("PowerShell .\\");
+         this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).src_name_without_ext);
 
-         this->FileManager.WriteToFile(".ps1");
+         this->FileManager.WriteToFile("mingw32-make -f ");
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).make_file_name);
+
+     
+         std::string compiler_output_location;
+
+         std::string compiler_output_location_add = "Compiler_Output.txt";
+
+
+         this->Construct_Path(compiler_output_location,compiler_output_location_add,this->opr_sis);
+
+
+
+         this->FileManager.WriteToFile(" > ");
+
+         this->FileManager.WriteToFile(compiler_output_location);
+
+         this->FileManager.WriteToFile("\n");
+
 
          this->FileManager.WriteToFile("\n\n");
 
@@ -149,6 +167,30 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("\n\n");
 
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+
+         this->FileManager.WriteToFile("Write-Output \"  # ");
+
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_name);
+
+
+         this->FileManager.WriteToFile(" class has been compiled\"");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("Write-Output \"\"");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
      }
 
      this->FileManager.WriteToFile("\n");
@@ -214,4 +256,70 @@ void Project_Script_Writer::Construct_Path(std::string & path,
 
         path.push_back(string[i]);        
      }     
+}
+
+
+
+
+void Project_Script_Writer::Construct_Path(std::string & path,
+
+     std::string string, char opr_sis){
+
+     std::string warehouse_path = this->Des_Reader.Get_Warehouse_Location();
+
+
+     std::string warehouse_word = "WAREHOUSE";
+
+     size_t warehouse_path_size = warehouse_path.length();
+
+     for(size_t i=0;i<warehouse_path_size;i++){
+
+         path.push_back(warehouse_path[i]);         
+     }
+
+     if(opr_sis == 'w'){
+
+       if(warehouse_path.back() != '\\'){
+
+          path.push_back('\\');
+       }
+     }
+
+
+     if(opr_sis == 'l'){
+
+       if(warehouse_path.back() != '/'){
+
+          path.push_back('/');          
+       }
+     }
+
+     size_t warehouse_word_size = warehouse_word.length();
+
+     for(size_t i=0;i<warehouse_word_size;i++){
+
+         path.push_back(warehouse_word[i]);         
+     }
+
+
+     if(opr_sis == 'w'){
+
+        path.push_back('\\');        
+     }
+
+
+     if(opr_sis == 'l'){
+
+        path.push_back('/');        
+     }
+
+
+     size_t string_size = string.length();
+
+     for(size_t i=0;i<string_size;i++){
+
+        path.push_back(string[i]);        
+     }
+
+     path.shrink_to_fit();
 }

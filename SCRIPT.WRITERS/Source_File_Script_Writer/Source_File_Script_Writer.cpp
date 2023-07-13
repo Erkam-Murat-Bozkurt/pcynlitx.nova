@@ -122,11 +122,6 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->FileManager.WriteToFile("$Source_File_Location=\"");
 
-     /*
-     std::cout << "\n Inside Source_File_Script_Writer::Write_Source_File_Script..";
-     std::cout << "\n Src_Data_Pointer->source_file_git_record_dir:" << Src_Data_Pointer->source_file_git_record_dir;
-     std::cin.get();
-     */
     
      this->FileManager.WriteToFile(Src_Data_Pointer->source_file_git_record_dir);
 
@@ -167,12 +162,6 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile("Write-Output \"");
 
 
-     /*
-     
-     std::cout << "\n this->Src_Data_Pointer->source_file_name:" << this->Src_Data_Pointer->source_file_name;
-     std::cin.get();
-     */
-
 
      this->FileManager.WriteToFile(this->Src_Data_Pointer->source_file_name);
 
@@ -195,11 +184,6 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile("mingw32-make -f ");
 
 
-     /*
-     std::cout << "\n this->Src_Data_Pointer->make_file_name:" << this->Src_Data_Pointer->make_file_name;
-     std::cin.get();
-     */
-
      this->FileManager.WriteToFile(this->Src_Data_Pointer->make_file_name);
 
 
@@ -211,126 +195,42 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->FileManager.WriteToFile("\n");
 
+     this->FileManager.WriteToFile("\n");
 
-     /*
+     this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
+     this->FileManager.WriteToFile("\n");
 
+     this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile("$Repo_Root_Dir");
 
-      this->FileManager.WriteToFile("\\");
+     this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile("$Source_File_Location");
+     this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile("\\");
 
-      this->FileManager.WriteToFile(this->Src_Data_Pointer->object_file_name);
+     this->FileManager.WriteToFile("Write-Output \"  # ");
 
 
-      this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile(this->Src_Data_Pointer->source_file_name);
 
-      this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile("if ($Condition){");
+     this->FileManager.WriteToFile(" class has been compiled\"");
 
-      this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile("   $Exists_On_Obj_Dir = Test-Path -Path ");
+     this->FileManager.WriteToFile("Write-Output \"\"");
 
-      this->FileManager.WriteToFile("$Project_Objects");
+     this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile("\\");
+     this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile(this->Src_Data_Pointer->object_file_name);
+     this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile("\n");
-
-      this->FileManager.WriteToFile("\n");
-
-      this->FileManager.WriteToFile("   if($Exists_On_Obj_Dir){");
-
-      this->FileManager.WriteToFile("\n");
-
-      this->FileManager.WriteToFile("\n");
-
-      this->FileManager.WriteToFile("      rm ");
-
-      this->FileManager.WriteToFile("$Project_Objects");
-
-      this->FileManager.WriteToFile("\\");
-
-      this->FileManager.WriteToFile(this->Src_Data_Pointer->object_file_name);
-
-      this->FileManager.WriteToFile("\n");
-
-      this->FileManager.WriteToFile("   }");
-
-      */
-
-      this->FileManager.WriteToFile("\n");
-
-      this->FileManager.WriteToFile("\n");
-
-      /*
-
-      this->FileManager.WriteToFile("Move-Item -Path ");
-
-
-      this->FileManager.WriteToFile("$Repo_Root_Dir");
-
-      this->FileManager.WriteToFile("\\");
-
-      this->FileManager.WriteToFile("$Source_File_Location");
-
-      this->FileManager.WriteToFile("\\");
-
-      this->FileManager.WriteToFile(this->Src_Data_Pointer->object_file_name);
-
-
-      this->FileManager.WriteToFile(" -Destination $Project_Objects");
-
-      this->FileManager.WriteToFile("\n");
-
-      //this->FileManager.WriteToFile("}");
-
-   */
-
-      this->FileManager.WriteToFile("\n");
-
-      this->FileManager.WriteToFile("\n");
-
-
-      this->FileManager.WriteToFile("\n");
-
-      this->FileManager.WriteToFile("\n");
-
-
-      this->FileManager.WriteToFile("Write-Output \"  # ");
-
-
-      this->FileManager.WriteToFile(this->Src_Data_Pointer->source_file_name);
-
-
-      this->FileManager.WriteToFile(" class has been compiled\"");
-
-      this->FileManager.WriteToFile("\n");
-
-      this->FileManager.WriteToFile("\n");
-
-      this->FileManager.WriteToFile("Write-Output \"\"");
-
-      this->FileManager.WriteToFile("\n");
-
-      this->FileManager.WriteToFile("\n");
-
-      this->FileManager.WriteToFile("\n");
-
-      this->FileManager.FileClose();
+     this->FileManager.FileClose();
 }
 
 
