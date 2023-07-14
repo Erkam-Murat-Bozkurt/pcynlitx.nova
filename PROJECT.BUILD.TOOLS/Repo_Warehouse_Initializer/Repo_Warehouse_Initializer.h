@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <windows.h>
 #include "Git_File_List_Receiver.hpp"
+#include "Git_File_List_Writer.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 #include "Header_File_Determiner.h"
@@ -27,7 +28,6 @@ public:
  void Update_Warehaouse_Headers();
  void Clear_Dynamic_Memory();
 protected:
- void Determine_File_Name_With_Ext(char ** file_name, char * path);
  void Determine_Warehouse_Path();
  void Determine_Header_Files_Directory();
  void Determine_Object_Files_Directory();
@@ -39,13 +39,11 @@ protected:
  void Construct_Library_Files_Directory();
  void Determine_Header_File_Paths();
  void Copy_Independent_Header_Files_To_Project_Headers_Location();
- void Determine_Header_Paths(char * path, int src_num, int hdr_num);
- void Find_Independent_Header_Path(char * path, int path_num);
  void Determine_Independent_Header_Paths();
  void Copy_Header_Files_To_Project_Headers_Location();
- void Determine_Header_System_Path(std::string * sys_path,std::string path);
  void Clear_String_Memory(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
+ Git_File_List_Writer   Git_List_Writer;
  Header_File_Determiner Header_Determiner;
  Git_File_List_Receiver Git_Receiver;
  DirectoryOperations DirectoryManager;

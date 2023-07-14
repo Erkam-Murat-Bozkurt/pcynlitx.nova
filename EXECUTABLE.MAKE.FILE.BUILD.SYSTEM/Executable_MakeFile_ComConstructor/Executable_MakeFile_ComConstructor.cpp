@@ -44,6 +44,10 @@ void Executable_MakeFile_ComConstructor::Clear_Dynamic_Memory(){
 
         this->Clear_Vector_Memory(&this->header_file_list);
 
+        this->Clear_Vector_Memory(&this->header_file_dirs);
+
+        this->Clear_Vector_Memory(&this->header_file_paths);
+
         this->Clear_Vector_Memory(&this->object_file_list);
 
         this->Clear_String_Memory(&this->git_src_dir);

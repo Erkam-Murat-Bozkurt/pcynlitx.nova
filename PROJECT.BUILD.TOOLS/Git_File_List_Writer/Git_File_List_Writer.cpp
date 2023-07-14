@@ -29,6 +29,8 @@ Git_File_List_Writer::Git_File_List_Writer(char * DesPath) :
     }
 
     this->Des_Reader.Clear_Dynamic_Memory();
+
+    this->Write_Git_Repo_List_File();
 }
 
 
