@@ -21,7 +21,6 @@ int main(int argc, char ** argv){
 
     Build_Tools_Initializer Initializer(argv[1],'w');
 
-
     Initializer.Setup_Build_Tools();
 
     std::cout << "\n";

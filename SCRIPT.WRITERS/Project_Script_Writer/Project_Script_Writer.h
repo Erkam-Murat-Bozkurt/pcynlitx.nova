@@ -25,6 +25,7 @@ class Project_Script_Writer
 public:
  Project_Script_Writer(char * DesPATH, char opr_sis);
  virtual ~Project_Script_Writer();
+ void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * ptr);
  void Build_Compiler_Script();
  void Clear_Dynamic_Memory();
 protected:
@@ -32,7 +33,7 @@ protected:
  void Write_The_Project_Script();
  void Determine_Project_Script_Path(std::string paths);
  void Construct_Path(std::string & path, std::string str, std::string wp);
-  void Construct_Path(std::string & pointer,
+ void Construct_Path(std::string & pointer,
       std::string string, char opr_sis);
  Git_File_List_Receiver Git_Receiver;
  Descriptor_File_Reader Des_Reader;

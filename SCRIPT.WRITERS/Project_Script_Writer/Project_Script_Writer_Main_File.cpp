@@ -19,6 +19,12 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
+
+    Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
+
+    Dep_Determiner.Collect_Dependency_Information();
+
+
     Project_Script_Writer Script_Writer(argv[1],'w');
 
     Script_Writer.Build_Compiler_Script();

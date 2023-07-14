@@ -54,9 +54,8 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
      // Determination of the directories recorded on the git repo
 
      this->Mk_File_Clnr.Clear_Make_Files_Exist_On_Repo();
-
+    
      std::cout << "\n\e[1;32mThe current make files on the project have been cleaned..\e[0m\n";
-     //sleep(0.5);
 
      this->Determine_Project_Directories();
 
@@ -82,50 +81,11 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
      }
 
 
-     /*
-
-
-     for(int i=0;i<src_num;i++){
-
-         std::string source_file_name = this->File_Lister->Get_Source_File_Name(i);
-
-         std::cout << "\n source_file_name:" << source_file_name;
-         std::cin.get();
-         
-         if(!source_file_name.empty()){
-
-             std::string file_path = this->File_Lister->Get_Source_File_System_Path(i);
-
-             std::cout << "\n file_path:" << file_path;
-             std::cin.get();
-            
-             bool is_source_file = this->Src_Processor.Is_Source_File(file_path);
-             
-             std::cout << "\n is_source_file:" << is_source_file;
-             std::cin.get();
-            
-
-             if(is_source_file){
-
-                this->Mk_Builder.Build_MakeFile(i);
-
-                std::cout << "\n\e[0;37m[\e[1;32m+\e[0m] Target make file: [\e[0;33m " << source_file_name << ".make \e[0m]";
-                std::cout << "\n\n    The construction complated.";
-                std::cout << "\n\n";
-
-                //sleep(0.5);
-             }
-         }
-     }
-
-     */
-
      std::cout << "\n";
 
      std::cout << "\n\e[1;32mThe new makefiles have been constructed..\e[0m";
      std::cout << "\n";
 
-     //sleep(0.5);
 }
 
 void Auto_MakeFile_Builder::Determine_Project_Directories(){

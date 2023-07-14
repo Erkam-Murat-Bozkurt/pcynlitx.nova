@@ -27,6 +27,7 @@ class Script_Data_Processor
 public:
  Script_Data_Processor(char * DesPATH, char opr_sis);
  virtual ~Script_Data_Processor();
+ void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * ptr);
  void Process_Script_Data();
  void Receive_Git_File_List_Info(Git_File_List_Receiver * ptr);
  Script_Data Get_SrcFile_Script_Data(char * file_git_path);
@@ -42,7 +43,7 @@ protected:
  void Clear_String_Vector(std::vector<std::string> * ptr);
  void Clear_Script_Data(Script_Data * ptr);
  Script_Data_Collector Data_Collector;
- Source_File_Dependency_Determiner Dep_Determiner;
+ Source_File_Dependency_Determiner * Dep_Determiner;
  Descriptor_File_Reader Des_Reader;
  Cpp_FileOperations FileManager;
  CharOperator CString_Proccessor;

@@ -104,6 +104,11 @@ void Project_Src_Code_Rdr::Read_Project_Source_Code_Files(){
             int str  = i*division;
 
             int end  = (i+1)*division;
+
+            if(i==7){
+
+                end = repo_size;
+            }
                  
             this->threads[i] = std::thread(Project_Src_Code_Rdr::Read_Source_Code,this,i,str,end);     
         }
@@ -171,7 +176,6 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
 
             this->CodeBase.insert(std::make_pair(file_sys_path,this->Src_Code_Dt.back()));
             
-
             this->CodeBase_Name.insert(std::make_pair(Temp.file_name,this->Src_Code_Dt.back()));
 
             this->Clear_Vector_Memory(&Temp.FileContent);
@@ -308,6 +312,10 @@ FileData * Project_Src_Code_Rdr::Find_File_Data_From_Path(std::string path)
         
          std::cerr << "\n Out of Range error: " << oor.what() << '\n';
 
+         std::cout << "\n Inside Project_Src_Code_Rdr instance,";
+
+         std::cout << "\n Inside Find_File_Data_From_Path,";
+
          std::cout << "\n the file located on " << path << " can not find!.\n";
 
          exit(EXIT_FAILURE);
@@ -324,6 +332,11 @@ FileData * Project_Src_Code_Rdr::Find_File_Data_From_Name(std::string name){
     catch (const std::out_of_range & oor) {
         
          std::cerr << "\n Out of Range error: " << oor.what() << '\n';
+
+         std::cout << "\n Inside Project_Src_Code_Rdr instance,";
+
+         std::cout << "\n Inside Find_File_Data_From_Name,";
+
 
          std::cout << "\n the file located on " << name << " can not find!.\n";
 

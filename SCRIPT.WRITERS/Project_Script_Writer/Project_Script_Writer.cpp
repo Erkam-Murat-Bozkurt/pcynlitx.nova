@@ -6,6 +6,7 @@ Project_Script_Writer::Project_Script_Writer(char * DesPATH, char opr_sis) :
 
     Src_Data_Processor(DesPATH,opr_sis), Git_Receiver(DesPATH,opr_sis), Des_Reader(DesPATH)
 {
+
      this->Memory_Delete_Condition = true;
 
      this->source_file_num = 0;
@@ -31,6 +32,12 @@ Project_Script_Writer::~Project_Script_Writer(){
        this->Clear_Dynamic_Memory();
    }
 }
+
+void Project_Script_Writer::Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * ptr){
+
+     this->Src_Data_Processor.Receive_Source_File_Dependency_Determiner(ptr);
+}
+
 
 void Project_Script_Writer::Build_Compiler_Script(){
 

@@ -66,6 +66,8 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(){
 
 void Repo_Warehouse_Initializer::Update_Warehaouse_Headers(){
 
+     this->Git_List_Writer.Write_Git_Repo_List_File();
+
      this->warehouse_location = this->Des_Reader.Get_Warehouse_Location();
 
      this->Determine_Current_Directory();

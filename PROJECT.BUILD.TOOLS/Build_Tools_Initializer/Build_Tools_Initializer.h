@@ -16,6 +16,7 @@
 #include "Repo_Warehouse_Initializer.h"
 #include "Auto_MakeFile_Builder.h"
 #include "Project_Script_Writer.h"
+#include "Source_File_Dependency_Determiner.hpp"
 #include "Descriptor_File_Reader.hpp"
 
 class Build_Tools_Initializer
@@ -27,6 +28,7 @@ public:
 protected:
  void Clear_Dynamic_Memory();
  Repo_Warehouse_Initializer Rep_Init;
+ Source_File_Dependency_Determiner Dep_Determiner;
  Auto_MakeFile_Builder Mk_Builder;
  Project_Script_Writer Script_Writer;
  bool Memory_Delete_Condition;
