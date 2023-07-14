@@ -27,7 +27,7 @@ Executable_MakeFile_Builder::Executable_MakeFile_Builder(char * des_path, char o
 
 Des_Reader(des_path), Dep_Determiner(des_path,opr_sis),
 
-ComConstructor(des_path,opr_sis), Initializer(des_path,opr_sis)
+ComConstructor(des_path,opr_sis)
 
 {
      this->Des_Reader.Read_Descriptor_File();
@@ -49,6 +49,8 @@ void Executable_MakeFile_Builder::Clear_Dynamic_Memory(){
      this->ComConstructor.Clear_Dynamic_Memory();
 }
 
+/*
+
 void Executable_MakeFile_Builder::Update_Warehaouse_Headers()
 {
      this->Initializer.Update_Warehaouse_Headers();
@@ -57,6 +59,8 @@ void Executable_MakeFile_Builder::Update_Warehaouse_Headers()
 
      std::cout << "\n Project Warehouse Headers Updated ..";
 }
+
+*/
 
 void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_Name){
 

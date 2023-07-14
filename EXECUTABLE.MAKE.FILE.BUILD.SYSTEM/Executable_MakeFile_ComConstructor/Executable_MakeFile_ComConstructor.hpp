@@ -61,6 +61,8 @@ protected:
  IntToCharTranslater Translater;
  std::vector<Compiler_Data> * Comp_Data_ptr;
  std::vector<std::string> header_file_list;
+ std::vector<std::string> header_file_paths;
+ std::vector<std::string> header_file_dirs;
  std::vector<std::string> object_file_list;
  std::string Exe_Name;
  std::string options;
@@ -74,6 +76,7 @@ protected:
  std::string Compiler_System_Command;
  int  header_file_number;
  int  Data_Size;
+ char opr_sis;
  bool Memory_Delete_Condition;
 };
 

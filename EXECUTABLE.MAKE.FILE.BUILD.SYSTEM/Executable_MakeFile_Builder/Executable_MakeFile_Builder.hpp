@@ -36,16 +36,10 @@ class Executable_MakeFile_Builder
 public:
  Executable_MakeFile_Builder(char * des_path, char opr_sis);
  virtual ~Executable_MakeFile_Builder();
- void Update_Warehaouse_Headers();
  void Build_MakeFile(char * path, char * Exe_Name);
  void Clear_Dynamic_Memory();
 protected:
  void Write_MakeFile(char * Exe_Name);
- void Determine_Src_File_Dir(char * file_path, char opr_sis);
- void Determine_Git_Src_Dir(char * file_path, char opr_sis);
- void Determine_Make_File_Name(char * file_path);
- void Determine_Git_Src_Dir();
- Repo_Warehouse_Initializer Initializer;
  Executable_MakeFile_ComConstructor ComConstructor;
  Source_File_Dependency_Determiner  Dep_Determiner;
  Descriptor_File_Reader Des_Reader;

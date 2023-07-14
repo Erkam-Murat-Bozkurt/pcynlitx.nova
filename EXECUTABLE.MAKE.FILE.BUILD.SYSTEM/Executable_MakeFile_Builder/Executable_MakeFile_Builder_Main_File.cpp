@@ -25,8 +25,6 @@ int main(int argc, char ** argv){
     Executable_MakeFile_Builder File_Builder(argv[1],'w');
 
 
-    File_Builder.Update_Warehaouse_Headers();
-
     File_Builder.Build_MakeFile(argv[2],argv[3]);
     
 

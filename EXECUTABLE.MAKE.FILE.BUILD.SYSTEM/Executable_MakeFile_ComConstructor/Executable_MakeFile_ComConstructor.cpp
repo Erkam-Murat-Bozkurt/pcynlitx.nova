@@ -30,7 +30,7 @@ Executable_MakeFile_ComConstructor::Executable_MakeFile_ComConstructor(char * de
 {
     this->Des_Reader.Read_Descriptor_File();
 
-
+    this->opr_sis = opr_sis;
 
 }
 
@@ -118,9 +118,31 @@ void Executable_MakeFile_ComConstructor::Construct_Header_File_List(){
 
          std::string header_name = Data.dependent_headers.at(i);
 
+         std::string header_dir = Data.dependent_headers_dir.at(i);
+
+         std::string header_path;
+
          if(!header_name.empty()){
                   
             this->header_file_list.push_back(header_name);
+            
+            this->header_file_dirs.push_back(header_dir);
+
+            header_path += header_dir;
+
+            if(this->opr_sis=='w'){
+
+               header_path.push_back('\\');
+            }
+
+            if(this->opr_sis=='l'){
+
+               header_path.push_back('/');
+            }
+
+            header_path += header_name;
+
+            this->header_file_paths.push_back(header_path);
          }
      }
 }
@@ -323,18 +345,20 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      // THE ADDITION OF INCLUDE DIRECTORIES PATHS
 
-     this->Place_Information(&this->Compiler_System_Command,Include_Character);
+     for(size_t i=0;i<this->header_file_dirs.size();i++){
 
-     this->Place_Information(&this->Compiler_System_Command,Headers_Location);
+         this->Place_Information(&this->Compiler_System_Command,Include_Character);
 
+         this->Place_Information(&this->Compiler_System_Command,this->header_file_dirs[i]);
 
-     this->Place_Information(&this->Compiler_System_Command,slash);
+         this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-     this->Place_Information(&this->Compiler_System_Command,new_line);
+         this->Place_Information(&this->Compiler_System_Command,slash);
 
-     this->Place_Information(&this->Compiler_System_Command,tab);
+         this->Place_Information(&this->Compiler_System_Command,new_line);
 
-     //this->Place_Information(&this->Compiler_System_Command,Space_Character);
+         this->Place_Information(&this->Compiler_System_Command,tab);
+     }
 
 
      this->Place_Information(&this->Compiler_System_Command,Include_Character);
@@ -349,7 +373,6 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      this->Place_Information(&this->Compiler_System_Command,tab);
 
-     //this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
      int  included_dir_num = this->Des_Reader.Get_Include_Directory_Number();
 
@@ -482,7 +505,7 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
          this->Place_Information(&this->Compiler_System_Command,go_to_new_line);
      }
 
-     size_t hdr_list_size = this->header_file_list.size();
+     size_t hdr_list_size = this->header_file_paths.size();
 
      for(size_t i=0;i<hdr_list_size;i++){
 
@@ -490,11 +513,7 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
          this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-         this->Place_Information(&this->Compiler_System_Command,Headers_Location);
-
-         this->Place_Information(&this->Compiler_System_Command,slash);
-
-         this->Place_Information(&this->Compiler_System_Command,this->header_file_list[i]);
+         this->Place_Information(&this->Compiler_System_Command,this->header_file_paths[i]);
 
          this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
