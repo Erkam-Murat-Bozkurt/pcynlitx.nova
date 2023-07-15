@@ -31,19 +31,27 @@ public:
 protected:
  void Write_Source_File_Scripts();
  void Write_The_Project_Script();
- void Determine_Project_Script_Path(std::string paths);
+ void Determine_Project_Script_Path();
  void Construct_Path(std::string & path, std::string str, std::string wp);
  void Construct_Path(std::string & pointer,
       std::string string, char opr_sis);
+ void Determine_Object_Files_Location(char opr_sis);
+ void Clear_String_Memory(std::string & pointer);
+ void Determine_Compiler_Output_Path(std::string class_name);
  Git_File_List_Receiver Git_Receiver;
  Descriptor_File_Reader Des_Reader;
  Script_Data_Processor Src_Data_Processor;
  Source_File_Script_Writer Src_Script_Writer;
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
+ std::string Repo_Rood_Dir;
+ std::string object_files_location;
+ std::string compiler_output_location;
+ std::string headers_locations;
+ std::string script_path;
+ std::string warehouse_path;
  int source_file_num;
  std::vector<Script_Data> * Data_Pointer;
- std::string script_path;
  char opr_sis;
  bool Memory_Delete_Condition;
 };

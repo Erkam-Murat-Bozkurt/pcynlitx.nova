@@ -39,6 +39,7 @@ void Project_Script_Writer::Receive_Source_File_Dependency_Determiner(Source_Fil
 }
 
 
+
 void Project_Script_Writer::Build_Compiler_Script(){
 
     this->Src_Data_Processor.Process_Script_Data();
@@ -49,22 +50,25 @@ void Project_Script_Writer::Build_Compiler_Script(){
 
     this->source_file_num = this->Src_Data_Processor.Get_Source_File_Number();
 
-    std::string warehouse_path = this->Des_Reader.Get_Warehouse_Location();
+    this->warehouse_path = this->Des_Reader.Get_Warehouse_Location();
 
-    this->Determine_Project_Script_Path(warehouse_path);
+    this->Determine_Object_Files_Location('w');
+
+    this->Determine_Project_Script_Path();
 
     this->Write_Source_File_Scripts();
 
     this->Write_The_Project_Script();
 }
 
-void Project_Script_Writer::Determine_Project_Script_Path(std::string warehouse_path){
+
+void Project_Script_Writer::Determine_Project_Script_Path(){
 
      std::string script_path_add = "Project_Build_Script.ps1";
 
      this->Memory_Delete_Condition = false;
 
-     this->Construct_Path(this->script_path,script_path_add,warehouse_path);
+     this->Construct_Path(this->script_path,script_path_add,this->warehouse_path);
 }
 
 
@@ -84,7 +88,13 @@ void Project_Script_Writer::Write_Source_File_Scripts(){
      }
 }
 
+
+
 void Project_Script_Writer::Write_The_Project_Script(){
+
+
+     std::string Repo_Rood_Dir = this->Des_Reader.Get_Repo_Directory_Location();
+
 
      this->FileManager.SetFilePath(this->script_path);
 
@@ -93,6 +103,20 @@ void Project_Script_Writer::Write_The_Project_Script(){
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n$Project_Objects_Location=\"");
+
+     this->FileManager.WriteToFile(this->object_files_location);
+
+     this->FileManager.WriteToFile("\"");
+
+     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
+
+
 
      this->FileManager.WriteToFile("Write-Output \"\"");
 
@@ -118,6 +142,7 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
      char cd_word [] = "cd ";
 
+
      for(int i=0;i<this->source_file_num;i++){
 
          this->FileManager.WriteToFile("\n");
@@ -125,6 +150,22 @@ void Project_Script_Writer::Write_The_Project_Script(){
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("Write-Output \"\"");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("Write-Output \" The compilation process for ");
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_name);
+
+         this->FileManager.WriteToFile(" started. \"");
+
+         this->FileManager.WriteToFile("\n\n");
+
+         this->FileManager.WriteToFile("# Dependency: ");
+
+         std::string dep = std::to_string(this->Data_Pointer->at(i).dependency);
+
+         this->FileManager.WriteToFile(dep);
 
          this->FileManager.WriteToFile("\n");
 
@@ -147,36 +188,98 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).make_file_name);
 
-     
-         std::string compiler_output_location;
-
-         std::string compiler_output_location_add = "Compiler_Output.txt";
-
-
-         this->Construct_Path(compiler_output_location,compiler_output_location_add,this->opr_sis);
-
+         this->Determine_Compiler_Output_Path(this->Data_Pointer->at(i).src_name_without_ext);
 
 
          this->FileManager.WriteToFile(" > ");
 
-         this->FileManager.WriteToFile(compiler_output_location);
-
-         this->FileManager.WriteToFile("\n");
-
-
-         this->FileManager.WriteToFile("\n\n");
-
-         this->FileManager.WriteToFile("# Dependency: ");
-
-         std::string dep = std::to_string(this->Data_Pointer->at(i).dependency);
-
-         this->FileManager.WriteToFile(dep);
-
-         this->FileManager.WriteToFile("\n\n");
+         this->FileManager.WriteToFile(this->compiler_output_location);
 
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
+
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
+
+         this->FileManager.WriteToFile("\\");
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
+
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("if ($Condition){");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("   $Exists_On_Obj_Dir = Test-Path -Path ");
+
+         this->FileManager.WriteToFile("$Project_Objects");
+
+         this->FileManager.WriteToFile("\\");
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("   if($Exists_On_Obj_Dir){");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("      rm ");
+
+         this->FileManager.WriteToFile("$Project_Objects_Location");
+
+         this->FileManager.WriteToFile("\\");
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("   }");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("   Move-Item -Path ");
+
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
+
+         this->FileManager.WriteToFile("\\");
+
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
+
+
+
+
+         this->FileManager.WriteToFile(" -Destination $Project_Objects_Location");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("}");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
 
 
          this->FileManager.WriteToFile("Write-Output \"  # ");
@@ -192,6 +295,18 @@ void Project_Script_Writer::Write_The_Project_Script(){
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("Write-Output \"\"");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("\n");
 
@@ -234,10 +349,100 @@ void Project_Script_Writer::Write_The_Project_Script(){
 }
 
 
+
 void Project_Script_Writer::Clear_Dynamic_Memory(){
 
      this->Src_Data_Processor.Clear_Dynamic_Memory();             
 }
+
+
+
+void Project_Script_Writer::Determine_Object_Files_Location(char opr_sis){
+
+     this->Clear_String_Memory(this->object_files_location);
+
+     std::string object_files_location_add = "PROJECT.OBJECT.FILES";
+
+     this->Memory_Delete_Condition = false;
+
+     this->Construct_Path(this->object_files_location,object_files_location_add,opr_sis);
+}
+
+
+void Project_Script_Writer::Determine_Compiler_Output_Path(std::string class_name)
+{
+     this->Clear_String_Memory(this->compiler_output_location);
+
+     std::string output_directory = "OUTPUTS";
+
+     std::string compiler_output_location_add = "_Compiler_Output.txt";
+     
+     int index = 0;
+
+     size_t warehouse_path_size = this->warehouse_path.length();
+
+     for(size_t i=0;i<warehouse_path_size;i++){
+
+         this->compiler_output_location.push_back(this->warehouse_path[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(warehouse_path.back() != '\\'){
+
+           this->compiler_output_location.push_back('\\');        
+        }
+     }
+    
+     if(this->opr_sis == 'l'){
+
+        if(warehouse_path.back() != '/'){
+
+           this->compiler_output_location.push_back('/');        
+        }
+     }
+
+     size_t output_directory_size = output_directory.length();
+
+     for(size_t i=0;i<output_directory_size;i++){
+
+         this->compiler_output_location.push_back(output_directory[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(warehouse_path.back() != '\\'){
+
+           this->compiler_output_location.push_back('\\');        
+        }
+     }
+    
+     if(this->opr_sis == 'l'){
+
+        if(warehouse_path.back() != '/'){
+
+           this->compiler_output_location.push_back('/');        
+        }
+     }
+
+     size_t class_name_size = class_name.length();
+
+     for(size_t i=0;i<class_name_size;i++){
+
+        this->compiler_output_location.push_back(class_name[i]);
+     }
+
+     size_t add_string_size = compiler_output_location_add.length();
+
+     for(size_t i=0;i<add_string_size;i++){
+
+         this->compiler_output_location.push_back(compiler_output_location_add[i]);
+     }
+
+     this->compiler_output_location.shrink_to_fit();        
+}
+
+
 
 void Project_Script_Writer::Construct_Path(std::string & path,
 
@@ -329,4 +534,14 @@ void Project_Script_Writer::Construct_Path(std::string & path,
      }
 
      path.shrink_to_fit();
+}
+
+
+void Project_Script_Writer::Clear_String_Memory(std::string & str)
+{
+     if(!str.empty()){
+
+         str.clear();
+         str.shrink_to_fit();        
+     }
 }

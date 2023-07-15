@@ -27,6 +27,8 @@ int main(int argc, char ** argv){
 
     Project_Script_Writer Script_Writer(argv[1],'w');
 
+    Script_Writer.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
+
     Script_Writer.Build_Compiler_Script();
 
     Script_Writer.Clear_Dynamic_Memory();

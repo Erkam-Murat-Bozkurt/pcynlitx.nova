@@ -12,8 +12,6 @@ Script_Data_Processor::Script_Data_Processor(char * DesPATH, char opr_sis) :
      this->source_file_num = 0;
 
      this->Des_Reader.Read_Descriptor_File();
-
-     //this->Dep_Determiner->Collect_Dependency_Information();
 }
 
 
@@ -33,8 +31,6 @@ void Script_Data_Processor::Clear_Object_Memory(){
      this->Clear_Dynamic_Memory();
 
      this->Des_Reader.Clear_Dynamic_Memory();
-
-     //this->Dep_Determiner->Clear_Dynamic_Memory();
 }
 
 

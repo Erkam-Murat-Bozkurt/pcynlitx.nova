@@ -210,6 +210,92 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile("\n");
 
 
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
+
+
+      this->FileManager.WriteToFile("$Repo_Root_Dir");
+
+      this->FileManager.WriteToFile("\\");
+
+      this->FileManager.WriteToFile("$Source_File_Location");
+
+      this->FileManager.WriteToFile("\\");
+
+      this->FileManager.WriteToFile(this->Src_Data_Pointer->object_file_name);
+
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("if ($Condition){");
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("   $Exists_On_Obj_Dir = Test-Path -Path ");
+
+      this->FileManager.WriteToFile("$Project_Objects");
+
+      this->FileManager.WriteToFile("\\");
+
+      this->FileManager.WriteToFile(this->Src_Data_Pointer->object_file_name);
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("   if($Exists_On_Obj_Dir){");
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("      rm ");
+
+      this->FileManager.WriteToFile("$Project_Objects");
+
+      this->FileManager.WriteToFile("\\");
+
+      this->FileManager.WriteToFile(this->Src_Data_Pointer->object_file_name);
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("   }");
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("   Move-Item -Path ");
+
+
+      this->FileManager.WriteToFile("$Repo_Root_Dir");
+
+      this->FileManager.WriteToFile("\\");
+
+      this->FileManager.WriteToFile("$Source_File_Location");
+
+      this->FileManager.WriteToFile("\\");
+
+      this->FileManager.WriteToFile(this->Src_Data_Pointer->object_file_name);
+
+
+      this->FileManager.WriteToFile(" -Destination $Project_Objects");
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("}");
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("\n");
+
+
      this->FileManager.WriteToFile("Write-Output \"  # ");
 
 
@@ -284,7 +370,7 @@ void Source_File_Script_Writer::Determine_Script_Path(char opr_sis){
 
         for(size_t i=0;i<add_size;i++){
 
-           this->script_path.push_back(script_add_win[i]);           
+           this->script_path.push_back(script_add_win[i]);
         }
      }
 
