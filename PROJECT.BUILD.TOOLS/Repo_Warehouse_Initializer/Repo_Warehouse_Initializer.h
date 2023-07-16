@@ -32,11 +32,13 @@ protected:
  void Determine_Header_Files_Directory();
  void Determine_Object_Files_Directory();
  void Determine_Library_Files_Directory();
+ void Determine_Compiler_Output_Directory();
  void Determine_Current_Directory();
  void Construct_Warehouse_Path();
  void Construct_Header_Files_Directory();
  void Construct_Object_Files_Directory();
  void Construct_Library_Files_Directory();
+ void Construct_Compiler_Outputs_Directory();
  void Determine_Header_File_Paths();
  void Copy_Independent_Header_Files_To_Project_Headers_Location();
  void Determine_Independent_Header_Paths();
@@ -62,7 +64,8 @@ protected:
  std::vector<std::string> Independent_Header_New_Paths;
  std::string Headers_Directory;
  std::string Object_Files_Directory;
- std::string Library_Files_Directory; 
+ std::string Library_Files_Directory;
+ std::string Compiler_Outputs_Directory; 
  char opr_sis;
 };
 

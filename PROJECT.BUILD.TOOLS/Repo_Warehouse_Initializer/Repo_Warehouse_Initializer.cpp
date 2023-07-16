@@ -41,6 +41,8 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(){
 
      this->Determine_Library_Files_Directory();
 
+     this->Determine_Compiler_Output_Directory();
+
      this->Construct_Warehouse_Path();
 
      this->Construct_Header_Files_Directory();
@@ -48,6 +50,8 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(){
      this->Construct_Object_Files_Directory();
 
      this->Construct_Library_Files_Directory();
+
+     this->Construct_Compiler_Outputs_Directory();
 
      this->DirectoryManager.ChangeDirectory(this->current_directory.c_str());
 
@@ -241,6 +245,42 @@ void Repo_Warehouse_Initializer::Determine_Library_Files_Directory(){
      this->Library_Files_Directory.shrink_to_fit();
 }
 
+
+
+void Repo_Warehouse_Initializer::Determine_Compiler_Output_Directory(){
+
+     std::string directory_folder_name = "COMPILER.OUTPUTS";
+
+     size_t warehouse_path_size = this->warehouse_path.length();
+
+     size_t name_size= directory_folder_name.length();
+
+
+     for(size_t i=0;i<warehouse_path_size;i++){
+
+         this->Compiler_Outputs_Directory.push_back(this->warehouse_path[i]);
+     }
+
+     if(this->opr_sis=='w'){
+     
+        this->Compiler_Outputs_Directory.push_back('\\');
+     } 
+     else{
+           if(this->opr_sis == 'l'){
+           
+              this->Compiler_Outputs_Directory.push_back('/');              
+           }         
+     }     
+
+     for(size_t i=0;i<name_size;i++){
+
+         this->Compiler_Outputs_Directory.push_back(directory_folder_name[i]);         
+     }
+
+     this->Compiler_Outputs_Directory.shrink_to_fit();
+}
+
+
 void Repo_Warehouse_Initializer::Construct_Warehouse_Path(){
 
      int return_condition = this->DirectoryManager.ChangeDirectory(this->warehouse_path.c_str());
@@ -261,6 +301,8 @@ void Repo_Warehouse_Initializer::Construct_Warehouse_Path(){
         }
      }
 }
+
+
 
 void Repo_Warehouse_Initializer::Construct_Header_Files_Directory(){
 
@@ -325,6 +367,30 @@ void Repo_Warehouse_Initializer::Construct_Library_Files_Directory(){
         }
      }
 }
+
+
+void Repo_Warehouse_Initializer::Construct_Compiler_Outputs_Directory(){
+
+     int return_condition = this->DirectoryManager.ChangeDirectory(this->Compiler_Outputs_Directory.c_str());
+
+     if(return_condition == 0){
+
+        int const_cond = this->DirectoryManager.MakeDirectory(this->Compiler_Outputs_Directory.c_str());
+
+        if(const_cond == 0){
+
+           std::cout << "\n The compiler outputs directory can not be constructed on:";
+
+           std::cout << "\n";
+
+           std::cout << this->Compiler_Outputs_Directory;
+
+           exit(0);
+        }
+     }
+}
+
+
 
 void Repo_Warehouse_Initializer::Determine_Header_File_Paths(){
 

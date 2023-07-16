@@ -44,6 +44,8 @@ void Project_Script_Writer::Build_Compiler_Script(){
 
     this->Src_Data_Processor.Process_Script_Data();
 
+    std::cout << "\n\e[1;32m The necessary data for script construction collected \e[0m";
+
     this->Src_Script_Writer.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
     this->Data_Pointer = this->Src_Data_Processor.Get_Script_Data_Address();
@@ -153,7 +155,7 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("Write-Output \" The compilation process for ");
+         this->FileManager.WriteToFile("Write-Output \"The compilation process for ");
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_name);
 
@@ -282,13 +284,13 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
 
 
-         this->FileManager.WriteToFile("Write-Output \"  # ");
+         this->FileManager.WriteToFile("Write-Output \"# The source file ");
 
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_name);
 
 
-         this->FileManager.WriteToFile(" class has been compiled\"");
+         this->FileManager.WriteToFile(" has been compiled\"");
 
          this->FileManager.WriteToFile("\n");
 
@@ -373,7 +375,7 @@ void Project_Script_Writer::Determine_Compiler_Output_Path(std::string class_nam
 {
      this->Clear_String_Memory(this->compiler_output_location);
 
-     std::string output_directory = "OUTPUTS";
+     std::string output_directory = "WAREHOUSE\\COMPILER.OUTPUTS";
 
      std::string compiler_output_location_add = "_Compiler_Output.txt";
      
