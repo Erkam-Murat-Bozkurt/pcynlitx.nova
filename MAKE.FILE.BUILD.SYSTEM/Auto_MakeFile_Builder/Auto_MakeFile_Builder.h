@@ -33,16 +33,14 @@ class Auto_MakeFile_Builder
 public:
  Auto_MakeFile_Builder(char * DesPath, char opr_sis);
  virtual ~Auto_MakeFile_Builder();
- void Build_Make_Files();
- //void Receive_Project_Files_Lister(Project_Files_Lister * ptr);
+ void Build_Make_Files(); 
  void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dep_ptr);
+ void Clear_Dynamic_Memory();
 protected:
  void Determine_Project_Directories();
- void Clear_Dynamic_Memory();
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * ptr);
  void Construct_Path(std::string * ptr, std::string str, std::string wrd);
- //Project_Files_Lister * File_Lister;
  Source_File_Dependency_Determiner * Dep_Determiner;
  Make_File_Builder Mk_Builder;
  Make_File_Cleaner Mk_File_Clnr;

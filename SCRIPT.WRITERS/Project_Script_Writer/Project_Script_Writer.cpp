@@ -44,7 +44,7 @@ void Project_Script_Writer::Build_Compiler_Script(){
 
     this->Src_Data_Processor.Process_Script_Data();
 
-    std::cout << "\n\e[1;32m The necessary data for script construction collected \e[0m";
+    std::cout << "\n\n\e[1;32mThe necessary data for script construction collected \e[0m\n";
 
     this->Src_Script_Writer.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
