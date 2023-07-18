@@ -21,6 +21,9 @@ add_library(proj_bld_tools
     ${CMAKE_CURRENT_SOURCE_DIR}/Git_File_List_Writer/Git_File_List_Writer.hpp
 
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Git_Ignoring_Files_Lister/Git_Ignoring_Files_Lister.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Git_Ignoring_Files_Lister/Git_Ignoring_Files_Lister.hpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Git_Modification_Lister/Git_Modification_Lister.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Git_Modification_Lister/Git_Modification_Lister.hpp
 
@@ -56,6 +59,8 @@ target_include_directories(proj_bld_tools PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Git_File_List_Receiver
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Git_File_List_Writer
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Git_Ignoring_Files_Lister
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Git_Modification_Lister
 
@@ -167,6 +172,8 @@ target_link_directories(proj_bld_tools PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Git_File_List_Receiver
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Git_File_List_Writer
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Git_Ignoring_Files_Lister
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Git_Modification_Lister
 

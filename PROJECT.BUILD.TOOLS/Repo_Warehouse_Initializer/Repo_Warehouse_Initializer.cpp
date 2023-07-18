@@ -5,7 +5,8 @@
 
 Repo_Warehouse_Initializer::Repo_Warehouse_Initializer(char * DesPath, char opr_sis): 
 
- Git_List_Writer(DesPath), Git_Receiver(DesPath,opr_sis), Dir_Lister(DesPath,opr_sis), 
+ Git_List_Writer(DesPath), Git_Receiver(DesPath,opr_sis), 
+ Ignoring_Files_Lister(DesPath,opr_sis), Dir_Lister(DesPath,opr_sis), 
  Des_Reader(DesPath), Header_Determiner(DesPath,opr_sis) 
 
 {
@@ -66,6 +67,8 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(){
      this->Copy_Header_Files_To_Project_Headers_Location();
 
      this->Copy_Independent_Header_Files_To_Project_Headers_Location();
+
+     this->Ignoring_Files_Lister.Write_Ignoring_File_List();
 }
 
 void Repo_Warehouse_Initializer::Update_Warehaouse_Headers(){

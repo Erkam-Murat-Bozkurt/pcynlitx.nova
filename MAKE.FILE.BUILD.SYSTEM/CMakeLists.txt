@@ -38,6 +38,8 @@ target_include_directories(make_fbld_sys PUBLIC
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_File_List_Writer
 
+    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Ignoring_Files_Lister
+
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Modification_Lister
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Modification_Receiver
@@ -111,6 +113,8 @@ target_link_directories(make_fbld_sys PUBLIC
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Modification_Lister
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Modification_Receiver
+
+    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Ignoring_Files_Lister
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Library_Name_Extractor
 

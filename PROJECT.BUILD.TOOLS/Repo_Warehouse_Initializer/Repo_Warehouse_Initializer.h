@@ -13,6 +13,7 @@
 #include <windows.h>
 #include "Git_File_List_Receiver.hpp"
 #include "Git_File_List_Writer.hpp"
+#include "Git_Ignoring_Files_Lister.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 #include "Header_File_Determiner.h"
@@ -48,6 +49,7 @@ protected:
  Git_File_List_Writer   Git_List_Writer;
  Header_File_Determiner Header_Determiner;
  Git_File_List_Receiver Git_Receiver;
+ Git_Ignoring_Files_Lister Ignoring_Files_Lister;
  DirectoryOperations DirectoryManager;
  Project_Files_Lister Dir_Lister;
  Descriptor_File_Reader Des_Reader;

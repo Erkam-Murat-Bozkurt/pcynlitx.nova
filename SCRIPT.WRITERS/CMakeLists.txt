@@ -74,6 +74,8 @@ target_include_directories(script_writers PUBLIC
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_File_List_Receiver
 
+    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Ignoring_Files_Lister
+
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_File_List_Writer
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Modification_Lister
@@ -164,6 +166,8 @@ target_link_directories(script_writers PUBLIC
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_File_List_Receiver
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_File_List_Writer
+
+    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Ignoring_Files_Lister
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Modification_Lister
 

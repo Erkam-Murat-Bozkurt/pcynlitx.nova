@@ -59,6 +59,8 @@ target_include_directories(exec_make_bld PUBLIC
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_File_List_Writer
 
+    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Ignoring_Files_Lister
+
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Modification_Lister
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Modification_Receiver
@@ -139,6 +141,8 @@ target_link_directories(exec_make_bld PUBLIC
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Directory_Tree_Size_Determiner
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_File_List_Receiver
+
+    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Ignoring_Files_Lister
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_File_List_Writer
 
