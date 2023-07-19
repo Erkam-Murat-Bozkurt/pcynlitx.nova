@@ -26,8 +26,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Source_File_Dependency_Selector::Source_File_Dependency_Selector(char * des_file_path, char opr_sis)
 
-    : Info_Collector(des_file_path,opr_sis), 
-      Header_Processor(des_file_path,opr_sis)
+    : Info_Collector(des_file_path,opr_sis)
 {
    this->Memory_Delete_Condition = false;
 
@@ -100,8 +99,6 @@ void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
 void Source_File_Dependency_Selector::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
 
      this->Info_Collector.Receive_Source_Code_Reader(ptr);
-
-     this->Header_Processor.Receive_Source_Code_Reader(ptr);
 
      this->Code_Rd = ptr;
 }

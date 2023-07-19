@@ -43,7 +43,6 @@ protected:
  void Clear_String_Memory(std::string * pointer);
  Project_Src_Code_Rdr * Code_Rdr;
  StringOperator StringManager;
- std::vector<std::string> * File_Content;
  std::string Source_File_Name;
  std::string Class_Function_Patern;
  std::string File_Name_Witout_Ext;

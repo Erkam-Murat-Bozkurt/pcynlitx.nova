@@ -101,8 +101,6 @@ void Source_File_Information_Collector::Determine_Source_File_List()
 
          bool is_source_file = this->Src_File_Pr.Is_Source_File(path);
 
-         //bool is_header = this->Header_Processor.Is_Header(path);
-
          if(is_source_file){
 
             this->Src_File_Pr.Determine_Source_File_Name(path);
@@ -198,12 +196,6 @@ void Source_File_Information_Collector::Extract_Dependency_Data(std::string path
 
         std::string source_file_name = this->Src_File_Pr.Get_Source_File_Name();
 
-        //std::string head_name = this->Header_Processor.Get_Header_File_Name_With_Ext();
-
-        //std::string header_path, header_sys_path;
-
-        //this->Determine_Header_System_Path(&header_sys_path,path);
-                
 
         this->buffer.system_path = path;
         this->buffer.source_file_name = source_file_name;

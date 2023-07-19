@@ -94,11 +94,9 @@ protected:
  std::vector<Source_File_Dependency> Dependent_List_Buffer;
  std::vector<Source_File_Data> * Headers_Data_Ptr;
  std::vector<std::vector<Source_File_Dependency>> Dependency_Data;
- std::vector<Search_Data> * searched_paths;
  std::string warehouse_head_dir;
  std::string descriptor_file_path;
  char * dep_path;
- Header_File_Processor Header_Processor; 
  StringOperator StringManager; 
  std::mutex mtx;
  std::thread threads[8];
