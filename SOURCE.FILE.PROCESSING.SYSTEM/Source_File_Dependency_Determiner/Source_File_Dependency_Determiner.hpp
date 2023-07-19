@@ -42,6 +42,7 @@ public:
  void Collect_Dependency_Information();
  void Collect_Dependency_Information(std::string path);
  bool Is_Source_File(std::string spath);
+ bool Is_Header_File(std::string hpath);
  int  Get_Compiler_Data_Size();
  std::string Get_Warehouse_Headers_Dir();
  std::string Get_Warehouse_Objetcs_Dir();
@@ -63,7 +64,6 @@ protected:
  std::string Warehouse_Objetcs_Dir;
  std::string Warehouse_Path;
  std::vector<Compiler_Data> * Compiler_Data_Ptr;
- CharOperator Char_Processor;
  size_t  data_size;
  bool Memory_Delete_Condition;
 };

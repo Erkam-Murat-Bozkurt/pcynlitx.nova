@@ -56,6 +56,7 @@ public:
  void Extract_Dependency_Data();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
+ bool Is_Header_File(std::string hpath);
  Source_File_Data Get_Dependency_Data(int num);
  std::vector<Source_File_Data> * Get_Headers_Data_Address();
  size_t       Get_Dependency_Data_Size();

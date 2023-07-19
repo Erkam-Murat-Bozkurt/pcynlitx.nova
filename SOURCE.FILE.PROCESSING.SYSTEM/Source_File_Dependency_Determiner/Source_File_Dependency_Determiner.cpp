@@ -152,10 +152,16 @@ void Source_File_Dependency_Determiner::Order_Priorities(){
       }
 }
 
- bool Source_File_Dependency_Determiner::Is_Source_File(std::string path){
+bool Source_File_Dependency_Determiner::Is_Source_File(std::string path){
 
       return this->Src_Processor.Is_Source_File(path);
- }
+}
+
+bool Source_File_Dependency_Determiner::Is_Header_File(std::string hpath){
+
+     return this->DepSelector.Is_Header_File(hpath);
+}
+
 
 
 void Source_File_Dependency_Determiner::Print_Compiler_Orders(){

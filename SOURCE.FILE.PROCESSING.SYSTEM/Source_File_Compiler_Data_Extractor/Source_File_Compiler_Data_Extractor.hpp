@@ -74,10 +74,8 @@ protected:
  void Clear_Buffer_Memory(Compiler_Data * ptr);
  void Clear_Data_Memory(std::vector<Compiler_Data> * ptr);
  Source_File_Information_Collector * Info_Collector;
- StringOperator StringManager;
  CharOperator Char_Processor;
  Project_Files_Lister File_Lister;
- Cpp_FileOperations FileManager;
  std::vector<std::vector<Source_File_Dependency>> * dep_data_ptr;
  std::vector<Compiler_Data> compiler_dt[8];
  std::vector<Compiler_Data> compiler_data;

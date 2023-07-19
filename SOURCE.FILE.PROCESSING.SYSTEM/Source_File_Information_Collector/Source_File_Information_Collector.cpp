@@ -359,6 +359,12 @@ void Source_File_Information_Collector::Extract_Header_File_Name_From_Decleratio
 }
 
 
+bool  Source_File_Information_Collector::Is_Header_File(std::string hpath){
+
+      return this->Header_Processor.Is_Header(hpath);
+}
+
+
 bool Source_File_Information_Collector::Include_Decleration_Test(std::string string){
 
      this->include_decleration_cond = false;

@@ -31,6 +31,8 @@ void Build_Tools_Initializer::Clear_Dynamic_Memory(){
 
 void Build_Tools_Initializer::Setup_Build_Tools(){
 
+     this->Rep_Init.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
+
      this->Rep_Init.Build_Project_Warehouse();
 
      this->Rep_Init.Clear_Dynamic_Memory();

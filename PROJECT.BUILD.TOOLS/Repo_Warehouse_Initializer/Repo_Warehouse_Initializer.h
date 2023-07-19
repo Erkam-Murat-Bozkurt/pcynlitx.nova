@@ -11,6 +11,7 @@
 #include <iostream>
 #include <fcntl.h>
 #include <windows.h>
+#include "Source_File_Dependency_Determiner.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Git_File_List_Writer.hpp"
 #include "Git_Ignoring_Files_Lister.hpp"
@@ -25,6 +26,7 @@ class Repo_Warehouse_Initializer
 public:
  Repo_Warehouse_Initializer(char * DesPath, char opr_sis);
  virtual ~Repo_Warehouse_Initializer();
+ void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dtr);
  void Build_Project_Warehouse();
  void Update_Warehaouse_Headers();
  void Clear_Dynamic_Memory();
@@ -44,10 +46,11 @@ protected:
  void Copy_Independent_Header_Files_To_Project_Headers_Location();
  void Determine_Independent_Header_Paths();
  void Copy_Header_Files_To_Project_Headers_Location();
+ void Determine_Header_File_Name_With_Extention(std::string path);
  void Clear_String_Memory(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
+ Source_File_Dependency_Determiner * Dep_Determiner;
  Git_File_List_Writer   Git_List_Writer;
- Header_File_Determiner Header_Determiner;
  Git_File_List_Receiver Git_Receiver;
  Git_Ignoring_Files_Lister Ignoring_Files_Lister;
  DirectoryOperations DirectoryManager;
@@ -60,6 +63,7 @@ protected:
  std::string  warehouse_location;
  std::string  warehouse_path;
  std::string  current_directory;
+ std::string  Header_File_Name_With_Extention;
  std::vector<std::string> Header_File_Paths;
  std::vector<std::string> Headers_New_Paths;
  std::vector<std::string> Independent_Header_Paths;

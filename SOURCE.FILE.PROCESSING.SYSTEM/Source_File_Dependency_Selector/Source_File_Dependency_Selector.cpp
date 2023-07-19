@@ -103,6 +103,12 @@ void Source_File_Dependency_Selector::Receive_Source_Code_Reader(Project_Src_Cod
      this->Code_Rd = ptr;
 }
 
+ bool Source_File_Dependency_Selector::Is_Header_File(std::string hpath){
+
+      return this->Info_Collector.Is_Header_File(hpath);
+ }
+
+
 
 void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::string path)
 {
