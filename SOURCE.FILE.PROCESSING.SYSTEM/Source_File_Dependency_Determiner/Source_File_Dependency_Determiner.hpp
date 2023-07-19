@@ -48,6 +48,7 @@ public:
  std::string Get_Warehouse_Path();
  void Print_Dependency_List();
  void Print_Compiler_Orders();
+ void Clear_Object_Memory();
  void Clear_Dynamic_Memory();
  Compiler_Data Get_Compiler_Data(int i);
  std::vector<Compiler_Data> * Get_Compiler_Data_Address();
@@ -58,6 +59,9 @@ protected:
  Source_File_Dependency_Selector DepSelector;
  Source_File_Compiler_Data_Extractor Com_Data_Extractor;
  Source_File_Processor Src_Processor;
+ std::string Warehouse_Headers_Dir;
+ std::string Warehouse_Objetcs_Dir;
+ std::string Warehouse_Path;
  std::vector<Compiler_Data> * Compiler_Data_Ptr;
  CharOperator Char_Processor;
  size_t  data_size;

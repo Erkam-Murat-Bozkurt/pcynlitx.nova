@@ -63,6 +63,11 @@ void Source_File_Dependency_Selector::Clear_Object_Memory(){
         this->Clear_Dynamic_Memory();
 
         this->Info_Collector.Clear_Object_Memory();
+
+        if(this->dep_path != nullptr){
+
+            delete [] this->dep_path;
+        }
      }
 }
 

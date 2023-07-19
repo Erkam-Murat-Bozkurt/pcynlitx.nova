@@ -46,11 +46,23 @@ Source_File_Dependency_Determiner::~Source_File_Dependency_Determiner(){
     this->Clear_Dynamic_Memory();
 }
 
+void Source_File_Dependency_Determiner::Clear_Object_Memory(){
+
+     this->Com_Data_Extractor.Clear_Dynamic_Memory();
+
+     this->Code_Rd.Clear_Object_Memory();
+
+     this->Git_Data_Receiver.Clear_Dynamic_Memory();
+
+     this->DepSelector.Clear_Object_Memory();
+
+     this->Clear_Dynamic_Memory();
+
+}
+
 void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
 
      this->DepSelector.Clear_Dynamic_Memory();
-
-     this->Com_Data_Extractor.Clear_Dynamic_Memory();
 }
 
 
@@ -59,6 +71,12 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
      this->Clear_Dynamic_Memory();
 
      this->DepSelector.Determine_Source_File_Dependencies(path);
+
+     this->Warehouse_Headers_Dir = this->DepSelector.Get_Warehouse_Headers_Dir();
+
+     this->Warehouse_Objetcs_Dir = this->DepSelector.Get_Warehouse_Objetcs_Dir();
+
+     this->Warehouse_Path = this->DepSelector.Get_Warehouse_Path();
 
      std::vector<std::vector<Source_File_Dependency>> * s_ptr  
      
@@ -73,6 +91,8 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
      this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
      this->data_size = this->Compiler_Data_Ptr->size();
+
+     this->Clear_Dynamic_Memory();
 }
 
 
@@ -82,15 +102,17 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
       this->DepSelector.Determine_Source_File_Dependencies();
 
+      this->Warehouse_Headers_Dir = this->DepSelector.Get_Warehouse_Headers_Dir();
+
+      this->Warehouse_Objetcs_Dir = this->DepSelector.Get_Warehouse_Objetcs_Dir();
+
+      this->Warehouse_Path = this->DepSelector.Get_Warehouse_Path();
+
       std::vector<std::vector<Source_File_Dependency>> * s_ptr  
       
       = this->DepSelector.Get_Dependency_List_Adress();
 
-      std::string wrd_hdr_dir = this->DepSelector.Get_Warehouse_Headers_Dir();
-      
-      //this->ReOrderer.Receive_Dependency_Data(s_ptr);
-
-      //this->ReOrderer.Reorder_Dependency_Data();
+      std::string wrd_hdr_dir = this->DepSelector.Get_Warehouse_Headers_Dir();      
 
       this->Com_Data_Extractor.Receive_Dependency_Data(s_ptr,wrd_hdr_dir);
 
@@ -101,6 +123,8 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
       this->data_size = this->Compiler_Data_Ptr->size();
 
       this->Order_Priorities();
+
+      this->Clear_Dynamic_Memory();
 }
 
 
@@ -200,15 +224,15 @@ int Source_File_Dependency_Determiner::Get_Compiler_Data_Size(){
 
 std::string Source_File_Dependency_Determiner::Get_Warehouse_Headers_Dir(){
 
-       return this->DepSelector.Get_Warehouse_Headers_Dir();
+       return this->Warehouse_Headers_Dir;
 }
 
 std::string Source_File_Dependency_Determiner::Get_Warehouse_Objetcs_Dir(){
 
-       return this->DepSelector.Get_Warehouse_Objetcs_Dir();
+       return this->Warehouse_Objetcs_Dir;
 }
 
 std::string Source_File_Dependency_Determiner::Get_Warehouse_Path(){
 
-       return this->DepSelector.Get_Warehouse_Path();
+       return this->Warehouse_Path;
 }

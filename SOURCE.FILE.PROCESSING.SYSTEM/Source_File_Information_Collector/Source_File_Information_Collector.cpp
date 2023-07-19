@@ -76,6 +76,8 @@ void Source_File_Information_Collector::Clear_Dynamic_Memory()
         // Clearing the header data
 
       this->Clear_Headers_Data();
+
+      this->Clear_Buffer_Memory();
 }
 
 
