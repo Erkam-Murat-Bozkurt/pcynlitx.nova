@@ -30,8 +30,6 @@ protected:
  Descriptor_File_Reader * Des_Reader_Ptr;
  Script_Data * Src_Data_Pointer;
  Cpp_FileOperations FileManager;
- DirectoryOperations DirectoryManager;
- IntToCharTranslater Translater;
  std::string Repo_Rood_Dir;
  std::string object_files_location;
  std::string compiler_output_location;

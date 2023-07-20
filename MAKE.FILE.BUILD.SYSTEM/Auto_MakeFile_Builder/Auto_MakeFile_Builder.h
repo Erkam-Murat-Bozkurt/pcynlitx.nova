@@ -45,7 +45,6 @@ protected:
  Make_File_Builder Mk_Builder;
  Make_File_Cleaner Mk_File_Clnr;
  Descriptor_File_Reader Des_Reader;
- Source_File_Processor Src_Processor;
  std::string Warehouse_Path;
  std::string Repo_Dir;
  std::string repo_head_dir;

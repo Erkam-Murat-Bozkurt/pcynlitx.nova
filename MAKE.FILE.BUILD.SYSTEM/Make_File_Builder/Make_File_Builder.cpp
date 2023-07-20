@@ -24,9 +24,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Make_File_Builder::Make_File_Builder(char * DesPath, char opr_sis) :
 
-    Data_Collector(DesPath,opr_sis), Header_Determiner(DesPath,opr_sis), 
-
-    Des_Reader(DesPath) 
+    Data_Collector(DesPath,opr_sis),  Des_Reader(DesPath) 
 {
 
    this->Memory_Delete_Condition = false;
