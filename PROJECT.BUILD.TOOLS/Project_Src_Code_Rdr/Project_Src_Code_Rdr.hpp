@@ -55,6 +55,7 @@ public:
 protected:
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * ptr);
+ void Clear_Thread_Objects_Memory();
  void Read_Source_Code(int th_num, int st, int end);
  void Delete_Spaces_on_String(std::string * str);
  void Read_Source_Code_Single_Thread();

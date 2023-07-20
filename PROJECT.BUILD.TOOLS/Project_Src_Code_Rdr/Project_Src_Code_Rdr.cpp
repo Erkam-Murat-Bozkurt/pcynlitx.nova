@@ -33,20 +33,6 @@ void Project_Src_Code_Rdr::Clear_Object_Memory(){
 
          this->Clear_Dynamic_Memory();
 
-         for(int i=0;i<8;i++){
-     
-             delete this->Hdr_Determiner[i];
-         }
-
-         delete [] this->Hdr_Determiner;
-
-     
-         for(int i=0;i<8;i++){
-     
-             delete this->Src_Determiner[i];
-         }
-
-         delete [] this->Src_Determiner;
      }
 }
 
@@ -67,6 +53,38 @@ void Project_Src_Code_Rdr::Clear_Dynamic_Memory(){
      this->CodeBase.clear();
 
      this->CodeBase_Name.clear();
+}
+
+void Project_Src_Code_Rdr::Clear_Thread_Objects_Memory(){
+
+     for(int i=0;i<8;i++){
+     
+         if(this->Hdr_Determiner[i] != nullptr){
+              
+            delete this->Hdr_Determiner[i];
+
+            this->Hdr_Determiner[i] = nullptr;
+         }             
+     }
+         
+     delete [] this->Hdr_Determiner;
+
+     this->Hdr_Determiner = nullptr;
+     
+     
+     for(int i=0;i<8;i++){
+
+         if(this->Src_Determiner[i]!= nullptr){
+
+            delete this->Src_Determiner[i];
+
+            this->Src_Determiner[i] = nullptr;
+         }                 
+     }
+
+     delete [] this->Src_Determiner;
+
+     this->Src_Determiner = nullptr;
 }
 
 void Project_Src_Code_Rdr::Receive_Git_Repo_Information(Git_File_List_Receiver * ptr){
@@ -124,6 +142,8 @@ void Project_Src_Code_Rdr::Read_Project_Source_Code_Files(){
      }
 
      this->Src_Code_Dt.shrink_to_fit();
+
+     this->Clear_Thread_Objects_Memory();
 }
 
 
@@ -227,7 +247,9 @@ void Project_Src_Code_Rdr::Read_Source_Code_Single_Thread(){
 
             this->Clear_String_Memory(&Temp.sys_path);
          }
-     }    
+     }
+
+     this->Clear_Thread_Objects_Memory();    
 }
 
 
