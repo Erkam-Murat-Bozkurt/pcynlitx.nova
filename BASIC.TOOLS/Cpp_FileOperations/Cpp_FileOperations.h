@@ -60,6 +60,7 @@ public:
  bool Is_Path_Exist(std::string path);
  bool Is_Path_Exist(char * path);
  bool Is_This_File_Empty(char * path);
+ bool Is_This_File_Empty(std::string path);
  bool TryOpen(char path);
  int  GetFileSize() const;
  std::string GetFileLine(int lnbr);

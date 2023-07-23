@@ -111,6 +111,7 @@ void Git_Ignoring_Files_Lister::Write_Ignoring_File_List()
 
      this->Execute_Listing_Command();
 
+     std::cout << "\nCONFIGURATIONS:";
      std::cout << "\nThe Files having \".make\" and \".ps1\" extention will be ignored by Git";
      std::cout << "\n\n";
 }

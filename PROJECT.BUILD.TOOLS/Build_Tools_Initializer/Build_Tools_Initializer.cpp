@@ -7,8 +7,6 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) :
  Mk_Builder(DesPATH,opr_sis), Script_Writer(DesPATH,opr_sis)
  
 {
-    std::cout << "\n\n\e[1;32mC++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED\e[0m\n";
-
     
     this->Dep_Determiner.Collect_Dependency_Information();
 

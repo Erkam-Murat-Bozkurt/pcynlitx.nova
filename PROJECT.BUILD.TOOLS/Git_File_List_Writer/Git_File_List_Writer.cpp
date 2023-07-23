@@ -5,10 +5,12 @@
 #include "Git_File_List_Writer.hpp"
 
 
-Git_File_List_Writer::Git_File_List_Writer(char * DesPath) :
+Git_File_List_Writer::Git_File_List_Writer(char * DesPath, char opr_sis) :
 
     Des_Reader(DesPath)
 {
+
+    this->opr_sis = opr_sis;
 
     this->Initialize_Mermbers();
 
@@ -28,17 +30,17 @@ Git_File_List_Writer::Git_File_List_Writer(char * DesPath) :
         this->Repo_Dir.push_back(str_dr[i]);
     }
 
-    this->Des_Reader.Clear_Dynamic_Memory();
-
     this->Write_Git_Repo_List_File();
 }
 
 
 
-Git_File_List_Writer::Git_File_List_Writer(std::string DesPath) :
+Git_File_List_Writer::Git_File_List_Writer(std::string DesPath, char opr_sis) :
 
     Des_Reader(DesPath)
 {
+    this->opr_sis = opr_sis;
+
     this->Initialize_Mermbers();
 
     this->Des_Reader.Read_Descriptor_File();
@@ -100,11 +102,50 @@ void Git_File_List_Writer::Write_Git_Repo_List_File()
 {
      this->Memory_Delete_Condition = false;
 
+     this->Determine_Error_Check_File_Path();
+
      this->Determine_Git_File_List_Path();
 
      this->Determine_Git_Listing_Command();
-
+     
      this->List_Files_in_Repo();
+
+     this->Control_Std_Error_Status();
+
+}
+
+
+void Git_File_List_Writer::Determine_Error_Check_File_Path(){
+     
+     std::string error_text = "std_error.txt";
+
+     std::string wrd_dir = this->Des_Reader.Get_Warehouse_Location();
+
+     size_t wrd_dir_size = wrd_dir.length();
+
+     for(size_t i=0;i<wrd_dir_size;i++){
+
+         this->std_error_file_path.push_back(wrd_dir[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        this->std_error_file_path.push_back('\\');
+     }
+
+     if(this->opr_sis == 'l'){
+
+        this->std_error_file_path.push_back('/');
+     }
+
+     size_t error_text_size = error_text.length();
+
+     for(size_t i=0;i<error_text_size;i++){
+
+         this->std_error_file_path.push_back(error_text[i]);
+     }
+
+     this->std_error_file_path.shrink_to_fit();
 }
 
 
@@ -138,6 +179,8 @@ void Git_File_List_Writer::Determine_Git_Listing_Command()
 {
      std::string git_command = "cmd /c git ls-files > ";
 
+     std::string std_error_re_director = " 2> ";
+
      size_t git_command_size = git_command.length();
 
      size_t file_path_size = this->git_file_list_path.length();
@@ -152,8 +195,23 @@ void Git_File_List_Writer::Determine_Git_Listing_Command()
          this->git_listing_command.push_back(this->git_file_list_path[i]);
      }
 
-     this->git_listing_command.push_back('\"');
+     size_t error_redirector_size = std_error_re_director.length();
 
+     for(size_t i=0;i<error_redirector_size;i++)
+     {
+         this->git_listing_command.push_back(std_error_re_director[i]);
+     }
+     
+     size_t std_error_file_size = this->std_error_file_path.length();
+
+     for(size_t i=0;i<std_error_file_size;i++){
+
+         this->git_listing_command.push_back(this->std_error_file_path[i]);
+     }
+
+     this->git_listing_command.shrink_to_fit();
+
+  
      git_command.clear();
      git_command.shrink_to_fit();
 }
@@ -167,14 +225,74 @@ void Git_File_List_Writer::List_Files_in_Repo()
         this->FileManager.Delete_File(this->git_file_list_path.c_str());
      }
 
-     this->DirectoryManager.ChangeDirectory(this->Repo_Dir.c_str());
 
-     this->Clear_CString_Buffer();
+     int dir_chg_cond = this->DirectoryManager.ChangeDirectory(this->Repo_Dir.c_str());
 
-     char * system_cmd = this->From_Std_String_To_Char(this->git_listing_command);
+     if(dir_chg_cond == 0){
 
-     this->Execute_System_Call(system_cmd);
+        std::cerr << "\n";
+        std::cerr << "\n ERROR IN CONSTRUCTION:";
+        std::cerr << "\n Git repo directory is not exist";
+        std::cerr << "\n Please check your declerations about project directory";
+        std::cerr << "\n";
+        std::cerr << "\n";
+
+
+        exit(EXIT_FAILURE);
+     }
+     else{
+
+            this->Clear_CString_Buffer();
+
+            char * system_cmd = this->From_Std_String_To_Char(this->git_listing_command);
+
+            this->Execute_System_Call(system_cmd);
+
+     }     
 }
+
+
+
+ void Git_File_List_Writer::Control_Std_Error_Status(){
+
+      if(this->FileManager.Is_Path_Exist(this->std_error_file_path)){
+     
+         if(!this->FileManager.Is_This_File_Empty(this->std_error_file_path)){
+
+            std::cout << "\nERROR IN CODE READING:";
+
+            std::cout << "\n";
+
+            std::cout << "\nThe git can not find information about repository!";
+          
+            std::cout << "\nPlease check the declerations about project repository";
+
+            std::cout << "\nThe current project repository path specified on the decleration:";
+
+            std::cout << "\nRepo path:" << this->Repo_Dir;
+
+            std::cout << "\n";
+
+            std::cout << "\nGit gives the following error:";
+
+            std::cout << "\n";
+
+            this->FileManager.Read_File(this->std_error_file_path);
+
+
+            this->FileManager.Printf();
+
+
+            this->FileManager.Delete_File(this->std_error_file_path.c_str());
+
+            exit(EXIT_FAILURE);
+         }
+         else{
+
+              this->FileManager.Delete_File(this->std_error_file_path.c_str());
+         }
+      }
+ }
 
 
 void Git_File_List_Writer::Execute_System_Call(char * cmd){
@@ -210,6 +328,8 @@ void Git_File_List_Writer::Execute_System_Call(char * cmd){
      CloseHandle( pi.hProcess );
      CloseHandle( pi.hThread );
 }
+
+
 
 
 char * Git_File_List_Writer::From_Std_String_To_Char(std::string str){

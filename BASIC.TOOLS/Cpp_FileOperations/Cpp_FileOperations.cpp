@@ -372,6 +372,8 @@ void Cpp_FileOperations::Read_File(std::string path){
 
      }while(this->DataFile.good());
 
+     this->File_Content.shrink_to_fit();
+
      this->FileClose();
 }
 
@@ -388,6 +390,32 @@ bool Cpp_FileOperations::Is_This_File_Empty(char * path){
 
      return this->Is_File_Empty;
 }
+
+
+bool Cpp_FileOperations::Is_This_File_Empty(std::string path){
+
+     this->Clear_Dynamic_Memory();
+
+     this->File_line_Number = 0;
+
+     this->SetFilePath(path);
+     this->FileOpen(Rf);
+
+     std::string string_instance = this->ReadLine();
+
+     bool is_empty = false;
+
+     if(string_instance.empty()){
+
+          is_empty = true;
+     }
+
+     this->FileClose();
+
+     return is_empty;
+
+}
+
 
 void Cpp_FileOperations::Record_File(char * target_path){
 
