@@ -4,17 +4,11 @@
 
 #include "Git_Modification_Receiver.hpp"
 
-Git_Modification_Receiver::Git_Modification_Receiver(char * DesPath, char opr_sis): 
+Git_Modification_Receiver::Git_Modification_Receiver(char opr_sis): 
 
-  Des_Reader(DesPath), Header_Determiner(DesPath,opr_sis)
+  Des_Reader(opr_sis), Header_Determiner(opr_sis)
 
 {
-     this->Des_Reader.Read_Descriptor_File();
-     
-     this->warehouse_location = this->Des_Reader.Get_Warehouse_Location();
-
-     this->Repo_Dir  = this->Des_Reader.Get_Repo_Directory_Location();
-
      this->opr_sis = opr_sis;
 }
 
@@ -23,8 +17,37 @@ Git_Modification_Receiver::Git_Modification_Receiver(char * DesPath, char opr_si
 Git_Modification_Receiver::~Git_Modification_Receiver(){
 
      this->Clear_Dynamic_Memory();
+
+     this->Header_Determiner.Clear_Object_Memory();
 }
 
+
+void Git_Modification_Receiver::Receive_Descriptor_File_Path(char * DesPATH){
+
+     this->Header_Determiner.Receive_Descriptor_File_Path(DesPATH);
+
+     this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
+
+     this->Des_Reader.Read_Descriptor_File();
+     
+     this->warehouse_location = this->Des_Reader.Get_Warehouse_Location();
+
+     this->Repo_Dir  = this->Des_Reader.Get_Repo_Directory_Location();
+}
+
+
+void Git_Modification_Receiver::Receive_Descriptor_File_Path(std::string DesPATH){
+
+     this->Header_Determiner.Receive_Descriptor_File_Path(DesPATH);
+
+     this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
+
+     this->Des_Reader.Read_Descriptor_File();
+     
+     this->warehouse_location = this->Des_Reader.Get_Warehouse_Location();
+
+     this->Repo_Dir = this->Des_Reader.Get_Repo_Directory_Location();
+}
 
 
 void Git_Modification_Receiver::Receive_Git_Modifications()
@@ -446,6 +469,8 @@ void Git_Modification_Receiver::Clear_Dynamic_Memory(){
      this->Clear_Vector_Memory(&this->Updated_Source_Files);
 
      this->Des_Reader.Clear_Dynamic_Memory();
+
+     this->Header_Determiner.Clear_Dynamic_Memory();
 }
 
 

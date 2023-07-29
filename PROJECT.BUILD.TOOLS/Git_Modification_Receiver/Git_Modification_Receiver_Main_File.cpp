@@ -17,9 +17,9 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Git_Modification_Receiver Receiver(argv[1],'w');
+    Git_Modification_Receiver Receiver('w');
 
-
+    Receiver.Receive_Descriptor_File_Path(argv[1]);
 
     // The project warehouse will be builded
 

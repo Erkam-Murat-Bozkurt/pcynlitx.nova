@@ -15,8 +15,8 @@
 #include <vector>
 #include <string>
 #include "Git_File_List_Receiver.hpp"
+#include "Source_File_Determiner.h"
 #include "Descriptor_File_Reader.hpp"
-#include "Project_Files_Lister.h"
 #include "Header_File_Determiner.h"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
@@ -24,8 +24,10 @@
 class Git_Modification_Receiver
 {
 public:
- Git_Modification_Receiver(char * DesPath, char opr_sis);
+ Git_Modification_Receiver(char opr_sis);
  virtual ~Git_Modification_Receiver();
+ void Receive_Descriptor_File_Path(char * DesPATH);
+ void Receive_Descriptor_File_Path(std::string DesPATH);
  void Receive_Git_Modifications();
  std::vector<std::string> * Get_File_System_Path_Address();
  std::vector<std::string> * Get_Updated_Header_Files();

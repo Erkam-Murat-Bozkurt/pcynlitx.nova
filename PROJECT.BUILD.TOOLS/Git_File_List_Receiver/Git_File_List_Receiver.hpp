@@ -17,9 +17,10 @@
 class Git_File_List_Receiver
 {
 public:
- Git_File_List_Receiver(char * DesPath, char opr_sis);
- Git_File_List_Receiver(std::string DesPath, char opr_sis);
+ Git_File_List_Receiver(char opr_sis);
  virtual ~Git_File_List_Receiver();
+ void Receive_Descriptor_File_Path(char * DesPath);
+ void Receive_Descriptor_File_Path(std::string DesPath);
  void Determine_Git_Repo_Info();
  size_t  Get_Git_File_Index_Size();
  std::string Get_Git_File_Index(int num);

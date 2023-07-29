@@ -5,50 +5,13 @@
 #include "Git_File_List_Receiver.hpp"
 
 
-Git_File_List_Receiver::Git_File_List_Receiver(char * DesPath, char op_s) :
+Git_File_List_Receiver::Git_File_List_Receiver(char opr_sis) :
 
-    Des_Reader(DesPath)
+    Des_Reader(opr_sis)
 {
-    this->opr_sis = op_s;
+    this->opr_sis = opr_sis;
 
     this->Initialize_Mermbers();
-
-    this->Des_Reader.Read_Descriptor_File();
-
-    std::string str_wr = this->Des_Reader.Get_Warehouse_Location();
-
-    for(size_t i=0;i<str_wr.length();i++){
-
-        this->Warehouse.push_back(str_wr[i]);
-    }
-
-    std::string str_dr = this->Des_Reader.Get_Repo_Directory_Location();
-
-    for(size_t i=0;i<str_dr.length();i++){
-
-        this->Repo_Dir.push_back(str_dr[i]);
-    }
-
-    this->Des_Reader.Clear_Dynamic_Memory();
-}
-
-
-
-Git_File_List_Receiver::Git_File_List_Receiver(std::string DesPath, char op_s) :
-
-    Des_Reader(DesPath)
-{
-    this->opr_sis = op_s;
-
-    this->Initialize_Mermbers();
-
-    this->Des_Reader.Read_Descriptor_File();
-
-    this->Warehouse = this->Des_Reader.Get_Warehouse_Location();
-
-    this->Repo_Dir  = this->Des_Reader.Get_Repo_Directory_Location();
-
-    this->Des_Reader.Clear_Dynamic_Memory();
 }
 
 
@@ -91,13 +54,32 @@ void Git_File_List_Receiver::Clear_Dynamic_Memory()
          this->Clear_String_Memory(&this->git_file_list_path);
 
          this->FileManager.Clear_Dynamic_Memory();
+
+         this->Des_Reader.Clear_Dynamic_Memory();
      }
 }
 
 
+void Git_File_List_Receiver::Receive_Descriptor_File_Path(char * DesPath){
+
+     this->Des_Reader.Receive_Descriptor_File_Path(DesPath);     
+}
+
+
+void Git_File_List_Receiver::Receive_Descriptor_File_Path(std::string DesPath){
+
+     this->Des_Reader.Receive_Descriptor_File_Path(DesPath);     
+}
+
 void Git_File_List_Receiver::Determine_Git_Repo_Info()
 {
      this->Memory_Delete_Condition = false;
+
+     this->Des_Reader.Read_Descriptor_File();
+
+     this->Warehouse = this->Des_Reader.Get_Warehouse_Location();
+
+     this->Repo_Dir  = this->Des_Reader.Get_Repo_Directory_Location();
 
      this->Determine_Git_File_List_Path();
 

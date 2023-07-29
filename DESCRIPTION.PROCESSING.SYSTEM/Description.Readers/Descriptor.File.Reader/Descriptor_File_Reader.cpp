@@ -1,48 +1,11 @@
 
 #include "Descriptor_File_Reader.hpp"
 
-Descriptor_File_Reader::Descriptor_File_Reader(char * FilePATH) :
+Descriptor_File_Reader::Descriptor_File_Reader(char opr_sis) :
 
-  Syntax_Controller(FilePATH), Data_Collector(FilePATH)
+  Syntax_Controller(opr_sis), Data_Collector(opr_sis)
 {
-
    this->Initialize_Members();
-
-   size_t path_size = strlen(FilePATH);
-
-   for(size_t i=0;i<path_size;i++){
-
-       this->descriptor_file_path.push_back(FilePATH[i]);
-   }
-
-   this->Syntax_Controller.Control_Descriptor_File_Syntax();
-
-   this->Syntax_Controller.Clear_Dynamic_Memory();
-
-   this->Data_Collector.Collect_Descriptor_File_Data();
-}
-
-
-Descriptor_File_Reader::Descriptor_File_Reader(std::string FilePATH) :
-
-  Syntax_Controller(FilePATH), Data_Collector(FilePATH)
-{
-
-   this->Initialize_Members();
-
-   size_t path_size = FilePATH.length();
-
-   for(size_t i=0;i<path_size;i++){
-
-       this->descriptor_file_path.push_back(FilePATH[i]);
-   }
-
-
-   this->descriptor_file_path = FilePATH;
-
-   this->Syntax_Controller.Control_Descriptor_File_Syntax();
-
-   this->Data_Collector.Collect_Descriptor_File_Data();
 }
 
 
@@ -53,6 +16,23 @@ Descriptor_File_Reader::~Descriptor_File_Reader(){
         this->Clear_Dynamic_Memory();
     }
 }
+
+
+void Descriptor_File_Reader::Receive_Descriptor_File_Path(char * DesPATH){
+
+     this->Data_Collector.Receive_Descriptor_File_Path(DesPATH);
+
+     this->Syntax_Controller.Receive_Descriptor_File_Path(DesPATH);
+}
+
+
+void Descriptor_File_Reader::Receive_Descriptor_File_Path(std::string DesPATH){
+
+     this->Data_Collector.Receive_Descriptor_File_Path(DesPATH);
+
+     this->Syntax_Controller.Receive_Descriptor_File_Path(DesPATH);
+}
+
 
 void Descriptor_File_Reader::Initialize_Members(){
 
@@ -86,8 +66,6 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
          this->Clear_String_Memory(&this->root_dir);
 
-         this->Clear_String_Memory(&this->descriptor_file_path);
-
          this->Data_Collector.Clear_Dynamic_Memory();
 
          this->Syntax_Controller.Clear_Dynamic_Memory();
@@ -99,6 +77,12 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
 
 void Descriptor_File_Reader::Read_Descriptor_File(){
+     
+     this->Syntax_Controller.Control_Descriptor_File_Syntax();
+
+     this->Syntax_Controller.Clear_Dynamic_Memory();
+
+     this->Data_Collector.Collect_Descriptor_File_Data();
 
      this->Read_Root_Directory_Location();
 

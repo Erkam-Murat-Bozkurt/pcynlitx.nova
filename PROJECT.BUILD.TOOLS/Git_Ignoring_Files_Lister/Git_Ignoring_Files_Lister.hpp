@@ -22,9 +22,10 @@
 class Git_Ignoring_Files_Lister
 {
 public:
- Git_Ignoring_Files_Lister(char * DesPath, char opr_sis);
- Git_Ignoring_Files_Lister(std::string DesPath, char opr_sis);
+ Git_Ignoring_Files_Lister( char opr_sis);
  virtual ~Git_Ignoring_Files_Lister();
+ void Receive_Descriptor_File_Path(char * DesPATH);
+ void Receive_Descriptor_File_Path(std::string DesPATH);
  void Write_Ignoring_File_List();
  void Clear_Dynamic_Memory();
 protected:

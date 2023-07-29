@@ -6,51 +6,13 @@
 #include "Git_Ignoring_Files_Lister.hpp"
 
 
-Git_Ignoring_Files_Lister::Git_Ignoring_Files_Lister(char * DesPath, char opr_sis) :
+Git_Ignoring_Files_Lister::Git_Ignoring_Files_Lister(char opr_sis) :
 
-    Des_Reader(DesPath)
-{
-
-    this->opr_sis = opr_sis;
-
-    this->Initialize_Mermbers();
-
-    this->Des_Reader.Read_Descriptor_File();
-
-    std::string str_wr = this->Des_Reader.Get_Warehouse_Location();
-
-    for(size_t i=0;i<str_wr.length();i++){
-
-        this->Warehouse.push_back(str_wr[i]);
-    }
-
-    std::string str_dr = this->Des_Reader.Get_Repo_Directory_Location();
-
-    for(size_t i=0;i<str_dr.length();i++){
-
-        this->Repo_Dir.push_back(str_dr[i]);
-    }
-
-    this->Des_Reader.Clear_Dynamic_Memory();
-}
-
-
-
-Git_Ignoring_Files_Lister::Git_Ignoring_Files_Lister(std::string DesPath, char opr_sis) :
-
-    Des_Reader(DesPath)
+    Des_Reader(opr_sis)
 {
     this->opr_sis = opr_sis;
 
     this->Initialize_Mermbers();
-
-    this->Des_Reader.Read_Descriptor_File();
-
-    this->Warehouse = this->Des_Reader.Get_Warehouse_Location();
-
-    this->Repo_Dir  = this->Des_Reader.Get_Repo_Directory_Location();
-
-    this->Des_Reader.Clear_Dynamic_Memory();
 }
 
 
@@ -68,6 +30,18 @@ void Git_Ignoring_Files_Lister::Initialize_Mermbers(){
      this->Memory_Delete_Condition = false;
 
      this->CString = nullptr;
+}
+
+
+void Git_Ignoring_Files_Lister::Receive_Descriptor_File_Path(char * DesPATH){
+
+     this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
+}
+
+
+void Git_Ignoring_Files_Lister::Receive_Descriptor_File_Path(std::string DesPATH){
+
+     this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
 }
 
 
@@ -91,6 +65,9 @@ void Git_Ignoring_Files_Lister::Clear_Dynamic_Memory()
 
          this->DirectoryManager.Clear_Dynamic_Memory();
 
+         this->Des_Reader.Clear_Dynamic_Memory();
+
+
          if(this->CString != nullptr){
 
              delete [] this->CString;
@@ -104,6 +81,13 @@ void Git_Ignoring_Files_Lister::Clear_Dynamic_Memory()
 void Git_Ignoring_Files_Lister::Write_Ignoring_File_List()
 {
      this->Memory_Delete_Condition = false;
+
+     this->Des_Reader.Read_Descriptor_File();
+
+     this->Warehouse = this->Des_Reader.Get_Warehouse_Location();
+
+     this->Repo_Dir  = this->Des_Reader.Get_Repo_Directory_Location();
+
 
      this->Determine_Git_Ignoring_Files_List_Path();
 

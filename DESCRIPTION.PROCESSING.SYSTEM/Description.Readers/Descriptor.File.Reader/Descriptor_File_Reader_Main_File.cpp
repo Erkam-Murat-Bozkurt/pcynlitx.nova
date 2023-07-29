@@ -21,7 +21,9 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_File_Reader(argv[1]);    
+    Descriptor_File_Reader Des_File_Reader('w');    
+
+    Des_File_Reader.Receive_Descriptor_File_Path(argv[1]);
 
     Des_File_Reader.Read_Descriptor_File();
 

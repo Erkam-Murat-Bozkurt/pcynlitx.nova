@@ -29,11 +29,27 @@ int main(int argc, char ** argv){
          file_path.push_back(argv[2][i]);
     }
 
+
+    Git_File_List_Receiver Receiver('w');
+
+    Receiver.Receive_Descriptor_File_Path(argv[1]);
+
+    Receiver.Determine_Git_Repo_Info();
+
+
+
     Build_System_Data Data;
 
-    Source_File_Data_Collector Data_Collector(argv[1],'w');
+    Source_File_Data_Collector Data_Collector('w');
+
+    Data_Collector.Receive_Git_File_List_Receiver(&Receiver);
+
+
+
+    Data_Collector.Receive_Descriptor_File_Path(argv[1]);  
 
     Data_Collector.Process_Source_File_Data(&Data,file_path);
+
 
     file_path.clear();
 

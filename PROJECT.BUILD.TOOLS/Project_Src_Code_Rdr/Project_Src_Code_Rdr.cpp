@@ -2,16 +2,19 @@
 #include "Project_Src_Code_Rdr.hpp"
 
 
-Project_Src_Code_Rdr::Project_Src_Code_Rdr(char * DesPath, char opr_sis)
+Project_Src_Code_Rdr::Project_Src_Code_Rdr(char opr_sis)
 {
    this->Memory_Delete_Condition = false;
+   this->opr_sis = opr_sis;
+
 
    this->Hdr_Determiner = new Header_File_Determiner * [8];
    this->Src_Determiner = new Source_File_Determiner * [8];
 
    for(int i=0;i<8;i++){
    
-       this->Hdr_Determiner[i] = new Header_File_Determiner(DesPath,opr_sis);
+       this->Hdr_Determiner[i] = new Header_File_Determiner(opr_sis);
+
        this->Src_Determiner[i] = new Source_File_Determiner;
    }
 }
@@ -24,6 +27,24 @@ Project_Src_Code_Rdr::~Project_Src_Code_Rdr(){
         this->Clear_Object_Memory();       
     }   
 }
+
+void Project_Src_Code_Rdr::Receive_Descriptor_File_Path(char * DesPATH){
+
+    for(int i=0;i<8;i++){
+   
+       this->Hdr_Determiner[i]->Receive_Descriptor_File_Path(DesPATH);
+   }
+}
+
+
+void Project_Src_Code_Rdr::Receive_Descriptor_File_Path(std::string DesPATH){
+     
+     for(int i=0;i<8;i++){
+   
+         this->Hdr_Determiner[i]->Receive_Descriptor_File_Path(DesPATH);
+     }
+}
+
 
 void Project_Src_Code_Rdr::Clear_Object_Memory(){
 

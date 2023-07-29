@@ -28,6 +28,7 @@ Source_File_Dependency_Selector::Source_File_Dependency_Selector(char * des_file
 
     : Info_Collector(des_file_path,opr_sis)
 {
+
    this->Memory_Delete_Condition = false;
 
    size_t dep_path_size = strlen(des_file_path);

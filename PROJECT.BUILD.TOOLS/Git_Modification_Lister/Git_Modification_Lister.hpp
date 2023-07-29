@@ -21,9 +21,10 @@
 class Git_Modification_Lister
 {
 public:
- Git_Modification_Lister(char * DesPath, char opr_sis);
- Git_Modification_Lister(std::string DesPath, char opr_sis);
+ Git_Modification_Lister(char opr_sis);
  virtual ~Git_Modification_Lister(); 
+ void Receive_Descriptor_File_Path(char * DesPATH);
+ void Receive_Descriptor_File_Path(std::string DesPATH);
  void Write_Git_Modification_File();
  void Clear_Dynamic_Memory();
 protected:
@@ -39,7 +40,6 @@ protected:
  Descriptor_File_Reader Des_Reader;
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
- Custom_System_Interface System_Interface;
  std::string Warehouse;
  std::string warehouse_path;
  std::string modification_file_path;

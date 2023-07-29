@@ -38,8 +38,6 @@ Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_
 
     this->Code_Rd.Read_Project_Source_Code_Files();
 
-    std::cout << "\n\nThe project source code read.";
-
     this->DepSelector.Receive_Source_Code_Reader(&this->Code_Rd);
 
     this->Src_Processor.Receive_Source_Code_Reader(&this->Code_Rd);
@@ -61,7 +59,6 @@ void Source_File_Dependency_Determiner::Clear_Object_Memory(){
      this->DepSelector.Clear_Object_Memory();
 
      this->Clear_Dynamic_Memory();
-
 }
 
 void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){

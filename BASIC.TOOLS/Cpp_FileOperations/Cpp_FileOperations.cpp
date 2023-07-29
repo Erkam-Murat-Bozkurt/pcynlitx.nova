@@ -29,20 +29,11 @@ Cpp_FileOperations::Cpp_FileOperations(){
    // Constructor Function for CString defined paths
 };
 
-Cpp_FileOperations::Cpp_FileOperations(char * FilePATH){
+Cpp_FileOperations::Cpp_FileOperations(char opr_sis){
+
+    this->opr_sis = opr_sis;
 
     this->Initialize_Members();
-
-    this->SetFilePath(FilePATH);
-
-   // Constructor Function for CString defined paths
-};
-
-Cpp_FileOperations::Cpp_FileOperations(std::string FilePATH){
-
-    this->Initialize_Members();
-
-    this->SetFilePath(FilePATH);
 
    // Constructor Function for CString defined paths
 };
@@ -55,6 +46,93 @@ Cpp_FileOperations::~Cpp_FileOperations(){
     // Destructor Function
 };
 
+void Cpp_FileOperations::Determine_File_Path(char * FilePATH){
+
+     if(this->Is_Current_Dir_Symbol_Exist_On_the_File_Path(FilePATH)){
+
+        this->DetermineCurrentDirectory();
+
+        size_t CurrentDirectory_Size = strlen(this->CurrentDirectory);
+
+        for(size_t i=0;i<CurrentDirectory_Size;i++){
+
+            this->FilePath.push_back(this->CurrentDirectory[i]);
+        }
+
+
+        if(this->opr_sis == 'w'){
+
+           this->FilePath.push_back('\\');
+        }
+
+        if(this->opr_sis == 'l'){
+
+           this->FilePath.push_back('/');
+        }
+
+        int name_start = 0;
+
+        this->Find_Start_Point_When_Current_Dir_Symbol_Exist(FilePATH,name_start);
+
+        size_t path_size = strlen(FilePATH);
+
+        for(size_t i=name_start;i<path_size;i++){
+
+            this->FilePath.push_back(FilePATH[i]);
+        }
+
+        this->FilePath.shrink_to_fit();
+     }
+     else{
+
+            size_t path_size = strlen(FilePATH);
+
+            for(size_t i=0;i<path_size;i++){
+
+               this->FilePath.push_back(FilePATH[i]);
+            }
+
+            this->FilePath.shrink_to_fit();
+     }
+}
+
+ void Cpp_FileOperations::Find_Start_Point_When_Current_Dir_Symbol_Exist(char * path, int & start_point){
+
+      size_t path_size = strlen(path);
+
+      start_point = 0;
+
+      for(size_t i=0;i<path_size;i++){
+
+          if(this->opr_sis == 'w'){
+
+             if(path[i] == '\\'){
+
+                break;
+             }
+             else{
+
+                 start_point++;
+             }
+          }
+
+          if(this->opr_sis == 'l'){
+
+             if(path[i] == '/'){
+
+                break;
+             }
+             else{
+
+                 start_point++;
+             }
+          }
+      }
+
+      start_point++;
+ }
+
+
 void Cpp_FileOperations::Initialize_Members(){
 
      this->File_line_Number = 0;
@@ -63,6 +141,7 @@ void Cpp_FileOperations::Initialize_Members(){
      this->file_open_status = false;
      this->is_path_exist = false;
      this->c_str = nullptr;
+     this->CurrentDirectory = nullptr;
 }
 
 void Cpp_FileOperations::Clear_Dynamic_Memory(){
@@ -70,6 +149,8 @@ void Cpp_FileOperations::Clear_Dynamic_Memory(){
      this->Clear_Vector_Memory(&this->File_Content);
 
      this->Clear_CString_Memory(&this->c_str);
+
+     this->Clear_CString_Memory(&this->CurrentDirectory);
 
 
      if(!this->String_Line.empty())
@@ -93,32 +174,32 @@ void Cpp_FileOperations::Clear_Dynamic_Memory(){
 
 void Cpp_FileOperations::SetFilePath(std::string FilePATH){
 
+     this->isFilePathReceive = true;
+
+     this->Memory_Delete_Condition = false;
+
+     this->Clear_String_Memory(&this->FilePath);
+
+     char * file_path = this->Convert_Std_String_To_CString(FilePATH);
+
+     this->Determine_File_Path(file_path);
+
+     this->Clear_Temporary_CString_Memory();
+
+     this->isFilePathReceive = true;
+}
+
+void Cpp_FileOperations::SetFilePath(char * FilePATH){
+
      this->Memory_Delete_Condition = false;
 
      this->isFilePathReceive = true;
 
      this->Clear_String_Memory(&this->FilePath);
 
-     size_t String_Size = FilePATH.length();
+     this->Determine_File_Path(FilePATH);
 
-     for(size_t i=0;i<String_Size;i++){
-
-         this->FilePath.push_back(FilePATH[i]);
-     }
-}
-
-void Cpp_FileOperations::SetFilePath(char * FilePATH){
-
-     this->isFilePathReceive = true;
-
-     this->Clear_String_Memory(&this->FilePath);
-
-     size_t String_Size = strlen(FilePATH);
-
-     for(size_t i=0;i<String_Size;i++){
-
-         this->FilePath.push_back(FilePATH[i]);
-     }
+          
 }
 
 void Cpp_FileOperations::FileOpen(char Open_Mode){
@@ -648,6 +729,101 @@ char * Cpp_FileOperations::Convert_Std_String_To_CString(std::string st)
        return this->c_str;
 }
 
+
+void Cpp_FileOperations::DetermineCurrentDirectory(){
+
+     this->Clear_CString_Memory(&this->CurrentDirectory);
+
+     CHAR Buffer[BUFSIZE];
+
+     GetCurrentDirectory(BUFSIZE, Buffer);
+
+     char * Directory = Buffer;
+
+     int Directory_Name_Size = strlen(Directory);
+
+     this->Memory_Delete_Condition = false;
+
+     this->CurrentDirectory = new char [5*Directory_Name_Size];
+
+     this->Place_String(&this->CurrentDirectory,Directory,Directory_Name_Size);
+}
+
+bool Cpp_FileOperations::Is_Current_Dir_Symbol_Exist_On_the_File_Path(char * path){
+
+     bool current_dir_sysmbol_existance = false;
+
+     size_t path_length = strlen(path);
+
+     char point = '.';
+     
+     char first_character = '\0';
+
+     size_t first_character_position = 0;
+
+     for(size_t i=0;i<path_length;i++){
+
+         if(path[i]!= ' '){
+
+            first_character = path[i];
+
+            break;            
+         }
+         else{
+
+              first_character_position++;
+         }
+     }
+
+     char second_character  = '\0';
+
+     for(size_t i=first_character_position+1;i<path_length;i++){
+
+         if(path[i]!= ' '){
+
+            second_character = path[i];
+
+            break;            
+         }
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(first_character == '.'){
+
+           if(second_character == '\\'){
+
+               current_dir_sysmbol_existance = true;
+           }
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(first_character == '.'){
+
+           if(second_character == '/'){
+
+               current_dir_sysmbol_existance = true;
+           }
+        }
+     }
+
+     return current_dir_sysmbol_existance;
+
+}
+
+
+void Cpp_FileOperations::Place_String(char ** Pointer, char * String, int String_Size){
+
+     for(int i=0;i<String_Size;i++){
+
+        (*Pointer)[i] = String[i];
+     }
+
+     (*Pointer)[String_Size] = '\0';
+}
+
 void Cpp_FileOperations::Clear_CString_Memory(char ** pointer){
 
      if(*pointer!= nullptr){
@@ -684,6 +860,7 @@ void Cpp_FileOperations::Clear_Vector_Memory(std::vector<std::string> * pointer)
      }
 }
 
+
 void Cpp_FileOperations::Clear_String_Memory(std::string * pointer){
 
      if(!pointer->empty()){
@@ -692,6 +869,11 @@ void Cpp_FileOperations::Clear_String_Memory(std::string * pointer){
 
          pointer->shrink_to_fit();
      }
+}
+
+void Cpp_FileOperations::Clear_Temporary_CString_Memory(){
+
+     this->Clear_CString_Memory(&this->c_str);
 }
 
 int Cpp_FileOperations::GetFileSize() const {

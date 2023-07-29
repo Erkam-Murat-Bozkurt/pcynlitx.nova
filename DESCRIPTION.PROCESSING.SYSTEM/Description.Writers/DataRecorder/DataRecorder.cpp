@@ -21,7 +21,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "DataRecorder.h"
 
-DataRecorder::DataRecorder(char * Path) : StringOperations(Path)
+DataRecorder::DataRecorder(char * Path, char opr_sis) : StringOperations(Path,opr_sis)
 
 {
     this->File_Manager.SetFilePath(Path);

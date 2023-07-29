@@ -3,49 +3,14 @@
 #include "Git_Modification_Lister.hpp"
 
 
-Git_Modification_Lister::Git_Modification_Lister(char * DesPath, char opr_sis) :
+Git_Modification_Lister::Git_Modification_Lister(char opr_sis) :
 
-    Des_Reader(DesPath)
+    Des_Reader(opr_sis)
 {
-
     this->Initialize_Mermbers();
-
-    this->Des_Reader.Read_Descriptor_File();
-
-    std::string str_wr = this->Des_Reader.Get_Warehouse_Location();
-
-    for(size_t i=0;i<str_wr.length();i++){
-
-        this->Warehouse.push_back(str_wr[i]);
-    }
-
-    std::string str_dr = this->Des_Reader.Get_Repo_Directory_Location();
-
-    for(size_t i=0;i<str_dr.length();i++){
-
-        this->Repo_Dir.push_back(str_dr[i]);
-    }
-
-    this->Des_Reader.Clear_Dynamic_Memory();
 
     this->opr_sis = opr_sis;
-}
 
-
-
-Git_Modification_Lister::Git_Modification_Lister(std::string DesPath, char opr_sis) :
-
-    Des_Reader(DesPath)
-{
-    this->Initialize_Mermbers();
-
-    this->Des_Reader.Read_Descriptor_File();
-
-    this->Warehouse = this->Des_Reader.Get_Warehouse_Location();
-
-    this->Repo_Dir  = this->Des_Reader.Get_Repo_Directory_Location();
-
-    this->Des_Reader.Clear_Dynamic_Memory();
 }
 
 
@@ -86,6 +51,9 @@ void Git_Modification_Lister::Clear_Dynamic_Memory()
 
          this->DirectoryManager.Clear_Dynamic_Memory();
 
+         this->Des_Reader.Clear_Dynamic_Memory();
+
+
          if(this->CString != nullptr){
 
              delete [] this->CString;
@@ -96,9 +64,26 @@ void Git_Modification_Lister::Clear_Dynamic_Memory()
 }
 
 
+void Git_Modification_Lister::Receive_Descriptor_File_Path(char * DesPATH){
+
+     this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
+}
+
+
+void Git_Modification_Lister::Receive_Descriptor_File_Path(std::string DesPATH){
+
+     this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
+}
+
 void Git_Modification_Lister::Write_Git_Modification_File()
 {
      this->Memory_Delete_Condition = false;
+
+     this->Des_Reader.Read_Descriptor_File();
+
+     this->Warehouse = this->Des_Reader.Get_Warehouse_Location();
+
+     this->Repo_Dir  = this->Des_Reader.Get_Repo_Directory_Location();
 
      this->Determine_Warehouse_Path();
 
@@ -148,6 +133,9 @@ void Git_Modification_Lister::Determine_Warehouse_Path(){
      }
 
      this->warehouse_path.shrink_to_fit();
+
+     std::cout << "\n this->warehouse_path:" << this->warehouse_path;
+     std::cin.get();
 }
 
 
@@ -164,9 +152,20 @@ void Git_Modification_Lister::Determine_Git_Modification_File_Path()
          this->modification_file_path.push_back(this->warehouse_path[i]) ;
      }
 
-     if(this->Warehouse.back() != '\\'){
+     if(this->opr_sis == 'w'){
 
-        this->modification_file_path.push_back('\\') ;
+        if(this->Warehouse.back() != '\\'){
+
+            this->modification_file_path.push_back('\\') ;
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(this->Warehouse.back() != '/'){
+
+            this->modification_file_path.push_back('/') ;
+        }
      }
 
      for(size_t i=0;i<file_name_size;i++){
@@ -194,8 +193,6 @@ void Git_Modification_Lister::Determine_Git_Listing_Command()
          this->git_listing_command.push_back(this->modification_file_path[i]);
      }
 
-     this->git_listing_command.push_back('\"');
-
      git_command.clear();
      git_command.shrink_to_fit();
 }
@@ -214,6 +211,10 @@ void Git_Modification_Lister::List_Files_in_Repo()
      this->Clear_CString_Buffer();
     
      char * system_cmd = this->From_Std_String_To_Char(this->git_listing_command);
+
+     std::cout << "\n system_cmd:" << system_cmd;
+
+     std::cout << "\n\n";
 
      this->Execute_System_Call(system_cmd);
 }

@@ -25,7 +25,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 MakeFile_Data_Collector::MakeFile_Data_Collector(char * Des_Path, char opr_sis) :
 
-Des_Reader(Des_Path)
+Des_Reader(Des_Path,opr_sis)
 
 {
      this->Des_Reader.Read_Descriptor_File();

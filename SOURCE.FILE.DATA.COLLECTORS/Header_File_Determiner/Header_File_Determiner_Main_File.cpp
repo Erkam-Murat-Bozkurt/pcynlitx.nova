@@ -21,19 +21,23 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_Reader(argv[1]);
-
-    Des_Reader.Read_Descriptor_File();
-
-    Git_File_List_Receiver Receiver(argv[1],'w');
+    Git_File_List_Receiver Receiver('w');
+    
+    Receiver.Receive_Descriptor_File_Path(argv[1]);
 
     Receiver.Determine_Git_Repo_Info();
+    
 
     std::string Repo_Dir = Receiver.Get_Git_Repo_Directory();
 
     int index_size = Receiver.Get_Git_File_Index_Size();
 
-    Header_File_Determiner Header_Determiner(argv[1],'w');
+
+
+    Header_File_Determiner Header_Determiner('w');
+
+    Header_Determiner.Receive_Descriptor_File_Path(argv[1]);
+
 
     for(int i=0;i<index_size-1;i++){
 

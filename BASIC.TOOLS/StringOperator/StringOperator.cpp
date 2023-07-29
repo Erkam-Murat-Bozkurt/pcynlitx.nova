@@ -29,17 +29,9 @@ StringOperator::StringOperator()
 }
 
 
-StringOperator::StringOperator(char * FilePATH) :
+StringOperator::StringOperator(char opr_sis) :
 
-   CharacterOperations(FilePATH), Cpp_File_Manager(FilePATH)
-{
-   this->Initialize_Members();
-}
-
-
-StringOperator::StringOperator(std::string FilePATH) :
-
- CharacterOperations(FilePATH), Cpp_File_Manager(FilePATH)
+   CharacterOperations(opr_sis), Cpp_File_Manager(opr_sis)
 {
    this->Initialize_Members();
 }
@@ -51,6 +43,22 @@ StringOperator::~StringOperator(){
         this->Clear_Dynamic_Memory();
     }
 }
+
+void StringOperator::SetFilePath(char * FilePATH){
+
+     this->Cpp_File_Manager.SetFilePath(FilePATH);
+
+     this->CharacterOperations.SetFilePath(FilePATH);
+}
+
+
+void StringOperator::SetFilePath(std::string FilePATH){
+
+     this->Cpp_File_Manager.SetFilePath(FilePATH);
+
+     this->CharacterOperations.SetFilePath(FilePATH);
+}
+
 
 void StringOperator::Initialize_Members(){
 

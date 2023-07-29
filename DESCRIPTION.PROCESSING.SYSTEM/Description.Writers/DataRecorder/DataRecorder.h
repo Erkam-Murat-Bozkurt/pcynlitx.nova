@@ -10,7 +10,7 @@
 class DataRecorder
 {
 public:
-  DataRecorder(char * Path);
+  DataRecorder(char * Path, char opr_sis);
   virtual ~DataRecorder();
   void Add_Data_Record(char * Data_Type, char * Data_Record);
   void Clear_Data_Record(char * Data_Type);

@@ -1,30 +1,12 @@
 
 #include "Descriptor_File_Data_Collector.hpp"
 
-Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(char * Descriptor_File_Path) :
+Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(char opr_sis) :
 
-  FileManager(Descriptor_File_Path)
+  StringManager(opr_sis),  FileManager(opr_sis)
 {
 
-   size_t path_size = strlen(Descriptor_File_Path);
-
-   for(size_t i=0;i<path_size;i++){
-
-       this->Descriptor_File_Path.append(1,Descriptor_File_Path[i]);
-   }
-
    this->Initialize_Members();
-}
-
-
-Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(std::string Descriptor_File_Path) :
-
-  FileManager(Descriptor_File_Path)
-
-{
-   this->Initialize_Members();
-
-   this->Descriptor_File_Path = Descriptor_File_Path;
 
 }
 
@@ -35,6 +17,18 @@ Descriptor_File_Data_Collector::~Descriptor_File_Data_Collector(){
 
        this->Clear_Dynamic_Memory();
     }
+}
+
+
+void Descriptor_File_Data_Collector::Receive_Descriptor_File_Path(char * DesPATH){
+
+     this->FileManager.SetFilePath(DesPATH);
+}
+
+
+void Descriptor_File_Data_Collector::Receive_Descriptor_File_Path(std::string DesPATH){
+
+     this->FileManager.SetFilePath(DesPATH);
 }
 
 
@@ -68,7 +62,7 @@ void Descriptor_File_Data_Collector::Clear_Dynamic_Memory()
 
          this->Clear_Vector_Memory(&this->File_Index_With_Spaces);
 
-         this->Clear_String_Memory(&this->Descriptor_File_Path);
+         //this->Clear_String_Memory(&this->Descriptor_File_Path);
 
          this->StringManager.Clear_Dynamic_Memory();
 

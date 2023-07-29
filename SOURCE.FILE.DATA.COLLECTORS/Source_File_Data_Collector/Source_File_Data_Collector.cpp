@@ -3,15 +3,11 @@
 
 #include "Source_File_Data_Collector.hpp"
 
-Source_File_Data_Collector::Source_File_Data_Collector(char * DesPath, char opr_sis) :
+Source_File_Data_Collector::Source_File_Data_Collector( char opr_sis) :
 
-    Git_Receiver(DesPath,opr_sis)
+   FileManager(opr_sis), StringManager(opr_sis)
 {
     this->operating_sis = opr_sis;
-
-    this->Git_Receiver.Determine_Git_Repo_Info();
-
-    this->Initialize_Members();
 }
 
 
@@ -19,10 +15,24 @@ Source_File_Data_Collector::~Source_File_Data_Collector()
 {
     this->Clear_Dynamic_Memory();
 
-    this->Git_Receiver.Clear_Dynamic_Memory();
-
     this->Clear_String_Memory(&this->Git_Repo_Dir);
 }
+
+void Source_File_Data_Collector::Receive_Git_File_List_Receiver(Git_File_List_Receiver * Receiver){
+
+     this->Git_Receiver_Ptr = Receiver;
+}
+
+void Source_File_Data_Collector::Receive_Descriptor_File_Path(char * DesPATH){
+
+     this->Git_Receiver_Ptr->Receive_Descriptor_File_Path(DesPATH);
+}
+
+void Source_File_Data_Collector::Receive_Descriptor_File_Path(std::string DesPATH){
+
+     this->Git_Receiver_Ptr->Receive_Descriptor_File_Path(DesPATH);
+}
+
 
 void Source_File_Data_Collector::Initialize_Members()
 {
@@ -30,9 +40,9 @@ void Source_File_Data_Collector::Initialize_Members()
 
      this->included_header_file_number = 0;
 
-     this->git_record_size = this->Git_Receiver.Get_Git_File_Index_Size();
+     this->git_record_size = this->Git_Receiver_Ptr->Get_Git_File_Index_Size();
 
-     std::string dir = this->Git_Receiver.Get_Git_Repo_Directory();
+     std::string dir = this->Git_Receiver_Ptr->Get_Git_Repo_Directory();
 
      for(size_t i=0;i<dir.length();i++)
      {
@@ -45,6 +55,8 @@ void Source_File_Data_Collector::Process_Source_File_Data(Build_System_Data * Pt
      this->Data_Pointer = Ptr;
 
      this->Clear_Dynamic_Memory();
+
+     this->Initialize_Members();
 
      for(size_t i=0;i<path.length();i++){
 
@@ -294,7 +306,7 @@ void Source_File_Data_Collector::Determine_Git_Record_Header_File_Path(std::stri
 
      for(int i=0;i<this->git_record_size;i++){
 
-         std::string file_path = this->Git_Receiver.Get_Git_File_Index(i);
+         std::string file_path = this->Git_Receiver_Ptr->Get_Git_File_Index(i);
 
          std::string file_name;
 
@@ -449,7 +461,7 @@ void Source_File_Data_Collector::Determine_Header_File_Directory(std::string * d
 
 void Source_File_Data_Collector::Determine_Class_Header_File_Name()
 {
-     int total_hdr_number   = this->Data_Pointer->Included_Header_Files_Number;
+     int total_hdr_number    = this->Data_Pointer->Included_Header_Files_Number;
 
      std::string  file_name  = this->Data_Pointer->File_Name;
 

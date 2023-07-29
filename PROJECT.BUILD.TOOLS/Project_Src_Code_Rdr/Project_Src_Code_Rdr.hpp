@@ -37,8 +37,10 @@ struct FileData
 class Project_Src_Code_Rdr
 {
 public:
- Project_Src_Code_Rdr(char * DesPath, char opr_sis);
+ Project_Src_Code_Rdr(char opr_sis);
  virtual ~Project_Src_Code_Rdr();
+ void Receive_Descriptor_File_Path(char * DesPATH);
+ void Receive_Descriptor_File_Path(std::string DesPATH);   
  void Receive_Git_Repo_Information(Git_File_List_Receiver * ptr);
  void Read_Project_Source_Code_Files();
  std::vector<std::string> * Get_File_Content(int i);
@@ -68,6 +70,7 @@ protected:
  Git_File_List_Receiver * Git_Data_Ptr;
  Source_File_Determiner ** Src_Determiner;
  Header_File_Determiner ** Hdr_Determiner;
+ char opr_sis;
  std::thread threads[8];
  std::mutex mtx;
  std::string File_Name;

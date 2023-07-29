@@ -11,9 +11,10 @@ class StringOperator
 {
 public:
  StringOperator();
- StringOperator(char * FilePATH);
- StringOperator(std::string FilePATH);
+ StringOperator(char opr_sis);
  virtual ~StringOperator();
+ void SetFilePath(char * FilePATH);
+ void SetFilePath(std::string FilePATH);
  void ReceiveFileLine(std::string ReadLine);
  void LoadStringBuffer(std::string ReadLine);
  int  FindNextWordLine(std::string search_word, int startPoint);

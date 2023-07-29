@@ -1,23 +1,18 @@
 
 #include "Header_File_Determiner.h"
 
-Header_File_Determiner::Header_File_Determiner(char * DesPath, char opr_sis) :
+Header_File_Determiner::Header_File_Determiner(char opr_sis) :
 
-     Git_Receiver(DesPath,opr_sis)
+     Git_Receiver(opr_sis), StringManager(opr_sis), FileManager(opr_sis)
 {
-    this->Git_Receiver.Determine_Git_Repo_Info();
-
-    this->git_record_size = this->Git_Receiver.Get_Git_File_Index_Size();
-
-    this->Repo_Dir  = this->Git_Receiver.Get_Git_Repo_Directory();
-
-    this->operating_sis = opr_sis;
 
     this->include_decleration_cond = false;
 
     this->Memory_Delete_Condition = false;
 
     this->is_header_file = false;
+
+    this->operating_sis = opr_sis;
 }
 
 
@@ -46,6 +41,31 @@ void Header_File_Determiner::Clear_Dynamic_Memory(){
      this->StringManager.Clear_Dynamic_Memory();
      this->FileManager.Clear_Dynamic_Memory();   
 }
+
+
+void Header_File_Determiner::Receive_Descriptor_File_Path(char * DesPATH){
+
+     this->Git_Receiver.Receive_Descriptor_File_Path(DesPATH);
+
+     this->Git_Receiver.Determine_Git_Repo_Info();
+
+     this->git_record_size = this->Git_Receiver.Get_Git_File_Index_Size();
+
+     this->Repo_Dir  = this->Git_Receiver.Get_Git_Repo_Directory();
+}
+
+
+void Header_File_Determiner::Receive_Descriptor_File_Path(std::string DesPATH){
+
+     this->Git_Receiver.Receive_Descriptor_File_Path(DesPATH);
+
+     this->Git_Receiver.Determine_Git_Repo_Info();
+
+     this->git_record_size = this->Git_Receiver.Get_Git_File_Index_Size();
+
+     this->Repo_Dir  = this->Git_Receiver.Get_Git_Repo_Directory();
+}
+
 
 bool Header_File_Determiner::Is_this_file_included_on_anywhere(std::string file_path){
 
@@ -301,15 +321,6 @@ bool Header_File_Determiner::Is_Header(std::string file_path){
 
        this->is_header_file = true;
     }
-    
-    /*
-
-
-    std::cout << "\n this->is_header_file:" << this->is_header_file;
-
-    std::cin.get();
-
-    */
 
     return this->is_header_file;
 }

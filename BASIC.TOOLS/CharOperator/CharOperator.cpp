@@ -28,18 +28,10 @@ CharOperator::CharOperator(){
 
 }
 
-CharOperator::CharOperator(char * FilePath) : FileManager (FilePath) {
+CharOperator::CharOperator(char opr_sis) : FileManager (opr_sis) {
 
     this->Memory_Delete_Condition = false;
 }
-
-CharOperator::CharOperator(std::string FilePath): FileManager (FilePath){
-
-
-    this->Memory_Delete_Condition = false;
-
-}
-
 
 CharOperator::~CharOperator(){
 
@@ -59,6 +51,16 @@ void CharOperator::Clear_Dynamic_Memory(){
      }
 }
 
+void CharOperator::SetFilePath(char * FilePATH){
+
+     this->FileManager.SetFilePath(FilePATH);
+}
+
+
+void CharOperator::SetFilePath(std::string FilePATH){
+
+     this->FileManager.SetFilePath(FilePATH);
+}
 
 void CharOperator::ForwardFilePointer(Cpp_FileOperations * FileManager,int stepSize){
 

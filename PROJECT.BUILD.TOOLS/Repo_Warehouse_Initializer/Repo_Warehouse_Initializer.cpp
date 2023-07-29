@@ -5,19 +5,30 @@
 
 Repo_Warehouse_Initializer::Repo_Warehouse_Initializer(char * DesPath, char opr_sis): 
 
- Git_List_Writer(DesPath,opr_sis), Git_Receiver(DesPath,opr_sis), 
+ Git_List_Writer(opr_sis),       Git_Receiver(opr_sis), 
  Ignoring_Files_Lister(DesPath,opr_sis), Dir_Lister(DesPath,opr_sis), 
- Des_Reader(DesPath) 
+ Des_Reader(DesPath,opr_sis) 
 
 {
+     std::cout << "\n The start of the Repo_Warehouse_Initializer constructor";
+     std::cin.get();
 
      this->Des_Reader.Read_Descriptor_File();
 
+     std::cout << "\n Descriptor File Readed";;
+     std::cin.get();    
+
      this->Git_Receiver.Determine_Git_Repo_Info();
+
+     std::cout << "\n Git Repo Information Received";
+     std::cin.get();    
 
      this->Dir_Lister.Determine_Git_Repo_Info();
      
      this->opr_sis = opr_sis;
+
+     std::cout << "\n The start of the Repo_Warehouse_Initializer constructor";
+     std::cin.get();
 }
 
 
@@ -34,7 +45,6 @@ Repo_Warehouse_Initializer::~Repo_Warehouse_Initializer(){
 
 
 void Repo_Warehouse_Initializer::Build_Project_Warehouse(){
-
 
      this->warehouse_location = this->Des_Reader.Get_Warehouse_Location();
 

@@ -20,7 +20,9 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Git_File_List_Receiver Receiver(argv[1],'w');
+    Git_File_List_Receiver Receiver('w');
+
+    Receiver.Receive_Descriptor_File_Path(argv[1]);
 
     Receiver.Determine_Git_Repo_Info();
 

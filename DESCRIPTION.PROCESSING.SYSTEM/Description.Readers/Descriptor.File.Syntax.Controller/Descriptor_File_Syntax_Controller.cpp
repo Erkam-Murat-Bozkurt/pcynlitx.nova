@@ -2,18 +2,11 @@
 
 #include "Descriptor_File_Syntax_Controller.hpp"
 
-Descriptor_File_Syntax_Controller::Descriptor_File_Syntax_Controller(char * path) :
+Descriptor_File_Syntax_Controller::Descriptor_File_Syntax_Controller(char opr_sis) :
 
-  FileManager(path)
+  StringManager(opr_sis), FileManager(opr_sis)
 {
    this->Memory_Delete_Condition = false;
-}
-
-Descriptor_File_Syntax_Controller::Descriptor_File_Syntax_Controller(std::string path) :
-
-  FileManager(path)
-{
-  this->Memory_Delete_Condition = false;
 }
 
 Descriptor_File_Syntax_Controller::~Descriptor_File_Syntax_Controller(){
@@ -24,7 +17,6 @@ Descriptor_File_Syntax_Controller::~Descriptor_File_Syntax_Controller(){
     }
 }
 
-
 void Descriptor_File_Syntax_Controller::Clear_Dynamic_Memory(){
 
      if(!this->Memory_Delete_Condition){
@@ -33,12 +25,23 @@ void Descriptor_File_Syntax_Controller::Clear_Dynamic_Memory(){
 
          this->Clear_Vector_Memory(&this->File_Index);
 
-         this->Clear_String_Memory(&this->Descriptor_File_Path);
-
          this->StringManager.Clear_Dynamic_Memory();
 
          this->FileManager.Clear_Dynamic_Memory();
      }
+}
+
+
+void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Path(char * DesPATH){
+
+     this->FileManager.SetFilePath(DesPATH);
+     
+}
+
+
+void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Path(std::string DesPATH){
+
+     this->FileManager.SetFilePath(DesPATH);
 }
 
 void Descriptor_File_Syntax_Controller::Control_Descriptor_File_Syntax(){

@@ -20,9 +20,10 @@
 class Git_File_List_Writer
 {
 public:
- Git_File_List_Writer(char * DesPath, char opr_sis);
- Git_File_List_Writer(std::string DesPath, char opr_sis);
+ Git_File_List_Writer(char opr_sis);
  virtual ~Git_File_List_Writer();
+ void Receive_Descriptor_File_Path(char * DesPath);
+ void Receive_Descriptor_File_Path(std::string DesPath);
  void Write_Git_Repo_List_File();
  void Clear_Dynamic_Memory();
 protected:

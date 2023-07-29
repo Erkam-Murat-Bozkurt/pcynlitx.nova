@@ -24,7 +24,9 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Git_File_List_Receiver Receiver(argv[1],'w');
+    Git_File_List_Receiver Receiver('w');
+
+    Receiver.Receive_Descriptor_File_Path(argv[1]);
 
     Receiver.Determine_Git_Repo_Info();
 
@@ -42,7 +44,9 @@ int main(int argc, char ** argv){
     }
 
 
-    Project_Src_Code_Rdr Code_Rd(argv[1],'w');
+    Project_Src_Code_Rdr Code_Rd('w');
+
+    Code_Rd.Receive_Descriptor_File_Path(argv[1]);
 
     Code_Rd.Receive_Git_Repo_Information(&Receiver);
 
@@ -77,26 +81,6 @@ int main(int argc, char ** argv){
 
        std::cout << "\n\n ";           
     }
-
-    /*
-
-    for(size_t i=0;i<src_file_num;i++){
-    
-       std::vector<std::string> * src_code = Code_Rd.Get_File_Content(i);
-
-       std::string path = Code_Rd.Get_File_Path(i);
-
-       std::cout << "\n\n ";
-
-       std::cout << "\n THE SOURCE CODE FOR FILE PATH:" ;
-       
-       std::cout << "\n " << path;
-
-       print_file(src_code);
-    }
-
-
-    */
 
     std::cout << "\n\n";
 

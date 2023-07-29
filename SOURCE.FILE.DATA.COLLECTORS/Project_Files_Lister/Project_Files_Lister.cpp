@@ -3,9 +3,9 @@
 
 Project_Files_Lister::Project_Files_Lister(char * DesPATH, char opr_sis) :
 
-   Git_Data_Receiver(DesPATH,opr_sis), Src_Data_Col(DesPATH,opr_sis),
+   Git_Data_Receiver(opr_sis), Src_Data_Col(opr_sis),
 
-   Header_Determiner(DesPATH,opr_sis)
+   Header_Determiner(opr_sis)
 {
     this->Git_Data_Receiver.Determine_Git_Repo_Info();
 

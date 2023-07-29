@@ -13,9 +13,10 @@ class CharOperator
 {
 public:
   CharOperator();
-  CharOperator(char * FilePATH);
-  CharOperator(std::string FilePATH);
+  CharOperator(char opr_sis);
   virtual ~CharOperator();
+  void SetFilePath(char * FilePATH);
+  void SetFilePath(std::string FilePATH);
   int  DetermineCharacterRepitation(std::string list, char c);             // The function determines that how many character is there in a list
   int  FindNextCharacterPositon(std::string list, int start ,char c);      // Search a character in a list starting from a given point..
   int  FindTheSpecificWordLine(std::string line);                          // The return value is the line number includes a specific word..
@@ -25,7 +26,7 @@ public:
   bool CompareString(std::string firstString, std::string secondString);   // Compares two string
   void Clear_Dynamic_Memory();
 private:
-  Cpp_FileOperations FileManager;
+  Cpp_FileOperations FileManager;  
   bool Memory_Delete_Condition;
   int  CharacterPosition;
   int  CharacterRepitation;

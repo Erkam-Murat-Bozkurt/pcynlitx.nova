@@ -20,9 +20,10 @@
 class Descriptor_File_Data_Collector
 {
 public:
- Descriptor_File_Data_Collector(char * FilePATH);
- Descriptor_File_Data_Collector(std::string FilePATH);
+ Descriptor_File_Data_Collector(char opr_sis);
  virtual ~Descriptor_File_Data_Collector();
+ void Receive_Descriptor_File_Path(char * FilePATH);
+ void Receive_Descriptor_File_Path(std::string FilePATH);
  void Collect_Descriptor_File_Data();
  void Clear_Dynamic_Memory();
  int Get_Record_Directory_Record_Area(int index);

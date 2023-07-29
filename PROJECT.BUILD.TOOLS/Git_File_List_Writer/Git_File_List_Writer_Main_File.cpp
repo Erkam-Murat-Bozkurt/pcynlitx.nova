@@ -21,7 +21,9 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Git_File_List_Writer Writer(argv[1]);
+    Git_File_List_Writer Writer('w');
+
+    Writer.Receive_Descriptor_File_Path(argv[1]);
 
     Writer.Write_Git_Repo_List_File();
 

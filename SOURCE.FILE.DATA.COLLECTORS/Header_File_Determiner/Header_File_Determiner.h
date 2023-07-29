@@ -21,8 +21,10 @@
 class Header_File_Determiner
 {
 public:
- Header_File_Determiner(char * DesPath, char opr_sis);
+ Header_File_Determiner(char opr_sis);
  virtual ~Header_File_Determiner();
+ void Receive_Descriptor_File_Path(char * DesPATH);
+ void Receive_Descriptor_File_Path(std::string DesPATH);
  bool Is_Header(std::string file_path);
  bool Is_This_Repo_Header(std::string file_path);
  bool Include_Decleration_Test(std::string string);
@@ -43,9 +45,9 @@ public:
  void Clear_Object_Memory();
 protected:
  void Clear_String_Memory(std::string * pointer);
+ Git_File_List_Receiver Git_Receiver;
  StringOperator StringManager;
  Cpp_FileOperations FileManager;
- Git_File_List_Receiver Git_Receiver;
  std::string  Header_File_Directory;
  std::string  Header_File_Name;
  std::string  Header_File_Name_With_Extention;

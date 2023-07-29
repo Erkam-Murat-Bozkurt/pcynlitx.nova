@@ -8,6 +8,9 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) :
  
 {
     
+    std::cout << "\n The start of the Build_Tools_Initializer constructor";
+    std::cin.get();
+
     this->Dep_Determiner.Collect_Dependency_Information();
 
     std::cout << "\n\n\e[1;32mThe source file dependencies determined \e[0m\n\n";
@@ -30,6 +33,8 @@ void Build_Tools_Initializer::Clear_Dynamic_Memory(){
 void Build_Tools_Initializer::Setup_Build_Tools(){
 
      this->Rep_Init.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
+
+     std::cout << "\n 1";
 
      this->Rep_Init.Build_Project_Warehouse();
 

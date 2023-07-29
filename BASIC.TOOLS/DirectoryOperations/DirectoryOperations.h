@@ -22,8 +22,6 @@ class DirectoryOperations
 {
 public:
  DirectoryOperations();
- DirectoryOperations(char * DesPath);
- DirectoryOperations(std::string DesPath);
  virtual ~DirectoryOperations();
  void LoadSystemFunctionCommand(char * command,char * DirectoryName);
  void RecordCurrentDirectoryPATH();
@@ -61,7 +59,6 @@ private:
  void Clear_Pointer_Memory(char ** ptr);
  void Clear_String_Memory(std::string ** ptr);
  char * Convert_Std_String_To_CString(std::string st);
- CharOperator CString_Operator;
  bool   Memory_Delete_Condition;
  std::string * File_List;
  char * SystemCommand;

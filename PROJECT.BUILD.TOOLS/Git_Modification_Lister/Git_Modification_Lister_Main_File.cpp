@@ -22,7 +22,9 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Git_Modification_Lister Lister(argv[1],'w');
+    Git_Modification_Lister Lister('w');
+
+    Lister.Receive_Descriptor_File_Path(argv[1]);
 
     Lister.Write_Git_Modification_File();
 

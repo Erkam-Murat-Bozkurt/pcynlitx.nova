@@ -22,9 +22,10 @@
 class Descriptor_File_Syntax_Controller
 {
 public:
- Descriptor_File_Syntax_Controller(char * path);
- Descriptor_File_Syntax_Controller(std::string path);
+ Descriptor_File_Syntax_Controller(char opr_sis);
  virtual ~Descriptor_File_Syntax_Controller();
+ void Receive_Descriptor_File_Path(char * opr_sis);
+ void Receive_Descriptor_File_Path(std::string opr_sis);
  void Control_Descriptor_File_Syntax();
  void Clear_Dynamic_Memory();
 protected:

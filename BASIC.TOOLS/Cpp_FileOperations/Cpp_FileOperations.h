@@ -30,12 +30,14 @@
                       // The stream is positioned at the end of the file.
                       // All writes will append to the file.
 
+#define BUFSIZE MAX_PATH
+
+
 class Cpp_FileOperations
 {
 public:
  Cpp_FileOperations();
- Cpp_FileOperations(char * FilePATH);
- Cpp_FileOperations(std::string FilePATH);
+ Cpp_FileOperations(char opr_sis);
  virtual ~Cpp_FileOperations();
  void CpFile(char * path, char * target_path);
  void CpFile(std::string path, std::string target_path);
@@ -72,6 +74,12 @@ private:
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
  void Clear_CString_Memory(char ** ptr);
+ void Clear_Temporary_CString_Memory();
+ void DetermineCurrentDirectory();
+ void Place_String(char ** Pointer, char * String, int String_Size);
+ bool Is_Current_Dir_Symbol_Exist_On_the_File_Path(char * path);
+ void Find_Start_Point_When_Current_Dir_Symbol_Exist(char * path, int & start_point);
+ void Determine_File_Path(char * path);
  std::fstream DataFile;
  std::string String_Line;
  std::string string_word;
@@ -80,6 +88,8 @@ private:
  bool Is_File_Empty;
  std::vector<std::string> File_Content;
  char Open_Mode_Determiner;
+ char opr_sis;
+ char * CurrentDirectory;
  char * c_str;
  int  File_line_Number;
  int  Delete_Return_Status;

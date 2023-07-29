@@ -19,11 +19,12 @@
 class Descriptor_File_Reader
 {
 public:
- Descriptor_File_Reader(char * path);
- Descriptor_File_Reader(std::string path);
+ Descriptor_File_Reader(char opr_sis);
  virtual ~Descriptor_File_Reader();
  void Read_Descriptor_File();
  void Clear_Dynamic_Memory();
+ void Receive_Descriptor_File_Path(char * DesPATH);
+ void Receive_Descriptor_File_Path(std::string DesPATH);
  std::string Get_Library_Directory(int i);
  std::string Get_Library_File(int i);
  std::string Get_Source_File_Directory(int i);

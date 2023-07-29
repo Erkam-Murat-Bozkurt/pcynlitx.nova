@@ -29,24 +29,6 @@ DirectoryOperations::DirectoryOperations()
 };
 
 
-DirectoryOperations::DirectoryOperations(char * DesPath) :
-
-CString_Operator(DesPath)
-
-{
-    this->Initialize_Mermbers();
-};
-
-
-DirectoryOperations::DirectoryOperations(std::string DesPath) :
-
-CString_Operator(DesPath)
-
-{
-    this->Initialize_Mermbers();
-};
-
-
 DirectoryOperations::~DirectoryOperations()
 {
      if(!this->Memory_Delete_Condition){
@@ -98,8 +80,6 @@ void DirectoryOperations::Clear_Dynamic_Memory(){
          this->Clear_String_Memory(&this->File_List);
 
          this->Clear_Pointer_Memory(&this->c_str);
-
-         this->CString_Operator.Clear_Dynamic_Memory();
      }
 }
 
@@ -290,6 +270,7 @@ int DirectoryOperations::ChangeDirectory(const char * path){
 
     char * CurrentDirectory = this->GetCurrentlyWorkingDirectory();
 
+
     std::string CurrentDirectory_String;
 
     std::string TargetDirectory_String;
@@ -298,19 +279,20 @@ int DirectoryOperations::ChangeDirectory(const char * path){
 
     for(int i=0;i<CurrentDirectory_Size;i++){
 
-        CurrentDirectory_String.append(1,CurrentDirectory[i]);
+        CurrentDirectory_String.push_back(CurrentDirectory[i]);
     }
 
-    CurrentDirectory_String.append(1,'\0');
+    CurrentDirectory_String.shrink_to_fit();
 
     int TargetDirectory_Size = strlen(path);
 
     for(int i=0;i<TargetDirectory_Size;i++){
 
-       TargetDirectory_String.append(1,path[i]);
+       TargetDirectory_String.push_back(path[i]);
     }
 
-    TargetDirectory_String.append(1,'\0');
+    TargetDirectory_String.shrink_to_fit();
+
 
     this->ReturnCondition = 0;
 
@@ -326,9 +308,11 @@ int DirectoryOperations::ChangeDirectory(const char * path){
 
 int DirectoryOperations::ChangeDirectory(char * path){
 
+
     this->DetermineCurrentDirectory();
 
     char * CurrentDirectory = this->GetCurrentlyWorkingDirectory();
+
 
     std::string CurrentDirectory_String;
 
@@ -338,19 +322,20 @@ int DirectoryOperations::ChangeDirectory(char * path){
 
     for(int i=0;i<CurrentDirectory_Size;i++){
 
-        CurrentDirectory_String.append(1,CurrentDirectory[i]);
+        CurrentDirectory_String.push_back(CurrentDirectory[i]);
     }
 
-    CurrentDirectory_String.append(1,'\0');
+    CurrentDirectory_String.shrink_to_fit();
 
     int TargetDirectory_Size = strlen(path);
 
     for(int i=0;i<TargetDirectory_Size;i++){
 
-       TargetDirectory_String.append(1,path[i]);
+       TargetDirectory_String.push_back(path[i]);
     }
 
-    TargetDirectory_String.append(1,'\0');
+    TargetDirectory_String.shrink_to_fit();
+
 
     this->ReturnCondition = 0;
 
