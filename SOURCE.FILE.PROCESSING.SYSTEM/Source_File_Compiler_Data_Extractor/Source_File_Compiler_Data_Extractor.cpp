@@ -28,7 +28,7 @@ Source_File_Compiler_Data_Extractor::Source_File_Compiler_Data_Extractor(char * 
 
     char opr_sis) :
 
-    File_Lister(des_file_path, opr_sis)
+    File_Lister(opr_sis)
 {
 
    this->operating_sis = opr_sis;

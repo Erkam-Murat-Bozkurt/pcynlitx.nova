@@ -1,7 +1,7 @@
 
 #include "Project_Files_Lister.h"
 
-Project_Files_Lister::Project_Files_Lister(char * DesPATH, char opr_sis) :
+Project_Files_Lister::Project_Files_Lister(char opr_sis) :
 
    Git_Data_Receiver(opr_sis), Src_Data_Col(opr_sis),
 

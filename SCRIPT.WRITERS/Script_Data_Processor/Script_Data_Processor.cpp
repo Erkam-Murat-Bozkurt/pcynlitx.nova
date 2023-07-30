@@ -4,7 +4,7 @@
 
 Script_Data_Processor::Script_Data_Processor(char * DesPATH, char opr_sis) :
 
- Des_Reader(DesPATH,opr_sis), Data_Collector(DesPATH,opr_sis)
+ Des_Reader(opr_sis), Data_Collector(opr_sis)
 
 {
      this->Memory_Delete_Condition = false;

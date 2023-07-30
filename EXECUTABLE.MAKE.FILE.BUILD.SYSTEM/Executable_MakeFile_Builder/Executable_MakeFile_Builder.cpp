@@ -25,7 +25,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Executable_MakeFile_Builder::Executable_MakeFile_Builder(char * des_path, char opr_sis):
 
-Des_Reader(des_path,opr_sis), Dep_Determiner(des_path,opr_sis),
+Des_Reader(opr_sis), Dep_Determiner(des_path,opr_sis),
 
 ComConstructor(des_path,opr_sis)
 

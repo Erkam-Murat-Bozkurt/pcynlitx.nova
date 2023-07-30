@@ -4,7 +4,7 @@
 
 Header_File_Processor::Header_File_Processor(char * DesPath, char opr_sis) :
 
-     Git_Receiver(DesPath,opr_sis)
+     Git_Receiver(opr_sis)
 {
     this->Git_Receiver.Determine_Git_Repo_Info();
 

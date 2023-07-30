@@ -24,7 +24,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Library_Updater::Library_Updater(char * DesPATH, char opr_sis):
 
-    Des_Reader(DesPATH,opr_sis)
+    Des_Reader(opr_sis)
 {
 
     this->opr_sis = opr_sis;

@@ -28,7 +28,7 @@ Source_File_Information_Collector::Source_File_Information_Collector(char * des_
 
    char opr_sis) :
 
-   Des_Reader(des_file_path,opr_sis), Git_Data_Receiver(des_file_path,opr_sis),
+   Des_Reader(opr_sis), Git_Data_Receiver(opr_sis),
    Header_Processor(des_file_path,opr_sis)
 {
    this->operating_sis = opr_sis;

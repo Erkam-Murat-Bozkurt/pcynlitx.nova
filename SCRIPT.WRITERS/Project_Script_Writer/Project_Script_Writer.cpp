@@ -4,7 +4,7 @@
 
 Project_Script_Writer::Project_Script_Writer(char * DesPATH, char opr_sis) :
 
-    Src_Data_Processor(DesPATH,opr_sis), Git_Receiver(DesPATH,opr_sis), Des_Reader(DesPATH,opr_sis)
+    Src_Data_Processor(DesPATH,opr_sis), Git_Receiver(opr_sis), Des_Reader(opr_sis)
 {
 
      this->Memory_Delete_Condition = true;

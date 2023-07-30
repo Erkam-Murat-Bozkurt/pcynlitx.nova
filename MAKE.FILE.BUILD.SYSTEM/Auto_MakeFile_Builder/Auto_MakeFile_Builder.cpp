@@ -4,7 +4,7 @@
 
 Auto_MakeFile_Builder::Auto_MakeFile_Builder(char * DesPath, char opr_sis) :
    
-   Mk_Builder(DesPath,opr_sis), Mk_File_Clnr(DesPath,opr_sis), Des_Reader(DesPath,opr_sis)
+   Mk_Builder(DesPath,opr_sis), Mk_File_Clnr(DesPath,opr_sis), Des_Reader(opr_sis)
 {
      this->Memory_Delete_Condition = true;
 

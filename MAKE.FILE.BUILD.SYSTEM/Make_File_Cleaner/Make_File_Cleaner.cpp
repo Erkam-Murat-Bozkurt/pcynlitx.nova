@@ -26,7 +26,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Make_File_Cleaner::Make_File_Cleaner(char * DesPath, char opr_sis) :
 
-  File_Lister(DesPath,opr_sis)
+  File_Lister(opr_sis)
 {
    this->Memory_Delete_Condition = false;
 

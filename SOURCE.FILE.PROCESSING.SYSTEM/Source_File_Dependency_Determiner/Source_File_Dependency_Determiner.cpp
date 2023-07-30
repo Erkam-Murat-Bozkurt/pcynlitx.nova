@@ -27,7 +27,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_file_path, char opr_sis) :
 
    DepSelector(des_file_path,opr_sis), Com_Data_Extractor(des_file_path,opr_sis),
-   Git_Data_Receiver(des_file_path,opr_sis), Code_Rd(des_file_path,opr_sis)
+   Git_Data_Receiver(opr_sis), Code_Rd(opr_sis)
 {
 
     std::cout << "\n\n\e[1;32mC++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED\e[0m\n";

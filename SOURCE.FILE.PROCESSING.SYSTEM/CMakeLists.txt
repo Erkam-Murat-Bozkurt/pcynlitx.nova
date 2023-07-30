@@ -78,16 +78,6 @@ target_include_directories(src_proc_sys PUBLIC
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Directory_Tree_Size_Determiner
 
-    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_File_List_Receiver
-
-    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_File_List_Writer
-
-    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Ignoring_Files_Lister
-
-    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Modification_Lister
-
-    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Modification_Receiver
-
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Library_Name_Extractor
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Library_Updater
@@ -97,6 +87,20 @@ target_include_directories(src_proc_sys PUBLIC
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Repo_Dir_Determiner
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Repo_Warehouse_Initializer
+
+
+
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Receiver
+
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Writer
+
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Ignoring_Files_Lister
+
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Lister
+
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Receiver
+
+
 
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Cpp_FileOperations
@@ -159,15 +163,19 @@ target_link_directories(src_proc_sys PUBLIC
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Directory_Tree_Size_Determiner
 
-    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_File_List_Receiver
 
-    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_File_List_Writer
 
-    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Modification_Lister
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Receiver
 
-    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Ignoring_Files_Lister
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Writer
 
-    ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Git_Modification_Receiver
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Ignoring_Files_Lister
+
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Lister
+
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Receiver
+
+
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Library_Name_Extractor
 
@@ -193,4 +201,6 @@ target_link_directories(src_proc_sys PUBLIC
 )
 
 
-target_link_libraries(src_proc_sys PUBLIC src_dat_col proj_bld_tools des_reader basic_tools)
+target_link_libraries(src_proc_sys PUBLIC src_dat_col proj_bld_tools
+
+                        git_data_processing_system des_reader basic_tools)

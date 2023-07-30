@@ -9,7 +9,8 @@ FILE_OPRS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
 DES_READ=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
 DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
 DES_SYN_CON=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
-GIT_LIST=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_Modification_Lister
+GIT_LIST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Writer
+
 
 
 VPATH = $(DIR_OPS) $(STRING_OPS) $(CHAR_OPS) $(FILE_OPRS) \
@@ -17,9 +18,8 @@ VPATH = $(DIR_OPS) $(STRING_OPS) $(CHAR_OPS) $(FILE_OPRS) \
 				$(GIT_LIST) $(DES_SYN_CON) \
 				$(INT_TRANS) $(SYS_INT)
 
-
-Git_FiGit_Modification_Listerle_List_Receiver.exe: Git_Modification_Lister_Main_File.cpp \
-	Git_Modification_Lister.cpp  \
+Git_File_List_Receiver.exe: Git_File_List_Writer_Main_File.cpp \
+	Git_File_List_Writer.cpp  \
 	Descriptor_File_Reader.cpp \
 	Descriptor_File_Data_Collector.cpp \
 	Descriptor_File_Syntax_Controller.cpp \
@@ -28,7 +28,7 @@ Git_FiGit_Modification_Listerle_List_Receiver.exe: Git_Modification_Lister_Main_
 	IntToCharTranslater.cpp \
 	Cpp_FileOperations.cpp \
 	Custom_System_Interface.cpp \
-	Git_Modification_Lister.hpp \
+	Git_File_List_Writer.hpp \
 	Descriptor_File_Reader.hpp \
 	Descriptor_File_Data_Collector.hpp \
 	Descriptor_File_Syntax_Controller.hpp \
@@ -39,7 +39,7 @@ Git_FiGit_Modification_Listerle_List_Receiver.exe: Git_Modification_Lister_Main_
 	Cpp_FileOperations.h \
 	Custom_System_Interface.h
 
-	g++ -std=c++17 -static-libgcc -static-libstdc++ -ggdb -o Git_Modification_Lister.exe \
+	g++ -std=c++17 -static-libgcc -static-libstdc++ -ggdb -o Git_File_List_Writer.exe \
 	 -I. \
 	 -I$(DIR_OPS) \
 	 -I$(STRING_OPS) \
@@ -62,8 +62,8 @@ Git_FiGit_Modification_Listerle_List_Receiver.exe: Git_Modification_Lister_Main_
 	 -L$(DES_SYN_CON) \
 	 -L$(INT_TRANS) \
 	 -L$(SYS_INT) \
-		Git_Modification_Lister_Main_File.cpp \
-		Git_Modification_Lister.cpp \
+		Git_File_List_Writer_Main_File.cpp \
+		Git_File_List_Writer.cpp \
 		$(DES_READ)\Descriptor_File_Reader.cpp \
 		$(DES_DATA_COL)\Descriptor_File_Data_Collector.cpp \
 		$(DES_SYN_CON)\Descriptor_File_Syntax_Controller.cpp \
@@ -73,7 +73,7 @@ Git_FiGit_Modification_Listerle_List_Receiver.exe: Git_Modification_Lister_Main_
 		$(INT_TRANS)\IntToCharTranslater.cpp \
 		$(FILE_OPRS)\Cpp_FileOperations.cpp \
 		$(SYS_INT)\Custom_System_Interface.cpp \
-		-include Git_Modification_Lister.hpp \
+		-include Git_File_List_Writer.hpp \
 		-include $(DES_READ)\Descriptor_File_Reader.hpp \
 		-include $(DES_DATA_COL)\Descriptor_File_Data_Collector.hpp \
 		-include $(DES_SYN_CON)\Descriptor_File_Syntax_Controller.hpp \

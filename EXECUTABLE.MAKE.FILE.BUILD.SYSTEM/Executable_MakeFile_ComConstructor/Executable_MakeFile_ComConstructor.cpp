@@ -25,7 +25,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Executable_MakeFile_ComConstructor::Executable_MakeFile_ComConstructor(char * des_path, char opr_sis):
 
-   Des_Reader(des_path,opr_sis), Dep_Determiner(des_path,opr_sis)
+   Des_Reader(opr_sis), Dep_Determiner(des_path,opr_sis)
 
 {
     this->Des_Reader.Read_Descriptor_File();

@@ -17,6 +17,8 @@ add_subdirectory(DESCRIPTION.PROCESSING.SYSTEM)
 
 add_subdirectory(EXECUTABLE.MAKE.FILE.BUILD.SYSTEM)
 
+add_subdirectory(GIT.DATA.PROCESSING.SYSTEM)
+
 add_subdirectory(MAKE.FILE.BUILD.SYSTEM)
 
 add_subdirectory(PROJECT.BUILD.TOOLS)
@@ -53,16 +55,20 @@ add_executable(Auto_MakeFile_Builder
 
 target_link_libraries(Project_Script_Writer PUBLIC 
 
-        src_dat_col src_proc_sys proj_bld_tools des_reader basic_tools )
+        src_dat_col src_proc_sys proj_bld_tools git_data_processing_system des_reader basic_tools )
 
      
 
 target_link_libraries(Build_Tools_Initializer PUBLIC 
 
-        src_dat_col src_proc_sys proj_bld_tools des_reader basic_tools )
+        src_dat_col src_proc_sys proj_bld_tools git_data_processing_system des_reader basic_tools )
+
 
      
 target_link_libraries(Executable_MakeFile_Builder PUBLIC exec_make_bld )
 
 
-target_link_libraries(Auto_MakeFile_Builder PUBLIC make_fbld_sys proj_bld_tools des_reader basic_tools)
+
+target_link_libraries(Auto_MakeFile_Builder PUBLIC make_fbld_sys proj_bld_tools 
+
+                   git_data_processing_system des_reader basic_tools)

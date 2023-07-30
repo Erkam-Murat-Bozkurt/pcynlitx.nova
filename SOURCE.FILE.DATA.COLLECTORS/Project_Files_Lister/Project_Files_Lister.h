@@ -24,7 +24,7 @@
 class Project_Files_Lister
 {
 public:
- Project_Files_Lister(char * DesPATH, char opr_sis);
+ Project_Files_Lister(char opr_sis);
  virtual ~Project_Files_Lister();
  void Determine_Git_Repo_Info();
  int  Get_Source_File_Number();

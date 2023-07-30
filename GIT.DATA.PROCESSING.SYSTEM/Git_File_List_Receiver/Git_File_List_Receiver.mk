@@ -1,7 +1,4 @@
 
-
-
-
 SYS_INT=D:\pcynlitx.build\BASIC.TOOLS\Custom_System_Interface
 INT_TRANS=D:\pcynlitx.build\BASIC.TOOLS\IntToCharTranslater
 STRING_OPS=D:\pcynlitx.build\BASIC.TOOLS\StringOperator
@@ -11,17 +8,16 @@ FILE_OPRS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
 DES_READ=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
 DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
 DES_SYN_CON=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
-GIT_LIST=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_File_List_Writer
-
+GIT_LIST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Receiver
 
 
 VPATH = $(DIR_OPS) $(STRING_OPS) $(CHAR_OPS) $(FILE_OPRS) \
-		$(DES_READ) $(DES_DATA_COL) \
+	    $(DES_READ) $(DES_DATA_COL) \
 		$(GIT_LIST) $(DES_SYN_CON) \
-		$(INT_TRANS) $(SYS_INT)
+	    $(INT_TRANS) $(SYS_INT) \
 
-Git_Ignoring_Files_Lister.exe: Git_Ignoring_Files_Lister_Main_File.cpp \
-	Git_Ignoring_Files_Lister.cpp  \
+Git_File_List_Receiver.exe: Git_File_List_Receiver_Main_File.cpp \
+	Git_File_List_Receiver.cpp  \
 	Descriptor_File_Reader.cpp \
 	Descriptor_File_Data_Collector.cpp \
 	Descriptor_File_Syntax_Controller.cpp \
@@ -30,10 +26,7 @@ Git_Ignoring_Files_Lister.exe: Git_Ignoring_Files_Lister_Main_File.cpp \
 	IntToCharTranslater.cpp \
 	Cpp_FileOperations.cpp \
 	Custom_System_Interface.cpp \
-	Git_Ignoring_Files_Lister.hpp \
-	Descriptor_File_Reader.hpp \
-	Descriptor_File_Data_Collector.hpp \
-	Descriptor_File_Syntax_Controller.hpp \
+	Git_File_List_Receiver.hpp  \
 	StringOperator.h \
 	DirectoryOperations.h \
 	CharOperator.h \
@@ -41,7 +34,7 @@ Git_Ignoring_Files_Lister.exe: Git_Ignoring_Files_Lister_Main_File.cpp \
 	Cpp_FileOperations.h \
 	Custom_System_Interface.h
 
-	g++ -std=c++17 -static-libgcc -static-libstdc++ -ggdb -o Git_Ignoring_Files_Lister.exe \
+	g++ -std=c++17 -static-libgcc -static-libstdc++ -ggdb -o Git_File_List_Receiver.exe \
 	 -I. \
 	 -I$(DIR_OPS) \
 	 -I$(STRING_OPS) \
@@ -54,6 +47,8 @@ Git_Ignoring_Files_Lister.exe: Git_Ignoring_Files_Lister_Main_File.cpp \
 	 -I$(DES_SYN_CON) \
 	 -I$(INT_TRANS) \
 	 -I$(SYS_INT) \
+	 -I$(SOURCE_DETR) \
+	 -I$(HEAD_DETR) \
 	 -L$(DIR_OPS) \
 	 -L$(STRING_OPS) \
 	 -L$(GIT_LIST) \
@@ -64,8 +59,10 @@ Git_Ignoring_Files_Lister.exe: Git_Ignoring_Files_Lister_Main_File.cpp \
 	 -L$(DES_SYN_CON) \
 	 -L$(INT_TRANS) \
 	 -L$(SYS_INT) \
-		Git_Ignoring_Files_Lister_Main_File.cpp \
-		Git_Ignoring_Files_Lister.cpp \
+	 -L$(SOURCE_DETR) \
+	 -L$(HEAD_DETR) \
+		Git_File_List_Receiver_Main_File.cpp \
+		Git_File_List_Receiver.cpp \
 		$(DES_READ)\Descriptor_File_Reader.cpp \
 		$(DES_DATA_COL)\Descriptor_File_Data_Collector.cpp \
 		$(DES_SYN_CON)\Descriptor_File_Syntax_Controller.cpp \
@@ -75,7 +72,7 @@ Git_Ignoring_Files_Lister.exe: Git_Ignoring_Files_Lister_Main_File.cpp \
 		$(INT_TRANS)\IntToCharTranslater.cpp \
 		$(FILE_OPRS)\Cpp_FileOperations.cpp \
 		$(SYS_INT)\Custom_System_Interface.cpp \
-		-include Git_Ignoring_Files_Lister.hpp \
+		-include Git_File_List_Receiver.hpp \
 		-include $(DES_READ)\Descriptor_File_Reader.hpp \
 		-include $(DES_DATA_COL)\Descriptor_File_Data_Collector.hpp \
 		-include $(DES_SYN_CON)\Descriptor_File_Syntax_Controller.hpp \

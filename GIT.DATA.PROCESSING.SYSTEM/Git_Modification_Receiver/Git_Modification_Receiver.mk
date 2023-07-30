@@ -11,7 +11,7 @@ DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers
 DES_SYN_CTR=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
 GIT_LIST=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_File_List_Receiver
 HEAD_DET=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
-SRC_DET=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
+SRC_DET=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Source_File_Determiner
 
 VPATH = $(DIR_LIST)   $(DIR_ENUM) $(DIR_OPS) \
 		$(STRING_OPS) $(CHAR_OPS) $(FILE_OPRS) $(SRC_DET) \

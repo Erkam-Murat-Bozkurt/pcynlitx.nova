@@ -1,9 +1,9 @@
 
 #include "Script_Data_Collector.hpp"
 
-Script_Data_Collector::Script_Data_Collector(char * DesPATH, char opr_sis) :
+Script_Data_Collector::Script_Data_Collector(char opr_sis) :
   
-   Des_File_Reader(DesPATH,opr_sis), Dir_Lister(DesPATH,opr_sis)
+   Des_File_Reader(opr_sis), Dir_Lister(opr_sis)
 {
      this->Memory_Delete_Condition = false;
 

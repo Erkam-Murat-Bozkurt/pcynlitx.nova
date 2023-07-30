@@ -31,7 +31,7 @@ struct Script_Data
 class Script_Data_Collector
 {
 public:
- Script_Data_Collector(char * DesPATH, char opr_sis);
+ Script_Data_Collector(char opr_sis);
  virtual ~Script_Data_Collector();
  void Receive_Compiler_Data(Compiler_Data * dt);
  void Determine_Source_File_Compilation_Information(Script_Data * ptr, std::string str);
