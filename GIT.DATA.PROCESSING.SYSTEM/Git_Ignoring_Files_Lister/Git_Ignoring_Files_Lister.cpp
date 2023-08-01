@@ -6,9 +6,7 @@
 #include "Git_Ignoring_Files_Lister.hpp"
 
 
-Git_Ignoring_Files_Lister::Git_Ignoring_Files_Lister(char opr_sis) :
-
-    Des_Reader(opr_sis)
+Git_Ignoring_Files_Lister::Git_Ignoring_Files_Lister(char opr_sis)
 {
     this->opr_sis = opr_sis;
 
@@ -33,16 +31,10 @@ void Git_Ignoring_Files_Lister::Initialize_Mermbers(){
 }
 
 
-void Git_Ignoring_Files_Lister::Receive_Descriptor_File_Path(char * DesPATH){
+ void Git_Ignoring_Files_Lister::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
 
-     this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
-}
-
-
-void Git_Ignoring_Files_Lister::Receive_Descriptor_File_Path(std::string DesPATH){
-
-     this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
-}
+      this->Des_Reader = ptr;
+ }
 
 
 void Git_Ignoring_Files_Lister::Clear_Dynamic_Memory()
@@ -65,8 +57,6 @@ void Git_Ignoring_Files_Lister::Clear_Dynamic_Memory()
 
          this->DirectoryManager.Clear_Dynamic_Memory();
 
-         this->Des_Reader.Clear_Dynamic_Memory();
-
 
          if(this->CString != nullptr){
 
@@ -82,11 +72,9 @@ void Git_Ignoring_Files_Lister::Write_Ignoring_File_List()
 {
      this->Memory_Delete_Condition = false;
 
-     this->Des_Reader.Read_Descriptor_File();
+     this->Warehouse = this->Des_Reader->Get_Warehouse_Location();
 
-     this->Warehouse = this->Des_Reader.Get_Warehouse_Location();
-
-     this->Repo_Dir  = this->Des_Reader.Get_Repo_Directory_Location();
+     this->Repo_Dir  = this->Des_Reader->Get_Repo_Directory_Location();
 
 
      this->Determine_Git_Ignoring_Files_List_Path();

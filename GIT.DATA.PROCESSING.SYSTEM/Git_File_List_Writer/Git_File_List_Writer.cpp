@@ -6,9 +6,7 @@
 
 
 
-Git_File_List_Writer::Git_File_List_Writer(char opr_sis) :
-
-    Des_Reader(opr_sis)
+Git_File_List_Writer::Git_File_List_Writer(char opr_sis)
 {
     this->opr_sis = opr_sis;
 
@@ -33,16 +31,10 @@ void Git_File_List_Writer::Initialize_Mermbers(){
 }
 
 
-void Git_File_List_Writer::Receive_Descriptor_File_Path(char * DesPath){
+void Git_File_List_Writer::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
 
-     this->Des_Reader.Receive_Descriptor_File_Path(DesPath);
+     this->Des_Reader = ptr;
 }
-
-void Git_File_List_Writer::Receive_Descriptor_File_Path(std::string DesPath){
-
-     this->Des_Reader.Receive_Descriptor_File_Path(DesPath);
-}
-
 
 void Git_File_List_Writer::Clear_Dynamic_Memory()
 {
@@ -62,8 +54,6 @@ void Git_File_List_Writer::Clear_Dynamic_Memory()
 
          this->DirectoryManager.Clear_Dynamic_Memory();
 
-         this->Des_Reader.Clear_Dynamic_Memory();
-
          if(this->CString != nullptr){
 
              delete [] this->CString;
@@ -78,11 +68,9 @@ void Git_File_List_Writer::Write_Git_Repo_List_File()
 {
      this->Memory_Delete_Condition = false;
 
-     this->Des_Reader.Read_Descriptor_File();
+     this->Warehouse = this->Des_Reader->Get_Warehouse_Location();
 
-     this->Warehouse = this->Des_Reader.Get_Warehouse_Location();
-
-     this->Repo_Dir  = this->Des_Reader.Get_Repo_Directory_Location();
+     this->Repo_Dir  = this->Des_Reader->Get_Repo_Directory_Location();
 
      this->Determine_Error_Check_File_Path();
 
@@ -101,7 +89,7 @@ void Git_File_List_Writer::Determine_Error_Check_File_Path(){
      
      std::string error_text = "std_error.txt";
 
-     std::string wrd_dir = this->Des_Reader.Get_Warehouse_Location();
+     std::string wrd_dir = this->Des_Reader->Get_Warehouse_Location();
 
      size_t wrd_dir_size = wrd_dir.length();
 

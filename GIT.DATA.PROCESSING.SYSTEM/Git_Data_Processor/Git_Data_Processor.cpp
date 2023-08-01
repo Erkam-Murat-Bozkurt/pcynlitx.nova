@@ -51,30 +51,26 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(char * DesPath){
 
      this->Des_Reader.Receive_Descriptor_File_Path(DesPath);
 
-     this->Modf_Receiver.Receive_Descriptor_File_Path(DesPath);
+     this->Des_Reader.Read_Descriptor_File();
 
-     this->Modf_Lister.Receive_Descriptor_File_Path(DesPath);
+     this->List_Writer.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
-     this->List_Writer.Receive_Descriptor_File_Path(DesPath);
+     this->List_Receiver.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
-     this->List_Receiver.Receive_Descriptor_File_Path(DesPath);
-
-     this->Ing_Lister.Receive_Descriptor_File_Path(DesPath);
+     this->Ing_Lister.Receive_Descriptor_File_Reader(&this->Des_Reader);
 }
 
 void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
 
      this->Des_Reader.Receive_Descriptor_File_Path(DesPath);
 
-     this->Modf_Receiver.Receive_Descriptor_File_Path(DesPath);
+     this->Des_Reader.Read_Descriptor_File();
 
-     this->Modf_Lister.Receive_Descriptor_File_Path(DesPath);
+     this->List_Writer.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
-     this->List_Writer.Receive_Descriptor_File_Path(DesPath);
+     this->List_Receiver.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
-     this->List_Receiver.Receive_Descriptor_File_Path(DesPath);
-
-     this->Ing_Lister.Receive_Descriptor_File_Path(DesPath);
+     this->Ing_Lister.Receive_Descriptor_File_Reader(&this->Des_Reader);
 }
 
 
@@ -93,12 +89,16 @@ void Git_Data_Processor::Clear_Dynamic_Memory()
          this->Modf_Receiver.Clear_Dynamic_Memory();
 
          this->Ing_Lister.Clear_Dynamic_Memory();
+
+         this->Des_Reader.Clear_Dynamic_Memory();
      }
 }
 
 
 void Git_Data_Processor::Write_Git_Repo_List_File()
 {
+     std::cout << "\n Inside Git_Data_Processor::Write_Git_Repo_List_File";
+
      this->List_Writer.Write_Git_Repo_List_File();
 }
 
@@ -110,6 +110,8 @@ void Git_Data_Processor::Determine_Git_Repo_Info(){
 
 
 void Git_Data_Processor::Write_Git_Modification_File(){
+     
+     this->Modf_Lister.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
      this->Modf_Lister.Write_Git_Modification_File();
 }
@@ -117,7 +119,15 @@ void Git_Data_Processor::Write_Git_Modification_File(){
 
 void Git_Data_Processor::Receive_Git_Modifications(){
 
+     this->Modf_Receiver.Receive_Descriptor_File_Reader(&this->Des_Reader);
+
      this->Modf_Receiver.Receive_Git_Modifications();
+}
+
+
+void Git_Data_Processor::Set_Git_Ignoring_Files(){
+
+     this->Ing_Lister.Write_Ignoring_File_List();
 }
 
 
@@ -187,7 +197,6 @@ std::vector<std::string> * Git_Data_Processor::Get_File_Name_Address(){
  
       return this->List_Receiver.Get_File_Name_Address();    
 }
-
 
 
 std::vector<std::string> * Git_Data_Processor::Get_Updated_Header_Files()  

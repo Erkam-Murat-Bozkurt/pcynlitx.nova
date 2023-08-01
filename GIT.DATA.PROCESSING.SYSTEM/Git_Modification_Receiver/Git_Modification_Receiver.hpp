@@ -1,5 +1,4 @@
 
-
 #ifndef GIT_MODIFICATION_RECEIVER_HPP
 #define GIT_MODIFICATION_RECEIVER_HPP
 
@@ -26,8 +25,7 @@ class Git_Modification_Receiver
 public:
  Git_Modification_Receiver(char opr_sis);
  virtual ~Git_Modification_Receiver();
- void Receive_Descriptor_File_Path(char * DesPATH);
- void Receive_Descriptor_File_Path(std::string DesPATH);
+ void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Git_Modifications();
  std::vector<std::string> * Get_File_System_Path_Address();
  std::vector<std::string> * Get_Updated_Header_Files();
@@ -51,7 +49,7 @@ protected:
  bool CheckStringLine(std::string str);
  Header_File_Determiner Header_Determiner;
  Source_File_Determiner Src_Determiner;
- Descriptor_File_Reader Des_Reader;
+ Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;
  int  File_Line_Number;
  std::string  warehouse_location;

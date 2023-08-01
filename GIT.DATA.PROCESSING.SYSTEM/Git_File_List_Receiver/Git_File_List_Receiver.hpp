@@ -19,8 +19,7 @@ class Git_File_List_Receiver
 public:
  Git_File_List_Receiver(char opr_sis);
  virtual ~Git_File_List_Receiver();
- void Receive_Descriptor_File_Path(char * DesPath);
- void Receive_Descriptor_File_Path(std::string DesPath);
+ void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Determine_Git_Repo_Info();
  size_t  Get_Git_File_Index_Size();
  std::string Get_Git_File_Index(int num);
@@ -46,7 +45,7 @@ protected:
  void Convert_Windows_Paths();
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
- Descriptor_File_Reader Des_Reader;
+ Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;
  std::vector<std::string> File_List_Content;
  std::vector<std::string> File_System_Paths;

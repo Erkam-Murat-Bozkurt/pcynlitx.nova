@@ -7,8 +7,8 @@
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
 
-int main(int argc, char ** argv){
-
+int main(int argc, char ** argv)
+{
     if(argc < 2){
 
        std::cout << "\n\n";

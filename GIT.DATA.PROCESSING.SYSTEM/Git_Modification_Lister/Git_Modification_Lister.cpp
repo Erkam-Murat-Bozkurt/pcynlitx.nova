@@ -3,9 +3,7 @@
 #include "Git_Modification_Lister.hpp"
 
 
-Git_Modification_Lister::Git_Modification_Lister(char opr_sis) :
-
-    Des_Reader(opr_sis)
+Git_Modification_Lister::Git_Modification_Lister(char opr_sis)
 {
     this->Initialize_Mermbers();
 
@@ -51,9 +49,6 @@ void Git_Modification_Lister::Clear_Dynamic_Memory()
 
          this->DirectoryManager.Clear_Dynamic_Memory();
 
-         this->Des_Reader.Clear_Dynamic_Memory();
-
-
          if(this->CString != nullptr){
 
              delete [] this->CString;
@@ -64,26 +59,19 @@ void Git_Modification_Lister::Clear_Dynamic_Memory()
 }
 
 
-void Git_Modification_Lister::Receive_Descriptor_File_Path(char * DesPATH){
+void Git_Modification_Lister::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
 
-     this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
+     this->Des_Reader = ptr;
 }
 
-
-void Git_Modification_Lister::Receive_Descriptor_File_Path(std::string DesPATH){
-
-     this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
-}
 
 void Git_Modification_Lister::Write_Git_Modification_File()
 {
      this->Memory_Delete_Condition = false;
 
-     this->Des_Reader.Read_Descriptor_File();
+     this->Warehouse = this->Des_Reader->Get_Warehouse_Location();
 
-     this->Warehouse = this->Des_Reader.Get_Warehouse_Location();
-
-     this->Repo_Dir  = this->Des_Reader.Get_Repo_Directory_Location();
+     this->Repo_Dir  = this->Des_Reader->Get_Repo_Directory_Location();
 
      this->Determine_Warehouse_Path();
 
@@ -133,9 +121,6 @@ void Git_Modification_Lister::Determine_Warehouse_Path(){
      }
 
      this->warehouse_path.shrink_to_fit();
-
-     std::cout << "\n this->warehouse_path:" << this->warehouse_path;
-     std::cin.get();
 }
 
 
@@ -211,10 +196,6 @@ void Git_Modification_Lister::List_Files_in_Repo()
      this->Clear_CString_Buffer();
     
      char * system_cmd = this->From_Std_String_To_Char(this->git_listing_command);
-
-     std::cout << "\n system_cmd:" << system_cmd;
-
-     std::cout << "\n\n";
 
      this->Execute_System_Call(system_cmd);
 }

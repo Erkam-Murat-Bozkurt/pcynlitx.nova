@@ -57,7 +57,7 @@ Git_Data_Processor.exe: Git_Data_Processor_Main_File.cpp \
 	Cpp_FileOperations.h \
 	Custom_System_Interface.h
 
-	g++ -std=c++17 -static-libgcc -static-libstdc++ -ggdb -o Git_File_List_Writer.exe \
+	g++ -std=c++17 -static-libgcc -static-libstdc++ -ggdb -o Git_Data_Processor.exe \
 	 -I. \
 	 -I$(DIR_OPS) \
 	 -I$(STRING_OPS) \

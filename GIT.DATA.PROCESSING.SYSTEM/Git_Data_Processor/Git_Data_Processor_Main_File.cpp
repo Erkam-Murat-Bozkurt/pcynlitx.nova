@@ -34,11 +34,34 @@ int main(int argc, char ** argv){
 
     Data_Processor.Write_Git_Repo_List_File();
 
-    std::cout << "\n Repo file list constructed..";
+    Data_Processor.Determine_Git_Repo_Info();
 
-    std::cin.get();
+    size_t index_size = Data_Processor.Get_Git_File_Index_Size();
+
+    for(size_t i=0;i<index_size;i++){
+
+        std::cout << "\n";
+
+        std::cout << "\n Git Record File -"  << i << " :" << Data_Processor.Get_Git_File_Index(i);
+
+        std::cout << "\n System path     -"  << i << " :" << Data_Processor.Get_File_System_Path(i);
+
+        std::cout << "\n Git Record dir  -"  << i << " :" << Data_Processor.Get_Git_Record_Directory(i);
+
+        std::cout << "\n File Name  -"       << i << " :" << Data_Processor.Get_File_Name(i);
+
+        std::cout << "\n";
+    }
 
     std::cout << "\n\n";
+
+    Data_Processor.Set_Git_Ignoring_Files();
+
+    Data_Processor.Write_Git_Modification_File();
+
+    Data_Processor.Receive_Git_Modifications();
+
+
 
     return 0;
 }

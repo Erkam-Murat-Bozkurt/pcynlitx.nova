@@ -43,21 +43,9 @@ void Header_File_Determiner::Clear_Dynamic_Memory(){
 }
 
 
-void Header_File_Determiner::Receive_Descriptor_File_Path(char * DesPATH){
+void Header_File_Determiner::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
 
-     this->Git_Receiver.Receive_Descriptor_File_Path(DesPATH);
-
-     this->Git_Receiver.Determine_Git_Repo_Info();
-
-     this->git_record_size = this->Git_Receiver.Get_Git_File_Index_Size();
-
-     this->Repo_Dir  = this->Git_Receiver.Get_Git_Repo_Directory();
-}
-
-
-void Header_File_Determiner::Receive_Descriptor_File_Path(std::string DesPATH){
-
-     this->Git_Receiver.Receive_Descriptor_File_Path(DesPATH);
+     this->Git_Receiver.Receive_Descriptor_File_Reader(ptr);
 
      this->Git_Receiver.Determine_Git_Repo_Info();
 

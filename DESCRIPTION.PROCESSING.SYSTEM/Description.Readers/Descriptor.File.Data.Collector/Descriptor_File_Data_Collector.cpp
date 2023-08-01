@@ -11,8 +11,8 @@ Descriptor_File_Data_Collector::Descriptor_File_Data_Collector(char opr_sis) :
 }
 
 
-Descriptor_File_Data_Collector::~Descriptor_File_Data_Collector(){
-
+Descriptor_File_Data_Collector::~Descriptor_File_Data_Collector()
+{
     if(!this->Memory_Delete_Condition){
 
        this->Clear_Dynamic_Memory();
@@ -61,8 +61,6 @@ void Descriptor_File_Data_Collector::Clear_Dynamic_Memory()
          this->Clear_Vector_Memory(&this->File_Index);
 
          this->Clear_Vector_Memory(&this->File_Index_With_Spaces);
-
-         //this->Clear_String_Memory(&this->Descriptor_File_Path);
 
          this->StringManager.Clear_Dynamic_Memory();
 

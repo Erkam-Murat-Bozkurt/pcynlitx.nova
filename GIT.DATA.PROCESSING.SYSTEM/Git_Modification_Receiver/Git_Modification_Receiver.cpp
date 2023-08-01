@@ -6,8 +6,7 @@
 
 Git_Modification_Receiver::Git_Modification_Receiver(char opr_sis): 
 
-  Des_Reader(opr_sis), Header_Determiner(opr_sis)
-
+  Header_Determiner(opr_sis)
 {
      this->opr_sis = opr_sis;
 }
@@ -21,37 +20,21 @@ Git_Modification_Receiver::~Git_Modification_Receiver(){
      this->Header_Determiner.Clear_Object_Memory();
 }
 
+void Git_Modification_Receiver::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
 
-void Git_Modification_Receiver::Receive_Descriptor_File_Path(char * DesPATH){
+     this->Des_Reader = ptr;
 
-     this->Header_Determiner.Receive_Descriptor_File_Path(DesPATH);
+     this->Header_Determiner.Receive_Descriptor_File_Reader(ptr);
 
-     this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
-
-     this->Des_Reader.Read_Descriptor_File();
-     
-     this->warehouse_location = this->Des_Reader.Get_Warehouse_Location();
-
-     this->Repo_Dir  = this->Des_Reader.Get_Repo_Directory_Location();
-}
-
-
-void Git_Modification_Receiver::Receive_Descriptor_File_Path(std::string DesPATH){
-
-     this->Header_Determiner.Receive_Descriptor_File_Path(DesPATH);
-
-     this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
-
-     this->Des_Reader.Read_Descriptor_File();
-     
-     this->warehouse_location = this->Des_Reader.Get_Warehouse_Location();
-
-     this->Repo_Dir = this->Des_Reader.Get_Repo_Directory_Location();
 }
 
 
 void Git_Modification_Receiver::Receive_Git_Modifications()
-{
+{     
+     this->warehouse_location = this->Des_Reader->Get_Warehouse_Location();
+
+     this->Repo_Dir  = this->Des_Reader->Get_Repo_Directory_Location();
+
      this->Determine_Warehouse_Path();
 
      this->Determine_Header_Files_Directory();
@@ -105,6 +88,8 @@ void Git_Modification_Receiver::Determine_Warehouse_Path(){
 
      this->warehouse_path.shrink_to_fit();
 }
+
+
 
 void Git_Modification_Receiver::Determine_Header_Files_Directory(){
 
@@ -235,9 +220,6 @@ void Git_Modification_Receiver::Determine_Git_Modification_File_Path()
 }
 
 
-
-
-
 void Git_Modification_Receiver::Read_Modification_File()
 {
      this->Memory_Delete_Condition = false;
@@ -331,8 +313,6 @@ void Git_Modification_Receiver::Determine_Updated_Header_Files()
 
      this->Updated_Header_Files.shrink_to_fit();
 }
-
-
 
 
 void Git_Modification_Receiver::Determine_Updated_Source_Files()
@@ -467,8 +447,6 @@ void Git_Modification_Receiver::Clear_Dynamic_Memory(){
      this->Clear_Vector_Memory(&this->Updated_Header_Files);
 
      this->Clear_Vector_Memory(&this->Updated_Source_Files);
-
-     this->Des_Reader.Clear_Dynamic_Memory();
 
      this->Header_Determiner.Clear_Dynamic_Memory();
 }

@@ -23,8 +23,7 @@ class Header_File_Determiner
 public:
  Header_File_Determiner(char opr_sis);
  virtual ~Header_File_Determiner();
- void Receive_Descriptor_File_Path(char * DesPATH);
- void Receive_Descriptor_File_Path(std::string DesPATH);
+ void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  bool Is_Header(std::string file_path);
  bool Is_This_Repo_Header(std::string file_path);
  bool Include_Decleration_Test(std::string string);
