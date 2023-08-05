@@ -29,6 +29,13 @@ int main(int argc, char ** argv){
     }
 
 
+    Descriptor_File_Reader Des_Reader('w');
+
+    Des_Reader.Receive_Descriptor_File_Path(argv[1]);
+
+    Des_Reader.Read_Descriptor_File();
+
+
     Git_Data_Processor Data_Processor('w');
 
     Data_Processor.Receive_Descriptor_File_Path(argv[1]);
@@ -45,8 +52,11 @@ int main(int argc, char ** argv){
 
     Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
 
+    Dep_Determiner.Receive_Descriptor_File_Reader(&Des_Reader);
 
     Dep_Determiner.Receive_Git_Data_Processor(&Data_Processor);
+
+
 
     //Dep_Determiner.Receive_Source_Code_Reader(&Code_Rd);
 

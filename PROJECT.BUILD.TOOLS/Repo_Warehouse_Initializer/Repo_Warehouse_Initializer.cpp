@@ -5,33 +5,13 @@
 
 Repo_Warehouse_Initializer::Repo_Warehouse_Initializer(char * DesPath, char opr_sis): 
 
- Git_Dt_Proc(opr_sis), Dir_Lister(opr_sis), 
- Des_Reader(opr_sis) 
+     Dir_Lister(opr_sis)
 
 {
-     std::cout << "\n The start of the Repo_Warehouse_Initializer constructor";
-     std::cin.get();
-
-     this->Des_Reader.Receive_Descriptor_File_Path(DesPath);
-
-     this->Des_Reader.Read_Descriptor_File();
-
-     std::cout << "\n Descriptor File Readed";;
-     std::cin.get();    
-
-     this->Git_Dt_Proc.Receive_Descriptor_File_Path(DesPath);
-
-     this->Git_Dt_Proc.Write_Git_Repo_List_File();
-
-     this->Git_Dt_Proc.Determine_Git_Repo_Info();
-
-     this->Dir_Lister.Determine_Git_Repo_Info();
-     
      this->opr_sis = opr_sis;
 
-     std::cout << "\n The start of the Repo_Warehouse_Initializer constructor";
-     std::cin.get();
 }
+
 
 
 
@@ -46,9 +26,21 @@ Repo_Warehouse_Initializer::~Repo_Warehouse_Initializer(){
  }
 
 
+void Repo_Warehouse_Initializer::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+
+     this->Des_Reader = ptr;
+}
+
+void Repo_Warehouse_Initializer::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
+
+     this->Git_Dt_Proc = ptr;
+
+     this->Dir_Lister.Receive_Git_Data_Processor(ptr);
+}
+
 void Repo_Warehouse_Initializer::Build_Project_Warehouse(){
 
-     this->warehouse_location = this->Des_Reader.Get_Warehouse_Location();
+     this->warehouse_location = this->Des_Reader->Get_Warehouse_Location();
 
      this->Determine_Current_Directory();
 
@@ -74,9 +66,7 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(){
 
      this->DirectoryManager.ChangeDirectory(this->current_directory.c_str());
 
-     this->source_files_number
-
-     = this->Dir_Lister.Get_Source_File_Number();
+     this->source_files_number = this->Dir_Lister.Get_Source_File_Number();
 
      this->Determine_Header_File_Paths();
 
@@ -85,15 +75,11 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(){
      this->Copy_Header_Files_To_Project_Headers_Location();
 
      this->Copy_Independent_Header_Files_To_Project_Headers_Location();
-
-     this->Git_Dt_Proc.Set_Git_Ignoring_Files();
 }
 
 void Repo_Warehouse_Initializer::Update_Warehaouse_Headers(){
 
-     this->Git_Dt_Proc.Write_Git_Repo_List_File();
-
-     this->warehouse_location = this->Des_Reader.Get_Warehouse_Location();
+     this->warehouse_location = this->Des_Reader->Get_Warehouse_Location();
 
      this->Determine_Current_Directory();
 
@@ -105,9 +91,7 @@ void Repo_Warehouse_Initializer::Update_Warehaouse_Headers(){
 
      this->Construct_Header_Files_Directory();
 
-     this->source_files_number
-
-     = this->Dir_Lister.Get_Source_File_Number();
+     this->source_files_number = this->Dir_Lister.Get_Source_File_Number();
 
      this->Determine_Header_File_Paths();
 
@@ -415,14 +399,14 @@ void Repo_Warehouse_Initializer::Construct_Compiler_Outputs_Directory(){
 
 void Repo_Warehouse_Initializer::Determine_Header_File_Paths(){
 
-     int index_size = this->Git_Dt_Proc.Get_Git_File_Index_Size();
+     int index_size = this->Git_Dt_Proc->Get_Git_File_Index_Size();
 
-     std::string repo_dir = this->Git_Dt_Proc.Get_Git_Repo_Directory();
+     std::string repo_dir = this->Git_Dt_Proc->Get_Git_Repo_Directory();
      
 
       for(int i=0;i<index_size;i++){
       
-          std::string file_sys_path = this->Git_Dt_Proc.Get_File_System_Path(i);
+          std::string file_sys_path = this->Git_Dt_Proc->Get_File_System_Path(i);
 
           bool is_hdr = this->Dep_Determiner->Is_Header_File(file_sys_path);
 
@@ -610,10 +594,6 @@ void Repo_Warehouse_Initializer::Clear_Dynamic_Memory(){
      this->Clear_String_Memory(&this->warehouse_location);
 
      this->Clear_String_Memory(&this->current_directory);
-
-     this->Des_Reader.Clear_Dynamic_Memory();
-
-     this->Git_Dt_Proc.Clear_Dynamic_Memory();
 }
 
 

@@ -29,8 +29,6 @@ Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_
    DepSelector(opr_sis), Com_Data_Extractor(opr_sis), Code_Rd(opr_sis)
 {
 
-    //std::cout << "\n\n\e[1;32mC++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED\e[0m\n";
-
 }
 
 Source_File_Dependency_Determiner::~Source_File_Dependency_Determiner(){
@@ -51,9 +49,14 @@ void Source_File_Dependency_Determiner::Clear_Object_Memory(){
 
 void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
 
-     this->DepSelector.Clear_Dynamic_Memory();
+     this->DepSelector.Clear_Dynamic_Memory();     
 }
 
+
+void Source_File_Dependency_Determiner::Receive_Descriptor_File_Reader(Descriptor_File_Reader *ptr){
+     
+     this->Code_Rd.Receive_Descriptor_File_Reader(ptr);
+}
 
 void Source_File_Dependency_Determiner::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
 
@@ -66,6 +69,10 @@ void Source_File_Dependency_Determiner::Receive_Git_Data_Processor(Git_Data_Proc
      this->DepSelector.Receive_Source_Code_Reader(&this->Code_Rd);
 
      this->Src_Processor.Receive_Source_Code_Reader(&this->Code_Rd); 
+
+     this->Com_Data_Extractor.Receive_Git_Data_Processor(ptr);
+
+     this->DepSelector.Receive_Git_Data_Processor(ptr);
 }
 
 

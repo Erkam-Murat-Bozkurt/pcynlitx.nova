@@ -39,6 +39,7 @@ class Source_File_Dependency_Determiner
 public:
  Source_File_Dependency_Determiner(char * des_file_path, char opr_sis);
  virtual ~Source_File_Dependency_Determiner();
+ void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Collect_Dependency_Information();
  void Collect_Dependency_Information(std::string path);
@@ -57,6 +58,7 @@ public:
 protected:
  void Order_Priorities(); 
  Git_Data_Processor * Git_Data_Proc;
+ Descriptor_File_Reader * Des_Reader;
  Project_Src_Code_Rdr Code_Rd;
  Source_File_Dependency_Selector DepSelector;
  Source_File_Compiler_Data_Extractor Com_Data_Extractor;

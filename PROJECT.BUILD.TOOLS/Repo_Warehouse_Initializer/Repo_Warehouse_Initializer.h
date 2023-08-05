@@ -27,6 +27,8 @@ class Repo_Warehouse_Initializer
 public:
  Repo_Warehouse_Initializer(char * DesPath, char opr_sis);
  virtual ~Repo_Warehouse_Initializer();
+ void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dtr);
  void Build_Project_Warehouse();
  void Update_Warehaouse_Headers();
@@ -51,12 +53,11 @@ protected:
  void Clear_String_Memory(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  Source_File_Dependency_Determiner * Dep_Determiner;
- Git_Data_Processor Git_Dt_Proc;
+ Git_Data_Processor * Git_Dt_Proc;
  DirectoryOperations DirectoryManager;
  Project_Files_Lister Dir_Lister;
- Descriptor_File_Reader Des_Reader;
+ Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;
- StringOperator StringManager;
  int  source_files_number;
  int  ind_hdr_number;
  std::string  warehouse_location;
