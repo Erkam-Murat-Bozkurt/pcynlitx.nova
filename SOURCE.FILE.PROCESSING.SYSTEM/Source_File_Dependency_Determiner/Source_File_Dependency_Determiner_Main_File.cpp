@@ -9,7 +9,12 @@
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Project_Files_Lister.h"
+#include "Git_Data_Processor.hpp"
 #include "Git_File_List_Receiver.hpp"
+#include "Git_File_List_Writer.hpp"
+#include "Git_Modification_Lister.hpp"
+#include "Git_Modification_Receiver.hpp"
+#include "Git_Ignoring_Files_Lister.hpp"
 #include "Descriptor_File_Reader.hpp"
 
 int main(int argc, char ** argv){
@@ -24,10 +29,24 @@ int main(int argc, char ** argv){
     }
 
 
+    Git_Data_Processor Data_Processor('w');
 
-    char path [] = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
+    Data_Processor.Receive_Descriptor_File_Path(argv[1]);
+
+    Data_Processor.Write_Git_Repo_List_File();
+
+    Data_Processor.Determine_Git_Repo_Info();
+
+    size_t index_size = Data_Processor.Get_Git_File_Index_Size();
+
+
+
+    char path [] = "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
 
     Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
+
+
+    Dep_Determiner.Receive_Git_Data_Processor(&Data_Processor);
 
     //Dep_Determiner.Receive_Source_Code_Reader(&Code_Rd);
 

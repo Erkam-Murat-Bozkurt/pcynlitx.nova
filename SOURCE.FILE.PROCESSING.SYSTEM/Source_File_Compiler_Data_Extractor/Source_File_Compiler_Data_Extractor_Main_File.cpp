@@ -31,36 +31,69 @@ int main(int argc, char ** argv){
     }
 
 
+    Descriptor_File_Reader Des_Reader('w');
 
-    Git_File_List_Receiver Git_Data_Receiver(argv[1],'w');
+    Des_Reader.Receive_Descriptor_File_Path(argv[1]);
 
-    Git_Data_Receiver.Determine_Git_Repo_Info();
+    Des_Reader.Read_Descriptor_File();
 
 
-    Project_Files_Lister Dir_Lister(argv[1],'w');
+    Git_Data_Processor Data_Processor('w');
+
+    Data_Processor.Receive_Descriptor_File_Path(argv[1]);
+
+    Data_Processor.Write_Git_Repo_List_File();
+
+    std::cout << "\n Git repo file writed";
+    std::cin.get();
+
+    Data_Processor.Determine_Git_Repo_Info();
+
+    std::cout << "\n Git repo info collected";
+    std::cin.get();
+
+
+    size_t index_size = Data_Processor.Get_Git_File_Index_Size();
+
+
+    /*
+
+    Project_Files_Lister Dir_Lister('w');
+
+    Dir_Lister.Receive_Git_Data_Processor(&Data_Processor);
 
     Dir_Lister.Determine_Git_Repo_Info();
 
     int src_file_num = Dir_Lister.Get_Source_File_Number();
 
+    */
 
-    Project_Src_Code_Rdr Code_Rd(argv[1],'w');
 
-    Code_Rd.Receive_Git_Repo_Information(&Git_Data_Receiver);
+    Project_Src_Code_Rdr Code_Rd('w');
+
+    Code_Rd.Receive_Descriptor_File_Reader(&Des_Reader);
+
+    Code_Rd.Receive_Git_Data_Processor(&Data_Processor);
 
     Code_Rd.Read_Project_Source_Code_Files();
 
 
-    std::string path = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
+    std::cout << "\n The source code read";
+    std::cin.get();
+
+    std::string path = "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
 
 
-    Source_File_Dependency_Selector Dep_Selector(argv[1],'w');
+    Source_File_Dependency_Selector Dep_Selector('w');
 
     Dep_Selector.Receive_Source_Code_Reader(&Code_Rd);
 
+    Dep_Selector.Receive_Git_Data_Processor(&Data_Processor);
+
     Dep_Selector.Determine_Source_File_Dependencies(path);
 
-    std::cout << "\n Project Data Collected..\n\n";
+    std::cout << "\n Project Dependency Data Collected..\n\n";
+    std::cin.get();
 
 
     std::vector<std::vector<Source_File_Dependency>> * ptr = Dep_Selector.Get_Dependency_List_Adress();
@@ -70,11 +103,22 @@ int main(int argc, char ** argv){
 
 
 
-    Source_File_Compiler_Data_Extractor Compiler_Data_Extractor(argv[1],'w');
+    Source_File_Compiler_Data_Extractor Compiler_Data_Extractor('w');
+
+    Compiler_Data_Extractor.Receive_Git_Data_Processor(&Data_Processor);
+
+    std::cout << "\n Git Data Processor received";
+    std::cin.get();
 
     Compiler_Data_Extractor.Receive_Dependency_Data(ptr,wr_hdr);
 
+    std::cout << "\n Dependency Data received";
+    std::cin.get();
+
     Compiler_Data_Extractor.Extract_Compiler_Data(path);
+
+    std::cout << "\n Compiler data extracted..";
+    std::cin.get();
 
 
     std::vector<Compiler_Data> * data_ptr = Compiler_Data_Extractor.Get_Compiler_Data_Address();

@@ -3,13 +3,9 @@
 
 Project_Files_Lister::Project_Files_Lister(char opr_sis) :
 
-   Git_Data_Receiver(opr_sis), Src_Data_Col(opr_sis),
-
-   Header_Determiner(opr_sis)
+   Src_Data_Col(opr_sis), Header_Determiner(opr_sis)
 {
-    this->Git_Data_Receiver.Determine_Git_Repo_Info();
-
-    this->Initialize_Members(opr_sis);
+    this->operating_sis = opr_sis;
 }
 
 
@@ -21,9 +17,17 @@ Project_Files_Lister::~Project_Files_Lister(){
    }
 }
 
-void Project_Files_Lister::Initialize_Members(char opr_sis){
+ void Project_Files_Lister::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
 
-     this->operating_sis = opr_sis;
+      this->Git_Data_Proc = ptr;
+
+      this->Src_Data_Col.Receive_Git_Data_Processor(ptr);
+
+      this->Initialize_Members();
+ }
+
+
+void Project_Files_Lister::Initialize_Members(){
 
      this->Source_File_Number = 0;
 
@@ -31,18 +35,16 @@ void Project_Files_Lister::Initialize_Members(char opr_sis){
 
      this->independent_header_files_number = 0;
 
-     this->git_record_size = this->Git_Data_Receiver.Get_Git_File_Index_Size();
+     this->git_record_size = this->Git_Data_Proc->Get_Git_File_Index_Size();
 
-     this->Repo_Dir        = this->Git_Data_Receiver.Get_Git_Repo_Directory();
+     this->Repo_Dir        = this->Git_Data_Proc->Get_Git_Repo_Directory();
 
      for(int i=0;i<this->git_record_size-1;i++){
 
-         std::string path = this->Git_Data_Receiver.Get_File_System_Path(i);
+         std::string path = this->Git_Data_Proc->Get_File_System_Path(i);
 
          this->git_record_paths.push_back(path);
      }
-
-     this->Git_Data_Receiver.Clear_Dynamic_Memory();
 }
 
 
@@ -79,7 +81,7 @@ void Project_Files_Lister::Collect_Source_Files_Data()
 
                 this->Data.push_back(Temp_Data);
 
-                this->Clear_Build_Data(&Temp_Data);
+                this->Clear_Build_Data(&Temp_Data);    
             }
          }
      }
@@ -298,9 +300,7 @@ void Project_Files_Lister::Clear_Dynamic_Memory()
          this->Clear_Build_Data_Memory(&this->Data);
 
          this->Clear_Vector_Memory(&this->git_record_paths);
-
-         this->Git_Data_Receiver.Clear_Dynamic_Memory();
-
+         
          this->Src_Data_Col.Clear_Dynamic_Memory();
 
          this->Header_Determiner.Clear_Dynamic_Memory();

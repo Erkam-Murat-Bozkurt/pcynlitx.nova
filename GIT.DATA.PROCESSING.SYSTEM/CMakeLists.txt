@@ -4,6 +4,9 @@
 
 add_library(git_data_processing_system 
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Git_Data_Processor/Git_Data_Processor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Git_Data_Processor/Git_Data_Processor.hpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Git_File_List_Receiver/Git_File_List_Receiver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Git_File_List_Receiver/Git_File_List_Receiver.hpp
 
@@ -22,7 +25,9 @@ add_library(git_data_processing_system
 
 target_include_directories(git_data_processing_system PUBLIC
 
- 
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Git_Data_Processor
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Git_File_List_Receiver
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Git_File_List_Writer
@@ -69,6 +74,7 @@ target_include_directories(git_data_processing_system PUBLIC
 target_link_directories(git_data_processing_system PUBLIC 
 
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Git_Data_Processor
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Git_File_List_Receiver
 

@@ -71,6 +71,7 @@ target_include_directories(proj_bld_tools PUBLIC
 
 
 
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Data_Processor
 
     ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Receiver
 
@@ -149,6 +150,8 @@ target_link_directories(proj_bld_tools PUBLIC
 
     ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector    
 
+
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Data_Processor
 
     ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Receiver
 

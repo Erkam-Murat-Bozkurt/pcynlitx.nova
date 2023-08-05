@@ -24,32 +24,46 @@ int main(int argc, char ** argv){
     }
 
 
-    Project_Files_Lister Dir_Lister(argv[1],'w');
 
-    Dir_Lister.Determine_Git_Repo_Info();
+    Descriptor_File_Reader Des_Reader('w');
 
-    int src_file_num = Dir_Lister.Get_Source_File_Number();
+    Des_Reader.Receive_Descriptor_File_Path(argv[1]);
+
+    Des_Reader.Read_Descriptor_File();
+
+    std::cout << "\n Descriptor File Readed";
+    std::cin.get();
+
+    Git_Data_Processor Git_Data_Proc('w');
+
+    Git_Data_Proc.Receive_Descriptor_File_Path(argv[1]);
+
+    Git_Data_Proc.Write_Git_Repo_List_File();
+
+    Git_Data_Proc.Determine_Git_Repo_Info();
+
+    int index_size = Git_Data_Proc.Get_Git_File_Index_Size();
+
+    std::cout << "\n index_size:" << index_size;
 
 
-    Git_File_List_Receiver Git_Data_Receiver(argv[1],'w');
 
-    Git_Data_Receiver.Determine_Git_Repo_Info();
+    Project_Src_Code_Rdr Code_Rd('w');
 
-
-    Project_Src_Code_Rdr Code_Rd(argv[1],'w');
-
-    Code_Rd.Receive_Git_Repo_Information(&Git_Data_Receiver);
+    Code_Rd.Receive_Git_Data_Processor(&Git_Data_Proc);
 
     Code_Rd.Read_Project_Source_Code_Files();
 
     std::cout << "\n Code reading complated..";
 
 
-    Source_File_Dependency_Selector Dep_Selector(argv[1],'w');
+    Source_File_Dependency_Selector Dep_Selector('w');
 
-    if(src_file_num > 0){
+    if(index_size > 0){
 
       Dep_Selector.Receive_Source_Code_Reader(&Code_Rd);
+
+      Dep_Selector.Receive_Git_Data_Processor(&Git_Data_Proc);
 
       Dep_Selector.Determine_Source_File_Dependencies();
 
@@ -60,7 +74,7 @@ int main(int argc, char ** argv){
 
 
 
-    char path [] =  "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
+    char path [] =  "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
 
 
     std::cout << "\n\n";

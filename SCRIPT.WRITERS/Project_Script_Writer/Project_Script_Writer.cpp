@@ -4,7 +4,7 @@
 
 Project_Script_Writer::Project_Script_Writer(char * DesPATH, char opr_sis) :
 
-    Src_Data_Processor(DesPATH,opr_sis), Git_Receiver(opr_sis), Des_Reader(opr_sis)
+    Src_Data_Processor(DesPATH,opr_sis), Des_Reader(opr_sis)
 {
 
      this->Memory_Delete_Condition = true;
@@ -16,10 +16,6 @@ Project_Script_Writer::Project_Script_Writer(char * DesPATH, char opr_sis) :
      this->opr_sis = opr_sis;
 
      this->Des_Reader.Read_Descriptor_File();
-
-     this->Git_Receiver.Determine_Git_Repo_Info();
-
-     this->Src_Data_Processor.Receive_Git_File_List_Info(&this->Git_Receiver);    
 }
 
 
@@ -38,7 +34,16 @@ void Project_Script_Writer::Receive_Source_File_Dependency_Determiner(Source_Fil
      this->Src_Data_Processor.Receive_Source_File_Dependency_Determiner(ptr);
 }
 
+void Project_Script_Writer::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
 
+     this->Git_Dt_Proc = ptr;
+
+     this->Git_Dt_Proc->Determine_Git_Repo_Info();
+
+     this->Src_Data_Processor.Receive_Git_Data_Processor(this->Git_Dt_Proc);
+
+    
+}
 
 void Project_Script_Writer::Build_Compiler_Script(){
 

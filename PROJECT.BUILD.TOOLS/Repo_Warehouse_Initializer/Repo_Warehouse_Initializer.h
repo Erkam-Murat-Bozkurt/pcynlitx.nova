@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <windows.h>
 #include "Source_File_Dependency_Determiner.hpp"
+#include "Git_Data_Processor.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Git_File_List_Writer.hpp"
 #include "Git_Ignoring_Files_Lister.hpp"
@@ -50,9 +51,7 @@ protected:
  void Clear_String_Memory(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  Source_File_Dependency_Determiner * Dep_Determiner;
- Git_File_List_Writer   Git_List_Writer;
- Git_File_List_Receiver Git_Receiver;
- Git_Ignoring_Files_Lister Ignoring_Files_Lister;
+ Git_Data_Processor Git_Dt_Proc;
  DirectoryOperations DirectoryManager;
  Project_Files_Lister Dir_Lister;
  Descriptor_File_Reader Des_Reader;

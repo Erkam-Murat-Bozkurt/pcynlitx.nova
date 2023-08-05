@@ -23,24 +23,47 @@ int main(int argc, char ** argv){
     }
 
 
-    Git_File_List_Receiver Receiver(argv[1],'w');
+    Descriptor_File_Reader Des_Reader('w');
 
-    Receiver.Determine_Git_Repo_Info();
+    Des_Reader.Receive_Descriptor_File_Path(argv[1]);
 
-    int index_size = Receiver.Get_Git_File_Index_Size();
+    Des_Reader.Read_Descriptor_File();
+
+    std::cout << "\n Descriptor File Readed";
+    std::cin.get();
+
+    Git_Data_Processor Git_Data_Proc('w');
+
+    Git_Data_Proc.Receive_Descriptor_File_Path(argv[1]);
+
+    Git_Data_Proc.Write_Git_Repo_List_File();
+
+    Git_Data_Proc.Determine_Git_Repo_Info();
+
+    int index_size = Git_Data_Proc.Get_Git_File_Index_Size();
+
+    std::cout << "\n index_size:" << index_size;
 
 
-    Project_Src_Code_Rdr Code_Rd(argv[1],'w');
+    Project_Src_Code_Rdr Code_Rd('w');
 
-    Code_Rd.Receive_Git_Repo_Information(&Receiver);
+    Code_Rd.Receive_Git_Data_Processor(&Git_Data_Proc);
 
     Code_Rd.Read_Project_Source_Code_Files();
 
+
+
     std::cout << "\n The project source codes readed..";
 
-    Source_File_Information_Collector Information_Collector(argv[1],'w');
+    Source_File_Information_Collector Information_Collector('w');
+
+    Information_Collector.Receive_Descriptor_File_Reader(&Des_Reader);
 
     Information_Collector.Receive_Source_Code_Reader(&Code_Rd);
+
+    Information_Collector.Receive_Git_Data_Processor(&Git_Data_Proc);
+
+
 
     /*
 
@@ -84,7 +107,7 @@ int main(int argc, char ** argv){
     //std::string path = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\PROJECT.HEADER.FILES\\Thread_Manager_Builder.h";
 
 
-    std::string path = "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Data_Manager_Builder\\Thread_Data_Manager_Builder.cpp";
+    std::string path = "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\SERVER.CLASS.BUILDER\\Thread_Data_Manager_Builder\\Thread_Data_Manager_Builder.cpp";
 
     Information_Collector.Extract_Dependency_Data(path);
 

@@ -4,14 +4,12 @@
 
 Script_Data_Processor::Script_Data_Processor(char * DesPATH, char opr_sis) :
 
- Des_Reader(opr_sis), Data_Collector(opr_sis)
+  Data_Collector(opr_sis)
 
 {
      this->Memory_Delete_Condition = false;
 
      this->source_file_num = 0;
-
-     this->Des_Reader.Read_Descriptor_File();
 }
 
 
@@ -29,14 +27,17 @@ Script_Data_Processor::~Script_Data_Processor(){
 void Script_Data_Processor::Clear_Object_Memory(){
 
      this->Clear_Dynamic_Memory();
+}
 
-     this->Des_Reader.Clear_Dynamic_Memory();
+void Script_Data_Processor::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+
+     this->Des_Reader = ptr;
 }
 
 
-void Script_Data_Processor::Receive_Git_File_List_Info(Git_File_List_Receiver * ptr){
+void Script_Data_Processor::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
  
-      this->GitReceiver = ptr;
+      this->Git_Dt_Proc = ptr;
 }
 
 void Script_Data_Processor::Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * ptr)
@@ -51,7 +52,7 @@ void Script_Data_Processor::Receive_Source_File_Dependency_Determiner(Source_Fil
 
 void Script_Data_Processor::Process_Script_Data(){
 
-     if(this->Des_Reader.Get_Warehouse_Location().empty()){
+     if(this->Des_Reader->Get_Warehouse_Location().empty()){
 
         std::cout << "\n There is no any decleration about";
         std::cout << "\n project warehouse location";
@@ -204,9 +205,8 @@ void Script_Data_Processor::Clear_String_Memory(std::string * ptr){
 }
 
 
-void Script_Data_Processor::Clear_Script_Data(Script_Data * ptr){
-
-  
+void Script_Data_Processor::Clear_Script_Data(Script_Data * ptr)
+{  
      this->Clear_String_Memory(&this->Temp_Data.object_file_name);
 
      this->Clear_String_Memory(&this->Temp_Data.object_file_path);

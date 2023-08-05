@@ -46,9 +46,10 @@ struct Search_Data
 class Dependency_Data_Extractor
 {
 public:
- Dependency_Data_Extractor(char * descriptor_file_path, char opr_sis);
+ Dependency_Data_Extractor(char opr_sis);
  virtual ~Dependency_Data_Extractor();
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
+ void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Extract_Dependency_Tree(std::string path);
  std::vector<Search_Data> * Get_Search_Data();
  void Clear_Dynamic_Memory();
@@ -71,7 +72,7 @@ protected:
  std::string Get_Header_System_Path(std::string header_name);
  Project_Src_Code_Rdr * Code_Rd;
  std::vector<Search_Data> searched_paths;
- Header_File_Processor Header_Processor; 
+ Header_File_Processor Header_Processor;  
  StringOperator StringManager; 
  bool Memory_Delete_Condition;
  bool is_this_repo_header;

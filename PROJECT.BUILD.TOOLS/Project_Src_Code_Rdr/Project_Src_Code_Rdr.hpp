@@ -18,7 +18,7 @@
 #include <iterator>
 #include <utility>      // std::pair, std::make_pair
 #include <stdexcept>      // std::out_of_range
-#include "Git_File_List_Receiver.hpp"
+#include "Git_Data_Processor.hpp"
 #include "Source_File_Determiner.h"
 #include "Header_File_Determiner.h"
 #include "Descriptor_File_Reader.hpp"
@@ -39,9 +39,8 @@ class Project_Src_Code_Rdr
 public:
  Project_Src_Code_Rdr(char opr_sis);
  virtual ~Project_Src_Code_Rdr();
- void Receive_Descriptor_File_Path(char * DesPATH);
- void Receive_Descriptor_File_Path(std::string DesPATH);   
- void Receive_Git_Repo_Information(Git_File_List_Receiver * ptr);
+ void Receive_Descriptor_File_Reader(Descriptor_File_Reader* ptr);
+ void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Read_Project_Source_Code_Files();
  std::vector<std::string> * Get_File_Content(int i);
  void Get_File_Content_From_Path(std::vector<std::string> & content, std::string path);
@@ -67,7 +66,7 @@ protected:
  Cpp_FileOperations FileManager[8];
  std::vector<FileData> Src_Code_Dt;
  std::vector<std::string> FilePaths;
- Git_File_List_Receiver * Git_Data_Ptr;
+ Git_Data_Processor * Git_Data_Proc;
  Source_File_Determiner ** Src_Determiner;
  Header_File_Determiner ** Hdr_Determiner;
  char opr_sis;

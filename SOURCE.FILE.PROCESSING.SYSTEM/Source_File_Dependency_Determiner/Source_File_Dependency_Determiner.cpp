@@ -26,21 +26,11 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_file_path, char opr_sis) :
 
-   DepSelector(des_file_path,opr_sis), Com_Data_Extractor(des_file_path,opr_sis),
-   Git_Data_Receiver(opr_sis), Code_Rd(opr_sis)
+   DepSelector(opr_sis), Com_Data_Extractor(opr_sis), Code_Rd(opr_sis)
 {
 
-    std::cout << "\n\n\e[1;32mC++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED\e[0m\n";
+    //std::cout << "\n\n\e[1;32mC++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED\e[0m\n";
 
-    this->Git_Data_Receiver.Determine_Git_Repo_Info();
-
-    this->Code_Rd.Receive_Git_Repo_Information(&this->Git_Data_Receiver);
-
-    this->Code_Rd.Read_Project_Source_Code_Files();
-
-    this->DepSelector.Receive_Source_Code_Reader(&this->Code_Rd);
-
-    this->Src_Processor.Receive_Source_Code_Reader(&this->Code_Rd);
 }
 
 Source_File_Dependency_Determiner::~Source_File_Dependency_Determiner(){
@@ -54,8 +44,6 @@ void Source_File_Dependency_Determiner::Clear_Object_Memory(){
 
      this->Code_Rd.Clear_Object_Memory();
 
-     this->Git_Data_Receiver.Clear_Dynamic_Memory();
-
      this->DepSelector.Clear_Object_Memory();
 
      this->Clear_Dynamic_Memory();
@@ -64,6 +52,20 @@ void Source_File_Dependency_Determiner::Clear_Object_Memory(){
 void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
 
      this->DepSelector.Clear_Dynamic_Memory();
+}
+
+
+void Source_File_Dependency_Determiner::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
+
+     this->Git_Data_Proc = ptr;
+
+     this->Code_Rd.Receive_Git_Data_Processor(this->Git_Data_Proc);
+
+     this->Code_Rd.Read_Project_Source_Code_Files();
+
+     this->DepSelector.Receive_Source_Code_Reader(&this->Code_Rd);
+
+     this->Src_Processor.Receive_Source_Code_Reader(&this->Code_Rd); 
 }
 
 
@@ -162,7 +164,6 @@ bool Source_File_Dependency_Determiner::Is_Header_File(std::string hpath){
 
      return this->DepSelector.Is_Header_File(hpath);
 }
-
 
 
 void Source_File_Dependency_Determiner::Print_Compiler_Orders(){

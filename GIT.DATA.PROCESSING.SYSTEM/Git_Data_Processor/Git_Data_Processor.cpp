@@ -96,9 +96,7 @@ void Git_Data_Processor::Clear_Dynamic_Memory()
 
 
 void Git_Data_Processor::Write_Git_Repo_List_File()
-{
-     std::cout << "\n Inside Git_Data_Processor::Write_Git_Repo_List_File";
-
+{     
      this->List_Writer.Write_Git_Repo_List_File();
 }
 

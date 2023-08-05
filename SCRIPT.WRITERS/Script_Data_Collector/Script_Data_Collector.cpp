@@ -3,19 +3,13 @@
 
 Script_Data_Collector::Script_Data_Collector(char opr_sis) :
   
-   Des_File_Reader(opr_sis), Dir_Lister(opr_sis)
+     Dir_Lister(opr_sis)
 {
      this->Memory_Delete_Condition = false;
 
      this->Src_Data_Pointer = nullptr;
 
-     this->Des_File_Reader.Read_Descriptor_File();
-
-     this->Dir_Lister.Determine_Git_Repo_Info();
-
      this->Build_Dt = this->Dir_Lister.Get_Build_System_Data_Address();
-
-     this->warehouse_path = this->Des_File_Reader.Get_Warehouse_Location();
 
      this->opr_sis = opr_sis;
 }
@@ -34,6 +28,15 @@ Script_Data_Collector::~Script_Data_Collector(){
 void Script_Data_Collector::Receive_Compiler_Data(Compiler_Data * ptr){
 
      this->Cmp_Data_Ptr = ptr;
+}
+
+
+
+void Script_Data_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+
+     this->Des_File_Reader = ptr;
+
+     this->warehouse_path = this->Des_File_Reader->Get_Warehouse_Location();
 }
 
 

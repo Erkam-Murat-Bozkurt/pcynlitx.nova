@@ -22,7 +22,21 @@ int main(int argc, char ** argv){
     }
 
 
-    Project_Files_Lister Dir_Lister(argv[1],'w');
+    Git_Data_Processor Data_Processor('w');
+
+    Data_Processor.Receive_Descriptor_File_Path(argv[1]);
+
+    Data_Processor.Write_Git_Repo_List_File();
+
+    Data_Processor.Determine_Git_Repo_Info();
+
+
+
+
+
+    Project_Files_Lister Dir_Lister('w');
+
+    Dir_Lister.Receive_Git_Data_Processor(&Data_Processor);
 
     Dir_Lister.Determine_Git_Repo_Info();
 

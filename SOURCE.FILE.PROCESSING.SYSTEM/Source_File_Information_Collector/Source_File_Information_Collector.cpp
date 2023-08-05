@@ -24,28 +24,11 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Source_File_Information_Collector.hpp"
 
-Source_File_Information_Collector::Source_File_Information_Collector(char * des_file_path, 
+Source_File_Information_Collector::Source_File_Information_Collector(char opr_sis) :
 
-   char opr_sis) :
-
-   Des_Reader(opr_sis), Git_Data_Receiver(opr_sis),
-   Header_Processor(des_file_path,opr_sis)
+   Header_Processor(opr_sis)
 {
    this->operating_sis = opr_sis;
-
-   this->Des_Reader.Read_Descriptor_File();
-
-   this->warehouse_path
-
-         = this->Des_Reader.Get_Warehouse_Location();
-
-   this->Determine_Warehouse_Header_Dir();
-
-   this->Determine_Warehouse_Object_Dir();
-
-   this->Des_Reader.Clear_Dynamic_Memory();
-
-   this->Git_Data_Receiver.Determine_Git_Repo_Info();   //  Git_File_List_Receiver instance
 }
 
 
@@ -64,8 +47,6 @@ void Source_File_Information_Collector::Clear_Object_Memory()
      this->Clear_String_Memory(&this->warehouse_head_dir);
 
      this->Clear_String_Memory(&this->warehouse_obj_dir);
-
-     this->Git_Data_Receiver.Clear_Dynamic_Memory();
 }
 
 
@@ -80,6 +61,18 @@ void Source_File_Information_Collector::Clear_Dynamic_Memory()
 }
 
 
+void Source_File_Information_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+
+     this->Des_Reader = ptr;
+
+     this->warehouse_path = this->Des_Reader->Get_Warehouse_Location();
+
+     this->Determine_Warehouse_Header_Dir();
+
+     this->Determine_Warehouse_Object_Dir();
+}
+
+
 void Source_File_Information_Collector::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
 
      this->Code_Rdr = ptr;
@@ -87,6 +80,12 @@ void Source_File_Information_Collector::Receive_Source_Code_Reader(Project_Src_C
      this->Header_Processor.Receive_Source_Code_Reader(ptr);
 
      this->Src_File_Pr.Receive_Source_Code_Reader(ptr);
+}
+
+
+void Source_File_Information_Collector::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
+
+     this->Git_Data_Proc = ptr;
 }
 
 
@@ -164,8 +163,6 @@ void Source_File_Information_Collector::Extract_Dependency_Data(){  // Data extr
 
                 this->Determine_Header_Repo_Warehouse_Path(&header_path_address,header_name,'w');
 
-
-
                 this->Src_Data_Holder[i].included_headers_paths.push_back(header_path_address);
 
                 this->Src_Data_Holder[i].inclusion_number++;
@@ -182,7 +179,6 @@ void Source_File_Information_Collector::Extract_Dependency_Data(std::string path
 {    // Data extraction for particular header file
 
      this->Clear_Dynamic_Memory();
-
 
      bool is_source_file = this->Src_File_Pr.Is_Source_File(path);
 
@@ -277,11 +273,11 @@ void Source_File_Information_Collector::Determine_Header_Repo_Warehouse_Path(std
 
  void Source_File_Information_Collector::Determine_Header_System_Path(std::string * sys_path,std::string path)
  {
-      int index_size = this->Git_Data_Receiver.Get_Git_File_Index_Size();
+      int index_size = this->Git_Data_Proc->Get_Git_File_Index_Size();
 
       for(int i=0;i<index_size;i++){
       
-          std::string file_sys_path = this->Git_Data_Receiver.Get_File_System_Path(i);
+          std::string file_sys_path = this->Git_Data_Proc->Get_File_System_Path(i);
 
           bool is_repo_hdr = this->Header_Processor.Is_Header(file_sys_path);
 

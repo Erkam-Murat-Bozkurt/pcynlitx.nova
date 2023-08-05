@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <windows.h>
 #include "Project_Src_Code_Rdr.hpp"
+#include "Git_Data_Processor.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "StringOperator.h"
 #include "Cpp_FileOperations.h"
@@ -23,8 +24,9 @@
 class Header_File_Processor
 {
 public:
- Header_File_Processor(char * DesPath, char opr_sis);
+ Header_File_Processor(char opr_sis);
  virtual ~Header_File_Processor();
+ void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  bool Is_Header(std::string file_path);
  bool Is_This_Repo_Header(std::string file_path);
@@ -44,9 +46,8 @@ public:
 protected:
  void Clear_String_Memory(std::string * pointer);
  Project_Src_Code_Rdr * Code_Rdr;
+ Git_Data_Processor * Git_Data_Proc;
  StringOperator StringManager;
- Cpp_FileOperations FileManager;
- Git_File_List_Receiver Git_Receiver;
  std::string  Header_File_Directory;
  std::string  Header_File_Name;
  std::string  Header_File_Name_With_Extention;

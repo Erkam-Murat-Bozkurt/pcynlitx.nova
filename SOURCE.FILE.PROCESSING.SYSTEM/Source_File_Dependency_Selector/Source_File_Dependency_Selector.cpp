@@ -24,23 +24,12 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Source_File_Dependency_Selector.hpp"
 
-Source_File_Dependency_Selector::Source_File_Dependency_Selector(char * des_file_path, char opr_sis)
+Source_File_Dependency_Selector::Source_File_Dependency_Selector( char opr_sis)
 
-    : Info_Collector(des_file_path,opr_sis)
+    : Info_Collector(opr_sis)
 {
 
    this->Memory_Delete_Condition = false;
-
-   size_t dep_path_size = strlen(des_file_path);
-
-   this->dep_path = new char [5*dep_path_size];
-
-   for(size_t i=0;i<dep_path_size;i++){
-
-       this->dep_path[i] = des_file_path[i];
-   }
-
-   this->dep_path[dep_path_size] = '\0';
 
    this->opr_sis = opr_sis;
    
@@ -63,11 +52,6 @@ void Source_File_Dependency_Selector::Clear_Object_Memory(){
         this->Clear_Dynamic_Memory();
 
         this->Info_Collector.Clear_Object_Memory();
-
-        if(this->dep_path != nullptr){
-
-            delete [] this->dep_path;
-        }
      }
 }
 
@@ -97,6 +81,12 @@ void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
 }
 
 
+void Source_File_Dependency_Selector::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
+
+     this->Info_Collector.Receive_Git_Data_Processor(ptr);
+}
+
+
 void Source_File_Dependency_Selector::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
 
      this->Info_Collector.Receive_Source_Code_Reader(ptr);
@@ -104,11 +94,11 @@ void Source_File_Dependency_Selector::Receive_Source_Code_Reader(Project_Src_Cod
      this->Code_Rd = ptr;
 }
 
- bool Source_File_Dependency_Selector::Is_Header_File(std::string hpath){
+
+bool Source_File_Dependency_Selector::Is_Header_File(std::string hpath){
 
       return this->Info_Collector.Is_Header_File(hpath);
- }
-
+}
 
 
 void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::string path)
@@ -294,7 +284,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int s
 
 void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,int thr_num){
 
-     this->Dep_Data_Collectors[thr_num] = new Dependency_Data_Extractor(this->dep_path,this->opr_sis);
+     this->Dep_Data_Collectors[thr_num] = new Dependency_Data_Extractor(this->opr_sis);
 
      this->Dep_Data_Collectors[thr_num]->Receive_Source_Code_Reader(this->Code_Rd);
 

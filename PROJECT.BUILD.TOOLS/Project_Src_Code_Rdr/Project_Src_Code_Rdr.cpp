@@ -28,21 +28,12 @@ Project_Src_Code_Rdr::~Project_Src_Code_Rdr(){
     }   
 }
 
-void Project_Src_Code_Rdr::Receive_Descriptor_File_Path(char * DesPATH){
+void Project_Src_Code_Rdr::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
 
     for(int i=0;i<8;i++){
    
-       this->Hdr_Determiner[i]->Receive_Descriptor_File_Path(DesPATH);
+       this->Hdr_Determiner[i]->Receive_Descriptor_File_Reader(ptr);
    }
-}
-
-
-void Project_Src_Code_Rdr::Receive_Descriptor_File_Path(std::string DesPATH){
-     
-     for(int i=0;i<8;i++){
-   
-         this->Hdr_Determiner[i]->Receive_Descriptor_File_Path(DesPATH);
-     }
 }
 
 
@@ -108,19 +99,19 @@ void Project_Src_Code_Rdr::Clear_Thread_Objects_Memory(){
      this->Src_Determiner = nullptr;
 }
 
-void Project_Src_Code_Rdr::Receive_Git_Repo_Information(Git_File_List_Receiver * ptr){
+void Project_Src_Code_Rdr::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
 
-     this->Git_Data_Ptr = ptr;
+     this->Git_Data_Proc = ptr;
 }
 
 
 void Project_Src_Code_Rdr::Receive_File_Paths(){
   
-     size_t file_number = this->Git_Data_Ptr->Get_Git_File_Index_Size();
+     size_t file_number = this->Git_Data_Proc->Get_Git_File_Index_Size();
 
      for(int i=0;i<file_number;i++){
 
-         std::string file_sys_path = this->Git_Data_Ptr->Get_File_System_Path(i);
+         std::string file_sys_path = this->Git_Data_Proc->Get_File_System_Path(i);
 
          this->FilePaths.push_back(file_sys_path);
      }

@@ -20,10 +20,9 @@
 #include <fcntl.h>
 #include <windows.h>
 #include <vector>
-
 #include "Source_File_Processor.hpp"
 #include "Project_Src_Code_Rdr.hpp"
-#include "Git_File_List_Receiver.hpp"
+#include "Git_Data_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 #include "Header_File_Processor.hpp"
@@ -47,10 +46,11 @@ struct Source_File_Data
 
 class Source_File_Information_Collector
 {
-
 public:
- Source_File_Information_Collector(char * des_file_path, char opr_sis);
+ Source_File_Information_Collector(char opr_sis);
  virtual ~Source_File_Information_Collector();
+ void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Extract_Dependency_Data(std::string path);
  void Extract_Dependency_Data();
@@ -81,8 +81,8 @@ protected:
  void Clear_Headers_Data();
  Project_Src_Code_Rdr * Code_Rdr;
  StringOperator StringManager;
- Descriptor_File_Reader Des_Reader;
- Git_File_List_Receiver Git_Data_Receiver;
+ Descriptor_File_Reader * Des_Reader;
+ Git_Data_Processor * Git_Data_Proc;
  Source_File_Processor Src_File_Pr;
  Cpp_FileOperations FileManager;
  Header_File_Processor Header_Processor;

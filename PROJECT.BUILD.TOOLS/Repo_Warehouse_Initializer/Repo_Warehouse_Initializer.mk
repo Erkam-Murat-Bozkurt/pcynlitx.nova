@@ -8,25 +8,32 @@ HEAD_DET=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
 DES_READ=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
 DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
 DES_SYN_CTR=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
-GIT_LIST=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_File_List_Receiver
 SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
 FILE_DAT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Data_Collector
 DIR_LIST=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Lister
 SRC_DET=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
 HEAD_DET=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
-GIT_LIST_WRITER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_File_List_Writer
-GIT_IGN_LISTER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_Ignoring_Files_Lister
 CUST_SYS_INT=D:\pcynlitx.build\BASIC.TOOLS\Custom_System_Interface
+
+GIT_LIST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Writer
+GIT_REC=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Receiver
+GIT_IGN=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Ignoring_Files_Lister
+GIT_MOD_LST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Lister
+GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiver
+
+
 
 VPATH = $(DIR_LIST) $(DIR_ENUM) $(DIR_OPS) \
 		$(STRING_OPS) $(CHAR_OPS) $(FILE_OPRS) $(HEAD_DET) $(SRC_DET) \
 		$(DES_READ) $(DES_DATA_COL) $(DES_SYN_CTR) $(GIT_LIST) \
-		$(FILE_DAT_COL) $(SRC_DT_COL) $(GIT_LIST_WRITER) \
-		$(HEAD_DET) $(CUST_SYS_INT) $(GIT_IGN_LISTER)
+		$(FILE_DAT_COL) $(SRC_DT_COL) $(GIT_REC) $(GIT_MOD_LST) \
+		$(HEAD_DET) $(CUST_SYS_INT) $(GIT_IGN) $(GIT_MOD_RCV)
 
 Repo_Warehouse_Initializer.exe: Repo_Warehouse_Initializer_Main_File.cpp \
 	Repo_Warehouse_Initializer.cpp \
 	Project_Files_Lister.cpp \
+	Git_Modification_Receiver.cpp \
+	Git_Modification_Lister.cpp \
 	Git_File_List_Receiver.cpp \
 	Git_File_List_Writer.cpp \
 	Git_Ignoring_Files_Lister.cpp \
@@ -63,18 +70,22 @@ Repo_Warehouse_Initializer.exe: Repo_Warehouse_Initializer_Main_File.cpp \
    -I$(DES_READ)   -I$(DES_DATA_COL) -I$(GIT_LIST)    -I$(FILE_DAT_COL)  \
    -I$(SRC_DT_COL) -I$(DIR_OPS)      -I$(STRING_OPS)  -I$(CHAR_OPS) \
    -I$(FILE_OPRS)  -I$(HEAD_DET)     -I$(SRC_DET)     -I$(DES_SYN_CTR) \
-   -I$(GIT_LIST_WRITER) -I$(CUST_SYS_INT) -I$(GIT_IGN_LISTER) \
+   -I$(GIT_LIST)   -I$(CUST_SYS_INT) -I$(GIT_IGN) 	  -I$(GIT_MOD_LST)\
+   -I$(GIT_MOD_RCV) -I$(GIT_REC) \
    -L$(DIR_LIST)   -L$(REPO_DET)     -L$(DIR_TREE)    -L$(DIR_OPS) \
    -L$(DES_READ)   -L$(DES_DATA_COL) -L$(GIT_LIST)    -L$(FILE_DAT_COL) \
    -L$(SRC_DT_COL) -L$(STRING_OPS)   -L$(CHAR_OPS)    -L$(FILE_OPRS)  \
-   -L$(HEAD_DET)   -L$(SRC_DET)      -L$(DES_SYN_CTR) -L$(GIT_LIST_WRITER)\
-   -L$(CUST_SYS_INT) -L$(GIT_IGN_LISTER) \
+   -L$(HEAD_DET)   -L$(SRC_DET)      -L$(DES_SYN_CTR) -L$(GIT_LIST)\
+   -L$(CUST_SYS_INT) -L$(GIT_IGN)  	 -L$(GIT_MOD_LST)\
+   -L$(GIT_MOD_RCV)  -L$(GIT_REC) \
 		Repo_Warehouse_Initializer_Main_File.cpp \
 		Repo_Warehouse_Initializer.cpp \
 		$(DIR_LIST)\Project_Files_Lister.cpp \
-		$(GIT_LIST)\Git_File_List_Receiver.cpp  \
-		$(GIT_LIST_WRITER)\Git_File_List_Writer.cpp  \
-	    $(GIT_IGN_LISTER)\Git_Ignoring_Files_Lister.cpp \
+		$(GIT_MOD_LST)\Git_Modification_Lister.cpp \
+		$(GIT_MOD_RCV)\Git_Modification_Receiver.cpp \
+		$(GIT_REC)\Git_File_List_Receiver.cpp  \
+		$(GIT_LIST)\Git_File_List_Writer.cpp  \
+	    $(GIT_IGN)\Git_Ignoring_Files_Lister.cpp \		
 		$(DES_READ)\Descriptor_File_Reader.cpp \
 		$(DES_DATA_COL)\Descriptor_File_Data_Collector.cpp \
 		$(DES_SYN_CTR)\Descriptor_File_Syntax_Controller.cpp \
@@ -89,9 +100,14 @@ Repo_Warehouse_Initializer.exe: Repo_Warehouse_Initializer_Main_File.cpp \
 		$(FILE_OPRS)\Cpp_FileOperations.cpp \
 		-include Repo_Warehouse_Initializer.h \
 		-include $(DIR_LIST)\Project_Files_Lister.h \
+		-include $(GIT_MOD_LST)\Git_Modification_Lister.cpp \
+		-include $(GIT_MOD_RCV)\Git_Modification_Receiver.cpp \
+		-include $(GIT_REC)\Git_File_List_Receiver.cpp  \
+		-include $(GIT_LIST)\Git_File_List_Writer.cpp  \
+	    -include $(GIT_IGN)\Git_Ignoring_Files_Lister.cpp \		
 		-include $(GIT_LIST)\Git_File_List_Receiver.hpp \
 		-include $(GIT_LIST_WRITER)\Git_File_List_Writer.hpp  \
-		-include $(GIT_IGN_LISTER)\Git_Ignoring_Files_Lister.hpp \
+		-include $(GIT_IGN)\Git_Ignoring_Files_Lister.hpp \
 		-include $(FILE_DAT_COL)\Project_Files_Data_Collector.hpp \
 		-include $(SRC_DT_COL)\Source_File_Data_Collector.hpp \
 		-include $(DES_READ)\Descriptor_File_Reader.hpp \

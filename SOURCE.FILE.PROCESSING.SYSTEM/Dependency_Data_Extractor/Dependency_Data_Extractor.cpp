@@ -24,9 +24,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Dependency_Data_Extractor.hpp"
 
-Dependency_Data_Extractor::Dependency_Data_Extractor(char * des_file_path, char opr_sis)
+Dependency_Data_Extractor::Dependency_Data_Extractor(char opr_sis)
 
-    : Header_Processor(des_file_path,opr_sis)
+    : Header_Processor(opr_sis)
 {
    this->Memory_Delete_Condition = false;
 }
@@ -68,6 +68,12 @@ void Dependency_Data_Extractor::Receive_Source_Code_Reader(Project_Src_Code_Rdr 
      this->Header_Processor.Receive_Source_Code_Reader(ptr);
 
      this->Code_Rd = ptr;
+}
+
+
+void Dependency_Data_Extractor::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
+
+     this->Header_Processor.Receive_Git_Data_Processor(ptr);
 }
 
 

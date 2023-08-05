@@ -12,7 +12,13 @@
 #include <unordered_map>
 #include <iterator>
 #include <utility>      // std::pair, std::make_pair
+#include "Git_Data_Processor.hpp"
 #include "Git_File_List_Receiver.hpp"
+#include "Git_File_List_Writer.hpp"
+#include "Git_Modification_Lister.hpp"
+#include "Git_Modification_Receiver.hpp"
+#include "Git_Ignoring_Files_Lister.hpp"
+#include "Descriptor_File_Reader.hpp"
 #include "Header_File_Determiner.h"
 #include "Source_File_Determiner.h"
 #include "Source_File_Data_Collector.hpp"
@@ -28,6 +34,7 @@ public:
  virtual ~Project_Files_Lister();
  void Determine_Git_Repo_Info();
  int  Get_Source_File_Number();
+ void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  std::string Get_Source_File_Directory(int num);
  std::string Get_Source_File_Git_Record_Path(int num);
  std::string Get_Source_File_System_Path(int num);
@@ -48,7 +55,7 @@ public:
  int  Get_Indenpendent_Header_Files_Number();
  void Clear_Dynamic_Memory();
 protected:
- void Initialize_Members(char opr_sis);
+ void Initialize_Members();
  bool Is_There_a_Source_File_With_Same_Name(std::string file_Name);
  void Collect_Source_Files_Data();
  void Collect_Independent_Header_Files_Data();
@@ -61,7 +68,7 @@ protected:
  void Clear_Build_Data_Memory(std::vector<Build_System_Data> * pointer);
  void Clear_String_Memory(std::string * pointer);
  void Clear_Build_Data(Build_System_Data * pointer);
- Git_File_List_Receiver Git_Data_Receiver;
+ Git_Data_Processor *  Git_Data_Proc;
  Source_File_Data_Collector Src_Data_Col;
  Header_File_Determiner Header_Determiner;
  Source_File_Determiner Source_Determiner;

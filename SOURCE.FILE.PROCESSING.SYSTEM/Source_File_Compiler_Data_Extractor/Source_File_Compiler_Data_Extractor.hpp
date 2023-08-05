@@ -26,7 +26,7 @@
 #include "Source_File_Dependency_Selector.hpp"
 #include "Dependency_Data_Extractor.hpp"
 #include "Source_File_Information_Collector.hpp"
-#include "Git_File_List_Receiver.hpp"
+#include "Git_Data_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 #include "Header_File_Determiner.h"
@@ -52,9 +52,10 @@ struct Compiler_Data
 class Source_File_Compiler_Data_Extractor
 {
 public:
- Source_File_Compiler_Data_Extractor(char * des_file_path, char opr_sis);
+ Source_File_Compiler_Data_Extractor(char opr_sis);
  virtual ~Source_File_Compiler_Data_Extractor();
  void Receive_Dependency_Data(std::vector<std::vector<Source_File_Dependency>> * ptr, std::string wrd);
+ void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Extract_Compiler_Data();
  void Extract_Compiler_Data(std::string path);
  void Clear_Dynamic_Memory();

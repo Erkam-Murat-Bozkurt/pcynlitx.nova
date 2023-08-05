@@ -22,6 +22,11 @@
 #include <windows.h>
 #include <thread>
 #include <mutex>
+#include "Git_Data_Processor.hpp"
+#include "Git_File_List_Receiver.hpp"
+#include "Git_File_List_Writer.hpp"
+#include "Git_Modification_Lister.hpp"
+#include "Git_Modification_Receiver.hpp"
 #include "Dependency_Data_Extractor.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Header_File_Processor.hpp"
@@ -54,8 +59,9 @@ struct Source_File_Dependency
 class Source_File_Dependency_Selector
 {
 public:
- Source_File_Dependency_Selector(char * descriptor_file_path, char opr_sis);
+ Source_File_Dependency_Selector(char opr_sis);
  virtual ~Source_File_Dependency_Selector();
+ void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Determine_Source_File_Dependencies(std::string path);
  void Determine_Source_File_Dependencies();
@@ -97,7 +103,6 @@ protected:
  std::vector<std::vector<Source_File_Dependency>> Dependency_Data;
  std::string warehouse_head_dir;
  std::string descriptor_file_path;
- char * dep_path;
  StringOperator StringManager; 
  std::mutex mtx;
  std::thread threads[8];

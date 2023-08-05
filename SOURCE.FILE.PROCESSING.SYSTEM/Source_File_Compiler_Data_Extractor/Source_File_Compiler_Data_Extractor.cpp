@@ -24,16 +24,13 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Source_File_Compiler_Data_Extractor.hpp"
 
-Source_File_Compiler_Data_Extractor::Source_File_Compiler_Data_Extractor(char * des_file_path, 
-
-    char opr_sis) :
+Source_File_Compiler_Data_Extractor::Source_File_Compiler_Data_Extractor(char opr_sis) :
 
     File_Lister(opr_sis)
 {
 
    this->operating_sis = opr_sis;
 
-   this->File_Lister.Determine_Git_Repo_Info();         // Project_Files_Lister instance
 }
 
 
@@ -88,6 +85,15 @@ void Source_File_Compiler_Data_Extractor::Clear_Data_Memory(std::vector<Compiler
       Data->clear();
 
       Data->shrink_to_fit();
+}
+
+
+
+void Source_File_Compiler_Data_Extractor::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
+
+     this->File_Lister.Receive_Git_Data_Processor(ptr);
+
+     this->File_Lister.Determine_Git_Repo_Info();         // Project_Files_Lister instance
 }
 
 

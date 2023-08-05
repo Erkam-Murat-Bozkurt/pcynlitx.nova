@@ -18,6 +18,7 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
+    std::cout << "\n\n\e[1;32mC++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED\e[0m\n";
 
     Build_Tools_Initializer Initializer(argv[1],'w');
 
