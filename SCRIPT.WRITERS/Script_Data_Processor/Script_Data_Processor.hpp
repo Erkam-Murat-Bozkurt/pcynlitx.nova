@@ -48,7 +48,6 @@ protected:
  Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;
  CharOperator CString_Proccessor;
- Git_Data_Processor * Git_Dt_Proc;
  std::vector<Script_Data> Data;
  Script_Data Temp_Data;
  std::string String_Line;

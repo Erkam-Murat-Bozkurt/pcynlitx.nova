@@ -37,7 +37,7 @@ void Script_Data_Processor::Receive_Descriptor_File_Reader(Descriptor_File_Reade
 
 void Script_Data_Processor::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
  
-      this->Git_Dt_Proc = ptr;
+     this->Data_Collector.Receive_Git_Data_Processor(ptr);
 }
 
 void Script_Data_Processor::Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * ptr)
@@ -59,7 +59,6 @@ void Script_Data_Processor::Process_Script_Data(){
 
         exit(0);
      }
-
 
      if(this->source_file_num > 0){
 

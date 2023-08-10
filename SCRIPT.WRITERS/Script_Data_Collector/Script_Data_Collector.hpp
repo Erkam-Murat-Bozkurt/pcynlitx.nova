@@ -8,6 +8,7 @@
 #include "Source_File_Dependency_Determiner.hpp"
 #include "Project_Files_Lister.h"
 #include "Descriptor_File_Reader.hpp"
+#include "Git_Data_Processor.hpp"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
 #include "Directory_Enumerator.h"
@@ -33,6 +34,7 @@ class Script_Data_Collector
 public:
  Script_Data_Collector(char opr_sis);
  virtual ~Script_Data_Collector();
+ void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Compiler_Data(Compiler_Data * dt);
  void Determine_Source_File_Compilation_Information(Script_Data * ptr, std::string str);
@@ -48,6 +50,7 @@ protected:
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  bool CompareString(std::string str1, std::string Str2);
  Descriptor_File_Reader * Des_File_Reader;
+ Git_Data_Processor * Git_Data_Proc;
  Project_Files_Lister Dir_Lister;
  std::vector<Build_System_Data> * Build_Dt;
  Script_Data * Src_Data_Pointer;

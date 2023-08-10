@@ -9,8 +9,6 @@ Script_Data_Collector::Script_Data_Collector(char opr_sis) :
 
      this->Src_Data_Pointer = nullptr;
 
-     this->Build_Dt = this->Dir_Lister.Get_Build_System_Data_Address();
-
      this->opr_sis = opr_sis;
 }
 
@@ -25,11 +23,22 @@ Script_Data_Collector::~Script_Data_Collector(){
 }
 
 
+void Script_Data_Collector::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
+
+     this->Git_Data_Proc = ptr;
+
+     this->Dir_Lister.Receive_Git_Data_Processor(ptr);
+
+     this->Dir_Lister.Determine_Git_Repo_Info();
+
+     this->Build_Dt = this->Dir_Lister.Get_Build_System_Data_Address();
+}
+
+
 void Script_Data_Collector::Receive_Compiler_Data(Compiler_Data * ptr){
 
      this->Cmp_Data_Ptr = ptr;
 }
-
 
 
 void Script_Data_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
@@ -142,14 +151,6 @@ void Script_Data_Collector::Determine_Header_Files_Inclusion_Number(Script_Data 
      int src_num)
 {
      // THIS MEMBER FUNCTION DETERMINES COMPLIATION PRIORITY OF THE SOURCE FILE
-
-     //std::string src_file_path = this->Dir_Lister.Get_Source_File_System_Path(src_num);
-
-     //this->Dep_Determiner.Collect_Dependency_Information(src_file_path);
-
-     // Dependencies of a particular source file.
-
-     //size_t dep_size = this->Dep_Determiner.Get_Compiler_Data_Size();
 
      ptr->dependency = this->Cmp_Data_Ptr->priority;
 }

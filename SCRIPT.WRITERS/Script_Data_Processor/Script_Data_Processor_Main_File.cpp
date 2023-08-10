@@ -5,7 +5,7 @@
 #include <cstring>
 #include "Descriptor_File_Reader.hpp"
 #include "Script_Data_Processor.hpp"
-#include "Git_File_List_Receiver.hpp"
+#include "Git_Data_Processor.hpp"
 
 int main(int argc, char ** argv){
 
@@ -19,14 +19,41 @@ int main(int argc, char ** argv){
     }
 
 
-    Git_File_List_Receiver Receiver(argv[1],'w');
 
-    Receiver.Determine_Git_Repo_Info();
+    Descriptor_File_Reader Des_File_Reader('w');    
+
+    Des_File_Reader.Receive_Descriptor_File_Path(argv[1]);
+
+    Des_File_Reader.Read_Descriptor_File();
+
+
+
+    Git_Data_Processor Data_Processor('w');
+
+    Data_Processor.Receive_Descriptor_File_Path(argv[1]);
+
+    Data_Processor.Write_Git_Repo_List_File();
+
+    Data_Processor.Determine_Git_Repo_Info();
+
+
+    Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
+
+    Dep_Determiner.Receive_Descriptor_File_Reader(&Des_File_Reader);
+
+    Dep_Determiner.Receive_Git_Data_Processor(&Data_Processor);
+
+    Dep_Determiner.Collect_Dependency_Information();
+
 
 
     Script_Data_Processor Srt_Data_Processor(argv[1],'w');
 
-    Srt_Data_Processor.Receive_Git_File_List_Info(&Receiver);
+    Srt_Data_Processor.Receive_Git_Data_Processor(&Data_Processor);
+
+    Srt_Data_Processor.Receive_Descriptor_File_Reader(&Des_File_Reader);
+
+    Srt_Data_Processor.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
 
     Srt_Data_Processor.Process_Script_Data();
 
