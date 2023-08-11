@@ -47,7 +47,7 @@ int main(int argc, char ** argv){
 
 
 
-    Script_Data_Processor Srt_Data_Processor(argv[1],'w');
+    Script_Data_Processor Srt_Data_Processor('w');
 
     Srt_Data_Processor.Receive_Git_Data_Processor(&Data_Processor);
 

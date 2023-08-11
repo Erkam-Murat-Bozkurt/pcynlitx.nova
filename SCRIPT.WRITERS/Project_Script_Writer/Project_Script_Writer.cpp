@@ -2,9 +2,9 @@
 
 #include "Project_Script_Writer.h"
 
-Project_Script_Writer::Project_Script_Writer(char * DesPATH, char opr_sis) :
+Project_Script_Writer::Project_Script_Writer(char opr_sis) :
 
-    Src_Data_Processor(DesPATH,opr_sis), Des_Reader(opr_sis)
+    Src_Data_Processor(opr_sis)
 {
 
      this->Memory_Delete_Condition = true;
@@ -14,8 +14,6 @@ Project_Script_Writer::Project_Script_Writer(char * DesPATH, char opr_sis) :
      this->Data_Pointer = nullptr;
 
      this->opr_sis = opr_sis;
-
-     this->Des_Reader.Read_Descriptor_File();
 }
 
 
@@ -35,29 +33,29 @@ void Project_Script_Writer::Receive_Source_File_Dependency_Determiner(Source_Fil
 }
 
 void Project_Script_Writer::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
+     
+     this->Src_Data_Processor.Receive_Git_Data_Processor(ptr);   
+}
 
-     this->Git_Dt_Proc = ptr;
+void Project_Script_Writer::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
 
-     this->Git_Dt_Proc->Determine_Git_Repo_Info();
+     this->Des_Reader = ptr;
 
-     this->Src_Data_Processor.Receive_Git_Data_Processor(this->Git_Dt_Proc);
-
-    
+     this->Src_Data_Processor.Receive_Descriptor_File_Reader(ptr);
 }
 
 void Project_Script_Writer::Build_Compiler_Script(){
 
+
     this->Src_Data_Processor.Process_Script_Data();
 
-    std::cout << "\n\n\e[1;32mThe necessary data for script construction collected \e[0m\n";
-
-    this->Src_Script_Writer.Receive_Descriptor_File_Reader(&this->Des_Reader);
+    this->Src_Script_Writer.Receive_Descriptor_File_Reader(this->Des_Reader);
 
     this->Data_Pointer = this->Src_Data_Processor.Get_Script_Data_Address();
 
     this->source_file_num = this->Src_Data_Processor.Get_Source_File_Number();
 
-    this->warehouse_path = this->Des_Reader.Get_Warehouse_Location();
+    this->warehouse_path = this->Des_Reader->Get_Warehouse_Location();
 
     this->Determine_Object_Files_Location('w');
 
@@ -100,7 +98,7 @@ void Project_Script_Writer::Write_Source_File_Scripts(){
 void Project_Script_Writer::Write_The_Project_Script(){
 
 
-     std::string Repo_Rood_Dir = this->Des_Reader.Get_Repo_Directory_Location();
+     std::string Repo_Rood_Dir = this->Des_Reader->Get_Repo_Directory_Location();
 
 
      this->FileManager.SetFilePath(this->script_path);
@@ -484,7 +482,7 @@ void Project_Script_Writer::Construct_Path(std::string & path,
 
      std::string string, char opr_sis){
 
-     std::string warehouse_path = this->Des_Reader.Get_Warehouse_Location();
+     std::string warehouse_path = this->Des_Reader->Get_Warehouse_Location();
 
 
      std::string warehouse_word = "WAREHOUSE";

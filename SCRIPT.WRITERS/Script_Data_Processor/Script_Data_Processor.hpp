@@ -25,7 +25,7 @@
 class Script_Data_Processor
 {
 public:
- Script_Data_Processor(char * DesPATH, char opr_sis);
+ Script_Data_Processor(char opr_sis);
  virtual ~Script_Data_Processor();
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * ptr);

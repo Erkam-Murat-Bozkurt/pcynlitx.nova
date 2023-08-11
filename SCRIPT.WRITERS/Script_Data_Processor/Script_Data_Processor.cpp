@@ -2,7 +2,7 @@
 
 #include "Script_Data_Processor.hpp"
 
-Script_Data_Processor::Script_Data_Processor(char * DesPATH, char opr_sis) :
+Script_Data_Processor::Script_Data_Processor(char opr_sis) :
 
   Data_Collector(opr_sis)
 

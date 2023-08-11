@@ -23,10 +23,11 @@
 class Project_Script_Writer
 {
 public:
- Project_Script_Writer(char * DesPATH, char opr_sis);
+ Project_Script_Writer(char opr_sis);
  virtual ~Project_Script_Writer();
  void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
+ void Receive_Descriptor_File_Reader(Descriptor_File_Reader* ptr);
  void Build_Compiler_Script();
  void Clear_Dynamic_Memory();
 protected:
@@ -39,8 +40,7 @@ protected:
  void Determine_Object_Files_Location(char opr_sis);
  void Clear_String_Memory(std::string & pointer);
  void Determine_Compiler_Output_Path(std::string class_name);
- Git_Data_Processor * Git_Dt_Proc;
- Descriptor_File_Reader Des_Reader;
+ Descriptor_File_Reader * Des_Reader;
  Script_Data_Processor Src_Data_Processor;
  Source_File_Script_Writer Src_Script_Writer;
  DirectoryOperations DirectoryManager;

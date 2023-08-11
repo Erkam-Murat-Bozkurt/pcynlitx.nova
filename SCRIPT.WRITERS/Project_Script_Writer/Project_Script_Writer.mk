@@ -16,7 +16,7 @@ PRO_FILES_DAT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Da
 DESCR_READ=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
 DESCR_DAT_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
 DESCR_SYNT_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
-GIT_REC=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_File_List_Receiver
+
 SCRIPT_DAT=D:\pcynlitx.build\SCRIPT.WRITERS\Script_Data_Collector
 SRC_SCRIPT_WRT=D:\pcynlitx.build\SCRIPT.WRITERS\Source_File_Script_Writer
 SRCRIPT_DATA_PR=D:\pcynlitx.build\SCRIPT.WRITERS\Script_Data_Processor
@@ -32,6 +32,16 @@ SRC_PROCESSOR=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Proces
 
 
 
+GIT_PROC=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Data_Processor
+GIT_LIST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Writer
+GIT_REC=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Receiver
+GIT_IGN=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Ignoring_Files_Lister
+GIT_MOD_LST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Lister
+GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiver
+SYS_INT=D:\pcynlitx.build\BASIC.TOOLS\Custom_System_Interface
+
+
+
 VPATH = $(DIR_LIST) $(REPO_DET) $(DIR_ENUM) $(DIR_TREE) \
 		$(DIR_OPS) $(STRING_OPS) $(CHAR_OPS) $(FILE_OPRS) \
 	    $(DESCR_READ) $(SRC_DAT_COL) \
@@ -41,7 +51,15 @@ VPATH = $(DIR_LIST) $(REPO_DET) $(DIR_ENUM) $(DIR_TREE) \
 		$(DESCR_SYNT_COL) $(SRC_DEP_DT) $(SRC_DEP_SL) $(SRC_INF_CL) \
 		$(SRCRIPT_DATA_PR) $(HDR_PROC) $(SRC_READER) \
 		$(SRC_COM_DT_EXT) $(SRC_DER_RORD) $(DEP_DAT_EXT) \
-		$(SRC_PROCESSOR)
+		$(SRC_PROCESSOR) \
+		$(GIT_PROC) \
+		$(GIT_LIST) \
+		$(GIT_REC) \
+		$(GIT_MOD_LST) \
+		$(GIT_MOD_RCV) \
+		$(GIT_IGN) \
+		$(SYS_INT)
+
 
 
 Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
@@ -60,7 +78,12 @@ Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
 	Script_Data_Collector.cpp \
 	Project_Files_Lister.cpp \
 	Project_Files_Data_Collector.cpp \
+	Git_Data_Processor.cpp \
 	Git_File_List_Receiver.cpp \
+	Git_File_List_Writer.cpp \
+	Git_Ignoring_Files_Lister.cpp \
+	Git_Modification_Lister.cpp \
+	Git_Modification_Lister.cpp \
 	Descriptor_File_Reader.cpp \
 	Descriptor_File_Data_Collector.cpp \
 	Descriptor_File_Syntax_Controller.cpp \
@@ -89,7 +112,12 @@ Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
 	Project_Src_Code_Rdr.hpp \
 	Project_Files_Lister.h \
 	Project_Files_Data_Collector.hpp \
+	Git_Data_Processor.hpp \
 	Git_File_List_Receiver.hpp \
+	Git_File_List_Writer.hpp \
+	Git_Ignoring_Files_Lister.hpp \
+	Git_Modification_Lister.hpp \
+	Git_Modification_Lister.hpp \
 	Descriptor_File_Reader.hpp  \
 	Descriptor_File_Data_Collector.hpp \
 	Source_File_Determiner.h \
@@ -118,6 +146,13 @@ Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
 	 -I$(SRC_INF_CL) -I$(SRCRIPT_DATA_PR) \
 	 -I$(HDR_PROC) -I$(SRC_READER) \
 	 -I$(SRC_COM_DT_EXT) -I$(SRC_DER_RORD) \
+	 -I$(GIT_PROC) \
+	 -I$(GIT_LIST) \
+	 -I$(GIT_REC) \
+	 -I$(GIT_MOD_LST) \
+	 -I$(GIT_MOD_RCV) \
+	 -I$(GIT_IGN) \
+	 -I$(SYS_INT) \
 	 -L$(DIR_LIST) -L$(DIR_ENUM) \
 	 -L$(DESCR_READ) -L$(DESCR_DAT_COL) \
 	 -L$(PRO_FILES_DAT_COL) -L$(REPO_DET) \
@@ -132,6 +167,12 @@ Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
 	 -L$(HDR_PROC)   -L$(SRC_READER) \
 	 -L$(SRC_COM_DT_EXT) -L$(SRC_DER_RORD) \
 	 -L$(SRC_PROCESSOR)\
+	 -L$(GIT_LIST) \
+	 -L$(GIT_REC) \
+	 -L$(GIT_MOD_LST) \
+	 -L$(GIT_MOD_RCV) \
+	 -L$(GIT_IGN) \
+	 -L$(SYS_INT) \
 		Project_Script_Writer_Main_File.cpp \
 		Project_Script_Writer.cpp \
 		$(SRCRIPT_DATA_PR)\Script_Data_Processor.cpp \
@@ -149,7 +190,12 @@ Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
 		$(DIR_LIST)\Project_Files_Lister.cpp \
 		$(PRO_FILES_DAT_COL)\Project_Files_Data_Collector.cpp \
 		$(SRC_DAT_COL)\Source_File_Data_Collector.cpp \
+    	$(GIT_PROC)\Git_Data_Processor.cpp \
+		$(GIT_LIST)\Git_File_List_Writer.cpp \
 		$(GIT_REC)\Git_File_List_Receiver.cpp \
+		$(GIT_MOD_LST)\Git_Modification_Lister.cpp \
+		$(GIT_MOD_RCV)\Git_Modification_Receiver.cpp \
+		$(GIT_IGN)\Git_Ignoring_Files_Lister.cpp \
 		$(DESCR_READ)\Descriptor_File_Reader.cpp \
 		$(DESCR_DAT_COL)\Descriptor_File_Data_Collector.cpp \
 		$(DESCR_SYNT_COL)\Descriptor_File_Syntax_Controller.cpp \
@@ -163,6 +209,7 @@ Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
 		$(CHAR_OPS)\CharOperator.cpp \
 		$(FILE_OPRS)\Cpp_FileOperations.cpp \
 		$(INT_CHAR)\IntToCharTranslater.cpp \
+		$(SYS_INT)\Custom_System_Interface.cpp \
 		-include Project_Script_Writer.h \
 		-include $(SRCRIPT_DATA_PR)\Script_Data_Processor.hpp \
 		-include $(SRC_SCRIPT_WRT)\Source_File_Script_Writer.hpp \
@@ -179,7 +226,12 @@ Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
 		-include $(DIR_LIST)\Project_Files_Lister.h \
 		-include $(PRO_FILES_DAT_COL)\Project_Files_Data_Collector.hpp \
 		-include $(SRC_DAT_COL)\Source_File_Data_Collector.hpp \
+        -include $(GIT_PROC)\Git_Data_Processor.hpp \
+		-include $(GIT_LIST)\Git_File_List_Writer.hpp \
 		-include $(GIT_REC)\Git_File_List_Receiver.hpp \
+		-include $(GIT_MOD_LST)\Git_Modification_Lister.hpp \
+		-include $(GIT_MOD_RCV)\Git_Modification_Receiver.hpp \
+		-include $(GIT_IGN)\Git_Ignoring_Files_Lister.hpp \
 		-include $(DESCR_READ)\Descriptor_File_Reader.hpp \
 		-include $(DESCR_DAT_COL)\Descriptor_File_Data_Collector.hpp \
 		-include $(DESCR_SYNT_COL)\Descriptor_File_Syntax_Controller.hpp \
@@ -193,4 +245,5 @@ Project_Script_Writer.exe: Project_Script_Writer_Main_File.cpp \
 		-include $(CHAR_OPS)\CharOperator.h \
 		-include $(INT_CHAR)\IntToCharTranslater.h \
 		-include $(FILE_OPRS)\Cpp_FileOperations.h \
-		-lpthread
+		-include $(SYS_INT)\Custom_System_Interface.h \
+	    -lpthread
