@@ -17,6 +17,7 @@
 #include "Auto_MakeFile_Builder.h"
 #include "Project_Script_Writer.h"
 #include "Source_File_Dependency_Determiner.hpp"
+#include "Git_Data_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
 
 class Build_Tools_Initializer
@@ -27,6 +28,8 @@ public:
  void Setup_Build_Tools();
 protected:
  void Clear_Dynamic_Memory();
+ Git_Data_Processor Git_Data_Proc;
+ Descriptor_File_Reader Des_Reader;
  Repo_Warehouse_Initializer Rep_Init;
  Source_File_Dependency_Determiner Dep_Determiner;
  Auto_MakeFile_Builder Mk_Builder;
