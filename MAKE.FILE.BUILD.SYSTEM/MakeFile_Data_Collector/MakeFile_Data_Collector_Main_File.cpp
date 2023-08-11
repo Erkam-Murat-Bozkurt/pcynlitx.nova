@@ -18,18 +18,32 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Project_Files_Lister File_Lister(argv[1],'w');
+    Descriptor_File_Reader Des_File_Reader('w');    
 
-    File_Lister.Determine_Git_Repo_Info();
+    Des_File_Reader.Receive_Descriptor_File_Path(argv[1]);
 
-    int src_file_num = File_Lister.Get_Source_File_Number();
+    Des_File_Reader.Read_Descriptor_File();
+
+
+    Git_Data_Processor Data_Processor('w');
+
+    Data_Processor.Receive_Descriptor_File_Path(argv[1]);
+
+    Data_Processor.Write_Git_Repo_List_File();
+
+    Data_Processor.Determine_Git_Repo_Info();
+
 
     Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
+
+    Dep_Determiner.Receive_Descriptor_File_Reader(&Des_File_Reader);
+
+    Dep_Determiner.Receive_Git_Data_Processor(&Data_Processor);
 
     Dep_Determiner.Collect_Dependency_Information();
 
 
-    MakeFile_Data_Collector Data_Collector(argv[1],'w');
+    MakeFile_Data_Collector Data_Collector('w');
 
     std::vector<Compiler_Data> * vec_ptr = Dep_Determiner.Get_Compiler_Data_Address();
 

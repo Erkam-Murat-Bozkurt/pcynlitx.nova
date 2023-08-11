@@ -23,33 +23,20 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "MakeFile_Data_Collector.hpp"
 
-MakeFile_Data_Collector::MakeFile_Data_Collector(char * Des_Path, char opr_sis) :
-
-Des_Reader(opr_sis)
-
+MakeFile_Data_Collector::MakeFile_Data_Collector(char opr_sis)
 {
-     this->Des_Reader.Read_Descriptor_File();
-
-     this->warehouse_path = this->Des_Reader.Get_Warehouse_Location();
-
-     this->repo_dir  = this->Des_Reader.Get_Repo_Directory_Location();
-
-     this->opr_sis = opr_sis;
-     
+     this->opr_sis = opr_sis;     
 }
 
 
 MakeFile_Data_Collector::~MakeFile_Data_Collector(){
 
-     this->Clear_Dynamic_Memory();
-   
+     this->Clear_Dynamic_Memory();   
 }
 
 void MakeFile_Data_Collector::Clear_Object_Memory(){
 
      this->Clear_Dynamic_Memory();
-
-     this->Des_Reader.Clear_Dynamic_Memory();
 }
 
 void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
@@ -73,6 +60,16 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
      this->Clear_String_Memory(&this->Source_File_Directory);     
 }
 
+
+void MakeFile_Data_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+
+     this->Des_Reader = ptr;
+
+     this->warehouse_path = this->Des_Reader->Get_Warehouse_Location();
+
+     this->repo_dir  = this->Des_Reader->Get_Repo_Directory_Location();
+
+}
 
 void MakeFile_Data_Collector::Receive_Compiler_Data_Pointer(Compiler_Data * ptr){
 
@@ -280,7 +277,7 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
      std::string compiler_input_command = "g++ -Wall -c -std=c++17 ";
 
 
-     std::string options = this->Des_Reader.Get_Options();
+     std::string options = this->Des_Reader->Get_Options();
 
      std::string Include_Character = "-I";
 
@@ -324,7 +321,7 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
      this->Place_String(&this->Compiler_System_Command,go_to_new_line);
 
 
-     int  included_dir_num = this->Des_Reader.Get_Include_Directory_Number();
+     int  included_dir_num = this->Des_Reader->Get_Include_Directory_Number();
 
      char include_dir_symbol [] = "$(EXTERNAL_INCLUDE_DIR_";
 
@@ -334,7 +331,7 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      for(int i=0;i<included_dir_num;i++){
 
-         std::string included_dir = this->Des_Reader.Get_Include_Directory(i);
+         std::string included_dir = this->Des_Reader->Get_Include_Directory(i);
 
          char * dir_index = this->Translater.Translate(i);
 
@@ -499,7 +496,7 @@ void MakeFile_Data_Collector::Determine_Dependency_Code_Line(){
 
 void MakeFile_Data_Collector::Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path){
 
-     std::string root_dir = this->Des_Reader.Get_Repo_Directory_Location();
+     std::string root_dir = this->Des_Reader->Get_Repo_Directory_Location();
 
      size_t path_size = sys_path.length();
      size_t end_point = path_size;

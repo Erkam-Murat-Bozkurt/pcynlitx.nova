@@ -29,10 +29,11 @@
 class Make_File_Builder
 {
 public:
- Make_File_Builder(char * DesPath, char opr_sis);
+ Make_File_Builder(char opr_sis);
  virtual ~Make_File_Builder();
  void Build_MakeFile(std::string file_name);
  void Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr);
+ void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Construct_Data_Map();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
@@ -42,7 +43,7 @@ private:
  void Write_Header_Paths_Shorts_Cuts();
  MakeFile_Data_Collector Data_Collector;
  Project_Files_Lister * File_Lister;
- Descriptor_File_Reader Des_Reader;
+ Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;
  DirectoryOperations DirectoryManager;
  IntToCharTranslater Translater;

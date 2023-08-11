@@ -20,7 +20,29 @@ int main(int argc, char ** argv){
     }
 
 
+
+
+    Descriptor_File_Reader Des_File_Reader('w');    
+
+    Des_File_Reader.Receive_Descriptor_File_Path(argv[1]);
+
+    Des_File_Reader.Read_Descriptor_File();
+
+
+    Git_Data_Processor Data_Processor('w');
+
+    Data_Processor.Receive_Descriptor_File_Path(argv[1]);
+
+    Data_Processor.Write_Git_Repo_List_File();
+
+    Data_Processor.Determine_Git_Repo_Info();
+
+
     Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
+
+    Dep_Determiner.Receive_Descriptor_File_Reader(&Des_File_Reader);
+
+    Dep_Determiner.Receive_Git_Data_Processor(&Data_Processor);
 
     Dep_Determiner.Collect_Dependency_Information();
 
@@ -31,6 +53,10 @@ int main(int argc, char ** argv){
     Auto_MakeFile_Builder Make_Builder(argv[1],'w');
 
     Make_Builder.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
+
+    Make_Builder.Receive_Git_Data_Processor(&Data_Processor);
+
+    Make_Builder.Receive_Descriptor_File_Reader(&Des_File_Reader);
 
     Make_Builder.Build_Make_Files();
 

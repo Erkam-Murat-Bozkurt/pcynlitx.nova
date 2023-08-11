@@ -27,6 +27,7 @@ class Make_File_Cleaner
 public:
  Make_File_Cleaner(char * DesPath, char opr_sis);
  virtual ~Make_File_Cleaner();
+ void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Clear_Make_Files_Exist_On_Repo();
  void Clear_Dynamic_Memory();
 private:

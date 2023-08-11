@@ -13,6 +13,7 @@
 #include <iostream>
 #include <fcntl.h>
 #include <stdlib.h>     //for using the function sleep
+#include "Git_Data_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 #include "Make_File_Builder.h"
@@ -35,6 +36,8 @@ public:
  virtual ~Auto_MakeFile_Builder();
  void Build_Make_Files(); 
  void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dep_ptr);
+ void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Clear_Dynamic_Memory();
 protected:
  void Determine_Project_Directories();
@@ -42,9 +45,10 @@ protected:
  void Clear_String_Memory(std::string * ptr);
  void Construct_Path(std::string * ptr, std::string str, std::string wrd);
  Source_File_Dependency_Determiner * Dep_Determiner;
+ Git_Data_Processor * Git_Data_Proc;
  Make_File_Builder Mk_Builder;
  Make_File_Cleaner Mk_File_Clnr;
- Descriptor_File_Reader Des_Reader;
+ Descriptor_File_Reader * Des_Reader;
  std::string Warehouse_Path;
  std::string Repo_Dir;
  std::string repo_head_dir;

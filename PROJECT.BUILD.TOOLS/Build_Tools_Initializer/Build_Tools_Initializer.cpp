@@ -4,7 +4,7 @@
 Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) : 
 
  Rep_Init(DesPATH,opr_sis),  Dep_Determiner(DesPATH,opr_sis) , 
- Mk_Builder(DesPATH,opr_sis), Script_Writer(DesPATH,opr_sis)
+ Mk_Builder(DesPATH,opr_sis), Script_Writer(opr_sis)
  
 {
     

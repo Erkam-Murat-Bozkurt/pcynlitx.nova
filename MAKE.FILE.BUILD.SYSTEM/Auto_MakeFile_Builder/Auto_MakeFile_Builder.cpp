@@ -4,17 +4,11 @@
 
 Auto_MakeFile_Builder::Auto_MakeFile_Builder(char * DesPath, char opr_sis) :
    
-   Mk_Builder(DesPath,opr_sis), Mk_File_Clnr(DesPath,opr_sis), Des_Reader(opr_sis)
+   Mk_Builder(opr_sis), Mk_File_Clnr(DesPath,opr_sis)
 {
      this->Memory_Delete_Condition = true;
 
      this->opr_sis = opr_sis;
-
-     this->Des_Reader.Read_Descriptor_File();
-
-     this->Warehouse_Path = this->Des_Reader.Get_Warehouse_Location();
-
-     this->Repo_Dir = this->Des_Reader.Get_Repo_Directory_Location();
 }
 
 
@@ -40,6 +34,25 @@ void Auto_MakeFile_Builder::Clear_Dynamic_Memory(){
 }
 
 
+void Auto_MakeFile_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+
+     this->Des_Reader = ptr;
+
+     this->Warehouse_Path = this->Des_Reader->Get_Warehouse_Location();
+
+     this->Repo_Dir = this->Des_Reader->Get_Repo_Directory_Location();
+
+     this->Mk_Builder.Receive_Descriptor_File_Reader(ptr);      
+}
+
+
+void Auto_MakeFile_Builder::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
+
+     this->Mk_File_Clnr.Receive_Git_Data_Processor(ptr);
+}
+
+
+
 void Auto_MakeFile_Builder::Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner 
 
      * dep_ptr){
@@ -48,6 +61,8 @@ void Auto_MakeFile_Builder::Receive_Source_File_Dependency_Determiner(Source_Fil
 
      this->Mk_Builder.Receive_Compiler_Data_Pointer(dep_ptr->Get_Compiler_Data_Address());
 }
+
+
 
 void Auto_MakeFile_Builder::Build_Make_Files(){
 
@@ -65,11 +80,9 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
 
      size_t data_size = Com_Data->size();
     
-     
      for(size_t i=0;i<data_size;i++){
 
          std::string source_file_name = Com_Data->at(i).source_file_name;
-
 
          this->Mk_Builder.Build_MakeFile(source_file_name);
 

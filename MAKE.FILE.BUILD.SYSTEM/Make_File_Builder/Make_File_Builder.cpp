@@ -22,14 +22,12 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Make_File_Builder.h"
 
-Make_File_Builder::Make_File_Builder(char * DesPath, char opr_sis) :
+Make_File_Builder::Make_File_Builder(char opr_sis) :
 
-    Data_Collector(DesPath,opr_sis),  Des_Reader(opr_sis) 
+    Data_Collector(opr_sis)
 {
 
    this->Memory_Delete_Condition = false;
-
-   this->Des_Reader.Read_Descriptor_File();
 
    this->opr_sis = opr_sis;
 }
@@ -44,8 +42,6 @@ Make_File_Builder::~Make_File_Builder(){
 void Make_File_Builder::Clear_Object_Memory(){
 
      this->Data_Collector.Clear_Object_Memory();
-
-     this->Des_Reader.Clear_Dynamic_Memory();
 
      this->DataMap.clear();
 
@@ -64,6 +60,13 @@ void Make_File_Builder::Clear_Dynamic_Memory(){
      }
 }
 
+
+void Make_File_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+
+     this->Des_Reader = ptr;
+
+     this->Data_Collector.Receive_Descriptor_File_Reader(ptr);
+}
 
 void Make_File_Builder::Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr)
 {
@@ -172,7 +175,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
 
 
 
-     int included_dir_num = this->Des_Reader.Get_Include_Directory_Number();
+     int included_dir_num = this->Des_Reader->Get_Include_Directory_Number();
 
      char include_symbol [] = "EXTERNAL_INCLUDE_DIR_";
 
@@ -184,7 +187,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
 
          this->FileManager.WriteToFile("\n");
 
-         std::string included_dir = this->Des_Reader.Get_Include_Directory(i);
+         std::string included_dir = this->Des_Reader->Get_Include_Directory(i);
 
          char * dir_index = this->Translater.Translate(i);
 
@@ -235,7 +238,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
 
          this->FileManager.WriteToFile("\n");
 
-         std::string included_dir = this->Des_Reader.Get_Include_Directory(i);
+         std::string included_dir = this->Des_Reader->Get_Include_Directory(i);
 
          char * dir_index = this->Translater.Translate(i);
 
@@ -300,7 +303,7 @@ void Make_File_Builder::Write_Header_Paths_Shorts_Cuts(){
 
 void Make_File_Builder::Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path){
 
-     std::string root_dir = this->Des_Reader.Get_Repo_Directory_Location();
+     std::string root_dir = this->Des_Reader->Get_Repo_Directory_Location();
 
      size_t path_size = sys_path.length();
      size_t end_point = path_size;

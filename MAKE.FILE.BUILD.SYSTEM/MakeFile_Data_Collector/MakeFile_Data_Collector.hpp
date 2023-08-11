@@ -27,8 +27,9 @@
 class MakeFile_Data_Collector
 {
 public:
- MakeFile_Data_Collector(char * Des_Path, char opr_sis);
+ MakeFile_Data_Collector(char opr_sis);
  virtual ~MakeFile_Data_Collector();
+ void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Collect_Make_File_Data(std::string fileName);
  void Receive_Git_Record_Data(std::string file_name);
  void Receive_Compiler_Data_Pointer(Compiler_Data * ptr); 
@@ -62,7 +63,7 @@ private:
  void Determine_Warehouse_Object_Dir();
  DirectoryOperations DirectoryManager;
  IntToCharTranslater Translater;
- Descriptor_File_Reader Des_Reader;
+ Descriptor_File_Reader * Des_Reader;
  Compiler_Data * Compiler_Data_Ptr;
  std::string repo_dir;
  std::string warehouse_head_dir;

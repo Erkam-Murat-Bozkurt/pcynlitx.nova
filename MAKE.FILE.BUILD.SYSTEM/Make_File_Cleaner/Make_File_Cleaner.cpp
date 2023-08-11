@@ -32,7 +32,6 @@ Make_File_Cleaner::Make_File_Cleaner(char * DesPath, char opr_sis) :
 
    this->opr_sis = opr_sis;
 
-   this->File_Lister.Determine_Git_Repo_Info();
 }
 
 
@@ -56,6 +55,12 @@ void Make_File_Cleaner::Clear_Dynamic_Memory(){
 }
 
 
+void Make_File_Cleaner::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
+     
+     this->File_Lister.Receive_Git_Data_Processor(ptr);
+
+     this->File_Lister.Determine_Git_Repo_Info();
+}
 
 void Make_File_Cleaner::Clear_Make_Files_Exist_On_Repo(){
 
