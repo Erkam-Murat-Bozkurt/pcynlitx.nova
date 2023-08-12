@@ -31,10 +31,12 @@ Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_
 
 }
 
+
 Source_File_Dependency_Determiner::~Source_File_Dependency_Determiner(){
 
     this->Clear_Dynamic_Memory();
 }
+
 
 void Source_File_Dependency_Determiner::Clear_Object_Memory(){
 
@@ -47,16 +49,23 @@ void Source_File_Dependency_Determiner::Clear_Object_Memory(){
      this->Clear_Dynamic_Memory();
 }
 
+
+
 void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
 
      this->DepSelector.Clear_Dynamic_Memory();     
 }
 
 
+
 void Source_File_Dependency_Determiner::Receive_Descriptor_File_Reader(Descriptor_File_Reader *ptr){
      
      this->Code_Rd.Receive_Descriptor_File_Reader(ptr);
+
+     this->DepSelector.Receive_Descriptor_File_Reader(ptr);
 }
+
+
 
 void Source_File_Dependency_Determiner::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
 

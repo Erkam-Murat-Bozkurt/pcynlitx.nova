@@ -23,19 +23,15 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Executable_MakeFile_ComConstructor.hpp"
 
-Executable_MakeFile_ComConstructor::Executable_MakeFile_ComConstructor(char * des_path, char opr_sis):
-
-   Des_Reader(opr_sis), Dep_Determiner(des_path,opr_sis)
+Executable_MakeFile_ComConstructor::Executable_MakeFile_ComConstructor(char opr_sis)
 
 {
-    this->Des_Reader.Read_Descriptor_File();
-
-    this->opr_sis = opr_sis;
+       this->opr_sis = opr_sis;
 
 }
 
-Executable_MakeFile_ComConstructor::~Executable_MakeFile_ComConstructor(){
-
+Executable_MakeFile_ComConstructor::~Executable_MakeFile_ComConstructor()
+{
        this->Clear_Dynamic_Memory();
 }
 
@@ -59,11 +55,20 @@ void Executable_MakeFile_ComConstructor::Clear_Dynamic_Memory(){
         this->Clear_String_Memory(&this->make_file_name);
 
         this->Clear_String_Memory(&this->Compiler_System_Command);
-
-        this->Dep_Determiner.Clear_Dynamic_Memory();
-
-        this->Des_Reader.Clear_Dynamic_Memory();
 }
+
+
+void Executable_MakeFile_ComConstructor::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+
+     this->Des_Reader = ptr;
+}
+
+
+void Executable_MakeFile_ComConstructor::Receive_Depepndency_Determiner(Source_File_Dependency_Determiner * ptr){
+
+     this->Dep_Determiner = ptr;
+}
+
 
 
 void Executable_MakeFile_ComConstructor::Receive_ExeFileName(std::string name){
@@ -77,17 +82,14 @@ void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(std::string
 
      // Receiving the compiler data from the member objects
 
-     this->Dep_Determiner.Collect_Dependency_Information(main_file_path);
+     this->warehouse_head_dir = this->Dep_Determiner->Get_Warehouse_Headers_Dir();
+
+     this->warehouse_obj_dir  = this->Dep_Determiner->Get_Warehouse_Objetcs_Dir();
+
+     this->warehouse_path     = this->Dep_Determiner->Get_Warehouse_Path();
 
 
-     this->warehouse_head_dir = this->Dep_Determiner.Get_Warehouse_Headers_Dir();
-
-     this->warehouse_obj_dir  = this->Dep_Determiner.Get_Warehouse_Objetcs_Dir();
-
-     this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
-
-
-     this->Comp_Data_ptr =  this->Dep_Determiner.Get_Compiler_Data_Address();
+     this->Comp_Data_ptr =  this->Dep_Determiner->Get_Compiler_Data_Address();
 
      this->Determine_Src_File_Dir(main_file_path,'w');
 
@@ -292,7 +294,7 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
      char compiler_input_command [] = "g++ -Wall -std=c++17 -o";
 
 
-     options = this->Des_Reader.Get_Options();
+     options = this->Des_Reader->Get_Options();
 
 
      char Include_Character [] = "-I";
@@ -378,7 +380,7 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
      this->Place_Information(&this->Compiler_System_Command,tab);
 
 
-     int  included_dir_num = this->Des_Reader.Get_Include_Directory_Number();
+     int  included_dir_num = this->Des_Reader->Get_Include_Directory_Number();
 
 
      char include_dir_symbol [] = "$(EXTERNAL_INCLUDE_DIR_";
@@ -389,7 +391,7 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      for(int i=0;i<included_dir_num;i++){
 
-         std::string included_dir = this->Des_Reader.Get_Include_Directory(i);
+         std::string included_dir = this->Des_Reader->Get_Include_Directory(i);
 
          std::string dir_index = this->Translater.Translate(i);
 
@@ -420,7 +422,7 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
      }
 
 
-     int  library_dir_num = this->Des_Reader.Get_Library_Directory_Number();
+     int  library_dir_num = this->Des_Reader->Get_Library_Directory_Number();
 
      this->Place_Information(&this->Compiler_System_Command,Link_Character);
 
@@ -450,7 +452,7 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      for(int i=0;i<library_dir_num;i++){
 
-         std::string library_dir = this->Des_Reader.Get_Library_Directory(i);
+         std::string library_dir = this->Des_Reader->Get_Library_Directory(i);
 
          char * dir_index = this->Translater.Translate(i);
 
@@ -641,22 +643,4 @@ std::string Executable_MakeFile_ComConstructor::Get_Make_File_Name(){
 std::string Executable_MakeFile_ComConstructor::Get_Compiler_System_Command(){
 
        return this->Compiler_System_Command;
-}
-
-std::string Executable_MakeFile_ComConstructor::Get_Warehouse_Headers_Dir(){
-
-     return this->Dep_Determiner.Get_Warehouse_Headers_Dir();
-    
-}
-
-std::string Executable_MakeFile_ComConstructor::Get_Warehouse_Objetcs_Dir(){
-
-     return this->Dep_Determiner.Get_Warehouse_Objetcs_Dir();
-}
-
-
-std::string Executable_MakeFile_ComConstructor::Get_Warehouse_Path(){
- 
-     return this->Dep_Determiner.Get_Warehouse_Path();
- 
 }

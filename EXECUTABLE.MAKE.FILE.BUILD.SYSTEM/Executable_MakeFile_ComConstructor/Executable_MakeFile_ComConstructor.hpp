@@ -28,8 +28,10 @@
 class Executable_MakeFile_ComConstructor
 {
 public:
- Executable_MakeFile_ComConstructor(char * des_path, char opr_sis);
+ Executable_MakeFile_ComConstructor(char opr_sis);
  virtual ~Executable_MakeFile_ComConstructor();
+ void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Depepndency_Determiner(Source_File_Dependency_Determiner * ptr);
  void Receive_ExeFileName(std::string name);
  void Construct_Compiler_Commands(std::string main_file_path);
  void Clear_Dynamic_Memory();
@@ -39,9 +41,6 @@ public:
  std::string Get_Src_File_Dr();
  std::string Get_Git_Src_Dr();
  std::string Get_Make_File_Name();
- std::string Get_Warehouse_Headers_Dir();
- std::string Get_Warehouse_Objetcs_Dir();
- std::string Get_Warehouse_Path();
 protected:
  void Clear_String_Memory(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
@@ -56,8 +55,8 @@ protected:
  void Place_String(std::string * pointer, std::string string);
  void Place_Information(std::string * ptr,std::string in);
  void Place_Information(std::string * ptr, char * in);
- Descriptor_File_Reader Des_Reader;
- Source_File_Dependency_Determiner Dep_Determiner;
+ Descriptor_File_Reader * Des_Reader;
+ Source_File_Dependency_Determiner * Dep_Determiner;
  IntToCharTranslater Translater;
  std::vector<Compiler_Data> * Comp_Data_ptr;
  std::vector<std::string> header_file_list;

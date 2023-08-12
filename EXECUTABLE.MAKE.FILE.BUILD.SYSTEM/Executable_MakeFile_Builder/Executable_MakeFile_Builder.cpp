@@ -25,13 +25,20 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Executable_MakeFile_Builder::Executable_MakeFile_Builder(char * des_path, char opr_sis):
 
-Des_Reader(opr_sis), Dep_Determiner(des_path,opr_sis),
-
-ComConstructor(des_path,opr_sis)
+   Des_Reader(opr_sis), Git_Data_Proc(opr_sis),
+ 
+   Dep_Determiner(des_path,opr_sis), ComConstructor(opr_sis)
 
 {
+     this->Des_Reader.Receive_Descriptor_File_Path(des_path);
+
      this->Des_Reader.Read_Descriptor_File();
-   
+
+     this->Git_Data_Proc.Receive_Descriptor_File_Path(des_path);
+
+     this->Git_Data_Proc.Write_Git_Repo_List_File();
+
+     this->Git_Data_Proc.Determine_Git_Repo_Info();
 }
 
 
@@ -64,7 +71,15 @@ void Executable_MakeFile_Builder::Update_Warehaouse_Headers()
 
 void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_Name){
 
+     this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
+
+     this->Dep_Determiner.Receive_Git_Data_Processor(&this->Git_Data_Proc);
+
      this->Dep_Determiner.Collect_Dependency_Information(mn_src_path);
+
+     this->ComConstructor.Receive_Descriptor_File_Reader(&this->Des_Reader);
+
+     this->ComConstructor.Receive_Depepndency_Determiner(&this->Dep_Determiner);
 
      this->ComConstructor.Receive_ExeFileName(Exe_Name);
 
@@ -73,11 +88,12 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
 
      // Receiving the compiler data from the member objects
 
-     this->warehouse_head_dir = this->ComConstructor.Get_Warehouse_Headers_Dir();
 
-     this->warehouse_obj_dir  = this->ComConstructor.Get_Warehouse_Objetcs_Dir();
+     this->warehouse_head_dir = this->Dep_Determiner.Get_Warehouse_Headers_Dir();
 
-     this->warehouse_path     = this->ComConstructor.Get_Warehouse_Path();
+     this->warehouse_obj_dir  = this->Dep_Determiner.Get_Warehouse_Objetcs_Dir();
+
+     this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
 
      this->Src_File_Dir       = this->ComConstructor.Get_Src_File_Dr();
 

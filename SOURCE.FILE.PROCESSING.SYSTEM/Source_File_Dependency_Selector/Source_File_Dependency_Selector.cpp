@@ -95,6 +95,11 @@ void Source_File_Dependency_Selector::Receive_Source_Code_Reader(Project_Src_Cod
 }
 
 
+void Source_File_Dependency_Selector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+
+     this->Info_Collector.Receive_Descriptor_File_Reader(ptr);
+}
+
 bool Source_File_Dependency_Selector::Is_Header_File(std::string hpath){
 
       return this->Info_Collector.Is_Header_File(hpath);

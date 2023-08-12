@@ -21,7 +21,7 @@
 #include "Source_File_Dependency_Determiner.hpp"
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
-#include "Git_File_List_Receiver.hpp"
+#include "Git_Data_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 #include "Header_File_Determiner.h"
@@ -40,6 +40,7 @@ public:
  void Clear_Dynamic_Memory();
 protected:
  void Write_MakeFile(char * Exe_Name);
+ Git_Data_Processor Git_Data_Proc;
  Executable_MakeFile_ComConstructor ComConstructor;
  Source_File_Dependency_Determiner  Dep_Determiner;
  Descriptor_File_Reader Des_Reader;

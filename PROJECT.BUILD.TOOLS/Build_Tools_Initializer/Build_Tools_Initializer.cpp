@@ -18,6 +18,8 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) :
 
     this->Git_Data_Proc.Determine_Git_Repo_Info();
 
+    this->Git_Data_Proc.Set_Git_Ignoring_Files();
+
 
     this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
 

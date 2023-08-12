@@ -56,6 +56,7 @@ int main(int argc, char ** argv){
 
     Dep_Determiner.Receive_Git_Data_Processor(&Data_Processor);
 
+    //Dep_Determiner.Collect_Dependency_Information(path);
 
 
     //Dep_Determiner.Receive_Source_Code_Reader(&Code_Rd);
@@ -78,6 +79,7 @@ int main(int argc, char ** argv){
     //Dep_Determiner.Print_Compiler_Orders();
 
     //Dep_Determiner.Clear_Dynamic_Memory();
+
 
      std::vector<Compiler_Data> * ptr = Dep_Determiner.Get_Compiler_Data_Address();
 
