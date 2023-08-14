@@ -145,7 +145,7 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
      this->FileManager.WriteToFile("\n\n");
 
-     char cd_word [] = "cd ";
+     char cd_word [] = "Set-Location ";
 
 
      for(int i=0;i<this->source_file_num;i++){
@@ -184,10 +184,52 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
 
+
          this->FileManager.WriteToFile("\n");
+         
+         this->FileManager.WriteToFile("\n");
+
+
+         this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
+
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
+
+         this->FileManager.WriteToFile("\\");
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
+
 
          this->FileManager.WriteToFile("\n");
 
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("if ($Condition){");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("      Remove-Item ");
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
+
+         this->FileManager.WriteToFile("\\");
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("}");
+
+
+
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("mingw32-make -f ");
 
@@ -230,7 +272,7 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("   $Exists_On_Obj_Dir = Test-Path -Path ");
 
-         this->FileManager.WriteToFile("$Project_Objects");
+         this->FileManager.WriteToFile("$Project_Objects_Location");
 
          this->FileManager.WriteToFile("\\");
 
@@ -246,7 +288,7 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("      rm ");
+         this->FileManager.WriteToFile("      Remove-Item ");
 
          this->FileManager.WriteToFile("$Project_Objects_Location");
 

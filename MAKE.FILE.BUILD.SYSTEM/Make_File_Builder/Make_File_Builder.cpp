@@ -200,39 +200,104 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
          this->FileManager.WriteToFile(included_dir);
      }
 
+     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
+
+
+
+     size_t dep_header_size = this->Data_Ptr->dependent_headers.size();
+
+     for(size_t i=0;i<dep_header_size;i++){
+
+          std::string header_name = this->Data_Ptr->dependent_headers.at(i);
+
+          std::string dir = this->Data_Ptr->dependent_headers_dir.at(i);
+
+          this->FileManager.WriteToFile(header_name);
+
+          this->FileManager.WriteToFile("_PATH=");
+
+          this->FileManager.WriteToFile(dir);
+
+          this->FileManager.WriteToFile("\n");
+     }
+
+
+
+
+
      char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
 
 
-     char PathSpecifier [] = {'v','p','a','t','h',' ','%','\0'};
+     char PathSpecifier [] = "VPATH = ";
+     char Ident [] =         "        ";
 
-     char header_add [] = ".h";
 
-     char object_add [] = ".o";
+     char NextLine [] = " \\";
+
+     //char header_add [] = ".h";
+
+     //char object_add [] = ".o";
 
      this->FileManager.WriteToFile("\n");
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile(PathSpecifier);
 
-     this->FileManager.WriteToFile(header_add);
-
-     this->FileManager.WriteToFile(" ");
+     //this->FileManager.WriteToFile(header_add);
 
      this->FileManager.WriteToFile("$(PROJECT_HEADERS_LOCATION)");
 
+     this->FileManager.WriteToFile(NextLine);
+
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile(PathSpecifier);
+     this->FileManager.WriteToFile(Ident);
 
-     this->FileManager.WriteToFile(object_add);
 
-     this->FileManager.WriteToFile(" ");
+     //this->FileManager.WriteToFile(PathSpecifier);
+
+     //this->FileManager.WriteToFile(object_add);
 
      this->FileManager.WriteToFile("$(PROJECT_OBJECTS_LOCATION)");
 
+     this->FileManager.WriteToFile(NextLine);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile(Ident);
+
+
+
+     for(size_t i=0;i<dep_header_size;i++){
+
+          std::string header_name = this->Data_Ptr->dependent_headers.at(i);
+
+          std::string dir = this->Data_Ptr->dependent_headers_dir.at(i);
+
+          this->FileManager.WriteToFile("$(");
+
+          this->FileManager.WriteToFile(header_name);
+
+          this->FileManager.WriteToFile("_PATH");
+
+          this->FileManager.WriteToFile(")");
+
+          this->FileManager.WriteToFile(NextLine);
+
+          this->FileManager.WriteToFile("\n");
+
+          this->FileManager.WriteToFile(Ident);
+     }
+
+
+
+
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
+
+     /*
 
      for(int i=0;i<included_dir_num;i++){
 
@@ -255,6 +320,8 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
          this->FileManager.WriteToFile(")");
 
      }
+
+     */
 
      this->FileManager.WriteToFile("\n");
      this->FileManager.WriteToFile("\n");
