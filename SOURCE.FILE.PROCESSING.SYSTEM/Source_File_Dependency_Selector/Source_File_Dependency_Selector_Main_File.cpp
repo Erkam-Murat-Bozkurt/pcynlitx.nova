@@ -74,7 +74,7 @@ int main(int argc, char ** argv){
 
 
 
-    char path [] =  "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
+    char path [] =  "D:\\pcynlitx.build.gui.new\\wxLauncher.cpp";
 
 
     std::cout << "\n\n";

@@ -260,16 +260,24 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
             std::string hdr_dir =  src_ptr->at(k).dir;            
                             
 
+            bool is_indep_hdr = false;
 
-            std::string obj_name;
+            this->is_this_independent_header(hdr_name,is_indep_hdr);
 
-            this->Extract_Obj_File_Name_From_File_Name(&obj_name,hdr_name);
 
+            if(!is_indep_hdr){
+
+                std::string obj_name;
+
+                 this->Extract_Obj_File_Name_From_File_Name(&obj_name,hdr_name);
+
+                 buffer.dependent_objs.push_back(obj_name);
+            }
+  
             buffer.dependent_headers.push_back(hdr_name);
 
             buffer.dependent_headers_paths.push_back(hdr_path);
 
-            buffer.dependent_objs.push_back(obj_name);
 
             buffer.dependent_headers_dir.push_back(hdr_dir);
 
@@ -296,6 +304,7 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
 
 void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int start, int end){
     
+
      for(std::size_t i=start;i<end;i++){
 
          std::vector<Source_File_Dependency> * src_ptr = &this->dep_data_ptr->at(i);
@@ -314,6 +323,8 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
 
             buffer.priority = data_size;
   
+           
+      
 
             this->Extract_Obj_File_Name_From_File_Name(&(buffer.object_file_name),
             

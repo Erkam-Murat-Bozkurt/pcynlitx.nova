@@ -81,7 +81,10 @@ int main(int argc, char ** argv){
     std::cout << "\n The source code read";
     std::cin.get();
 
-    std::string path = "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
+    std::string path =  "D:\\pcynlitx.build.gui.new\\wxLauncher.cpp";
+
+
+    //  std::string path = "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
 
 
     Source_File_Dependency_Selector Dep_Selector('w');

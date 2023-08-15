@@ -235,16 +235,11 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
 
      char NextLine [] = " \\";
 
-     //char header_add [] = ".h";
-
-     //char object_add [] = ".o";
-
      this->FileManager.WriteToFile("\n");
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile(PathSpecifier);
 
-     //this->FileManager.WriteToFile(header_add);
 
      this->FileManager.WriteToFile("$(PROJECT_HEADERS_LOCATION)");
 
@@ -254,10 +249,6 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
 
      this->FileManager.WriteToFile(Ident);
 
-
-     //this->FileManager.WriteToFile(PathSpecifier);
-
-     //this->FileManager.WriteToFile(object_add);
 
      this->FileManager.WriteToFile("$(PROJECT_OBJECTS_LOCATION)");
 
@@ -290,6 +281,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
           this->FileManager.WriteToFile(Ident);
      }
 
+     this->FileManager.WriteToFile("$(");
 
 
 
@@ -297,31 +289,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
 
      this->FileManager.WriteToFile("\n");
 
-     /*
 
-     for(int i=0;i<included_dir_num;i++){
-
-         this->FileManager.WriteToFile("\n");
-
-         std::string included_dir = this->Des_Reader->Get_Include_Directory(i);
-
-         char * dir_index = this->Translater.Translate(i);
-
-         this->FileManager.WriteToFile(PathSpecifier);
-
-         this->FileManager.WriteToFile(header_add);
-
-         this->FileManager.WriteToFile(" $(");
-
-         this->FileManager.WriteToFile(include_symbol);
-
-         this->FileManager.WriteToFile(dir_index);
-
-         this->FileManager.WriteToFile(")");
-
-     }
-
-     */
 
      this->FileManager.WriteToFile("\n");
      this->FileManager.WriteToFile("\n");

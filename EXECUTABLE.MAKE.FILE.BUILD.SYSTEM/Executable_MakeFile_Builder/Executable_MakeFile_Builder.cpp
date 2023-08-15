@@ -77,6 +77,10 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
 
      this->Dep_Determiner.Collect_Dependency_Information(mn_src_path);
 
+
+     this->Com_Data_ptr = this->Dep_Determiner.Get_Compiler_Data_Address();
+
+
      this->ComConstructor.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
      this->ComConstructor.Receive_Depepndency_Determiner(&this->Dep_Determiner);
@@ -178,57 +182,114 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
 
-     char PathSpecifier [] = {'v','p','a','t','h',' ','%','\0'};
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+
+     size_t compiler_data_size = this->Com_Data_ptr->size();
+
+     size_t dep_header_size = this->Com_Data_ptr->at(0).dependent_headers.size();
+
+     for(size_t i=0;i<dep_header_size;i++){
+
+          std::string header_name = this->Com_Data_ptr->at(0).dependent_headers.at(i);
+
+          std::string dir = this->Com_Data_ptr->at(0).dependent_headers_dir.at(i);
+
+          this->FileManager.WriteToFile(header_name);
+
+          this->FileManager.WriteToFile("_PATH=");
+
+          this->FileManager.WriteToFile(dir);
+
+          this->FileManager.WriteToFile("\n");
+     }
+
+
+
+
+     char PathSpecifier [] = "VPATH = ";
+     char Ident [] =         "        ";
+
+
+     char NextLine [] = " \\";
 
      char header_add [] = ".h";
 
      char object_add [] = ".o";
 
+
+
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile(PathSpecifier);
 
-     this->FileManager.WriteToFile(header_add);
-
-     this->FileManager.WriteToFile(" ");
 
      this->FileManager.WriteToFile("$(PROJECT_HEADERS_LOCATION)");
 
+     this->FileManager.WriteToFile(NextLine);
+
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile(PathSpecifier);
+     this->FileManager.WriteToFile(Ident);
 
-     this->FileManager.WriteToFile(object_add);
-
-     this->FileManager.WriteToFile(" ");
 
      this->FileManager.WriteToFile("$(PROJECT_OBJECTS_LOCATION)");
 
-     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile(NextLine);
 
      this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile(Ident);
+
+
+
+
+     for(size_t i=0;i<dep_header_size;i++){
+
+          std::string header_name = this->Com_Data_ptr->at(0).dependent_headers.at(i);
+
+          std::string dir = this->Com_Data_ptr->at(0).dependent_headers_dir.at(i);
+
+          this->FileManager.WriteToFile("$(");
+
+          this->FileManager.WriteToFile(header_name);
+
+          this->FileManager.WriteToFile("_PATH");
+
+          this->FileManager.WriteToFile(")");
+
+          this->FileManager.WriteToFile(NextLine);
+
+          this->FileManager.WriteToFile("\n");
+
+          this->FileManager.WriteToFile(Ident);
+     }
+
+
 
      for(int i=0;i<included_dir_num;i++){
 
-         this->FileManager.WriteToFile("\n");
+         this->FileManager.WriteToFile("$(");
+
+         this->FileManager.WriteToFile(include_symbol);
 
          std::string included_dir = this->Des_Reader.Get_Include_Directory(i);
 
          char * dir_index = this->Translater.Translate(i);
 
-         this->FileManager.WriteToFile(PathSpecifier);
-
-         this->FileManager.WriteToFile(header_add);
-
-         this->FileManager.WriteToFile(" $(");
-
-         this->FileManager.WriteToFile(include_symbol);
-
-         this->FileManager.WriteToFile(dir_index);
 
          this->FileManager.WriteToFile(")");
+
+         this->FileManager.WriteToFile(NextLine);
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile(Ident);
      }
 
      this->FileManager.WriteToFile("\n");
@@ -239,7 +300,7 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile(" ");
+     //this->FileManager.WriteToFile(" ");
 
      this->FileManager.WriteToFile(Exe_Name);
 
