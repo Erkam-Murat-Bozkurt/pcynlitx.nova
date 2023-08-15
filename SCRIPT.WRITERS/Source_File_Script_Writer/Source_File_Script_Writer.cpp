@@ -2,9 +2,11 @@
 
 #include "Source_File_Script_Writer.hpp"
 
-Source_File_Script_Writer::Source_File_Script_Writer(){
+Source_File_Script_Writer::Source_File_Script_Writer(char opr_sis){
 
      this->Memory_Delete_Condition = true;
+
+     this->opr_sis = opr_sis;
 }
 
 
@@ -18,7 +20,7 @@ Source_File_Script_Writer::~Source_File_Script_Writer(){
    }
 }
 
-void Source_File_Script_Writer::Clear_String_memory(std::string & str)
+void Source_File_Script_Writer::Clear_String_Memory(std::string & str)
 {
      if(!str.empty()){
 
@@ -29,14 +31,13 @@ void Source_File_Script_Writer::Clear_String_memory(std::string & str)
 
 void Source_File_Script_Writer::Clear_Dynamic_Memory(){
 
-     this->Clear_String_memory(this->script_path);
+     this->Clear_String_Memory(this->script_path);
 
-     this->Clear_String_memory(this->headers_locations);
+     this->Clear_String_Memory(this->headers_locations);
 
-     this->Clear_String_memory(this->object_files_location);
+     this->Clear_String_Memory(this->object_files_location);
 
-     this->Clear_String_memory(this->script_path);
-     
+     this->Clear_String_Memory(this->script_path);     
 }
 
 
@@ -45,13 +46,13 @@ void Source_File_Script_Writer::Receive_Descriptor_File_Reader(Descriptor_File_R
      this->Des_Reader_Ptr = Pointer;
 
      this->Repo_Rood_Dir = this->Des_Reader_Ptr->Get_Repo_Directory_Location();
+
+     this->warehouse_path = this->Des_Reader_Ptr->Get_Warehouse_Location();
 }
 
 void Source_File_Script_Writer::Receive_Script_Data(Script_Data * Pointer){
 
-     this->Src_Data_Pointer = Pointer;
-
-     this->warehouse_path   = Pointer->warehouse_path;
+     this->Src_Data_Pointer = Pointer; 
 }
 
 void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
@@ -94,6 +95,8 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile("\n");
 
 
+     /*
+
      this->FileManager.WriteToFile("$Project_Headers=\"");
 
      this->FileManager.WriteToFile(this->headers_locations);
@@ -101,6 +104,8 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile("\"");
 
      this->FileManager.WriteToFile("\n");
+
+     */
 
      this->FileManager.WriteToFile("\n");
 
@@ -120,14 +125,19 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("$Source_File_Location=\"");
 
-    
-     this->FileManager.WriteToFile(Src_Data_Pointer->source_file_git_record_dir);
 
-     this->FileManager.WriteToFile("\"");
+     if(!this->Src_Data_Pointer->source_file_git_record_dir.empty()){
 
-     this->FileManager.WriteToFile("\n\n");
+         this->FileManager.WriteToFile("$Source_File_Location=\"");
+
+         this->FileManager.WriteToFile(this->Src_Data_Pointer->source_file_git_record_dir);
+
+         this->FileManager.WriteToFile("\"");
+
+         this->FileManager.WriteToFile("\n\n");
+     }
+
 
      this->FileManager.WriteToFile("\n\n");
 
@@ -177,6 +187,60 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->FileManager.WriteToFile("\n\n");
 
+
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
+
+
+     this->FileManager.WriteToFile("$Repo_Root_Dir");
+
+     this->FileManager.WriteToFile("\\");
+
+     
+     if(!this->Src_Data_Pointer->source_file_git_record_dir.empty()){
+
+         this->FileManager.WriteToFile("$Source_File_Location");
+
+         this->FileManager.WriteToFile("\\");
+     }
+
+     this->FileManager.WriteToFile(this->Src_Data_Pointer->object_file_name);
+
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("if ($Condition){");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n   Remove-Item ");
+
+
+     this->FileManager.WriteToFile("$Repo_Root_Dir");
+
+     this->FileManager.WriteToFile("\\");
+
+     if(!this->Src_Data_Pointer->source_file_git_record_dir.empty()){
+
+         this->FileManager.WriteToFile("$Source_File_Location");
+
+         this->FileManager.WriteToFile("\\");
+     }
+
+
+     this->FileManager.WriteToFile(this->Src_Data_Pointer->object_file_name);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n}");
+
+
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
@@ -190,6 +254,7 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      
 
      this->FileManager.WriteToFile(" > ");
+
 
      this->FileManager.WriteToFile(this->compiler_output_location);
 
@@ -220,9 +285,13 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
       this->FileManager.WriteToFile("\\");
 
-      this->FileManager.WriteToFile("$Source_File_Location");
+     if(!this->Src_Data_Pointer->source_file_git_record_dir.empty()){
 
-      this->FileManager.WriteToFile("\\");
+         this->FileManager.WriteToFile("$Source_File_Location");
+
+         this->FileManager.WriteToFile("\\");
+     }
+
 
       this->FileManager.WriteToFile(this->Src_Data_Pointer->object_file_name);
 
@@ -255,7 +324,7 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
       this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile("      rm ");
+      this->FileManager.WriteToFile("      Remove-Item ");
 
       this->FileManager.WriteToFile("$Project_Objects");
 
@@ -278,12 +347,16 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
       this->FileManager.WriteToFile("\\");
 
-      this->FileManager.WriteToFile("$Source_File_Location");
 
-      this->FileManager.WriteToFile("\\");
+      if(!this->Src_Data_Pointer->source_file_git_record_dir.empty()){
+
+          this->FileManager.WriteToFile("$Source_File_Location");
+
+          this->FileManager.WriteToFile("\\");
+      }
+
 
       this->FileManager.WriteToFile(this->Src_Data_Pointer->object_file_name);
-
 
       this->FileManager.WriteToFile(" -Destination $Project_Objects");
 
@@ -322,7 +395,7 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
 void Source_File_Script_Writer::Determine_Script_Path(char opr_sis){
 
-     this->Clear_String_memory(this->script_path);
+     this->Clear_String_Memory(this->script_path);
 
      this->Memory_Delete_Condition = false;
 
@@ -391,11 +464,11 @@ void Source_File_Script_Writer::Determine_Script_Path(char opr_sis){
 
 void Source_File_Script_Writer::Determine_Warehouse_Paths(char opr_sis){
 
-     this->Clear_String_memory(this->headers_locations);
+     this->Clear_String_Memory(this->headers_locations);
 
-     this->Clear_String_memory(this->object_files_location);
+     this->Clear_String_Memory(this->object_files_location);
 
-     this->Clear_String_memory(this->compiler_output_location);
+     this->Clear_String_Memory(this->compiler_output_location);
 
 
      std::string headers_location_add = "PROJECT.HEADER.FILES";
@@ -411,7 +484,8 @@ void Source_File_Script_Writer::Determine_Warehouse_Paths(char opr_sis){
 
      this->Construct_Path(this->object_files_location,object_files_location_add,opr_sis);
 
-     this->Construct_Path(this->compiler_output_location,compiler_output_location_add,opr_sis);
+     this->Determine_Compiler_Output_Path(this->Src_Data_Pointer->src_name_without_ext);
+
 }
 
 
@@ -473,4 +547,77 @@ void Source_File_Script_Writer::Construct_Path(std::string & path,
      }
 
      path.shrink_to_fit();
+}
+
+
+
+void Source_File_Script_Writer::Determine_Compiler_Output_Path(std::string class_name)
+{
+     std::string output_directory = "WAREHOUSE\\COMPILER.OUTPUTS";
+
+     std::string compiler_output_location_add = "_Compiler_Output.txt";
+     
+     int index = 0;
+
+     size_t warehouse_path_size = this->warehouse_path.length();
+
+     for(size_t i=0;i<warehouse_path_size;i++){
+
+         this->compiler_output_location.push_back(this->warehouse_path[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(warehouse_path.back() != '\\'){
+
+           this->compiler_output_location.push_back('\\');        
+        }
+     }
+    
+     if(this->opr_sis == 'l'){
+
+        if(warehouse_path.back() != '/'){
+
+           this->compiler_output_location.push_back('/');        
+        }
+     }
+
+     size_t output_directory_size = output_directory.length();
+
+     for(size_t i=0;i<output_directory_size;i++){
+
+         this->compiler_output_location.push_back(output_directory[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(warehouse_path.back() != '\\'){
+
+           this->compiler_output_location.push_back('\\');        
+        }
+     }
+    
+     if(this->opr_sis == 'l'){
+
+        if(warehouse_path.back() != '/'){
+
+           this->compiler_output_location.push_back('/');        
+        }
+     }
+
+     size_t class_name_size = class_name.length();
+
+     for(size_t i=0;i<class_name_size;i++){
+
+        this->compiler_output_location.push_back(class_name[i]);
+     }
+
+     size_t add_string_size = compiler_output_location_add.length();
+
+     for(size_t i=0;i<add_string_size;i++){
+
+         this->compiler_output_location.push_back(compiler_output_location_add[i]);
+     }
+
+     this->compiler_output_location.shrink_to_fit();        
 }

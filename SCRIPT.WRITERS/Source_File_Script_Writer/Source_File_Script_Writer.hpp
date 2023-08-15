@@ -15,7 +15,7 @@
 class Source_File_Script_Writer
 {
 public:
- Source_File_Script_Writer();
+ Source_File_Script_Writer(char opr_sis);
  virtual ~Source_File_Script_Writer();
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Pointer);
  void Receive_Script_Data(Script_Data * Pointer);
@@ -25,8 +25,9 @@ public:
  void Construct_Path(std::string & pointer,
       std::string string, char opr_sis);
  void Clear_Dynamic_Memory();
- void Clear_String_memory(std::string & pointer);
+ void Clear_String_Memory(std::string & pointer);
 protected:
+void Determine_Compiler_Output_Path(std::string class_name);
  Descriptor_File_Reader * Des_Reader_Ptr;
  Script_Data * Src_Data_Pointer;
  Cpp_FileOperations FileManager;
@@ -36,6 +37,7 @@ protected:
  std::string headers_locations;
  std::string script_path;
  std::string warehouse_path;
+ char opr_sis;
  bool Memory_Delete_Condition;
 };
 

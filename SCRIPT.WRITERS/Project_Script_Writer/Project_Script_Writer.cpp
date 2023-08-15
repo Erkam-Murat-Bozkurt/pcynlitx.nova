@@ -4,7 +4,7 @@
 
 Project_Script_Writer::Project_Script_Writer(char opr_sis) :
 
-    Src_Data_Processor(opr_sis)
+    Src_Data_Processor(opr_sis), Src_Script_Writer(opr_sis)
 {
 
      this->Memory_Delete_Condition = true;
