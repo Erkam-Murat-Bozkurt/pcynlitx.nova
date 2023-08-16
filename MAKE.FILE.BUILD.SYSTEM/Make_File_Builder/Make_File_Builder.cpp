@@ -166,6 +166,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
 
      this->Determine_Git_Record_Directory(source_file_dir,sys_path);
      
+
      if(!source_file_dir.empty()){
 
         this->FileManager.WriteToFile("\\");
@@ -281,8 +282,28 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
           this->FileManager.WriteToFile(Ident);
      }
 
-     this->FileManager.WriteToFile("$(");
 
+     for(int i=0;i<included_dir_num;i++){
+
+         this->FileManager.WriteToFile("$(");
+
+
+         std::string included_dir = this->Des_Reader->Get_Include_Directory(i);
+
+         char * dir_index = this->Translater.Translate(i);
+
+         this->FileManager.WriteToFile(include_symbol);
+
+         this->FileManager.WriteToFile(dir_index);
+
+         this->FileManager.WriteToFile(")");
+
+         this->FileManager.WriteToFile(NextLine);
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile(Ident);
+     }
 
 
      this->FileManager.WriteToFile("\n");
@@ -372,6 +393,8 @@ void Make_File_Builder::Determine_Git_Record_Directory(std::string & git_dir, st
             }
          }
      }
+
+     git_dir.clear();
 
 
      for(size_t i=start_point;i<end_point;i++){

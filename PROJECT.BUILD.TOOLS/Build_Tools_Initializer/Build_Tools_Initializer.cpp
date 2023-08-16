@@ -12,6 +12,10 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) :
 
     this->Des_Reader.Read_Descriptor_File();
 
+    std::cout << "\n\n\e[1;32mThe project descriptor file read \e[0m\n\n";
+
+
+
     this->Git_Data_Proc.Receive_Descriptor_File_Path(DesPATH);
 
     this->Git_Data_Proc.Write_Git_Repo_List_File();
@@ -20,6 +24,9 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) :
 
     this->Git_Data_Proc.Set_Git_Ignoring_Files();
 
+    std::cout << "\n\n\e[1;32mThe data for git version controller has been collected \e[0m\n\n";
+
+
 
     this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
@@ -27,6 +34,7 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) :
 
     this->Dep_Determiner.Collect_Dependency_Information();
 
+    std::cout << "\n\n\e[1;32mSource file dependencies has been determined \e[0m\n\n";
 
 
     this->Rep_Init.Receive_Descriptor_File_Reader(&this->Des_Reader);
@@ -35,6 +43,8 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) :
 
     this->Rep_Init.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
 
+
+    std::cout << "\n\n\e[1;32mProject warehouse constructed \e[0m\n\n";
 
 
     this->Mk_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
@@ -50,8 +60,6 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) :
 
     this->Script_Writer.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
 
-
-    std::cout << "\n\n\e[1;32mThe source file dependencies determined \e[0m\n\n";
 }
 
 Build_Tools_Initializer::~Build_Tools_Initializer(){
