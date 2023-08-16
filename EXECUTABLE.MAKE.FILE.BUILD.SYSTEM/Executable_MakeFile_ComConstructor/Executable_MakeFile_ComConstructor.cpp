@@ -103,6 +103,10 @@ void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(std::string
 
      this->Construct_Object_File_List();
 
+     this->Construct_Library_Directories_List();
+
+     this->Construct_Library_List();
+
      this->Determine_Compiler_System_Command();
 }
 
@@ -176,6 +180,38 @@ void Executable_MakeFile_ComConstructor::Construct_Object_File_List(){
      }
 
      this->object_file_list.shrink_to_fit();
+}
+
+void Executable_MakeFile_ComConstructor::Construct_Library_Directories_List(){
+
+
+    int lib_dir_num = this->Des_Reader->Get_Library_Directory_Number();
+    
+
+    if(lib_dir_num > 0){
+
+       for(int i=0;i<lib_dir_num;i++){
+
+           this->library_directory_list.push_back(this->Des_Reader->Get_Library_Directory(i));
+       }
+    }
+
+    this->library_directory_list.shrink_to_fit();
+}
+
+void Executable_MakeFile_ComConstructor::Construct_Library_List(){
+
+    int lib_files_num = this->Des_Reader->Get_Library_Files_Number();
+
+    if(lib_files_num > 0){
+
+       for(int i=0;i<lib_files_num;i++){
+
+           this->library_name_list.push_back(this->Des_Reader->Get_Library_File(i));
+       }
+    }
+
+    this->library_name_list.shrink_to_fit();
 }
 
 void Executable_MakeFile_ComConstructor::Determine_Git_Src_Dir(){
@@ -526,6 +562,27 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
          this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
          if(i<(hdr_list_size-1)){
+         
+            this->Place_Information(&this->Compiler_System_Command,go_to_new_line);            
+         }
+     }
+
+     this->Place_Information(&this->Compiler_System_Command,go_to_new_line);            
+
+     char link_symbol [] = "-l";
+
+     size_t library_name_list_size = this->library_name_list.size();
+
+     
+     for(size_t i=0;i<library_name_list_size;i++){
+
+         this->Place_Information(&this->Compiler_System_Command,link_symbol);
+
+         this->Place_Information(&this->Compiler_System_Command,this->library_name_list.at(i));
+
+         this->Place_Information(&this->Compiler_System_Command,Space_Character);
+
+         if(i<(library_name_list_size-1)){
          
             this->Place_Information(&this->Compiler_System_Command,go_to_new_line);            
          }

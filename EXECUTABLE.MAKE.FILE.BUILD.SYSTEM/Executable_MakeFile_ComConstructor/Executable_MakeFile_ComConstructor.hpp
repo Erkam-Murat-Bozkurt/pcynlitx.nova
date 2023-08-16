@@ -47,6 +47,8 @@ protected:
  void Determine_Compiler_System_Command();
  void Construct_Object_File_List();
  void Construct_Header_File_List();
+ void Construct_Library_Directories_List();
+ void Construct_Library_List();
  void Determine_Git_Src_Dir();
  void Determine_Src_File_Dir(std::string file_path, char opr_sis);
  void Determine_Make_File_Name(std::string file_path);
@@ -63,6 +65,8 @@ protected:
  std::vector<std::string> header_file_paths;
  std::vector<std::string> header_file_dirs;
  std::vector<std::string> object_file_list;
+ std::vector<std::string> library_directory_list;
+ std::vector<std::string> library_name_list;
  std::string Exe_Name;
  std::string options;
  std::string warehouse_head_dir;

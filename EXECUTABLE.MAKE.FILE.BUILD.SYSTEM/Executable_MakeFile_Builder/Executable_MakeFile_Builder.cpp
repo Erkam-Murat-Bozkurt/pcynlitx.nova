@@ -180,6 +180,36 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
          this->FileManager.WriteToFile(included_dir);
      }
 
+
+     char link_dir_alias [] = "EXTERNAL_LINK_DIR_";
+
+
+
+     this->FileManager.WriteToFile("\n");
+
+     int library_dir_num = this->Des_Reader.Get_Library_Directory_Number();
+
+     for(int i=0;i<library_dir_num;i++){
+
+         this->FileManager.WriteToFile("\n");
+
+         std::string link_dir = this->Des_Reader.Get_Library_Directory(i);
+
+         char * dir_index = this->Translater.Translate(i);
+
+         this->FileManager.WriteToFile(link_dir_alias);
+
+         this->FileManager.WriteToFile(dir_index);
+
+         this->FileManager.WriteToFile("=");
+
+         this->FileManager.WriteToFile(link_dir);
+     }
+
+     this->FileManager.WriteToFile("\n");
+
+
+
      char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
 
 
@@ -248,6 +278,30 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
 
 
+     for(int i=0;i<library_dir_num;i++){
+
+         this->FileManager.WriteToFile("$(");
+
+         std::string link_dir = this->Des_Reader.Get_Library_Directory(i);
+
+         char * dir_index = this->Translater.Translate(i);
+
+         this->FileManager.WriteToFile(link_dir_alias);
+
+         this->FileManager.WriteToFile(dir_index);
+
+         this->FileManager.WriteToFile("_PATH");
+
+         this->FileManager.WriteToFile(")");
+
+         this->FileManager.WriteToFile(NextLine);
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile(Ident);
+     }
+
+
 
      for(size_t i=0;i<dep_header_size;i++){
 
@@ -282,6 +336,7 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
          char * dir_index = this->Translater.Translate(i);
 
+         this->FileManager.WriteToFile(dir_index);
 
          this->FileManager.WriteToFile(")");
 
