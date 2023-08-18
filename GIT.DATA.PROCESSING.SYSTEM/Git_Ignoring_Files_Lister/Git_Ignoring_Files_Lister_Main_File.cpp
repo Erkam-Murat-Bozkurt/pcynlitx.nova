@@ -23,9 +23,18 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
+
+    Descriptor_File_Reader Des_Reader('w');
+
+    Des_Reader.Receive_Descriptor_File_Path(argv[1]);
+
+    Des_Reader.Read_Descriptor_File();
+
+
+
     Git_Ignoring_Files_Lister Lister('w');
 
-    Lister.Receive_Descriptor_File_Path(argv[1]);
+    Lister.Receive_Descriptor_File_Reader(&Des_Reader);
 
     Lister.Write_Ignoring_File_List();
 
