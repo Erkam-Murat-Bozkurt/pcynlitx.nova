@@ -133,7 +133,7 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
      this->FileManager.WriteToFile("\n\n");
 
-     this->FileManager.WriteToFile("Write-Output \" THE PROJECT RE-CONSTRUCTION STARTED\"");
+     this->FileManager.WriteToFile("Write-Output \" THE OBJECT FILE CONSTRUCTION ( RE-CONSTRUCTION ) PROCESS STARTED\"");
 
      this->FileManager.WriteToFile("\n\n");
 
@@ -158,11 +158,15 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("Write-Output \"The compilation process for ");
+         /*
+
+         this->FileManager.WriteToFile("Write-Output \"[+] The compilation process for ");
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_name);
 
          this->FileManager.WriteToFile(" started. \"");
+
+          */
 
          this->FileManager.WriteToFile("\n\n");
 
@@ -204,13 +208,13 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("if ($Condition){");
+         this->FileManager.WriteToFile("if($Condition){");
 
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("      Remove-Item ");
+         this->FileManager.WriteToFile("   Remove-Item ");
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
 
@@ -231,18 +235,46 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("mingw32-make -f ");
+         this->FileManager.WriteToFile("$gcc_return = mingw32-make -f ");
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).make_file_name);
 
          this->Determine_Compiler_Output_Path(this->Data_Pointer->at(i).src_name_without_ext);
 
 
-         this->FileManager.WriteToFile(" > ");
+         this->FileManager.WriteToFile(" 2>&1 > ");
 
          this->FileManager.WriteToFile(this->compiler_output_location);
 
          this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("if($gcc_return -eq 1 ){");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("   Write-Output \"  # Compiler fails on \"");
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
+
+         this->FileManager.WriteToFile(" creation!");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n   exit");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("}");
 
          this->FileManager.WriteToFile("\n");
 
@@ -329,7 +361,7 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
 
 
-         this->FileManager.WriteToFile("Write-Output \"# The source file ");
+         this->FileManager.WriteToFile("Write-Output \"[+] The source file ");
 
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_name);
@@ -341,7 +373,7 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("Write-Output \"\"");
+         //this->FileManager.WriteToFile("Write-Output \"\"");
 
          this->FileManager.WriteToFile("\n");
 
@@ -376,7 +408,7 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
      this->FileManager.WriteToFile("\n\n");
 
-     this->FileManager.WriteToFile("Write-Output \" THE PROJECT RE-CONSTRUCTED\"");
+     this->FileManager.WriteToFile("Write-Output \" THE PROJECT OBJECT FILES CONSTRUCTED\"");
 
      this->FileManager.WriteToFile("\n");
 

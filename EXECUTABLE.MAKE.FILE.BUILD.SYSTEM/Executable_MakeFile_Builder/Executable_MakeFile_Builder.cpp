@@ -145,14 +145,12 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
      this->FileManager.WriteToFile("\n");
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("SOURCE_LOCATION=$(REPO_DIRECTORY)");
+     this->FileManager.WriteToFile("SOURCE_LOCATION=");
 
 
      if(!this->Src_File_Dir.empty()){
 
-        this->FileManager.WriteToFile("\\");
-
-        this->FileManager.WriteToFile(this->git_src_dir);
+        this->FileManager.WriteToFile(this->Src_File_Dir);
      }
 
      int included_dir_num = this->Des_Reader.Get_Include_Directory_Number();

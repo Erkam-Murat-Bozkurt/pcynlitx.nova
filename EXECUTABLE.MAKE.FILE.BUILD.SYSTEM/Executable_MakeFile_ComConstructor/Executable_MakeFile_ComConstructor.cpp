@@ -516,6 +516,10 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
           }
      }
 
+     this->Place_Information(&this->Compiler_System_Command,Source_Location);
+
+     this->Place_Information(&this->Compiler_System_Command,slash);
+
      this->Place_Information(&this->Compiler_System_Command,this->source_file_name);
 
      this->Place_Information(&this->Compiler_System_Command,Space_Character);
