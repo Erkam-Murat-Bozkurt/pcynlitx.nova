@@ -145,6 +145,23 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
      this->FileManager.WriteToFile("\n\n");
 
+
+     this->FileManager.WriteToFile("Write-Output \" Total number of the source file: ");
+
+     this->FileManager.WriteToFile(this->Translater.Translate(this->source_file_num));
+
+     this->FileManager.WriteToFile("\"");
+
+
+     this->FileManager.WriteToFile("\n\n");
+
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n\n");
+
+
+
      char cd_word [] = "Set-Location ";
 
 
@@ -235,7 +252,7 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("$gcc_return = mingw32-make -f ");
+         this->FileManager.WriteToFile("mingw32-make -f ");
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).make_file_name);
 
@@ -254,27 +271,34 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
 
 
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("if($gcc_return -eq 1 ){");
+         this->FileManager.WriteToFile("if($LASTEXITCODE -ne 0){");
 
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("   Write-Output \"  # Compiler fails on \"");
+         this->FileManager.WriteToFile("   Write-Output \"# Compiler fails on ");
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
 
-         this->FileManager.WriteToFile(" creation!");
+         this->FileManager.WriteToFile(" creation!\"");
 
-         this->FileManager.WriteToFile("\n");
+         this->FileManager.WriteToFile("\n\n");
 
-         this->FileManager.WriteToFile("\n   exit");
+         this->FileManager.WriteToFile("   Write-Output \"\"");
+
+         this->FileManager.WriteToFile("\n\n");
+
+         this->FileManager.WriteToFile("   Write-Output \"\"");
+
+         this->FileManager.WriteToFile("\n\n");
+
+         this->FileManager.WriteToFile("   exit");
 
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("}");
+
 
          this->FileManager.WriteToFile("\n");
 
@@ -361,7 +385,27 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
 
 
-         this->FileManager.WriteToFile("Write-Output \"[+] The source file ");
+         this->FileManager.WriteToFile("Write-Host \"[\" -NoNewline ");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("Write-Host \" ");
+
+         this->FileManager.WriteToFile(this->Translater.Translate(i+1));
+
+         this->FileManager.WriteToFile(" - ");
+
+         this->FileManager.WriteToFile(this->Translater.Translate(this->source_file_num));
+
+         this->FileManager.WriteToFile("\" -ForegroundColor DarkCyan -NoNewline");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("Write-Host \" ] The source file ");
 
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_name);

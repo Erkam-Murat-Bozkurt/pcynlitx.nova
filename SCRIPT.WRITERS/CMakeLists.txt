@@ -14,7 +14,8 @@ add_library(script_writers
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Script_Writer/Source_File_Script_Writer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Script_Writer/Source_File_Script_Writer.hpp
-    
+
+    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/IntToCharTranslater    
 )
 
 target_include_directories(script_writers PUBLIC

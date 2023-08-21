@@ -245,7 +245,7 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("$gcc_return = mingw32-make -f ");
+     this->FileManager.WriteToFile("mingw32-make -f ");
 
 
      this->FileManager.WriteToFile(this->Src_Data_Pointer->make_file_name);
@@ -260,21 +260,29 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile("\n");
 
 
-     this->FileManager.WriteToFile("if($gcc_return -eq 1 ){");
+     this->FileManager.WriteToFile("if($LASTEXITCODE -ne 0){");
 
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("   Write-Output \"  # Compiler fails on \"");
+     this->FileManager.WriteToFile("   Write-Output \"# Compiler fails on ");
 
      this->FileManager.WriteToFile(this->Src_Data_Pointer->object_file_name);
 
-     this->FileManager.WriteToFile(" creation!");
+     this->FileManager.WriteToFile(" creation!\"");
 
-     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n\n");
 
-     this->FileManager.WriteToFile("\n  exit");
+     this->FileManager.WriteToFile("   Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("   Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("   exit");
 
      this->FileManager.WriteToFile("\n");
 

@@ -45,6 +45,7 @@ protected:
  Source_File_Script_Writer Src_Script_Writer;
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
+ IntToCharTranslater Translater;
  std::string Repo_Rood_Dir;
  std::string object_files_location;
  std::string compiler_output_location;
