@@ -71,11 +71,6 @@ void Dependency_Data_Extractor::Receive_Source_Code_Reader(Project_Src_Code_Rdr 
 }
 
 
-void Dependency_Data_Extractor::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
-
-     this->Header_Processor.Receive_Git_Data_Processor(ptr);
-}
-
 
 void Dependency_Data_Extractor::Extract_Dependency_Tree(std::string path){
 

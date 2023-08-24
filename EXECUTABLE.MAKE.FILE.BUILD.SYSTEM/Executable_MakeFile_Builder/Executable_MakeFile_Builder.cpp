@@ -27,7 +27,7 @@ Executable_MakeFile_Builder::Executable_MakeFile_Builder(char * des_path, char o
 
    Des_Reader(opr_sis), Git_Data_Proc(opr_sis),
  
-   Dep_Determiner(des_path,opr_sis), ComConstructor(opr_sis)
+   Dep_Determiner(des_path,opr_sis), ComConstructor(opr_sis), Script_Builder(opr_sis)
 
 {
      this->Des_Reader.Receive_Descriptor_File_Path(des_path);
@@ -56,18 +56,6 @@ void Executable_MakeFile_Builder::Clear_Dynamic_Memory(){
      this->ComConstructor.Clear_Dynamic_Memory();
 }
 
-/*
-
-void Executable_MakeFile_Builder::Update_Warehaouse_Headers()
-{
-     this->Initializer.Update_Warehaouse_Headers();
-
-     this->Initializer.Clear_Dynamic_Memory();
-
-     std::cout << "\n Project Warehouse Headers Updated ..";
-}
-
-*/
 
 void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_Name){
 
@@ -89,6 +77,16 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
 
      this->ComConstructor.Construct_Compiler_Commands(mn_src_path);
 
+     
+     this->Script_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
+
+     this->Script_Builder.Receive_Git_Data_Processor(&this->Git_Data_Proc);
+
+     this->Script_Builder.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
+
+     std::vector<Compiler_Data> * Com_Dat = this->Dep_Determiner.Get_Compiler_Data_Address();
+
+     this->Script_Builder.Build_Compiler_Script_For_Executable_File();
 
      // Receiving the compiler data from the member objects
 
@@ -352,8 +350,6 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
-
-     //this->FileManager.WriteToFile(" ");
 
      this->FileManager.WriteToFile(Exe_Name);
 

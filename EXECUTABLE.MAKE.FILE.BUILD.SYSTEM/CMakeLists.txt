@@ -9,6 +9,9 @@ add_library(exec_make_bld
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_ComConstructor/Executable_MakeFile_ComConstructor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_ComConstructor/Executable_MakeFile_ComConstructor.hpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_Script_Builder/Executable_MakeFile_Script_Builder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_Script_Builder/Executable_MakeFile_Script_Builder.hpp
     
 )
 
@@ -18,6 +21,16 @@ target_include_directories(exec_make_bld PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_Builder
     ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_ComConstructor
+    ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_Script_Builder
+
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Project_Script_Writer
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Script_Data_Collector
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Script_Data_Processor
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Script_Writer
 
 
 
@@ -109,6 +122,15 @@ target_link_directories(exec_make_bld PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_Builder
     ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_ComConstructor
 
+
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Project_Script_Writer
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Script_Data_Collector
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Script_Data_Processor
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Script_Writer
 
 
     ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Header_File_Processor

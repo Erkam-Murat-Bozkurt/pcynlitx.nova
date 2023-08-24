@@ -34,6 +34,9 @@ Source_File_Dependency_Selector::Source_File_Dependency_Selector( char opr_sis)
    this->opr_sis = opr_sis;
    
    this->Dep_Data_Collectors = nullptr;
+
+   this->Construct_Dependency_Data_Extractors();
+
 }
 
 
@@ -43,42 +46,11 @@ Source_File_Dependency_Selector::~Source_File_Dependency_Selector()
 }
 
 
-void Source_File_Dependency_Selector::Clear_Object_Memory(){
 
-     if(!this->Memory_Delete_Condition){
 
-        this->Memory_Delete_Condition = true;
-        
-        this->Clear_Dynamic_Memory();
 
-        this->Info_Collector.Clear_Object_Memory();
-     }
-}
 
-void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
-{
-    if(!this->Dependency_Data.empty()){
-    
-        std::vector<std::vector<Source_File_Dependency>>::iterator it;
-
-        for(auto it=this->Dependency_Data.begin();it<this->Dependency_Data.end();it++){
-     
-            std::vector<Source_File_Dependency> * ptr = &(*it);
-
-            this->Clear_Vector_Memory(ptr);     
-        }
-
-        this->Dependency_Data.clear();
-
-        this->Dependency_Data.shrink_to_fit();
-    }
-
-     this->Clear_String_Memory(&this->warehouse_head_dir);
-
-     this->Clear_String_Memory(&this->descriptor_file_path);
-
-     this->Info_Collector.Clear_Dynamic_Memory();
-}
+/* THE CLASS INPUTS (THE MEMBER FUNCTIONS RECEIVING INFORMATION) */
 
 
 void Source_File_Dependency_Selector::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
@@ -100,11 +72,23 @@ void Source_File_Dependency_Selector::Receive_Descriptor_File_Reader(Descriptor_
      this->Info_Collector.Receive_Descriptor_File_Reader(ptr);
 }
 
+
+
+
+
+
+/* THE CONTROL FUNCTIONS (THE MEMBER FUNCTION PERFORMS CONTROL OPERATIONS) */
+
 bool Source_File_Dependency_Selector::Is_Header_File(std::string hpath){
 
       return this->Info_Collector.Is_Header_File(hpath);
 }
 
+
+
+
+
+/* THE MEMBER FUNCTIONS PERFORMING MAIN OPERATIONS  */
 
 void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::string path)
 {
@@ -116,7 +100,6 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
 
      this->warehouse_head_dir = this->Info_Collector.Get_Warehouse_Headers_Dir();
 
-     this->Construct_Dependency_Data_Extractors();
 
      this->Extract_Dependency_Tree(path,0);
 
@@ -188,9 +171,9 @@ void Source_File_Dependency_Selector::Process_Dependency_Data(int thr_num, int s
 
          this->Extract_Dependency_Tree(sub_path,thr_num);
 
-         this->Set_Included_Header_Number(&this->Dependent_List[thr_num]);
-
          mt.lock();
+
+         this->Set_Included_Header_Number(&this->Dependent_List[thr_num]);
 
          this->Dependency_Data.push_back(this->Dependent_List[thr_num]);
 
@@ -215,7 +198,6 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
 
      this->Headers_Data_Ptr   = this->Info_Collector.Get_Headers_Data_Address();
 
-     this->Construct_Dependency_Data_Extractors();
 
      size_t data_size = this->Headers_Data_Ptr->size();
 
@@ -256,6 +238,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
 
     this->Clear_Dependency_Data_Extractors();
 }
+
 
 
 void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int start, int end){
@@ -312,8 +295,14 @@ void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,i
             this->Dependent_List[thr_num].push_back(Data);
         }
      }
-}
 
+
+     this->Dep_Data_Collectors[thr_num]->Clear_Object_Memory();
+
+     delete this->Dep_Data_Collectors[thr_num];
+
+     this->Dep_Data_Collectors[thr_num] = nullptr;
+}
 
 
 void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency & data,
@@ -324,11 +313,14 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
 
      FileData * Data = this->Code_Rd->Find_File_Data_From_Name(header_name);
 
+     
+
      std::string file_path = Data->sys_path;
 
      this->Extract_Directory_From_Path(file_path,file_dir);
 
      this->Extract_File_Name_From_Path(&src_file_name,path);
+
 
      this->Determine_Header_Repo_Warehouse_Path(&wrd_path,header_name,'w');
 
@@ -355,8 +347,6 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
      this->Clear_String_Memory(&hdr_sys_path);
      
 }
-
-
 
 
 void Source_File_Dependency_Selector::Extract_Directory_From_Path(std::string path, std::string & dir){
@@ -422,8 +412,6 @@ void Source_File_Dependency_Selector::Set_Included_Header_Number(std::vector<Sou
 }
 
 
-
-
 void Source_File_Dependency_Selector::Determine_Header_Repo_Warehouse_Path(std::string * wrd_path,
 
      std::string file_name, char opr_sis)
@@ -455,8 +443,6 @@ void Source_File_Dependency_Selector::Determine_Header_Repo_Warehouse_Path(std::
          wrd_path->push_back(file_name[i]);
      }
 }
-
-
 
 
 void Source_File_Dependency_Selector::Extract_File_Name_From_Path(std::string * pointer,
@@ -536,23 +522,60 @@ void Source_File_Dependency_Selector::Print_Dependency_List()
 }
 
 
-std::vector<std::string> * Source_File_Dependency_Selector::Get_File_Content(std::string path){
+void Source_File_Dependency_Selector::Construct_Dependency_Data_Extractors(){
 
-     FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Path(path);
+     this->Dep_Data_Collectors = new Dependency_Data_Extractor * [8];   
 
-     return &FileDtPtr->FileContent;
+     for(int i=0;i<8;i++){
+
+        this->Dep_Data_Collectors[i] = nullptr;
+     }
 }
 
-std::string Source_File_Dependency_Selector::Get_Header_System_Path(std::string header_name){
 
-     std::string sys_path;
 
-     FileData * Ptr = this->Code_Rd->Find_File_Data_From_Name(header_name);
 
-     sys_path = Ptr->sys_path;
 
-     return sys_path;
+/* THE MEMBER FUNCTIONS WHICH ARE RESPONSIBLE FROM MEMORY MENAGEMENT */
+
+
+void Source_File_Dependency_Selector::Clear_Object_Memory(){
+
+     if(!this->Memory_Delete_Condition){
+
+        this->Memory_Delete_Condition = true;
+        
+        this->Clear_Dynamic_Memory();
+
+        this->Info_Collector.Clear_Object_Memory();
+     }
 }
+
+void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
+{
+    if(!this->Dependency_Data.empty()){
+    
+        std::vector<std::vector<Source_File_Dependency>>::iterator it;
+
+        for(auto it=this->Dependency_Data.begin();it<this->Dependency_Data.end();it++){
+     
+            std::vector<Source_File_Dependency> * ptr = &(*it);
+
+            this->Clear_Vector_Memory(ptr);     
+        }
+
+        this->Dependency_Data.clear();
+
+        this->Dependency_Data.shrink_to_fit();
+    }
+
+     this->Clear_String_Memory(&this->warehouse_head_dir);
+
+     this->Clear_String_Memory(&this->descriptor_file_path);
+
+     this->Info_Collector.Clear_Dynamic_Memory();
+}
+
 
 void Source_File_Dependency_Selector::Clear_String_Memory(std::string * Pointer)
 {
@@ -564,15 +587,6 @@ void Source_File_Dependency_Selector::Clear_String_Memory(std::string * Pointer)
      }
 }
 
-void Source_File_Dependency_Selector::Construct_Dependency_Data_Extractors(){
-
-     this->Dep_Data_Collectors = new Dependency_Data_Extractor * [8];   
-
-     for(int i=0;i<8;i++){
-
-        this->Dep_Data_Collectors[i] = nullptr;
-     }
-}
 
 void Source_File_Dependency_Selector::Clear_Dependency_Data_Extractors(){
 
@@ -638,6 +652,36 @@ void Source_File_Dependency_Selector::Clear_Vector_Memory(std::vector<Source_Fil
        this->Clear_String_Memory(&temp->header_sys_path);
 
  }
+
+
+
+
+
+
+
+
+//  GETTER MEMBER FUNCTIONS  
+
+
+
+std::vector<std::string> * Source_File_Dependency_Selector::Get_File_Content(std::string path){
+
+     FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Path(path);
+
+     return &FileDtPtr->FileContent;
+}
+
+std::string Source_File_Dependency_Selector::Get_Header_System_Path(std::string header_name){
+
+     std::string sys_path;
+
+     FileData * Ptr = this->Code_Rd->Find_File_Data_From_Name(header_name);
+
+     sys_path = Ptr->sys_path;
+
+     return sys_path;
+}
+
 
 
 std::vector<std::vector<Source_File_Dependency>> * Source_File_Dependency_Selector::Get_Dependency_List_Adress()

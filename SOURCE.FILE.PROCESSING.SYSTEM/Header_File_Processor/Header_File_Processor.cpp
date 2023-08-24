@@ -21,7 +21,7 @@ Header_File_Processor::~Header_File_Processor(){
 
 void Header_File_Processor::Clear_Object_Memory(){
 
-     this->Clear_String_Memory(&this->Repo_Dir);
+     //this->Clear_String_Memory(&this->Repo_Dir);
 
      this->Clear_Dynamic_Memory();
 }
@@ -39,17 +39,6 @@ void Header_File_Processor::Clear_Dynamic_Memory(){
 void Header_File_Processor::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
 
      this->Code_Rdr = ptr;
-}
-
-
-void Header_File_Processor::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
-
-     this->Git_Data_Proc = ptr;
-
-     this->git_record_size = this->Git_Data_Proc->Get_Git_File_Index_Size();
-
-     this->Repo_Dir  = this->Git_Data_Proc->Get_Git_Repo_Directory();
-
 }
 
 
@@ -208,41 +197,6 @@ void Header_File_Processor::Extract_Header_File_Name_From_Decleration(std::strin
           header_name->push_back(string[i]);
      }
 }
-
- bool Header_File_Processor::Is_This_Repo_Header(std::string file_path){
- 
-      this->is_this_repo_header = false;
-
-      this->Determine_Header_File_Name_With_Extention(file_path);
-   
-      std::string file_name_wit_ext =this->Get_Header_File_Name_With_Ext();
- 
-      if(this->Is_Header(file_path)){
-      
-         int size = this->Git_Data_Proc->Get_Git_File_Index_Size();
-
-         for(int i=0;i<size;i++){
-         
-             std::string repo_file_system_path = this->Git_Data_Proc->Get_File_System_Path(i);
-
-             this->Determine_Header_File_Name_With_Extention(repo_file_system_path);
-
-             std::string repo_file_name_with_ext = this->Get_Header_File_Name_With_Ext();
-
-             bool is_equal = this->CompareString(repo_file_name_with_ext,file_name_wit_ext);
-
-             if(is_equal){
-             
-                this->is_this_repo_header = true;
-
-                return this->is_this_repo_header;
-             }
-         }      
-      }
-
-      return this->is_this_repo_header; 
- }
-
 
 
 

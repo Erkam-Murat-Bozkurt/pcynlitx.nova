@@ -26,10 +26,8 @@ class Header_File_Processor
 public:
  Header_File_Processor(char opr_sis);
  virtual ~Header_File_Processor();
- void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  bool Is_Header(std::string file_path);
- bool Is_This_Repo_Header(std::string file_path);
  bool Include_Decleration_Test(std::string string);
  bool Is_this_file_included_on_anywhere(std::string file_path);
  void Determine_Header_File_Directory(std::string path);
@@ -46,17 +44,14 @@ public:
 protected:
  void Clear_String_Memory(std::string * pointer);
  Project_Src_Code_Rdr * Code_Rdr;
- Git_Data_Processor * Git_Data_Proc;
  StringOperator StringManager;
  std::string  Header_File_Directory;
  std::string  Header_File_Name;
  std::string  Header_File_Name_With_Extention;
  std::string  Header_File_System_Path;
- std::string  Repo_Dir;
  char operating_sis;
  bool is_header_file;
  bool is_this_repo_header;
- int  git_record_size;
  bool Memory_Delete_Condition;
  bool isStringsEqual;
  bool include_decleration_cond;

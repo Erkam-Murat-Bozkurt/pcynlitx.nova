@@ -49,7 +49,6 @@ public:
  Dependency_Data_Extractor(char opr_sis);
  virtual ~Dependency_Data_Extractor();
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
- void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Extract_Dependency_Tree(std::string path);
  std::vector<Search_Data> * Get_Search_Data();
  void Clear_Dynamic_Memory();
