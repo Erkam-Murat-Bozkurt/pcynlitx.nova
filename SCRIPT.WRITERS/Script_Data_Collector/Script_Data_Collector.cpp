@@ -1,5 +1,8 @@
 
+
+
 #include "Script_Data_Collector.hpp"
+
 
 Script_Data_Collector::Script_Data_Collector(char opr_sis) :
   
@@ -12,8 +15,10 @@ Script_Data_Collector::Script_Data_Collector(char opr_sis) :
      this->opr_sis = opr_sis;
 }
 
-Script_Data_Collector::~Script_Data_Collector(){
 
+
+Script_Data_Collector::~Script_Data_Collector()
+{
    if(!this->Memory_Delete_Condition){
 
       this->Memory_Delete_Condition = true;
@@ -21,6 +26,7 @@ Script_Data_Collector::~Script_Data_Collector(){
       this->Dir_Lister.Clear_Dynamic_Memory();      
    }
 }
+
 
 
 void Script_Data_Collector::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
@@ -35,10 +41,12 @@ void Script_Data_Collector::Receive_Git_Data_Processor(Git_Data_Processor * ptr)
 }
 
 
+
 void Script_Data_Collector::Receive_Compiler_Data(Compiler_Data * ptr){
 
      this->Cmp_Data_Ptr = ptr;
 }
+
 
 
 void Script_Data_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
@@ -47,6 +55,7 @@ void Script_Data_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reade
 
      this->warehouse_path = this->Des_File_Reader->Get_Warehouse_Location();
 }
+
 
 
 
@@ -59,29 +68,30 @@ void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script
 
      int record_index = 0;
 
-     this->Find_Data_Record_Index(header_name,record_index);
 
-     std::string git_record_dir = this->Build_Dt->at(record_index).git_record_dir;
+
+     Build_System_Data * Bld_Data = this->Dir_Lister.Get_Build_System_Data(header_name);
+
+
+     std::string git_record_dir = Bld_Data->git_record_dir;
 
 
      this->Place_String(&ptr->source_file_git_record_dir,git_record_dir);
 
 
-
-     std::string src_file_name = this->Build_Dt->at(record_index).File_Name_With_Ext;
+     std::string src_file_name = Bld_Data->File_Name_With_Ext;
 
 
      this->Place_String(&ptr->source_file_name,src_file_name);
 
 
-     
+          std::string src_dir = Bld_Data->File_Directory;
 
-     std::string src_dir = this->Build_Dt->at(record_index).File_Directory;
 
      this->Place_String(&ptr->source_file_dir,src_dir);
 
 
-     std::string src_name_without_ext = this->Build_Dt->at(record_index).File_Name;
+     std::string src_name_without_ext = Bld_Data->File_Name;
 
      this->Place_String(&ptr->src_name_without_ext,src_name_without_ext);
 
@@ -156,6 +166,8 @@ void Script_Data_Collector::Determine_Header_Files_Inclusion_Number(Script_Data 
 }
 
 
+
+
 void Script_Data_Collector::Determine_Make_File_Name(Script_Data * ptr){
 
    
@@ -179,6 +191,8 @@ void Script_Data_Collector::Determine_Make_File_Name(Script_Data * ptr){
 
      ptr->make_file_name.shrink_to_fit();
 }
+
+
 
 
 void Script_Data_Collector::Find_Data_Record_Index(std::string header_name, int & index){
@@ -211,11 +225,17 @@ void Script_Data_Collector::Find_Data_Record_Index(std::string header_name, int 
      
          std::cout << "\n Inside Script_Data_Collector::Find_Data_Record_Index";
 
-         std::cout << "\n Record index can not be determined";
+         std::cout << "\n The record index of the file which is named as \"" << header_name << "\""; 
+
+         std::cout << "\n  can not be determined";
+
+    
 
          exit(EXIT_FAILURE);     
      }
 }
+
+
 
 void Script_Data_Collector::Find_File_Name(std::string name_ext, std::string & name){
 

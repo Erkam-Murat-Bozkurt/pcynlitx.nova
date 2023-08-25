@@ -89,7 +89,9 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Clear_Dynamic_Memory();
 
+
      this->DepSelector.Determine_Source_File_Dependencies(path);
+
 
      this->Warehouse_Headers_Dir = this->DepSelector.Get_Warehouse_Headers_Dir();
 
@@ -97,19 +99,16 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Warehouse_Path = this->DepSelector.Get_Warehouse_Path();
 
-     std::vector<std::vector<Source_File_Dependency>> * s_ptr  
-     
-               = this->DepSelector.Get_Dependency_List_Adress();
- 
-     std::string wrd_hdr_dir = this->DepSelector.Get_Warehouse_Headers_Dir();
 
-     this->Com_Data_Extractor.Receive_Dependency_Data(s_ptr,wrd_hdr_dir);
+     this->Com_Data_Extractor.Receive_Dependency_Data(&this->DepSelector);
 
      this->Com_Data_Extractor.Extract_Compiler_Data(path);
 
+     this->Com_Data_Extractor.Extract_Compiler_Data();
+
+
      this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
-     this->data_size = this->Compiler_Data_Ptr->size();
 
      this->Clear_Dynamic_Memory();
 }
@@ -127,19 +126,13 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
       this->Warehouse_Path = this->DepSelector.Get_Warehouse_Path();
 
-      std::vector<std::vector<Source_File_Dependency>> * s_ptr  
-      
-      = this->DepSelector.Get_Dependency_List_Adress();
 
-      std::string wrd_hdr_dir = this->DepSelector.Get_Warehouse_Headers_Dir();      
-
-      this->Com_Data_Extractor.Receive_Dependency_Data(s_ptr,wrd_hdr_dir);
+      this->Com_Data_Extractor.Receive_Dependency_Data(&this->DepSelector);
 
       this->Com_Data_Extractor.Extract_Compiler_Data();
 
       this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
-      this->data_size = this->Compiler_Data_Ptr->size();
 
       this->Order_Priorities();
 
@@ -149,9 +142,9 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
 void Source_File_Dependency_Determiner::Order_Priorities(){
 
-     for(int i=0;i<this->data_size;i++){
+     for(int i=0;i< this->Compiler_Data_Ptr->size();i++){
 
-         for(int j=i;j<this->data_size;j++){
+         for(int j=i;j< this->Compiler_Data_Ptr->size();j++){
 
              int dep_i = this->Compiler_Data_Ptr->at(i).priority;
 
@@ -184,7 +177,7 @@ bool Source_File_Dependency_Determiner::Is_Header_File(std::string hpath){
 
 void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
 
-     for(int i=0;i<this->data_size;i++){
+     for(int i=0;i< this->Compiler_Data_Ptr->size();i++){
 
          std::cout << "\n\n";
 

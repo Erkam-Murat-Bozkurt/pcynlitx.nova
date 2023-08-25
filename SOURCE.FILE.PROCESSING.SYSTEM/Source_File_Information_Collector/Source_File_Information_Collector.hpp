@@ -52,7 +52,6 @@ public:
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
- void Extract_Dependency_Data(std::string path);
  void Extract_Dependency_Data();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();

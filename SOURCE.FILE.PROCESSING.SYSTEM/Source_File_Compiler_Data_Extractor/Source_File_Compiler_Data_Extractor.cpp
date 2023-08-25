@@ -30,7 +30,6 @@ Source_File_Compiler_Data_Extractor::Source_File_Compiler_Data_Extractor(char op
 {
 
    this->operating_sis = opr_sis;
-
 }
 
 
@@ -98,13 +97,13 @@ void Source_File_Compiler_Data_Extractor::Receive_Git_Data_Processor(Git_Data_Pr
 
 
 
-void Source_File_Compiler_Data_Extractor::Receive_Dependency_Data(std::vector<std::vector<Source_File_Dependency>> * ptr,
-
-     std::string wrd)
+void Source_File_Compiler_Data_Extractor::Receive_Dependency_Data(Source_File_Dependency_Selector * ptr)
 {
-     this->dep_data_ptr = ptr;
+     this->Dep_Selector_Ptr = ptr;
 
-     this->warehouse_head_dir = wrd;
+     this->dep_data_ptr = this->Dep_Selector_Ptr->Get_Dependency_List_Adress();
+
+     this->warehouse_head_dir = this->Dep_Selector_Ptr->Get_Warehouse_Headers_Dir();
 }
 
 

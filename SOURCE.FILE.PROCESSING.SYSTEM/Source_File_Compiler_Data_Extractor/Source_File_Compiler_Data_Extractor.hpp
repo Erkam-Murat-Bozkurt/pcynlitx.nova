@@ -54,7 +54,7 @@ class Source_File_Compiler_Data_Extractor
 public:
  Source_File_Compiler_Data_Extractor(char opr_sis);
  virtual ~Source_File_Compiler_Data_Extractor();
- void Receive_Dependency_Data(std::vector<std::vector<Source_File_Dependency>> * ptr, std::string wrd);
+ void Receive_Dependency_Data(Source_File_Dependency_Selector * ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Extract_Compiler_Data();
  void Extract_Compiler_Data(std::string path);
@@ -74,6 +74,7 @@ protected:
  void Clear_String_Memory(std::string * pointer);
  void Clear_Buffer_Memory(Compiler_Data * ptr);
  void Clear_Data_Memory(std::vector<Compiler_Data> * ptr);
+ Source_File_Dependency_Selector * Dep_Selector_Ptr;
  Source_File_Information_Collector * Info_Collector;
  CharOperator Char_Processor;
  Project_Files_Lister File_Lister;

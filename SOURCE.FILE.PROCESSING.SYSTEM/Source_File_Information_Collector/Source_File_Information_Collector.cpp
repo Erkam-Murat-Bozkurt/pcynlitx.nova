@@ -38,27 +38,8 @@ Source_File_Information_Collector::~Source_File_Information_Collector()
 }
 
 
-void Source_File_Information_Collector::Clear_Object_Memory()
-{
-     this->Clear_Dynamic_Memory();
 
-     this->Clear_String_Memory(&this->warehouse_path);
-
-     this->Clear_String_Memory(&this->warehouse_head_dir);
-
-     this->Clear_String_Memory(&this->warehouse_obj_dir);
-}
-
-
-
-void Source_File_Information_Collector::Clear_Dynamic_Memory()
-{
-        // Clearing the header data
-
-      this->Clear_Headers_Data();
-
-      this->Clear_Buffer_Memory();
-}
+/* THE CLASS INPUT FUNCTIONS ****************************************************************************/
 
 
 void Source_File_Information_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
@@ -89,15 +70,22 @@ void Source_File_Information_Collector::Receive_Git_Data_Processor(Git_Data_Proc
 }
 
 
+
+
+
+/* THE MEMBER FUNCTIONS PERFORMING THE MAIN OPERATIONS ******************************************/
+
+
 void Source_File_Information_Collector::Determine_Source_File_List()
 {
-     size_t fileNum = this->Code_Rdr->Get_Project_Files_Number();
 
-     for(int i=0;i<fileNum;i++){
+     for(int i=0;i<this->Code_Rdr->Get_Project_Files_Number();i++)
+     {
 
          std::string path = this->Code_Rdr->Get_File_Path(i);
-
+      
          bool is_source_file = this->Src_File_Pr.Is_Source_File(path);
+
 
          if(is_source_file){
 
@@ -127,10 +115,8 @@ void Source_File_Information_Collector::Extract_Dependency_Data(){  // Data extr
 
      this->Determine_Source_File_List();
 
-
-     std::size_t dt_size = this->Src_Data_Holder.size();
      
-     for(std::size_t i = 0;i<dt_size;i++){
+     for(std::size_t i =0; i<this->Src_Data_Holder.size(); i++){
 
          std::string path = this->Src_Data_Holder[i].system_path;
 
@@ -151,8 +137,8 @@ void Source_File_Information_Collector::Extract_Dependency_Data(){  // Data extr
 
              bool is_include_decleration = this->Include_Decleration_Test(string);
 
-             if(is_include_decleration){
-
+             if(is_include_decleration)
+             {
                 std::string header_name;
 
                 this->Extract_Header_File_Name_From_Decleration(&header_name,string);
@@ -174,78 +160,12 @@ void Source_File_Information_Collector::Extract_Dependency_Data(){  // Data extr
 }
 
 
-void Source_File_Information_Collector::Extract_Dependency_Data(std::string path)
 
-{    // Data extraction for particular header file
-
-     this->Clear_Dynamic_Memory();
-
-     bool is_source_file = this->Src_File_Pr.Is_Source_File(path);
-
-
-     if(is_source_file){
-
-        this->Memory_Delete_Condition = false;
-
-        this->Src_File_Pr.Determine_Source_File_Name(path);
-
-        std::string source_file_name = this->Src_File_Pr.Get_Source_File_Name();
-
-
-        this->buffer.system_path = path;
-        this->buffer.source_file_name = source_file_name;
-        this->buffer.inclusion_number = 0;
-        this->buffer.priority = 0;
-        this->buffer.rcr_srch_complated = false;
-    
-        FileData * src_code = this->Code_Rdr->Find_File_Data_From_Path(path);
-
-
-        size_t line_num = src_code->FileContent.size();
-   
-
-        for(size_t k=0;k<line_num;k++){
-
-            std::string string_line = src_code->FileContent.at(k);
-
-            // In order to remove possible spaces on the string
-
-            // a temporary string is constructed
-
-
-            bool is_include_decleration = this->Include_Decleration_Test(string_line);
-
-            if(is_include_decleration){
-
-               std::string header_name;
-
-               this->Extract_Header_File_Name_From_Decleration(&header_name,string_line);
-
-               this->buffer.included_headers.push_back(header_name);
-
-               std::string header_path_address;
-
-               this->Determine_Header_Repo_Warehouse_Path(&header_path_address,header_name,'w');
-
-               this->buffer.included_headers_paths.push_back(header_path_address);
-
-               this->buffer.inclusion_number++;
-
-               this->buffer.priority = this->buffer.inclusion_number;
-            }
-        }
-
-        this->Src_Data_Holder.push_back(this->buffer);
-
-        this->Clear_Buffer_Memory();
-     }
-}
 
 void Source_File_Information_Collector::Determine_Header_Repo_Warehouse_Path(std::string * wrd_path,
 
      std::string file_name, char opr_sis){
 
-     size_t name_size = file_name.length();
 
      size_t wrd_path_size = this->warehouse_head_dir.length();
 
@@ -264,7 +184,7 @@ void Source_File_Information_Collector::Determine_Header_Repo_Warehouse_Path(std
         wrd_path->push_back('/');
      }
 
-     for(size_t i=0;i<name_size;i++){
+     for(size_t i=0;i<file_name.length();i++){
 
          wrd_path->push_back(file_name[i]);
      }
@@ -399,8 +319,8 @@ bool Source_File_Information_Collector::Include_Decleration_Test(std::string str
 }
 
 
-void Source_File_Information_Collector::Determine_Warehouse_Header_Dir(){
-
+void Source_File_Information_Collector::Determine_Warehouse_Header_Dir()
+{
      std::string warehouse_word = "WAREHOUSE";
 
      std::string header_directory = "PROJECT.HEADER.FILES";
@@ -576,6 +496,39 @@ bool Source_File_Information_Collector::CompareString(std::string firstString,
 }
 
 
+
+
+
+
+
+
+/* MEMORY MANAGEMENT FUNCTIONS ******************************************************/
+
+
+void Source_File_Information_Collector::Clear_Object_Memory()
+{
+     this->Clear_Dynamic_Memory();
+
+     this->Clear_String_Memory(&this->warehouse_path);
+
+     this->Clear_String_Memory(&this->warehouse_head_dir);
+
+     this->Clear_String_Memory(&this->warehouse_obj_dir);
+}
+
+
+
+void Source_File_Information_Collector::Clear_Dynamic_Memory()
+{
+        // Clearing the header data
+
+      this->Clear_Headers_Data();
+
+      this->Clear_Buffer_Memory();
+}
+
+
+
 void Source_File_Information_Collector::Clear_Headers_Data()
 {
      std::vector<Source_File_Data>::iterator ith;
@@ -640,43 +593,60 @@ void Source_File_Information_Collector::Clear_Vector_Memory(std::vector<std::str
 }
 
 
-  void Source_File_Information_Collector::Clear_String_Memory(std::string * pointer){
+void Source_File_Information_Collector::Clear_String_Memory(std::string * pointer){
 
-       if(!pointer->empty()){
+     if(!pointer->empty()){
 
-           pointer->clear();
+         pointer->clear();
 
-           pointer->shrink_to_fit();
-       }
-  }
+         pointer->shrink_to_fit();
+      }
+}
 
 
-  Source_File_Data Source_File_Information_Collector::Get_Dependency_Data(int num)
-  {
-         return this->Src_Data_Holder[num];
-  }
 
-  std::vector<Source_File_Data> * Source_File_Information_Collector::Get_Headers_Data_Address()
-  {
-      return &this->Src_Data_Holder;
-  }
 
-  std::string Source_File_Information_Collector::Get_Warehouse_Headers_Dir(){
 
-         return this->warehouse_head_dir;
-  }
 
-  std::string Source_File_Information_Collector::Get_Warehouse_Objetcs_Dir(){
 
-         return this->warehouse_obj_dir;
-  }
 
-  std::string Source_File_Information_Collector::Get_Warehouse_Path(){
+  /* GETTER FUNCTIONS OF THE CLASS *******************************************************/
 
-         return this->warehouse_path;
-  }
 
-  size_t Source_File_Information_Collector::Get_Dependency_Data_Size(){
+Source_File_Data Source_File_Information_Collector::Get_Dependency_Data(int num)
+{
+   return this->Src_Data_Holder[num];
+}
 
-        return this->Src_Data_Holder.size();
-  }
+
+
+std::vector<Source_File_Data> * Source_File_Information_Collector::Get_Headers_Data_Address()
+{
+     return &this->Src_Data_Holder;
+}
+
+
+
+std::string Source_File_Information_Collector::Get_Warehouse_Headers_Dir(){
+
+     return this->warehouse_head_dir;
+}
+
+
+std::string Source_File_Information_Collector::Get_Warehouse_Objetcs_Dir(){
+
+     return this->warehouse_obj_dir;
+}
+
+
+
+std::string Source_File_Information_Collector::Get_Warehouse_Path(){
+
+     return this->warehouse_path;
+}
+
+
+size_t Source_File_Information_Collector::Get_Dependency_Data_Size(){
+
+       return this->Src_Data_Holder.size();
+}

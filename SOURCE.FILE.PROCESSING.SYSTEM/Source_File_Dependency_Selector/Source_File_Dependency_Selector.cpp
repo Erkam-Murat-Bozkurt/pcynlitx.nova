@@ -70,6 +70,8 @@ void Source_File_Dependency_Selector::Receive_Source_Code_Reader(Project_Src_Cod
 void Source_File_Dependency_Selector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
 
      this->Info_Collector.Receive_Descriptor_File_Reader(ptr);
+
+     this->warehouse_head_dir = this->Info_Collector.Get_Warehouse_Headers_Dir();
 }
 
 
@@ -96,12 +98,9 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
 
      this->Info_Collector.Clear_Dynamic_Memory();
 
-     this->Info_Collector.Extract_Dependency_Data(path);
-
-     this->warehouse_head_dir = this->Info_Collector.Get_Warehouse_Headers_Dir();
-
 
      this->Extract_Dependency_Tree(path,0);
+     
 
      this->Set_Included_Header_Number(&this->Dependent_List[0]);
 
@@ -155,35 +154,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
 }
 
 
-void Source_File_Dependency_Selector::Process_Dependency_Data(int thr_num, int start, int end)
-{    
 
-     std::unique_lock<std::mutex> mt(this->mtx);
-
-     mt.unlock();
-
-
-     for(size_t i=start;i<end;i++){
-
-         Source_File_Dependency Data = this->Dependent_List_Buffer.at(i);
-
-         std::string sub_path = Data.header_sys_path;
-
-         this->Extract_Dependency_Tree(sub_path,thr_num);
-
-         mt.lock();
-
-         this->Set_Included_Header_Number(&this->Dependent_List[thr_num]);
-
-         this->Dependency_Data.push_back(this->Dependent_List[thr_num]);
-
-         this->Dependency_Data.shrink_to_fit();
-
-         mt.unlock();
-
-         this->Clear_Vector_Memory(&this->Dependent_List[thr_num]);  
-    }
-}
 
 
 void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
@@ -194,14 +165,12 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
 
      this->Info_Collector.Extract_Dependency_Data();
 
-     this->warehouse_head_dir = this->Info_Collector.Get_Warehouse_Headers_Dir();
-
      this->Headers_Data_Ptr   = this->Info_Collector.Get_Headers_Data_Address();
 
 
      size_t data_size = this->Headers_Data_Ptr->size();
 
-    if(data_size>8){
+     if(data_size>8){
 
        int division = data_size/8;
 
@@ -241,11 +210,52 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
 
 
 
+void Source_File_Dependency_Selector::Process_Dependency_Data(int thr_num, int start, int end)
+{    
+
+     std::unique_lock<std::mutex> mt(this->mtx);
+
+     mt.unlock();
+
+
+     for(size_t i=start;i<end;i++){
+
+         Source_File_Dependency Data = this->Dependent_List_Buffer.at(i);
+
+         std::string sub_path = Data.header_sys_path;
+         
+         this->Extract_Dependency_Tree(sub_path,thr_num);
+
+
+
+         mt.lock();
+
+         this->Set_Included_Header_Number(&this->Dependent_List[thr_num]);
+
+         this->Dependency_Data.push_back(this->Dependent_List[thr_num]);
+
+         this->Dependency_Data.shrink_to_fit();
+
+         mt.unlock();
+
+
+
+         this->Clear_Vector_Memory(&this->Dependent_List[thr_num]);  
+    }
+}
+
+
+
+
+
+
 void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int start, int end){
 
      std::unique_lock<std::mutex> mt(this->mtx);
 
      mt.unlock();
+
+
 
      for(size_t i=start;i<end;i++){
      
@@ -267,7 +277,12 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int s
 
          this->Clear_Vector_Memory(&this->Dependent_List[thr_num]);  
      }     
+
 }
+
+
+
+
 
 
 void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,int thr_num){
@@ -303,6 +318,8 @@ void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,i
 
      this->Dep_Data_Collectors[thr_num] = nullptr;
 }
+
+
 
 
 void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency & data,
@@ -609,6 +626,8 @@ void Source_File_Dependency_Selector::Clear_Dependency_Data_Extractors(){
         this->Dep_Data_Collectors = nullptr;
      }
 }
+
+
 
 void Source_File_Dependency_Selector::Clear_Vector_Memory(std::vector<Source_File_Dependency> * pointer){
 
