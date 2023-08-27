@@ -1,0 +1,708 @@
+
+
+
+
+/*
+
+Copyright ©  2021,  Erkam Murat Bozkurt
+
+This file is part of the research project which is carried by Erkam Murat Bozkurt.
+
+This is a free software: you can redistribute it and/or modify it under the terms
+of the GNU General Public License as published by the Free Software Foundation
+either version 3 of the License, or any later version.
+
+This software is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>.
+
+*/
+
+#include "Source_File_Information_Collector_For_Single_File.hpp"
+
+Source_File_Information_Collector_For_Single_File::Source_File_Information_Collector_For_Single_File(char opr_sis) :
+
+   Header_Processor(opr_sis)
+{
+   this->opr_sis = opr_sis;
+}
+
+
+Source_File_Information_Collector_For_Single_File::~Source_File_Information_Collector_For_Single_File()
+{
+      this->Clear_Object_Memory();
+}
+
+
+
+
+
+/* THE CLASS INPUT FUNCTIONS ****************************************************************************/
+
+
+void Source_File_Information_Collector_For_Single_File::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+
+     this->Des_Reader = ptr;
+
+     this->warehouse_path = this->Des_Reader->Get_Warehouse_Location();
+
+     this->Determine_Warehouse_Header_Dir();
+
+     this->Determine_Warehouse_Object_Dir();
+}
+
+
+void Source_File_Information_Collector_For_Single_File::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
+
+     this->Code_Rdr = ptr;
+
+     this->Header_Processor.Receive_Source_Code_Reader(ptr);
+
+     this->Src_File_Pr.Receive_Source_Code_Reader(ptr);
+}
+
+
+void Source_File_Information_Collector_For_Single_File::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
+
+     this->Git_Data_Proc = ptr;
+}
+
+
+
+
+
+/* THE MEMBER FUNCTIONS PERFORMING THE MAIN OPERATIONS ******************************************/
+
+
+void Source_File_Information_Collector_For_Single_File::Extract_Dependency_Data(std::string src_file_path){  // Data extraction for whole project
+     
+     this->Determine_Root_Source_File_Header_Dependencies(src_file_path);
+
+     this->Determine_Related_Source_Files_From_Header_Dependencies();
+
+
+     for(std::size_t i =0; i<this->Dependent_Source_File_Names.size(); i++){
+
+         FileData * src_code = this->Code_Rdr->Find_File_Data_From_Name(this->Dependent_Source_File_Names.at(i));
+
+         size_t line_num = src_code->FileContent.size();
+
+
+         Source_File_Data Buffer_Dat;
+
+         Buffer_Dat.source_file_name = this->Dependent_Source_File_Names.at(i);
+
+         Buffer_Dat.system_path = src_code->sys_path;
+     
+        
+         /*
+
+         Buffer_Dat.inclusion_number = 0;
+
+         Buffer_Dat.priority = 0;
+
+
+         for(size_t k=0;k<line_num;k++){
+
+             std::string string = src_code->FileContent.at(k);
+
+             bool is_include_decleration = this->Include_Decleration_Test(string);
+
+             if(is_include_decleration)
+             {
+                std::string header_name;
+
+                this->Extract_Header_File_Name_From_Decleration(&header_name,string);
+ 
+                Buffer_Dat.included_headers.push_back(header_name);
+
+                std::string header_path_address;
+
+                this->Determine_Header_Repo_Warehouse_Path(&header_path_address,header_name,'w');
+
+                Buffer_Dat.included_headers_paths.push_back(header_path_address);
+
+                Buffer_Dat.inclusion_number++;
+
+                Buffer_Dat.priority = Buffer_Dat.inclusion_number;
+
+              }
+          }
+
+          */
+
+          this->Src_Data_Holder.push_back(Buffer_Dat);
+      }
+}
+
+
+
+void Source_File_Information_Collector_For_Single_File::Determine_Root_Source_File_Header_Dependencies(std::string src_file_path)
+{
+     Dependency_Data_Extractor * Dep_Extractor = new Dependency_Data_Extractor(this->opr_sis);
+
+     Dep_Extractor->Receive_Source_Code_Reader(this->Code_Rdr);
+
+     Dep_Extractor->Extract_Dependency_Tree(src_file_path);
+    
+
+     std::vector<Search_Data> * Dep_Data_Ptr = Dep_Extractor->Get_Search_Data();
+
+     for(size_t i=0;i<Dep_Data_Ptr->size();i++){
+
+         this->Dep_Search_Data.push_back(Dep_Data_Ptr->at(i));
+     }
+
+     this->Dep_Search_Data.shrink_to_fit();
+
+     Dep_Extractor->Clear_Object_Memory();
+
+     delete Dep_Extractor;          
+}
+
+
+
+void Source_File_Information_Collector_For_Single_File::Determine_Related_Source_Files_From_Header_Dependencies(){
+
+     size_t search_data_size = this->Dep_Search_Data.size();
+
+     for(size_t i=0;i<search_data_size;i++){
+       
+         std::string hdr_name = this->Dep_Search_Data.at(i).name;
+
+         std::string hdr_name_witout_ext;
+
+         this->Find_File_Name_Without_Extantion(hdr_name,hdr_name_witout_ext);
+
+         std::string source_file_name = hdr_name_witout_ext + ".cpp";
+         
+         if(this->Code_Rdr->Check_Repo_File_Status(source_file_name)){
+
+             this->Dependent_Source_File_Names.push_back(source_file_name);
+         }
+     }
+}
+
+
+
+
+void Source_File_Information_Collector_For_Single_File::Find_File_Name_Without_Extantion(std::string hdr_name, 
+
+     std::string & file_name_with_ext){
+
+     size_t end_point =0;
+
+     for(size_t i=hdr_name.size();i>0;i--){
+
+         if(hdr_name[i] == '.'){
+
+            end_point = i;
+         }     
+     }
+
+     for(size_t i=0;i<end_point;i++){
+
+         file_name_with_ext.push_back(hdr_name[i]);
+     }
+
+     file_name_with_ext.shrink_to_fit();
+}
+
+
+
+void Source_File_Information_Collector_For_Single_File::Determine_Header_Repo_Warehouse_Path(std::string * wrd_path,
+
+     std::string file_name, char opr_sis){
+
+
+     size_t wrd_path_size = this->warehouse_head_dir.length();
+
+     for(size_t i=0;i<wrd_path_size;i++){
+
+          wrd_path->push_back(this->warehouse_head_dir[i]);
+     }
+
+     if(opr_sis == 'w'){
+
+         wrd_path->push_back('\\');
+     }
+
+     if(opr_sis == 'l'){
+
+        wrd_path->push_back('/');
+     }
+
+     for(size_t i=0;i<file_name.length();i++){
+
+         wrd_path->push_back(file_name[i]);
+     }
+}
+
+
+ void Source_File_Information_Collector_For_Single_File::Determine_Header_System_Path(std::string * sys_path,std::string path)
+ {
+      int index_size = this->Git_Data_Proc->Get_Git_File_Index_Size();
+
+      for(int i=0;i<index_size;i++){
+      
+          std::string file_sys_path = this->Git_Data_Proc->Get_File_System_Path(i);
+
+          bool is_repo_hdr = this->Header_Processor.Is_Header(file_sys_path);
+
+          if(is_repo_hdr){
+          
+             this->Header_Processor.Determine_Header_File_Name_With_Extention(file_sys_path);       
+
+             std::string head_name = this->Header_Processor.Get_Header_File_Name_With_Ext();
+
+             this->Header_Processor.Determine_Header_File_Name_With_Extention(path);
+
+             std::string ref_hdr_name = this->Header_Processor.Get_Header_File_Name_With_Ext();
+
+
+             if(this->CompareString(head_name,ref_hdr_name)){
+             
+                size_t file_size = file_sys_path.size();
+
+                for(size_t k=0;k<file_size;k++){
+                
+                    sys_path->push_back(file_sys_path[k]);
+                }
+
+                sys_path->shrink_to_fit();
+
+                break;               
+             }
+
+          }
+      }      
+ }
+
+
+void Source_File_Information_Collector_For_Single_File::Extract_Header_File_Name_From_Decleration(std::string * header_name,
+
+     std::string string){
+
+     size_t size = string.length();
+
+     int start_point = 0;
+
+     for(size_t k=0;k<size;k++){
+
+         if(string[k] == '\"'){
+
+            break;
+         }
+         else{
+
+            start_point++;
+         }
+     }
+
+     start_point = start_point + 1;
+
+     int end_point = start_point;
+
+     for(size_t k=start_point;k<size;k++){
+
+        if(string[k] == '\"'){
+
+           break;
+        }
+        else{
+
+             end_point++;
+        }
+     }
+
+     for(int i=start_point;i<end_point;i++){
+
+         header_name->push_back(string[i]);
+     }
+}
+
+
+bool  Source_File_Information_Collector_For_Single_File::Is_Header_File(std::string hpath){
+
+      return this->Header_Processor.Is_Header(hpath);
+}
+
+
+bool Source_File_Information_Collector_For_Single_File::Include_Decleration_Test(std::string string){
+
+     this->include_decleration_cond = false;
+
+     std::string include_key = "#include\"";  // double_quotation_mark
+
+
+     bool is_this_include_dec
+
+     = this->StringManager.CheckStringInclusion(string,include_key);
+
+
+     bool char_before_sharp = false; //  sharp symbol = #
+
+     if(string[0]!= '#'){
+
+        char_before_sharp = true;
+     }
+
+     // In metaprograms, #include key is used on the inside code
+
+     // Therefore, there may be false include therms which is used in the metaprograms
+
+     // in order to produce header files. If there is a character before the sharp symbol,
+
+     // it is a meta program code. ( simething like write{ #include \"sample.h\" })
+
+     if(!char_before_sharp){
+
+        if(is_this_include_dec){
+
+           this->include_decleration_cond = true;
+        }
+     }
+
+     return this->include_decleration_cond;
+}
+
+
+void Source_File_Information_Collector_For_Single_File::Determine_Warehouse_Header_Dir()
+{
+     std::string warehouse_word = "WAREHOUSE";
+
+     std::string header_directory = "PROJECT.HEADER.FILES";
+
+     size_t warehouse_path_size = this->warehouse_path.length();
+
+     size_t head_dir_size = header_directory.length();
+
+     size_t wr_word_size  = warehouse_word.length();
+
+     for(size_t i=0;i<warehouse_path_size;i++){
+
+        this->warehouse_head_dir.push_back(this->warehouse_path[i]);
+     }
+
+     size_t index =  this->warehouse_head_dir.size(); // The last character index
+
+     char last_character = this->warehouse_head_dir[index];
+
+     if(this->opr_sis == 'w'){
+
+        if(last_character != '\\'){
+
+           this->warehouse_head_dir.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+         if(last_character!= '/'){
+
+            this->warehouse_head_dir.push_back('/');
+         }
+     }
+
+     for(size_t i=0;i<wr_word_size;i++){
+
+         this->warehouse_head_dir.push_back(warehouse_word[i]);
+     }
+
+
+     index =  this->warehouse_head_dir.size(); // The last character index
+
+     last_character = this->warehouse_head_dir[index];
+
+
+     if(this->opr_sis == 'w'){
+
+        if(last_character != '\\'){
+
+           this->warehouse_head_dir.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(last_character != '/'){
+
+           this->warehouse_head_dir.push_back('/');
+        }
+     }
+
+     for(size_t i=0;i<head_dir_size;i++){
+
+         this->warehouse_head_dir.push_back(header_directory[i]);
+     }
+}
+
+
+
+void Source_File_Information_Collector_For_Single_File::Determine_Warehouse_Object_Dir(){
+
+     std::string object_directory  = "PROJECT.OBJECT.FILES";
+
+     std::string warehouse_word    = "WAREHOUSE";
+
+     size_t warehouse_path_size = this->warehouse_path.length();
+
+     size_t object_dir_size     = object_directory.length();
+
+     size_t wr_word_size        = warehouse_word.length();
+
+
+     for(size_t i=0;i<warehouse_path_size;i++){
+
+         this->warehouse_obj_dir.push_back(this->warehouse_path[i]);
+     }
+
+     size_t index =  this->warehouse_path.size(); // The last character index
+
+     char last_character = this->warehouse_path[index];
+
+
+     if(this->opr_sis == 'w'){
+
+        if(last_character != '\\'){
+
+           this->warehouse_obj_dir.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(last_character != '/'){
+
+            this->warehouse_obj_dir.push_back('/');
+        }
+     }
+
+     for(size_t i=0;i<wr_word_size;i++){
+
+         this->warehouse_obj_dir.push_back(warehouse_word[i]);
+     }
+
+
+     index =  this->warehouse_path.size(); // The last character index
+
+     last_character = this->warehouse_path[index];
+
+     if(this->opr_sis == 'w'){
+
+        if(last_character != '\\'){
+
+           this->warehouse_obj_dir.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(last_character != '/'){
+
+           this->warehouse_obj_dir.push_back('/');
+        }
+     }
+
+     for(size_t i=0;i<object_dir_size;i++){
+
+         this->warehouse_obj_dir.push_back(object_directory[i]);
+     }
+}
+
+
+bool Source_File_Information_Collector_For_Single_File::CompareString(std::string firstString, 
+
+     std::string secondString){
+
+     size_t firstStringLength  = firstString.length();
+
+     size_t secondStringLength = secondString.length();
+
+     if(firstStringLength==secondStringLength){
+
+        for(size_t i=0;i<firstStringLength;i++){
+
+            if(firstString[i]!=secondString[i]){
+
+               this->isStringsEqual = false;
+
+               return this->isStringsEqual;
+            }
+        }
+
+        this->isStringsEqual = true;
+
+        return this->isStringsEqual;
+     }
+     else{
+
+            this->isStringsEqual = false;
+
+            return this->isStringsEqual;
+     }
+}
+
+
+
+
+
+
+
+
+/* MEMORY MANAGEMENT FUNCTIONS ******************************************************/
+
+
+void Source_File_Information_Collector_For_Single_File::Clear_Object_Memory()
+{
+     this->Clear_Dynamic_Memory();
+
+     this->Clear_String_Memory(&this->warehouse_path);
+
+     this->Clear_String_Memory(&this->warehouse_head_dir);
+
+     this->Clear_String_Memory(&this->warehouse_obj_dir);
+}
+
+
+
+void Source_File_Information_Collector_For_Single_File::Clear_Dynamic_Memory()
+{
+        // Clearing the header data
+
+      this->Clear_Headers_Data();
+
+      this->Clear_Buffer_Memory();
+}
+
+
+
+void Source_File_Information_Collector_For_Single_File::Clear_Headers_Data()
+{
+     std::vector<Source_File_Data>::iterator ith;
+
+     if(!this->Src_Data_Holder.empty()){
+
+         for(auto ith=this->Src_Data_Holder.begin();
+
+             ith<this->Src_Data_Holder.end();ith++)
+         {
+
+             //this->Clear_Vector_Memory(&ith->included_headers);
+
+             //this->Clear_Vector_Memory(&ith->included_headers_paths);
+
+             this->Clear_String_Memory(&ith->source_file_name);
+
+             this->Clear_String_Memory(&ith->system_path);
+
+          }
+
+          this->Src_Data_Holder.clear();
+
+          this->Src_Data_Holder.shrink_to_fit();
+      }
+}
+
+
+
+void Source_File_Information_Collector_For_Single_File::Clear_Buffer_Memory()
+{
+     //this->Clear_Vector_Memory(&this->buffer.included_headers);
+
+     //this->Clear_Vector_Memory(&this->buffer.included_headers_paths);
+
+     this->Clear_String_Memory(&this->buffer.source_file_name);
+
+     this->Clear_String_Memory(&this->buffer.system_path);
+}
+
+
+
+void Source_File_Information_Collector_For_Single_File::Clear_Vector_Memory(std::vector<std::string> * pointer)
+{
+      if(!pointer->empty()){
+
+           std::vector<std::string>::iterator it;
+
+           auto begin = pointer->begin();
+
+           auto end   = pointer->end();
+
+           for(auto it=begin;it<end;it++){
+
+               if(!it->empty()){
+
+                   it->clear();
+
+                   it->shrink_to_fit();
+               }
+            }
+
+           pointer->clear();
+
+           pointer->shrink_to_fit();
+      }
+}
+
+
+void Source_File_Information_Collector_For_Single_File::Clear_String_Memory(std::string * pointer){
+
+     if(!pointer->empty()){
+
+         pointer->clear();
+
+         pointer->shrink_to_fit();
+      }
+}
+
+
+
+
+
+
+/* THE GETTER FUNCTIONS */
+
+
+Source_File_Data Source_File_Information_Collector_For_Single_File::Get_Dependency_Data(int num)
+{
+   return this->Src_Data_Holder[num];
+}
+
+
+
+std::vector<Source_File_Data> * Source_File_Information_Collector_For_Single_File::Get_Source_File_Data_Address()
+{
+     return &this->Src_Data_Holder;
+}
+
+
+
+std::string Source_File_Information_Collector_For_Single_File::Get_Warehouse_Headers_Dir(){
+
+     return this->warehouse_head_dir;
+}
+
+
+std::string Source_File_Information_Collector_For_Single_File::Get_Warehouse_Objetcs_Dir(){
+
+     return this->warehouse_obj_dir;
+}
+
+
+
+std::string Source_File_Information_Collector_For_Single_File::Get_Warehouse_Path(){
+
+     return this->warehouse_path;
+}
+
+
+size_t Source_File_Information_Collector_For_Single_File::Get_Dependency_Data_Size(){
+
+       return this->Src_Data_Holder.size();
+}

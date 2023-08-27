@@ -4,8 +4,8 @@
 
 
 
-#ifndef SOURCE_FILE_DEPENDENCY_SELECTOR_HPP
-#define SOURCE_FILE_DEPENDENCY_SELECTOR_HPP
+#ifndef SOURCE_FILE_DEPENDENCY_SELECTOR_FOR_SINGLE_FILE_HPP
+#define SOURCE_FILE_DEPENDENCY_SELECTOR_FOR_SINGLE_FILE_HPP
 
 #include <cstring>
 #include <cstdlib>
@@ -22,6 +22,8 @@
 #include <windows.h>
 #include <thread>
 #include <mutex>
+#include "Source_File_Information_Collector_For_Single_File.hpp"
+#include "Source_File_Dependency_Selector.hpp"
 #include "Git_Data_Processor.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Git_File_List_Writer.hpp"
@@ -42,25 +44,11 @@
 #include "IntToCharTranslater.h"
 
 
-struct Source_File_Dependency
-{
-  bool rcr_srch_complated;
-  std::string source_file_name; // The header file which its dependencies are researched 
-  std::string source_file_path;
-  std::string Header_Name;
-  std::string header_sys_path;
-  std::string repo_warehouse_path;
-  std::string dir;
-  int included_file_hdr_num;
-  int base_included_hdr_num;
-  int priority;
-};
-
-class Source_File_Dependency_Selector
+class Source_File_Dependency_Selector_For_Single_File
 {
 public:
- Source_File_Dependency_Selector(char opr_sis);
- virtual ~Source_File_Dependency_Selector();
+ Source_File_Dependency_Selector_For_Single_File(char opr_sis);
+ virtual ~Source_File_Dependency_Selector_For_Single_File();
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
@@ -92,10 +80,9 @@ protected:
  void Set_Dependency_Data(Source_File_Dependency & data, std::string path, std::string header_name);
  std::vector<std::string> * Get_File_Content(std::string path);
  std::string Get_Header_System_Path(std::string header_name);
- void Process_Dependency_Data(int thr_num, int start, int end);
  void Clear_Dependency_Data_Extractors();
  void Construct_Dependency_Data_Extractors();
- Source_File_Information_Collector Info_Collector; 
+ Source_File_Information_Collector_For_Single_File Info_Collector; 
  Dependency_Data_Extractor ** Dep_Data_Collectors;
  Project_Src_Code_Rdr * Code_Rd;
  std::vector<Source_File_Dependency> Dependent_List[8];
@@ -115,4 +102,4 @@ protected:
  bool This_File_Exist;
 };
 
-#endif /* SOURCE_FILE_DEPENDENCY_SELECTOR_HPP */
+#endif /* SOURCE_FILE_DEPENDENCY_SELECTOR_FOR_SINGLE_FILE_HPP */
