@@ -23,10 +23,11 @@ FILE_LISTER=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Lister
 SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
 
 
-
+SRC_INF_CL_SF=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector_For_Single_File
 SRC_INF_CL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector
 SRC_COM_DT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Compiler_Data_Extractor
 SRC_DEP_SL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector
+SRC_DEP_SL_SF=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector_For_Single_File
 SRC_DER_RORD=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_ReOrderer
 HDR_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
 DEP_DAT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Extractor
@@ -55,14 +56,17 @@ VPATH = $(DIR_OPS)      $(CPP_OPS) $(CHAR_OPS) \
 		$(GIT_REC) \
 		$(GIT_MOD_LST) \
 		$(GIT_MOD_RCV) \
-		$(GIT_IGN)
+		$(GIT_IGN) \
+		$(SRC_INF_CL_SF) $(SRC_DEP_SL_SF)
 
 Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_File.cpp \
 	Source_File_Dependency_Determiner.cpp \
 	Source_File_Dependency_ReOrderer.cpp \
+	Source_File_Dependency_Selector_For_Single_File.cpp \
 	Source_File_Dependency_Selector.cpp \
 	Dependency_Data_Extractor.cpp \
 	Source_File_Compiler_Data_Extractor.cpp \
+	Source_File_Information_Collector_For_Single_File.cpp \
 	Source_File_Information_Collector.cpp \
 	Source_File_Processor.cpp \
 	Header_File_Processor.cpp \
@@ -89,9 +93,11 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 	Custom_System_Interface.cpp \
 	Source_File_Dependency_Determiner.hpp \
 	Source_File_Dependency_ReOrderer.hpp \
+	Source_File_Dependency_Selector_For_Single_File.hpp\
 	Source_File_Dependency_Selector.hpp\
 	Source_File_Compiler_Data_Extractor.hpp \
 	Dependency_Data_Extractor.hpp \
+	Source_File_Information_Collector_For_Single_File.hpp \
 	Source_File_Information_Collector.hpp \
 	Source_File_Processor.hpp \
 	Header_File_Processor.hpp \
@@ -153,9 +159,11 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 	  	Source_File_Dependency_Determiner_Main_File.cpp \
 	  	Source_File_Dependency_Determiner.cpp \
 	  	$(SRC_DER_RORD)\Source_File_Dependency_ReOrderer.cpp \
+		$(SRC_DEP_SL_SF)\Source_File_Dependency_Selector_For_Single_File.cpp \
 		$(SRC_DEP_SL)\Source_File_Dependency_Selector.cpp \
 		$(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.cpp \
 		$(DEP_DAT_EXT)\Dependency_Data_Extractor.cpp \
+		$(SRC_INF_CL_SF)\Source_File_Information_Collector.cpp \
 		$(SRC_INF_CL)\Source_File_Information_Collector.cpp \
 		$(SRC_PROCESSOR)\Source_File_Processor.cpp \
 		$(HDR_PROC)\Header_File_Processor.cpp \

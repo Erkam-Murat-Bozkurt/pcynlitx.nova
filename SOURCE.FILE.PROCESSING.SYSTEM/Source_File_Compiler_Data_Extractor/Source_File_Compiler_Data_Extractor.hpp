@@ -23,10 +23,13 @@
 #include <mutex>
 #include <thread>
 #include <chrono>
+#include "Source_File_Dependency_Selector_For_Single_File.hpp"
 #include "Source_File_Dependency_Selector.hpp"
-#include "Dependency_Data_Extractor.hpp"
+#include "Source_File_Information_Collector_For_Single_File.hpp"
 #include "Source_File_Information_Collector.hpp"
+#include "Dependency_Data_Extractor.hpp"
 #include "Git_Data_Processor.hpp"
+#include "Project_Src_Code_Rdr.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Files_Lister.h"
 #include "Header_File_Determiner.h"
@@ -54,6 +57,7 @@ class Source_File_Compiler_Data_Extractor
 public:
  Source_File_Compiler_Data_Extractor(char opr_sis);
  virtual ~Source_File_Compiler_Data_Extractor();
+ void Receive_Single_File_Dependency_Data(Source_File_Dependency_Selector_For_Single_File * ptr);
  void Receive_Dependency_Data(Source_File_Dependency_Selector * ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Extract_Compiler_Data();
@@ -74,6 +78,7 @@ protected:
  void Clear_String_Memory(std::string * pointer);
  void Clear_Buffer_Memory(Compiler_Data * ptr);
  void Clear_Data_Memory(std::vector<Compiler_Data> * ptr);
+ Source_File_Dependency_Selector_For_Single_File * Dep_Selector_For_Single_File_Ptr;
  Source_File_Dependency_Selector * Dep_Selector_Ptr;
  Source_File_Information_Collector * Info_Collector;
  CharOperator Char_Processor;

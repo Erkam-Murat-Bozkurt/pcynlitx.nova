@@ -88,6 +88,9 @@ void Source_File_Compiler_Data_Extractor::Clear_Data_Memory(std::vector<Compiler
 
 
 
+// THE CLASS INPUT FUNCTIONS
+
+
 void Source_File_Compiler_Data_Extractor::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
 
      this->File_Lister.Receive_Git_Data_Processor(ptr);
@@ -105,6 +108,25 @@ void Source_File_Compiler_Data_Extractor::Receive_Dependency_Data(Source_File_De
 
      this->warehouse_head_dir = this->Dep_Selector_Ptr->Get_Warehouse_Headers_Dir();
 }
+
+
+void Source_File_Compiler_Data_Extractor::Receive_Single_File_Dependency_Data(Source_File_Dependency_Selector_For_Single_File * ptr)
+{
+     this->Dep_Selector_For_Single_File_Ptr = ptr;
+
+     this->dep_data_ptr = this->Dep_Selector_For_Single_File_Ptr->Get_Dependency_List_Adress();
+
+     this->warehouse_head_dir = this->Dep_Selector_For_Single_File_Ptr->Get_Warehouse_Headers_Dir();
+}
+
+
+
+
+
+
+
+
+/**** THE CLASS MEMBER FUNTIONS PERFORMING MAIN OPERATIONS  ***************************************/
 
 
 void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){ 
@@ -221,6 +243,9 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Threa
 }
 
 
+
+/*
+
 void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path)
 { 
 
@@ -298,7 +323,7 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path
       this->compiler_data.shrink_to_fit();      
 }
 
-
+*/
 
 
 void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int start, int end){
@@ -470,6 +495,9 @@ void Source_File_Compiler_Data_Extractor::Clear_Buffer_Memory(Compiler_Data * pt
 
      this->Clear_String_Memory(&ptr->object_file_name);
 }
+
+
+
 
 void Source_File_Compiler_Data_Extractor::Clear_Vector_Memory(std::vector<std::string> * pointer)
 {

@@ -7,7 +7,9 @@
 #include <cstring>
 #include <vector>
 #include "Source_File_Compiler_Data_Extractor.hpp"
+#include "Source_File_Dependency_Selector_For_Single_File.hpp"
 #include "Source_File_Dependency_Selector.hpp"
+#include "Source_File_Information_Collector_For_Single_File.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Project_Files_Lister.h"
 #include "Git_File_List_Receiver.hpp"
@@ -81,13 +83,13 @@ int main(int argc, char ** argv){
     std::cout << "\n The source code read";
     std::cin.get();
 
-    std::string path =  "D:\\pcynlitx.build.gui.new\\wxLauncher.cpp";
+    std::string path =  "D:\\pcynlitx.build.gui\\wxLauncher.cpp";
 
 
     //  std::string path = "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
 
 
-    Source_File_Dependency_Selector Dep_Selector('w');
+    Source_File_Dependency_Selector_For_Single_File Dep_Selector('w');
 
     Dep_Selector.Receive_Source_Code_Reader(&Code_Rd);
 
@@ -113,12 +115,12 @@ int main(int argc, char ** argv){
     std::cout << "\n Git Data Processor received";
     std::cin.get();
 
-    Compiler_Data_Extractor.Receive_Dependency_Data(ptr,wr_hdr);
+    Compiler_Data_Extractor.Receive_Single_File_Dependency_Data(&Dep_Selector);
 
     std::cout << "\n Dependency Data received";
     std::cin.get();
 
-    Compiler_Data_Extractor.Extract_Compiler_Data(path);
+    Compiler_Data_Extractor.Extract_Compiler_Data();
 
     std::cout << "\n Compiler data extracted..";
     std::cin.get();

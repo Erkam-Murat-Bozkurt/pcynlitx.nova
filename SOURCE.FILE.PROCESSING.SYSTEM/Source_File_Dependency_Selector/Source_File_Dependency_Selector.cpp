@@ -255,8 +255,6 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int s
 
      mt.unlock();
 
-
-
      for(size_t i=start;i<end;i++){
      
          std::string path =this->Source_File_Data_Ptr->at(i).system_path;

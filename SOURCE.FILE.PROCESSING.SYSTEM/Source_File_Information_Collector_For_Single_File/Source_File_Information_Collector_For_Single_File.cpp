@@ -98,45 +98,8 @@ void Source_File_Information_Collector_For_Single_File::Extract_Dependency_Data(
          Buffer_Dat.source_file_name = this->Dependent_Source_File_Names.at(i);
 
          Buffer_Dat.system_path = src_code->sys_path;
-     
-        
-         /*
-
-         Buffer_Dat.inclusion_number = 0;
-
-         Buffer_Dat.priority = 0;
-
-
-         for(size_t k=0;k<line_num;k++){
-
-             std::string string = src_code->FileContent.at(k);
-
-             bool is_include_decleration = this->Include_Decleration_Test(string);
-
-             if(is_include_decleration)
-             {
-                std::string header_name;
-
-                this->Extract_Header_File_Name_From_Decleration(&header_name,string);
- 
-                Buffer_Dat.included_headers.push_back(header_name);
-
-                std::string header_path_address;
-
-                this->Determine_Header_Repo_Warehouse_Path(&header_path_address,header_name,'w');
-
-                Buffer_Dat.included_headers_paths.push_back(header_path_address);
-
-                Buffer_Dat.inclusion_number++;
-
-                Buffer_Dat.priority = Buffer_Dat.inclusion_number;
-
-              }
-          }
-
-          */
-
-          this->Src_Data_Holder.push_back(Buffer_Dat);
+             
+         this->Src_Data_Holder.push_back(Buffer_Dat);
       }
 }
 

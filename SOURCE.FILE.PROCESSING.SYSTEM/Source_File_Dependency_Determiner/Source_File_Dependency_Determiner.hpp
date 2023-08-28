@@ -19,7 +19,9 @@
 #include <fcntl.h>
 #include <windows.h>
 #include "Source_File_Compiler_Data_Extractor.hpp"
+#include "Source_File_Dependency_Selector_For_Single_File.hpp"
 #include "Source_File_Dependency_Selector.hpp"
+#include "Source_File_Information_Collector_For_Single_File.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Source_File_Processor.hpp"
 #include "Header_File_Processor.hpp"
@@ -61,6 +63,7 @@ protected:
  Descriptor_File_Reader * Des_Reader;
  Project_Src_Code_Rdr Code_Rd;
  Source_File_Dependency_Selector DepSelector;
+ Source_File_Dependency_Selector_For_Single_File DepSelector_For_Single_File;
  Source_File_Compiler_Data_Extractor Com_Data_Extractor;
  Source_File_Processor Src_Processor;
  std::string Warehouse_Headers_Dir;
