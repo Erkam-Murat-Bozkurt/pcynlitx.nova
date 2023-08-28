@@ -74,11 +74,10 @@ int main(int argc, char ** argv){
 
     */
 
-    Dep_Determiner.Collect_Dependency_Information();
+    //Dep_Determiner.Collect_Dependency_Information(path);
 
-    //Dep_Determiner.Print_Compiler_Orders();
+     Dep_Determiner.Collect_Dependency_Information();
 
-    //Dep_Determiner.Clear_Dynamic_Memory();
 
 
      std::vector<Compiler_Data> * ptr = Dep_Determiner.Get_Compiler_Data_Address();

@@ -47,28 +47,14 @@ int main(int argc, char ** argv){
     Data_Processor.Write_Git_Repo_List_File();
 
     std::cout << "\n Git repo file writed";
-    std::cin.get();
 
     Data_Processor.Determine_Git_Repo_Info();
 
     std::cout << "\n Git repo info collected";
-    std::cin.get();
 
 
     size_t index_size = Data_Processor.Get_Git_File_Index_Size();
 
-
-    /*
-
-    Project_Files_Lister Dir_Lister('w');
-
-    Dir_Lister.Receive_Git_Data_Processor(&Data_Processor);
-
-    Dir_Lister.Determine_Git_Repo_Info();
-
-    int src_file_num = Dir_Lister.Get_Source_File_Number();
-
-    */
 
 
     Project_Src_Code_Rdr Code_Rd('w');
@@ -81,7 +67,6 @@ int main(int argc, char ** argv){
 
 
     std::cout << "\n The source code read";
-    std::cin.get();
 
     std::string path =  "D:\\pcynlitx.build.gui\\wxLauncher.cpp";
 
@@ -98,7 +83,6 @@ int main(int argc, char ** argv){
     Dep_Selector.Determine_Source_File_Dependencies(path);
 
     std::cout << "\n Project Dependency Data Collected..\n\n";
-    std::cin.get();
 
 
     std::vector<std::vector<Source_File_Dependency>> * ptr = Dep_Selector.Get_Dependency_List_Adress();
@@ -113,17 +97,14 @@ int main(int argc, char ** argv){
     Compiler_Data_Extractor.Receive_Git_Data_Processor(&Data_Processor);
 
     std::cout << "\n Git Data Processor received";
-    std::cin.get();
 
     Compiler_Data_Extractor.Receive_Single_File_Dependency_Data(&Dep_Selector);
 
     std::cout << "\n Dependency Data received";
-    std::cin.get();
 
     Compiler_Data_Extractor.Extract_Compiler_Data();
 
     std::cout << "\n Compiler data extracted..";
-    std::cin.get();
 
 
     std::vector<Compiler_Data> * data_ptr = Compiler_Data_Extractor.Get_Compiler_Data_Address();

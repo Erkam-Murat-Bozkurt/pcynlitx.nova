@@ -26,7 +26,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_file_path, char opr_sis) :
 
-   DepSelector(opr_sis), Com_Data_Extractor(opr_sis), Code_Rd(opr_sis)
+    Code_Rd(opr_sis), Com_Data_Extractor(opr_sis), DepSelector(opr_sis), DepSelector_For_Single_File(opr_sis)
 {
 
 }
@@ -106,14 +106,15 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
      this->Warehouse_Path = this->DepSelector.Get_Warehouse_Path();
 
 
-     this->Com_Data_Extractor.Receive_Dependency_Data(&this->DepSelector_For_Single_File);
-
-     this->Com_Data_Extractor.Extract_Compiler_Data(path);
+     this->Com_Data_Extractor.Receive_Single_File_Dependency_Data(&this->DepSelector_For_Single_File);
 
      this->Com_Data_Extractor.Extract_Compiler_Data();
 
 
      this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
+
+
+      this->Order_Priorities();
 
 
      this->Clear_Dynamic_Memory();

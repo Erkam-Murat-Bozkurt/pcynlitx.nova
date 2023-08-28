@@ -126,14 +126,29 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 
 	g++ -std=c++17 -static-libgcc -static-libstdc++ -ggdb \
 		-o Source_File_Dependency_Determiner.exe \
-	 	-I$(DIR_OPS)        -I$(CPP_OPS)     -I$(CHAR_OPS) \
-	 	-I$(SRC_INF_CL)     -I$(STRING_OPS)  -I$(HEAD_DET) \
-	 	-I$(FILE_LISTER)    -I$(SOURCE_DETR) -I$(GIT_LIST) \
-	 	-I$(DIR_ENUM)       -I$(INT_TO_CHAR) \
-	 	-I$(DES_DATA_COL)   -I$(DES_READER)  -I$(SRC_DER_RORD) \
-	 	-I$(FILE_DAT_COL)   -I$(HDR_PROC)    -I$(SRC_READER) \
-	 	-I$(SRC_DT_COL)     -I$(SYNT_COL) 	 -I$(SRC_PROCESSOR) \
-	 	-I$(SRC_DEP_SL)     -I$(SRC_COM_DT_EXT) -I$(DEP_DAT_EXT)\
+	 	-I$(DIR_OPS) \
+		-I$(CPP_OPS) \
+		-I$(CHAR_OPS) \
+	 	-I$(SRC_INF_CL) \
+		-I$(STRING_OPS) \
+		-I$(HEAD_DET) \
+	 	-I$(FILE_LISTER) \
+		-I$(SOURCE_DETR) \
+		-I$(GIT_LIST) \
+	 	-I$(DIR_ENUM) \
+		-I$(INT_TO_CHAR) \
+	 	-I$(DES_DATA_COL) \
+		-I$(DES_READER) \
+		-I$(SRC_DER_RORD) \
+	 	-I$(FILE_DAT_COL) \
+		-I$(HDR_PROC) \
+		-I$(SRC_READER) \
+	 	-I$(SRC_DT_COL) \
+		-I$(SYNT_COL) \
+		-I$(SRC_PROCESSOR) \
+	 	-I$(SRC_DEP_SL) \
+		-I$(SRC_COM_DT_EXT) \
+		-I$(DEP_DAT_EXT) \
 	    -I$(GIT_PROC) \
 		-I$(GIT_LIST) \
 		-I$(GIT_REC) \
@@ -141,14 +156,31 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 		-I$(GIT_MOD_RCV) \
 		-I$(GIT_IGN) \
 		-I$(SYS_INT) \
-	 	-L$(SRC_INF_CL)     -L$(DIR_ENUM)    -L$(DIR_OPS)  \
-	 	-L$(CHAR_OPS)       -L$(INT_TO_CHAR) -L$(DES_DATA_COL) \
-	 	-L$(DES_READER)     -L$(STRING_OPS)  -L$(CPP_OPS) \
-	 	-L$(HEAD_DET)       -L$(FILE_LISTER) -L$(FILE_DAT_COL) \
-	 	-L$(SOURCE_DETR)    -L$(GIT_LIST)    -L$(SRC_DER_RORD)  \
-	 	-L$(SRC_DT_COL)     -L$(SYNT_COL)   \
-	 	-L$(SRC_COM_DT_EXT) -L$(SRC_DEP_SL) -L$(SRC_PROCESSOR) \
-	 	-L$(HDR_PROC)       -L$(SRC_READER) -L$(DEP_DAT_EXT)\
+		-I$(SRC_INF_CL_SF) \
+		-I$(SRC_DEP_SL_SF) \
+	 	-L$(SRC_INF_CL) \
+		-L$(DIR_ENUM) \
+		-L$(DIR_OPS)  \
+	 	-L$(CHAR_OPS) \
+		-L$(INT_TO_CHAR) \
+		-L$(DES_DATA_COL) \
+	 	-L$(DES_READER) \
+		-L$(STRING_OPS) \
+		-L$(CPP_OPS) \
+	 	-L$(HEAD_DET) \
+	    -L$(FILE_LISTER) \
+		-L$(FILE_DAT_COL) \
+	 	-L$(SOURCE_DETR) \
+		-L$(GIT_LIST) \
+		-L$(SRC_DER_RORD) \
+	 	-L$(SRC_DT_COL) \
+		-L$(SYNT_COL) \
+	 	-L$(SRC_COM_DT_EXT) \
+		-L$(SRC_DEP_SL) \
+		-L$(SRC_PROCESSOR) \
+	 	-L$(HDR_PROC) \
+		-L$(SRC_READER) \
+		-L$(DEP_DAT_EXT)\
 		-L$(GIT_PROC) \
 		-L$(GIT_LIST) \
 		-L$(GIT_REC) \
@@ -156,6 +188,8 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 		-L$(GIT_MOD_RCV) \
 		-L$(GIT_IGN) \
 		-L$(SYS_INT) \
+		-L$(SRC_INF_CL_SF) \
+		-L$(SRC_DEP_SL_SF) \
 	  	Source_File_Dependency_Determiner_Main_File.cpp \
 	  	Source_File_Dependency_Determiner.cpp \
 	  	$(SRC_DER_RORD)\Source_File_Dependency_ReOrderer.cpp \
@@ -163,7 +197,7 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 		$(SRC_DEP_SL)\Source_File_Dependency_Selector.cpp \
 		$(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.cpp \
 		$(DEP_DAT_EXT)\Dependency_Data_Extractor.cpp \
-		$(SRC_INF_CL_SF)\Source_File_Information_Collector.cpp \
+		$(SRC_INF_CL_SF)\Source_File_Information_Collector_For_Single_File.cpp \
 		$(SRC_INF_CL)\Source_File_Information_Collector.cpp \
 		$(SRC_PROCESSOR)\Source_File_Processor.cpp \
 		$(HDR_PROC)\Header_File_Processor.cpp \
@@ -190,11 +224,13 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 		$(INT_TO_CHAR)\IntToCharTranslater.cpp \
 		$(SYS_INT)\Custom_System_Interface.cpp \
 		-include Source_File_Dependency_Determiner.hpp \
-		-include $(SRC_DER_RORD)\Source_File_Dependency_ReOrderer.hpp \
-		-include $(SRC_DEP_SL)\Source_File_Dependency_Selector.hpp \
 		-include $(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.hpp \
-		-include $(DEP_DAT_EXT)\Dependency_Data_Extractor.hpp \
+		-include $(SRC_DER_RORD)\Source_File_Dependency_ReOrderer.hpp \
+		-include $(SRC_DEP_SL_SF)\Source_File_Dependency_Selector_For_Single_File.hpp \
+		-include $(SRC_DEP_SL)\Source_File_Dependency_Selector.hpp \
+		-include $(SRC_INF_CL_SF)\Source_File_Information_Collector_For_Single_File.hpp \
 		-include $(SRC_INF_CL)\Source_File_Information_Collector.hpp \
+		-include $(DEP_DAT_EXT)\Dependency_Data_Extractor.hpp \
 		-include $(SRC_PROCESSOR)\Source_File_Processor.hpp \
 		-include $(HDR_PROC)\Header_File_Processor.hpp \
 		-include $(SRC_READER)\Project_Src_Code_Rdr.hpp \
