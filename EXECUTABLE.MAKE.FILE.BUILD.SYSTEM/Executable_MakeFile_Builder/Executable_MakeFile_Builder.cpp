@@ -54,6 +54,8 @@ void Executable_MakeFile_Builder::Clear_Dynamic_Memory(){
      this->Dep_Determiner.Clear_Dynamic_Memory();
 
      this->ComConstructor.Clear_Dynamic_Memory();
+
+     this->Script_Builder.Clear_Dynamic_Memory();
 }
 
 
@@ -64,7 +66,6 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
      this->Dep_Determiner.Receive_Git_Data_Processor(&this->Git_Data_Proc);
 
      this->Dep_Determiner.Collect_Dependency_Information(mn_src_path);
-
 
      this->Com_Data_ptr = this->Dep_Determiner.Get_Compiler_Data_Address();
 
@@ -78,15 +79,16 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
      this->ComConstructor.Construct_Compiler_Commands(mn_src_path);
 
      
+     this->Script_Builder.Receive_File_System_Path(mn_src_path);
+
      this->Script_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
      this->Script_Builder.Receive_Git_Data_Processor(&this->Git_Data_Proc);
 
      this->Script_Builder.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
 
-     std::vector<Compiler_Data> * Com_Dat = this->Dep_Determiner.Get_Compiler_Data_Address();
+     this->Script_Builder.Build_Compiler_Script_For_Executable_File(mn_src_path);
 
-     this->Script_Builder.Build_Compiler_Script_For_Executable_File();
 
      // Receiving the compiler data from the member objects
 
@@ -106,6 +108,8 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
      this->Compiler_System_Command = this->ComConstructor.Get_Compiler_System_Command();
 
      this->Write_MakeFile(Exe_Name);
+
+
 }
 
 

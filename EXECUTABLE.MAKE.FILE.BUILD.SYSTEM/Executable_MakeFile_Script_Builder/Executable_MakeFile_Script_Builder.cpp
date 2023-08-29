@@ -45,16 +45,38 @@ void Executable_MakeFile_Script_Builder::Receive_Descriptor_File_Reader(Descript
      this->Src_Data_Processor.Receive_Descriptor_File_Reader(ptr);
 
      this->Repo_Root_Dir = this->Des_Reader->Get_Repo_Directory_Location();
-
 }
 
-void Executable_MakeFile_Script_Builder::Build_Compiler_Script_For_Executable_File(){
+void Executable_MakeFile_Script_Builder::Receive_File_System_Path(char * file_sys_path){
+
+     size_t path_size = strlen(file_sys_path);
+
+     for(size_t i=0;i<path_size;i++){
+
+         this->file_sys_path.push_back(file_sys_path[i]);
+     }
+
+     this->file_sys_path.shrink_to_fit();
+}
+
+
+void Executable_MakeFile_Script_Builder::Build_Compiler_Script_For_Executable_File(char * src_name){
 
      this->Src_Data_Processor.Process_Script_Data();
      
      this->Data_Pointer = this->Src_Data_Processor.Get_Script_Data_Address();
 
-     std::string src_file_name = this->Data_Pointer->at(0).src_name_without_ext;
+     std::string src_file_name;
+
+     size_t name_size = strlen(src_name);
+
+     for(size_t i=0;i<name_size;i++){
+
+          src_file_name.push_back(src_name[i]);
+     }
+
+     src_file_name.shrink_to_fit();
+     
 
      this->source_file_num = this->Src_Data_Processor.Get_Source_File_Number();
 
@@ -62,26 +84,14 @@ void Executable_MakeFile_Script_Builder::Build_Compiler_Script_For_Executable_Fi
 
      this->Determine_Object_Files_Location('w');
 
-     this->Determine_Script_Path(src_file_name);
+     this->Construct_Script_Path();
 
      this->Write_The_Executable_Make_File_Update_Script(src_file_name);
 }
 
 
-void Executable_MakeFile_Script_Builder::Determine_Script_Path(std::string src_file_name){
-
-     std::string script_path_add = "_Build_Script.ps1";
-
-     std::string script_file_name = src_file_name + script_path_add;
-
-     this->Memory_Delete_Condition = false;
-
-     this->Construct_Script_Path(this->script_path,script_file_name);
-}
-
 
 void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_Script(std::string src_file_name){
-
 
      this->FileManager.SetFilePath(this->script_path);
 
@@ -448,8 +458,26 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
 void Executable_MakeFile_Script_Builder::Clear_Dynamic_Memory(){
 
-     this->Src_Data_Processor.Clear_Dynamic_Memory();             
+     this->Src_Data_Processor.Clear_Dynamic_Memory(); 
+
+     this->Clear_String_Memory(&this->script_path);
+
+     this->Clear_String_Memory(&this->file_sys_path);
+
+     this->Clear_String_Memory(&this->file_sys_dir);
+
 }
+
+void Executable_MakeFile_Script_Builder::Clear_String_Memory(std::string * pointer)
+{
+     if(!pointer->empty()){
+
+         pointer->clear();
+
+         pointer->shrink_to_fit();
+    }
+}
+
 
 
 
@@ -540,55 +568,154 @@ void Executable_MakeFile_Script_Builder::Determine_Compiler_Output_Path(std::str
 
 
 
-void Executable_MakeFile_Script_Builder::Construct_Script_Path(std::string & path,
+void Executable_MakeFile_Script_Builder::Construct_Script_Path(){
 
-     std::string src_file_name){
+     std::string file_sys_dir;
 
-     std::string Repo_Root_Dir = this->Des_Reader->Get_Repo_Directory_Location();
+     std::string name_without_ext;
 
-     std::string git_record_dir = this->Data_Pointer->at(0).source_file_git_record_dir;
-     
-     int index = 0;
+     this->Determine_Src_File_Sys_Dir(file_sys_dir);
 
-     size_t repo_root_dir_size_ = Repo_Root_Dir.length();
+     this->Determine_File_Name(name_without_ext);
 
-     for(size_t i=0;i<repo_root_dir_size_;i++){
+     for(size_t i=0;i<file_sys_dir.size();i++){
 
-         path.push_back(Repo_Root_Dir[i]);
+         this->script_path.push_back(file_sys_dir[i]);
      }
 
-     if(Repo_Root_Dir.back() != '\\'){
 
-        path.push_back('\\');        
-     }
+     if(this->opr_sis == 'w'){
 
-     
-     size_t git_record_dir_size = git_record_dir.length();
+        if(this->script_path.back()!='\\'){
 
-     if(git_record_dir_size>0){
-
-        for(size_t i=0;i<git_record_dir_size;i++){
-
-            path.push_back(git_record_dir[i]);        
-        }     
-
-
-        if(git_record_dir.back() != '\\'){
-
-           path.push_back('\\');        
+           this->script_path.push_back('\\');
         }
      }
 
+     if(this->opr_sis == 'l'){
+
+        if(this->script_path.back()!='/'){
+
+           this->script_path.push_back('/');
+        }
+     }
+
+     
+     for(size_t i=0;i<name_without_ext.size();i++){
+
+         this->script_path.push_back(name_without_ext[i]);
+     }
+
+     std::string script_path_add = "_build_script.ps1";
 
 
-     size_t string_size = src_file_name.length();
+     size_t string_size = script_path_add.length();
 
      for(size_t i=0;i<string_size;i++){
 
-        path.push_back(src_file_name[i]);        
+        this->script_path.push_back(script_path_add[i]);        
      }     
+
+     this->script_path.shrink_to_fit();
 }
 
+
+
+void Executable_MakeFile_Script_Builder::Determine_Src_File_Sys_Dir(std::string & file_sys_dir){
+
+     size_t path_size = this->file_sys_path.length();
+
+     size_t dir_size = path_size;
+
+     for(size_t i=path_size;i>0;i--){
+
+        if(this->opr_sis == 'w'){
+
+           if(this->file_sys_path[i] == '\\'){
+
+              break;
+           }
+           else{
+
+              dir_size--;
+           }
+        }
+
+        if(this->opr_sis == 'l'){
+
+           if(this->file_sys_path[i] == '/'){
+
+              break;
+           }
+           else{
+
+              dir_size--;
+           }
+        }
+     }
+
+     for(size_t i=0;i<dir_size;i++){
+
+         file_sys_dir.push_back(this->file_sys_path[i]);        
+     }
+}
+
+
+void Executable_MakeFile_Script_Builder::Determine_File_Name(std::string & FileName_Without_Ext){
+
+     size_t path_size = this->file_sys_path.length();
+
+     size_t start_point = path_size, end_point;
+
+     for(size_t i=path_size;i>0;i--){
+
+         if(this->file_sys_path[i] == '.'){
+
+            end_point = i;
+
+            break;
+         }
+     }
+
+     for(size_t i=path_size;i>0;i--){
+
+        if(this->opr_sis == 'w'){
+
+           if(this->file_sys_path[i] == '\\'){
+
+              start_point++;
+
+              break;
+           }
+           else{
+
+              start_point--;
+           }
+        }
+
+        if(this->opr_sis == 'l'){
+
+           if(this->file_sys_path[i] == '/'){
+
+              start_point++;
+
+              break;
+           }
+           else{
+
+              start_point--;
+           }
+        }         
+     }
+
+    
+     for(size_t i=start_point;i<end_point;i++){
+
+         FileName_Without_Ext.push_back(this->file_sys_path[i]);
+     }
+
+     FileName_Without_Ext.shrink_to_fit();
+}
 
 
 

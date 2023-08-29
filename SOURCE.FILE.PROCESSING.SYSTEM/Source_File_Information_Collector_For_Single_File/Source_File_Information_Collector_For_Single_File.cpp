@@ -85,6 +85,14 @@ void Source_File_Information_Collector_For_Single_File::Extract_Dependency_Data(
 
      this->Determine_Related_Source_Files_From_Header_Dependencies();
 
+     FileData * root_src_code = this->Code_Rdr->Find_File_Data_From_Path(src_file_path);
+
+     Source_File_Data Base_File_Dt;
+
+     Base_File_Dt.source_file_name = root_src_code->file_name;
+     Base_File_Dt.system_path = root_src_code->sys_path;
+
+     this->Src_Data_Holder.push_back(Base_File_Dt);
 
      for(std::size_t i =0; i<this->Dependent_Source_File_Names.size(); i++){
 
@@ -101,6 +109,8 @@ void Source_File_Information_Collector_For_Single_File::Extract_Dependency_Data(
              
          this->Src_Data_Holder.push_back(Buffer_Dat);
       }
+
+      this->Src_Data_Holder.shrink_to_fit();
 }
 
 
@@ -205,46 +215,6 @@ void Source_File_Information_Collector_For_Single_File::Determine_Header_Repo_Wa
          wrd_path->push_back(file_name[i]);
      }
 }
-
-
- void Source_File_Information_Collector_For_Single_File::Determine_Header_System_Path(std::string * sys_path,std::string path)
- {
-      int index_size = this->Git_Data_Proc->Get_Git_File_Index_Size();
-
-      for(int i=0;i<index_size;i++){
-      
-          std::string file_sys_path = this->Git_Data_Proc->Get_File_System_Path(i);
-
-          bool is_repo_hdr = this->Header_Processor.Is_Header(file_sys_path);
-
-          if(is_repo_hdr){
-          
-             this->Header_Processor.Determine_Header_File_Name_With_Extention(file_sys_path);       
-
-             std::string head_name = this->Header_Processor.Get_Header_File_Name_With_Ext();
-
-             this->Header_Processor.Determine_Header_File_Name_With_Extention(path);
-
-             std::string ref_hdr_name = this->Header_Processor.Get_Header_File_Name_With_Ext();
-
-
-             if(this->CompareString(head_name,ref_hdr_name)){
-             
-                size_t file_size = file_sys_path.size();
-
-                for(size_t k=0;k<file_size;k++){
-                
-                    sys_path->push_back(file_sys_path[k]);
-                }
-
-                sys_path->shrink_to_fit();
-
-                break;               
-             }
-
-          }
-      }      
- }
 
 
 void Source_File_Information_Collector_For_Single_File::Extract_Header_File_Name_From_Decleration(std::string * header_name,
@@ -556,10 +526,6 @@ void Source_File_Information_Collector_For_Single_File::Clear_Headers_Data()
              ith<this->Src_Data_Holder.end();ith++)
          {
 
-             //this->Clear_Vector_Memory(&ith->included_headers);
-
-             //this->Clear_Vector_Memory(&ith->included_headers_paths);
-
              this->Clear_String_Memory(&ith->source_file_name);
 
              this->Clear_String_Memory(&ith->system_path);
@@ -576,10 +542,6 @@ void Source_File_Information_Collector_For_Single_File::Clear_Headers_Data()
 
 void Source_File_Information_Collector_For_Single_File::Clear_Buffer_Memory()
 {
-     //this->Clear_Vector_Memory(&this->buffer.included_headers);
-
-     //this->Clear_Vector_Memory(&this->buffer.included_headers_paths);
-
      this->Clear_String_Memory(&this->buffer.source_file_name);
 
      this->Clear_String_Memory(&this->buffer.system_path);

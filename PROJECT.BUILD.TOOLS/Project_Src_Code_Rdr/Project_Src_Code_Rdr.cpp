@@ -415,39 +415,6 @@ void Project_Src_Code_Rdr::Get_File_Content_From_Path(std::vector<std::string> &
 }
 
 
-bool Project_Src_Code_Rdr::CompareString(std::string firstString, std::string secondString){
-
-     int firstStringLength  = firstString.length();
-
-     int secondStringLength = secondString.length();
-
-     this->isStringsEqual = false;
-
-     if(firstStringLength==secondStringLength){
-
-        for(int i=0;i<firstStringLength;i++){
-
-            if(firstString[i]!=secondString[i]){
-
-               this->isStringsEqual = false;
-
-               return this->isStringsEqual;
-            }
-        }
-
-        this->isStringsEqual = true;
-
-        return this->isStringsEqual;
-     }
-     else{
-
-          this->isStringsEqual = false;
-
-          return this->isStringsEqual;
-     }
-}
-
-
 size_t Project_Src_Code_Rdr::Get_Project_Files_Number(){
 
        return this->Src_Code_Dt.size();

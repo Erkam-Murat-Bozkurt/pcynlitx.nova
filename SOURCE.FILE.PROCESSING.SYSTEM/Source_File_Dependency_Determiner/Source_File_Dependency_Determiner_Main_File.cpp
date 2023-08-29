@@ -47,8 +47,10 @@ int main(int argc, char ** argv){
     size_t index_size = Data_Processor.Get_Git_File_Index_Size();
 
 
+    
 
-    char path [] = "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
+
+    char path [] ="D:\\pcynlitx.build.gui\\wxLauncher.cpp";
 
     Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
 
@@ -74,9 +76,9 @@ int main(int argc, char ** argv){
 
     */
 
-    //Dep_Determiner.Collect_Dependency_Information(path);
+    Dep_Determiner.Collect_Dependency_Information(path);
 
-     Dep_Determiner.Collect_Dependency_Information();
+     //Dep_Determiner.Collect_Dependency_Information();
 
 
 

@@ -267,44 +267,6 @@ bool  Source_File_Information_Collector::Is_Header_File(std::string hpath){
 
 
 
-bool Source_File_Information_Collector::CompareString(std::string firstString, 
-
-     std::string secondString){
-
-     size_t firstStringLength  = firstString.length();
-
-     size_t secondStringLength = secondString.length();
-
-     if(firstStringLength==secondStringLength){
-
-        for(size_t i=0;i<firstStringLength;i++){
-
-            if(firstString[i]!=secondString[i]){
-
-               this->isStringsEqual = false;
-
-               return this->isStringsEqual;
-            }
-        }
-
-        this->isStringsEqual = true;
-
-        return this->isStringsEqual;
-     }
-     else{
-
-            this->isStringsEqual = false;
-
-            return this->isStringsEqual;
-     }
-}
-
-
-
-
-
-
-
 
 /* MEMORY MANAGEMENT FUNCTIONS ******************************************************/
 
