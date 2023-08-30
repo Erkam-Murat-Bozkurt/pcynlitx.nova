@@ -18,6 +18,11 @@
 #include <string>
 #include <fcntl.h>
 #include <windows.h>
+#include <map>
+#include <unordered_map>
+#include <iterator>
+#include <utility>        // std::pair, std::make_pair
+#include <stdexcept>      // std::out_of_range
 #include "Source_File_Compiler_Data_Extractor.hpp"
 #include "Source_File_Dependency_Selector_For_Single_File.hpp"
 #include "Source_File_Dependency_Selector.hpp"
@@ -35,6 +40,12 @@
 #include "DirectoryOperations.h"
 #include "IntToCharTranslater.h"
 
+
+struct Dependency_Table
+{
+   std::string src_file_name_witout_ext;
+   int inclusion_number; // The number of included files
+};
 
 class Source_File_Dependency_Determiner
 {
@@ -58,7 +69,12 @@ public:
  Compiler_Data Get_Compiler_Data(int i);
  std::vector<Compiler_Data> * Get_Compiler_Data_Address();
 protected:
- void Order_Priorities(); 
+ void Order_Priorities();
+ void Re_Arrange_Priorities(); 
+ void Construct_Dependency_Map();
+ bool Check_Dependecy_Search_Status(std::string name);
+ void Extract_File_Name_Without_Extention(std::string & name, std::string name_with_ext);
+ int Find_File_Priority(std::string name);
  Git_Data_Processor * Git_Data_Proc;
  Descriptor_File_Reader * Des_Reader;
  Project_Src_Code_Rdr Code_Rd;
@@ -70,6 +86,7 @@ protected:
  std::string Warehouse_Objetcs_Dir;
  std::string Warehouse_Path;
  std::vector<Compiler_Data> * Compiler_Data_Ptr;
+ std::unordered_map<std::string, int> Dependency_Map;
  size_t  data_size;
  bool Memory_Delete_Condition;
 };

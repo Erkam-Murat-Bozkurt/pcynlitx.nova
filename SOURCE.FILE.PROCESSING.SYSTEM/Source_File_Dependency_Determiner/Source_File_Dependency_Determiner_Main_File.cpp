@@ -93,7 +93,9 @@ int main(int argc, char ** argv){
         std::cout << "\n source file path:" << ptr->at(i).source_file_path;
 
         size_t header_number = ptr->at(i).dependent_headers.size();
-        
+
+        std::cout << "\n priority:" << ptr->at(i).priority;
+
         std::cout << "\n header_number:" << header_number;        
 
         std::cout << "\n dependent headers:";

@@ -55,7 +55,9 @@ void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
 
      this->DepSelector.Clear_Dynamic_Memory();  
 
-     this->DepSelector_For_Single_File.Clear_Dynamic_Memory();   
+     this->DepSelector_For_Single_File.Clear_Dynamic_Memory();
+
+     this->Dependency_Map.clear();   
 }
 
 
@@ -114,6 +116,11 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
      this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
 
+      this->Construct_Dependency_Map();
+
+      this->Re_Arrange_Priorities();
+
+
       this->Order_Priorities();
 
 
@@ -141,9 +148,113 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
       this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
 
+      this->Construct_Dependency_Map();
+
+      this->Re_Arrange_Priorities();
+
       this->Order_Priorities();
 
       this->Clear_Dynamic_Memory();
+}
+
+
+void Source_File_Dependency_Determiner::Construct_Dependency_Map(){
+
+     for(int i=0;i< this->Compiler_Data_Ptr->size();i++){
+
+         std::string name = this->Compiler_Data_Ptr->at(i).source_file_name_witout_ext;
+         int dep_counter  = this->Compiler_Data_Ptr->at(i).priority;
+
+         this->Dependency_Map.insert(std::make_pair(name,dep_counter));
+     }
+}
+
+
+
+void Source_File_Dependency_Determiner::Re_Arrange_Priorities(){
+
+     for(size_t i=0;i<this->Compiler_Data_Ptr->size();i++){
+
+        for(size_t k=0;k<this->Compiler_Data_Ptr->at(i).dependent_headers.size();k++)
+        {
+            std::string file_name_with_ext;
+
+            std::string header_name = this->Compiler_Data_Ptr->at(i).dependent_headers.at(k);
+
+            this->Extract_File_Name_Without_Extention(file_name_with_ext,header_name);
+
+            if(this->Check_Dependecy_Search_Status(file_name_with_ext)){
+
+               int file_priority = this->Find_File_Priority(file_name_with_ext);
+
+               int current_file_priority = this->Compiler_Data_Ptr->at(i).priority;
+
+               if(file_priority>current_file_priority){
+
+                  this->Compiler_Data_Ptr->at(i).priority = file_priority+1;
+               }
+            }        
+        }     
+     }
+}
+
+
+void Source_File_Dependency_Determiner::Extract_File_Name_Without_Extention(std::string & name, std::string name_with_ext){
+
+     size_t name_size = name_with_ext.size();
+    
+     size_t end_point = 0;
+
+     for(size_t i=0;i<name_size;i++){
+
+         if(name_with_ext[i]== '.'){
+
+            end_point = i;
+         }
+     }
+
+     for(size_t i=0;i<end_point;i++){
+
+         name.push_back(name_with_ext[i]);
+     }
+
+     name.shrink_to_fit();
+
+}
+
+bool Source_File_Dependency_Determiner::Check_Dependecy_Search_Status(std::string name){
+
+     bool is_dependency_exist = false;
+
+     if(this->Dependency_Map.find(name)!=this->Dependency_Map.end()){
+
+        is_dependency_exist = true;
+     }
+
+     return is_dependency_exist;
+}
+
+
+
+int Source_File_Dependency_Determiner::Find_File_Priority(std::string name){
+
+    try {        
+
+         return  this->Dependency_Map.at(name);
+    }
+    catch (const std::out_of_range & oor) {
+        
+         std::cerr << "\n Out of Range error: " << oor.what() << '\n';
+
+         std::cout << "\n Inside Source_File_Dependency_Determiner instance,";
+
+         std::cout << "\n Inside Find_File_Priority,";
+
+
+         std::cout << "\n the file priority information for" << name << " can not find!.\n";
+
+         exit(EXIT_FAILURE);
+    }     
 }
 
 
