@@ -71,13 +71,13 @@ void Source_File_Compiler_Data_Extractor::Clear_Data_Memory(std::vector<Compiler
 
             this->Clear_Vector_Memory(&it->dependent_headers_paths);
 
-            this->Clear_Vector_Memory(&it->dependent_objs);
-
             this->Clear_String_Memory(&it->source_file_path);
 
             this->Clear_String_Memory(&it->source_file_name);
 
             this->Clear_String_Memory(&it->object_file_name);
+
+            this->Clear_String_Memory(&it->source_file_name_witout_ext);
         }
       }
 
@@ -185,6 +185,8 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){
 }
 
 
+
+
 void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Thread(){ 
      
      std::size_t dt_size = this->dep_data_ptr->size();
@@ -243,89 +245,6 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Threa
 }
 
 
-
-/*
-
-void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(std::string path)
-{ 
-
-     this->Clear_Dynamic_Memory();
-
-     // Compiler data extraction for a particular source file
-
-     std::vector<Source_File_Dependency> * src_ptr = &this->dep_data_ptr->at(0);
-
-     size_t data_size = src_ptr->size();
-
-     Compiler_Data buffer;
-
-
-     if(data_size>0){
-
-        //Compiler_Data buffer is definition of the member variable;              
-
-        buffer.source_file_name = src_ptr->at(0).source_file_name;
-
-        buffer.source_file_path = src_ptr->at(0).source_file_path;
-
-        this->Extract_Obj_File_Name_From_File_Name(&buffer.object_file_name,
-        
-                                                    buffer.source_file_name);        
-
-        buffer.priority = data_size;
-         
-
-        for(size_t k=0;k<data_size;k++){
-            
-            std::string hdr_name = src_ptr->at(k).Header_Name;
-
-            std::string hdr_path = src_ptr->at(k).repo_warehouse_path;
-
-            std::string hdr_dir =  src_ptr->at(k).dir;            
-                            
-
-            bool is_indep_hdr = false;
-
-            this->is_this_independent_header(hdr_name,is_indep_hdr);
-
-
-            if(!is_indep_hdr){
-
-                std::string obj_name;
-
-                 this->Extract_Obj_File_Name_From_File_Name(&obj_name,hdr_name);
-
-                 buffer.dependent_objs.push_back(obj_name);
-            }
-  
-            buffer.dependent_headers.push_back(hdr_name);
-
-            buffer.dependent_headers_paths.push_back(hdr_path);
-
-
-            buffer.dependent_headers_dir.push_back(hdr_dir);
-
-         }
-
-
-         buffer.dependent_headers.shrink_to_fit();
-
-         buffer.dependent_headers_paths.shrink_to_fit();
-
-         buffer.dependent_objs.shrink_to_fit();
-
-         this->compiler_data.push_back(buffer);
-
-         this->Clear_Buffer_Memory(&buffer);
-      }
-
-      
-      this->compiler_data.shrink_to_fit();      
-}
-
-*/
-
-
 void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int start, int end){
     
 
@@ -354,12 +273,16 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
             
                 buffer.source_file_name);
 
+            this->Extract_Src_Name_Without_Extention(&buffer.source_file_name_witout_ext,
+            
+                buffer.source_file_name);
+
 
             for(size_t k=0;k<data_size;k++){
             
                 std::string hdr_name = src_ptr->at(k).Header_Name;
 
-                std::string hdr_path = src_ptr->at(k).repo_warehouse_path;
+                std::string hdr_path = src_ptr->at(k).header_sys_path;
 
                 std::string hdr_dir =  src_ptr->at(k).dir;            
 
@@ -413,6 +336,27 @@ void Source_File_Compiler_Data_Extractor::Extract_Obj_File_Name_From_File_Name(s
      object_name->shrink_to_fit();
 }
 
+
+void Source_File_Compiler_Data_Extractor::Extract_Src_Name_Without_Extention(std::string * src_name_without_ext,
+
+     std::string file_name){
+
+     size_t name_size = file_name.length();
+
+     for(size_t i=0;i<name_size;i++){
+
+         if(file_name[i] == '.'){
+
+            break;
+         }
+         else{
+
+               src_name_without_ext->push_back(file_name[i]);
+         }
+     }
+
+     src_name_without_ext->shrink_to_fit();
+}
 
 
 void Source_File_Compiler_Data_Extractor::is_this_independent_header(std::string header_name, 
@@ -494,6 +438,8 @@ void Source_File_Compiler_Data_Extractor::Clear_Buffer_Memory(Compiler_Data * pt
      this->Clear_String_Memory(&ptr->source_file_name);
 
      this->Clear_String_Memory(&ptr->object_file_name);
+
+     this->Clear_String_Memory(&ptr->source_file_name_witout_ext);
 }
 
 

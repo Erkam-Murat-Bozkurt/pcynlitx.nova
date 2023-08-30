@@ -143,6 +143,8 @@ void print_compiler_data(std::vector<Compiler_Data> * data_ptr){
          std::cout << "\n source file path     :" << temp.source_file_path;
          std::cout << "\n source file name     :" << temp.source_file_name;
          std::cout << "\n object_file_name     :" << temp.object_file_name;
+         std::cout << "\n source name wext     :" << temp.source_file_name_witout_ext;
+
 
          std::cout << "\n";
 
@@ -152,14 +154,6 @@ void print_compiler_data(std::vector<Compiler_Data> * data_ptr){
          for(int k=0;k<head_size;k++){
 
              std::cout << "\n included header:" << temp.dependent_headers[k];
-         }
-
-
-         size_t obj_size = temp.dependent_objs.size();
-
-         for(int k=0;k<obj_size;k++){
-
-             std::cout << "\n included class object:" << temp.dependent_objs[k];
          }
 
          size_t path_size = temp.dependent_headers.size();
@@ -180,7 +174,7 @@ void print_compiler_data(std::vector<Compiler_Data> * data_ptr){
 
          for(int k=0;k<dir_num;k++){
 
-             std::cout << "\n included header path:" << temp.dependent_headers_dir[k];
+             std::cout << "\n included header directory:" << temp.dependent_headers_dir[k];
          } 
 
          std::cout << "\n";

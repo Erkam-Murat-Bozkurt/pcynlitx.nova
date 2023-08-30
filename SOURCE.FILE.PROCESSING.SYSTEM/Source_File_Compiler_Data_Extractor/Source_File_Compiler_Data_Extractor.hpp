@@ -44,8 +44,8 @@ struct Compiler_Data
   std::string  source_file_path;
   std::string  source_file_name;
   std::string  object_file_name;
+  std::string  source_file_name_witout_ext;
   std::vector<std::string> dependent_headers;
-  std::vector<std::string> dependent_objs;
   std::vector<std::string> dependent_headers_paths;
   std::vector<std::string> dependent_headers_dir;
   int  priority; // dependency
@@ -61,7 +61,6 @@ public:
  void Receive_Dependency_Data(Source_File_Dependency_Selector * ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Extract_Compiler_Data();
- void Extract_Compiler_Data(std::string path);
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
  Compiler_Data Get_Compiler_Data(int num);
@@ -74,6 +73,8 @@ protected:
       std::string path);
  void Process_Compiler_Data(int start, int end, int thm);
  void Extract_Compiler_Data_For_Single_Thread();
+ void Extract_Src_Name_Without_Extention(std::string * src_name_without_ext, 
+      std::string file_name);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
  void Clear_Buffer_Memory(Compiler_Data * ptr);
