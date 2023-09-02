@@ -67,6 +67,7 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
 
      this->Dep_Determiner.Collect_Dependency_Information(mn_src_path);
 
+
      this->Com_Data_ptr = this->Dep_Determiner.Get_Compiler_Data_Address();
 
 

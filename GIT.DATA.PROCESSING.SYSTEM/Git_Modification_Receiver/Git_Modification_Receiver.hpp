@@ -16,7 +16,6 @@
 #include "Git_File_List_Receiver.hpp"
 #include "Source_File_Determiner.h"
 #include "Descriptor_File_Reader.hpp"
-#include "Header_File_Determiner.h"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
 
@@ -26,6 +25,7 @@ public:
  Git_Modification_Receiver(char opr_sis);
  virtual ~Git_Modification_Receiver();
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Git_List_Receiver(Git_File_List_Receiver * ptr);
  void Receive_Git_Modifications();
  std::vector<std::string> * Get_File_System_Path_Address();
  std::vector<std::string> * Get_Updated_Header_Files();
@@ -47,10 +47,19 @@ protected:
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Delete_Spaces_on_String(std::string & str);
  bool CheckStringLine(std::string str);
- Header_File_Determiner Header_Determiner;
+ bool Is_Header(std::string file_path);
+ bool Is_this_file_included_on_anywhere(std::string file_path);
+ void Determine_Git_Record_File_System_Path(std::string * sys_path,std::string file_path);
+ bool Include_Decleration_Test(std::string string);
+ void Extract_Header_File_Name_From_Decleration(std::string * header_name, std::string string);
+ void Determine_Header_File_Name(std::string path);
+ bool CompareString(std::string firstString, std::string secondString);
+ void Delete_Spaces_on_String(std::string * str);
+ Git_File_List_Receiver * Git_List_Receiver;
  Source_File_Determiner Src_Determiner;
  Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;
+ StringOperator StringManager;
  int  File_Line_Number;
  std::string  warehouse_location;
  std::string  warehouse_path;
@@ -63,6 +72,7 @@ protected:
  std::string Library_Files_Directory; 
  std::string modification_file_path;
  std::string Repo_Dir;
+ std::string Header_File_Name;
  bool Memory_Delete_Condition;
  bool isStringLine;
  char opr_sis;

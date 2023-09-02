@@ -82,6 +82,7 @@ void Executable_MakeFile_Script_Builder::Build_Compiler_Script_For_Executable_Fi
 
      this->warehouse_path = this->Des_Reader->Get_Warehouse_Location();
 
+
      this->Determine_Object_Files_Location('w');
 
      this->Construct_Script_Path();
@@ -190,7 +191,6 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
 
-
          this->FileManager.WriteToFile("\n");
          
          this->FileManager.WriteToFile("\n");
@@ -220,9 +220,12 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
 
+
+
          this->FileManager.WriteToFile("\\");
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
+
 
          this->FileManager.WriteToFile("\n");
 
@@ -606,7 +609,7 @@ void Executable_MakeFile_Script_Builder::Construct_Script_Path(){
          this->script_path.push_back(name_without_ext[i]);
      }
 
-     std::string script_path_add = "_build_script.ps1";
+     std::string script_path_add = "_exe_build_script.ps1";
 
 
      size_t string_size = script_path_add.length();

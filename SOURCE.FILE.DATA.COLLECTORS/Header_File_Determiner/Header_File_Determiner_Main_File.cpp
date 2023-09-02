@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cstring>
 #include "Descriptor_File_Reader.hpp"
-#include "Git_File_List_Receiver.hpp"
+#include "Git_Data_Processor.hpp"
 #include "Header_File_Determiner.h"
 
 int main(int argc, char ** argv){

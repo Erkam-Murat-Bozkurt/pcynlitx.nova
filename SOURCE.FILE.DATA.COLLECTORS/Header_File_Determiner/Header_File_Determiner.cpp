@@ -3,7 +3,7 @@
 
 Header_File_Determiner::Header_File_Determiner(char opr_sis) :
 
-     Git_Receiver(opr_sis), StringManager(opr_sis), FileManager(opr_sis)
+   StringManager(opr_sis), FileManager(opr_sis)
 {
 
     this->include_decleration_cond = false;
@@ -23,10 +23,7 @@ Header_File_Determiner::~Header_File_Determiner(){
 
 void Header_File_Determiner::Clear_Object_Memory(){
 
-     this->Git_Receiver.Clear_Dynamic_Memory();
-
      this->Clear_String_Memory(&this->Repo_Dir);
-
 
      this->Clear_Dynamic_Memory();
 }
@@ -43,15 +40,13 @@ void Header_File_Determiner::Clear_Dynamic_Memory(){
 }
 
 
-void Header_File_Determiner::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void Header_File_Determiner::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
 
-     this->Git_Receiver.Receive_Descriptor_File_Reader(ptr);
+     this->Git_Data_Proc = ptr;
 
-     this->Git_Receiver.Determine_Git_Repo_Info();
+     this->git_record_size = this->Git_Data_Proc->Get_Git_File_Index_Size();
 
-     this->git_record_size = this->Git_Receiver.Get_Git_File_Index_Size();
-
-     this->Repo_Dir  = this->Git_Receiver.Get_Git_Repo_Directory();
+     this->Repo_Dir  = this->Git_Data_Proc->Get_Git_Repo_Directory();
 }
 
 
@@ -61,7 +56,7 @@ bool Header_File_Determiner::Is_this_file_included_on_anywhere(std::string file_
 
      for(int i=0;i<this->git_record_size-1;i++){
 
-         std::string git_record_path = this->Git_Receiver.Get_Git_File_Index(i);
+         std::string git_record_path = this->Git_Data_Proc->Get_Git_File_Index(i);
 
          std::string record_sys_path = "";
 
@@ -124,6 +119,7 @@ bool Header_File_Determiner::Is_this_file_included_on_anywhere(std::string file_
 
       return this->Is_this_file_included_on_somewhere;
 }
+
 
 bool Header_File_Determiner::Include_Decleration_Test(std::string string){
 
@@ -245,11 +241,11 @@ void Header_File_Determiner::Extract_Header_File_Name_From_Decleration(std::stri
  
       if(this->Is_Header(file_path)){
       
-         int size = this->Git_Receiver.Get_Git_File_Index_Size();
+         int size = this->Git_Data_Proc->Get_Git_File_Index_Size();
 
          for(int i=0;i<size;i++){
          
-             std::string repo_file_system_path = this->Git_Receiver.Get_File_System_Path(i);
+             std::string repo_file_system_path = this->Git_Data_Proc->Get_File_System_Path(i);
 
              this->Determine_Header_File_Name_With_Extention(repo_file_system_path);
 

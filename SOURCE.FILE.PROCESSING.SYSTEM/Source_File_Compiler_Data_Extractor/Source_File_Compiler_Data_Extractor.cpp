@@ -225,7 +225,6 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Threa
                             
                 buffer.dependent_headers_dir.push_back(hdr_dir);
 
-
                 buffer.dependent_headers.push_back(hdr_name);
 
                 buffer.dependent_headers_paths.push_back(hdr_path);                                                
@@ -284,7 +283,9 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
 
                 std::string hdr_path = src_ptr->at(k).header_sys_path;
 
-                std::string hdr_dir =  src_ptr->at(k).dir;            
+                std::string hdr_dir =  src_ptr->at(k).dir;
+
+                std::string dep_obj =  src_ptr->at(k).object_file_name;           
 
                 buffer.dependent_headers.push_back(hdr_name);
 

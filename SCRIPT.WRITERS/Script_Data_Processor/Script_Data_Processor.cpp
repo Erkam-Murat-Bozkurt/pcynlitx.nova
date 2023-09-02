@@ -76,7 +76,7 @@ void Script_Data_Processor::Determine_Script_Information(){
         Compiler_Data Cmp_Dt = this->Dep_Determiner->Get_Compiler_Data(i);
 
         this->Data_Collector.Receive_Compiler_Data(&Cmp_Dt);
-
+        
         this->Data_Collector.Determine_Source_File_Compilation_Information(&this->Temp_Data,Cmp_Dt.source_file_name);
 
         this->Data_Collector.Determine_Header_Files_Inclusion_Number(&this->Temp_Data,i);

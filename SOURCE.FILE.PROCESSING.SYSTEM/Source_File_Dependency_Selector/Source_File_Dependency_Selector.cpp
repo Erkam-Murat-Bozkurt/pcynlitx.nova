@@ -324,7 +324,7 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
 
      std::string path, std::string header_name){
     
-     std::string src_file_name, wrd_path, hdr_sys_path, file_dir;
+     std::string src_file_name, wrd_path, hdr_sys_path, file_dir, object_file_name;
 
      FileData * Data = this->Code_Rd->Find_File_Data_From_Name(header_name);
 
@@ -341,6 +341,8 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
 
      this->Determine_Header_System_Path(hdr_sys_path,header_name);
 
+     this->Determine_Object_File_Name(object_file_name,src_file_name);
+
      this->Place_String(&data.source_file_name,src_file_name);
 
      this->Place_String(&data.Header_Name,header_name);
@@ -352,6 +354,8 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
      this->Place_String(&data.repo_warehouse_path,wrd_path);
 
      this->Place_String(&data.dir,file_dir);
+
+     this->Place_String(&data.object_file_name,object_file_name);
 
      data.rcr_srch_complated= true;
 
@@ -457,6 +461,30 @@ void Source_File_Dependency_Selector::Determine_Header_Repo_Warehouse_Path(std::
 
          wrd_path->push_back(file_name[i]);
      }
+}
+
+
+void Source_File_Dependency_Selector::Determine_Object_File_Name(std::string & obj_name, std::string src_name){
+
+     size_t name_size = src_name.size();
+
+     for(size_t i=0;i<name_size;i++){
+
+         if(src_name[i] == '.'){
+
+            obj_name.push_back(src_name[i]);
+
+            break;
+         }
+         else{
+
+             obj_name.push_back(src_name[i]);
+         }
+     }
+
+     obj_name.push_back('o');
+
+     obj_name.shrink_to_fit();
 }
 
 

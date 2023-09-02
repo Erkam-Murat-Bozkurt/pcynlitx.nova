@@ -95,7 +95,7 @@ bool Source_File_Dependency_Selector_For_Single_File::Is_Header_File(std::string
 
 
 void Source_File_Dependency_Selector_For_Single_File::Determine_Source_File_Dependencies(std::string path){
-
+     
      this->Clear_Dynamic_Memory();
 
      this->Info_Collector.Clear_Dynamic_Memory();
@@ -158,6 +158,7 @@ void Source_File_Dependency_Selector_For_Single_File::Extract_Dependency_Data(in
      
          std::string path =this->Source_File_Data_Ptr->at(i).system_path;
 
+    
          this->Extract_Dependency_Tree(path,thr_num);
 
          this->Set_Included_Header_Number(&this->Dependent_List[thr_num]);
@@ -223,22 +224,23 @@ void Source_File_Dependency_Selector_For_Single_File::Set_Dependency_Data(Source
 
      std::string path, std::string header_name){
     
-     std::string src_file_name, wrd_path, hdr_sys_path, file_dir;
+     std::string src_file_name, wrd_path, hdr_sys_path, file_dir, object_file_name;
 
      FileData * Data = this->Code_Rd->Find_File_Data_From_Name(header_name);
 
-     
-
      std::string file_path = Data->sys_path;
+
 
      this->Extract_Directory_From_Path(file_path,file_dir);
 
      this->Extract_File_Name_From_Path(&src_file_name,path);
 
-
      this->Determine_Header_Repo_Warehouse_Path(&wrd_path,header_name,'w');
 
      this->Determine_Header_System_Path(hdr_sys_path,header_name);
+
+     this->Determine_Object_File_Name(object_file_name,src_file_name);
+
 
      this->Place_String(&data.source_file_name,src_file_name);
 
@@ -252,9 +254,14 @@ void Source_File_Dependency_Selector_For_Single_File::Set_Dependency_Data(Source
 
      this->Place_String(&data.dir,file_dir);
 
+     this->Place_String(&data.object_file_name,object_file_name);
+
+
      data.rcr_srch_complated= true;
 
      this->Clear_String_Memory(&src_file_name);
+
+     this->Clear_String_Memory(&object_file_name);
 
      this->Clear_String_Memory(&wrd_path);
 
@@ -304,6 +311,29 @@ void Source_File_Dependency_Selector_For_Single_File::Extract_Directory_From_Pat
     dir.shrink_to_fit();    
 }
 
+
+void Source_File_Dependency_Selector_For_Single_File::Determine_Object_File_Name(std::string & obj_name, std::string src_name){
+
+     size_t name_size = src_name.size();
+
+     for(size_t i=0;i<name_size;i++){
+
+         if(src_name[i] == '.'){
+
+            obj_name.push_back(src_name[i]);
+
+            break;
+         }
+         else{
+
+             obj_name.push_back(src_name[i]);
+         }
+     }
+
+     obj_name.push_back('o');
+
+     obj_name.shrink_to_fit();
+}
 
 
 void Source_File_Dependency_Selector_For_Single_File::Determine_Header_System_Path(std::string & path, std::string name){
@@ -356,6 +386,7 @@ void Source_File_Dependency_Selector_For_Single_File::Determine_Header_Repo_Ware
 
          wrd_path->push_back(file_name[i]);
      }
+
 }
 
 
@@ -464,6 +495,12 @@ void Source_File_Dependency_Selector_For_Single_File::Clear_Object_Memory(){
         
         this->Clear_Dynamic_Memory();
 
+        this->Clear_String_Memory(&this->warehouse_head_dir);
+
+        this->Clear_String_Memory(&this->descriptor_file_path);
+
+        this->Info_Collector.Clear_Dynamic_Memory();
+
         this->Info_Collector.Clear_Object_Memory();
      }
 }
@@ -485,12 +522,6 @@ void Source_File_Dependency_Selector_For_Single_File::Clear_Dynamic_Memory()
 
         this->Dependency_Data.shrink_to_fit();
     }
-
-     this->Clear_String_Memory(&this->warehouse_head_dir);
-
-     this->Clear_String_Memory(&this->descriptor_file_path);
-
-     this->Info_Collector.Clear_Dynamic_Memory();
 }
 
 

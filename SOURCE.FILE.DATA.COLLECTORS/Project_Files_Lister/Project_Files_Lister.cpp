@@ -23,6 +23,8 @@ Project_Files_Lister::~Project_Files_Lister(){
 
       this->Src_Data_Col.Receive_Git_Data_Processor(ptr);
 
+      this->Header_Determiner.Receive_Git_Data_Processor(ptr);
+
       this->Initialize_Members();
  }
 
@@ -98,6 +100,7 @@ void Project_Files_Lister::Collect_Independent_Header_Files_Data()
 
          std::string file_path = this->git_record_paths[i];
 
+
          bool is_header_file = this->Header_Determiner.Is_Header(file_path);
 
          if(is_header_file){
@@ -106,9 +109,9 @@ void Project_Files_Lister::Collect_Independent_Header_Files_Data()
 
             this->Determine_File_Name_With_Ext(&file_name,file_path);
 
-            bool src_file_ext = this->Is_There_a_Source_File_With_Same_Name(file_name);
+            bool src_file_exist = this->Is_There_a_Source_File_With_Same_Name(file_name);
 
-            if(!src_file_ext){
+            if(!src_file_exist){
             
                 this->independent_header_files.push_back(file_path);
 

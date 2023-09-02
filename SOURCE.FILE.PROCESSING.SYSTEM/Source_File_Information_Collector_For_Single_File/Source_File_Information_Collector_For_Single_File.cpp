@@ -188,77 +188,6 @@ void Source_File_Information_Collector_For_Single_File::Find_File_Name_Without_E
 
 
 
-void Source_File_Information_Collector_For_Single_File::Determine_Header_Repo_Warehouse_Path(std::string * wrd_path,
-
-     std::string file_name, char opr_sis){
-
-
-     size_t wrd_path_size = this->warehouse_head_dir.length();
-
-     for(size_t i=0;i<wrd_path_size;i++){
-
-          wrd_path->push_back(this->warehouse_head_dir[i]);
-     }
-
-     if(opr_sis == 'w'){
-
-         wrd_path->push_back('\\');
-     }
-
-     if(opr_sis == 'l'){
-
-        wrd_path->push_back('/');
-     }
-
-     for(size_t i=0;i<file_name.length();i++){
-
-         wrd_path->push_back(file_name[i]);
-     }
-}
-
-
-void Source_File_Information_Collector_For_Single_File::Extract_Header_File_Name_From_Decleration(std::string * header_name,
-
-     std::string string){
-
-     size_t size = string.length();
-
-     int start_point = 0;
-
-     for(size_t k=0;k<size;k++){
-
-         if(string[k] == '\"'){
-
-            break;
-         }
-         else{
-
-            start_point++;
-         }
-     }
-
-     start_point = start_point + 1;
-
-     int end_point = start_point;
-
-     for(size_t k=start_point;k<size;k++){
-
-        if(string[k] == '\"'){
-
-           break;
-        }
-        else{
-
-             end_point++;
-        }
-     }
-
-     for(int i=start_point;i<end_point;i++){
-
-         header_name->push_back(string[i]);
-     }
-}
-
 
 bool  Source_File_Information_Collector_For_Single_File::Is_Header_File(std::string hpath){
 
@@ -449,44 +378,6 @@ void Source_File_Information_Collector_For_Single_File::Determine_Warehouse_Obje
 }
 
 
-bool Source_File_Information_Collector_For_Single_File::CompareString(std::string firstString, 
-
-     std::string secondString){
-
-     size_t firstStringLength  = firstString.length();
-
-     size_t secondStringLength = secondString.length();
-
-     if(firstStringLength==secondStringLength){
-
-        for(size_t i=0;i<firstStringLength;i++){
-
-            if(firstString[i]!=secondString[i]){
-
-               this->isStringsEqual = false;
-
-               return this->isStringsEqual;
-            }
-        }
-
-        this->isStringsEqual = true;
-
-        return this->isStringsEqual;
-     }
-     else{
-
-            this->isStringsEqual = false;
-
-            return this->isStringsEqual;
-     }
-}
-
-
-
-
-
-
-
 
 /* MEMORY MANAGEMENT FUNCTIONS ******************************************************/
 
@@ -547,33 +438,6 @@ void Source_File_Information_Collector_For_Single_File::Clear_Buffer_Memory()
      this->Clear_String_Memory(&this->buffer.system_path);
 }
 
-
-
-void Source_File_Information_Collector_For_Single_File::Clear_Vector_Memory(std::vector<std::string> * pointer)
-{
-      if(!pointer->empty()){
-
-           std::vector<std::string>::iterator it;
-
-           auto begin = pointer->begin();
-
-           auto end   = pointer->end();
-
-           for(auto it=begin;it<end;it++){
-
-               if(!it->empty()){
-
-                   it->clear();
-
-                   it->shrink_to_fit();
-               }
-            }
-
-           pointer->clear();
-
-           pointer->shrink_to_fit();
-      }
-}
 
 
 void Source_File_Information_Collector_For_Single_File::Clear_String_Memory(std::string * pointer){

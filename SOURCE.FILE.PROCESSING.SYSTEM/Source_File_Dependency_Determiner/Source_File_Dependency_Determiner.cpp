@@ -64,8 +64,6 @@ void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
 
 void Source_File_Dependency_Determiner::Receive_Descriptor_File_Reader(Descriptor_File_Reader *ptr){
      
-     this->Code_Rd.Receive_Descriptor_File_Reader(ptr);
-
      this->DepSelector.Receive_Descriptor_File_Reader(ptr);
 
      this->DepSelector_For_Single_File.Receive_Descriptor_File_Reader(ptr);
@@ -90,6 +88,9 @@ void Source_File_Dependency_Determiner::Receive_Git_Data_Processor(Git_Data_Proc
      this->Com_Data_Extractor.Receive_Git_Data_Processor(ptr);
 
      this->DepSelector.Receive_Git_Data_Processor(ptr);
+
+     this->DepSelector_For_Single_File.Receive_Git_Data_Processor(ptr);
+
 }
 
 
@@ -97,15 +98,14 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Clear_Dynamic_Memory();
 
-
      this->DepSelector_For_Single_File.Determine_Source_File_Dependencies(path);
 
 
-     this->Warehouse_Headers_Dir = this->DepSelector.Get_Warehouse_Headers_Dir();
+     this->Warehouse_Headers_Dir = this->DepSelector_For_Single_File.Get_Warehouse_Headers_Dir();
 
-     this->Warehouse_Objetcs_Dir = this->DepSelector.Get_Warehouse_Objetcs_Dir();
+     this->Warehouse_Objetcs_Dir = this->DepSelector_For_Single_File.Get_Warehouse_Objetcs_Dir();
 
-     this->Warehouse_Path = this->DepSelector.Get_Warehouse_Path();
+     this->Warehouse_Path = this->DepSelector_For_Single_File.Get_Warehouse_Path();
 
 
      this->Com_Data_Extractor.Receive_Single_File_Dependency_Data(&this->DepSelector_For_Single_File);

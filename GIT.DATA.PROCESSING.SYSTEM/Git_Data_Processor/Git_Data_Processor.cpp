@@ -119,6 +119,8 @@ void Git_Data_Processor::Receive_Git_Modifications(){
 
      this->Modf_Receiver.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
+     this->Modf_Receiver.Receive_Git_List_Receiver(&this->List_Receiver);
+
      this->Modf_Receiver.Receive_Git_Modifications();
 }
 

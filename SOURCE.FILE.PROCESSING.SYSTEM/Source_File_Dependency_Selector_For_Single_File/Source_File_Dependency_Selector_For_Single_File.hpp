@@ -82,6 +82,7 @@ protected:
  std::string Get_Header_System_Path(std::string header_name);
  void Clear_Dependency_Data_Extractors();
  void Construct_Dependency_Data_Extractors();
+ void Determine_Object_File_Name(std::string & obj_name, std::string src_name);
  Source_File_Information_Collector_For_Single_File Info_Collector; 
  Dependency_Data_Extractor ** Dep_Data_Collectors;
  Project_Src_Code_Rdr * Code_Rd;

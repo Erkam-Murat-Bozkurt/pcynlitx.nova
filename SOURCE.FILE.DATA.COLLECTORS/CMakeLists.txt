@@ -38,11 +38,26 @@ target_include_directories(src_dat_col PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Determiner
 
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Descriptor.File.Data.Collector
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Descriptor.File.Reader
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Descriptor.File.Syntax.Controller
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Data_Processor
+
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Receiver
+
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Writer
+
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Ignoring_Files_Lister
+
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Lister
+
+    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Receiver
+
+
+    ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector
+
+    ${CMAKE_SOURCE_DIR}/Descriptor.File.Reader
+
+    ${CMAKE_SOURCE_DIR}/Descriptor.File.Syntax.Controller
 
 
 
@@ -62,18 +77,6 @@ target_include_directories(src_dat_col PUBLIC
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Repo_Warehouse_Initializer
 
-
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Data_Processor
-
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Receiver
-
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Writer
-
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Ignoring_Files_Lister
-
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Lister
-
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Receiver
 
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Cpp_FileOperations

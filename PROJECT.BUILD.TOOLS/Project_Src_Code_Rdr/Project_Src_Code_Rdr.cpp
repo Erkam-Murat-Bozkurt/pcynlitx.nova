@@ -28,14 +28,6 @@ Project_Src_Code_Rdr::~Project_Src_Code_Rdr(){
     }   
 }
 
-void Project_Src_Code_Rdr::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
-
-    for(int i=0;i<8;i++){
-   
-       this->Hdr_Determiner[i]->Receive_Descriptor_File_Reader(ptr);
-   }
-}
-
 
 void Project_Src_Code_Rdr::Clear_Object_Memory(){
 
@@ -102,6 +94,11 @@ void Project_Src_Code_Rdr::Clear_Thread_Objects_Memory(){
 void Project_Src_Code_Rdr::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
 
      this->Git_Data_Proc = ptr;
+
+     for(int i=0;i<8;i++){
+   
+         this->Hdr_Determiner[i]->Receive_Git_Data_Processor(ptr);
+     }
 }
 
 

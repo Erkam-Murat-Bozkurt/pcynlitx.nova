@@ -59,7 +59,6 @@ int main(int argc, char ** argv){
 
     Project_Src_Code_Rdr Code_Rd('w');
 
-    Code_Rd.Receive_Descriptor_File_Reader(&Des_Reader);
 
     Code_Rd.Receive_Git_Data_Processor(&Data_Processor);
 
@@ -79,6 +78,8 @@ int main(int argc, char ** argv){
     Dep_Selector.Receive_Source_Code_Reader(&Code_Rd);
 
     Dep_Selector.Receive_Git_Data_Processor(&Data_Processor);
+
+    Dep_Selector.Receive_Descriptor_File_Reader(&Des_Reader);
 
     Dep_Selector.Determine_Source_File_Dependencies(path);
 
@@ -109,7 +110,8 @@ int main(int argc, char ** argv){
 
     std::vector<Compiler_Data> * data_ptr = Compiler_Data_Extractor.Get_Compiler_Data_Address();
 
-
+    std::cout << "\n data_ptr->size():" << data_ptr->size();
+    std::cin.get();
 
     std::cout << "\n\n DATA FOR PATH:" << path;
 
@@ -161,6 +163,14 @@ void print_compiler_data(std::vector<Compiler_Data> * data_ptr){
          std::cout << "\n";
 
 
+         size_t dep_obj_size = temp.dependent_objs.size();
+
+        for(int k=0;k<dep_obj_size;k++){
+
+             std::cout << "\n dependenct objects:" << temp.dependent_objs[k];
+         } 
+
+         
          for(int k=0;k<path_size;k++){
 
              std::cout << "\n included header path:" << temp.dependent_headers_paths[k];

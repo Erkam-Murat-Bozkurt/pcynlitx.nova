@@ -39,7 +39,6 @@ class Project_Src_Code_Rdr
 public:
  Project_Src_Code_Rdr(char opr_sis);
  virtual ~Project_Src_Code_Rdr();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader* ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Read_Project_Source_Code_Files();
  std::vector<std::string> * Get_File_Content(int i);

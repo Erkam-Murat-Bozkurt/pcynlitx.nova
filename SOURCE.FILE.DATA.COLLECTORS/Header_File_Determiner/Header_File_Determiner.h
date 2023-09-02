@@ -13,7 +13,12 @@
 #include <iostream>
 #include <fcntl.h>
 #include <windows.h>
+#include "Git_Data_Processor.hpp"
 #include "Git_File_List_Receiver.hpp"
+#include "Git_File_List_Writer.hpp"
+#include "Git_Modification_Lister.hpp"
+#include "Git_Modification_Receiver.hpp"
+#include "Git_Ignoring_Files_Lister.hpp"
 #include "StringOperator.h"
 #include "Cpp_FileOperations.h"
 
@@ -23,7 +28,7 @@ class Header_File_Determiner
 public:
  Header_File_Determiner(char opr_sis);
  virtual ~Header_File_Determiner();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  bool Is_Header(std::string file_path);
  bool Is_This_Repo_Header(std::string file_path);
  bool Include_Decleration_Test(std::string string);
@@ -44,7 +49,7 @@ public:
  void Clear_Object_Memory();
 protected:
  void Clear_String_Memory(std::string * pointer);
- Git_File_List_Receiver Git_Receiver;
+ Git_Data_Processor *  Git_Data_Proc;
  StringOperator StringManager;
  Cpp_FileOperations FileManager;
  std::string  Header_File_Directory;

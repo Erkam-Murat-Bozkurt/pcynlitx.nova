@@ -64,15 +64,8 @@ protected:
  void Find_File_Name_Without_Extantion(std::string hdr_name, std::string & file_name_with_ext);
  void Determine_Warehouse_Object_Dir();
  void Determine_Warehouse_Header_Dir();
- void Determine_Header_Repo_Warehouse_Path(std::string * wrd_path,
-      std::string file_name, char opr_sis);
- void Extract_Header_File_Name_From_Decleration(std::string * header_name,
-      std::string string);
- void Determine_Header_System_Path(std::string * sys_path,std::string path);
  bool Include_Decleration_Test(std::string string);
- bool CompareString(std::string sr1, std::string sr2);
  void Clear_Buffer_Memory();
- void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
  void Clear_Headers_Data();
  std::vector<Search_Data> Dep_Search_Data;

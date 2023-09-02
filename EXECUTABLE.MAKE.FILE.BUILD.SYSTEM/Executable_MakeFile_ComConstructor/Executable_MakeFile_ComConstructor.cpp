@@ -163,15 +163,16 @@ void Executable_MakeFile_ComConstructor::Construct_Object_File_List(){
 
      std::string go_to_new_line = "\\\n\t";
 
-     size_t list_size = this->Comp_Data_ptr->at(0).dependent_objs.size();
-
      
+
+     size_t list_size = this->Comp_Data_ptr->size();
+    
 
      size_t counter = 0;
 
      for(int i=0;i<list_size;i++){
 
-         std::string Object_File_Name = this->Comp_Data_ptr->at(0).dependent_objs.at(i);
+         std::string Object_File_Name = this->Comp_Data_ptr->at(i).object_file_name;
 
          if(!Object_File_Name.empty()){
 
@@ -270,7 +271,7 @@ void Executable_MakeFile_ComConstructor::Determine_Src_File_Dir(std::string file
 
 void Executable_MakeFile_ComConstructor::Determine_Make_File_Name(std::string file_path)
 {
-     char file_ext [] = ".make";
+     char file_ext [] = "_exe_builder.make";
 
      size_t ext_size  = strlen(file_ext);
 
@@ -515,20 +516,6 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
             sizer = 0;
           }
      }
-
-     this->Place_Information(&this->Compiler_System_Command,Source_Location);
-
-     this->Place_Information(&this->Compiler_System_Command,slash);
-
-     this->Place_Information(&this->Compiler_System_Command,this->source_file_name);
-
-     this->Place_Information(&this->Compiler_System_Command,Space_Character);
-
-     this->Place_Information(&this->Compiler_System_Command,slash);
-
-     this->Place_Information(&this->Compiler_System_Command,new_line);
-
-     this->Place_Information(&this->Compiler_System_Command,tab);
 
 
      size_t obj_list_size = this->object_file_list.size();
