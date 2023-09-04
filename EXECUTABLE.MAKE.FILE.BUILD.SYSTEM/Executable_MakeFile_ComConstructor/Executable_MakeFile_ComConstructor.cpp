@@ -518,16 +518,26 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
      }
 
 
-     size_t obj_list_size = this->object_file_list.size();
 
-
-     // The include commands definition
 
      std::string go_to_new_line = "\\\n\t";
 
 
+     this->Place_Information(&this->Compiler_System_Command,Source_Location);
 
-     for(size_t i=0;i<obj_list_size;i++){
+     this->Place_Information(&this->Compiler_System_Command,slash);
+
+     this->Place_Information(&this->Compiler_System_Command,this->source_file_name);
+
+     this->Place_Information(&this->Compiler_System_Command,Space_Character);
+
+     this->Place_Information(&this->Compiler_System_Command,go_to_new_line);
+
+
+     size_t obj_list_size = this->object_file_list.size();
+
+
+     for(size_t i=1;i<obj_list_size;i++){
 
          this->Place_Information(&this->Compiler_System_Command,Objects_Location);
 
@@ -579,6 +589,7 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
          }
      }
 }
+
 
 void Executable_MakeFile_ComConstructor::Add_String(std::string * list, std::string string){
 
@@ -694,3 +705,4 @@ std::string Executable_MakeFile_ComConstructor::Get_Compiler_System_Command(){
 
        return this->Compiler_System_Command;
 }
+

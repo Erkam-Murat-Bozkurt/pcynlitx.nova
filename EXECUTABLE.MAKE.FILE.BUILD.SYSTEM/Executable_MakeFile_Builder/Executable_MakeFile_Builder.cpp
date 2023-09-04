@@ -25,7 +25,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Executable_MakeFile_Builder::Executable_MakeFile_Builder(char * des_path, char opr_sis):
 
-   Des_Reader(opr_sis), Git_Data_Proc(opr_sis),
+   Des_Reader(opr_sis), Git_Data_Proc(opr_sis), 
  
    Dep_Determiner(des_path,opr_sis), ComConstructor(opr_sis), Script_Builder(opr_sis)
 
@@ -68,8 +68,23 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
      this->Dep_Determiner.Collect_Dependency_Information(mn_src_path);
 
 
-     this->Com_Data_ptr = this->Dep_Determiner.Get_Compiler_Data_Address();
+     this->Script_Builder.Receive_File_System_Path(mn_src_path);
 
+     this->Script_Builder.Receive_Exe_File_Name(Exe_Name);
+
+     this->Script_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
+
+     this->Script_Builder.Receive_Git_Data_Processor(&this->Git_Data_Proc);
+
+     this->Script_Builder.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
+
+     this->Script_Builder.Build_Compiler_Script_For_Executable_File(mn_src_path);
+
+
+
+
+
+     this->Com_Data_ptr = this->Dep_Determiner.Get_Compiler_Data_Address();
 
      this->ComConstructor.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
@@ -80,16 +95,9 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
      this->ComConstructor.Construct_Compiler_Commands(mn_src_path);
 
      
-     this->Script_Builder.Receive_File_System_Path(mn_src_path);
 
-     this->Script_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
-     this->Script_Builder.Receive_Git_Data_Processor(&this->Git_Data_Proc);
-
-     this->Script_Builder.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
-
-     this->Script_Builder.Build_Compiler_Script_For_Executable_File(mn_src_path);
-
+     this->source_file_name = this->Script_Builder.Get_Src_File_Name();
 
      // Receiving the compiler data from the member objects
 
@@ -109,8 +117,6 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
      this->Compiler_System_Command = this->ComConstructor.Get_Compiler_System_Command();
 
      this->Write_MakeFile(Exe_Name);
-
-
 }
 
 
@@ -360,6 +366,15 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      this->FileManager.WriteToFile(": ");
 
+
+     this->FileManager.WriteToFile(this->source_file_name);
+
+     this->FileManager.WriteToFile(" \\");
+
+     this->FileManager.WriteToFile("\n\t");     
+
+
+
      std::vector<std::string> * object_list = this->ComConstructor.Get_Object_File_List();
 
      std::vector<std::string> * header_list = this->ComConstructor.Get_Header_File_List();
@@ -372,7 +387,7 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      size_t header_list_size = header_list->size();
 
-     for(size_t i=0;i<object_list_size;i++){
+     for(size_t i=1;i<object_list_size;i++){
      
          this->FileManager.WriteToFile(object_list->at(i));
 
@@ -403,3 +418,7 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
      this->FileManager.FileClose();
 
 }
+
+
+
+

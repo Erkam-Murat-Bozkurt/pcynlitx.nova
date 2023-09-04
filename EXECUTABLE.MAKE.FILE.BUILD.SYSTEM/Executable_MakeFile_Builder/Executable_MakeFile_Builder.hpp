@@ -60,7 +60,7 @@ protected:
  std::string header_file_list;
  std::string Dependency_Code_Line;
  std::string Compiler_System_Command;
- int  header_file_number;
+ std::string source_file_name;
  bool Memory_Delete_Condition;
 };
 

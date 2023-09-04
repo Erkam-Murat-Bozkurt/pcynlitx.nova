@@ -30,8 +30,11 @@ public:
  void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader* ptr);
+ void Receive_Exe_File_Name(char * exe_file_name);
  void Build_Compiler_Script_For_Executable_File(char * src_name);
  void Clear_Dynamic_Memory();
+ std::string Get_Src_File_Name_Without_Ext();
+ std::string Get_Src_File_Name();
 protected:
  void Write_The_Executable_Make_File_Update_Script(std::string src_file_name);
  void Construct_Script_Path();
@@ -42,6 +45,7 @@ protected:
  void Determine_File_Name(std::string & file_name_without_ext);
  void Clear_String_Memory(std::string & pointer);
  void Determine_Compiler_Output_Path(std::string class_name);
+ void Determine_Script_Builder_Make_File_Name();
  void Clear_String_Memory(std::string * pointer);
  Descriptor_File_Reader * Des_Reader;
  Script_Data_Processor Src_Data_Processor;
@@ -58,6 +62,10 @@ protected:
  std::vector<Script_Data> * Data_Pointer;
  std::string file_sys_path;
  std::string file_sys_dir;
+ std::string file_name_without_ext;
+ std::string src_file_name;
+ std::string script_builder_make_file_name;
+ std::string exe_file_name;
  char opr_sis;
  bool Memory_Delete_Condition;
 };

@@ -47,6 +47,18 @@ void Executable_MakeFile_Script_Builder::Receive_Descriptor_File_Reader(Descript
      this->Repo_Root_Dir = this->Des_Reader->Get_Repo_Directory_Location();
 }
 
+void Executable_MakeFile_Script_Builder::Receive_Exe_File_Name(char * exe_file_name){
+
+     size_t name_size = strlen(exe_file_name);
+
+     for(size_t i=0;i<name_size;i++){
+
+         this->exe_file_name.push_back(exe_file_name[i]);
+     }
+
+     this->exe_file_name.shrink_to_fit();
+}
+
 void Executable_MakeFile_Script_Builder::Receive_File_System_Path(char * file_sys_path){
 
      size_t path_size = strlen(file_sys_path);
@@ -57,6 +69,62 @@ void Executable_MakeFile_Script_Builder::Receive_File_System_Path(char * file_sy
      }
 
      this->file_sys_path.shrink_to_fit();
+
+     size_t start_point = 0, end_point=0;     
+
+     for(size_t i=path_size;i>0;i--){
+
+         if(this->opr_sis == 'w'){
+
+            if(file_sys_path[i] == '\\'){
+
+               start_point =i+1;
+
+               break;
+            }
+         }
+
+         if(this->opr_sis == 'l'){
+
+            if(file_sys_path[i] == '/'){
+
+               start_point =i+1;
+
+               break;
+            }
+         }
+         
+     }
+
+
+     for(size_t i=path_size;i>0;i--){
+
+         if(file_sys_path[i]=='.'){
+
+            end_point = i;
+
+            break;
+         }
+     }     
+
+     // DETERMINATION OF SOURCE FILE NAME WITHOUT FILE EXTANTION
+
+     for(size_t i=start_point;i<end_point;i++){
+
+         this->file_name_without_ext.push_back(file_sys_path[i]);
+     }
+
+     this->file_name_without_ext.shrink_to_fit();
+
+
+     // DETERMINATION OF SOURCE FILE NAME WITH FILE EXTANTION
+
+     for(size_t i=start_point;i<path_size;i++){
+
+         this->src_file_name.push_back(file_sys_path[i]);
+     }
+
+     this->src_file_name.shrink_to_fit();
 }
 
 
@@ -86,6 +154,8 @@ void Executable_MakeFile_Script_Builder::Build_Compiler_Script_For_Executable_Fi
      this->Determine_Object_Files_Location('w');
 
      this->Construct_Script_Path();
+
+     this->Determine_Script_Builder_Make_File_Name();
 
      this->Write_The_Executable_Make_File_Update_Script(src_file_name);
 }
@@ -161,7 +231,7 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
      char cd_word [] = "Set-Location ";
 
 
-     for(int i=0;i<this->source_file_num;i++){
+     for(int i=0;i<this->source_file_num-1;i++){
 
          this->FileManager.WriteToFile("\n");
 
@@ -424,6 +494,142 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
          this->FileManager.WriteToFile("\n");
      }
 
+
+     
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n");
+
+
+     /*
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("# Dependency: ");
+
+     std::string dep = std::to_string(this->Data_Pointer->at(this->source_file_num-1).dependency);
+
+     this->FileManager.WriteToFile(dep);
+
+     */
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile(cd_word);
+
+     this->FileManager.WriteToFile(" ");
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(this->source_file_num-1).source_file_dir);
+
+     this->FileManager.WriteToFile("\n");
+         
+     this->FileManager.WriteToFile("\n");
+
+
+     this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
+
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(this->source_file_num-1).source_file_dir);
+
+     this->FileManager.WriteToFile("\\");
+
+     this->FileManager.WriteToFile(this->exe_file_name);
+
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("if($Condition){");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("   Remove-Item ");
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(this->source_file_num-1).source_file_dir);
+
+
+
+     this->FileManager.WriteToFile("\\");
+
+     this->FileManager.WriteToFile(this->exe_file_name);
+
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("}");
+
+
+
+     this->Determine_Compiler_Output_Path(this->exe_file_name);
+
+
+
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("mingw32-make -f ");
+
+     this->FileManager.WriteToFile(this->script_builder_make_file_name);
+
+     this->FileManager.WriteToFile(" 2>&1 > ");
+
+     this->FileManager.WriteToFile(this->compiler_output_location);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+
+
+     this->FileManager.WriteToFile("if($LASTEXITCODE -ne 0){");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("   Write-Output \"# Compiler fails on ");
+
+     this->FileManager.WriteToFile(this->exe_file_name);
+
+     this->FileManager.WriteToFile(" creation!\"");
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("   Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("   Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("   exit");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("}");
+
+
+
+
+
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
@@ -438,7 +644,7 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
      this->FileManager.WriteToFile("\n\n");
 
-     this->FileManager.WriteToFile("Write-Output \" THE PROJECT OBJECT FILES CONSTRUCTED\"");
+     this->FileManager.WriteToFile("Write-Output \" THE EXECUTABLE FILE CONSTRUCTED\"");
 
      this->FileManager.WriteToFile("\n");
 
@@ -469,6 +675,14 @@ void Executable_MakeFile_Script_Builder::Clear_Dynamic_Memory(){
 
      this->Clear_String_Memory(&this->file_sys_dir);
 
+     this->Clear_String_Memory(&this->file_name_without_ext);
+
+     this->Clear_String_Memory(&this->script_builder_make_file_name);
+
+     this->Clear_String_Memory(&this->exe_file_name);
+
+     this->Clear_String_Memory(&this->src_file_name);
+
 }
 
 void Executable_MakeFile_Script_Builder::Clear_String_Memory(std::string * pointer)
@@ -481,6 +695,18 @@ void Executable_MakeFile_Script_Builder::Clear_String_Memory(std::string * point
     }
 }
 
+
+void Executable_MakeFile_Script_Builder::Determine_Script_Builder_Make_File_Name(){
+
+     this->script_builder_make_file_name = this->file_name_without_ext;
+
+     std::string file_ext = "_exe_builder.make";
+
+     for(size_t i=0;i<file_ext.size();i++){
+
+         this->script_builder_make_file_name.push_back(file_ext[i]);
+     }
+}
 
 
 
@@ -793,4 +1019,15 @@ void Executable_MakeFile_Script_Builder::Clear_String_Memory(std::string & str)
          str.clear();
          str.shrink_to_fit();        
      }
+}
+
+
+std::string Executable_MakeFile_Script_Builder::Get_Src_File_Name_Without_Ext(){
+
+     return this->file_name_without_ext;   
+}
+
+std::string Executable_MakeFile_Script_Builder::Get_Src_File_Name(){
+
+     return this->src_file_name;   
 }

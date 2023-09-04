@@ -34,6 +34,15 @@ target_include_directories(exec_make_bld PUBLIC
 
 
 
+    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Auto_MakeFile_Builder    
+
+    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Make_File_Builder    
+
+    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Make_File_Cleaner    
+
+    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector    
+
+
     ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Header_File_Processor
 
     ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Dependency_Data_Extractor
@@ -136,6 +145,16 @@ target_link_directories(exec_make_bld PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Script_Writer
 
+
+    
+    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Auto_MakeFile_Builder    
+
+    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Make_File_Builder    
+
+    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Make_File_Cleaner    
+
+    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector    
+    
 
     ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Header_File_Processor
 
