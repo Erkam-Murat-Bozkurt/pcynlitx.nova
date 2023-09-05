@@ -17,6 +17,7 @@
 #include <string>
 #include <fcntl.h>
 #include <windows.h>
+#include <cctype>
 #include "Executable_MakeFile_ComConstructor.hpp"
 #include "Executable_MakeFile_Script_Builder.hpp"
 #include "Source_File_Dependency_Determiner.hpp"
@@ -41,6 +42,9 @@ public:
  void Clear_Dynamic_Memory();
 protected:
  void Write_MakeFile(char * Exe_Name);
+ void Determine_New_Directory_Path();
+ void Receive_Exe_File_Name(char * Exe_Name);
+ void Construct_New_Directory_For_Build_Files();
  Git_Data_Processor Git_Data_Proc;
  Executable_MakeFile_ComConstructor ComConstructor;
  Executable_MakeFile_Script_Builder Script_Builder;
@@ -61,6 +65,9 @@ protected:
  std::string Dependency_Code_Line;
  std::string Compiler_System_Command;
  std::string source_file_name;
+ std::string Exe_File_Name;
+ std::string new_dir_path;
+ char opr_sis;
  bool Memory_Delete_Condition;
 };
 

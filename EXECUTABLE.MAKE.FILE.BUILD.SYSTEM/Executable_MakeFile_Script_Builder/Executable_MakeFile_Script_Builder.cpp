@@ -59,6 +59,13 @@ void Executable_MakeFile_Script_Builder::Receive_Exe_File_Name(char * exe_file_n
      this->exe_file_name.shrink_to_fit();
 }
 
+
+ void Executable_MakeFile_Script_Builder::Receive_Construction_Directory_Path(std::string path){
+
+      this->Construction_Directory_Path = path;
+ }
+
+
 void Executable_MakeFile_Script_Builder::Receive_File_System_Path(char * file_sys_path){
 
      size_t path_size = strlen(file_sys_path);
@@ -200,7 +207,6 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
      this->FileManager.WriteToFile(this->src_file_name);
 
-     //this->FileManager.WriteToFile(src_file_name);
 
      this->FileManager.WriteToFile(" will be updated\"");
 
@@ -238,8 +244,6 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("\n");
-
-         //this->FileManager.WriteToFile("Write-Output \"\"");
 
          this->FileManager.WriteToFile("\n");
 
@@ -537,7 +541,7 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
      this->FileManager.WriteToFile(" ");
 
-     this->FileManager.WriteToFile(this->Data_Pointer->at(this->source_file_num-1).source_file_dir);
+     this->FileManager.WriteToFile(this->Construction_Directory_Path);
 
      this->FileManager.WriteToFile("\n");
          
@@ -547,7 +551,7 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
      this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
 
 
-     this->FileManager.WriteToFile(this->Data_Pointer->at(this->source_file_num-1).source_file_dir);
+     this->FileManager.WriteToFile(this->Construction_Directory_Path);
 
      this->FileManager.WriteToFile("\\");
 
@@ -566,9 +570,7 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
      this->FileManager.WriteToFile("   Remove-Item ");
 
-     this->FileManager.WriteToFile(this->Data_Pointer->at(this->source_file_num-1).source_file_dir);
-
-
+     this->FileManager.WriteToFile(this->Construction_Directory_Path);
 
      this->FileManager.WriteToFile("\\");
 
@@ -847,13 +849,15 @@ void Executable_MakeFile_Script_Builder::Construct_Script_Path(){
 
      std::string name_without_ext;
 
-     this->Determine_Src_File_Sys_Dir(file_sys_dir);
+     //this->Determine_Src_File_Sys_Dir(file_sys_dir);
+
+     //file_sys_dir = this->Construction_Directory_Path;
 
      this->Determine_File_Name(name_without_ext);
 
-     for(size_t i=0;i<file_sys_dir.size();i++){
+     for(size_t i=0;i<this->Construction_Directory_Path.size();i++){
 
-         this->script_path.push_back(file_sys_dir[i]);
+         this->script_path.push_back(this->Construction_Directory_Path[i]);
      }
 
 
@@ -890,6 +894,7 @@ void Executable_MakeFile_Script_Builder::Construct_Script_Path(){
      }     
 
      this->script_path.shrink_to_fit();
+
 }
 
 

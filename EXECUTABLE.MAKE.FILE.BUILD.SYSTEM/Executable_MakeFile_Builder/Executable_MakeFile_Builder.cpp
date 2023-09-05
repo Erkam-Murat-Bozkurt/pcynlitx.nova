@@ -30,15 +30,21 @@ Executable_MakeFile_Builder::Executable_MakeFile_Builder(char * des_path, char o
    Dep_Determiner(des_path,opr_sis), ComConstructor(opr_sis), Script_Builder(opr_sis)
 
 {
+     this->opr_sis = opr_sis;
+
      this->Des_Reader.Receive_Descriptor_File_Path(des_path);
 
      this->Des_Reader.Read_Descriptor_File();
+
+     std::cout << "\nProject descriptions received";
 
      this->Git_Data_Proc.Receive_Descriptor_File_Path(des_path);
 
      this->Git_Data_Proc.Write_Git_Repo_List_File();
 
      this->Git_Data_Proc.Determine_Git_Repo_Info();
+
+     std::cout << "\nGit version control data collected";
 }
 
 
@@ -61,6 +67,8 @@ void Executable_MakeFile_Builder::Clear_Dynamic_Memory(){
 
 void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_Name){
 
+
+
      this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
      this->Dep_Determiner.Receive_Git_Data_Processor(&this->Git_Data_Proc);
@@ -68,9 +76,29 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
      this->Dep_Determiner.Collect_Dependency_Information(mn_src_path);
 
 
+     this->warehouse_head_dir = this->Dep_Determiner.Get_Warehouse_Headers_Dir();
+
+     this->warehouse_obj_dir  = this->Dep_Determiner.Get_Warehouse_Objetcs_Dir();
+
+     this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
+
+     
+     std::cout << "\nThe source file dependencies determined";
+
+
+     this->Receive_Exe_File_Name(Exe_Name);
+
+     this->Determine_New_Directory_Path();
+
+     this->Construct_New_Directory_For_Build_Files();
+
+
+
      this->Script_Builder.Receive_File_System_Path(mn_src_path);
 
      this->Script_Builder.Receive_Exe_File_Name(Exe_Name);
+
+     this->Script_Builder.Receive_Construction_Directory_Path(this->new_dir_path);
 
      this->Script_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
@@ -80,8 +108,7 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
 
      this->Script_Builder.Build_Compiler_Script_For_Executable_File(mn_src_path);
 
-
-
+     std::cout << "\nThe construction script writed";
 
 
      this->Com_Data_ptr = this->Dep_Determiner.Get_Compiler_Data_Address();
@@ -102,11 +129,6 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
      // Receiving the compiler data from the member objects
 
 
-     this->warehouse_head_dir = this->Dep_Determiner.Get_Warehouse_Headers_Dir();
-
-     this->warehouse_obj_dir  = this->Dep_Determiner.Get_Warehouse_Objetcs_Dir();
-
-     this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
 
      this->Src_File_Dir       = this->ComConstructor.Get_Src_File_Dr();
 
@@ -122,7 +144,7 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
 
 void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
-     this->DirectoryManager.ChangeDirectory(this->Src_File_Dir.c_str());
+     this->DirectoryManager.ChangeDirectory(this->new_dir_path.c_str());
 
      this->FileManager.SetFilePath(this->make_file_name);
 
@@ -161,6 +183,21 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
         this->FileManager.WriteToFile(this->Src_File_Dir);
      }
+
+
+     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
+     
+     this->FileManager.WriteToFile("TARGET_LOCATION=");
+
+
+     if(!this->new_dir_path.empty()){
+
+         this->FileManager.WriteToFile(this->new_dir_path);
+     }
+
+     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
 
      int included_dir_num = this->Des_Reader.Get_Include_Directory_Number();
 
@@ -362,6 +399,18 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      this->FileManager.WriteToFile("\n");
 
+     this->FileManager.WriteToFile("$(TARGET_LOCATION)");
+
+     if(this->opr_sis == 'w'){
+
+        this->FileManager.WriteToFile("\\");
+     }
+
+     if(this->opr_sis == 'l'){
+
+        this->FileManager.WriteToFile("/");
+     }
+
      this->FileManager.WriteToFile(Exe_Name);
 
      this->FileManager.WriteToFile(": ");
@@ -421,4 +470,110 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
 
 
+void Executable_MakeFile_Builder::Determine_New_Directory_Path(){
 
+     std::string warehouse_word  ="WAREHOUSE";
+
+     this->new_dir_path = this->warehouse_path;
+
+     if(this->opr_sis == 'w'){
+
+        if(this->new_dir_path.back()!='\\'){
+
+            this->new_dir_path.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(this->new_dir_path.back()!='/'){
+
+            this->new_dir_path.push_back('/');
+        }
+     }
+
+
+     for(size_t i=0;i<warehouse_word.length();i++){
+
+         this->new_dir_path.push_back(warehouse_word[i]);
+     }
+
+
+
+     if(this->opr_sis == 'w'){
+
+        if(this->new_dir_path.back()!='\\'){
+
+            this->new_dir_path.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(this->new_dir_path.back()!='/'){
+
+            this->new_dir_path.push_back('/');
+        }
+     }
+
+
+
+     size_t name_size = this->Exe_File_Name.length();
+
+     for(size_t i=0;i<name_size;i++){
+ 
+         char upper_case = toupper(this->Exe_File_Name[i]);
+
+         if(upper_case == '.'){
+
+            upper_case = '_';
+         }
+
+         this->new_dir_path.push_back(upper_case);
+     }
+
+     std::string dir_add_word = "_BUILDER";
+
+     for(size_t i=0;i<dir_add_word.length();i++){
+
+         this->new_dir_path.push_back(dir_add_word[i]);
+     }
+}
+
+
+void Executable_MakeFile_Builder::Receive_Exe_File_Name(char * Exe_Name){
+
+    size_t name_size = strlen(Exe_Name);
+
+    for(size_t i=0;i<name_size;i++){
+
+        this->Exe_File_Name.push_back(Exe_Name[i]);
+    }
+
+    this->Exe_File_Name.shrink_to_fit();
+}
+
+void Executable_MakeFile_Builder::Construct_New_Directory_For_Build_Files(){
+
+     int return_condition = this->DirectoryManager.ChangeDirectory(this->new_dir_path.c_str());
+
+     if(return_condition == 0){
+
+        int const_cond = this->DirectoryManager.MakeDirectory(this->new_dir_path.c_str());
+
+        if(const_cond == 0){
+
+           std::cout << "\n The new directory for executable ";
+           
+           std::cout <<   this->Exe_File_Name;
+           
+           std::cout << " can not be constructed on:";
+
+           std::cout << "\n";
+
+           std::cout << this->new_dir_path;
+
+           exit(0);
+        }
+     }
+}
