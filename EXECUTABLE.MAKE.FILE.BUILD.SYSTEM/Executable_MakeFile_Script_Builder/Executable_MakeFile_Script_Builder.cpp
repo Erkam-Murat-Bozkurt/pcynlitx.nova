@@ -196,15 +196,13 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
      this->FileManager.WriteToFile("\n\n");
 
-     this->FileManager.WriteToFile("Write-Host  \" The object files related with ");
+     this->FileManager.WriteToFile("Write-Host  \"The object files related with ");
 
-     this->FileManager.WriteToFile(src_file_name);
+     this->FileManager.WriteToFile(this->src_file_name);
 
-     this->FileManager.WriteToFile("will be updated\" -ForegroundColor DarkCyan");
+     //this->FileManager.WriteToFile(src_file_name);
 
-     this->FileManager.WriteToFile("\n\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
+     this->FileManager.WriteToFile(" will be updated\"");
 
      this->FileManager.WriteToFile("\n\n");
 
@@ -212,8 +210,12 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
      this->FileManager.WriteToFile("\n\n");
 
+     this->FileManager.WriteToFile("Write-Output \"\"");
 
-     this->FileManager.WriteToFile("Write-Output \" Total number of the source file: ");
+     this->FileManager.WriteToFile("\n\n");
+
+
+     this->FileManager.WriteToFile("Write-Output \"Total number of the source file: ");
 
      this->FileManager.WriteToFile(this->Translater.Translate(this->source_file_num));
 
@@ -237,7 +239,7 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("Write-Output \"\"");
+         //this->FileManager.WriteToFile("Write-Output \"\"");
 
          this->FileManager.WriteToFile("\n");
 
@@ -449,27 +451,46 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("Write-Host \" ");
+         int decimal_space = this->Determine_Decimal_Space(this->source_file_num,i+1);
+
+         this->FileManager.WriteToFile("Write-Host \"");
+
+         for(int k=0;k<decimal_space;k++){
+
+             this->FileManager.WriteToFile(" ");       
+
+         }
+
+
+         this->FileManager.WriteToFile("\" -NoNewline");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+
+         this->FileManager.WriteToFile("Write-Host \"");
 
          this->FileManager.WriteToFile(this->Translater.Translate(i+1));
 
          this->FileManager.WriteToFile(" - ");
 
+
          this->FileManager.WriteToFile(this->Translater.Translate(this->source_file_num));
 
-         this->FileManager.WriteToFile("\" -ForegroundColor DarkCyan -NoNewline");
+         this->FileManager.WriteToFile("\" -NoNewline");
 
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("Write-Host \" ] The source file ");
+         this->FileManager.WriteToFile("Write-Host \"] Built for ");
 
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_name);
 
 
-         this->FileManager.WriteToFile(" has been compiled\"");
+         this->FileManager.WriteToFile(" complated\"");
 
          this->FileManager.WriteToFile("\n");
 
@@ -505,17 +526,6 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
      this->FileManager.WriteToFile("\n");
 
 
-     /*
-
-     this->FileManager.WriteToFile("\n\n");
-
-     this->FileManager.WriteToFile("# Dependency: ");
-
-     std::string dep = std::to_string(this->Data_Pointer->at(this->source_file_num-1).dependency);
-
-     this->FileManager.WriteToFile(dep);
-
-     */
 
      this->FileManager.WriteToFile("\n");
 
@@ -638,13 +648,9 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
      this->FileManager.WriteToFile("\n\n");
 
-     this->FileManager.WriteToFile("Write-Output \" THE EXECUTABLE FILE CONSTRUCTED\"");
+     this->FileManager.WriteToFile("Write-Output \"THE EXECUTABLE FILE CONSTRUCTED\"");
 
      this->FileManager.WriteToFile("\n");
 
@@ -663,6 +669,44 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
      this->FileManager.FileClose();
 }
 
+
+int Executable_MakeFile_Script_Builder::Determine_Decimal_Space(int total_src_num, int current_number){
+     
+    int decimal_power_for_total =0;
+    int decimal_power_for_current = 0;
+    int space = 0;
+
+    int remainder = total_src_num/10;
+
+    if(remainder>=1){
+
+       do{
+
+          decimal_power_for_total++;
+
+          remainder = remainder/10;
+
+       }while(remainder>=1);
+    }
+
+    remainder = current_number/10;
+
+    if(remainder>=1){
+
+       do{
+
+          decimal_power_for_current++;
+
+          remainder = remainder/10;
+
+       }while(remainder>=1);
+    }
+
+
+    space = decimal_power_for_total - decimal_power_for_current;
+
+    return space;
+}
 
 
 void Executable_MakeFile_Script_Builder::Clear_Dynamic_Memory(){

@@ -46,6 +46,7 @@ protected:
  void Clear_String_Memory(std::string & pointer);
  void Determine_Compiler_Output_Path(std::string class_name);
  void Determine_Script_Builder_Make_File_Name();
+ int  Determine_Decimal_Space(int total_src_num, int current_number);
  void Clear_String_Memory(std::string * pointer);
  Descriptor_File_Reader * Des_Reader;
  Script_Data_Processor Src_Data_Processor;
