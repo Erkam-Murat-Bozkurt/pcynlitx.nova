@@ -40,6 +40,7 @@ protected:
  void Determine_Object_Files_Location(char opr_sis);
  void Clear_String_Memory(std::string & pointer);
  void Determine_Compiler_Output_Path(std::string class_name);
+ int  Determine_Decimal_Space(int total_src_num, int current_number);
  Descriptor_File_Reader * Des_Reader;
  Script_Data_Processor Src_Data_Processor;
  Source_File_Script_Writer Src_Script_Writer;

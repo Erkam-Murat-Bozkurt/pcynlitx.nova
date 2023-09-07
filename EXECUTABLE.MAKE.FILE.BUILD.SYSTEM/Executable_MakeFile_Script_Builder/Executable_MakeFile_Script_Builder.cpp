@@ -191,6 +191,7 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
      this->FileManager.WriteToFile("\n");
      this->FileManager.WriteToFile("\n");
 
+     char cd_word [] = "Set-Location ";
 
 
      this->FileManager.WriteToFile("Write-Output \"\"");
@@ -236,7 +237,6 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
      this->FileManager.WriteToFile("\n\n");
 
 
-     char cd_word [] = "Set-Location ";
 
 
      for(int i=0;i<this->source_file_num-1;i++){
@@ -245,260 +245,33 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("\n");
+         this->Change_Directory(i);
 
-         this->FileManager.WriteToFile("\n\n");
+         //this->Determination_of_Up_to_date_Status(i);
+  
+         //this->FileManager.WriteToFile("if($UP_TO_DATE_COND -ne 0)){");
 
-         this->FileManager.WriteToFile("# Dependency: ");
-
-         std::string dep = std::to_string(this->Data_Pointer->at(i).dependency);
-
-         this->FileManager.WriteToFile(dep);
+         this->Remove_The_Current_Object_File(i);
 
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile(cd_word);
-
-         this->FileManager.WriteToFile(" ");
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
+         this->Compile_The_Source_File(i);
 
          this->FileManager.WriteToFile("\n");
-         
-         this->FileManager.WriteToFile("\n");
 
-
-         this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
-
-         this->FileManager.WriteToFile("\\");
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
-
+         this->Check_Build_Success_Status(i);
 
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("if($Condition){");
+         this->Move_Object_File_To_The_Warehouse(i);
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   Remove-Item ");
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
-
-
-
-         this->FileManager.WriteToFile("\\");
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
-
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("}");
-
-
-
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("mingw32-make -f ");
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).make_file_name);
-
-         this->Determine_Compiler_Output_Path(this->Data_Pointer->at(i).src_name_without_ext);
-
-
-         this->FileManager.WriteToFile(" 2>&1 > ");
-
-         this->FileManager.WriteToFile(this->compiler_output_location);
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-
-
-         this->FileManager.WriteToFile("if($LASTEXITCODE -ne 0){");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   Write-Output \"# Compiler fails on ");
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
-
-         this->FileManager.WriteToFile(" creation!\"");
-
-         this->FileManager.WriteToFile("\n\n");
-
-         this->FileManager.WriteToFile("   Write-Output \"\"");
-
-         this->FileManager.WriteToFile("\n\n");
-
-         this->FileManager.WriteToFile("   Write-Output \"\"");
-
-         this->FileManager.WriteToFile("\n\n");
-
-         this->FileManager.WriteToFile("   exit");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("}");
-
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
-
-         this->FileManager.WriteToFile("\\");
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
-
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("if ($Condition){");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   $Exists_On_Obj_Dir = Test-Path -Path ");
-
-         this->FileManager.WriteToFile("$Project_Objects_Location");
-
-         this->FileManager.WriteToFile("\\");
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   if($Exists_On_Obj_Dir){");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("      Remove-Item ");
-
-         this->FileManager.WriteToFile("$Project_Objects_Location");
-
-         this->FileManager.WriteToFile("\\");
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   }");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   Move-Item -Path ");
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
-
-         this->FileManager.WriteToFile("\\");
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
-
-
-
-
-         this->FileManager.WriteToFile(" -Destination $Project_Objects_Location");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("}");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-
-
-         this->FileManager.WriteToFile("Write-Host \"[\" -NoNewline ");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         int decimal_space = this->Determine_Decimal_Space(this->source_file_num,i+1);
-
-         this->FileManager.WriteToFile("Write-Host \"");
-
-         for(int k=0;k<decimal_space;k++){
-
-             this->FileManager.WriteToFile(" ");       
-
-         }
-
-
-         this->FileManager.WriteToFile("\" -NoNewline");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-
-         this->FileManager.WriteToFile("Write-Host \"");
-
-         this->FileManager.WriteToFile(this->Translater.Translate(i+1));
-
-         this->FileManager.WriteToFile(" - ");
-
-
-         this->FileManager.WriteToFile(this->Translater.Translate(this->source_file_num));
-
-         this->FileManager.WriteToFile("\" -NoNewline");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("Write-Host \"] Built for ");
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_name);
-
-
-         this->FileManager.WriteToFile(" complated\"");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
+         this->Print_Build_Output_To_Screen(i);
 
          this->FileManager.WriteToFile("\n");
 
@@ -711,6 +484,290 @@ int Executable_MakeFile_Script_Builder::Determine_Decimal_Space(int total_src_nu
 }
 
 
+ void Executable_MakeFile_Script_Builder::Change_Directory(int index){ 
+   
+      // Writing Code for directory change 
+
+      // THIS IS THE META FUNCTION WRITING THE CODES FOR DIRECTORY CHANGE OPERATION
+      
+      char cd_word [] = "Set-Location ";
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("\n\n");
+
+      this->FileManager.WriteToFile("# Dependency: ");
+
+      std::string dep = std::to_string(this->Data_Pointer->at(index).dependency);
+
+      this->FileManager.WriteToFile(dep);
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile(cd_word);
+
+      this->FileManager.WriteToFile(" ");
+
+      this->FileManager.WriteToFile(this->Data_Pointer->at(index).source_file_dir);
+
+      this->FileManager.WriteToFile("\n");
+         
+      this->FileManager.WriteToFile("\n");         
+ }
+
+
+
+void Executable_MakeFile_Script_Builder::Determination_of_Up_to_date_Status(int index){
+   
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("mingw32-make -q ");
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).make_file_name);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("$UP_TO_DATE_COND=$LASTEXITCODE");
+
+     this->FileManager.WriteToFile("\n");
+}
+
+
+ void Executable_MakeFile_Script_Builder::Remove_The_Current_Object_File(int index){
+      
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
+
+      this->FileManager.WriteToFile(this->Data_Pointer->at(index).source_file_dir);
+
+      this->FileManager.WriteToFile("\\");
+
+      this->FileManager.WriteToFile(this->Data_Pointer->at(index).object_file_name);
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("if($Condition){");
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("\n");
+
+      this->FileManager.WriteToFile("  Remove-Item ");
+
+      this->FileManager.WriteToFile(this->Data_Pointer->at(index).source_file_dir);
+
+      this->FileManager.WriteToFile("\\");
+
+      this->FileManager.WriteToFile(this->Data_Pointer->at(index).object_file_name);
+
+      this->FileManager.WriteToFile("\n");
+      
+      this->FileManager.WriteToFile("}");
+
+      this->FileManager.WriteToFile("\n");
+
+}
+
+void Executable_MakeFile_Script_Builder::Compile_The_Source_File(int index){
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("mingw32-make -f ");
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).make_file_name);
+
+     this->Determine_Compiler_Output_Path(this->Data_Pointer->at(index).src_name_without_ext);
+
+     this->FileManager.WriteToFile(" 2>&1 > ");
+
+     this->FileManager.WriteToFile(this->compiler_output_location);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+}
+
+
+
+
+void Executable_MakeFile_Script_Builder::Check_Build_Success_Status(int index){
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("if($LASTEXITCODE -ne 0){");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("   Write-Output \"# Compiler fails on ");
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).object_file_name);
+
+     this->FileManager.WriteToFile(" creation!\"");
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("   Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("   Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("   exit");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("}");
+
+     this->FileManager.WriteToFile("\n");
+
+}
+
+
+void Executable_MakeFile_Script_Builder::Move_Object_File_To_The_Warehouse(int index){
+     
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).source_file_dir);
+
+     this->FileManager.WriteToFile("\\");
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).object_file_name);
+
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("if($Condition){");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("   $Exists_On_Obj_Dir = Test-Path -Path $Project_Objects_Location");
+
+     this->FileManager.WriteToFile("\\");
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).object_file_name);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("   if($Exists_On_Obj_Dir){");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("      Remove-Item ");
+
+     this->FileManager.WriteToFile("$Project_Objects_Location");
+
+     this->FileManager.WriteToFile("\\");
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).object_file_name);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("   }");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("   Move-Item -Path ");
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).source_file_dir);
+
+     this->FileManager.WriteToFile("\\");
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).object_file_name);
+
+     this->FileManager.WriteToFile(" -Destination $Project_Objects_Location");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("}");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+}
+
+
+void Executable_MakeFile_Script_Builder::Print_Build_Output_To_Screen(int index){
+
+     this->FileManager.WriteToFile("\n");
+
+
+     this->FileManager.WriteToFile("Write-Host \"[\" -NoNewline ");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     int decimal_space = this->Determine_Decimal_Space(this->source_file_num,index+1);
+
+     this->FileManager.WriteToFile("Write-Host \"");
+
+     for(int k=0;k<decimal_space;k++){
+
+         this->FileManager.WriteToFile(" ");       
+     }
+
+     this->FileManager.WriteToFile("\" -NoNewline");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+
+     this->FileManager.WriteToFile("Write-Host \"");
+
+     this->FileManager.WriteToFile(this->Translater.Translate(index+1));
+
+     this->FileManager.WriteToFile(" / ");
+
+     this->FileManager.WriteToFile(this->Translater.Translate(this->source_file_num));
+
+     this->FileManager.WriteToFile("\" -NoNewline");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("Write-Host \"] Built for ");
+
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).source_file_name);
+
+     this->FileManager.WriteToFile(" complated\"");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+}
+
+
 void Executable_MakeFile_Script_Builder::Clear_Dynamic_Memory(){
 
      this->Src_Data_Processor.Clear_Dynamic_Memory(); 
@@ -848,10 +905,6 @@ void Executable_MakeFile_Script_Builder::Construct_Script_Path(){
      std::string file_sys_dir;
 
      std::string name_without_ext;
-
-     //this->Determine_Src_File_Sys_Dir(file_sys_dir);
-
-     //file_sys_dir = this->Construction_Directory_Path;
 
      this->Determine_File_Name(name_without_ext);
 

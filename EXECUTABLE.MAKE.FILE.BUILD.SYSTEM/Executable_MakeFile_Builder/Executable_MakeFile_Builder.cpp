@@ -321,6 +321,24 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
      this->FileManager.WriteToFile(Ident);
 
 
+     this->FileManager.WriteToFile("$(SOURCE_LOCATION)");
+
+     this->FileManager.WriteToFile(NextLine);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile(Ident);
+
+     
+     this->FileManager.WriteToFile("$(TARGET_LOCATION)");
+
+     this->FileManager.WriteToFile(NextLine);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile(Ident);
+
+     
 
      for(int i=0;i<library_dir_num;i++){
 

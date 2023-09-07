@@ -260,6 +260,14 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
      this->FileManager.WriteToFile(Ident);
 
 
+     this->FileManager.WriteToFile("$(SOURCE_LOCATION)");
+
+     this->FileManager.WriteToFile(NextLine);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile(Ident);
+
 
      for(size_t i=0;i<dep_header_size;i++){
 

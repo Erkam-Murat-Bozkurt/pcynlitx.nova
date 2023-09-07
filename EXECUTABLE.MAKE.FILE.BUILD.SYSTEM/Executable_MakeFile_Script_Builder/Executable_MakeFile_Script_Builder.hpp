@@ -49,6 +49,13 @@ protected:
  void Determine_Script_Builder_Make_File_Name();
  int  Determine_Decimal_Space(int total_src_num, int current_number);
  void Clear_String_Memory(std::string * pointer);
+ void Change_Directory(int index);
+ void Determination_of_Up_to_date_Status(int index);
+ void Remove_The_Current_Object_File(int index);
+ void Compile_The_Source_File(int index);
+ void Check_Build_Success_Status(int index);
+ void Move_Object_File_To_The_Warehouse(int index);
+ void Print_Build_Output_To_Screen(int index);
  Descriptor_File_Reader * Des_Reader;
  Script_Data_Processor Src_Data_Processor;
  DirectoryOperations DirectoryManager;

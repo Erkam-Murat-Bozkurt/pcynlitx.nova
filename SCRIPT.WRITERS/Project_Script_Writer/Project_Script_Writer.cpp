@@ -171,19 +171,9 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("Write-Output \"\"");
+         //this->FileManager.WriteToFile("Write-Output \"\"");
 
          this->FileManager.WriteToFile("\n");
-
-         /*
-
-         this->FileManager.WriteToFile("Write-Output \"[+] The compilation process for ");
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_name);
-
-         this->FileManager.WriteToFile(" started. \"");
-
-          */
 
          this->FileManager.WriteToFile("\n\n");
 
@@ -385,39 +375,70 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
 
 
-         this->FileManager.WriteToFile("Write-Host \"[\" -NoNewline ");
+
+         this->FileManager.WriteToFile("Write-Host \"[ \" -NoNewline ");
 
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("Write-Host \" ");
+
+         int decimal_space =  this->Determine_Decimal_Space(this->source_file_num,i+1);
+
+
+         this->FileManager.WriteToFile("Write-Host \"");
+
+         for(int k=0;k<decimal_space;k++){
+
+             this->FileManager.WriteToFile(" ");
+
+         }
+
+
+         this->FileManager.WriteToFile("\" -NoNewline");
+
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+
+         this->FileManager.WriteToFile("Write-Host \"");
+
 
          this->FileManager.WriteToFile(this->Translater.Translate(i+1));
 
-         this->FileManager.WriteToFile(" - ");
+         this->FileManager.WriteToFile("\" -ForegroundColor Green -NoNewline");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+
+         this->FileManager.WriteToFile("Write-Host \"");
+
+
+         this->FileManager.WriteToFile(" / ");
 
          this->FileManager.WriteToFile(this->Translater.Translate(this->source_file_num));
 
-         this->FileManager.WriteToFile("\" -ForegroundColor DarkCyan -NoNewline");
+         this->FileManager.WriteToFile("\" -ForegroundColor White -NoNewline");
 
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("Write-Host \" ] The source file ");
+         this->FileManager.WriteToFile("Write-Host \" ] Built for ");
 
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_name);
 
 
-         this->FileManager.WriteToFile(" has been compiled\"");
+         this->FileManager.WriteToFile(" complated\"");
 
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("\n");
-
-         //this->FileManager.WriteToFile("Write-Output \"\"");
 
          this->FileManager.WriteToFile("\n");
 
@@ -478,6 +499,44 @@ void Project_Script_Writer::Clear_Dynamic_Memory(){
      this->Src_Data_Processor.Clear_Dynamic_Memory();             
 }
 
+
+int Project_Script_Writer::Determine_Decimal_Space(int total_src_num, int current_number){
+     
+    int decimal_power_for_total =0;
+    int decimal_power_for_current = 0;
+    int space = 0;
+
+    int remainder = total_src_num/10;
+
+    if(remainder>=1){
+
+       do{
+
+          decimal_power_for_total++;
+
+          remainder = remainder/10;
+
+       }while(remainder>=1);
+    }
+
+    remainder = current_number/10;
+
+    if(remainder>=1){
+
+       do{
+
+          decimal_power_for_current++;
+
+          remainder = remainder/10;
+
+       }while(remainder>=1);
+    }
+
+
+    space = decimal_power_for_total - decimal_power_for_current;
+
+    return space;
+}
 
 
 void Project_Script_Writer::Determine_Object_Files_Location(char opr_sis){
