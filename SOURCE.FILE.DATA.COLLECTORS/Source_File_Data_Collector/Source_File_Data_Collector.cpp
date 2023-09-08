@@ -528,6 +528,24 @@ void Source_File_Data_Collector::Receive_Include_File_Name(std::string * pointer
         }
      }
 
+     
+     /* The following lines control directory character existanse on the 
+     
+        include file decleration 
+
+        For istance "sample/sample.h"
+     
+     */
+
+     for(size_t i=start_point;i<end_point;i++){
+
+        if(((string[i] == '\\') || (string[i] == '/'))){
+
+           start_point = i+1;
+        }
+     }
+
+     
      int index = 0;
 
      for(size_t i=start_point;i<end_point;i++){

@@ -45,7 +45,10 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
 
      char header_add_hpp [] = ".hpp";
 
-     char source_file_ext [] = ".cpp";
+     char source_file_ext_1 [] = ".cpp";
+
+     char source_file_ext_2 [] = ".cc";
+
 
      this->Is_This_Source_File = false;
 
@@ -82,7 +85,11 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
 
     bool is_this_main_file = false;
 
-    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext)){
+    bool ext_chek_cond_1 = this->StringManager.CheckStringInclusion(file_path,source_file_ext_1);
+
+    bool ext_chek_cond_2 = this->StringManager.CheckStringInclusion(file_path,source_file_ext_2);
+
+    if(ext_chek_cond_1 || ext_chek_cond_2){
 
        this->Read_File(file_path);
 
@@ -114,9 +121,7 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
       }
 
 
-      this->Is_This_Source_File
-
-                  = this->StringManager.CheckStringInclusion(file_path,source_file_ext);
+      this->Is_This_Source_File = ext_chek_cond_1 || ext_chek_cond_2;
 
       if(this->Is_This_Source_File){
 
@@ -141,7 +146,11 @@ bool Source_File_Determiner::Is_Source_File(std::string file_path){
 
      std::string header_add_hpp  = ".hpp";
 
-     std::string source_file_ext = ".cpp";
+     char source_file_ext_1 [] = ".cpp";
+
+     char source_file_ext_2 [] = ".cc";
+
+
 
      this->Is_This_Source_File = false;
 
@@ -178,7 +187,12 @@ bool Source_File_Determiner::Is_Source_File(std::string file_path){
 
     bool is_this_main_file = false;
 
-    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext)){
+    bool ext_chek_cond_1 = this->StringManager.CheckStringInclusion(file_path,source_file_ext_1);
+
+    bool ext_chek_cond_2 = this->StringManager.CheckStringInclusion(file_path,source_file_ext_2);
+
+
+    if(ext_chek_cond_1 || ext_chek_cond_2){
 
        this->Read_File(file_path);
 
@@ -206,9 +220,7 @@ bool Source_File_Determiner::Is_Source_File(std::string file_path){
       }
 
 
-      this->Is_This_Source_File
-
-          = this->StringManager.CheckStringInclusion(file_path,source_file_ext);
+      this->Is_This_Source_File = ext_chek_cond_1 || ext_chek_cond_2;
 
       if(this->Is_This_Source_File)
       {
