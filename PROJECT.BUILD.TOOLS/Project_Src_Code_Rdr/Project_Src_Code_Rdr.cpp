@@ -8,10 +8,10 @@ Project_Src_Code_Rdr::Project_Src_Code_Rdr(char opr_sis)
    this->opr_sis = opr_sis;
 
 
-   this->Hdr_Determiner = new Header_File_Determiner * [8];
-   this->Src_Determiner = new Source_File_Determiner * [8];
+   this->Hdr_Determiner = new Header_File_Determiner * [16];
+   this->Src_Determiner = new Source_File_Determiner * [16];
 
-   for(int i=0;i<8;i++){
+   for(int i=0;i<16;i++){
    
        this->Hdr_Determiner[i] = new Header_File_Determiner(opr_sis);
 
@@ -61,7 +61,7 @@ void Project_Src_Code_Rdr::Clear_Dynamic_Memory(){
 
 void Project_Src_Code_Rdr::Clear_Thread_Objects_Memory(){
 
-     for(int i=0;i<8;i++){
+     for(int i=0;i<16;i++){
      
          if(this->Hdr_Determiner[i] != nullptr){
               
@@ -76,7 +76,7 @@ void Project_Src_Code_Rdr::Clear_Thread_Objects_Memory(){
      this->Hdr_Determiner = nullptr;
      
      
-     for(int i=0;i<8;i++){
+     for(int i=0;i<16;i++){
 
          if(this->Src_Determiner[i]!= nullptr){
 
@@ -95,7 +95,7 @@ void Project_Src_Code_Rdr::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
 
      this->Git_Data_Proc = ptr;
 
-     for(int i=0;i<8;i++){
+     for(int i=0;i<16;i++){
    
          this->Hdr_Determiner[i]->Receive_Git_Data_Processor(ptr);
      }
@@ -122,17 +122,17 @@ void Project_Src_Code_Rdr::Read_Project_Source_Code_Files(){
 
      size_t repo_size = this->FilePaths.size();      
 
-     if(repo_size >= 8){
+     if(repo_size >= 16){
      
-        int division = repo_size/8;
+        int division = repo_size/16;
         
-        for(int i=0;i<8;i++){
+        for(int i=0;i<16;i++){
 
             int str  = i*division;
 
             int end  = (i+1)*division;
 
-            if(i==7){
+            if(i==15){
 
                 end = repo_size;
             }
@@ -140,7 +140,7 @@ void Project_Src_Code_Rdr::Read_Project_Source_Code_Files(){
             this->threads[i] = std::thread(Project_Src_Code_Rdr::Read_Source_Code,this,i,str,end);     
         }
     
-        for(int i=0;i<8;i++){
+        for(int i=0;i<16;i++){
      
             this->threads[i].join();
         }
@@ -202,18 +202,20 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
             mt.lock();
 
             this->Src_Code_Dt.push_back(Temp);
-
+        
             this->CodeBase.insert(std::make_pair(file_sys_path,this->Src_Code_Dt.back()));
             
             this->CodeBase_Name.insert(std::make_pair(Temp.file_name,this->Src_Code_Dt.back()));
+
+            mt.unlock();
+
+
 
             this->Clear_Vector_Memory(&Temp.FileContent);
 
             this->Clear_String_Memory(&Temp.sys_path);
 
             this->Clear_String_Memory(&Temp.file_name);
-
-            mt.unlock();
          }
      } 
 }

@@ -276,14 +276,26 @@ bool Header_File_Determiner::Is_Header(std::string file_path){
 
      char header_add_hpp [] = ".hpp";
 
-     char source_file_ext [] = ".cpp";
+     char source_file_ext_cpp [] = ".cpp";
+
+     char source_file_ext_cc [] = ".cc";
+
+
+
 
      this->is_header_file = false;
 
-     if(this->StringManager.CheckStringInclusion(file_path,source_file_ext)){
+     if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_cpp)){
 
         return this->is_header_file;
      }
+
+     if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_cc)){
+
+        return this->is_header_file;
+     }
+
+
 
      this->is_header_file = this->StringManager.CheckStringInclusion(file_path,header_add_h);
 
@@ -301,10 +313,14 @@ bool Header_File_Determiner::Is_Header(std::string file_path){
           }
     }
 
+    /*
+
     if(this->Is_this_file_included_on_anywhere(file_path)){
 
        this->is_header_file = true;
     }
+
+    */
 
     return this->is_header_file;
 }

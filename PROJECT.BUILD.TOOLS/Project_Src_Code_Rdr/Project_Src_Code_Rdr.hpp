@@ -62,14 +62,14 @@ protected:
  void Receive_File_Paths();
  bool CompareString(std::string str1, std::string str2);
  void Determine_File_Name(std::string path, std::string & name);
- Cpp_FileOperations FileManager[8];
+ Cpp_FileOperations FileManager[16];
  std::vector<FileData> Src_Code_Dt;
  std::vector<std::string> FilePaths;
  Git_Data_Processor * Git_Data_Proc;
  Source_File_Determiner ** Src_Determiner;
  Header_File_Determiner ** Hdr_Determiner;
  char opr_sis;
- std::thread threads[8];
+ std::thread threads[16];
  std::mutex mtx;
  std::string File_Name;
  std::unordered_map<std::string, FileData> CodeBase;

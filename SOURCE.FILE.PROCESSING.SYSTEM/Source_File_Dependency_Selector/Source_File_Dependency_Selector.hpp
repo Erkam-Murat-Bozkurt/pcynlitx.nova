@@ -100,7 +100,7 @@ protected:
  Source_File_Information_Collector Info_Collector; 
  Dependency_Data_Extractor ** Dep_Data_Collectors;
  Project_Src_Code_Rdr * Code_Rd;
- std::vector<Source_File_Dependency> Dependent_List[8];
+ std::vector<Source_File_Dependency> Dependent_List[16];
  std::vector<Source_File_Dependency> Dependent_List_Buffer;
  std::vector<Source_File_Data> * Source_File_Data_Ptr;
  std::vector<std::vector<Source_File_Dependency>> Dependency_Data;
@@ -108,7 +108,7 @@ protected:
  std::string descriptor_file_path;
  StringOperator StringManager; 
  std::mutex mtx;
- std::thread threads[8];
+ std::thread threads[16];
  char opr_sis;
  int  header_file_number;
  bool Memory_Delete_Condition;

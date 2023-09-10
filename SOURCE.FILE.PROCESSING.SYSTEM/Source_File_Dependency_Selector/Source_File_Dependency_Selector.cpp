@@ -116,22 +116,28 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::st
         
         this->Clear_Vector_Memory(&this->Dependent_List[0]);  
    
-        if(list_size>8){
+        if(list_size>16){
 
-            int division = list_size/8;
+            int division = list_size/16;
 
-            for(int i=0;i<8;i++){
+            for(int i=0;i<16;i++){
 
                 int str  = i*division;
 
                 int end  = (i+1)*division;
                  
+
+                if(i==15){
+            
+                   end = list_size;
+                }
+
                 this->threads[i] 
                 
                 = std::thread(Source_File_Dependency_Selector::Process_Dependency_Data,this,i,str,end);     
             }
     
-            for(int i=0;i<8;i++){
+            for(int i=0;i<16;i++){
      
                 this->threads[i].join();
             }
@@ -170,18 +176,18 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
 
      size_t data_size = this->Source_File_Data_Ptr->size();
 
-     if(data_size>8){
+     if(data_size>16){
 
-       int division = data_size/8;
+       int division = data_size/16;
 
-       for(int i=0;i<8;i++){
+       for(int i=0;i<16;i++){
 
            int str  = i*division;
 
            int end  = (i+1)*division;
 
 
-           if(i==7){
+           if(i==15){
             
                end = data_size;
            }
@@ -191,7 +197,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
                 = std::thread(Source_File_Dependency_Selector::Extract_Dependency_Data,this,i,str,end);     
        }
     
-       for(int i=0;i<8;i++){
+       for(int i=0;i<16;i++){
      
           this->threads[i].join();
        }
@@ -567,9 +573,9 @@ void Source_File_Dependency_Selector::Print_Dependency_List()
 
 void Source_File_Dependency_Selector::Construct_Dependency_Data_Extractors(){
 
-     this->Dep_Data_Collectors = new Dependency_Data_Extractor * [8];   
+     this->Dep_Data_Collectors = new Dependency_Data_Extractor * [16];   
 
-     for(int i=0;i<8;i++){
+     for(int i=0;i<16;i++){
 
         this->Dep_Data_Collectors[i] = nullptr;
      }
@@ -635,7 +641,7 @@ void Source_File_Dependency_Selector::Clear_Dependency_Data_Extractors(){
 
      if(this->Dep_Data_Collectors!=nullptr){
 
-        for(int i=0;i<8;i++){
+        for(int i=0;i<16;i++){
 
             if(this->Dep_Data_Collectors[i]!= nullptr){
 
