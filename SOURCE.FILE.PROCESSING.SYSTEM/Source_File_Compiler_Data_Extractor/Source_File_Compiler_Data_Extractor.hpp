@@ -83,11 +83,10 @@ protected:
  Source_File_Dependency_Selector * Dep_Selector_Ptr;
  Source_File_Information_Collector * Info_Collector;
  CharOperator Char_Processor;
- Project_Files_Lister File_Lister;
  std::vector<std::vector<Source_File_Dependency>> * dep_data_ptr;
- std::vector<Compiler_Data> compiler_dt[8];
+ std::vector<Compiler_Data> compiler_dt[16];
  std::vector<Compiler_Data> compiler_data;
- std::thread threads[8];
+ std::thread threads[16];
  std::mutex mtx;
  Compiler_Data buffer;
  std::string warehouse_head_dir;

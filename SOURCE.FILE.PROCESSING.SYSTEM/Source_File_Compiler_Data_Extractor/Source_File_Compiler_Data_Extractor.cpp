@@ -24,9 +24,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Source_File_Compiler_Data_Extractor.hpp"
 
-Source_File_Compiler_Data_Extractor::Source_File_Compiler_Data_Extractor(char opr_sis) :
-
-    File_Lister(opr_sis)
+Source_File_Compiler_Data_Extractor::Source_File_Compiler_Data_Extractor(char opr_sis)
 {
 
    this->operating_sis = opr_sis;
@@ -41,8 +39,6 @@ Source_File_Compiler_Data_Extractor::~Source_File_Compiler_Data_Extractor()
 void Source_File_Compiler_Data_Extractor::Clear_Object_Memory(){
 
      this->Clear_Dynamic_Memory();
-
-     this->File_Lister.Clear_Dynamic_Memory();
 }
 
 void Source_File_Compiler_Data_Extractor::Clear_Dynamic_Memory(){
@@ -91,15 +87,6 @@ void Source_File_Compiler_Data_Extractor::Clear_Data_Memory(std::vector<Compiler
 // THE CLASS INPUT FUNCTIONS
 
 
-void Source_File_Compiler_Data_Extractor::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
-
-     this->File_Lister.Receive_Git_Data_Processor(ptr);
-
-     this->File_Lister.Determine_Git_Repo_Info();         // Project_Files_Lister instance
-}
-
-
-
 void Source_File_Compiler_Data_Extractor::Receive_Dependency_Data(Source_File_Dependency_Selector * ptr)
 {
      this->Dep_Selector_Ptr = ptr;
@@ -137,17 +124,17 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){
      
      this->dep_data_ptr->shrink_to_fit();
 
-     if(dt_size >= 8)
+     if(dt_size >= 16)
      {   
-        int division = dt_size/8;
+        int division = dt_size/16;
         
-        for(int i=0;i<8;i++){
+        for(int i=0;i<16;i++){
 
             int str  = i*division;
 
             int end  = (i+1)*division;
 
-            if(i==7){
+            if(i==15){
             
                end = dt_size;
             }
@@ -158,13 +145,13 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){
                             this,i,str,end);     
         }
     
-        for(int i=0;i<8;i++){
+        for(int i=0;i<16;i++){
      
             this->threads[i].join();
         }
 
 
-        for(int i=0;i<8;i++){                     
+        for(int i=0;i<16;i++){                     
         
             size_t d_size = this->compiler_dt[i].size();
 
@@ -360,33 +347,6 @@ void Source_File_Compiler_Data_Extractor::Extract_Src_Name_Without_Extention(std
 }
 
 
-void Source_File_Compiler_Data_Extractor::is_this_independent_header(std::string header_name, 
-
-bool & is_ind)
-
-{
-     is_ind = false;
-
-     int ind_header_num = this->File_Lister.Get_Indenpendent_Header_Files_Number();
-          
-     for(int i=0;i<ind_header_num;i++){
-
-         std::string ind_header_path = this->File_Lister.Get_Independent_Header_File(i);
-
-         std::string ind_header = "";
-
-         this->Extract_Header_File_Name_From_Path(&ind_header,ind_header_path);
-
-         bool is_equal = this->Char_Processor.CompareString(header_name,ind_header);
-
-         if(is_equal){
-
-            is_ind = true;
-
-            break;
-         }
-      }
-}
 
 
 void Source_File_Compiler_Data_Extractor::Extract_Header_File_Name_From_Path(std::string * name,

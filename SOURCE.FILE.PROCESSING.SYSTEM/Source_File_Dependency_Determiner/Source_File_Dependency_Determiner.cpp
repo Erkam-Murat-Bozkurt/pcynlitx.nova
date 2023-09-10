@@ -85,8 +85,6 @@ void Source_File_Dependency_Determiner::Receive_Git_Data_Processor(Git_Data_Proc
 
      this->Src_Processor.Receive_Source_Code_Reader(&this->Code_Rd); 
 
-     this->Com_Data_Extractor.Receive_Git_Data_Processor(ptr);
-
      this->DepSelector.Receive_Git_Data_Processor(ptr);
 
      this->DepSelector_For_Single_File.Receive_Git_Data_Processor(ptr);
