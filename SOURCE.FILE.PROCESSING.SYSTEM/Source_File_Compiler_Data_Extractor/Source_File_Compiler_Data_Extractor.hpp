@@ -45,6 +45,8 @@ struct Compiler_Data
   std::string  source_file_name;
   std::string  object_file_name;
   std::string  source_file_name_witout_ext;
+  std::string  src_git_record_dir;
+  std::string  src_sys_dir;
   std::vector<std::string> dependent_headers;
   std::vector<std::string> dependent_headers_paths;
   std::vector<std::string> dependent_headers_dir;
@@ -59,7 +61,6 @@ public:
  virtual ~Source_File_Compiler_Data_Extractor();
  void Receive_Single_File_Dependency_Data(Source_File_Dependency_Selector_For_Single_File * ptr);
  void Receive_Dependency_Data(Source_File_Dependency_Selector * ptr);
- void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Extract_Compiler_Data();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
@@ -82,7 +83,6 @@ protected:
  Source_File_Dependency_Selector_For_Single_File * Dep_Selector_For_Single_File_Ptr;
  Source_File_Dependency_Selector * Dep_Selector_Ptr;
  Source_File_Information_Collector * Info_Collector;
- CharOperator Char_Processor;
  std::vector<std::vector<Source_File_Dependency>> * dep_data_ptr;
  std::vector<Compiler_Data> compiler_dt[16];
  std::vector<Compiler_Data> compiler_data;

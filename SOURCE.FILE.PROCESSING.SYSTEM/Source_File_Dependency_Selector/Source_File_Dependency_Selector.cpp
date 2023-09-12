@@ -56,6 +56,8 @@ Source_File_Dependency_Selector::~Source_File_Dependency_Selector()
 void Source_File_Dependency_Selector::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
 
      this->Info_Collector.Receive_Git_Data_Processor(ptr);
+
+     this->Git_Data_Proc = ptr;
 }
 
 
@@ -89,79 +91,7 @@ bool Source_File_Dependency_Selector::Is_Header_File(std::string hpath){
 
 
 
-
 /* THE MEMBER FUNCTIONS PERFORMING MAIN OPERATIONS  */
-
-void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(std::string path)
-{
-     this->Clear_Dynamic_Memory();
-
-     this->Info_Collector.Clear_Dynamic_Memory();
-
-
-     this->Extract_Dependency_Tree(path,0);
-     
-
-     this->Set_Included_Header_Number(&this->Dependent_List[0]);
-
-     this->Dependency_Data.push_back(this->Dependent_List[0]);
- 
-     this->Dependency_Data.shrink_to_fit();
-
-     size_t list_size = this->Dependent_List[0].size();
-
-     if(list_size>0){
-
-        this->Dependent_List_Buffer = this->Dependent_List[0];
-        
-        this->Clear_Vector_Memory(&this->Dependent_List[0]);  
-   
-        if(list_size>16){
-
-            int division = list_size/16;
-
-            for(int i=0;i<16;i++){
-
-                int str  = i*division;
-
-                int end  = (i+1)*division;
-                 
-
-                if(i==15){
-            
-                   end = list_size;
-                }
-
-                this->threads[i] 
-                
-                = std::thread(Source_File_Dependency_Selector::Process_Dependency_Data,this,i,str,end);     
-            }
-    
-            for(int i=0;i<16;i++){
-     
-                this->threads[i].join();
-            }
-        }
-        else{
-
-            this->Process_Dependency_Data(0,0,list_size);
-        }
-
-        this->Clear_Vector_Memory(&this->Dependent_List_Buffer);
-     }
-
-     // THE DEPENDENCIES COLLECTED FOR THE ROOT PATH
-
-     this->Info_Collector.Clear_Dynamic_Memory();  
-
-     this->Clear_Dependency_Data_Extractors();
-
-     this->Dependency_Data.shrink_to_fit();
-}
-
-
-
-
 
 void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
 
@@ -216,45 +146,6 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
 
 
 
-void Source_File_Dependency_Selector::Process_Dependency_Data(int thr_num, int start, int end)
-{    
-
-     std::unique_lock<std::mutex> mt(this->mtx);
-
-     mt.unlock();
-
-
-     for(size_t i=start;i<end;i++){
-
-         Source_File_Dependency Data = this->Dependent_List_Buffer.at(i);
-
-         std::string sub_path = Data.header_sys_path;
-         
-         this->Extract_Dependency_Tree(sub_path,thr_num);
-
-
-
-         mt.lock();
-
-         this->Set_Included_Header_Number(&this->Dependent_List[thr_num]);
-
-         this->Dependency_Data.push_back(this->Dependent_List[thr_num]);
-
-         this->Dependency_Data.shrink_to_fit();
-
-         mt.unlock();
-
-
-
-         this->Clear_Vector_Memory(&this->Dependent_List[thr_num]);  
-    }
-}
-
-
-
-
-
-
 void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int start, int end){
 
      std::unique_lock<std::mutex> mt(this->mtx);
@@ -264,6 +155,8 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int s
      for(size_t i=start;i<end;i++){
      
          std::string path =this->Source_File_Data_Ptr->at(i).system_path;
+
+
 
          this->Extract_Dependency_Tree(path,thr_num);
 
@@ -330,11 +223,12 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
 
      std::string path, std::string header_name){
     
-     std::string src_file_name, wrd_path, hdr_sys_path, file_dir, object_file_name;
+     std::string src_file_name, wrd_path, hdr_sys_path, file_dir, object_file_name,
+     
+     src_git_record_dir, file_name_without_ext, src_sys_dir;
 
      FileData * Data = this->Code_Rd->Find_File_Data_From_Name(header_name);
 
-     
 
      std::string file_path = Data->sys_path;
 
@@ -342,12 +236,20 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
 
      this->Extract_File_Name_From_Path(&src_file_name,path);
 
+     this->Determine_Git_Record_Source_File_Directory(path,src_git_record_dir);
+
+     this->Determine_File_Name_Without_Ext(path,file_name_without_ext);
 
      this->Determine_Header_Repo_Warehouse_Path(&wrd_path,header_name,'w');
 
      this->Determine_Header_System_Path(hdr_sys_path,header_name);
 
      this->Determine_Object_File_Name(object_file_name,src_file_name);
+
+     this->Extract_Directory_From_Path(path,src_sys_dir);
+
+
+
 
      this->Place_String(&data.source_file_name,src_file_name);
 
@@ -361,7 +263,15 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
 
      this->Place_String(&data.dir,file_dir);
 
+     this->Place_String(&data.source_file_name_without_ext,file_name_without_ext);
+
+     this->Place_String(&data.src_git_record_dir,src_git_record_dir);
+
+     this->Place_String(&data.src_sys_dir,src_sys_dir);
+
      this->Place_String(&data.object_file_name,object_file_name);
+
+     
 
      data.rcr_srch_complated= true;
 
@@ -413,6 +323,135 @@ void Source_File_Dependency_Selector::Extract_Directory_From_Path(std::string pa
     }
 
     dir.shrink_to_fit();    
+}
+
+
+
+void Source_File_Dependency_Selector::Determine_File_Name_Without_Ext(std::string path, std::string & file_name)
+{
+     size_t file_path_size = path.length();
+
+     size_t dir_size = file_path_size;
+
+     size_t file_extention_start_point = file_path_size;
+
+
+    for(size_t i=file_path_size;i>0;i--){
+
+        if((path[i] == '/') || (path[i] == '\\')){
+
+            break;
+        }
+        else{
+
+              dir_size--;
+        }
+     }
+
+     for(size_t i=file_path_size;i>0;i--){
+
+         if(path[i] == '.'){
+
+           break;
+         }
+            else{
+
+                file_extention_start_point--;
+          }
+
+          if(file_extention_start_point <= dir_size){
+
+             file_extention_start_point = dir_size;
+          }
+     }
+
+     size_t file_name_size = 0;
+
+     if(file_extention_start_point <= dir_size){
+
+        file_name_size = file_path_size - dir_size;
+
+        // It is the case in which the file does not have extenton
+     }
+
+     if(file_extention_start_point > dir_size){
+
+        file_name_size = file_extention_start_point - dir_size;
+     }
+
+
+     size_t name_start_point = 0;
+
+     if(dir_size != 0){
+
+        name_start_point = dir_size +1;
+     }
+
+     for(size_t i=name_start_point;i<file_extention_start_point;i++){
+
+         file_name.push_back(path[i]);
+     }
+}
+
+
+void Source_File_Dependency_Selector::Determine_Git_Record_Source_File_Directory(std::string git_record_system_path, 
+
+     std::string & record_dir)     
+    {
+
+     size_t path_size = git_record_system_path.length();
+
+     size_t dir_size = path_size;
+
+     size_t end_point = 0;
+
+     for(int i=path_size;i>0;i--){
+
+         if(this->opr_sis =='w'){
+
+           if(git_record_system_path[i] == '\\'){
+
+             end_point = i;
+
+             break;
+           }
+         }
+
+         if(this->opr_sis =='l'){
+
+           if(git_record_system_path[i] == '/'){
+
+             end_point = i;
+
+             break;
+           }
+         }
+     }
+
+
+
+     std::string dir = this->Git_Data_Proc->Get_Git_Repo_Directory();
+
+
+     size_t repo_dir_size = dir.length();
+
+     size_t start_point = repo_dir_size;
+
+     char start_point_character = git_record_system_path[start_point];
+
+     if(((start_point_character == '\\' )
+
+         || (start_point_character== '/' ))){
+
+         start_point++;
+     }
+
+     for(size_t i=start_point;i<end_point;i++){
+
+         record_dir.push_back(git_record_system_path[i]) ;
+     }
+
+     record_dir.shrink_to_fit();
 }
 
 

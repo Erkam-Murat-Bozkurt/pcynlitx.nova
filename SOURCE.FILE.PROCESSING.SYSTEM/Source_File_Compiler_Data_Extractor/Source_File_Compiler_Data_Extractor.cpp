@@ -107,12 +107,6 @@ void Source_File_Compiler_Data_Extractor::Receive_Single_File_Dependency_Data(So
 }
 
 
-
-
-
-
-
-
 /**** THE CLASS MEMBER FUNTIONS PERFORMING MAIN OPERATIONS  ***************************************/
 
 
@@ -233,7 +227,6 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Threa
 
 void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int start, int end){
     
-
      for(std::size_t i=start;i<end;i++){
 
          std::vector<Source_File_Dependency> * src_ptr = &this->dep_data_ptr->at(i);
@@ -252,14 +245,15 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
 
             buffer.priority = data_size;
   
-           
-      
+
+            buffer.src_git_record_dir = src_ptr->at(0).src_git_record_dir;
+
+            buffer.source_file_name_witout_ext = src_ptr->at(0).source_file_name_without_ext; 
+
+            buffer.src_sys_dir = src_ptr->at(0).src_sys_dir;
+
 
             this->Extract_Obj_File_Name_From_File_Name(&(buffer.object_file_name),
-            
-                buffer.source_file_name);
-
-            this->Extract_Src_Name_Without_Extention(&buffer.source_file_name_witout_ext,
             
                 buffer.source_file_name);
 
@@ -401,6 +395,11 @@ void Source_File_Compiler_Data_Extractor::Clear_Buffer_Memory(Compiler_Data * pt
      this->Clear_String_Memory(&ptr->object_file_name);
 
      this->Clear_String_Memory(&ptr->source_file_name_witout_ext);
+
+     this->Clear_String_Memory(&ptr->src_git_record_dir);
+
+     this->Clear_String_Memory(&ptr->src_sys_dir);
+
 }
 
 

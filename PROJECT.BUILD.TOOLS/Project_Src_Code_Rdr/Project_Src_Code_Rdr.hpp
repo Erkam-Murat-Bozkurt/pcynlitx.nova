@@ -60,7 +60,6 @@ protected:
  void Delete_Spaces_on_String(std::string * str);
  void Read_Source_Code_Single_Thread();
  void Receive_File_Paths();
- bool CompareString(std::string str1, std::string str2);
  void Determine_File_Name(std::string path, std::string & name);
  Cpp_FileOperations FileManager[16];
  std::vector<FileData> Src_Code_Dt;

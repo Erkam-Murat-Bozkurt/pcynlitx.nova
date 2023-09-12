@@ -95,17 +95,6 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile("\n");
 
 
-     /*
-
-     this->FileManager.WriteToFile("$Project_Headers=\"");
-
-     this->FileManager.WriteToFile(this->headers_locations);
-
-     this->FileManager.WriteToFile("\"");
-
-     this->FileManager.WriteToFile("\n");
-
-     */
 
      this->FileManager.WriteToFile("\n");
 

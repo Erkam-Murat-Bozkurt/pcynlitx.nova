@@ -46,6 +46,9 @@ struct Source_File_Dependency
 {
   bool rcr_srch_complated;
   std::string source_file_name; // The header file which its dependencies are researched 
+  std::string source_file_name_without_ext;
+  std::string src_git_record_dir;
+  std::string src_sys_dir;
   std::string source_file_path;
   std::string Header_Name;
   std::string header_sys_path;
@@ -97,9 +100,13 @@ protected:
  void Process_Dependency_Data(int thr_num, int start, int end);
  void Clear_Dependency_Data_Extractors();
  void Construct_Dependency_Data_Extractors();
+ void Determine_Git_Record_Source_File_Directory( std::string git_record_system_path, 
+ std::string & record_dir);
+ void Determine_File_Name_Without_Ext(std::string path, std::string & file_name);
  Source_File_Information_Collector Info_Collector; 
  Dependency_Data_Extractor ** Dep_Data_Collectors;
  Project_Src_Code_Rdr * Code_Rd;
+ Git_Data_Processor * Git_Data_Proc;
  std::vector<Source_File_Dependency> Dependent_List[16];
  std::vector<Source_File_Dependency> Dependent_List_Buffer;
  std::vector<Source_File_Data> * Source_File_Data_Ptr;

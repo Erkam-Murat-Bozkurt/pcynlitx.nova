@@ -58,8 +58,7 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) :
 
     this->Script_Writer.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
-    this->Script_Writer.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
-
+    this->Script_Writer.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);    
 }
 
 Build_Tools_Initializer::~Build_Tools_Initializer(){

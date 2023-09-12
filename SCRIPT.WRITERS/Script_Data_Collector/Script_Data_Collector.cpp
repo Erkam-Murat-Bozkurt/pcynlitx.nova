@@ -61,7 +61,7 @@ void Script_Data_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reade
 
 void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script_Data * ptr,
 
-     std::string header_name){
+     std::string source_file_name){
 
      ptr->warehouse_path = this->warehouse_path;
 
@@ -69,32 +69,27 @@ void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script
      int record_index = 0;
 
 
-
-     Build_System_Data * Bld_Data = this->Dir_Lister.Get_Build_System_Data(header_name);
-
-
-     std::string git_record_dir = Bld_Data->git_record_dir;
-
+     std::string git_record_dir = this->Cmp_Data_Ptr->src_git_record_dir;
 
      this->Place_String(&ptr->source_file_git_record_dir,git_record_dir);
 
 
-     std::string src_file_name = Bld_Data->File_Name_With_Ext;
 
+     std::string src_file_name = this->Cmp_Data_Ptr->source_file_name;
 
      this->Place_String(&ptr->source_file_name,src_file_name);
 
 
-          std::string src_dir = Bld_Data->File_Directory;
 
+     std::string src_dir = this->Cmp_Data_Ptr->src_sys_dir;
 
      this->Place_String(&ptr->source_file_dir,src_dir);
 
 
-     std::string src_name_without_ext = Bld_Data->File_Name;
+     std::string src_name_without_ext = this->Cmp_Data_Ptr->source_file_name_witout_ext;
 
      this->Place_String(&ptr->src_name_without_ext,src_name_without_ext);
-
+     
 
 
      size_t src_name_size = src_file_name.length();
