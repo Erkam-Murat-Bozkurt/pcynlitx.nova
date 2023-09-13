@@ -45,14 +45,9 @@ protected:
  Script_Data_Collector Data_Collector;
  Source_File_Dependency_Determiner * Dep_Determiner;
  Descriptor_File_Reader * Des_Reader;
- Cpp_FileOperations FileManager;
- CharOperator CString_Proccessor;
  std::vector<Script_Data> Data;
  Script_Data Temp_Data;
- std::string String_Line;
  std::string warehouse_path;
- std::string project_repo_dir;
- std::string script_path;
  int source_file_num;
  bool Memory_Delete_Condition;
 };

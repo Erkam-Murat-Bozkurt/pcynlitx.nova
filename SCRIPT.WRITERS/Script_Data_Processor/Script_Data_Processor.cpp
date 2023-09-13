@@ -121,25 +121,6 @@ std::vector<Script_Data> *  Script_Data_Processor::Get_Script_Data_Address(){
      return &this->Data;
 }
 
-Script_Data Script_Data_Processor::Get_SrcFile_Script_Data(char * file_name){
-
-     for(int i=0;i<this->source_file_num;i++){
-
-         std::string src_file_name = this->Data.at(i).source_file_name;
-
-         bool is_equal = this->CString_Proccessor.CompareString(src_file_name,file_name);
-
-         if(is_equal){
-
-            return this->Data.at(i);
-         }
-     }
-
-     std::cout << "\n There is no any script data for ";
-     std::cout << file_name;
-
-     exit(0);
-}
 
 int Script_Data_Processor::Get_Source_File_Number(){
 

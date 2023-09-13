@@ -49,7 +49,6 @@ protected:
  std::string Repo_Rood_Dir;
  std::string object_files_location;
  std::string compiler_output_location;
- std::string headers_locations;
  std::string script_path;
  std::string warehouse_path;
  int source_file_num;
