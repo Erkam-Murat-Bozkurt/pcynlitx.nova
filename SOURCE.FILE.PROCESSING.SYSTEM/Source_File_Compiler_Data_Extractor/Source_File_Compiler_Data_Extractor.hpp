@@ -87,7 +87,6 @@ protected:
  std::vector<Compiler_Data> compiler_dt[16];
  std::vector<Compiler_Data> compiler_data;
  std::thread threads[16];
- std::mutex mtx;
  Compiler_Data buffer;
  std::string warehouse_head_dir;
  std::string warehouse_obj_dir;

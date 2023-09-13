@@ -174,19 +174,30 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Threa
      
      for(std::size_t i= 0;i<dt_size;i++){
 
-         std::vector<Source_File_Dependency> * hdr_ptr = &this->dep_data_ptr->at(i);
+         std::vector<Source_File_Dependency> * src_ptr = &this->dep_data_ptr->at(i);
 
-         hdr_ptr->shrink_to_fit();
+         src_ptr->shrink_to_fit();
 
-         size_t data_size = hdr_ptr->size();
+         size_t data_size = src_ptr->size();
 
          Compiler_Data buffer;
 
          if(data_size>0){
 
-            buffer.source_file_name = hdr_ptr->at(0).source_file_name;
+            buffer.source_file_name = src_ptr->at(0).source_file_name;
 
-            buffer.source_file_path = hdr_ptr->at(0).source_file_path;
+            buffer.source_file_path = src_ptr->at(0).source_file_path;
+
+
+            buffer.priority = data_size;
+  
+
+            buffer.src_git_record_dir = src_ptr->at(0).src_git_record_dir;
+
+            buffer.source_file_name_witout_ext = src_ptr->at(0).source_file_name_without_ext; 
+
+            buffer.src_sys_dir = src_ptr->at(0).src_sys_dir;
+
 
 
             this->Extract_Obj_File_Name_From_File_Name(&(buffer.object_file_name),
@@ -198,11 +209,11 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Threa
 
             for(size_t k=0;k<data_size;k++){
             
-                std::string hdr_name = hdr_ptr->at(k).Header_Name;
+                std::string hdr_name = src_ptr->at(k).Header_Name;
 
-                std::string hdr_path = hdr_ptr->at(k).repo_warehouse_path;
+                std::string hdr_path = src_ptr->at(k).repo_warehouse_path;
 
-                std::string hdr_dir =  hdr_ptr->at(k).dir;            
+                std::string hdr_dir =  src_ptr->at(k).dir;            
                             
                 buffer.dependent_headers_dir.push_back(hdr_dir);
 
@@ -223,6 +234,8 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Threa
 
       this->compiler_data.shrink_to_fit();
 }
+
+
 
 
 void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int start, int end){
@@ -316,69 +329,6 @@ void Source_File_Compiler_Data_Extractor::Extract_Obj_File_Name_From_File_Name(s
      object_name->push_back('o');
 
      object_name->shrink_to_fit();
-}
-
-
-void Source_File_Compiler_Data_Extractor::Extract_Src_Name_Without_Extention(std::string * src_name_without_ext,
-
-     std::string file_name){
-
-     size_t name_size = file_name.length();
-
-     for(size_t i=0;i<name_size;i++){
-
-         if(file_name[i] == '.'){
-
-            break;
-         }
-         else{
-
-               src_name_without_ext->push_back(file_name[i]);
-         }
-     }
-
-     src_name_without_ext->shrink_to_fit();
-}
-
-
-
-
-void Source_File_Compiler_Data_Extractor::Extract_Header_File_Name_From_Path(std::string * name,
-
-     std::string path)
-{
-     size_t string_size = path.length();
-
-     size_t header_name_size = 0;
-
-     for(size_t i = string_size;i>0;i--){
-
-         if(this->operating_sis == 'w'){
-
-            if(path[i] == '\\'){
-
-               break;
-            }
-          }
-          else{
-
-             if(path[i] == '/'){
-
-                break;
-              }
-          }
-
-          header_name_size++;
-      }
-
-      size_t start_point = string_size - header_name_size + 1;
-
-      for(size_t i = start_point;i<string_size;i++){
-
-           name->push_back(path[i]);
-      }
-
-      name->shrink_to_fit();
 }
 
 

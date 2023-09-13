@@ -83,10 +83,14 @@ protected:
  void Clear_Dependency_Data_Extractors();
  void Construct_Dependency_Data_Extractors();
  void Determine_Object_File_Name(std::string & obj_name, std::string src_name);
+ void Determine_Git_Record_Source_File_Directory( std::string git_record_system_path, 
+ std::string & record_dir);
+ void Determine_File_Name_Without_Ext(std::string path, std::string & file_name);
  Source_File_Information_Collector_For_Single_File Info_Collector; 
  Dependency_Data_Extractor ** Dep_Data_Collectors;
  Project_Src_Code_Rdr * Code_Rd;
- std::vector<Source_File_Dependency> Dependent_List[8];
+ Git_Data_Processor * Git_Data_Proc;
+ std::vector<Source_File_Dependency> Dependent_List[16];
  std::vector<Source_File_Dependency> Dependent_List_Buffer;
  std::vector<Source_File_Data> * Source_File_Data_Ptr;
  std::vector<std::vector<Source_File_Dependency>> Dependency_Data;
@@ -94,7 +98,7 @@ protected:
  std::string descriptor_file_path;
  StringOperator StringManager; 
  std::mutex mtx;
- std::thread threads[8];
+ std::thread threads[16];
  char opr_sis;
  int  header_file_number;
  bool Memory_Delete_Condition;

@@ -114,13 +114,11 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
      this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
 
-      this->Construct_Dependency_Map();
+     this->Construct_Dependency_Map();
 
-      this->Re_Arrange_Priorities();
+     this->Re_Arrange_Priorities();
 
-
-      this->Order_Priorities();
-
+     this->Order_Priorities();
 
      this->Clear_Dynamic_Memory();
 }
