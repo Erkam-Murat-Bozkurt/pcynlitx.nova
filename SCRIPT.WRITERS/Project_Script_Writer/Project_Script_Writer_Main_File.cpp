@@ -50,8 +50,6 @@ int main(int argc, char ** argv){
 
     Script_Writer.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
 
-    Script_Writer.Receive_Git_Data_Processor(&Data_Processor);
-
     Script_Writer.Receive_Descriptor_File_Reader(&Des_File_Reader);
 
     Script_Writer.Build_Compiler_Script();

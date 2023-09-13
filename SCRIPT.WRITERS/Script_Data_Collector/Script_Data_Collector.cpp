@@ -4,13 +4,9 @@
 #include "Script_Data_Collector.hpp"
 
 
-Script_Data_Collector::Script_Data_Collector(char opr_sis) :
-  
-     Dir_Lister(opr_sis)
+Script_Data_Collector::Script_Data_Collector(char opr_sis) 
 {
      this->Memory_Delete_Condition = false;
-
-     this->Src_Data_Pointer = nullptr;
 
      this->opr_sis = opr_sis;
 }
@@ -23,23 +19,8 @@ Script_Data_Collector::~Script_Data_Collector()
 
       this->Memory_Delete_Condition = true;
 
-      this->Dir_Lister.Clear_Dynamic_Memory();      
    }
 }
-
-
-
-void Script_Data_Collector::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
-
-     this->Git_Data_Proc = ptr;
-
-     this->Dir_Lister.Receive_Git_Data_Processor(ptr);
-
-     this->Dir_Lister.Determine_Git_Repo_Info();
-
-     this->Build_Dt = this->Dir_Lister.Get_Build_System_Data_Address();
-}
-
 
 
 void Script_Data_Collector::Receive_Compiler_Data(Compiler_Data * ptr){
@@ -188,150 +169,6 @@ void Script_Data_Collector::Determine_Make_File_Name(Script_Data * ptr){
 }
 
 
-
-
-void Script_Data_Collector::Find_Data_Record_Index(std::string header_name, int & index){
-
-     size_t data_size = this->Build_Dt->size();
-
-     bool directory_determination = false;
-
-     for(size_t i=0;i<data_size;i++){
-
-         std::string search_name;
-
-         this->Find_File_Name(header_name,search_name);
-
-         std::string FileName = this->Build_Dt->at(i).File_Name;
-
-         bool is_equal = this->CompareString(search_name,FileName);
-
-         if(is_equal){
-         
-            index = i;
-
-            directory_determination = true;
-
-            break;
-         }
-     }
-
-     if(!directory_determination){
-     
-         std::cout << "\n Inside Script_Data_Collector::Find_Data_Record_Index";
-
-         std::cout << "\n The record index of the file which is named as \"" << header_name << "\""; 
-
-         std::cout << "\n  can not be determined";
-
-    
-
-         exit(EXIT_FAILURE);     
-     }
-}
-
-
-
-void Script_Data_Collector::Find_File_Name(std::string name_ext, std::string & name){
-
-     size_t name_size = name_ext.length();
-
-     for(size_t i=0;i<name_size;i++){
-     
-         if(name_ext[i] != '.'){
-         
-            name.push_back(name_ext[i]);
-         }         
-         else{
-         
-            break;
-         }         
-     }
-}
-
-void Script_Data_Collector::Find_Git_Record_Dir(std::string header_name, std::string & dir){
-
-     size_t data_size = this->Build_Dt->size();
-
-     bool directory_determination = false;
-
-     for(size_t i=0;i<data_size;i++){
-     
-         std::string FileName = this->Build_Dt->at(i).File_Name_With_Ext;
-
-         std::string head_name = this->Build_Dt->at(i).class_header_file_name;
-
-         bool is_equal = this->CompareString(head_name,header_name);
-
-         if(is_equal){
-         
-            dir = this->Build_Dt->at(i).git_record_dir;
-
-            directory_determination = true;
-
-            break;
-         }
-     }
-
-     if(!directory_determination){
-     
-         std::cout << "\n Inside Script_Data_Collector::Find_Git_Record_Dir";
-
-         std::cout << "\n Git record directory can not be determined";
-
-         exit(EXIT_FAILURE);     
-     }
-}
-
-
-bool Script_Data_Collector::CompareString(std::string firstString, 
-
-     std::string secondString){
-
-     size_t firstStringLength  = firstString.length();
-
-     size_t secondStringLength = secondString.length();
-
-     if(firstStringLength==secondStringLength){
-
-        for(size_t i=0;i<firstStringLength;i++){
-
-            if(firstString[i]!=secondString[i]){
-
-               this->isStringsEqual = false;
-
-               return this->isStringsEqual;
-            }
-        }
-
-        this->isStringsEqual = true;
-
-        return this->isStringsEqual;
-     }
-     else{
-
-            this->isStringsEqual = false;
-
-            return this->isStringsEqual;
-     }
-}
-
-void Script_Data_Collector::Clear_Data_Memory(Script_Data * ptr, int src_num){
-
-     ptr->dependency = 0;
-
-     this->Clear_String_Memory(&ptr->object_file_name);
-
-     this->Clear_String_Memory(&ptr->object_file_path);
-
-     this->Clear_String_Memory(&ptr->object_file_name);
-
-     this->Clear_String_Memory(&ptr->source_file_name);
-
-     this->Clear_String_Memory(&ptr->make_file_name);
-}
-
-
 void Script_Data_Collector::Place_String(std::string * pointer, std::string string){
 
      size_t string_size = string.length();
@@ -344,40 +181,3 @@ void Script_Data_Collector::Place_String(std::string * pointer, std::string stri
      pointer->shrink_to_fit();
 }
 
-
-  void Script_Data_Collector::Clear_Vector_Memory(std::vector<std::string> * pointer){
-
-       if(!pointer->empty()){
-
-           std::vector<std::string>::iterator it;
-
-           auto begin = pointer->begin();
-
-           auto end   = pointer->end();
-
-           for(auto it=begin;it<end;it++){
-
-               if(!it->empty()){
-
-                   it->clear();
-
-                   it->shrink_to_fit();
-               }
-            }
-
-           pointer->clear();
-
-           pointer->shrink_to_fit();
-       }
-  }
-
-
-void Script_Data_Collector::Clear_String_Memory(std::string * pointer){
-
-     if(!pointer->empty()){
-
-         pointer->clear();
-
-         pointer->shrink_to_fit();
-      }
-}

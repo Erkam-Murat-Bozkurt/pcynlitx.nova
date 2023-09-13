@@ -30,7 +30,6 @@ public:
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * ptr);
  void Process_Script_Data();
- void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  Script_Data Get_SrcFile_Script_Data(char * file_git_path);
  std::vector<Script_Data> * Get_Script_Data_Address();
  int  Get_Source_File_Number();

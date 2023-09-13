@@ -33,10 +33,6 @@ void Executable_MakeFile_Script_Builder::Receive_Source_File_Dependency_Determin
      this->Src_Data_Processor.Receive_Source_File_Dependency_Determiner(ptr);
 }
 
-void Executable_MakeFile_Script_Builder::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
-     
-     this->Src_Data_Processor.Receive_Git_Data_Processor(ptr);   
-}
 
 void Executable_MakeFile_Script_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
 

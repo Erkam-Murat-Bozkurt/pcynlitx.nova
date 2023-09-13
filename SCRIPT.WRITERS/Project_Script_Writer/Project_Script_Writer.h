@@ -26,7 +26,6 @@ public:
  Project_Script_Writer(char opr_sis);
  virtual ~Project_Script_Writer();
  void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * ptr);
- void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader* ptr);
  void Build_Compiler_Script();
  void Clear_Dynamic_Memory();

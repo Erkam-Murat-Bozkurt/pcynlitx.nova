@@ -28,7 +28,6 @@ public:
  virtual ~Executable_MakeFile_Script_Builder();
  void Receive_File_System_Path(char * file_sys_path);
  void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * ptr);
- void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader* ptr);
  void Receive_Construction_Directory_Path(std::string path);
  void Receive_Exe_File_Name(char * exe_file_name);

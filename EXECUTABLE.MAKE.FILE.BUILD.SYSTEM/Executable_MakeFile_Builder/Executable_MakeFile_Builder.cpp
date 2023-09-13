@@ -102,8 +102,6 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
 
      this->Script_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
-     this->Script_Builder.Receive_Git_Data_Processor(&this->Git_Data_Proc);
-
      this->Script_Builder.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
 
      this->Script_Builder.Build_Compiler_Script_For_Executable_File(mn_src_path);

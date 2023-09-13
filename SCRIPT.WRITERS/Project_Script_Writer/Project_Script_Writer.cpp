@@ -32,10 +32,6 @@ void Project_Script_Writer::Receive_Source_File_Dependency_Determiner(Source_Fil
      this->Src_Data_Processor.Receive_Source_File_Dependency_Determiner(ptr);
 }
 
-void Project_Script_Writer::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
-     
-     this->Src_Data_Processor.Receive_Git_Data_Processor(ptr);   
-}
 
 void Project_Script_Writer::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
 
@@ -170,8 +166,6 @@ void Project_Script_Writer::Write_The_Project_Script(){
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("\n");
-
-         //this->FileManager.WriteToFile("Write-Output \"\"");
 
          this->FileManager.WriteToFile("\n");
 
