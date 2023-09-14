@@ -24,9 +24,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Make_File_Cleaner.hpp"
 
-Make_File_Cleaner::Make_File_Cleaner(char * DesPath, char opr_sis) :
-
-  File_Lister(opr_sis)
+Make_File_Cleaner::Make_File_Cleaner(char * DesPath, char opr_sis)
 {
    this->Memory_Delete_Condition = false;
 
@@ -49,26 +47,22 @@ void Make_File_Cleaner::Clear_Dynamic_Memory(){
      if(!this->Memory_Delete_Condition){
 
          this->Memory_Delete_Condition = true;
-
-         this->File_Lister.Clear_Dynamic_Memory();
      }
 }
 
+void Make_File_Cleaner::Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr){
 
-void Make_File_Cleaner::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
-     
-     this->File_Lister.Receive_Git_Data_Processor(ptr);
-
-     this->File_Lister.Determine_Git_Repo_Info();
+     this->Compiler_Data_Pointer = ptr;
 }
+
 
 void Make_File_Cleaner::Clear_Make_Files_Exist_On_Repo(){
 
-     int src_file_num = this->File_Lister.Get_Source_File_Number();
+     size_t Data_Size = this->Compiler_Data_Pointer->size();
+     
+     for(int i=0;i<Data_Size;i++){
 
-     for(int i=0;i<src_file_num;i++){
-
-         std::string dir =  this->File_Lister.Get_Source_File_Directory(i);
+         std::string dir = this->Compiler_Data_Pointer->at(i).src_sys_dir;
 
          this->Enumerator.List_Files_On_Directory(dir);
 

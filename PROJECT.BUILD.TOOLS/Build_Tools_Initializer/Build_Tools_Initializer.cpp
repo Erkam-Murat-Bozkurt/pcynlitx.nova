@@ -3,7 +3,7 @@
 
 Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) : 
 
- Rep_Init(DesPATH,opr_sis),  Dep_Determiner(DesPATH,opr_sis) , 
+ Rep_Init(DesPATH,opr_sis),   Dep_Determiner(DesPATH,opr_sis) , 
  Mk_Builder(DesPATH,opr_sis), Script_Writer(opr_sis), 
  Git_Data_Proc(opr_sis), Des_Reader(opr_sis)
  
@@ -48,8 +48,6 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) :
 
 
     this->Mk_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
-
-    this->Mk_Builder.Receive_Git_Data_Processor(&this->Git_Data_Proc);
 
     this->Mk_Builder.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
 

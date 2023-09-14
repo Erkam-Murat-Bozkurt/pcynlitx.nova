@@ -46,13 +46,6 @@ void Auto_MakeFile_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reade
 }
 
 
-void Auto_MakeFile_Builder::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
-
-     this->Mk_File_Clnr.Receive_Git_Data_Processor(ptr);
-}
-
-
-
 void Auto_MakeFile_Builder::Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner 
 
      * dep_ptr){
@@ -60,6 +53,8 @@ void Auto_MakeFile_Builder::Receive_Source_File_Dependency_Determiner(Source_Fil
      this->Dep_Determiner = dep_ptr;
 
      this->Mk_Builder.Receive_Compiler_Data_Pointer(dep_ptr->Get_Compiler_Data_Address());
+
+     this->Mk_File_Clnr.Receive_Compiler_Data_Pointer(dep_ptr->Get_Compiler_Data_Address());
 }
 
 

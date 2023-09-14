@@ -54,8 +54,6 @@ int main(int argc, char ** argv){
 
     Make_Builder.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
 
-    Make_Builder.Receive_Git_Data_Processor(&Data_Processor);
-
     Make_Builder.Receive_Descriptor_File_Reader(&Des_File_Reader);
 
     Make_Builder.Build_Make_Files();
