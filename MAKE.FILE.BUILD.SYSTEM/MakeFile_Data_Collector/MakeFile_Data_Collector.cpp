@@ -23,9 +23,8 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "MakeFile_Data_Collector.hpp"
 
-MakeFile_Data_Collector::MakeFile_Data_Collector(char opr_sis)
+MakeFile_Data_Collector::MakeFile_Data_Collector()
 {
-     this->opr_sis = opr_sis;     
 }
 
 
@@ -58,6 +57,12 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
      this->Clear_String_Memory(&this->Source_File_Name);
 
      this->Clear_String_Memory(&this->Source_File_Directory);     
+}
+
+
+void MakeFile_Data_Collector::Receive_Operating_System(char opr_sis){
+
+     this->opr_sis = opr_sis;
 }
 
 

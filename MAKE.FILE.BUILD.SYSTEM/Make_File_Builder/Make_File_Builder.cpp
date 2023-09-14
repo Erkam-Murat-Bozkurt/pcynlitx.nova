@@ -22,14 +22,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Make_File_Builder.h"
 
-Make_File_Builder::Make_File_Builder(char opr_sis) :
-
-    Data_Collector(opr_sis)
+Make_File_Builder::Make_File_Builder()
 {
-
    this->Memory_Delete_Condition = false;
-
-   this->opr_sis = opr_sis;
 }
 
 
@@ -42,8 +37,6 @@ Make_File_Builder::~Make_File_Builder(){
 void Make_File_Builder::Clear_Object_Memory(){
 
      this->Data_Collector.Clear_Object_Memory();
-
-     this->DataMap.clear();
 
      this->Clear_Dynamic_Memory();
 }
@@ -61,6 +54,14 @@ void Make_File_Builder::Clear_Dynamic_Memory(){
 }
 
 
+void Make_File_Builder::Receive_Operating_System(char opr_sis){
+
+     this->opr_sis = opr_sis;
+
+     this->Data_Collector.Receive_Operating_System(opr_sis);
+}
+
+
 void Make_File_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
 
      this->Des_Reader = ptr;
@@ -71,18 +72,12 @@ void Make_File_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reader * 
 void Make_File_Builder::Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr)
 {
      this->Comp_Data_Ptr = ptr;
-
-     this->Construct_Data_Map();
 }
 
-void Make_File_Builder::Construct_Data_Map(){
 
-     for(size_t i=0;i<this->Comp_Data_Ptr->size();i++){
+void Make_File_Builder::Receive_DataMap(std::unordered_map<std::string, Compiler_Data> * ptr){
 
-         std::string source_file_name = this->Comp_Data_Ptr->at(i).source_file_name;
-
-         this->DataMap.insert(std::make_pair(source_file_name,this->Comp_Data_Ptr->at(i)));
-     }
+     this->DataMap_Pointer = ptr;
 }
 
 
@@ -90,7 +85,7 @@ Compiler_Data * Make_File_Builder::Find_Compiler_Data_From_Source_File_Name(std:
 {
     try {        
 
-         return  &this->DataMap.at(name);
+         return  &this->DataMap_Pointer->at(name);
     }
     catch (const std::out_of_range & oor) {
         
@@ -117,11 +112,13 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
 
      std::string Source_File_Directory = this->Data_Collector.Get_Source_File_System_Directory();
 
-     this->DirectoryManager.ChangeDirectory(Source_File_Directory);
-
      std::string Make_File_Name = this->Data_Collector.Get_Make_File_Name();
 
-     this->FileManager.SetFilePath(Make_File_Name);
+     std::string Make_File_Path;
+
+     this->Determine_MakeFile_Path(Make_File_Path,Source_File_Directory,Make_File_Name);
+
+     this->FileManager.SetFilePath(Make_File_Path);
 
      this->FileManager.FileOpen(RWCf);     
 
@@ -364,6 +361,47 @@ void Make_File_Builder::Write_Header_Paths_Shorts_Cuts(){
           this->FileManager.WriteToFile("\n\n");        ;
      }   
 }
+
+
+
+void Make_File_Builder::Determine_MakeFile_Path(std::string & make_file_path, 
+
+     std::string src_file_dir, std::string make_file_name){
+
+     
+     size_t dir_size  = src_file_dir.length();
+     size_t name_size = make_file_name.length();
+
+
+     for(size_t i=0;i<dir_size;i++){
+
+         make_file_path.push_back(src_file_dir[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(make_file_path.back()!= '\\'){
+
+           make_file_path.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(make_file_path.back()!= '/'){
+
+           make_file_path.push_back('/');
+        }
+     }
+
+     for(size_t i=0;i<name_size;i++){
+
+         make_file_path.push_back(make_file_name[i]);
+     }
+
+     make_file_path.shrink_to_fit();
+}
+
 
 void Make_File_Builder::Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path){
 

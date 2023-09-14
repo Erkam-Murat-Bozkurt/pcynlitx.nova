@@ -29,25 +29,27 @@
 class Make_File_Builder
 {
 public:
- Make_File_Builder(char opr_sis);
+ Make_File_Builder();
  virtual ~Make_File_Builder();
  void Build_MakeFile(std::string file_name);
  void Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
- void Construct_Data_Map();
+ void Receive_Operating_System(char opr_sis);
+ void Receive_DataMap(std::unordered_map<std::string, Compiler_Data> * ptr);
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 private:
  Compiler_Data * Find_Compiler_Data_From_Source_File_Name(std::string name);
  void Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path);
  void Write_Header_Paths_Shorts_Cuts();
+ void Determine_MakeFile_Path(std::string & make_file_path, 
+      std::string src_file_path, std::string make_file_name);
  MakeFile_Data_Collector Data_Collector;
- //Project_Files_Lister * File_Lister;
  Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;
  DirectoryOperations DirectoryManager;
  IntToCharTranslater Translater;
- std::unordered_map<std::string, Compiler_Data> DataMap;
+ std::unordered_map<std::string, Compiler_Data> * DataMap_Pointer;
  std::vector<Compiler_Data> * Comp_Data_Ptr;
  Compiler_Data * Data_Ptr;
  char opr_sis;

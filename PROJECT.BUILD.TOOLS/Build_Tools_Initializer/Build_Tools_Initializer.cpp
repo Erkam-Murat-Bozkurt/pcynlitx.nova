@@ -44,9 +44,6 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) :
     this->Rep_Init.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
 
 
-    std::cout << "\n\n\e[1;32mProject warehouse constructed \e[0m\n\n";
-
-
     this->Mk_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
     this->Mk_Builder.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);

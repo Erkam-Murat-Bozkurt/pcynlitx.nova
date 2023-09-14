@@ -200,9 +200,9 @@ void Git_File_List_Writer::List_Files_in_Repo()
      if(dir_chg_cond == 0){
 
         std::cerr << "\n";
-        std::cerr << "\n ERROR IN CONSTRUCTION:";
-        std::cerr << "\n Git repo directory is not exist";
-        std::cerr << "\n Please check your declerations about project directory";
+        std::cerr << "\nERROR IN CONSTRUCTION:";
+        std::cerr << "\nGit repo directory is not exist";
+        std::cerr << "\nPlease check your declerations about project directory";
         std::cerr << "\n";
         std::cerr << "\n";
 

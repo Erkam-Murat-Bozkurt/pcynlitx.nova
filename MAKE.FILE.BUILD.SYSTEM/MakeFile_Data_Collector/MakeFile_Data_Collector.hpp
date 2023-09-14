@@ -27,12 +27,13 @@
 class MakeFile_Data_Collector
 {
 public:
- MakeFile_Data_Collector(char opr_sis);
+ MakeFile_Data_Collector();
  virtual ~MakeFile_Data_Collector();
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Collect_Make_File_Data(std::string fileName);
  void Receive_Git_Record_Data(std::string file_name);
  void Receive_Compiler_Data_Pointer(Compiler_Data * ptr); 
+ void Receive_Operating_System(char opr_sis);
  std::string Get_Source_File_Name();
  std::string Get_Source_File_System_Directory();
  std::string Get_Make_File_Name();
