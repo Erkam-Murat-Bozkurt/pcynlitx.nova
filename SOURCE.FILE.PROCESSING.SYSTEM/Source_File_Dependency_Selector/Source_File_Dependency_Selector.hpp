@@ -55,6 +55,7 @@ struct Source_File_Dependency
   std::string repo_warehouse_path;
   std::string dir;
   std::string object_file_name;
+  std::vector<std::string> External_Headers;
   int included_file_hdr_num;
   int base_included_hdr_num;
   int priority;
@@ -96,12 +97,12 @@ protected:
  void Set_Dependency_Data(Source_File_Dependency & data, std::string path, std::string header_name);
  std::vector<std::string> * Get_File_Content(std::string path);
  std::string Get_Header_System_Path(std::string header_name);
- void Process_Dependency_Data(int thr_num, int start, int end);
  void Clear_Dependency_Data_Extractors();
  void Construct_Dependency_Data_Extractors();
  void Determine_Git_Record_Source_File_Directory( std::string git_record_system_path, 
  std::string & record_dir);
  void Determine_File_Name_Without_Ext(std::string path, std::string & file_name);
+ void Set_External_Header_File_Dependencies(Source_File_Dependency & data, std::vector<std::string> * vec);
  Source_File_Information_Collector Info_Collector; 
  Dependency_Data_Extractor ** Dep_Data_Collectors;
  Project_Src_Code_Rdr * Code_Rd;

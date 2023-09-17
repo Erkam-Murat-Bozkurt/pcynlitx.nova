@@ -51,6 +51,7 @@ public:
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Extract_Dependency_Tree(std::string path);
  std::vector<Search_Data> * Get_Search_Data();
+ std::vector<std::string> * Get_External_Header_Files();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 protected:
@@ -67,10 +68,13 @@ protected:
  void Clear_String_Memory(std::string & str);
  int  Determine_Inclusion_Number(std::string path);
  int  Search_Dependencies(Search_Data & Src_Data, std::vector<Search_Data> & dt);
+ void Insert_External_Header_File_For_Dependency(std::string hdr_file);
+ void Clear_Vector_Memory(std::vector<std::string> & vec);
  std::vector<std::string> * Get_File_Content(std::string path);
  std::string Get_Header_System_Path(std::string header_name);
  Project_Src_Code_Rdr * Code_Rd;
  std::vector<Search_Data> searched_paths;
+ std::vector<std::string> External_Header_Files;
  Header_File_Processor Header_Processor;  
  StringOperator StringManager; 
  bool Memory_Delete_Condition;

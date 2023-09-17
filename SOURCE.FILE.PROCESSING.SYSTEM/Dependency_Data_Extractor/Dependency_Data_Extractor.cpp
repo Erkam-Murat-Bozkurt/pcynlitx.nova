@@ -52,6 +52,8 @@ void Dependency_Data_Extractor::Clear_Object_Memory(){
 
 void Dependency_Data_Extractor::Clear_Dynamic_Memory()
 {
+     this->Clear_Vector_Memory(this->External_Header_Files);
+
      for(size_t i=0;i<this->searched_paths.size();i++){
 
          this->Clear_String_Memory(this->searched_paths.at(i).path);
@@ -162,6 +164,7 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data, std::
 
      /*  The inclusion number determined */
 
+
     Src_Data.search_complated = true;
 
     if(inclusion_number>0){
@@ -176,9 +179,9 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data, std::
            std::string string_line = FileContent->at(k);
 
            bool is_new_dep = this->Find_New_Dependency(string_line,data);
-
+           
            std::string header_name = this->Find_Header_Name(string_line);
-
+      
            if(is_new_dep){
 
               std::string hdr_sys_path =  this->Get_Header_System_Path(header_name);
@@ -190,7 +193,7 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data, std::
               temp.search_complated = false;
 
               data.push_back(temp);
-           }            
+           }    
         }        
       }
       else{
@@ -225,21 +228,34 @@ bool Dependency_Data_Extractor::Find_New_Dependency(std::string string_line, std
      bool is_include_decleration = this->Include_Decleration_Test(string_line);
 
      if(is_include_decleration){
-
+        
         std::string header_name  = this->Find_Header_Name(string_line);
 
-        bool is_repo_header_file = this->Is_This_Repo_HeaderFile(header_name);
+        bool is_repo_file = this->Code_Rd->Check_Repo_File_Status(header_name);
 
-        if(is_repo_header_file){
+        if(is_repo_file){
 
-           bool is_already_searched = this->Is_This_File_Aready_Searched(header_name,data);
+           bool is_repo_header_file = this->Is_This_Repo_HeaderFile(header_name);
 
-          if(!is_already_searched){
+           if(is_repo_header_file){
 
-              is_new_dependency = true;
+              bool is_already_searched = this->Is_This_File_Aready_Searched(header_name,data);
 
-              return is_new_dependency;
-          }
+              if(!is_already_searched){
+
+                 is_new_dependency = true;
+
+                 return is_new_dependency;
+              }
+            }
+        }
+        else{
+
+             this->Insert_External_Header_File_For_Dependency(header_name);
+
+             is_new_dependency = false;
+
+             return is_new_dependency;
         }
      }
 
@@ -384,12 +400,28 @@ std::string Dependency_Data_Extractor::Find_Header_Name(std::string string)
          }
      }
 
+
+
+     for(size_t i=start_point;i<end_point;i++){
+
+         if(string[i]=='/'){
+
+            start_point = i+1;
+         }
+
+         if(string[i]=='\\'){
+
+            start_point = i+1;
+         }
+     }
+   
      std::string header_name;
 
      for(size_t i=start_point;i<end_point;i++){
 
          header_name.push_back(string[i]);
      }
+
 
      return header_name;
 }
@@ -459,6 +491,13 @@ void Dependency_Data_Extractor::Extract_File_Name_From_Path(std::string * pointe
 }
 
 
+void Dependency_Data_Extractor::Insert_External_Header_File_For_Dependency(std::string hdr_file_name){
+
+     this->External_Header_Files.push_back(hdr_file_name);
+
+     this->External_Header_Files.shrink_to_fit();
+}
+
 bool Dependency_Data_Extractor::CompareString(std::string firstString, 
 
      std::string secondString){
@@ -493,6 +532,42 @@ bool Dependency_Data_Extractor::CompareString(std::string firstString,
 
 
 
+void Dependency_Data_Extractor::Clear_Vector_Memory(std::vector<std::string> & vec){
+
+     if(!vec.empty()){
+
+         std::vector<std::string>::iterator it;
+
+         auto begin = vec.begin();
+
+         auto end   = vec.end();
+
+         for(auto it=begin;it<end;it++){
+
+             if(!it->empty()){
+
+                 it->clear();
+
+                 it->shrink_to_fit();
+              }
+         }
+
+         vec.clear();
+
+         vec.shrink_to_fit();
+     }
+}
+
+void Dependency_Data_Extractor::Clear_String_Memory(std::string & str)
+{
+     if(!str.empty()){
+
+         str.clear();
+
+         str.shrink_to_fit();
+     }
+}
+
 
 std::vector<std::string> * Dependency_Data_Extractor::Get_File_Content(std::string path){
 
@@ -512,16 +587,11 @@ std::string Dependency_Data_Extractor::Get_Header_System_Path(std::string header
      return sys_path;
 }
 
-void Dependency_Data_Extractor::Clear_String_Memory(std::string & str)
-{
-     if(!str.empty()){
 
-         str.clear();
+std::vector<std::string> * Dependency_Data_Extractor::Get_External_Header_Files(){
 
-         str.shrink_to_fit();
-     }
+     return &this->External_Header_Files;
 }
-
 
 std::vector<Search_Data> * Dependency_Data_Extractor::Get_Search_Data(){
 

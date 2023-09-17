@@ -78,14 +78,13 @@ void Source_File_Information_Collector::Receive_Git_Data_Processor(Git_Data_Proc
 
 void Source_File_Information_Collector::Determine_Source_File_List()
 {
-
+      
      for(int i=0;i<this->Code_Rdr->Get_Project_Files_Number();i++)
      {
 
          std::string path = this->Code_Rdr->Get_File_Path(i);
       
          bool is_source_file = this->Src_File_Pr.Is_Source_File(path);
-
 
          if(is_source_file){
 

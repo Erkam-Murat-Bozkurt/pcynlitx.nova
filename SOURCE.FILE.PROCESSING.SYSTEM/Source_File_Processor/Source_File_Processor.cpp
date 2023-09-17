@@ -43,7 +43,15 @@ bool Source_File_Processor::Is_Source_File(char * file_path){
 
      char header_add_hpp [] = ".hpp";
 
-     char source_file_ext [] = ".cpp";
+     char source_file_ext_1 [] = ".cpp";
+
+     char source_file_ext_2 [] = ".cc";
+
+     char source_file_ext_3 [] = ".cxx";
+
+     char source_file_ext_4 [] = ".c";
+
+
 
      this->Is_This_Source_File = false;
 
@@ -80,7 +88,29 @@ bool Source_File_Processor::Is_Source_File(char * file_path){
 
     bool is_this_main_file = false;
 
-    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext)){
+    bool src_file_ext = false;
+
+    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_1)){
+
+       src_file_ext = true;
+    }
+
+    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_2)){
+
+       src_file_ext = true;
+    }
+
+    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_3)){
+
+       src_file_ext = true;
+    }
+
+    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_4)){
+
+       src_file_ext = true;
+    }
+
+    if(src_file_ext){
 
        std::vector<std::string> * Source_Code = this->Get_File_Source_Code(file_path);
 
@@ -110,14 +140,13 @@ bool Source_File_Processor::Is_Source_File(char * file_path){
       }
 
 
-      this->Is_This_Source_File
+     if(src_file_ext){
 
-                  = this->StringManager.CheckStringInclusion(file_path,source_file_ext);
+        this->Is_This_Source_File = true;
 
-      if(this->Is_This_Source_File){
+        return this->Is_This_Source_File;
+     }
 
-         return this->Is_This_Source_File;
-      }
     }
 
     return this->Is_This_Source_File;
@@ -137,11 +166,21 @@ bool Source_File_Processor::Is_Source_File(std::string file_path){
 
      std::string header_add_hpp  = ".hpp";
 
-     std::string source_file_ext = ".cpp";
+     std::string source_file_ext_1 = ".cpp";
+
+     std::string source_file_ext_2 = ".cc";
+
+     std::string source_file_ext_3 = ".cxx";
+
+     std::string source_file_ext_4 = ".c";
+
 
      this->Is_This_Source_File = false;
 
      bool is_header = this->StringManager.CheckStringInclusion(file_path,header_add_h);
+
+
+
 
      if(is_header){
 
@@ -174,7 +213,32 @@ bool Source_File_Processor::Is_Source_File(std::string file_path){
 
     bool is_this_main_file = false;
 
-    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext))
+
+    
+    bool src_file_ext = false;
+
+    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_1)){
+
+       src_file_ext = true;
+    }
+
+    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_2)){
+
+       src_file_ext = true;
+    }
+
+    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_3)){
+
+       src_file_ext = true;
+    }
+
+    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_4)){
+
+       src_file_ext = true;
+    }
+
+
+    if(src_file_ext)
     {       
        std::vector<std::string> * Source_Code = this->Get_File_Source_Code(file_path);
 
@@ -204,12 +268,10 @@ bool Source_File_Processor::Is_Source_File(std::string file_path){
       }
 
 
-      this->Is_This_Source_File
+      if(src_file_ext){
 
-         = this->StringManager.CheckStringInclusion(file_path,source_file_ext);
+         this->Is_This_Source_File = true;
 
-      if(this->Is_This_Source_File)
-      {
          return this->Is_This_Source_File;
       }
     }

@@ -150,7 +150,9 @@ bool Source_File_Determiner::Is_Source_File(std::string file_path){
 
      char source_file_ext_2 [] = ".cc";
 
+     char source_file_ext_3 [] = ".cxx";
 
+     char source_file_ext_4 [] = ".c";
 
      this->Is_This_Source_File = false;
 
@@ -192,7 +194,12 @@ bool Source_File_Determiner::Is_Source_File(std::string file_path){
     bool ext_chek_cond_2 = this->StringManager.CheckStringInclusion(file_path,source_file_ext_2);
 
 
-    if(ext_chek_cond_1 || ext_chek_cond_2){
+    bool ext_chek_cond_3 = this->StringManager.CheckStringInclusion(file_path,source_file_ext_3);
+
+    bool ext_chek_cond_4 = this->StringManager.CheckStringInclusion(file_path,source_file_ext_4);
+
+
+    if(ext_chek_cond_1 || ext_chek_cond_2 || ext_chek_cond_3 || ext_chek_cond_4){
 
        this->Read_File(file_path);
 

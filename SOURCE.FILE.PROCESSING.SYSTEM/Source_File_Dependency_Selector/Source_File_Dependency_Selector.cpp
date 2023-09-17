@@ -156,12 +156,12 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int s
      
          std::string path =this->Source_File_Data_Ptr->at(i).system_path;
 
-
-
          this->Extract_Dependency_Tree(path,thr_num);
 
          this->Set_Included_Header_Number(&this->Dependent_List[thr_num]);
 
+
+     
 
          mt.lock();
 
@@ -184,6 +184,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int s
 
 void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,int thr_num){
 
+
      this->Dep_Data_Collectors[thr_num] = new Dependency_Data_Extractor(this->opr_sis);
 
      this->Dep_Data_Collectors[thr_num]->Receive_Source_Code_Reader(this->Code_Rd);
@@ -193,6 +194,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,i
      std::vector<Search_Data> * Dep_Data_Ptr = this->Dep_Data_Collectors[thr_num]->Get_Search_Data();
 
      size_t data_size = Dep_Data_Ptr->size();
+     
 
      if(data_size>0){   // The header file have dependencies
 
@@ -203,6 +205,10 @@ void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,i
             std::string header_name = Dep_Data_Ptr->at(i).name;
 
             this->Set_Dependency_Data(Data,path,header_name);
+
+            std::vector<std::string> * Ext_Hdr = this->Dep_Data_Collectors[thr_num]->Get_External_Header_Files();
+
+            this->Set_External_Header_File_Dependencies(Data,Ext_Hdr);
 
             this->Dependent_List[thr_num].push_back(Data);
         }
@@ -282,6 +288,8 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
      this->Clear_String_Memory(&hdr_sys_path);
      
 }
+
+
 
 
 void Source_File_Dependency_Selector::Extract_Directory_From_Path(std::string path, std::string & dir){
@@ -558,6 +566,21 @@ void Source_File_Dependency_Selector::Extract_File_Name_From_Path(std::string * 
 }
 
 
+void Source_File_Dependency_Selector::Set_External_Header_File_Dependencies(Source_File_Dependency & data, 
+
+     std::vector<std::string> * vec){
+
+     size_t vec_size = vec->size();
+
+     for(size_t i=0;i<vec_size;i++){
+
+        data.External_Headers.push_back(vec->at(i));
+     }
+
+     data.External_Headers.shrink_to_fit();
+}
+
+
 void Source_File_Dependency_Selector::Place_String(std::string * str_pointer, std::string str)
 {
      size_t string_size = str.length();
@@ -575,6 +598,8 @@ void Source_File_Dependency_Selector::Print_Dependency_List()
 {
      size_t data_size = this->Dependency_Data.size();
 
+    
+
      for(size_t i=0;i<data_size;i++){
 
          std::vector<Source_File_Dependency> * ptr = &this->Dependency_Data.at(i);
@@ -591,6 +616,8 @@ void Source_File_Dependency_Selector::Print_Dependency_List()
 
             for(auto it=ptr->begin();it<ptr->end();it++){
          
+                std::cout << "\n";
+
                 std::cout << "\n list - " << counter << " " << it->Header_Name;     
 
                 std::cout << "\n list - " << counter << " " << it->dir;     
