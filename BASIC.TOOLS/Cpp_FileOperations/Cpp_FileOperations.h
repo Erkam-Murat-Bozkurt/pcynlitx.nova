@@ -39,6 +39,7 @@ public:
  Cpp_FileOperations();
  Cpp_FileOperations(char opr_sis);
  virtual ~Cpp_FileOperations();
+ void Receive_Operating_System(char opr_sis);
  void CpFile(char * path, char * target_path);
  void CpFile(std::string path, std::string target_path);
  void SetFilePath(std::string FilePATH);

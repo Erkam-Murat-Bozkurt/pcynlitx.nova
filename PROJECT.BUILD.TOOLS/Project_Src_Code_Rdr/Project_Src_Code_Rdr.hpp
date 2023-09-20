@@ -16,8 +16,8 @@
 #include <map>
 #include <unordered_map>
 #include <iterator>
-#include <utility>      // std::pair, std::make_pair
-#include <stdexcept>      // std::out_of_range
+#include <utility>                     // std::pair, std::make_pair
+#include <stdexcept>                   // std::out_of_range
 #include "Git_Data_Processor.hpp"
 #include "Source_File_Determiner.h"
 #include "Header_File_Determiner.h"
@@ -30,6 +30,7 @@ struct FileData
 {
    std::string sys_path;
    std::string file_name;
+   std::string combined_file_name;        // This name is used for header decleration with directory. For example "sample/sample.h"
    std::vector<std::string> FileContent;
 };
 
@@ -41,17 +42,19 @@ public:
  virtual ~Project_Src_Code_Rdr();
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Read_Project_Source_Code_Files();
- std::vector<std::string> * Get_File_Content(int i);
- void Get_File_Content_From_Path(std::vector<std::string> & content, std::string path);
- FileData * Find_File_Data_From_Path(std::string path);
- FileData * Find_File_Data_From_Name(std::string name);
- std::string Get_File_Path(int i);
- std::string Get_File_Name(int i);
+ const std::vector<std::string> * Get_File_Content(int i) const;
+ const std::vector<std::string> * Get_File_Content_From_Path(std::string path) const;
+ const FileData * Find_File_Data_From_Path(std::string path) const;
+ const FileData * Find_File_Data_From_Name(std::string name) const;
+ const FileData * Find_File_Data_From_Combined_Name(std::string name) const;
+ std::string Get_File_Path(int i) const;
+ std::string Get_File_Name(int i) const;
  bool Is_This_Repo_File(std::string path);
  bool Check_Repo_File_Status(std::string name);
- size_t Get_Project_Files_Number();
- void   Clear_Dynamic_Memory();
- void   Clear_Object_Memory();
+ bool Check_Repo_File_Status_From_Combined_File_Name(std::string name);
+ void Clear_Dynamic_Memory();
+ void Clear_Object_Memory();
+ size_t Get_Project_Files_Number() const;
 protected:
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * ptr);
@@ -61,18 +64,20 @@ protected:
  void Read_Source_Code_Single_Thread();
  void Receive_File_Paths();
  void Determine_File_Name(std::string path, std::string & name);
- Cpp_FileOperations FileManager[16];
- std::vector<FileData> Src_Code_Dt;
- std::vector<std::string> FilePaths;
+ void Determine_File_Combined_Name(std::string path, std::string & file_name);
  Git_Data_Processor * Git_Data_Proc;
  Source_File_Determiner ** Src_Determiner;
  Header_File_Determiner ** Hdr_Determiner;
- char opr_sis;
+ Cpp_FileOperations FileManager[16];
  std::thread threads[16];
- std::mutex mtx;
- std::string File_Name;
- std::unordered_map<std::string, FileData> CodeBase;
- std::unordered_map<std::string, FileData> CodeBase_Name;
+ std::mutex  mtx;
+ std::vector<FileData> Src_Code_Dt;
+ std::vector<std::string> FilePaths;
+ std::unordered_map<std::string, FileData *> CodeBase;
+ std::unordered_map<std::string, FileData *> CodeBase_Name;
+ std::unordered_map<std::string, FileData *> CodeBase_Combined_Name;
+ std::string root_directory;
+ char opr_sis;
  bool Memory_Delete_Condition;
  bool isStringsEqual;
 };

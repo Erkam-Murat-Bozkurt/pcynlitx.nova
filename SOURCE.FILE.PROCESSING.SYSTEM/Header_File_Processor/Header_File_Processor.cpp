@@ -21,8 +21,6 @@ Header_File_Processor::~Header_File_Processor(){
 
 void Header_File_Processor::Clear_Object_Memory(){
 
-     //this->Clear_String_Memory(&this->Repo_Dir);
-
      this->Clear_Dynamic_Memory();
 }
 
@@ -41,7 +39,6 @@ void Header_File_Processor::Receive_Source_Code_Reader(Project_Src_Code_Rdr * pt
      this->Code_Rdr = ptr;
 }
 
-
 bool Header_File_Processor::Is_this_file_included_on_anywhere(std::string file_path){
 
      size_t repo_size = this->Code_Rdr->Get_Project_Files_Number();
@@ -50,7 +47,7 @@ bool Header_File_Processor::Is_this_file_included_on_anywhere(std::string file_p
 
      for(int i=0;i<repo_size;i++){
 
-         std::vector<std::string> * File_Content = this->Code_Rdr->Get_File_Content(i);
+         const std::vector<std::string> * File_Content = this->Code_Rdr->Get_File_Content(i);
 
          this->Header_File_System_Path = this->Code_Rdr->Get_File_Path(i);
          
@@ -89,6 +86,7 @@ bool Header_File_Processor::Is_this_file_included_on_anywhere(std::string file_p
 
       return this->Is_this_file_included_on_somewhere;
 }
+
 
 bool Header_File_Processor::Include_Decleration_Test(std::string string){
 
@@ -202,43 +200,67 @@ void Header_File_Processor::Extract_Header_File_Name_From_Decleration(std::strin
 
 bool Header_File_Processor::Is_Header(std::string file_path){
 
-     char inclusion_guard [] = "#ifndef";
+     std::string inclusion_guard  = "#ifndef";
 
-     char header_add_h [] = ".h";
+     std::string header_add_h = ".h";
 
-     char header_add_hpp [] = ".hpp";
+     std::string header_add_hpp  = ".hpp";
 
-     char source_file_ext_1 [] = ".cpp";
+     std::string source_file_ext_cpp  = ".cpp";
 
-     char source_file_ext_2 [] = ".cc";
+     std::string source_file_ext_cc  = ".cc";
+
+
+     std::string file_extention;
+
+     bool is_there_file_ext = false;
+
+     this->Extract_File_Extention(file_extention,file_path,is_there_file_ext);
+
+
+     if(!is_there_file_ext){
+
+         this->is_header_file = false;
+
+         return this->is_header_file;
+     }
 
 
      this->is_header_file = false;
 
-     if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_1)){
+     if(this->StringManager.CompareString(file_extention,source_file_ext_cpp)){
+
+        this->is_header_file = false;
 
         return this->is_header_file;
      }
 
-     
-     if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_2)){
+     if(this->StringManager.CompareString(file_extention,source_file_ext_cc)){
+
+        this->is_header_file = false;
 
         return this->is_header_file;
      }
 
-     this->is_header_file = this->StringManager.CheckStringInclusion(file_path,header_add_h);
 
-     if(this->is_header_file){
+
+     bool include_header_ext = this->StringManager.CompareString(file_extention,header_add_h);
+
+     if(include_header_ext){
+
+        this->is_header_file = true;
 
         return this->is_header_file;
      }
      else{
 
-          this->is_header_file = this->StringManager.CheckStringInclusion(file_path,header_add_hpp);
+          include_header_ext = this->StringManager.CompareString(file_extention,header_add_hpp);
 
-          if(this->is_header_file){
+          if(include_header_ext){
+        
+             this->is_header_file = true;
 
-              return this->is_header_file;
+            return this->is_header_file;
           }
     }
 
@@ -246,13 +268,49 @@ bool Header_File_Processor::Is_Header(std::string file_path){
 
     if(this->Is_this_file_included_on_anywhere(file_path)){
 
-      this->is_header_file = true;
+       this->is_header_file = true;
     }
 
     */
 
     return this->is_header_file;
+
 }
+
+
+
+
+void Header_File_Processor::Extract_File_Extention(std::string & ext, std::string file_path, 
+
+     bool & is_there_ext){
+
+     size_t name_size   = file_path.length();
+     size_t start_point = 0;
+
+     is_there_ext = false;
+     
+     for(size_t i=0;i<name_size;i++){
+
+         if(file_path[i] == '.'){
+
+            is_there_ext = true;
+
+            start_point=i;
+
+            break;
+         }
+     }
+
+     for(size_t i=start_point;i<name_size;i++){
+
+         ext.push_back(file_path[i]);
+     }
+
+     ext.shrink_to_fit();     
+}
+
+
+
 
 void Header_File_Processor::Determine_Header_File_Directory(std::string path){
 

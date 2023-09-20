@@ -38,6 +38,7 @@ public:
  void Determine_Header_File_Name_With_Extention(std::string path);
  void Determine_Header_File_System_Path(std::string repo_dir, std::string git_rcpath);
  void Extract_Header_File_Name_From_Decleration(std::string * header_name, std::string s);
+ void Extract_File_Extention(std::string & ext, std::string file_name, bool & is_there_ext);
  void Determine_Git_Record_File_System_Path(std::string * sys_path, std::string file_path);
  bool CompareString(std::string firstString, std::string secondString);
  void Delete_Spaces_on_String(std::string * pointer);

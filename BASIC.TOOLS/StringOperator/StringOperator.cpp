@@ -44,6 +44,14 @@ StringOperator::~StringOperator(){
     }
 }
 
+
+void StringOperator::Receive_Operating_System(char opr_sis){
+
+     this->Cpp_File_Manager.Receive_Operating_System(opr_sis);
+
+     this->opr_sis = opr_sis;
+}
+
 void StringOperator::SetFilePath(char * FilePATH){
 
      this->Cpp_File_Manager.SetFilePath(FilePATH);

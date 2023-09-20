@@ -9,9 +9,18 @@ FILE_OPRS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
 DES_READ=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
 DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
 DES_SYN_CON=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
-GIT_LIST=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Git_File_List_Receiver
 SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
 HEAD_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
+
+
+
+GIT_PROC=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Data_Processor
+GIT_LIST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Writer
+GIT_REC=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Receiver
+GIT_IGN=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Ignoring_Files_Lister
+GIT_MOD_LST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Lister
+GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiver
+
 
 
 VPATH = $(DIR_OPS)     $(STRING_OPS) \
@@ -20,10 +29,21 @@ VPATH = $(DIR_OPS)     $(STRING_OPS) \
 		$(INT_TRANS)   $(SYS_INT) \
 		$(SOURCE_DETR) $(HEAD_DETR) \
  	    $(CHAR_OPS)    $(FILE_OPRS) \
+		$(GIT_PROC) \
+		$(GIT_LIST) \
+		$(GIT_REC) \
+		$(GIT_MOD_LST) \
+		$(GIT_MOD_RCV) \
+		$(GIT_IGN)
 
 Project_Src_Code_Rdr.exe: Project_Src_Code_Rdr_Main_File.cpp \
     Project_Src_Code_Rdr.cpp \
-	Git_File_List_Receiver.cpp  \
+    Git_Data_Processor.cpp \
+	Git_File_List_Writer.cpp \
+	Git_File_List_Receiver.cpp \
+	Git_Modification_Lister.cpp \
+	Git_Modification_Receiver.cpp \
+	Git_Ignoring_Files_Lister.cpp \
 	Source_File_Determiner.cpp \
 	Header_File_Determiner.cpp \
 	Descriptor_File_Reader.cpp \
@@ -35,7 +55,12 @@ Project_Src_Code_Rdr.exe: Project_Src_Code_Rdr_Main_File.cpp \
 	Cpp_FileOperations.cpp \
 	Custom_System_Interface.cpp \
 	Project_Src_Code_Rdr.hpp \
-	Git_File_List_Receiver.hpp  \
+	Git_Data_Processor.hpp \
+	Git_File_List_Writer.hpp \
+	Git_File_List_Receiver.hpp \
+	Git_Modification_Lister.hpp \
+	Git_Modification_Receiver.hpp \
+	Git_Ignoring_Files_Lister.hpp \
     Source_File_Determiner.h \
 	Header_File_Determiner.h \
 	StringOperator.h \
@@ -56,10 +81,15 @@ Project_Src_Code_Rdr.exe: Project_Src_Code_Rdr_Main_File.cpp \
 	 -I$(CHAR_OPS) \
 	 -I$(DES_READ) \
 	 -I$(DES_DATA_COL) \
-	 -I$(GIT_LIST) \
 	 -I$(DES_SYN_CON) \
 	 -I$(INT_TRANS) \
 	 -I$(SYS_INT) \
+	 -I$(GIT_PROC) \
+	 -I$(GIT_LIST) \
+	 -I$(GIT_REC) \
+	 -I$(GIT_MOD_LST) \
+	 -I$(GIT_MOD_RCV) \
+	 -I$(GIT_IGN) \
 	 -L$(DIR_OPS) \
 	 -L$(STRING_OPS) \
 	 -L$(GIT_LIST) \
@@ -70,9 +100,21 @@ Project_Src_Code_Rdr.exe: Project_Src_Code_Rdr_Main_File.cpp \
 	 -L$(DES_SYN_CON) \
 	 -L$(INT_TRANS) \
 	 -L$(SYS_INT) \
+	 -L$(GIT_PROC) \
+	 -L$(GIT_LIST) \
+	 -L$(GIT_REC) \
+	 -L$(GIT_MOD_LST) \
+	 -L$(GIT_MOD_RCV) \
+	 -L$(GIT_IGN) \
+	 -L$(SYS_INT) \
 		Project_Src_Code_Rdr_Main_File.cpp \
 		Project_Src_Code_Rdr.cpp \
-		$(GIT_LIST)\Git_File_List_Receiver.cpp \
+		$(GIT_PROC)\Git_Data_Processor.cpp \
+		$(GIT_LIST)\Git_File_List_Writer.cpp \
+		$(GIT_REC)\Git_File_List_Receiver.cpp \
+		$(GIT_MOD_LST)\Git_Modification_Lister.cpp \
+		$(GIT_MOD_RCV)\Git_Modification_Receiver.cpp \
+		$(GIT_IGN)\Git_Ignoring_Files_Lister.cpp \
 		$(SOURCE_DETR)\Source_File_Determiner.cpp \
 	    $(HEAD_DETR)\Header_File_Determiner.cpp \
 		$(DES_READ)\Descriptor_File_Reader.cpp \
@@ -84,7 +126,13 @@ Project_Src_Code_Rdr.exe: Project_Src_Code_Rdr_Main_File.cpp \
 		$(INT_TRANS)\IntToCharTranslater.cpp \
 		$(FILE_OPRS)\Cpp_FileOperations.cpp \
 		$(SYS_INT)\Custom_System_Interface.cpp \
-		-include $(GIT_LIST)\Git_File_List_Receiver.hpp \
+		-include Project_Src_Code_Rdr.hpp \
+		-include $(GIT_PROC)\Git_Data_Processor.hpp \
+		-include $(GIT_LIST)\Git_File_List_Writer.hpp \
+		-include $(GIT_REC)\Git_File_List_Receiver.hpp \
+		-include $(GIT_MOD_LST)\Git_Modification_Lister.hpp \
+		-include $(GIT_MOD_RCV)\Git_Modification_Receiver.hpp \
+		-include $(GIT_IGN)\Git_Ignoring_Files_Lister.hpp \
 	    -include $(SOURCE_DETR)\Source_File_Determiner.h \
 	    -include $(HEAD_DETR)\Header_File_Determiner.h \
 		-include $(DES_READ)\Descriptor_File_Reader.hpp \

@@ -184,7 +184,6 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int s
 
 void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,int thr_num){
 
-
      this->Dep_Data_Collectors[thr_num] = new Dependency_Data_Extractor(this->opr_sis);
 
      this->Dep_Data_Collectors[thr_num]->Receive_Source_Code_Reader(this->Code_Rd);
@@ -206,7 +205,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,i
 
             this->Set_Dependency_Data(Data,path,header_name);
 
-            std::vector<std::string> * Ext_Hdr = this->Dep_Data_Collectors[thr_num]->Get_External_Header_Files();
+            const std::vector<std::string> * Ext_Hdr = this->Dep_Data_Collectors[thr_num]->Get_External_Header_Files();
 
             this->Set_External_Header_File_Dependencies(Data,Ext_Hdr);
 
@@ -233,7 +232,7 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
      
      src_git_record_dir, file_name_without_ext, src_sys_dir;
 
-     FileData * Data = this->Code_Rd->Find_File_Data_From_Name(header_name);
+     const FileData * Data = this->Code_Rd->Find_File_Data_From_Name(header_name);
 
 
      std::string file_path = Data->sys_path;
@@ -466,7 +465,7 @@ void Source_File_Dependency_Selector::Determine_Git_Record_Source_File_Directory
 
 void Source_File_Dependency_Selector::Determine_Header_System_Path(std::string & path, std::string name){
 
-     FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Name(name);
+     const FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Name(name);
 
      path = FileDtPtr->sys_path;
 }
@@ -517,7 +516,9 @@ void Source_File_Dependency_Selector::Determine_Header_Repo_Warehouse_Path(std::
 }
 
 
-void Source_File_Dependency_Selector::Determine_Object_File_Name(std::string & obj_name, std::string src_name){
+void Source_File_Dependency_Selector::Determine_Object_File_Name(std::string & obj_name, 
+ 
+     std::string src_name){
 
      size_t name_size = src_name.size();
 
@@ -568,7 +569,7 @@ void Source_File_Dependency_Selector::Extract_File_Name_From_Path(std::string * 
 
 void Source_File_Dependency_Selector::Set_External_Header_File_Dependencies(Source_File_Dependency & data, 
 
-     std::vector<std::string> * vec){
+     const std::vector<std::string> * vec){
 
      size_t vec_size = vec->size();
 
@@ -781,21 +782,19 @@ void Source_File_Dependency_Selector::Clear_Vector_Memory(std::vector<Source_Fil
 
 
 
-std::vector<std::string> * Source_File_Dependency_Selector::Get_File_Content(std::string path){
+const std::vector<std::string> * Source_File_Dependency_Selector::Get_File_Content(std::string path){
 
-     FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Path(path);
+     const FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Path(path);
 
      return &FileDtPtr->FileContent;
 }
 
 std::string Source_File_Dependency_Selector::Get_Header_System_Path(std::string header_name){
 
-     std::string sys_path;
+     const FileData * Ptr = this->Code_Rd->Find_File_Data_From_Name(header_name);
 
-     FileData * Ptr = this->Code_Rd->Find_File_Data_From_Name(header_name);
-
-     sys_path = Ptr->sys_path;
-
+     std::string sys_path = Ptr->sys_path;
+    
      return sys_path;
 }
 

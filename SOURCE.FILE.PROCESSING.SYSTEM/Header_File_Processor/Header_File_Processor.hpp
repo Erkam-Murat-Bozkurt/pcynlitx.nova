@@ -35,6 +35,7 @@ public:
  void Determine_Header_File_Name_With_Extention(std::string path);
  void Extract_Header_File_Name_From_Decleration(std::string * header_name, std::string s);
  bool CompareString(std::string firstString, std::string secondString);
+ void Extract_File_Extention(std::string & ext, std::string file_name, bool & is_there_ext);
  std::string Get_Header_Directory();
  std::string Get_Header_File_System_Path();
  std::string Get_Header_File_Name_Without_Ext();

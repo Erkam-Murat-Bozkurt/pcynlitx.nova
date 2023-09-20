@@ -30,130 +30,6 @@ void Source_File_Processor::Receive_Source_Code_Reader(Project_Src_Code_Rdr * pt
      this->Code_Rdr = ptr;
 }
 
-
-bool Source_File_Processor::Is_Source_File(char * file_path){
-
-     this->Clear_Dynamic_Memory();
-
-     char inclusion_guard [] = "#ifndef";
-
-     char main_file_key [] = "main(";
-
-     char header_add_h [] = ".h";
-
-     char header_add_hpp [] = ".hpp";
-
-     char source_file_ext_1 [] = ".cpp";
-
-     char source_file_ext_2 [] = ".cc";
-
-     char source_file_ext_3 [] = ".cxx";
-
-     char source_file_ext_4 [] = ".c";
-
-
-
-     this->Is_This_Source_File = false;
-
-     bool is_header = this->StringManager.CheckStringInclusion(file_path,header_add_h);
-
-     if(is_header){
-
-        this->Is_This_Source_File = false;
-
-        return this->Is_This_Source_File;
-     }
-     else{
-
-          is_header = this->StringManager.CheckStringInclusion(file_path,header_add_hpp);
-
-          if(is_header){
-
-            this->Is_This_Source_File = false;
-
-            return this->Is_This_Source_File;
-          }
-     }
-
-
-    this->Is_This_Source_File = false;
-
-    this->Determine_File_Name_Without_Ext(file_path);
-
-    std::string file_name = this->Get_File_Name_Witout_Ext();
-
-    this->Determine_Class_Function_Pattern(file_name);
-
-    std::string decleration_pattern = this->Get_Class_Function_Pattern();
-
-    bool is_this_main_file = false;
-
-    bool src_file_ext = false;
-
-    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_1)){
-
-       src_file_ext = true;
-    }
-
-    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_2)){
-
-       src_file_ext = true;
-    }
-
-    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_3)){
-
-       src_file_ext = true;
-    }
-
-    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_4)){
-
-       src_file_ext = true;
-    }
-
-    if(src_file_ext){
-
-       std::vector<std::string> * Source_Code = this->Get_File_Source_Code(file_path);
-
-       size_t line_num = Source_Code->size();
-
-       for(int k=0;k<line_num;k++){
-
-           this->Delete_Spaces_on_String(&(Source_Code->at(k)));
-
-           this->Is_This_Source_File
-
-            = this->StringManager.CheckStringInclusion(Source_Code->at(k),decleration_pattern);
-
-            if(this->Is_This_Source_File){
-
-                return this->Is_This_Source_File;
-            }
-
-            is_this_main_file = this->StringManager.CheckStringInclusion(Source_Code->at(k),main_file_key);
-
-            if(is_this_main_file){
-
-               this->Is_This_Source_File = false;
-
-               return this->Is_This_Source_File;
-            }
-      }
-
-
-     if(src_file_ext){
-
-        this->Is_This_Source_File = true;
-
-        return this->Is_This_Source_File;
-     }
-
-    }
-
-    return this->Is_This_Source_File;
-}
-
-
-
 bool Source_File_Processor::Is_Source_File(std::string file_path){
 
      this->Clear_Dynamic_Memory();
@@ -175,9 +51,26 @@ bool Source_File_Processor::Is_Source_File(std::string file_path){
      std::string source_file_ext_4 = ".c";
 
 
+
+     std::string file_extention;
+
+     bool is_there_file_ext = false;
+
+     this->Extract_File_Extention(file_extention,file_path,is_there_file_ext);
+
+
+     if(!is_there_file_ext){
+
+         this->Is_This_Source_File = false;
+
+         return this->Is_This_Source_File;
+     }
+
+
+
      this->Is_This_Source_File = false;
 
-     bool is_header = this->StringManager.CheckStringInclusion(file_path,header_add_h);
+     bool is_header = this->StringManager.CompareString(file_extention,header_add_h);
 
 
 
@@ -190,7 +83,7 @@ bool Source_File_Processor::Is_Source_File(std::string file_path){
      }
      else{
 
-          is_header = this->StringManager.CheckStringInclusion(file_path,header_add_hpp);
+          is_header = this->StringManager.CompareString(file_extention,header_add_hpp);
 
           if(is_header){
 
@@ -217,22 +110,22 @@ bool Source_File_Processor::Is_Source_File(std::string file_path){
     
     bool src_file_ext = false;
 
-    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_1)){
+    if(this->StringManager.CompareString(file_extention,source_file_ext_1)){
 
        src_file_ext = true;
     }
 
-    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_2)){
+    if(this->StringManager.CompareString(file_extention,source_file_ext_2)){
 
        src_file_ext = true;
     }
 
-    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_3)){
+    if(this->StringManager.CompareString(file_extention,source_file_ext_3)){
 
        src_file_ext = true;
     }
 
-    if(this->StringManager.CheckStringInclusion(file_path,source_file_ext_4)){
+    if(this->StringManager.CompareString(file_extention,source_file_ext_4)){
 
        src_file_ext = true;
     }
@@ -240,13 +133,11 @@ bool Source_File_Processor::Is_Source_File(std::string file_path){
 
     if(src_file_ext)
     {       
-       std::vector<std::string> * Source_Code = this->Get_File_Source_Code(file_path);
+       const std::vector<std::string> * Source_Code = this->Get_File_Source_Code(file_path);
 
        size_t line_num = Source_Code->size();
 
        for(int k=0;k<line_num;k++){
-
-           this->Delete_Spaces_on_String(&Source_Code->at(k));
 
            this->Is_This_Source_File
 
@@ -277,6 +168,39 @@ bool Source_File_Processor::Is_Source_File(std::string file_path){
     }
 
     return this->Is_This_Source_File;
+}
+
+
+
+
+
+void Source_File_Processor::Extract_File_Extention(std::string & ext, std::string file_path, 
+
+     bool & is_there_ext){
+
+     size_t name_size   = file_path.length();
+     size_t start_point = 0;
+
+     is_there_ext = false;
+     
+     for(size_t i=0;i<name_size;i++){
+
+         if(file_path[i] == '.'){
+
+            is_there_ext = true;
+
+            start_point=i;
+
+            break;
+         }
+     }
+
+     for(size_t i=start_point;i<name_size;i++){
+
+         ext.push_back(file_path[i]);
+     }
+
+     ext.shrink_to_fit();     
 }
 
 
@@ -326,6 +250,7 @@ void Source_File_Processor::Determine_File_Name_Without_Ext(char * path){
 
      this->Determine_File_Name_Without_Ext(file_path);
 }
+
 
 void Source_File_Processor::Determine_File_Name_Without_Ext(std::string path)
 {
@@ -445,7 +370,7 @@ void Source_File_Processor::Delete_Spaces_on_String(std::string * str)
 
 
 
-std::vector<std::string> * Source_File_Processor::Get_File_Source_Code(char * path)
+const std::vector<std::string> * Source_File_Processor::Get_File_Source_Code(char * path) const
 {
      std::string std_path;
 
@@ -459,15 +384,16 @@ std::vector<std::string> * Source_File_Processor::Get_File_Source_Code(char * pa
      std_path.shrink_to_fit();
 
 
-     FileData * Data = this->Code_Rdr->Find_File_Data_From_Path(std_path);
+     const FileData * Data = this->Code_Rdr->Find_File_Data_From_Path(std_path);
 
      return  &Data->FileContent;   
 }
 
 
-std::vector<std::string> * Source_File_Processor::Get_File_Source_Code(std::string path){
+const std::vector<std::string> * Source_File_Processor::Get_File_Source_Code(std::string path) const
+{
 
-     FileData * Data = this->Code_Rdr->Find_File_Data_From_Path(path);
+     const FileData * Data = this->Code_Rdr->Find_File_Data_From_Path(path);
 
      return  &Data->FileContent; 
 }

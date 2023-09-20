@@ -37,6 +37,8 @@ protected:
  void Determine_Class_Function_Pattern(std::string path);
  std::string Get_Class_Function_Pattern();
  void Delete_Spaces_on_String(std::string * pointer);
+ void Extract_File_Extention(std::string & ext, std::string file_path, 
+     bool & is_there_ext);
  void Clear_Dynamic_Memory();
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);

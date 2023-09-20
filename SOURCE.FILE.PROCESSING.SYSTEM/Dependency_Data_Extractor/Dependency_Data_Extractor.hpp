@@ -39,6 +39,7 @@ struct Search_Data
 {
   std::string path;
   std::string name;
+  std::string combined_name;
   bool search_complated;
   int dep_counter;
 };
@@ -51,7 +52,7 @@ public:
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Extract_Dependency_Tree(std::string path);
  std::vector<Search_Data> * Get_Search_Data();
- std::vector<std::string> * Get_External_Header_Files();
+ const std::vector<std::string> * Get_External_Header_Files() const;
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 protected:
@@ -69,9 +70,12 @@ protected:
  int  Determine_Inclusion_Number(std::string path);
  int  Search_Dependencies(Search_Data & Src_Data, std::vector<Search_Data> & dt);
  void Insert_External_Header_File_For_Dependency(std::string hdr_file);
+ bool Is_Header_Name_Combined(std::string name);
+ void Extract_Plain_File_Name(std::string & plain_name, std::string combined_name);
  void Clear_Vector_Memory(std::vector<std::string> & vec);
- std::vector<std::string> * Get_File_Content(std::string path);
- std::string Get_Header_System_Path(std::string header_name);
+ const std::vector<std::string> * Get_File_Content(std::string path) const;
+ std::string Get_Header_System_Path(std::string header_name) const;
+ void Print_Maps();
  Project_Src_Code_Rdr * Code_Rd;
  std::vector<Search_Data> searched_paths;
  std::vector<std::string> External_Header_Files;

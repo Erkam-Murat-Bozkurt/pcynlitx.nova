@@ -37,22 +37,47 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
 
      this->Clear_Dynamic_Memory();
 
-     char inclusion_guard [] = "#ifndef";
+     std::string std_srt_path;
 
-     char main_file_key [] = "main(";
+     size_t path_size = strlen(file_path);
 
-     char header_add_h [] = ".h";
+     for(size_t i=0;i<path_size;i++){
 
-     char header_add_hpp [] = ".hpp";
+         std_srt_path.push_back(file_path[i]);
+     }
 
-     char source_file_ext_1 [] = ".cpp";
+     std::string inclusion_guard = "#ifndef";
 
-     char source_file_ext_2 [] = ".cc";
+     std::string main_file_key   = "main(";
+
+     std::string header_add_h    = ".h";
+
+     std::string header_add_hpp  = ".hpp";
+
+     std::string source_file_ext_1  = ".cpp";
+
+     std::string source_file_ext_2  = ".cc";
+
+
+
+     std::string file_extention;
+
+     bool is_there_file_ext = false;
+
+     this->Extract_File_Extention(file_extention,file_path,is_there_file_ext);
+
+
+     if(!is_there_file_ext){
+
+         this->Is_This_Source_File = false;
+
+         return this->Is_This_Source_File;
+     }
 
 
      this->Is_This_Source_File = false;
 
-     bool is_header = this->StringManager.CheckStringInclusion(file_path,header_add_h);
+     bool is_header = this->StringManager.CompareString(file_extention,header_add_h);
 
      if(is_header){
 
@@ -62,7 +87,7 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
      }
      else{
 
-          is_header = this->StringManager.CheckStringInclusion(file_path,header_add_hpp);
+          is_header = this->StringManager.CompareString(file_extention,header_add_hpp);
 
           if(is_header){
 
@@ -85,9 +110,9 @@ bool Source_File_Determiner::Is_Source_File(char * file_path){
 
     bool is_this_main_file = false;
 
-    bool ext_chek_cond_1 = this->StringManager.CheckStringInclusion(file_path,source_file_ext_1);
+    bool ext_chek_cond_1 = this->StringManager.CompareString(file_extention,source_file_ext_1);
 
-    bool ext_chek_cond_2 = this->StringManager.CheckStringInclusion(file_path,source_file_ext_2);
+    bool ext_chek_cond_2 = this->StringManager.CompareString(file_extention,source_file_ext_2);
 
     if(ext_chek_cond_1 || ext_chek_cond_2){
 
@@ -146,17 +171,36 @@ bool Source_File_Determiner::Is_Source_File(std::string file_path){
 
      std::string header_add_hpp  = ".hpp";
 
-     char source_file_ext_1 [] = ".cpp";
+     std::string source_file_ext_1  = ".cpp";
 
-     char source_file_ext_2 [] = ".cc";
+     std::string source_file_ext_2  = ".cc";
 
-     char source_file_ext_3 [] = ".cxx";
+     std::string source_file_ext_3  = ".cxx";
 
-     char source_file_ext_4 [] = ".c";
+     std::string source_file_ext_4   = ".c";
+
+
+
 
      this->Is_This_Source_File = false;
 
-     bool is_header = this->StringManager.CheckStringInclusion(file_path,header_add_h);
+     std::string file_extention;
+
+     bool is_there_file_ext = false;
+
+     this->Extract_File_Extention(file_extention,file_path,is_there_file_ext);
+
+
+     if(!is_there_file_ext){
+
+         this->Is_This_Source_File = false;
+
+         return this->Is_This_Source_File;
+     }
+
+
+
+     bool is_header = this->StringManager.CompareString(file_extention,header_add_h);
 
      if(is_header){
 
@@ -166,7 +210,7 @@ bool Source_File_Determiner::Is_Source_File(std::string file_path){
      }
      else{
 
-          is_header = this->StringManager.CheckStringInclusion(file_path,header_add_hpp);
+          is_header = this->StringManager.CompareString(file_extention,header_add_hpp);
 
           if(is_header){
 
@@ -189,14 +233,14 @@ bool Source_File_Determiner::Is_Source_File(std::string file_path){
 
     bool is_this_main_file = false;
 
-    bool ext_chek_cond_1 = this->StringManager.CheckStringInclusion(file_path,source_file_ext_1);
+    bool ext_chek_cond_1 = this->StringManager.CompareString(file_extention,source_file_ext_1);
 
-    bool ext_chek_cond_2 = this->StringManager.CheckStringInclusion(file_path,source_file_ext_2);
+    bool ext_chek_cond_2 = this->StringManager.CompareString(file_extention,source_file_ext_2);
 
 
-    bool ext_chek_cond_3 = this->StringManager.CheckStringInclusion(file_path,source_file_ext_3);
+    bool ext_chek_cond_3 = this->StringManager.CompareString(file_extention,source_file_ext_3);
 
-    bool ext_chek_cond_4 = this->StringManager.CheckStringInclusion(file_path,source_file_ext_4);
+    bool ext_chek_cond_4 = this->StringManager.CompareString(file_extention,source_file_ext_4);
 
 
     if(ext_chek_cond_1 || ext_chek_cond_2 || ext_chek_cond_3 || ext_chek_cond_4){
@@ -227,7 +271,7 @@ bool Source_File_Determiner::Is_Source_File(std::string file_path){
       }
 
 
-      this->Is_This_Source_File = ext_chek_cond_1 || ext_chek_cond_2;
+      this->Is_This_Source_File = ext_chek_cond_1 || ext_chek_cond_2 || ext_chek_cond_3 || ext_chek_cond_4;
 
       if(this->Is_This_Source_File)
       {
@@ -236,6 +280,36 @@ bool Source_File_Determiner::Is_Source_File(std::string file_path){
     }
 
     return this->Is_This_Source_File;
+}
+
+
+void Source_File_Determiner::Extract_File_Extention(std::string & ext, std::string file_path, 
+
+     bool & is_there_ext){
+
+     size_t name_size   = file_path.length();
+     size_t start_point = 0;
+
+     is_there_ext = false;
+     
+     for(size_t i=0;i<name_size;i++){
+
+         if(file_path[i] == '.'){
+
+            is_there_ext = true;
+
+            start_point=i;
+
+            break;
+         }
+     }
+
+     for(size_t i=start_point;i<name_size;i++){
+
+         ext.push_back(file_path[i]);
+     }
+
+     ext.shrink_to_fit();     
 }
 
 

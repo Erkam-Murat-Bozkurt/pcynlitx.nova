@@ -46,6 +46,11 @@ Cpp_FileOperations::~Cpp_FileOperations(){
     // Destructor Function
 };
 
+void Cpp_FileOperations::Receive_Operating_System(char opr_sis){
+
+     this->opr_sis = opr_sis;
+}
+
 void Cpp_FileOperations::Determine_File_Path(char * FilePATH){
 
      if(this->Is_Current_Dir_Symbol_Exist_On_the_File_Path(FilePATH)){

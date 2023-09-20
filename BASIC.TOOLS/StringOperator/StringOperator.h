@@ -13,6 +13,7 @@ public:
  StringOperator();
  StringOperator(char opr_sis);
  virtual ~StringOperator();
+ void Receive_Operating_System(char opr_sis);
  void SetFilePath(char * FilePATH);
  void SetFilePath(std::string FilePATH);
  void ReceiveFileLine(std::string ReadLine);
@@ -31,6 +32,7 @@ private:
  void Initialize_Members();
  CharOperator CharacterOperations;
  Cpp_FileOperations Cpp_File_Manager;
+ char opr_sis;
  int Word_Count;
  int wordPosition;
  int Included_Word_Start_Position;
