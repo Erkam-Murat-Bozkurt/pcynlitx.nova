@@ -780,15 +780,6 @@ void Source_File_Dependency_Selector::Clear_Vector_Memory(std::vector<Source_Fil
 
 //  GETTER MEMBER FUNCTIONS  
 
-
-
-const std::vector<std::string> * Source_File_Dependency_Selector::Get_File_Content(std::string path){
-
-     const FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Path(path);
-
-     return &FileDtPtr->FileContent;
-}
-
 std::string Source_File_Dependency_Selector::Get_Header_System_Path(std::string header_name){
 
      const FileData * Ptr = this->Code_Rd->Find_File_Data_From_Name(header_name);

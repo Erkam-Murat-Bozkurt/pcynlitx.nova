@@ -96,7 +96,6 @@ protected:
  void Clear_Temporary_String_Memory(Source_File_Dependency * temp);
  void Determine_Header_System_Path(std::string & path, std::string name);
  void Set_Dependency_Data(Source_File_Dependency & data, std::string path, std::string header_name);
- const std::vector<std::string> * Get_File_Content(std::string path);
  std::string Get_Header_System_Path(std::string header_name);
  void Clear_Dependency_Data_Extractors();
  void Construct_Dependency_Data_Extractors();

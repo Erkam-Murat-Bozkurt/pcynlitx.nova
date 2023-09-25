@@ -154,7 +154,7 @@ void Source_File_Processor::Extract_File_Extention(std::string & ext, std::strin
 
      is_there_ext = false;
      
-     for(size_t i=0;i<name_size;i++){
+     for(size_t i=name_size;i>0;i--){
 
          if(file_path[i] == '.'){
 

@@ -31,7 +31,6 @@ int main(int argc, char ** argv){
     Des_Reader.Read_Descriptor_File();
 
     std::cout << "\n Descriptor File Readed";
-    std::cin.get();
 
     Git_Data_Processor Git_Data_Proc('w');
 
@@ -41,17 +40,12 @@ int main(int argc, char ** argv){
 
     Git_Data_Proc.Determine_Git_Repo_Info();
 
-    int index_size = Git_Data_Proc.Get_Git_File_Index_Size();
-
-    std::cout << "\n index_size:" << index_size;
-
 
     Project_Src_Code_Rdr Code_Rd('w');
 
     Code_Rd.Receive_Git_Data_Processor(&Git_Data_Proc);
 
     Code_Rd.Read_Project_Source_Code_Files();
-
 
 
     std::cout << "\n The project source codes readed..";
@@ -64,9 +58,9 @@ int main(int argc, char ** argv){
 
     Information_Collector.Receive_Git_Data_Processor(&Git_Data_Proc);
 
-    //std::string path = "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\SERVER.CLASS.BUILDER\\Thread_Data_Manager_Builder\\Thread_Data_Manager_Builder.cpp";
+    std::string path = "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\SERVER.CLASS.BUILDER\\Thread_Data_Manager_Builder\\Thread_Data_Manager_Builder.cpp";
 
-    std::string path = "D:\\pcynlitx.build.gui\\wxLauncher.cpp";
+    //std::string path = "D:\\pcynlitx.build.gui\\wxLauncher.cpp";
 
 
 

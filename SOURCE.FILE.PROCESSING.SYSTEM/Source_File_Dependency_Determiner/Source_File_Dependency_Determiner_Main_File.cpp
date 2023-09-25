@@ -76,9 +76,9 @@ int main(int argc, char ** argv){
 
     */
 
-    Dep_Determiner.Collect_Dependency_Information(path);
+    //Dep_Determiner.Collect_Dependency_Information(path);
 
-     //Dep_Determiner.Collect_Dependency_Information();
+     Dep_Determiner.Collect_Dependency_Information();
 
 
 

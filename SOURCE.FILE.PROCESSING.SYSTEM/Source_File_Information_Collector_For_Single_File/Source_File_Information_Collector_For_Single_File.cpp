@@ -85,7 +85,7 @@ void Source_File_Information_Collector_For_Single_File::Extract_Dependency_Data(
 
      this->Determine_Related_Source_Files_From_Header_Dependencies();
 
-     FileData * root_src_code = this->Code_Rdr->Find_File_Data_From_Path(src_file_path);
+     const FileData * root_src_code = this->Code_Rdr->Find_File_Data_From_Path(src_file_path);
 
      Source_File_Data Base_File_Dt;
 
@@ -96,10 +96,7 @@ void Source_File_Information_Collector_For_Single_File::Extract_Dependency_Data(
 
      for(std::size_t i =0; i<this->Dependent_Source_File_Names.size(); i++){
 
-         FileData * src_code = this->Code_Rdr->Find_File_Data_From_Name(this->Dependent_Source_File_Names.at(i));
-
-         size_t line_num = src_code->FileContent.size();
-
+         const FileData * src_code = this->Code_Rdr->Find_File_Data_From_Name(this->Dependent_Source_File_Names.at(i));
 
          Source_File_Data Buffer_Dat;
 

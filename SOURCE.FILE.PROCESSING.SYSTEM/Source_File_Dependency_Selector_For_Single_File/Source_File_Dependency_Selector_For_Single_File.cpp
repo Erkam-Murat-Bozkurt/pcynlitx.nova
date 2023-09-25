@@ -230,7 +230,7 @@ void Source_File_Dependency_Selector_For_Single_File::Set_Dependency_Data(Source
      src_git_record_dir, file_name_without_ext, src_sys_dir;
 
 
-     FileData * Data = this->Code_Rd->Find_File_Data_From_Name(header_name);
+     const FileData * Data = this->Code_Rd->Find_File_Data_From_Name(header_name);
 
      std::string file_path = Data->sys_path;
 
@@ -357,7 +357,7 @@ void Source_File_Dependency_Selector_For_Single_File::Determine_Object_File_Name
 
 void Source_File_Dependency_Selector_For_Single_File::Determine_Header_System_Path(std::string & path, std::string name){
 
-     FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Name(name);
+     const FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Name(name);
 
      path = FileDtPtr->sys_path;
 }
@@ -763,18 +763,11 @@ void Source_File_Dependency_Selector_For_Single_File::Clear_Vector_Memory(std::v
 
 
 
-std::vector<std::string> * Source_File_Dependency_Selector_For_Single_File::Get_File_Content(std::string path){
-
-     FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Path(path);
-
-     return &FileDtPtr->FileContent;
-}
-
 std::string Source_File_Dependency_Selector_For_Single_File::Get_Header_System_Path(std::string header_name){
 
      std::string sys_path;
 
-     FileData * Ptr = this->Code_Rd->Find_File_Data_From_Name(header_name);
+     const FileData * Ptr = this->Code_Rd->Find_File_Data_From_Name(header_name);
 
      sys_path = Ptr->sys_path;
 
