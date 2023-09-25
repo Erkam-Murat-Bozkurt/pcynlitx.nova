@@ -287,7 +287,6 @@ bool Header_File_Determiner::Is_Header(std::string file_path){
 
      this->Extract_File_Extention(file_extention,file_path,is_there_file_ext);
 
-
      if(!is_there_file_ext){
 
          this->is_header_file = false;
@@ -305,13 +304,13 @@ bool Header_File_Determiner::Is_Header(std::string file_path){
         return this->is_header_file;
      }
 
+
      if(this->StringManager.CompareString(file_extention,source_file_ext_cc)){
 
         this->is_header_file = false;
 
         return this->is_header_file;
      }
-
 
 
      bool include_header_ext = this->StringManager.CompareString(file_extention,header_add_h);
@@ -343,6 +342,7 @@ bool Header_File_Determiner::Is_Header(std::string file_path){
 
     */
 
+
     return this->is_header_file;
 }
 
@@ -356,7 +356,7 @@ void Header_File_Determiner::Extract_File_Extention(std::string & ext, std::stri
 
      is_there_ext = false;
      
-     for(size_t i=0;i<name_size;i++){
+     for(size_t i=name_size;i>0;i--){
 
          if(file_path[i] == '.'){
 

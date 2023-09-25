@@ -13,11 +13,7 @@
 
 
 
-void print_file(std::vector<std::string> * ptr);
-
-void Clear_Vector_Memory(std::vector<std::string> & pointer);
-
-void Clear_String_Memory(std::string & str);
+void print_include_declerations(const std::vector<std::string> & vec);
 
 
 
@@ -44,8 +40,6 @@ int main(int argc, char ** argv){
     Git_Data_Proc.Determine_Git_Repo_Info();
 
 
-    /*
-
     int index_size = Git_Data_Proc.Get_Git_File_Index_Size();
 
     std::cout << "\n index_size:" << index_size;
@@ -62,8 +56,6 @@ int main(int argc, char ** argv){
         std::cout << "\n";
     }
 
-    */
-
 
     Project_Src_Code_Rdr Code_Rd('w');
 
@@ -76,8 +68,7 @@ int main(int argc, char ** argv){
     size_t src_file_num = Code_Rd.Get_Project_Files_Number();
 
     std::cout << "\n File number:" << src_file_num;
-    std::cin.get();
-    
+
     for(size_t i=0;i<src_file_num;i++){
     
        std::string path = Code_Rd.Get_File_Path(i);
@@ -86,10 +77,11 @@ int main(int argc, char ** argv){
 
        
        std::cout << "\n\n";
-       std::cout << "\n i:"<< i;
+       std::cout << "\n #FILE NAME: " << Data->file_name;
+       std::cout << "\n Data index:"<< i;
        std::cout << "\n Path:" << Data->sys_path;
 
-       std::string combined_name = Data->combined_file_name;
+       std::string combined_name = Data->cmbn_name;
 
        
        /*
@@ -102,15 +94,21 @@ int main(int argc, char ** argv){
        std::cout << "\n The obtained combained name:" << combined_name;
        */
        
-       const FileData * Data_Combined_Name = Code_Rd.Find_File_Data_From_Combined_Name(combined_name);
+       const FileData * Data_Combined_Name = Code_Rd.Find_File_Data_From_Directory_File_Name_Combination(combined_name);
 
-       std::cout << "\n File path:"  << Data_Combined_Name->sys_path;
+       std::cout << "\n";
+       std::cout << "\n\e[1;32m After retreiving data from combined file name!\e[0m";
+       std::cout << "\n";
 
-       std::cout << "\n Combined Name:" << Data_Combined_Name->combined_file_name;
+       std::cout << "\n File path:"     << Data_Combined_Name->sys_path;
 
-       bool is_repo_file = Code_Rd.Check_Repo_File_Status_From_Combined_File_Name(Data_Combined_Name->combined_file_name);
+       std::cout << "\n Combined Name:" << Data_Combined_Name->cmbn_name;
+
+       bool is_repo_file = Code_Rd.Check_Repo_File_Status_From_Directory_File_Name_Combination(Data_Combined_Name->cmbn_name);
 
        std::cout << "\n is_repo_file:" << is_repo_file;
+
+       print_include_declerations(Data_Combined_Name->include_declerations);
 
        std::cout << "\n\n ";           
     }
@@ -122,61 +120,19 @@ int main(int argc, char ** argv){
     return 0;
 }
 
-void Clear_File_Data(FileData & data){
 
-     Clear_String_Memory(data.combined_file_name);
-     Clear_String_Memory(data.file_name);
-     Clear_String_Memory(data.sys_path);
-     Clear_Vector_Memory(data.FileContent);    
-}
+void print_include_declerations(const std::vector<std::string> & vec){
+
+     std::cout << "\n\n The include declerations:";    
+     std::cout << "\n ---------------------------------";
 
 
-void Clear_String_Memory(std::string & str){
-
-     if(!str.empty()){
-
-        str.clear();
-        str.shrink_to_fit();
-     }
-}
-
-
-void Clear_Vector_Memory(std::vector<std::string> & vec){
-
-     if(!vec.empty()){
-
-         std::vector<std::string>::iterator it;
-
-         auto begin = vec.begin();
-
-         auto end   = vec.end();
-
-         for(auto it=begin;it<end;it++){
-
-             if(!it->empty()){
-
-                 it->clear();
-
-                 it->shrink_to_fit();
-              }
-         }
-
-         vec.clear();
-
-         vec.shrink_to_fit();
-     }
-}
-
-
-
-void print_file(std::vector<std::string> * ptr){
-
-     size_t vec_size = ptr->size();
+     size_t vec_size = vec.size();
 
      for(size_t i=0;i<vec_size;i++){
      
-         std::string line = ptr->at(i);
+         std::string line = vec.at(i);
 
-         std::cout << line;
+         std::cout << "\n " << line;
      }
 }

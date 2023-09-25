@@ -22,6 +22,11 @@
 #include <string>
 #include <fcntl.h>
 #include <windows.h>
+#include <map>
+#include <unordered_map>
+#include <iterator>
+#include <utility>                     // std::pair, std::make_pair
+#include <stdexcept>                   // std::out_of_range
 #include "Source_File_Information_Collector.hpp"
 #include "Header_File_Processor.hpp"
 #include "Project_Src_Code_Rdr.hpp"
@@ -39,7 +44,7 @@ struct Search_Data
 {
   std::string path;
   std::string name;
-  std::string combined_name;
+  std::string include_decleration;
   bool search_complated;
   int dep_counter;
 };
@@ -58,26 +63,22 @@ public:
 protected:
  void Re_Order_Dependencies();
  int  Recursive_Dependency_Determination(std::string path, std::vector<Search_Data> & data);
- std::string Find_Header_Name(std::string string);
- bool Find_New_Dependency(std::string path, std::vector<Search_Data> & data);
- bool Find_New_Dependency_From_Path(std::string path, std::vector<Search_Data> & data);
- bool Is_This_File_Aready_Searched(std::string name, std::vector<Search_Data> & data);
- bool Include_Decleration_Test(std::string string);
- void Extract_File_Name_From_Path(std::string * ptr, std::string str);
- bool CompareString(std::string firstString, std::string secondString);
+ bool Check_New_Dependency_Status(std::string path, std::vector<Search_Data> & data);
+ bool Check_New_Dependency_Status_From_Path(std::string path, std::vector<Search_Data> & data);
+ bool Is_This_File_Aready_Searched(std::string inc_dec);
  bool Is_This_Repo_HeaderFile(std::string head_name);
  void Clear_String_Memory(std::string & str);
  int  Determine_Inclusion_Number(std::string path);
  int  Search_Dependencies(Search_Data & Src_Data, std::vector<Search_Data> & dt);
  void Insert_External_Header_File_For_Dependency(std::string hdr_file);
- bool Is_Header_Name_Combined(std::string name);
- void Extract_Plain_File_Name(std::string & plain_name, std::string combined_name);
+ bool Is_This_A_Combined_Include_Delaration(std::string name);
  void Clear_Vector_Memory(std::vector<std::string> & vec);
- const std::vector<std::string> * Get_File_Content(std::string path) const;
+ const std::vector<std::string> * Get_File_Include_Delarations(std::string path) const;
  std::string Get_Header_System_Path(std::string header_name) const;
- void Print_Maps();
+ std::string Get_File_Path_Form_Declaration(std::string declaration);
  Project_Src_Code_Rdr * Code_Rd;
  std::vector<Search_Data> searched_paths;
+ std::unordered_map<std::string, Search_Data *> Map_Inc_Dec;
  std::vector<std::string> External_Header_Files;
  Header_File_Processor Header_Processor;  
  StringOperator StringManager; 

@@ -292,7 +292,7 @@ void Source_File_Determiner::Extract_File_Extention(std::string & ext, std::stri
 
      is_there_ext = false;
      
-     for(size_t i=0;i<name_size;i++){
+     for(size_t i=name_size;i>0;i--){
 
          if(file_path[i] == '.'){
 

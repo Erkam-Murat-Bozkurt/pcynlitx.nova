@@ -26,14 +26,13 @@ public:
  virtual ~Source_File_Processor();
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  bool Is_Source_File(std::string file_path);
- //bool Is_Source_File(char * file_path);
  void Determine_Source_File_Name(std::string path);
  void Determine_File_Name_Without_Ext(std::string path);
  void Determine_File_Name_Without_Ext(char * path);
  std::string Get_Source_File_Name();
  std::string Get_File_Name_Witout_Ext();
- const std::vector<std::string> * Get_File_Source_Code(char * path) const;
- const std::vector<std::string> * Get_File_Source_Code(std::string path) const;
+ const std::vector<std::string> * Get_File_Include_Declerations(char * path) const;
+ const std::vector<std::string> * Get_File_Include_Declerations(std::string path) const;
 protected:
  void Determine_Class_Function_Pattern(std::string path);
  std::string Get_Class_Function_Pattern();

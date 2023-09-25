@@ -47,40 +47,35 @@ bool Header_File_Processor::Is_this_file_included_on_anywhere(std::string file_p
 
      for(int i=0;i<repo_size;i++){
 
-         const std::vector<std::string> * File_Content = this->Code_Rdr->Get_File_Content(i);
+         const std::vector<std::string> * Include_Declerations = this->Code_Rdr->Get_Include_Declerations(i);
 
          this->Header_File_System_Path = this->Code_Rdr->Get_File_Path(i);
          
-         size_t FileSize = File_Content->size();
+         size_t FileSize = Include_Declerations->size();
 
          for(size_t k=0;k<FileSize;k++){
 
-             std::string file_line = File_Content->at(k);
+             std::string file_line = Include_Declerations->at(k);
 
              // In order to remove possible spaces on the string
 
              // a temporary string is constructed
              
-             bool is_include_decleration = this->Include_Decleration_Test(file_line);
-
-
              std::string header_name;
 
-             if(is_include_decleration){
 
-                this->Extract_Header_File_Name_From_Decleration(&header_name,file_line);
+             this->Extract_Header_File_Name_From_Decleration(&header_name,file_line);
 
-                this->Determine_Header_File_Name(file_path);
+             this->Determine_Header_File_Name(file_path);
 
-                bool is_strings_equal = this->CompareString(header_name,this->Header_File_Name);
+             bool is_strings_equal = this->CompareString(header_name,this->Header_File_Name);
 
-                if(is_strings_equal){
+             if(is_strings_equal){
 
-                   this->Is_this_file_included_on_somewhere = true;
+                this->Is_this_file_included_on_somewhere = true;
 
-                   break;
-                }
-             }
+                break;
+             }             
          }
       }
 
