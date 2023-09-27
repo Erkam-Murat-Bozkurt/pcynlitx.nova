@@ -59,8 +59,9 @@ int main(int argc, char ** argv){
 
     std::cout << "\n Code reading complated..";
 
+    std::string path = "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\SERVER.CLASS.BUILDER\\Thread_Data_Manager_Builder\\Thread_Data_Manager_Builder.cpp";
 
-    char path [] =  "D:\\pcynlitx.build.gui\\wxLauncher.cpp";
+    //std::string path =  "D:\\pcynlitx.build.gui\\wxLauncher.cpp";
 
 
     std::cout << "\n\n";

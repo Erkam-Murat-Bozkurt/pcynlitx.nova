@@ -33,8 +33,9 @@ struct FileData
    std::string file_name;
    std::string cmbn_name;        
    std::vector<std::string> include_declerations;
-   bool is_there_member_function_decleration;
-   bool is_there_main_file_key_word;
+   bool is_source_file;
+   bool is_main_file;   
+   bool is_header_file;
 };
 
 /*

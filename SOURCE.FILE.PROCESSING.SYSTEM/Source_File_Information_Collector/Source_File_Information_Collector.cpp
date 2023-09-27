@@ -24,9 +24,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Source_File_Information_Collector.hpp"
 
-Source_File_Information_Collector::Source_File_Information_Collector(char opr_sis) :
-
-   Header_Processor(opr_sis)
+Source_File_Information_Collector::Source_File_Information_Collector(char opr_sis)
 {
    this->operating_sis = opr_sis;
 }
@@ -57,10 +55,6 @@ void Source_File_Information_Collector::Receive_Descriptor_File_Reader(Descripto
 void Source_File_Information_Collector::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
 
      this->Code_Rdr = ptr;
-
-     this->Header_Processor.Receive_Source_Code_Reader(ptr);
-
-     this->Src_File_Pr.Receive_Source_Code_Reader(ptr);
 }
 
 
@@ -81,27 +75,26 @@ void Source_File_Information_Collector::Determine_Source_File_List()
       
      for(int i=0;i<this->Code_Rdr->Get_Project_Files_Number();i++)
      {
-
          std::string path = this->Code_Rdr->Get_File_Path(i);
       
-         bool is_source_file = this->Src_File_Pr.Is_Source_File(path);
+         const FileData * ptr = this->Code_Rdr->Find_File_Data_From_Path(path);
+
+         bool is_source_file = ptr->is_source_file;
 
          if(is_source_file){
 
-            this->Src_File_Pr.Determine_Source_File_Name(path);
+            std::string source_file_name = ptr->file_name;
 
-            std::string source_file_name = this->Src_File_Pr.Get_Source_File_Name();
+            Source_File_Data buffer;
 
-            this->buffer.system_path = path;
-            this->buffer.source_file_name = source_file_name;
+            buffer.system_path = path;
+            buffer.source_file_name = source_file_name;
 
-            this->Src_Data_Holder.push_back(this->buffer);
+            this->Src_Data_Holder.push_back(buffer);
 
-            this->Clear_Buffer_Memory();
+            this->Clear_Buffer_Memory(buffer);
          }
-      }
-
-      this->Header_Processor.Clear_Dynamic_Memory();
+      }      
 }
 
 
@@ -259,9 +252,13 @@ void Source_File_Information_Collector::Determine_Warehouse_Object_Dir(){
 }
 
 
-bool  Source_File_Information_Collector::Is_Header_File(std::string hpath){
+bool  Source_File_Information_Collector::Is_Header_File(std::string path){
 
-      return this->Header_Processor.Is_Header(hpath);
+      const FileData * ptr = this->Code_Rdr->Find_File_Data_From_Path(path);
+
+      bool is_header_file = ptr->is_header_file;
+
+      return is_header_file;
 }
 
 
@@ -274,11 +271,11 @@ void Source_File_Information_Collector::Clear_Object_Memory()
 {
      this->Clear_Dynamic_Memory();
 
-     this->Clear_String_Memory(&this->warehouse_path);
+     this->Clear_String_Memory(this->warehouse_path);
 
-     this->Clear_String_Memory(&this->warehouse_head_dir);
+     this->Clear_String_Memory(this->warehouse_head_dir);
 
-     this->Clear_String_Memory(&this->warehouse_obj_dir);
+     this->Clear_String_Memory(this->warehouse_obj_dir);
 }
 
 
@@ -288,8 +285,6 @@ void Source_File_Information_Collector::Clear_Dynamic_Memory()
         // Clearing the header data
 
       this->Clear_Headers_Data();
-
-      this->Clear_Buffer_Memory();
 }
 
 
@@ -304,9 +299,9 @@ void Source_File_Information_Collector::Clear_Headers_Data()
 
              ith<this->Src_Data_Holder.end();ith++)
          {
-             this->Clear_String_Memory(&ith->source_file_name);
+             this->Clear_String_Memory(ith->source_file_name);
 
-             this->Clear_String_Memory(&ith->system_path);
+             this->Clear_String_Memory(ith->system_path);
 
          }
 
@@ -318,49 +313,21 @@ void Source_File_Information_Collector::Clear_Headers_Data()
 
 
 
-void Source_File_Information_Collector::Clear_Buffer_Memory()
+void Source_File_Information_Collector::Clear_Buffer_Memory(Source_File_Data & data)
 {
-     this->Clear_String_Memory(&this->buffer.source_file_name);
+     this->Clear_String_Memory(data.source_file_name);
 
-     this->Clear_String_Memory(&this->buffer.system_path);
+     this->Clear_String_Memory(data.system_path);
 }
 
 
+void Source_File_Information_Collector::Clear_String_Memory(std::string & str){
 
-void Source_File_Information_Collector::Clear_Vector_Memory(std::vector<std::string> * pointer)
-{
-      if(!pointer->empty()){
+     if(!str.empty()){
 
-           std::vector<std::string>::iterator it;
+         str.clear();
 
-           auto begin = pointer->begin();
-
-           auto end   = pointer->end();
-
-           for(auto it=begin;it<end;it++){
-
-               if(!it->empty()){
-
-                   it->clear();
-
-                   it->shrink_to_fit();
-               }
-            }
-
-           pointer->clear();
-
-           pointer->shrink_to_fit();
-      }
-}
-
-
-void Source_File_Information_Collector::Clear_String_Memory(std::string * pointer){
-
-     if(!pointer->empty()){
-
-         pointer->clear();
-
-         pointer->shrink_to_fit();
+         str.shrink_to_fit();
       }
 }
 

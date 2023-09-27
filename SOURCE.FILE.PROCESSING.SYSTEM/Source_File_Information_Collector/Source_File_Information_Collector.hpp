@@ -38,7 +38,6 @@ struct Source_File_Data
 };
 
 
-
 class Source_File_Information_Collector
 {
 public:
@@ -62,26 +61,18 @@ protected:
  void Determine_Source_File_List();
  void Determine_Warehouse_Object_Dir();
  void Determine_Warehouse_Header_Dir();
- void Clear_Buffer_Memory();
- void Clear_Vector_Memory(std::vector<std::string> * pointer);
- void Clear_String_Memory(std::string * pointer);
+ void Clear_Buffer_Memory(Source_File_Data & data);
+ void Clear_String_Memory(std::string & str);
  void Clear_Headers_Data();
- Project_Src_Code_Rdr * Code_Rdr;
- StringOperator StringManager;
+ Project_Src_Code_Rdr   * Code_Rdr;
  Descriptor_File_Reader * Des_Reader;
  Git_Data_Processor * Git_Data_Proc;
- Source_File_Processor Src_File_Pr;
- Header_File_Processor Header_Processor;
  std::vector<Source_File_Data> Src_Data_Holder;
- Source_File_Data buffer;
  std::string warehouse_head_dir;
  std::string warehouse_obj_dir;
  std::string warehouse_path;
  char operating_sis;
- bool include_decleration_cond;
  bool Memory_Delete_Condition;
- bool is_independent_header;
- bool isStringsEqual;
 };
 
 #endif /* SOURCE_FILE_INFORMATION_COLLECTOR_HPP */

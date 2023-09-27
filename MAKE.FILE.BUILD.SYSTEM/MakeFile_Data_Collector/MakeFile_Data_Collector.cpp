@@ -236,7 +236,7 @@ void MakeFile_Data_Collector::Receive_Git_Record_Data(std::string file_name){
      std::string source_file_sys_path = this->Compiler_Data_Ptr->source_file_path;
 
      this->Determine_Source_File_Directory(this->Source_File_Directory,source_file_sys_path);
-
+     
      this->Header_File_Directory = this->Source_File_Directory;
  }
 
@@ -499,12 +499,16 @@ void MakeFile_Data_Collector::Determine_Dependency_Code_Line(){
 }
 
 
-void MakeFile_Data_Collector::Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path){
+void MakeFile_Data_Collector::Determine_Git_Record_Directory(std::string & git_dir, 
+
+     std::string sys_path){
 
      std::string root_dir = this->Des_Reader->Get_Repo_Directory_Location();
 
      size_t path_size = sys_path.length();
+
      size_t end_point = path_size;
+
      size_t start_point = root_dir.length()+1;
 
      for(size_t i=path_size;i>0;i--){
@@ -548,9 +552,12 @@ void MakeFile_Data_Collector::Determine_Git_Record_Directory(std::string & git_d
 
 
 
-void MakeFile_Data_Collector::Determine_Source_File_Directory(std::string & src_dir, std::string sys_path){
+void MakeFile_Data_Collector::Determine_Source_File_Directory(std::string & src_dir,
+
+     std::string sys_path){
 
      size_t path_size = sys_path.length();
+
      size_t end_point = path_size;
 
      for(size_t i=path_size;i>0;i--){
@@ -595,9 +602,7 @@ void MakeFile_Data_Collector::Determine_Source_File_Directory(std::string & src_
 void MakeFile_Data_Collector::Determine_File_Name_Without_Ext(std::string & file_name, 
 
      std::string file_name_with_ext)
-     {
-
-
+{
      size_t name_size = file_name_with_ext.length();     
 
      size_t end_point = name_size;

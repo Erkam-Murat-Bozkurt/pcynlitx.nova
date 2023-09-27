@@ -30,6 +30,8 @@ void Source_File_Processor::Receive_Source_Code_Reader(Project_Src_Code_Rdr * pt
      this->Code_Rdr = ptr;
 }
 
+
+/*
 bool Source_File_Processor::Is_Source_File(std::string file_path){
 
      this->Clear_Dynamic_Memory();
@@ -58,6 +60,8 @@ bool Source_File_Processor::Is_Source_File(std::string file_path){
 
      this->Extract_File_Extention(file_extention,file_path,is_there_file_ext);
 
+     std::cout << "\n file_extention:" << file_extention;
+     std::cout << "\n is_there_file_ext:" << is_there_file_ext;
 
      if(!is_there_file_ext){
 
@@ -118,21 +122,26 @@ bool Source_File_Processor::Is_Source_File(std::string file_path){
         src_file_ext = true;
      }
 
+     std::cout << "\n";
+     std::cout << "\n src_file_ext:" << src_file_ext;
 
      if(src_file_ext)
      {       
        const FileData * Data = this->Code_Rdr->Find_File_Data_From_Path(file_path);
 
-       if(Data->is_there_member_function_decleration){
+       std::cout << "\n Data->is_there_main_file_key_word:"          << Data->is_there_main_file_key_word;
+       std::cout << "\n Data->is_there_member_function_decleration:" << Data->is_there_member_function_decleration;
 
-          this->Is_This_Source_File = true;
-
-          return this->Is_This_Source_File;
-       }
-    
        if(Data->is_there_main_file_key_word){
 
           this->Is_This_Source_File = false;
+
+          return this->Is_This_Source_File;
+       }
+
+       if(Data->is_there_member_function_decleration){
+
+          this->Is_This_Source_File = true;
 
           return this->Is_This_Source_File;
        }
@@ -141,6 +150,7 @@ bool Source_File_Processor::Is_Source_File(std::string file_path){
      return this->Is_This_Source_File;
 }
 
+*/
 
 
 

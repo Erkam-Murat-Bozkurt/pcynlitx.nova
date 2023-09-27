@@ -54,17 +54,33 @@ void Dependency_Data_Extractor::Clear_Dynamic_Memory()
 {
      this->Clear_Vector_Memory(this->External_Header_Files);
 
-     for(size_t i=0;i<this->searched_paths.size();i++){
+     if(!this->searched_paths.empty()){
 
-         this->Clear_String_Memory(this->searched_paths.at(i).path);
-         this->Clear_String_Memory(this->searched_paths.at(i).name);
-         this->Clear_String_Memory(this->searched_paths.at(i).include_decleration);         
+         for(size_t i=0;i<this->searched_paths.size();i++){
+
+             this->Clear_String_Memory(this->searched_paths.at(i).path);
+             
+             this->Clear_String_Memory(this->searched_paths.at(i).name);
+             
+             this->Clear_String_Memory(this->searched_paths.at(i).include_decleration);         
+         }
+    
+         this->searched_paths.clear();
+     
+         this->searched_paths.shrink_to_fit();
      }
 
-     this->searched_paths.clear();
-     this->searched_paths.shrink_to_fit();
+     if(!this->External_Header_Files.empty()){
 
-     this->Map_Inc_Dec.clear();     
+         this->External_Header_Files.clear();
+
+         this->External_Header_Files.shrink_to_fit();
+     }
+
+     if(!this->Map_Inc_Dec.empty()){
+
+         this->Map_Inc_Dec.clear();
+     }     
 }
 
 
@@ -81,14 +97,14 @@ void Dependency_Data_Extractor::Extract_Dependency_Tree(std::string path){
 
      this->Clear_Dynamic_Memory();
 
-     this->Recursive_Dependency_Determination(path,this->searched_paths);
-
+     this->Recursive_Dependency_Determination(path,this->searched_paths,this->External_Header_Files);
+     
      this->Re_Order_Dependencies();     
 }
 
 int Dependency_Data_Extractor::Recursive_Dependency_Determination(std::string path, 
 
-     std::vector<Search_Data> & data){
+     std::vector<Search_Data> & data, std::vector<std::string> & external_headers){
 
      Search_Data Head;
 
@@ -96,13 +112,13 @@ int Dependency_Data_Extractor::Recursive_Dependency_Determination(std::string pa
      Head.search_complated = false;
 
 
-     int inc_num = this->Search_Dependencies(Head,data);
+     int inc_num = this->Search_Dependencies(Head,data,external_headers);
     
      for(size_t i=0;i<data.size();i++){
 
         if(!data.at(i).search_complated){
 
-            inc_num =  inc_num +  this->Search_Dependencies(data.at(i),data);
+            inc_num =  inc_num +  this->Search_Dependencies(data.at(i),data,external_headers);
 
             data.at(i).search_complated = true;
 
@@ -110,14 +126,20 @@ int Dependency_Data_Extractor::Recursive_Dependency_Determination(std::string pa
          }
      }
 
-     this->Map_Inc_Dec.clear();     
 
+     if(!this->Map_Inc_Dec.empty()){
+
+        this->Map_Inc_Dec.clear();
+     }
+     
      return inc_num;
 }
 
 
 
-int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data, std::vector<Search_Data> & data)
+int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data, 
+
+    std::vector<Search_Data> & data, std::vector<std::string> & external_headers)
 {
 
     int inclusion_number = this->Determine_Inclusion_Number(Src_Data.path);
@@ -139,7 +161,7 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data, std::
 
            std::string inc_dec = Include_Delerations->at(k);
      
-           bool is_new_dep = this->Check_New_Dependency_Status(inc_dec,data);
+           bool is_new_dep = this->Check_New_Dependency_Status(inc_dec,data,external_headers);
            
            if(is_new_dep){
               
@@ -173,7 +195,7 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data, std::
         }           
     }
     else{
-             if(this->Check_New_Dependency_Status_From_Path(Src_Data.path,data)){
+             if(this->Check_New_Dependency_Status_From_Path(Src_Data.path,data,external_headers)){
 
                const FileData * File_Data_Ptr =  this->Code_Rd->Find_File_Data_From_Path(Src_Data.path);
 
@@ -198,7 +220,7 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data, std::
 
 bool Dependency_Data_Extractor::Check_New_Dependency_Status(std::string string_line, 
 
-     std::vector<Search_Data> & data)
+     std::vector<Search_Data> & data, std::vector<std::string> & external_headers)
 {
 
      bool is_new_dependency = false;
@@ -228,7 +250,7 @@ bool Dependency_Data_Extractor::Check_New_Dependency_Status(std::string string_l
         }
         else{
 
-              this->Insert_External_Header_File_For_Dependency(include_decleration);
+              this->Insert_External_Header_File_For_Dependency(include_decleration,external_headers);
 
               is_new_dependency = false;
 
@@ -257,7 +279,7 @@ bool Dependency_Data_Extractor::Check_New_Dependency_Status(std::string string_l
            }
            else{
 
-                  this->Insert_External_Header_File_For_Dependency(include_decleration);
+                  this->Insert_External_Header_File_For_Dependency(include_decleration,external_headers);
 
                   is_new_dependency = false;
 
@@ -272,7 +294,7 @@ bool Dependency_Data_Extractor::Check_New_Dependency_Status(std::string string_l
 
 bool Dependency_Data_Extractor::Check_New_Dependency_Status_From_Path(std::string path, 
 
-     std::vector<Search_Data> & data){
+     std::vector<Search_Data> & data, std::vector<std::string> & external_headers){
 
      bool is_new_dependency = false;
 
@@ -293,7 +315,7 @@ bool Dependency_Data_Extractor::Check_New_Dependency_Status_From_Path(std::strin
         }
         else{
 
-              this->Insert_External_Header_File_For_Dependency(FileDtPtr->file_name);
+              this->Insert_External_Header_File_For_Dependency(FileDtPtr->file_name,external_headers);
 
               is_new_dependency = false;
 
@@ -359,6 +381,8 @@ bool Dependency_Data_Extractor::Is_This_Repo_HeaderFile(std::string include_decl
      }
      else{
 
+         FileDtPtr = this->Code_Rd->Find_File_Data_From_Name(include_declaration);
+
          if(this->Code_Rd->Check_Repo_File_Status(include_declaration)){
 
             is_this_a_repo_header = this->Header_Processor.Is_Header(FileDtPtr->sys_path);
@@ -415,8 +439,9 @@ void Dependency_Data_Extractor::Re_Order_Dependencies(){
          std::string sub_path = this->searched_paths.at(i).path;
 
          std::vector<Search_Data> temp_vec;
+         std::vector<std::string> ext_headers;
 
-         int inc_num = this->Recursive_Dependency_Determination(sub_path,temp_vec);
+         int inc_num = this->Recursive_Dependency_Determination(sub_path,temp_vec,ext_headers);
          
          if(inc_num != 0){
 
@@ -433,7 +458,9 @@ void Dependency_Data_Extractor::Re_Order_Dependencies(){
          }
 
          temp_vec.clear();
-         temp_vec.shrink_to_fit();                  
+         temp_vec.shrink_to_fit();
+         ext_headers.clear();
+         ext_headers.shrink_to_fit();                  
      }
 
 
@@ -459,11 +486,13 @@ void Dependency_Data_Extractor::Re_Order_Dependencies(){
 
 
 
-void Dependency_Data_Extractor::Insert_External_Header_File_For_Dependency(std::string hdr_file_name){
+void Dependency_Data_Extractor::Insert_External_Header_File_For_Dependency(std::string hdr_file_name, 
 
-     this->External_Header_Files.push_back(hdr_file_name);
+     std::vector<std::string> & external_headers){
 
-     this->External_Header_Files.shrink_to_fit();
+     external_headers.push_back(hdr_file_name);
+
+     external_headers.shrink_to_fit();
 }
 
 

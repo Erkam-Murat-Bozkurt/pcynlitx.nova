@@ -98,21 +98,17 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->DepSelector_For_Single_File.Determine_Source_File_Dependencies(path);
 
-
      this->Warehouse_Headers_Dir = this->DepSelector_For_Single_File.Get_Warehouse_Headers_Dir();
 
      this->Warehouse_Objetcs_Dir = this->DepSelector_For_Single_File.Get_Warehouse_Objetcs_Dir();
 
      this->Warehouse_Path = this->DepSelector_For_Single_File.Get_Warehouse_Path();
 
-
      this->Com_Data_Extractor.Receive_Single_File_Dependency_Data(&this->DepSelector_For_Single_File);
 
      this->Com_Data_Extractor.Extract_Compiler_Data();
 
-
      this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
-
 
      this->Construct_Dependency_Map();
 
@@ -136,13 +132,11 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
       this->Warehouse_Path = this->DepSelector.Get_Warehouse_Path();
 
-
       this->Com_Data_Extractor.Receive_Dependency_Data(&this->DepSelector);
 
       this->Com_Data_Extractor.Extract_Compiler_Data();
 
       this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
-
 
       this->Construct_Dependency_Map();
 
@@ -159,6 +153,7 @@ void Source_File_Dependency_Determiner::Construct_Dependency_Map(){
      for(int i=0;i< this->Compiler_Data_Ptr->size();i++){
 
          std::string name = this->Compiler_Data_Ptr->at(i).source_file_name_witout_ext;
+
          int dep_counter  = this->Compiler_Data_Ptr->at(i).priority;
 
          this->Dependency_Map.insert(std::make_pair(name,dep_counter));

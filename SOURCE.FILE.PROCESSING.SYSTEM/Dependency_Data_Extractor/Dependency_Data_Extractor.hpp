@@ -62,15 +62,20 @@ public:
  void Clear_Object_Memory();
 protected:
  void Re_Order_Dependencies();
- int  Recursive_Dependency_Determination(std::string path, std::vector<Search_Data> & data);
- bool Check_New_Dependency_Status(std::string path, std::vector<Search_Data> & data);
- bool Check_New_Dependency_Status_From_Path(std::string path, std::vector<Search_Data> & data);
+ int  Recursive_Dependency_Determination(std::string path, std::vector<Search_Data> & data, 
+      std::vector<std::string> & external_headers);
+ bool Check_New_Dependency_Status(std::string path, std::vector<Search_Data> & data, 
+      std::vector<std::string> & external_headers);
+ bool Check_New_Dependency_Status_From_Path(std::string path, std::vector<Search_Data> & data, 
+      std::vector<std::string> & external_headers);
  bool Is_This_File_Aready_Searched(std::string inc_dec);
  bool Is_This_Repo_HeaderFile(std::string head_name);
  void Clear_String_Memory(std::string & str);
  int  Determine_Inclusion_Number(std::string path);
- int  Search_Dependencies(Search_Data & Src_Data, std::vector<Search_Data> & dt);
- void Insert_External_Header_File_For_Dependency(std::string hdr_file);
+ int  Search_Dependencies(Search_Data & Src_Data, std::vector<Search_Data> & dt,
+      std::vector<std::string> & external_headers);
+ void Insert_External_Header_File_For_Dependency(std::string hdr_file, 
+      std::vector<std::string> & external_headers);
  bool Is_This_A_Combined_Include_Delaration(std::string name);
  void Clear_Vector_Memory(std::vector<std::string> & vec);
  const std::vector<std::string> * Get_File_Include_Delarations(std::string path) const;

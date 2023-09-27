@@ -130,6 +130,7 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
      mt.unlock();
 
      
+
      for(int i=start_point;i<end_point;i++){
      
          std::string file_sys_path = this->FilePaths.at(i);
@@ -149,10 +150,16 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
             }
 
 
-
             FileData buffer;  // DATA BUFFER DECLERATION
 
             buffer.sys_path = file_sys_path;
+
+            if(is_header){
+
+               buffer.is_header_file = true;
+               buffer.is_main_file   = false;
+               buffer.is_source_file = false;
+            }
 
             this->FileManager[trn].Read_File(file_sys_path);
 
@@ -164,24 +171,37 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
 
                 this->Delete_Spaces_on_String(&string_line);
 
+
                 if(is_src_file){
 
                    std::string main_file_key   = "main(";
 
-                   bool is_exist = false;
+                   bool is_main_key_exist 
                    
-                   is_exist = this->StringManager[0].CheckStringInclusion(string_line,class_function_pattern);
+                   = this->StringManager[trn].CheckStringInclusion(string_line,main_file_key);
 
-                   if(is_exist){
 
-                      buffer.is_there_member_function_decleration = true;
+                   if(is_main_key_exist){
+
+                      buffer.is_main_file   = true;
+                      buffer.is_header_file = false;
+                      buffer.is_source_file = false;
                    }
+
+                                
+                   bool is_member_function_key_exist 
                    
-                   is_exist = this->StringManager[0].CheckStringInclusion(string_line,main_file_key);
+                   = this->StringManager[trn].CheckStringInclusion(string_line,class_function_pattern);
 
-                   if(is_exist){
 
-                      buffer.is_there_main_file_key_word = true;
+                   // It is the member function scop resolution key word 
+                   // For member function sample::function, it is "sample::"
+
+                   if(is_member_function_key_exist){      
+
+                      buffer.is_source_file = true;
+                      buffer.is_header_file = false;
+                      buffer.is_main_file   = false;
                    }
                 }
 
@@ -189,9 +209,9 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
 
                 if(is_include_decleration){
 
-                    std::string include_decleration = this->Extract_Include_Decleration(string_line);
+                   std::string include_decleration = this->Extract_Include_Decleration(string_line);
 
-                    buffer.include_declerations.push_back(include_decleration);
+                   buffer.include_declerations.push_back(include_decleration);
                 }
             }
 
@@ -212,10 +232,10 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
             mt.unlock();
 
 
-
             this->Clear_Buffer_Memory(buffer);
          }
      }
+
 }
 
 
@@ -261,22 +281,35 @@ void Project_Src_Code_Rdr::Read_Source_Code_Single_Thread(){
 
                    std::string main_file_key   = "main(";
 
-                   bool is_exist = false;
+                   bool is_main_key_exist 
                    
-                   is_exist = this->StringManager[0].CheckStringInclusion(string_line,class_function_pattern);
+                   = this->StringManager[0].CheckStringInclusion(string_line,main_file_key);
 
-                   if(is_exist){
 
-                      buffer.is_there_member_function_decleration = true;
+                   if(is_main_key_exist){
+
+                      buffer.is_main_file   = true;
+                      buffer.is_header_file = false;
+                      buffer.is_source_file = false;
                    }
+
+                                
+                   bool is_member_function_key_exist 
                    
-                   is_exist = this->StringManager[0].CheckStringInclusion(string_line,main_file_key);
+                   = this->StringManager[0].CheckStringInclusion(string_line,class_function_pattern);
 
-                   if(is_exist){
 
-                      buffer.is_there_main_file_key_word = true;
+                   // It is the member function scop resolution key word 
+                   // For member function sample::function, it is "sample::"
+
+                   if(is_member_function_key_exist){      
+
+                      buffer.is_source_file = true;
+                      buffer.is_header_file = false;
+                      buffer.is_main_file   = false;
                    }
                 }
+
 
                 bool is_include_decleration = this->Include_Decleration_Test(string_line,0);
 
@@ -296,13 +329,6 @@ void Project_Src_Code_Rdr::Read_Source_Code_Single_Thread(){
 
 
             this->Code_Dt.push_back(buffer);
-
-            this->Map_Path.insert(std::make_pair(buffer.sys_path,&this->Code_Dt.back()));
-            
-            this->Map_Name.insert(std::make_pair(buffer.file_name,&this->Code_Dt.back()));
-
-            this->Map_Cmbn.insert(std::make_pair(buffer.cmbn_name,&this->Code_Dt.back()));
-
 
             this->Clear_Buffer_Memory(buffer);
 
@@ -365,8 +391,10 @@ void Project_Src_Code_Rdr::Determine_File_Name(std::string path, std::string & f
 
      for(size_t i=dir_size+1;i<file_path_size;i++){
 
-         file_name.push_back(path[i]);
+         file_name.push_back(path[i]);        
      }
+
+     file_name.shrink_to_fit();
 }
 
 void Project_Src_Code_Rdr::Determine_File_Combined_Name(std::string path, std::string & file_name){
@@ -413,21 +441,6 @@ void Project_Src_Code_Rdr::Determine_File_Combined_Name(std::string path, std::s
      }
 
      file_name.shrink_to_fit();
-
-     /*
-
-     if(this->opr_sis == 'w'){
-
-        for(size_t i=0;i<file_name.length();i++){
-
-            if(file_name[i] == '/'){
-
-               file_name[i] = '\\';
-            }
-        }
-     }
-
-     */
 }
 
 
@@ -480,7 +493,15 @@ void Project_Src_Code_Rdr::Determine_Class_Function_Pattern(std::string file_sys
 
      for(size_t i=0;i<file_name_size;i++)
      {
-         pattern.push_back(file_name[i]);
+         if(file_name[i]=='.'){
+
+            break;
+         }
+         else{
+
+              pattern.push_back(file_name[i]);
+
+         }
      }
 
      std::string name_space_opr = "::";

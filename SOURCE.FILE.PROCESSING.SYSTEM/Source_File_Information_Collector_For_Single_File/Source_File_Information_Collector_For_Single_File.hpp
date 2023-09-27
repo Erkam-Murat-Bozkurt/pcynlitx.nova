@@ -64,31 +64,20 @@ protected:
  void Find_File_Name_Without_Extantion(std::string hdr_name, std::string & file_name_with_ext);
  void Determine_Warehouse_Object_Dir();
  void Determine_Warehouse_Header_Dir();
- bool Include_Decleration_Test(std::string string);
- void Clear_Buffer_Memory();
- void Clear_String_Memory(std::string * pointer);
+ void Clear_Buffer_Memory(Source_File_Data & data);
+ void Clear_String_Memory(std::string & str);
  void Clear_Headers_Data();
  std::vector<Search_Data> Dep_Search_Data;
  std::vector<std::string> Dependent_Source_File_Names;
  std::vector<Source_File_Data> Src_Data_Holder;
- Dependency_Data_Extractor ** Dep_Data_Collectors;
- Project_Src_Code_Rdr * Code_Rdr;
- StringOperator StringManager;
+ Project_Src_Code_Rdr   * Code_Rdr;
  Descriptor_File_Reader * Des_Reader;
- Git_Data_Processor * Git_Data_Proc;
- Source_File_Processor Src_File_Pr;
- Header_File_Processor Header_Processor;
- Source_File_Data buffer;
+ Git_Data_Processor     * Git_Data_Proc;
  std::string warehouse_head_dir;
  std::string warehouse_obj_dir;
  std::string warehouse_path;
- std::mutex mtx;
- std::thread threads[8];
  char opr_sis;
- bool include_decleration_cond;
  bool Memory_Delete_Condition;
- bool is_independent_header;
- bool isStringsEqual;
 };
 
 #endif /* SOURCE_FILE_INFORMATION_COLLECTOR_FOR_SINGLE_FILE_HPP */

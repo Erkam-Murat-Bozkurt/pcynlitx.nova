@@ -100,9 +100,15 @@ int main(int argc, char ** argv){
        std::cout << "\n\e[1;32m After retreiving data from combined file name!\e[0m";
        std::cout << "\n";
 
-       std::cout << "\n File path:"     << Data_Combined_Name->sys_path;
+       std::cout << "\n File path:"      << Data_Combined_Name->sys_path;
 
-       std::cout << "\n Combined Name:" << Data_Combined_Name->cmbn_name;
+       std::cout << "\n Combined Name:"  << Data_Combined_Name->cmbn_name;
+
+       std::cout << "\n Is source file:" << Data_Combined_Name->is_source_file;
+
+       std::cout << "\n Is main   file:" << Data_Combined_Name->is_main_file;
+       
+       std::cout << "\n Is header file:" << Data_Combined_Name->is_header_file;
 
        bool is_repo_file = Code_Rd.Check_Repo_File_Status_From_Directory_File_Name_Combination(Data_Combined_Name->cmbn_name);
 

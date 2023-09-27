@@ -106,6 +106,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
 
      size_t data_size = this->Source_File_Data_Ptr->size();
 
+
      if(data_size>16){
 
        int division = data_size/16;
@@ -156,12 +157,11 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int s
      
          std::string path =this->Source_File_Data_Ptr->at(i).system_path;
 
+
          this->Extract_Dependency_Tree(path,thr_num);
 
          this->Set_Included_Header_Number(&this->Dependent_List[thr_num]);
 
-
-     
 
          mt.lock();
 
@@ -193,8 +193,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,i
      std::vector<Search_Data> * Dep_Data_Ptr = this->Dep_Data_Collectors[thr_num]->Get_Search_Data();
 
      size_t data_size = Dep_Data_Ptr->size();
-     
-
+          
      if(data_size>0){   // The header file have dependencies
 
         for(size_t i=0;i<data_size;i++){
@@ -212,7 +211,6 @@ void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,i
             this->Dependent_List[thr_num].push_back(Data);
         }
      }
-
 
      this->Dep_Data_Collectors[thr_num]->Clear_Object_Memory();
 
@@ -598,8 +596,6 @@ void Source_File_Dependency_Selector::Place_String(std::string * str_pointer, st
 void Source_File_Dependency_Selector::Print_Dependency_List()
 {
      size_t data_size = this->Dependency_Data.size();
-
-    
 
      for(size_t i=0;i<data_size;i++){
 

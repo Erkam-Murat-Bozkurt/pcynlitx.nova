@@ -25,9 +25,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Source_File_Information_Collector_For_Single_File.hpp"
 
-Source_File_Information_Collector_For_Single_File::Source_File_Information_Collector_For_Single_File(char opr_sis) :
-
-   Header_Processor(opr_sis)
+Source_File_Information_Collector_For_Single_File::Source_File_Information_Collector_For_Single_File(char opr_sis)
 {
    this->opr_sis = opr_sis;
 }
@@ -60,10 +58,6 @@ void Source_File_Information_Collector_For_Single_File::Receive_Descriptor_File_
 void Source_File_Information_Collector_For_Single_File::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
 
      this->Code_Rdr = ptr;
-
-     this->Header_Processor.Receive_Source_Code_Reader(ptr);
-
-     this->Src_File_Pr.Receive_Source_Code_Reader(ptr);
 }
 
 
@@ -90,6 +84,7 @@ void Source_File_Information_Collector_For_Single_File::Extract_Dependency_Data(
      Source_File_Data Base_File_Dt;
 
      Base_File_Dt.source_file_name = root_src_code->file_name;
+
      Base_File_Dt.system_path = root_src_code->sys_path;
 
      this->Src_Data_Holder.push_back(Base_File_Dt);
@@ -189,45 +184,6 @@ void Source_File_Information_Collector_For_Single_File::Find_File_Name_Without_E
 bool  Source_File_Information_Collector_For_Single_File::Is_Header_File(std::string hpath){
 
       return this->Header_Processor.Is_Header(hpath);
-}
-
-
-bool Source_File_Information_Collector_For_Single_File::Include_Decleration_Test(std::string string){
-
-     this->include_decleration_cond = false;
-
-     std::string include_key = "#include\"";  // double_quotation_mark
-
-
-     bool is_this_include_dec
-
-     = this->StringManager.CheckStringInclusion(string,include_key);
-
-
-     bool char_before_sharp = false; //  sharp symbol = #
-
-     if(string[0]!= '#'){
-
-        char_before_sharp = true;
-     }
-
-     // In metaprograms, #include key is used on the inside code
-
-     // Therefore, there may be false include therms which is used in the metaprograms
-
-     // in order to produce header files. If there is a character before the sharp symbol,
-
-     // it is a meta program code. ( simething like write{ #include \"sample.h\" })
-
-     if(!char_before_sharp){
-
-        if(is_this_include_dec){
-
-           this->include_decleration_cond = true;
-        }
-     }
-
-     return this->include_decleration_cond;
 }
 
 
@@ -383,11 +339,11 @@ void Source_File_Information_Collector_For_Single_File::Clear_Object_Memory()
 {
      this->Clear_Dynamic_Memory();
 
-     this->Clear_String_Memory(&this->warehouse_path);
+     this->Clear_String_Memory(this->warehouse_path);
 
-     this->Clear_String_Memory(&this->warehouse_head_dir);
+     this->Clear_String_Memory(this->warehouse_head_dir);
 
-     this->Clear_String_Memory(&this->warehouse_obj_dir);
+     this->Clear_String_Memory(this->warehouse_obj_dir);
 }
 
 
@@ -414,9 +370,9 @@ void Source_File_Information_Collector_For_Single_File::Clear_Headers_Data()
              ith<this->Src_Data_Holder.end();ith++)
          {
 
-             this->Clear_String_Memory(&ith->source_file_name);
+             this->Clear_String_Memory(ith->source_file_name);
 
-             this->Clear_String_Memory(&ith->system_path);
+             this->Clear_String_Memory(ith->system_path);
 
           }
 
@@ -428,22 +384,22 @@ void Source_File_Information_Collector_For_Single_File::Clear_Headers_Data()
 
 
 
-void Source_File_Information_Collector_For_Single_File::Clear_Buffer_Memory()
+void Source_File_Information_Collector_For_Single_File::Clear_Buffer_Memory(Source_File_Data & data)
 {
-     this->Clear_String_Memory(&this->buffer.source_file_name);
+     this->Clear_String_Memory(data.source_file_name);
 
-     this->Clear_String_Memory(&this->buffer.system_path);
+     this->Clear_String_Memory(data.system_path);
 }
 
 
 
-void Source_File_Information_Collector_For_Single_File::Clear_String_Memory(std::string * pointer){
+void Source_File_Information_Collector_For_Single_File::Clear_String_Memory(std::string & str){
 
-     if(!pointer->empty()){
+     if(!str.empty()){
 
-         pointer->clear();
+         str.clear();
 
-         pointer->shrink_to_fit();
+         str.shrink_to_fit();
       }
 }
 
