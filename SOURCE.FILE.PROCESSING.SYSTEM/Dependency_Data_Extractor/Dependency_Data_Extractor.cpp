@@ -163,6 +163,10 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data,
      
            bool is_new_dep = this->Check_New_Dependency_Status(inc_dec,data,external_headers);
            
+
+           std::string dir_file_name_comb; 
+
+
            if(is_new_dep){
               
               const FileData * File_Data_Ptr;
@@ -170,10 +174,23 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data,
               Search_Data buffer;     // Temporary data decleration           
 
               if(this->Is_This_A_Combined_Include_Delaration(inc_dec)){
+                 
+                 /*
+                    If it is a combined header decleration, there may be more directory information 
+                    on the include decleration. For instance the include decleration can be in the 
+                    form as "somedir/sample/sample.h"
+                   
+                    The function "Extract_Directory_File_Name_Combination()" is used to find last 
+                    directory and file name
+                 */
 
-                 File_Data_Ptr = this->Code_Rd->Find_File_Data_From_Directory_File_Name_Combination(inc_dec);
+                 this->Extract_Directory_File_Name_Combination(inc_dec,dir_file_name_comb);  
+                 
+                 File_Data_Ptr = this->Code_Rd->Find_File_Data_From_Directory_File_Name_Combination(dir_file_name_comb);
               }
               else{
+
+                    dir_file_name_comb = inc_dec;
 
                     File_Data_Ptr = this->Code_Rd->Find_File_Data_From_Name(inc_dec);                                
               }
@@ -185,11 +202,13 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data,
 
               buffer.include_decleration = inc_dec;
 
+              buffer.dir_file_comb = dir_file_name_comb;
+
               buffer.search_complated = false;
 
               data.push_back(buffer);
 
-              this->Map_Inc_Dec.insert(std::make_pair(buffer.include_decleration,&data.back()));
+              this->Map_Inc_Dec.insert(std::make_pair(buffer.dir_file_comb,&data.back()));
 
            }    
         }           
@@ -201,13 +220,14 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data,
 
                Search_Data buffer;
                buffer.path = File_Data_Ptr->sys_path;;
-               buffer.include_decleration = File_Data_Ptr->cmbn_name;;
-               buffer.name = File_Data_Ptr->file_name;;
+               buffer.include_decleration = File_Data_Ptr->cmbn_name;
+               buffer.dir_file_comb = File_Data_Ptr->cmbn_name;
+               buffer.name = File_Data_Ptr->file_name;
                buffer.search_complated = false;
 
                data.push_back(buffer);
 
-               this->Map_Inc_Dec.insert(std::make_pair(buffer.include_decleration,&data.back()));
+               this->Map_Inc_Dec.insert(std::make_pair(buffer.dir_file_comb,&data.back()));
             }
     }
 
@@ -230,15 +250,25 @@ bool Dependency_Data_Extractor::Check_New_Dependency_Status(std::string string_l
 
      if(this->Is_This_A_Combined_Include_Delaration(include_decleration)){
 
-        bool is_repo_file = this->Code_Rd->Check_Repo_File_Status_From_Directory_File_Name_Combination(include_decleration);
+        // There may be more directory information on the include decleration
+        // For instance the include decleration can be in the form as "somedir/sample/sample.h"
+        // The function Extract_Directory_File_Name_Combination is used to find last directory and file name
 
+        std::string dir_file_name_comb;
+
+        this->Extract_Directory_File_Name_Combination(include_decleration,dir_file_name_comb);  
+
+
+        bool is_repo_file = this->Code_Rd->Check_Repo_File_Status_From_Directory_File_Name_Combination(dir_file_name_comb);
+
+ 
         if(is_repo_file){
 
-           bool is_repo_header_file = this->Is_This_Repo_HeaderFile(include_decleration);
+           bool is_repo_header_file = this->Is_This_Repo_HeaderFile(dir_file_name_comb);
 
            if(is_repo_header_file){
               
-               bool is_already_searched = this->Is_This_File_Aready_Searched(include_decleration);
+               bool is_already_searched = this->Is_This_File_Aready_Searched(dir_file_name_comb);
 
                if(!is_already_searched){
 
@@ -306,7 +336,9 @@ bool Dependency_Data_Extractor::Check_New_Dependency_Status_From_Path(std::strin
 
         if(this->Code_Rd->Is_This_Repo_File(FileDtPtr->sys_path)){
 
-            if(!this->Is_This_File_Aready_Searched(FileDtPtr->cmbn_name)){
+            bool is_already_searched = this->Is_This_File_Aready_Searched(FileDtPtr->cmbn_name);
+
+            if(!is_already_searched){
 
                is_new_dependency = true;
 
@@ -413,6 +445,41 @@ std::string Dependency_Data_Extractor::Get_File_Path_Form_Declaration(std::strin
      }
 
      return FileDtPtr->sys_path;     
+}
+
+
+
+void Dependency_Data_Extractor::Extract_Directory_File_Name_Combination(std::string inc_dec, 
+
+     std::string & dir_file_com)
+{
+     size_t dec_size = inc_dec.length();
+
+     size_t dir_char_num = 0, start_point = dec_size;
+
+     for(size_t i=dec_size;i>0;i--){
+
+         if((inc_dec[i] == '/') || (inc_dec[i] == '\\')){
+
+            dir_char_num++;
+
+            if(dir_char_num>1){
+
+               start_point = i+1;        
+
+               break;
+            }
+         }
+         
+         start_point--;        
+     }
+    
+     for(size_t i=start_point;i<dec_size;i++){
+
+         dir_file_com.push_back(inc_dec[i]);
+     }
+
+     dir_file_com.shrink_to_fit();
 }
 
 

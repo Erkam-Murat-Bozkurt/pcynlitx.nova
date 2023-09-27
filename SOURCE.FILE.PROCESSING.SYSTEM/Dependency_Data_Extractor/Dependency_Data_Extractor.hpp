@@ -45,6 +45,7 @@ struct Search_Data
   std::string path;
   std::string name;
   std::string include_decleration;
+  std::string dir_file_comb;
   bool search_complated;
   int dep_counter;
 };
@@ -77,6 +78,7 @@ protected:
  void Insert_External_Header_File_For_Dependency(std::string hdr_file, 
       std::vector<std::string> & external_headers);
  bool Is_This_A_Combined_Include_Delaration(std::string name);
+ void Extract_Directory_File_Name_Combination(std::string inc_dec, std::string & dir_file_com);
  void Clear_Vector_Memory(std::vector<std::string> & vec);
  const std::vector<std::string> * Get_File_Include_Delarations(std::string path) const;
  std::string Get_Header_System_Path(std::string header_name) const;

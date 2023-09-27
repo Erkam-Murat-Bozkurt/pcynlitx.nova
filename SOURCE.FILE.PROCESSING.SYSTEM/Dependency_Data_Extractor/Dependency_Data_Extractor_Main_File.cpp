@@ -66,6 +66,23 @@ int main(int argc, char ** argv){
         std::cout << "\n Dependency File <" << i << ">:" << Data_Ptr->at(i).path;
     }
 
+    std::cout << "\n\n";
+    std::cout << "\n THE EXTERNAL HEADER FILES:";
+    std::cout << "\n\n";
+
+    const std::vector<std::string> * external_headers = Dep_Data_Extractor.Get_External_Header_Files();
+
+    if(external_headers->size()==0){
+
+       std::cout << "\n There is no external header";
+    }
+    else{
+
+          for(size_t i=0;i<external_headers->size();i++){
+
+              std::cout << "\n External Header[" << i << "]:" << external_headers->at(i);
+          }
+    }
 
     std::cout << "\n\n THE END OF THE PROGRAM \n\n";
 
