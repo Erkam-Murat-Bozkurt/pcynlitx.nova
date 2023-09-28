@@ -5,8 +5,9 @@
 
 
 
-#ifndef SOURCE_FILE_INFORMATION_COLLECTOR_FOR_SINGLE_FILE_HPP
-#define SOURCE_FILE_INFORMATION_COLLECTOR_FOR_SINGLE_FILE_HPP
+
+#ifndef QUICK_SRC_DEPENDENCY_EXTRACTOR_HPP
+#define QUICK_SRC_DEPENDENCY_EXTRACTOR_HPP
 
 #include <cstring>
 #include <cstdlib>
@@ -39,46 +40,34 @@
 
 
 
-class Source_File_Information_Collector_For_Single_File
+class Quick_Src_Dependency_Extractor
 {
 public:
- Source_File_Information_Collector_For_Single_File(char opr_sis);
- virtual ~Source_File_Information_Collector_For_Single_File();
+ Quick_Src_Dependency_Extractor(char opr_sis);
+ virtual ~Quick_Src_Dependency_Extractor();
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
- void Extract_Dependency_Data(std::string src_file_path); // Dependency data extraction for a single file
+ void Extract_Dependency_Search_Data(std::string src_file_path); // Dependency data extraction for a single file
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
  bool Is_Header_File(std::string hpath);
- Source_File_Data Get_Dependency_Data(int num);
- std::vector<Source_File_Data>  * Get_Source_File_Data_Address();
+ const std::vector<Search_Data> * Get_Dependency_Search_Data() const;
  const std::vector<std::string> * Get_Root_File_External_Headers() const;
- size_t       Get_Dependency_Data_Size();
  std::string  Get_Warehouse_Headers_Dir();
  std::string  Get_Warehouse_Objetcs_Dir();
  std::string  Get_Warehouse_Path();
 
 protected:
- void Determine_Root_Source_File_Header_Dependencies(std::string src_file_path);
- void Determine_Related_Source_Files_From_Header_Dependencies();
- void Is_There_Any_Related_Source_File_On_The_Repo(std::string str, 
-      std::string & src_name, bool & is_there);
- void Find_File_Name_Without_Extantion(std::string hdr_name, std::string & file_name_with_ext);
  void Determine_Warehouse_Object_Dir();
  void Determine_Warehouse_Header_Dir();
  void Receive_String_Vector(std::vector<std::string> & target_vec, 
       const std::vector<std::string> * vec);
- void Clear_Buffer_Memory(Source_File_Data & data);
  void Clear_String_Memory(std::string & str);
- void Clear_Headers_Data();
  void Clear_Search_Data();
  void Clear_External_Headers_Memory();
- void Clear_Dependent_Source_File_Names();
  std::vector<Search_Data> Dep_Search_Data;
- std::vector<std::string> Dependent_Source_File_Names;
  std::vector<std::string> Root_File_External_Headers;
- std::vector<Source_File_Data> Src_Data_Holder;
  Project_Src_Code_Rdr   * Code_Rdr;
  Descriptor_File_Reader * Des_Reader;
  Git_Data_Processor     * Git_Data_Proc;
@@ -89,4 +78,4 @@ protected:
  bool Memory_Delete_Condition;
 };
 
-#endif /* SOURCE_FILE_INFORMATION_COLLECTOR_FOR_SINGLE_FILE_HPP */
+#endif /* QUICK_SRC_DEPENDENCY_EXTRACTOR_HPP */
