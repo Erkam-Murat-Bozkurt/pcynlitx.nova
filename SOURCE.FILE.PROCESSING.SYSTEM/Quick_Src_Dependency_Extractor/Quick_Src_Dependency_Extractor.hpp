@@ -40,6 +40,41 @@
 
 
 
+/*
+   
+   THIS CLASS IS USED IN EXECUTABLE MAKE FILE CONSTRUCTION.
+
+   The data type "Simple_Source_File_Dependency" data structure is used
+   for the quick construction of make file data. When the file naming convations
+   can not preserve, an object file for each source file is constructed by the 
+   automatically written scripts. Then, on the make file's compiler command, 
+   a simple link is given with a linker to the project library (the library
+   which is constructed for the whole project). 
+   
+*/
+
+struct Simple_Source_File_Dependency 
+{
+  bool rcr_srch_complated;
+  std::string source_file_name; // The header file which its dependencies are researched 
+  std::string source_file_name_without_ext;
+  std::string src_git_record_dir;
+  std::string src_sys_dir;
+  std::string source_file_path;
+  std::string Header_Name;
+  std::string Combined_Header_Name;
+  std::string header_sys_path;
+  std::string repo_warehouse_path;
+  std::string dir;
+  std::string object_file_name;
+  std::vector<std::string> External_Headers;
+  std::vector<std::string> Dependent_Headers;
+  int included_file_hdr_num;
+  int base_included_hdr_num;
+  int priority;
+};
+
+
 class Quick_Src_Dependency_Extractor
 {
 public:

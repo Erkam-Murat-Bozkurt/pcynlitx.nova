@@ -56,8 +56,6 @@ int main(int argc, char ** argv){
 
     std::cout << "\n Code reading complated..";
 
-    std::cin.get();
-
 
     Source_File_Dependency_Selector Dep_Selector('w');
 
@@ -72,8 +70,6 @@ int main(int argc, char ** argv){
       Dep_Selector.Print_Dependency_List();
 
       std::cout << "\n Dependency size:" << Dep_Selector.Get_Dependency_List_Size();
-
-      std::cin.get();
     }
 
 
@@ -87,14 +83,6 @@ int main(int argc, char ** argv){
     std::cin.get();
     */
 
-
-    Dep_Selector.Determine_Source_File_Dependencies();
-
-    Dep_Selector.Print_Dependency_List();
-
-
-
-    std::cout << "\n Dependency size:" << Dep_Selector.Get_Dependency_List_Size();
 
     std::cout << "\n\n THE END OF THE PROGRAM \n\n";
 

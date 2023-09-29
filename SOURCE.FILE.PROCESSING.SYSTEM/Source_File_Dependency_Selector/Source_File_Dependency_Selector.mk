@@ -23,7 +23,7 @@ HDR_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
 SRC_READER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Src_Code_Rdr
 DEP_DAT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Extractor
 SRC_PROCESSOR=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Processor
-
+SRC_DATA_SETTER=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Data_Setter
 
 
 GIT_PROC=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Data_Processor
@@ -49,7 +49,8 @@ VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 		$(GIT_REC) \
 		$(GIT_MOD_LST) \
 		$(GIT_MOD_RCV) \
-		$(GIT_IGN)
+		$(GIT_IGN) \
+		$(SRC_DATA_SETTER)
 
 Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.cpp \
 	Source_File_Dependency_Selector.cpp \
@@ -60,6 +61,7 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 	Project_Files_Lister.cpp \
     Project_Files_Data_Collector.cpp \
 	Source_File_Data_Collector.cpp \
+	Source_File_Data_Setter.cpp \
 	Source_File_Determiner.cpp \
 	Header_File_Determiner.cpp \
 	Git_Data_Processor.cpp \
@@ -83,7 +85,8 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 	Project_Src_Code_Rdr.hpp \
 	Project_Files_Lister.h \
 	Project_Files_Data_Collector.hpp \
-	Source_File_Data_Collector.cpp \
+	Source_File_Data_Collector.hpp \
+	Source_File_Data_Setter.hpp \
 	Git_Data_Processor.hpp \
 	Git_File_List_Writer.hpp \
 	Git_File_List_Receiver.hpp \
@@ -118,6 +121,7 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 	 -I$(GIT_MOD_RCV) \
 	 -I$(GIT_IGN) \
 	 -I$(SYS_INT) \
+	 -I$(SRC_DATA_SETTER) \
 	 -L$(SRC_INF_COL)   -L$(DIR_ENUM) \
 	 -L$(DIR_OPS)       -L$(CPP_OPS) \
 	 -L$(CHAR_OPS)      -L$(INT_TO_CHAR) \
@@ -136,6 +140,7 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 	 -L$(GIT_MOD_RCV) \
 	 -L$(GIT_IGN) \
 	 -L$(SYS_INT) \
+	 -L$(SRC_DATA_SETTER)\
 		Source_File_Dependency_Selector_Main_File.cpp \
 		Source_File_Dependency_Selector.cpp \
 		$(DEP_DAT_EXT)\Dependency_Data_Extractor.cpp \
@@ -146,6 +151,7 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 		$(FILE_LISTER)\Project_Files_Lister.cpp \
 		$(FILE_DAT_COL)\Project_Files_Data_Collector.cpp \
 		$(SRC_DT_COL)\Source_File_Data_Collector.cpp \
+		$(SRC_DATA_SETTER)\Source_File_Data_Setter.cpp \
 	    $(GIT_PROC)\Git_Data_Processor.cpp \
 		$(GIT_LIST)\Git_File_List_Writer.cpp \
 		$(GIT_REC)\Git_File_List_Receiver.cpp \
@@ -168,6 +174,7 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 		-include $(DEP_DAT_EXT)\Dependency_Data_Extractor.hpp \
 		-include $(SRC_INF_COL)\Source_File_Information_Collector.hpp \
 		-include $(SRC_PROCESSOR)\Source_File_Processor.hpp \
+		-include $(SRC_DATA_SETTER)\Source_File_Data_Setter.hpp \
 		-include $(HDR_PROC)\Header_File_Processor.hpp \
 		-include $(GIT_PROC)\Git_Data_Processor.hpp \
 		-include $(GIT_LIST)\Git_File_List_Writer.hpp \

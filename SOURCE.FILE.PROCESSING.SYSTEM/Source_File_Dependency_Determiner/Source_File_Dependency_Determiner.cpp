@@ -275,12 +275,21 @@ void Source_File_Dependency_Determiner::Order_Priorities(){
 
 bool Source_File_Dependency_Determiner::Is_Source_File(std::string path){
 
-      return this->Src_Processor.Is_Source_File(path);
+     const FileData * ptr = this->Code_Rd.Find_File_Data_From_Path(path);
+
+     bool is_source_file = ptr->is_source_file;
+
+     return is_source_file;
 }
 
-bool Source_File_Dependency_Determiner::Is_Header_File(std::string hpath){
 
-     return this->DepSelector.Is_Header_File(hpath);
+bool Source_File_Dependency_Determiner::Is_Header_File(std::string path){
+
+     const FileData * ptr = this->Code_Rd.Find_File_Data_From_Path(path);
+
+     bool is_header_file = ptr->is_header_file;
+
+     return is_header_file;
 }
 
 

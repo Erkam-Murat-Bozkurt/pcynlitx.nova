@@ -38,6 +38,7 @@ GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiv
 SRC_INF_COL_SF=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector_For_Single_File
 SRC_INF_COL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector
 SRC_DEP_SEL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector
+SRC_DATA_SETTER=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Data_Setter
 
 
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
@@ -56,13 +57,16 @@ VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 		$(GIT_IGN) \
 		$(SRC_INF_COL) \
 		$(SRC_DEP_SEL) \
-		$(SRC_INF_COL_SF)
+		$(SRC_INF_COL_SF) \
+		$(SRC_DATA_SETTER)
+
 
 Source_File_Dependency_Selector_For_Single_File.exe: Source_File_Dependency_Selector_For_Single_File_Main.cpp \
 	Source_File_Dependency_Selector_For_Single_File.cpp \
 	Source_File_Dependency_Selector.cpp \
 	Source_File_Information_Collector_For_Single_File.cpp \
     Source_File_Information_Collector.cpp \
+	Source_File_Data_Setter.cpp \
 	Dependency_Data_Extractor.cpp \
 	Header_File_Processor.cpp \
 	Project_Src_Code_Rdr.cpp \
@@ -90,6 +94,7 @@ Source_File_Dependency_Selector_For_Single_File.exe: Source_File_Dependency_Sele
 	Dependency_Data_Extractor.hpp \
 	Source_File_Information_Collector_For_Single_File.hpp \
 	Source_File_Information_Collector.hpp \
+	Source_File_Data_Setter.hpp \
 	Header_File_Processor.hpp \
 	Project_Src_Code_Rdr.hpp \
 	Project_Files_Lister.h \
@@ -132,6 +137,7 @@ Source_File_Dependency_Selector_For_Single_File.exe: Source_File_Dependency_Sele
 	 -I$(SRC_INF_COL) \
 	 -I$(SRC_DEP_SEL) \
 	 -I$(SRC_INF_COL_SF) \
+	 -I$(SRC_DATA_SETTER) \
 	 -L$(SRC_INF_COL)   -L$(DIR_ENUM) \
 	 -L$(DIR_OPS)       -L$(CPP_OPS) \
 	 -L$(CHAR_OPS)      -L$(INT_TO_CHAR) \
@@ -153,11 +159,13 @@ Source_File_Dependency_Selector_For_Single_File.exe: Source_File_Dependency_Sele
 	 -L$(SRC_INF_COL) \
 	 -L$(SRC_DEP_SEL) \
 	 -L$(SRC_INF_COL_SF) \
+	 -L$(SRC_DATA_SETTER)\
 		Source_File_Dependency_Selector_For_Single_File_Main.cpp \
 		Source_File_Dependency_Selector_For_Single_File.cpp \
 	    $(SRC_DEP_SEL)\Source_File_Dependency_Selector.cpp \
 		$(SRC_INF_COL_SF)\Source_File_Information_Collector_For_Single_File.cpp \
 		$(SRC_INF_COL)\Source_File_Information_Collector.cpp \
+		$(SRC_DATA_SETTER)\Source_File_Data_Setter.cpp \
 		$(DEP_DAT_EXT)\Dependency_Data_Extractor.cpp \
 		$(SRC_PROCESSOR)\Source_File_Processor.cpp \
 		$(HDR_PROC)\Header_File_Processor.cpp \
@@ -187,6 +195,7 @@ Source_File_Dependency_Selector_For_Single_File.exe: Source_File_Dependency_Sele
 		-include $(SRC_DEP_SEL)\Source_File_Dependency_Selector.hpp \
 		-include $(SRC_INF_COL_SF)\Source_File_Information_Collector_For_Single_File.hpp \
 		-include $(SRC_INF_COL)\Source_File_Information_Collector.hpp \
+		-include $(SRC_DATA_SETTER)\Source_File_Data_Setter.hpp \
 		-include $(DEP_DAT_EXT)\Dependency_Data_Extractor.hpp \
 		-include $(SRC_PROCESSOR)\Source_File_Processor.hpp \
 		-include $(HDR_PROC)\Header_File_Processor.hpp \

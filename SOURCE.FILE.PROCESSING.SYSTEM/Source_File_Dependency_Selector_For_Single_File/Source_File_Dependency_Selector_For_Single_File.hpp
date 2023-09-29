@@ -24,6 +24,7 @@
 #include <mutex>
 #include "Source_File_Information_Collector_For_Single_File.hpp"
 #include "Source_File_Dependency_Selector.hpp"
+#include "Source_File_Data_Setter.hpp"
 #include "Git_Data_Processor.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Git_File_List_Writer.hpp"
@@ -72,7 +73,7 @@ protected:
       std::string file_name, char opr_sis);
  void Place_String(std::string * str_pointer, std::string string);
  void Extract_File_Name_From_Path(std::string * ptr, std::string str);
- void Clear_String_Memory(std::string * Pointer);
+ void Clear_String_Memory(std::string & Pointer);
  void Clear_Vector_Memory(std::vector<Source_File_Dependency> * pointer);
  void Clear_Temporary_String_Memory(Source_File_Dependency * temp);
  void Determine_Header_System_Path(std::string & path, std::string name);
@@ -85,6 +86,7 @@ protected:
  std::string & record_dir);
  void Determine_File_Name_Without_Ext(std::string path, std::string & file_name);
  Source_File_Information_Collector_For_Single_File Info_Collector; 
+ Source_File_Data_Setter Data_Setter;
  Dependency_Data_Extractor ** Dep_Data_Collectors;
  Project_Src_Code_Rdr * Code_Rd;
  Git_Data_Processor * Git_Data_Proc;
@@ -94,7 +96,6 @@ protected:
  std::vector<std::vector<Source_File_Dependency>> Dependency_Data;
  std::string warehouse_head_dir;
  std::string descriptor_file_path;
- StringOperator StringManager; 
  std::mutex mtx;
  std::thread threads[16];
  char opr_sis;

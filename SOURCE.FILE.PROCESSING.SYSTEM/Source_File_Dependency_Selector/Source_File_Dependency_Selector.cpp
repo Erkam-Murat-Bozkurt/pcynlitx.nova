@@ -26,7 +26,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Source_File_Dependency_Selector::Source_File_Dependency_Selector( char opr_sis)
 
-    : Info_Collector(opr_sis)
+    : Info_Collector(opr_sis), Data_Setter(opr_sis)
 {
 
    this->Memory_Delete_Condition = false;
@@ -57,6 +57,8 @@ void Source_File_Dependency_Selector::Receive_Git_Data_Processor(Git_Data_Proces
 
      this->Info_Collector.Receive_Git_Data_Processor(ptr);
 
+     this->Data_Setter.Receive_Git_Data_Processor(ptr);
+
      this->Git_Data_Proc = ptr;
 }
 
@@ -64,6 +66,8 @@ void Source_File_Dependency_Selector::Receive_Git_Data_Processor(Git_Data_Proces
 void Source_File_Dependency_Selector::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
 
      this->Info_Collector.Receive_Source_Code_Reader(ptr);
+
+     this->Data_Setter.Receive_Source_Code_Reader(ptr);
 
      this->Code_Rd = ptr;
 }
@@ -74,6 +78,8 @@ void Source_File_Dependency_Selector::Receive_Descriptor_File_Reader(Descriptor_
      this->Info_Collector.Receive_Descriptor_File_Reader(ptr);
 
      this->warehouse_head_dir = this->Info_Collector.Get_Warehouse_Headers_Dir();
+
+     this->Data_Setter.Receive_Warehouse_Header_Directory(this->warehouse_head_dir);
 }
 
 
@@ -226,247 +232,81 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
 
      std::string path, std::string header_name){
     
-     std::string src_file_name, wrd_path, hdr_sys_path, file_dir, object_file_name,
+     std::string src_file_name, wrd_path, 
+     
+     hdr_sys_path, file_dir, object_file_name,
      
      src_git_record_dir, file_name_without_ext, src_sys_dir;
 
+     
      const FileData * Data = this->Code_Rd->Find_File_Data_From_Name(header_name);
 
 
      std::string file_path = Data->sys_path;
 
-     this->Extract_Directory_From_Path(file_path,file_dir);
+     this->Data_Setter.Extract_Directory_From_Path(file_path,file_dir);
 
-     this->Extract_File_Name_From_Path(&src_file_name,path);
-
-     this->Determine_Git_Record_Source_File_Directory(path,src_git_record_dir);
-
-     this->Determine_File_Name_Without_Ext(path,file_name_without_ext);
-
-     this->Determine_Header_Repo_Warehouse_Path(&wrd_path,header_name,'w');
-
-     this->Determine_Header_System_Path(hdr_sys_path,header_name);
-
-     this->Determine_Object_File_Name(object_file_name,src_file_name);
-
-     this->Extract_Directory_From_Path(path,src_sys_dir);
+     this->Data_Setter.Extract_File_Name_From_Path(src_file_name,path);
 
 
 
+     this->Data_Setter.Determine_Git_Record_Source_File_Directory(path,src_git_record_dir);
 
-     this->Place_String(&data.source_file_name,src_file_name);
+     this->Data_Setter.Determine_File_Name_Without_Ext(path,file_name_without_ext);
 
-     this->Place_String(&data.Header_Name,header_name);
+     this->Data_Setter.Determine_Header_Repo_Warehouse_Path(wrd_path,header_name,'w');
 
-     this->Place_String(&data.header_sys_path,hdr_sys_path);
+     this->Data_Setter.Determine_Header_System_Path(hdr_sys_path,header_name);
 
-     this->Place_String(&data.source_file_path,path);
+     this->Data_Setter.Determine_Object_File_Name(object_file_name,src_file_name);
 
-     this->Place_String(&data.repo_warehouse_path,wrd_path);
+     this->Data_Setter.Extract_Directory_From_Path(path,src_sys_dir);
 
-     this->Place_String(&data.dir,file_dir);
 
-     this->Place_String(&data.source_file_name_without_ext,file_name_without_ext);
 
-     this->Place_String(&data.src_git_record_dir,src_git_record_dir);
 
-     this->Place_String(&data.src_sys_dir,src_sys_dir);
+     this->Data_Setter.Copy_String(data.source_file_name,src_file_name);
 
-     this->Place_String(&data.object_file_name,object_file_name);
+     this->Data_Setter.Copy_String(data.Header_Name,header_name);
 
-     
+     this->Data_Setter.Copy_String(data.header_sys_path,hdr_sys_path);
+
+     this->Data_Setter.Copy_String(data.source_file_path,path);
+
+     this->Data_Setter.Copy_String(data.repo_warehouse_path,wrd_path);
+
+     this->Data_Setter.Copy_String(data.dir,file_dir);
+
+     this->Data_Setter.Copy_String(data.source_file_name_without_ext,file_name_without_ext);
+
+     this->Data_Setter.Copy_String(data.src_git_record_dir,src_git_record_dir);
+
+     this->Data_Setter.Copy_String(data.src_sys_dir,src_sys_dir);
+
+     this->Data_Setter.Copy_String(data.object_file_name,object_file_name);
 
      data.rcr_srch_complated= true;
 
-     this->Clear_String_Memory(&src_file_name);
 
-     this->Clear_String_Memory(&wrd_path);
 
-     this->Clear_String_Memory(&hdr_sys_path);
+     this->Clear_String_Memory(src_file_name);
+
+     this->Clear_String_Memory(wrd_path);
+
+     this->Clear_String_Memory(hdr_sys_path);
+
+     this->Clear_String_Memory(file_dir);
+
+     this->Clear_String_Memory(object_file_name);
+
+     this->Clear_String_Memory(src_git_record_dir);
+
+     this->Clear_String_Memory(file_name_without_ext);
      
+     this->Clear_String_Memory(src_sys_dir);
 }
 
 
-
-
-void Source_File_Dependency_Selector::Extract_Directory_From_Path(std::string path, std::string & dir){
-
-     size_t path_size = path.size();
-
-     size_t end_point = path_size;
-
-     for(size_t i=path_size;i>0;i--){
-
-         if(this->opr_sis == 'w'){
-
-            if(path[i]== '\\'){
-
-                break;
-            }
-            else{
-
-                 end_point--;
-            }
-         }
-
-         if(this->opr_sis == 'l'){
-
-            if(path[i]== '/'){
-
-                break;
-            }
-            else{
-
-                 end_point--;
-            }
-         }         
-    }
-
-    for(size_t i=0;i<end_point;i++)
-    {
-        dir.push_back(path[i]);
-    }
-
-    dir.shrink_to_fit();    
-}
-
-
-
-void Source_File_Dependency_Selector::Determine_File_Name_Without_Ext(std::string path, std::string & file_name)
-{
-     size_t file_path_size = path.length();
-
-     size_t dir_size = file_path_size;
-
-     size_t file_extention_start_point = file_path_size;
-
-
-    for(size_t i=file_path_size;i>0;i--){
-
-        if((path[i] == '/') || (path[i] == '\\')){
-
-            break;
-        }
-        else{
-
-              dir_size--;
-        }
-     }
-
-     for(size_t i=file_path_size;i>0;i--){
-
-         if(path[i] == '.'){
-
-           break;
-         }
-            else{
-
-                file_extention_start_point--;
-          }
-
-          if(file_extention_start_point <= dir_size){
-
-             file_extention_start_point = dir_size;
-          }
-     }
-
-     size_t file_name_size = 0;
-
-     if(file_extention_start_point <= dir_size){
-
-        file_name_size = file_path_size - dir_size;
-
-        // It is the case in which the file does not have extenton
-     }
-
-     if(file_extention_start_point > dir_size){
-
-        file_name_size = file_extention_start_point - dir_size;
-     }
-
-
-     size_t name_start_point = 0;
-
-     if(dir_size != 0){
-
-        name_start_point = dir_size +1;
-     }
-
-     for(size_t i=name_start_point;i<file_extention_start_point;i++){
-
-         file_name.push_back(path[i]);
-     }
-}
-
-
-void Source_File_Dependency_Selector::Determine_Git_Record_Source_File_Directory(std::string git_record_system_path, 
-
-     std::string & record_dir)     
-    {
-
-     size_t path_size = git_record_system_path.length();
-
-     size_t dir_size = path_size;
-
-     size_t end_point = 0;
-
-     for(int i=path_size;i>0;i--){
-
-         if(this->opr_sis =='w'){
-
-           if(git_record_system_path[i] == '\\'){
-
-             end_point = i;
-
-             break;
-           }
-         }
-
-         if(this->opr_sis =='l'){
-
-           if(git_record_system_path[i] == '/'){
-
-             end_point = i;
-
-             break;
-           }
-         }
-     }
-
-
-
-     std::string dir = this->Git_Data_Proc->Get_Git_Repo_Directory();
-
-
-     size_t repo_dir_size = dir.length();
-
-     size_t start_point = repo_dir_size;
-
-     char start_point_character = git_record_system_path[start_point];
-
-     if(((start_point_character == '\\' )
-
-         || (start_point_character== '/' ))){
-
-         start_point++;
-     }
-
-     for(size_t i=start_point;i<end_point;i++){
-
-         record_dir.push_back(git_record_system_path[i]) ;
-     }
-
-     record_dir.shrink_to_fit();
-}
-
-
-
-void Source_File_Dependency_Selector::Determine_Header_System_Path(std::string & path, std::string name){
-
-     const FileData * FileDtPtr = this->Code_Rd->Find_File_Data_From_Name(name);
-
-     path = FileDtPtr->sys_path;
-}
 
 
 void Source_File_Dependency_Selector::Set_Included_Header_Number(std::vector<Source_File_Dependency> * ptr){
@@ -478,90 +318,6 @@ void Source_File_Dependency_Selector::Set_Included_Header_Number(std::vector<Sou
          it->base_included_hdr_num = ptr->size();
          it->included_file_hdr_num = 0;
      }     
-}
-
-
-void Source_File_Dependency_Selector::Determine_Header_Repo_Warehouse_Path(std::string * wrd_path,
-
-     std::string file_name, char opr_sis)
-{
-
-     size_t name_size = file_name.length();
-
-     size_t wrd_path_size = this->warehouse_head_dir.length();
-
-     size_t path_size = name_size + wrd_path_size;
-
-     for(size_t i=0;i<wrd_path_size;i++){
-
-         wrd_path->push_back(this->warehouse_head_dir[i]);
-     }
-
-     if(opr_sis == 'w'){
-
-        wrd_path->push_back('\\');
-     }
-
-     if(opr_sis == 'l'){
-
-        wrd_path->push_back('/');
-     }
-
-     for(size_t i=0;i<name_size;i++){
-
-         wrd_path->push_back(file_name[i]);
-     }
-}
-
-
-void Source_File_Dependency_Selector::Determine_Object_File_Name(std::string & obj_name, 
- 
-     std::string src_name){
-
-     size_t name_size = src_name.size();
-
-     for(size_t i=0;i<name_size;i++){
-
-         if(src_name[i] == '.'){
-
-            obj_name.push_back(src_name[i]);
-
-            break;
-         }
-         else{
-
-             obj_name.push_back(src_name[i]);
-         }
-     }
-
-     obj_name.push_back('o');
-
-     obj_name.shrink_to_fit();
-}
-
-
-void Source_File_Dependency_Selector::Extract_File_Name_From_Path(std::string * pointer,
-
-     std::string string ){
-
-     size_t string_size = string.length();
-
-     size_t start_point = 0;
-
-     for(size_t i=string_size;i>0;i--){
-
-        if(((string[i] == '/') || (string[i] == '\\'))){
-
-            start_point = i+1;
-
-            break;
-        }
-     }
-
-     for(size_t i=start_point;i<string_size;i++)
-     {
-         pointer->push_back(string[i]) ;
-     }
 }
 
 
@@ -577,19 +333,6 @@ void Source_File_Dependency_Selector::Set_External_Header_File_Dependencies(Sour
      }
 
      data.External_Headers.shrink_to_fit();
-}
-
-
-void Source_File_Dependency_Selector::Place_String(std::string * str_pointer, std::string str)
-{
-     size_t string_size = str.length();
-
-     for(size_t i=0;i<string_size;i++){
-
-         str_pointer->push_back(str[i]);
-     }
-
-     str_pointer->shrink_to_fit();
 }
 
 
@@ -681,21 +424,21 @@ void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
         this->Dependency_Data.shrink_to_fit();
     }
 
-     this->Clear_String_Memory(&this->warehouse_head_dir);
+     this->Clear_String_Memory(this->warehouse_head_dir);
 
-     this->Clear_String_Memory(&this->descriptor_file_path);
+     this->Clear_String_Memory(this->descriptor_file_path);
 
      this->Info_Collector.Clear_Dynamic_Memory();
 }
 
 
-void Source_File_Dependency_Selector::Clear_String_Memory(std::string * Pointer)
+void Source_File_Dependency_Selector::Clear_String_Memory(std::string & str)
 {
-     if(!Pointer->empty()){
+     if(!str.empty()){
 
-         Pointer->clear();
+         str.clear();
 
-         Pointer->shrink_to_fit();
+         str.shrink_to_fit();
      }
 }
 
@@ -752,23 +495,6 @@ void Source_File_Dependency_Selector::Clear_Vector_Memory(std::vector<Source_Fil
          pointer->shrink_to_fit();
      }
 }
-
-
-
- void Source_File_Dependency_Selector::Clear_Temporary_String_Memory(Source_File_Dependency * temp){
- 
-       this->Clear_String_Memory(&temp->Header_Name);
-
-       this->Clear_String_Memory(&temp->source_file_name);
-
-       this->Clear_String_Memory(&temp->source_file_path);
-
-       this->Clear_String_Memory(&temp->header_sys_path);
-
- }
-
-
-
 
 
 

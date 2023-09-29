@@ -17,9 +17,9 @@
 
 int main(int argc, char ** argv){
 
-    if(argc < 2){
+    if(argc < 3){
 
-       std::cout << "\n The usage: Source_File_Dependency_Selector.exe <Descriptor File Path> ";
+       std::cout << "\n The usage: Source_File_Dependency_Selector.exe <Descriptor File Path> <File Path>";
 
        std::cout << "\n\n";
 
@@ -35,7 +35,6 @@ int main(int argc, char ** argv){
     Des_Reader.Read_Descriptor_File();
 
     std::cout << "\n Descriptor File Readed";
-    std::cin.get();
 
     Git_Data_Processor Git_Data_Proc('w');
 
@@ -59,7 +58,7 @@ int main(int argc, char ** argv){
 
     std::cout << "\n Code reading complated..";
 
-    std::string path = "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\SERVER.CLASS.BUILDER\\Thread_Data_Manager_Builder\\Thread_Data_Manager_Builder.cpp";
+    //std::string path = "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\SERVER.CLASS.BUILDER\\Thread_Data_Manager_Builder\\Thread_Data_Manager_Builder.cpp";
 
     //std::string path =  "D:\\pcynlitx.build.gui\\wxLauncher.cpp";
 
@@ -78,7 +77,7 @@ int main(int argc, char ** argv){
 
       Dep_Selector.Receive_Git_Data_Processor(&Git_Data_Proc);
 
-      Dep_Selector.Determine_Source_File_Dependencies(path);
+      Dep_Selector.Determine_Source_File_Dependencies(argv[2]);
 
       Dep_Selector.Print_Dependency_List();
 
