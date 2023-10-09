@@ -35,6 +35,9 @@ GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiv
 
 SRC_INF_COL= D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector
 DEP_DATA_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Extractor
+SRC_DATA_SETTER=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Data_Setter
+
+
 
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 	    $(SOURCE_DETR) $(DIR_ENUM) $(SYS_INT) \
@@ -50,7 +53,8 @@ VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 		$(GIT_MOD_RCV) \
 		$(GIT_IGN) \
 		$(SRC_INF_COL) \
-		$(DEP_DATA_EXT)
+		$(DEP_DATA_EXT) \
+		$(SRC_DATA_SETTER)
 
 Quick_Src_Dependency_Extractor.exe: Quick_Src_Dependency_Extractor_Main_File.cpp \
 	Quick_Src_Dependency_Extractor.cpp \
@@ -59,6 +63,7 @@ Quick_Src_Dependency_Extractor.exe: Quick_Src_Dependency_Extractor_Main_File.cpp
 	Source_File_Processor.cpp \
 	Header_File_Processor.cpp \
 	Project_Src_Code_Rdr.cpp \
+	Source_File_Data_Setter.cpp \
 	Project_Files_Lister.cpp \
 	Project_Files_Data_Collector.cpp \
 	Source_File_Data_Collector.cpp \
@@ -80,6 +85,7 @@ Quick_Src_Dependency_Extractor.exe: Quick_Src_Dependency_Extractor_Main_File.cpp
 	Cpp_FileOperations.cpp \
 	Quick_Src_Dependency_Extractor.hpp \
 	Source_File_Information_Collector.hpp \
+	Source_File_Data_Setter.hpp \
 	Dependency_Data_Extractor.hpp \
 	Source_File_Processor.hpp \
 	Header_File_Processor.hpp \
@@ -123,6 +129,7 @@ Quick_Src_Dependency_Extractor.exe: Quick_Src_Dependency_Extractor_Main_File.cpp
 	 -I$(SYS_INT) \
 	 -I$(SRC_INF_COL) \
 	 -I$(DEP_DATA_EXT) \
+	 -I$(SRC_DATA_SETTER) \
 	 -L$(DIR_ENUM)     -L$(DIR_OPS)     -L$(CPP_OPS) \
 	 -L$(CHAR_OPS)     -L$(INT_TO_CHAR) -L$(DES_DATA_COL) \
 	 -L$(DES_READER)   -L$(STRING_OPS) \
@@ -140,10 +147,12 @@ Quick_Src_Dependency_Extractor.exe: Quick_Src_Dependency_Extractor_Main_File.cpp
 	 -L$(SYS_INT) \
 	 -L$(SRC_INF_COL) \
 	 -L$(DEP_DATA_EXT) \
+	 -L$(SRC_DATA_SETTER)\
 		Quick_Src_Dependency_Extractor_Main_File.cpp \
 		Quick_Src_Dependency_Extractor.cpp \
 		$(SRC_INF_COL)\Source_File_Information_Collector.cpp \
 		$(DEP_DATA_EXT)\Dependency_Data_Extractor.cpp \
+		$(SRC_DATA_SETTER)\Source_File_Data_Setter.cpp \
 		$(SRC_FILE_PROC)\Source_File_Processor.cpp \
 		$(HDR_PROC)\Header_File_Processor.cpp \
 		$(SRC_READER)\Project_Src_Code_Rdr.cpp \
@@ -171,6 +180,7 @@ Quick_Src_Dependency_Extractor.exe: Quick_Src_Dependency_Extractor_Main_File.cpp
 		-include Quick_Src_Dependency_Extractor.hpp \
 		-include $(SRC_INF_COL)\Source_File_Information_Collector.hpp \
 		-include $(DEP_DATA_EXT)\Dependency_Data_Extractor.hpp \
+		-include $(SRC_DATA_SETTER)\Source_File_Data_Setter.hpp \
 		-include $(SRC_FILE_PROC)\Source_File_Processor.hpp \
 		-include $(HDR_PROC)\Header_File_Processor.hpp \
 		-include $(SRC_READER)\Project_Src_Code_Rdr.hpp \

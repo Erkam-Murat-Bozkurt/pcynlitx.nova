@@ -1,4 +1,6 @@
 
+
+
 #include "Build_Tools_Initializer.h"
 
 Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) : 
@@ -33,22 +35,22 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) :
     this->Dep_Determiner.Collect_Dependency_Information();
 
     std::cout << "\n\n\e[1;32mSource file dependencies has been determined \e[0m\n\n";
-    
+
+
 
     this->Rep_Init.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
     this->Rep_Init.Receive_Git_Data_Processor(&this->Git_Data_Proc);
 
-    this->Rep_Init.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
-    
+  
     
     this->Mk_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
     this->Mk_Builder.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
-
+   
 
     this->Script_Writer.Receive_Descriptor_File_Reader(&this->Des_Reader);
-
+   
     this->Script_Writer.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);    
 }
 
@@ -70,7 +72,6 @@ void Build_Tools_Initializer::Clear_Dynamic_Memory(){
 
 void Build_Tools_Initializer::Setup_Build_Tools(){
 
-     this->Rep_Init.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
 
      this->Rep_Init.Build_Project_Warehouse();
 
@@ -78,12 +79,14 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      std::cout << "\n\n\e[1;32mThe project warehouse constructed \e[0m\n\n";
 
+
      this->Mk_Builder.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
 
      this->Mk_Builder.Build_Make_Files();
 
      this->Mk_Builder.Clear_Dynamic_Memory();
-
+     
+     
      std::cout << "\n\n\e[1;32mThe project makefiles constructed \e[0m\n\n";
 
      this->Script_Writer.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);

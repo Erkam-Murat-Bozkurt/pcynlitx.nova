@@ -3,10 +3,7 @@
 
 #include "Repo_Warehouse_Initializer.h"
 
-Repo_Warehouse_Initializer::Repo_Warehouse_Initializer(char * DesPath, char opr_sis): 
-
-     Dir_Lister(opr_sis)
-
+Repo_Warehouse_Initializer::Repo_Warehouse_Initializer(char * DesPath, char opr_sis)
 {
      this->opr_sis = opr_sis;
 
@@ -20,11 +17,6 @@ Repo_Warehouse_Initializer::~Repo_Warehouse_Initializer(){
      this->Clear_Dynamic_Memory();
 }
 
- void Repo_Warehouse_Initializer::Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dtr){
-
-      this->Dep_Determiner = dtr;
- }
-
 
 void Repo_Warehouse_Initializer::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
 
@@ -34,11 +26,10 @@ void Repo_Warehouse_Initializer::Receive_Descriptor_File_Reader(Descriptor_File_
 void Repo_Warehouse_Initializer::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
 
      this->Git_Dt_Proc = ptr;
-
-     this->Dir_Lister.Receive_Git_Data_Processor(ptr);
 }
 
 void Repo_Warehouse_Initializer::Build_Project_Warehouse(){
+
 
      this->warehouse_location = this->Des_Reader->Get_Warehouse_Location();
 
@@ -46,17 +37,15 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(){
 
      this->Determine_Warehouse_Path();
 
-     this->Determine_Header_Files_Directory();
-
      this->Determine_Object_Files_Directory();
 
      this->Determine_Library_Files_Directory();
 
      this->Determine_Compiler_Output_Directory();
 
-     this->Construct_Warehouse_Path();
 
-     this->Construct_Header_Files_Directory();
+
+     this->Construct_Warehouse_Path();
 
      this->Construct_Object_Files_Directory();
 
@@ -65,42 +54,8 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(){
      this->Construct_Compiler_Outputs_Directory();
 
      this->DirectoryManager.ChangeDirectory(this->current_directory.c_str());
-
-     this->source_files_number = this->Dir_Lister.Get_Source_File_Number();
-
-     this->Determine_Header_File_Paths();
-
-     this->Determine_Independent_Header_Paths();
-
-     this->Copy_Header_Files_To_Project_Headers_Location();
-
-     this->Copy_Independent_Header_Files_To_Project_Headers_Location();
 }
 
-void Repo_Warehouse_Initializer::Update_Warehaouse_Headers(){
-
-     this->warehouse_location = this->Des_Reader->Get_Warehouse_Location();
-
-     this->Determine_Current_Directory();
-
-     this->Determine_Warehouse_Path();
-
-     this->Determine_Header_Files_Directory();
-
-     this->DirectoryManager.ChangeDirectory(this->current_directory.c_str());
-
-     this->Construct_Header_Files_Directory();
-
-     this->source_files_number = this->Dir_Lister.Get_Source_File_Number();
-
-     this->Determine_Header_File_Paths();
-
-     this->Determine_Independent_Header_Paths();
-
-     this->Copy_Header_Files_To_Project_Headers_Location();
-
-     this->Copy_Independent_Header_Files_To_Project_Headers_Location();
-}
 
 void Repo_Warehouse_Initializer::Determine_Current_Directory(){
 
@@ -152,39 +107,6 @@ void Repo_Warehouse_Initializer::Determine_Warehouse_Path(){
      this->warehouse_path.shrink_to_fit();
 }
 
-void Repo_Warehouse_Initializer::Determine_Header_Files_Directory(){
-
-     std::string header_directory_folder_name = "PROJECT.HEADER.FILES";
-
-     size_t warehouse_path_size = this->warehouse_path.length();
-
-     size_t head_folder_size= header_directory_folder_name.length();
-
-     for(size_t i=0;i<warehouse_path_size;i++){
-
-         this->Headers_Directory.push_back(this->warehouse_path[i]);
-     }
-
-     if(this->opr_sis == 'w'){
-
-       this->Headers_Directory.push_back('\\');
-     }
-     else{
-
-          if(this->opr_sis == 'l'){
-                    
-             this->Headers_Directory.push_back('/');
-          }
-     }
-
-
-     for(size_t i=0;i<head_folder_size;i++){
-
-         this->Headers_Directory.push_back(header_directory_folder_name[i]);         
-     }
-     
-     this->Headers_Directory.shrink_to_fit();
-}
 
 void Repo_Warehouse_Initializer::Determine_Object_Files_Directory(){
 
@@ -308,28 +230,6 @@ void Repo_Warehouse_Initializer::Construct_Warehouse_Path(){
 }
 
 
-
-void Repo_Warehouse_Initializer::Construct_Header_Files_Directory(){
-
-     int return_condition = this->DirectoryManager.ChangeDirectory(this->Headers_Directory.c_str());
-
-     if(return_condition == 0){
-
-        int const_cond = this->DirectoryManager.MakeDirectory(this->Headers_Directory.c_str());
-
-        if(const_cond == 0){
-
-           std::cout << "\n The headers files directory can not be constructed on:";
-
-           std::cout << "\n";
-
-           std::cout << this->Headers_Directory;
-
-           exit(0);
-        }
-     }
-}
-
 void Repo_Warehouse_Initializer::Construct_Object_Files_Directory(){
 
      int return_condition = this->DirectoryManager.ChangeDirectory(this->Object_Files_Directory.c_str());
@@ -396,195 +296,8 @@ void Repo_Warehouse_Initializer::Construct_Compiler_Outputs_Directory(){
 }
 
 
-
-void Repo_Warehouse_Initializer::Determine_Header_File_Paths(){
-
-     int index_size = this->Git_Dt_Proc->Get_Git_File_Index_Size();
-
-     std::string repo_dir = this->Git_Dt_Proc->Get_Git_Repo_Directory();
-     
-
-      for(int i=0;i<index_size;i++){
-      
-          std::string file_sys_path = this->Git_Dt_Proc->Get_File_System_Path(i);
-
-          bool is_hdr = this->Dep_Determiner->Is_Header_File(file_sys_path);
-
-          if(is_hdr){
-          
-             this->Header_File_Paths.push_back(file_sys_path);
-
-             this->Determine_Header_File_Name_With_Extention(file_sys_path);       
-
-             std::string head_name = this->Header_File_Name_With_Extention;
-
-             std::string header_warehouse_path;
-
-             for(size_t k=0;k<this->Headers_Directory.length();k++){
-          
-                 header_warehouse_path.push_back(this->Headers_Directory[k]);          
-             }
-
-             if(this->opr_sis == 'w'){
-          
-                header_warehouse_path.push_back('\\');    
-      
-             }
-             else{
-                    
-                  if(this->opr_sis == 'l'){
-             
-                     header_warehouse_path.push_back('/');
-                  }
-             }
-
-             for(size_t k=0;k<head_name.length();k++){
-          
-                 header_warehouse_path.push_back(head_name[k]);
-             }
-
-             header_warehouse_path.shrink_to_fit();
-
-             this->Headers_New_Paths.push_back(header_warehouse_path);
-          }
-     }
-}
-
-
-void Repo_Warehouse_Initializer::Determine_Independent_Header_Paths(){
-
-     this->ind_hdr_number
-
-     = this->Dir_Lister.Get_Indenpendent_Header_Files_Number();
-
-     for(int i=0;i<this->ind_hdr_number;i++){
-
-         std::string path =  this->Dir_Lister.Get_Independent_Header_File(i);
-
-         if(!path.empty()){
-
-             this->Independent_Header_Paths.push_back(path);
-
-             this->Determine_Header_File_Name_With_Extention(path);       
-
-             std::string head_name = this->Header_File_Name_With_Extention;
-
-             size_t wrd_path_size = this->Headers_Directory.length();
-
-             std::string header_new_path;
-
-             for(size_t k=0;k<wrd_path_size;k++){
-             
-                 header_new_path.push_back(this->Headers_Directory[k]);                 
-             }            
-
-             if(this->opr_sis == 'w'){
-             
-                 header_new_path.push_back('\\');             
-             }
-             else{
-             
-                  if(this->opr_sis == 'l'){
-                  
-                     header_new_path.push_back('/');                               
-                  }             
-             }
-             
-             for(size_t k=0;k<wrd_path_size;k++){
-             
-                 header_new_path.push_back(head_name[k]);                 
-             }
-
-             header_new_path.shrink_to_fit();
-
-             this->Independent_Header_New_Paths.push_back(header_new_path);           
-         }
-     }
-}
-
-
-void Repo_Warehouse_Initializer::Copy_Header_Files_To_Project_Headers_Location(){
-     
-     size_t hdr_list_size = this->Header_File_Paths.size();
-
-     size_t new_hdr_size  = this->Headers_New_Paths.size();
-
-     if(hdr_list_size != new_hdr_size){
-     
-        std::cout << "\n The header file paths is not equal to the ";
-        std::cout << "\n paths to be copied to the warehouse header location";
-        
-        exit(EXIT_FAILURE);
-     }
-
-     for(int i=0;i<hdr_list_size;i++){
-         
-         this->FileManager.CpFile(this->Header_File_Paths.at(i),
-
-         this->Headers_New_Paths.at(i));            
-     }
-}
-
-void Repo_Warehouse_Initializer::Copy_Independent_Header_Files_To_Project_Headers_Location(){
-
-     size_t ind_hdr_num  = this->Independent_Header_Paths.size();
-
-     size_t ind_new_path = this->Independent_Header_New_Paths.size(); 
-
-     if(ind_hdr_num != ind_new_path){
-     
-        std::cout << "\n The independent header file paths is not equal to the ";
-        std::cout << "\n paths to be copied to the warehouse header location";
-        
-        exit(EXIT_FAILURE);   
-     }
-
-     for(int i=0;i<ind_hdr_num;i++){
-
-         this->FileManager.CpFile(this->Independent_Header_Paths.at(i),
-
-         this->Independent_Header_New_Paths.at(i));        
-     }
-}
-
-
-void Repo_Warehouse_Initializer::Determine_Header_File_Name_With_Extention(std::string path){
-
-     size_t file_path_size = path.length();
-
-     this->Clear_String_Memory(&this->Header_File_Name_With_Extention);
-
-
-     size_t dir_size = file_path_size;
-
-     for(size_t i=file_path_size;i>0;i--){
-
-          if(((path[i] == '/') || (path[i] == '\\'))){
-
-             break;
-          }
-          else{
-
-              dir_size--;
-          }
-     }
-
-     for(size_t i=dir_size+1;i<file_path_size;i++){
-
-        this->Header_File_Name_With_Extention.push_back(path[i]);
-     }
-}
-
-
-
 void Repo_Warehouse_Initializer::Clear_Dynamic_Memory(){
   
-     this->Clear_Vector_Memory(&this->Header_File_Paths);
-
-     this->Clear_Vector_Memory(&this->Headers_New_Paths);
-
-     this->Clear_String_Memory(&this->Headers_Directory);
-
      this->Clear_String_Memory(&this->Object_Files_Directory);
 
      this->Clear_String_Memory(&this->Library_Files_Directory);
@@ -594,33 +307,6 @@ void Repo_Warehouse_Initializer::Clear_Dynamic_Memory(){
      this->Clear_String_Memory(&this->warehouse_location);
 
      this->Clear_String_Memory(&this->current_directory);
-}
-
-
-void Repo_Warehouse_Initializer::Clear_Vector_Memory(std::vector<std::string> * pointer)
-{
-     if(!pointer->empty()){
-
-         std::vector<std::string>::iterator it;
-
-         auto begin = pointer->begin();
-
-         auto end   = pointer->end();
-
-         for(auto it=begin;it<end;it++)
-         {
-             if(!it->empty()){
-
-                 it->clear();
-
-                 it->shrink_to_fit();
-             }
-         }
-
-         pointer->clear();
-
-         pointer->shrink_to_fit();
-      }
 }
 
 

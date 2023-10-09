@@ -27,7 +27,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Quick_Src_Dependency_Extractor.hpp"
 
-Quick_Src_Dependency_Extractor::Quick_Src_Dependency_Extractor(char opr_sis)
+Quick_Src_Dependency_Extractor::Quick_Src_Dependency_Extractor(char opr_sis) : Data_Setter(opr_sis)
 {
    this->opr_sis = opr_sis;
 }
@@ -75,6 +75,22 @@ void Quick_Src_Dependency_Extractor::Receive_Git_Data_Processor(Git_Data_Process
 /* THE MEMBER FUNCTIONS PERFORMING THE MAIN OPERATIONS ******************************************/
 
 
+void Quick_Src_Dependency_Extractor::Extract_Dependency_Data(std::string src_file_path){
+
+     std::cout << "\n Inside Quick_Src_Dependency_Extractor::Extract_Dependency_Data";
+     std::cout << "\n src_file_path:" << src_file_path;
+     std::cin.get();
+
+     this->Extract_Dependency_Search_Data(src_file_path);
+
+     std::cout << "\n Search Data Extracted";
+     std::cin.get();
+
+     this->Set_Dependency_Data(src_file_path);
+}
+
+
+
 void Quick_Src_Dependency_Extractor::Extract_Dependency_Search_Data(std::string src_file_path){  // Data extraction for whole project
      
      Dependency_Data_Extractor * Dep_Extractor = new Dependency_Data_Extractor(this->opr_sis);
@@ -102,14 +118,139 @@ void Quick_Src_Dependency_Extractor::Extract_Dependency_Search_Data(std::string 
 
 
 
+void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_path){
+     
+     std::string src_file_name, file_dir, object_file_name,
+     
+     src_git_record_dir, file_name_without_ext, src_sys_dir;
 
-bool  Quick_Src_Dependency_Extractor::Is_Header_File(std::string path){
+     
+     std::cout << "\n Inside Quick_Src_Dependency_Extractor::Set_Dependency_Data";
 
-      const FileData * ptr = this->Code_Rdr->Find_File_Data_From_Path(path);
+     std::cout << "\n src_file_path:" << src_file_path;
 
-      bool is_header_file = ptr->is_header_file;
+     /*
+     const FileData * Data = this->Code_Rdr->Find_File_Data_From_Path(src_file_path);
 
-      return is_header_file;
+     std::cout << "\n Data->" << Data->
+     
+     */
+
+     std::cout << "\n --1";
+     std::cin.get();
+
+
+     this->Data_Setter.Extract_Directory_From_Path(src_file_path,file_dir);
+
+     std::cout << "\n --2";
+     std::cin.get();
+
+     this->Data_Setter.Extract_File_Name_From_Path(src_file_name,src_file_path);
+
+
+     std::cout << "\n --3";
+     std::cin.get();
+
+
+     this->Data_Setter.Determine_Git_Record_Source_File_Directory(src_file_path,src_git_record_dir);
+
+     std::cout << "\n --4";
+     std::cin.get();
+
+     this->Data_Setter.Determine_File_Name_Without_Ext(src_file_path,file_name_without_ext);
+
+     std::cout << "\n --5";
+     std::cin.get();
+
+     this->Data_Setter.Determine_Object_File_Name(object_file_name,src_file_name);
+
+     std::cout << "\n --6";
+     std::cin.get();
+
+     this->Data_Setter.Extract_Directory_From_Path(src_file_path,src_sys_dir);
+
+     std::cout << "\n --7";
+     std::cin.get();
+
+     std::cout << "\n src_file_name:" << src_file_name;
+     std::cout << "\n src_file_path:" << src_file_path;
+     std::cout << "\n file_dir:" << file_dir;
+     std::cout << "\n file_name_without_ext:" << file_name_without_ext;
+     std::cout << "\n src_git_record_dir:" << src_git_record_dir;
+     std::cout << "\n src_sys_dir:" << src_sys_dir;
+     std::cout << "\n object_file_name:" << object_file_name;
+
+
+
+     this->Data_Setter.Copy_String(this->Dep_Data.source_file_name,src_file_name);
+
+     this->Data_Setter.Copy_String(this->Dep_Data.source_file_path,src_file_path);
+
+     this->Data_Setter.Copy_String(this->Dep_Data.dir,file_dir);
+
+     this->Data_Setter.Copy_String(this->Dep_Data.source_file_name_without_ext,file_name_without_ext);
+
+     this->Data_Setter.Copy_String(this->Dep_Data.src_git_record_dir,src_git_record_dir);
+
+     this->Data_Setter.Copy_String(this->Dep_Data.src_sys_dir,src_sys_dir);
+
+     this->Data_Setter.Copy_String(this->Dep_Data.object_file_name,object_file_name);
+
+
+
+
+     this->Clear_String_Memory(src_file_name);
+
+     this->Clear_String_Memory(file_dir);
+
+     this->Clear_String_Memory(object_file_name);
+
+     this->Clear_String_Memory(src_git_record_dir);
+
+     this->Clear_String_Memory(file_name_without_ext);
+     
+     this->Clear_String_Memory(src_sys_dir);
+
+
+
+     size_t data_size = this->Dep_Search_Data.size();
+
+     std::cout << "\n data_size:" << data_size;
+
+     if(data_size>0){   // The header file have dependencies
+
+        for(size_t i=0;i<data_size;i++){
+
+            std::cout << "\n this->Dep_Search_Data.at(" << i << ").name:" << this->Dep_Search_Data.at(i).name;
+
+            std::cout << "\n this->Dep_Search_Data.at(" << i << ").path:" << this->Dep_Search_Data.at(i).path;
+
+            std::cout << "\n this->Dep_Search_Data.at(" << i << ").include_decleration:" << this->Dep_Search_Data.at(i).include_decleration;
+
+            this->Dep_Data.Dependent_Header_Names.push_back(this->Dep_Search_Data.at(i).name);
+
+            this->Dep_Data.Dependent_Header_Paths.push_back(this->Dep_Search_Data.at(i).path);
+
+            this->Dep_Data.Include_Declerations.push_back(this->Dep_Search_Data.at(i).include_decleration);
+        }
+     }
+}
+
+
+ const Simple_Source_File_Dependency * Quick_Src_Dependency_Extractor::Get_Simple_Source_File_Dependency() const
+ {
+       return &this->Dep_Data;
+ } 
+
+
+
+bool Quick_Src_Dependency_Extractor::Is_Header_File(std::string path){
+
+     const FileData * ptr = this->Code_Rdr->Find_File_Data_From_Path(path);
+
+     bool is_header_file = ptr->is_header_file;
+
+     return is_header_file;
 }
 
 

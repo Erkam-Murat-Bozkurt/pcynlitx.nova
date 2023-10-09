@@ -8,9 +8,9 @@
 int main(int argc, char ** argv)
 {
 
-    if(argc <3){
+    if(argc <2){
 
-       std::cout << "\n usage: Repo_Warehouse_Initializer.exe <descriptor file path> <option>";
+       std::cout << "\n usage: Repo_Warehouse_Initializer.exe <descriptor file path>";
 
        std::cout << "\n\n";
 
@@ -37,14 +37,6 @@ int main(int argc, char ** argv)
     size_t index_size = Data_Processor.Get_Git_File_Index_Size();
 
 
-    Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
-
-    Dep_Determiner.Receive_Descriptor_File_Reader(&Des_Reader);
-
-    Dep_Determiner.Receive_Git_Data_Processor(&Data_Processor);
-
-    Dep_Determiner.Collect_Dependency_Information();
-
 
     Repo_Warehouse_Initializer Initializer(argv[1],'w');
 
@@ -52,33 +44,11 @@ int main(int argc, char ** argv)
 
     Initializer.Receive_Descriptor_File_Reader(&Des_Reader);
 
-    Initializer.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
+    Initializer.Build_Project_Warehouse();
 
-    if(argv[2][0] == 'b'){
+    std::cout << "\nProject Warehouse Constructed ..";
 
-       // The project warehouse will be builded
-
-       Initializer.Build_Project_Warehouse();
-
-       std::cout << "\nProject Warehouse Constructed ..";
-
-       std::cout << "\n\n";
-
-    }
-    else{
-
-          // The project warehouse headers will be updated
-
-          if(argv[2][0] == 'u'){
-
-              Initializer.Update_Warehaouse_Headers();
-          }
-
-          std::cout << "\n Project Header Files Updated ..";
-
-          std::cout << "\n\n";
-
-    }
+    std::cout << "\n\n";
 
     Initializer.Clear_Dynamic_Memory();
 

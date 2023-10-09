@@ -12,6 +12,10 @@
 #include <fcntl.h>
 #include <windows.h>
 #include "Source_File_Dependency_Determiner.hpp"
+#include "Source_File_Dependency_Selector_For_Single_File.hpp"
+#include "Source_File_Dependency_Selector.hpp"
+#include "Source_File_Information_Collector_For_Single_File.hpp"
+#include "Source_File_Information_Collector.hpp"
 #include "Git_Data_Processor.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Git_File_List_Writer.hpp"
@@ -29,45 +33,25 @@ public:
  virtual ~Repo_Warehouse_Initializer();
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
- void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dtr);
  void Build_Project_Warehouse();
- void Update_Warehaouse_Headers();
  void Clear_Dynamic_Memory();
 protected:
  void Determine_Warehouse_Path();
- void Determine_Header_Files_Directory();
  void Determine_Object_Files_Directory();
  void Determine_Library_Files_Directory();
  void Determine_Compiler_Output_Directory();
  void Determine_Current_Directory();
  void Construct_Warehouse_Path();
- void Construct_Header_Files_Directory();
  void Construct_Object_Files_Directory();
  void Construct_Library_Files_Directory();
  void Construct_Compiler_Outputs_Directory();
- void Determine_Header_File_Paths();
- void Copy_Independent_Header_Files_To_Project_Headers_Location();
- void Determine_Independent_Header_Paths();
- void Copy_Header_Files_To_Project_Headers_Location();
- void Determine_Header_File_Name_With_Extention(std::string path);
  void Clear_String_Memory(std::string * pointer);
- void Clear_Vector_Memory(std::vector<std::string> * pointer);
- Source_File_Dependency_Determiner * Dep_Determiner;
  Git_Data_Processor * Git_Dt_Proc;
  DirectoryOperations DirectoryManager;
- Project_Files_Lister Dir_Lister;
  Descriptor_File_Reader * Des_Reader;
- Cpp_FileOperations FileManager;
- int  source_files_number;
- int  ind_hdr_number;
- std::string  warehouse_location;
- std::string  warehouse_path;
- std::string  current_directory;
- std::string  Header_File_Name_With_Extention;
- std::vector<std::string> Header_File_Paths;
- std::vector<std::string> Headers_New_Paths;
- std::vector<std::string> Independent_Header_Paths;
- std::vector<std::string> Independent_Header_New_Paths;
+ std::string warehouse_location;
+ std::string warehouse_path;
+ std::string current_directory;
  std::string Headers_Directory;
  std::string Object_Files_Directory;
  std::string Library_Files_Directory;

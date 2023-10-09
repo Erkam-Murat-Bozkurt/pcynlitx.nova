@@ -30,6 +30,8 @@ add_library(proj_bld_tools
     ${CMAKE_CURRENT_SOURCE_DIR}/Repo_Warehouse_Initializer/Repo_Warehouse_Initializer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Repo_Warehouse_Initializer/Repo_Warehouse_Initializer.h
 
+    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.DATA.COLLECTORS/Header_File_Determiner/Header_File_Determiner.cpp 
+    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.DATA.COLLECTORS/Header_File_Determiner/Header_File_Determiner.h 
 )
 
 target_include_directories(proj_bld_tools PUBLIC

@@ -58,9 +58,8 @@ int main(int argc, char ** argv){
     Quick_Extractor.Receive_Source_Code_Reader(&Code_Rd);
 
     Quick_Extractor.Receive_Git_Data_Processor(&Git_Data_Proc);
-
-
-    Quick_Extractor.Extract_Dependency_Search_Data(argv[2]);
+    
+    Quick_Extractor.Extract_Dependency_Data(argv[2]);
 
 
 
@@ -93,7 +92,37 @@ int main(int argc, char ** argv){
         std::cout << "\n External Header[" << i << "]:" << external_headers->at(i);
     }
 
-    Quick_Extractor.Clear_Dynamic_Memory();
+    const Simple_Source_File_Dependency * data_ptr = Quick_Extractor.Get_Simple_Source_File_Dependency();
+
+    std::cout << "\n source_file_nam                 :" << data_ptr->source_file_name;
+    std::cout << "\n Combined_Header_Name            :" << data_ptr->Combined_Header_Name;
+    std::cout << "\n dir                             :" << data_ptr->dir;
+    std::cout << "\n object_file_name                :" << data_ptr->object_file_name;
+    std::cout << "\n source_file_name_without_ext    :" << data_ptr->source_file_name_without_ext;
+    std::cout << "\n source_file_path                :" << data_ptr->source_file_path;
+    std::cout << "\n src_sys_dir                     :" << data_ptr->src_sys_dir;
+    std::cout << "\n src_git_record_dir              :" << data_ptr->src_git_record_dir;
+
+    for(size_t i=0;i<data_ptr->Dependent_Header_Names.size();i++){
+
+        std::cout << "\n data_ptr->Dependent_Header_Names.at("<< i << "):" 
+        
+                  << data_ptr->Dependent_Header_Names.at(i);
+    }
+
+    for(size_t i=0;i<data_ptr->Dependent_Header_Paths.size();i++){
+
+        std::cout << "\n data_ptr->Dependent_Header_Paths.at("<< i << "):" 
+        
+                  << data_ptr->Dependent_Header_Paths.at(i);
+    }
+
+    for(size_t i=0;i<data_ptr->Include_Declerations.size();i++){
+
+        std::cout << "\n data_ptr->Include_Declerations.at("<< i << "):" 
+        
+                  << data_ptr->Include_Declerations.at(i);
+    }
 
     std::cout << "\n\n THE END OF THE PROGRAM \n\n";
 
