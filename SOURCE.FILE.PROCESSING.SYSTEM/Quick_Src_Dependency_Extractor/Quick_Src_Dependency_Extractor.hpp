@@ -96,6 +96,7 @@ protected:
  void Determine_Warehouse_Object_Dir();
  void Determine_Warehouse_Header_Dir();
  void Set_Dependency_Data(std::string src_file_path);
+ void Extract_Directory_File_Name_Combination(std::string path, std::string & dir_file_com);
  void Receive_String_Vector(std::vector<std::string> & target_vec, 
       const std::vector<std::string> * vec);
  void Clear_String_Memory(std::string & str);

@@ -200,10 +200,7 @@ void Source_File_Data_Setter::Determine_Git_Record_Source_File_Directory(std::st
          }
      }
 
-
-
      std::string dir = this->Git_Data_Proc->Get_Git_Repo_Directory();
-
 
      size_t repo_dir_size = dir.length();
 

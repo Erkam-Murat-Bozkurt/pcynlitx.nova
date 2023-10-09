@@ -105,21 +105,21 @@ int main(int argc, char ** argv){
 
     for(size_t i=0;i<data_ptr->Dependent_Header_Names.size();i++){
 
-        std::cout << "\n data_ptr->Dependent_Header_Names.at("<< i << "):" 
+        std::cout << "\n Dependent Header Name ["<< i << "]:" 
         
                   << data_ptr->Dependent_Header_Names.at(i);
     }
 
     for(size_t i=0;i<data_ptr->Dependent_Header_Paths.size();i++){
 
-        std::cout << "\n data_ptr->Dependent_Header_Paths.at("<< i << "):" 
+        std::cout << "\n Dependent Header Paths ["<< i << "]:" 
         
                   << data_ptr->Dependent_Header_Paths.at(i);
     }
 
     for(size_t i=0;i<data_ptr->Include_Declerations.size();i++){
 
-        std::cout << "\n data_ptr->Include_Declerations.at("<< i << "):" 
+        std::cout << "\n Include Decleration ["<< i << "]:" 
         
                   << data_ptr->Include_Declerations.at(i);
     }

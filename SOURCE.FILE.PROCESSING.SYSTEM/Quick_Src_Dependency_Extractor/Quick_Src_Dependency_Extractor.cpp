@@ -66,6 +66,8 @@ void Quick_Src_Dependency_Extractor::Receive_Source_Code_Reader(Project_Src_Code
 void Quick_Src_Dependency_Extractor::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
 
      this->Git_Data_Proc = ptr;
+
+     this->Data_Setter.Receive_Git_Data_Processor(ptr);
 }
 
 
@@ -77,14 +79,13 @@ void Quick_Src_Dependency_Extractor::Receive_Git_Data_Processor(Git_Data_Process
 
 void Quick_Src_Dependency_Extractor::Extract_Dependency_Data(std::string src_file_path){
 
-     std::cout << "\n Inside Quick_Src_Dependency_Extractor::Extract_Dependency_Data";
-     std::cout << "\n src_file_path:" << src_file_path;
-     std::cin.get();
-
      this->Extract_Dependency_Search_Data(src_file_path);
 
-     std::cout << "\n Search Data Extracted";
-     std::cin.get();
+     std::string cmb_name;
+
+     this->Extract_Directory_File_Name_Combination(src_file_path,cmb_name);
+
+     this->Dep_Data.Combined_Header_Name = cmb_name;
 
      this->Set_Dependency_Data(src_file_path);
 }
@@ -108,7 +109,6 @@ void Quick_Src_Dependency_Extractor::Extract_Dependency_Search_Data(std::string 
 
      this->Dep_Search_Data.shrink_to_fit();
 
-
      this->Receive_String_Vector(this->Root_File_External_Headers,Dep_Extractor->Get_External_Header_Files());
 
      Dep_Extractor->Clear_Object_Memory();
@@ -124,62 +124,18 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
      
      src_git_record_dir, file_name_without_ext, src_sys_dir;
 
-     
-     std::cout << "\n Inside Quick_Src_Dependency_Extractor::Set_Dependency_Data";
-
-     std::cout << "\n src_file_path:" << src_file_path;
-
-     /*
-     const FileData * Data = this->Code_Rdr->Find_File_Data_From_Path(src_file_path);
-
-     std::cout << "\n Data->" << Data->
-     
-     */
-
-     std::cout << "\n --1";
-     std::cin.get();
-
 
      this->Data_Setter.Extract_Directory_From_Path(src_file_path,file_dir);
 
-     std::cout << "\n --2";
-     std::cin.get();
-
      this->Data_Setter.Extract_File_Name_From_Path(src_file_name,src_file_path);
-
-
-     std::cout << "\n --3";
-     std::cin.get();
-
 
      this->Data_Setter.Determine_Git_Record_Source_File_Directory(src_file_path,src_git_record_dir);
 
-     std::cout << "\n --4";
-     std::cin.get();
-
      this->Data_Setter.Determine_File_Name_Without_Ext(src_file_path,file_name_without_ext);
-
-     std::cout << "\n --5";
-     std::cin.get();
 
      this->Data_Setter.Determine_Object_File_Name(object_file_name,src_file_name);
 
-     std::cout << "\n --6";
-     std::cin.get();
-
      this->Data_Setter.Extract_Directory_From_Path(src_file_path,src_sys_dir);
-
-     std::cout << "\n --7";
-     std::cin.get();
-
-     std::cout << "\n src_file_name:" << src_file_name;
-     std::cout << "\n src_file_path:" << src_file_path;
-     std::cout << "\n file_dir:" << file_dir;
-     std::cout << "\n file_name_without_ext:" << file_name_without_ext;
-     std::cout << "\n src_git_record_dir:" << src_git_record_dir;
-     std::cout << "\n src_sys_dir:" << src_sys_dir;
-     std::cout << "\n object_file_name:" << object_file_name;
-
 
 
      this->Data_Setter.Copy_String(this->Dep_Data.source_file_name,src_file_name);
@@ -215,17 +171,9 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
 
      size_t data_size = this->Dep_Search_Data.size();
 
-     std::cout << "\n data_size:" << data_size;
-
      if(data_size>0){   // The header file have dependencies
 
         for(size_t i=0;i<data_size;i++){
-
-            std::cout << "\n this->Dep_Search_Data.at(" << i << ").name:" << this->Dep_Search_Data.at(i).name;
-
-            std::cout << "\n this->Dep_Search_Data.at(" << i << ").path:" << this->Dep_Search_Data.at(i).path;
-
-            std::cout << "\n this->Dep_Search_Data.at(" << i << ").include_decleration:" << this->Dep_Search_Data.at(i).include_decleration;
 
             this->Dep_Data.Dependent_Header_Names.push_back(this->Dep_Search_Data.at(i).name);
 
@@ -234,6 +182,68 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
             this->Dep_Data.Include_Declerations.push_back(this->Dep_Search_Data.at(i).include_decleration);
         }
      }
+}
+
+
+
+void Quick_Src_Dependency_Extractor::Extract_Directory_File_Name_Combination(std::string path, 
+
+     std::string & dir_file_com)
+{
+     size_t dec_size = path.length();
+
+     size_t dir_char_num = 0, start_point = dec_size;
+
+     for(size_t i=dec_size;i>0;i--){
+
+         if((path[i] == '/') || (path[i] == '\\')){
+
+            dir_char_num++;
+
+            if(dir_char_num>1){
+
+               start_point = i+1;        
+
+               break;
+            }
+         }
+         
+         start_point--;        
+     }
+    
+     size_t end_point = start_point;
+     
+
+
+     for(size_t i=dec_size;i>start_point;i--){
+
+         if((path[i] == '/') || (path[i] == '\\')){
+
+             end_point = i+1;        
+
+             break;            
+         }
+         
+         end_point--;        
+     }
+
+
+     for(size_t i=start_point;i<end_point;i++){
+
+         dir_file_com.push_back(path[i]);
+     }
+
+
+     std::string hdr_name = this->Dep_Search_Data.at(0).name;
+
+     size_t hdr_name_size = hdr_name.length();
+
+     for(size_t i=0;i<hdr_name_size;i++){
+
+         dir_file_com.push_back(hdr_name[i]);
+     }
+
+     dir_file_com.shrink_to_fit();
 }
 
 
