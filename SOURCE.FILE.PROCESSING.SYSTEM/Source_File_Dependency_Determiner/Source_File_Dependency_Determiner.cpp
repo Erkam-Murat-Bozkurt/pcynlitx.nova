@@ -26,7 +26,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_file_path, char opr_sis) :
 
-    Code_Rd(opr_sis), Com_Data_Extractor(opr_sis), DepSelector(opr_sis), DepSelector_For_Single_File(opr_sis)
+    Code_Rd(opr_sis), Com_Data_Extractor(opr_sis), DepSelector(opr_sis), 
+    
+    DepSelector_For_Single_File(opr_sis), Simple_Dep_Extractor(opr_sis)
 {
 
 }
@@ -67,6 +69,8 @@ void Source_File_Dependency_Determiner::Receive_Descriptor_File_Reader(Descripto
      this->DepSelector.Receive_Descriptor_File_Reader(ptr);
 
      this->DepSelector_For_Single_File.Receive_Descriptor_File_Reader(ptr);
+
+     this->Simple_Dep_Extractor.Receive_Descriptor_File_Reader(ptr);
 }
 
 
@@ -89,6 +93,10 @@ void Source_File_Dependency_Determiner::Receive_Git_Data_Processor(Git_Data_Proc
 
      this->DepSelector_For_Single_File.Receive_Git_Data_Processor(ptr);
 
+
+     this->Simple_Dep_Extractor.Receive_Git_Data_Processor(ptr);
+
+     this->Simple_Dep_Extractor.Receive_Source_Code_Reader(&this->Code_Rd);
 }
 
 
@@ -146,6 +154,13 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
       this->Clear_Dynamic_Memory();
 }
+
+
+ void Source_File_Dependency_Determiner::Simple_Dependency_Determination_For_Single_Source_File(std::string path){
+
+      this->Simple_Dep_Extractor.Extract_Dependency_Data(path);
+ }
+
 
 
 void Source_File_Dependency_Determiner::Construct_Dependency_Map(){
@@ -371,3 +386,9 @@ std::string Source_File_Dependency_Determiner::Get_Warehouse_Path(){
 
        return this->Warehouse_Path;
 }
+
+
+ const Simple_Source_File_Dependency * Source_File_Dependency_Determiner::Get_Simple_File_Dependencies(){
+
+      return this->Simple_Dep_Extractor.Get_Simple_Source_File_Dependency();
+ }

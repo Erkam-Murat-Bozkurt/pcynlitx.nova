@@ -28,6 +28,7 @@
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector_For_Single_File.hpp"
 #include "Source_File_Information_Collector.hpp"
+#include "Quick_Src_Dependency_Extractor.hpp"
 #include "Source_File_Processor.hpp"
 #include "Header_File_Processor.hpp"
 #include "Project_Src_Code_Rdr.hpp"
@@ -56,6 +57,7 @@ public:
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Collect_Dependency_Information();
  void Collect_Dependency_Information(std::string path);
+ void Simple_Dependency_Determination_For_Single_Source_File(std::string path);
  bool Is_Source_File(std::string spath);
  bool Is_Header_File(std::string hpath);
  int  Get_Compiler_Data_Size();
@@ -67,7 +69,8 @@ public:
  void Clear_Object_Memory();
  void Clear_Dynamic_Memory();
  Compiler_Data Get_Compiler_Data(int i);
- std::vector<Compiler_Data> * Get_Compiler_Data_Address();
+ std::vector<Compiler_Data> *  Get_Compiler_Data_Address();
+ const Simple_Source_File_Dependency * Get_Simple_File_Dependencies();
 protected:
  void Order_Priorities();
  void Re_Arrange_Priorities(); 
@@ -82,6 +85,7 @@ protected:
  Source_File_Dependency_Selector_For_Single_File DepSelector_For_Single_File;
  Source_File_Compiler_Data_Extractor Com_Data_Extractor;
  Source_File_Processor Src_Processor;
+ Quick_Src_Dependency_Extractor Simple_Dep_Extractor;
  std::string Warehouse_Headers_Dir;
  std::string Warehouse_Objetcs_Dir;
  std::string Warehouse_Path;
