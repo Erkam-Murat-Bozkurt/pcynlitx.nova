@@ -382,7 +382,7 @@ void Descriptor_File_Data_Collector::Delete_Spaces_on_String(std::string * str)
 
         for(size_t i=0;i<str->length();i++){
 
-           if((*str)[i] == ' '){
+           if( ((*str)[i] == ' ') || ((*str)[i] == '\t') ){
 
               search_cond = true;
 
