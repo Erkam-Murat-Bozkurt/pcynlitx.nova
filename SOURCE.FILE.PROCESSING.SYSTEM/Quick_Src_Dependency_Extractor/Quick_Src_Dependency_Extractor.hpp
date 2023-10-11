@@ -32,7 +32,6 @@
 #include "Project_Src_Code_Rdr.hpp"
 #include "Git_Data_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
-#include "Project_Files_Lister.h"
 #include "Header_File_Processor.hpp"
 #include "StringOperator.h"
 #include "Cpp_FileOperations.h"
@@ -66,6 +65,7 @@ struct Simple_Source_File_Dependency
   std::string object_file_name;
   std::vector<std::string> External_Headers;
   std::vector<std::string> Dependent_Header_Names;
+  std::vector<std::string> Dependent_Header_Directories;
   std::vector<std::string> Dependent_Header_Paths;
   std::vector<std::string> Include_Declerations;
   int included_file_hdr_num;
@@ -97,11 +97,14 @@ protected:
  void Determine_Warehouse_Header_Dir();
  void Set_Dependency_Data(std::string src_file_path);
  void Extract_Directory_File_Name_Combination(std::string path, std::string & dir_file_com);
+ void Extract_Directory_From_Path(std::string & dir, std::string path);
  void Receive_String_Vector(std::vector<std::string> & target_vec, 
       const std::vector<std::string> * vec);
  void Clear_String_Memory(std::string & str);
  void Clear_Search_Data();
  void Clear_External_Headers_Memory();
+ void Clear_Dependency_Data();
+ void Clear_Vector_Memory(std::vector<std::string> & str);
  Source_File_Data_Setter Data_Setter;
  Simple_Source_File_Dependency Dep_Data;
  std::vector<Search_Data> Dep_Search_Data;

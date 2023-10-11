@@ -65,78 +65,96 @@ void Executable_MakeFile_Builder::Clear_Dynamic_Memory(){
 }
 
 
-void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_Name){
+void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_Name, char strategy){
+
+     if(strategy == 'a'){
+
+        this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
+
+        this->Dep_Determiner.Receive_Git_Data_Processor(&this->Git_Data_Proc);
+
+        this->Dep_Determiner.Collect_Dependency_Information(mn_src_path);
 
 
+        this->warehouse_head_dir = this->Dep_Determiner.Get_Warehouse_Headers_Dir();
 
-     this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
+        this->warehouse_obj_dir  = this->Dep_Determiner.Get_Warehouse_Objetcs_Dir();
 
-     this->Dep_Determiner.Receive_Git_Data_Processor(&this->Git_Data_Proc);
-
-     this->Dep_Determiner.Collect_Dependency_Information(mn_src_path);
-
-
-     this->warehouse_head_dir = this->Dep_Determiner.Get_Warehouse_Headers_Dir();
-
-     this->warehouse_obj_dir  = this->Dep_Determiner.Get_Warehouse_Objetcs_Dir();
-
-     this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
-
-     
-     std::cout << "\nThe source file dependencies determined";
-
-
-     this->Receive_Exe_File_Name(Exe_Name);
-
-     this->Determine_New_Directory_Path();
-
-     this->Construct_New_Directory_For_Build_Files();
-
-
-
-     this->Script_Builder.Receive_File_System_Path(mn_src_path);
-
-     this->Script_Builder.Receive_Exe_File_Name(Exe_Name);
-
-     this->Script_Builder.Receive_Construction_Directory_Path(this->new_dir_path);
-
-     this->Script_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
-
-     this->Script_Builder.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
-
-     this->Script_Builder.Build_Compiler_Script_For_Executable_File(mn_src_path);
-
-     std::cout << "\nThe construction script writed";
-
-
-     this->Com_Data_ptr = this->Dep_Determiner.Get_Compiler_Data_Address();
-
-     this->ComConstructor.Receive_Descriptor_File_Reader(&this->Des_Reader);
-
-     this->ComConstructor.Receive_Depepndency_Determiner(&this->Dep_Determiner);
-
-     this->ComConstructor.Receive_ExeFileName(Exe_Name);
-
-     this->ComConstructor.Construct_Compiler_Commands(mn_src_path);
+        this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
 
      
+        std::cout << "\nThe source file dependencies determined";
 
 
-     this->source_file_name = this->Script_Builder.Get_Src_File_Name();
+        this->Receive_Exe_File_Name(Exe_Name);
 
-     // Receiving the compiler data from the member objects
+        this->Determine_New_Directory_Path();
+
+        this->Construct_New_Directory_For_Build_Files();
 
 
 
-     this->Src_File_Dir       = this->ComConstructor.Get_Src_File_Dr();
+        this->Script_Builder.Receive_File_System_Path(mn_src_path);
 
-     this->git_src_dir        = this->ComConstructor.Get_Git_Src_Dr();
+        this->Script_Builder.Receive_Exe_File_Name(Exe_Name);
 
-     this->make_file_name     = this->ComConstructor.Get_Make_File_Name();
+        this->Script_Builder.Receive_Construction_Directory_Path(this->new_dir_path);
 
-     this->Compiler_System_Command = this->ComConstructor.Get_Compiler_System_Command();
+        this->Script_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
-     this->Write_MakeFile(Exe_Name);
+        this->Script_Builder.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
+
+        this->Script_Builder.Build_Compiler_Script_For_Executable_File(mn_src_path);
+
+        std::cout << "\nThe construction script writed";
+
+
+        this->Com_Data_ptr = this->Dep_Determiner.Get_Compiler_Data_Address();
+
+        this->ComConstructor.Receive_Descriptor_File_Reader(&this->Des_Reader);
+
+        this->ComConstructor.Receive_Depepndency_Determiner(&this->Dep_Determiner);
+
+        this->ComConstructor.Receive_ExeFileName(Exe_Name);
+
+        this->ComConstructor.Construct_Compiler_Commands(mn_src_path);
+
+     
+
+
+        this->source_file_name = this->Script_Builder.Get_Src_File_Name();
+
+        // Receiving the compiler data from the member objects
+
+
+        this->Src_File_Dir       = this->ComConstructor.Get_Src_File_Dr();
+
+        this->git_src_dir        = this->ComConstructor.Get_Git_Src_Dr();
+
+        this->make_file_name     = this->ComConstructor.Get_Make_File_Name();
+
+        this->Compiler_System_Command = this->ComConstructor.Get_Compiler_System_Command();
+
+        this->Write_MakeFile(Exe_Name);
+
+     }
+     else{
+
+          if(strategy == 's'){
+
+             
+          }
+          else{
+
+                std::cout << "\nThe build strategy must be one of the following characters:";
+                std::cout << "\n";
+                std::cout << "\na: Advanced build";
+                std::cout << "\ns: Simple build";
+                std::cout << "\n\n";
+
+                exit(0);
+          }
+     }
 }
 
 

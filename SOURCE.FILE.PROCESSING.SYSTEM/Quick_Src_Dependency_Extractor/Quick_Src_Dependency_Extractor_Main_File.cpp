@@ -117,6 +117,14 @@ int main(int argc, char ** argv){
                   << data_ptr->Dependent_Header_Paths.at(i);
     }
 
+    for(size_t i=0;i<data_ptr->Dependent_Header_Directories.size();i++){
+
+        std::cout << "\n Dependent Header Directories ["<< i << "]:" 
+        
+                  << data_ptr->Dependent_Header_Directories.at(i);
+    }
+
+
     for(size_t i=0;i<data_ptr->Include_Declerations.size();i++){
 
         std::cout << "\n Include Decleration ["<< i << "]:" 

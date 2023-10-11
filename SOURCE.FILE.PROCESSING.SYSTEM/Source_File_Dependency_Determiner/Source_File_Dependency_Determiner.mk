@@ -61,6 +61,8 @@ VPATH = $(DIR_OPS)       $(CPP_OPS)         $(CHAR_OPS) \
 		$(GIT_IGN) \
 		$(SRC_INF_CL_SF) $(SRC_DEP_SL_SF)
 
+		
+
 Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_File.cpp \
 	Source_File_Dependency_Determiner.cpp \
 	Source_File_Dependency_ReOrderer.cpp \
@@ -250,7 +252,6 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 		-include $(SRC_READER)\Project_Src_Code_Rdr.hpp \
 		-include $(FILE_DAT_COL)\Project_Files_Data_Collector.hpp \
 		-include $(SRC_DT_COL)\Source_File_Data_Collector.hpp \
-		-include $(FILE_LISTER)\Project_Files_Lister.h \
         -include $(GIT_PROC)\Git_Data_Processor.hpp \
 		-include $(GIT_LIST)\Git_File_List_Writer.hpp \
 		-include $(GIT_REC)\Git_File_List_Receiver.hpp \

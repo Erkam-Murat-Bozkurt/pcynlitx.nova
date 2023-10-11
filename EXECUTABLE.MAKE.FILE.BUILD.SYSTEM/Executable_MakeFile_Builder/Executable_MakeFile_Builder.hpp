@@ -38,7 +38,7 @@ class Executable_MakeFile_Builder
 public:
  Executable_MakeFile_Builder(char * des_path, char opr_sis);
  virtual ~Executable_MakeFile_Builder();
- void Build_MakeFile(char * path, char * Exe_Name);
+ void Build_MakeFile(char * path, char * Exe_Name, char c);
  void Clear_Dynamic_Memory();
 protected:
  void Write_MakeFile(char * Exe_Name);

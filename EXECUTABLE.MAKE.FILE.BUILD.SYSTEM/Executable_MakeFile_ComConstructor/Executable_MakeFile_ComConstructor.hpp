@@ -7,6 +7,7 @@
 
 #include <cstring>
 #include <cstdlib>
+#include <cctype>
 #include <vector>
 #include <iterator>
 #include <sys/types.h>
@@ -30,8 +31,9 @@ class Executable_MakeFile_ComConstructor
 public:
  Executable_MakeFile_ComConstructor(char opr_sis);
  virtual ~Executable_MakeFile_ComConstructor();
+ void Receive_Construction_Strategy(char strategy);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
- void Receive_Depepndency_Determiner(Source_File_Dependency_Determiner * ptr);
+ void Receive_Dependency_Determiner(Source_File_Dependency_Determiner * ptr);
  void Receive_ExeFileName(std::string name);
  void Construct_Compiler_Commands(std::string main_file_path);
  void Clear_Dynamic_Memory();
@@ -50,9 +52,12 @@ protected:
  void Construct_Library_Directories_List();
  void Construct_Library_List();
  void Determine_Git_Src_Dir();
+ void Determine_Compiler_System_Command_For_Simple_Construction();
+ void Construct_Header_File_List_For_Simple_Construction();
  void Determine_Src_File_Dir(std::string file_path, char opr_sis);
  void Determine_Make_File_Name(std::string file_path);
  void Determine_Source_File_Name(std::string file_path);
+ void Extract_Repo_Directory_Name(std::string & name, std::string root_dir);
  void Add_String(std::string * list, std::string string);
  void Place_String(std::string * pointer, std::string string);
  void Place_Information(std::string * ptr,std::string in);
@@ -61,6 +66,7 @@ protected:
  Source_File_Dependency_Determiner * Dep_Determiner;
  IntToCharTranslater Translater;
  std::vector<Compiler_Data> * Comp_Data_ptr;
+ const Simple_Source_File_Dependency * Simple_Data_Ptr;
  std::vector<std::string> header_file_list;
  std::vector<std::string> header_file_paths;
  std::vector<std::string> header_file_dirs;
@@ -80,6 +86,7 @@ protected:
  int  header_file_number;
  int  Data_Size;
  char opr_sis;
+ char constraction_strategy;
  bool Memory_Delete_Condition;
 };
 

@@ -179,6 +179,12 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
 
             this->Dep_Data.Dependent_Header_Paths.push_back(this->Dep_Search_Data.at(i).path);
 
+            std::string dir;
+
+            this->Extract_Directory_From_Path(dir,this->Dep_Search_Data.at(i).path);
+
+            this->Dep_Data.Dependent_Header_Directories.push_back(dir);
+
             this->Dep_Data.Include_Declerations.push_back(this->Dep_Search_Data.at(i).include_decleration);
         }
      }
@@ -409,6 +415,50 @@ void Quick_Src_Dependency_Extractor::Determine_Warehouse_Object_Dir(){
 
 
 
+void Quick_Src_Dependency_Extractor::Extract_Directory_From_Path(std::string & dir, std::string path){
+
+     size_t path_size = path.size();
+
+     size_t end_point = path_size;
+
+     for(size_t i=path_size;i>0;i--){
+
+         if(this->opr_sis == 'w'){
+
+            if(path[i]== '\\'){
+
+                break;
+            }
+            else{
+
+                 end_point--;
+            }
+         }
+
+         if(this->opr_sis == 'l'){
+
+            if(path[i]== '/'){
+
+                break;
+            }
+            else{
+
+                 end_point--;
+            }
+         }         
+    }
+
+    for(size_t i=0;i<end_point;i++)
+    {
+        dir.push_back(path[i]);
+    }
+
+    dir.shrink_to_fit();    
+}
+
+
+
+
 /* MEMORY MANAGEMENT FUNCTIONS ******************************************************/
 
 
@@ -421,6 +471,8 @@ void Quick_Src_Dependency_Extractor::Clear_Object_Memory()
      this->Clear_String_Memory(this->warehouse_head_dir);
 
      this->Clear_String_Memory(this->warehouse_obj_dir);
+
+     this->Clear_Dependency_Data();
 }
 
 
@@ -492,6 +544,37 @@ void Quick_Src_Dependency_Extractor::Clear_Search_Data()
 }
 
 
+void Quick_Src_Dependency_Extractor::Clear_Dependency_Data(){
+
+     this->Clear_String_Memory(this->Dep_Data.source_file_name); 
+     
+     this->Clear_String_Memory(this->Dep_Data.source_file_name_without_ext);
+     
+     this->Clear_String_Memory(this->Dep_Data.src_git_record_dir);
+     
+     this->Clear_String_Memory(this->Dep_Data.src_sys_dir);
+     
+     this->Clear_String_Memory(this->Dep_Data.source_file_path);
+     
+     this->Clear_String_Memory(this->Dep_Data.Combined_Header_Name);
+     
+     this->Clear_String_Memory(this->Dep_Data.dir);
+     
+     this->Clear_String_Memory(this->Dep_Data.object_file_name);
+
+
+     this->Clear_Vector_Memory(this->Dep_Data.External_Headers);
+     
+     this->Clear_Vector_Memory(this->Dep_Data.Dependent_Header_Names);
+     
+     this->Clear_Vector_Memory(this->Dep_Data.Dependent_Header_Directories);
+     
+     this->Clear_Vector_Memory(this->Dep_Data.Dependent_Header_Paths);
+     
+     this->Clear_Vector_Memory(this->Dep_Data.Include_Declerations);
+}
+
+
 void Quick_Src_Dependency_Extractor::Clear_String_Memory(std::string & str){
 
      if(!str.empty()){
@@ -501,6 +584,23 @@ void Quick_Src_Dependency_Extractor::Clear_String_Memory(std::string & str){
          str.shrink_to_fit();
       }
 }
+
+
+void Quick_Src_Dependency_Extractor::Clear_Vector_Memory(std::vector<std::string> & str){
+
+     size_t vec_size = str.size();
+
+     for(size_t i=0;i<vec_size;i++){
+
+         this->Clear_String_Memory(str.at(i));
+     }
+
+     str.clear();
+
+     str.shrink_to_fit();
+}
+
+
 
 
 
