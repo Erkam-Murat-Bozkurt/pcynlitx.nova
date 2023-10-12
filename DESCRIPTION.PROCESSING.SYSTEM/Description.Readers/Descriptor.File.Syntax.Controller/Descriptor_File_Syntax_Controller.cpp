@@ -264,8 +264,6 @@ void Descriptor_File_Syntax_Controller::Clear_String_Memory(std::string * pointe
 
 void Descriptor_File_Syntax_Controller::Delete_Spaces_on_String(std::string * str)
 {
-     size_t string_size = str->length();
-
      bool search_cond = true;
 
      do{

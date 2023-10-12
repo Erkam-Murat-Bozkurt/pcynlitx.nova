@@ -29,6 +29,7 @@ private:
  void Determine_Warehouse_Object_Dir();
  void Determine_Current_Library_Path();
  void Determine_Target_Library_Path();
+ void Determine_Library_File_Name();
  void Receive_Library_Name(char * lib_name);
  void Place_Information(std::string & str, std::string s);
  void Clear_String_Memory(std::string & str);

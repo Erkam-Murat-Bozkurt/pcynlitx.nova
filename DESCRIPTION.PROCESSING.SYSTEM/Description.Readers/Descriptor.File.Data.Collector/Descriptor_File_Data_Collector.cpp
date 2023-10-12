@@ -101,8 +101,6 @@ void Descriptor_File_Data_Collector::Receive_Descriptor_File_Index(){
 
      this->File_Size = 0;
 
-     int index = 0;
-
      this->Memory_Delete_Condition = false;
 
      do{
@@ -126,8 +124,6 @@ void Descriptor_File_Data_Collector::Print_Descriptor_File_Index(){
 
      std::vector<std::string>::iterator it;
 
-     int i=0;
-
      for(auto it=this->File_Index.begin();it<this->File_Index.end();it++){
 
          std::cout << "\n"
@@ -140,7 +136,7 @@ void Descriptor_File_Data_Collector::Determine_Root_Directory_Record_Area(){
 
      char key_word [] = "[PROJECT-ROOT-DIR]";
 
-     int record_stard = 1, record_end = 0;
+     int record_stard = 1;
 
      int keyword_line = this->FindStringPoint(key_word,record_stard);
 
@@ -163,7 +159,7 @@ void Descriptor_File_Data_Collector::Determine_Warehouse_Location_Record_Area(){
 
      char key_word [] = "[PROJECT-WAREHOUSE-LOCATION]";
 
-     int record_stard = 1, record_end = 0;
+     int record_stard = 1;
 
      int keyword_line = this->FindStringPoint(key_word,record_stard);
 
@@ -186,7 +182,7 @@ void Descriptor_File_Data_Collector::Determine_Standard_Record_Area(){
 
      char key_word [] = "[C++-STANDARD]";
 
-     int record_stard = 1, record_end = 0;
+     int record_stard = 1;
 
      int keyword_line = this->FindStringPoint(key_word,record_stard);
 
@@ -212,7 +208,7 @@ void Descriptor_File_Data_Collector::Determine_Include_Directories_Record_Area()
 
      char key_word [] = "[INCLUDE-DIRECTORIES]";
 
-     int record_stard = 1, record_end = 0;
+     int record_stard = 1;
 
      int keyword_line = this->FindStringPoint(key_word,record_stard);
 
@@ -239,7 +235,7 @@ void Descriptor_File_Data_Collector::Determine_Source_File_Directories_Record_Ar
      char key_word [] = "[SOURCE-FILE-DIRECTORIES]";
 
 
-     int record_stard = 1, record_end = 0;
+     int record_stard = 1;
 
      int keyword_line = this->FindStringPoint(key_word,record_stard);
 
@@ -266,7 +262,7 @@ void Descriptor_File_Data_Collector::Determine_Library_Directories_Record_Area()
 
      char key_word [] = "[LIBRARY-DIRECTORIES]";
 
-     int record_stard = 1, record_end = 0;
+     int record_stard = 1;
 
      int keyword_line = this->FindStringPoint(key_word,record_stard);
 
@@ -293,7 +289,7 @@ void Descriptor_File_Data_Collector::Determine_Library_Files_Record_Area(){
      char key_word [] = "[LIBRARY-FILES]";
 
 
-     int record_stard = 1, record_end = 0;
+     int record_stard = 1;
 
      int keyword_line = this->FindStringPoint(key_word,record_stard);
 
@@ -321,7 +317,7 @@ void Descriptor_File_Data_Collector::Determine_Options_Record_Area(){
      char key_word [] = "[OPTIONS]";
 
 
-     int record_stard = 1, record_end = 0;
+     int record_stard = 1;
 
      int keyword_line = this->FindStringPoint(key_word,record_stard);
 
@@ -372,8 +368,6 @@ int Descriptor_File_Data_Collector::FindStringPoint(std::string search_word,int 
 
 void Descriptor_File_Data_Collector::Delete_Spaces_on_String(std::string * str)
 {
-    size_t string_size = str->length();
-
     bool search_cond = true;
 
     do{

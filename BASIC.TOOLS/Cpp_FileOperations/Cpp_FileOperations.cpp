@@ -759,8 +759,6 @@ bool Cpp_FileOperations::Is_Current_Dir_Symbol_Exist_On_the_File_Path(char * pat
      bool current_dir_sysmbol_existance = false;
 
      size_t path_length = strlen(path);
-
-     char point = '.';
      
      char first_character = '\0';
 

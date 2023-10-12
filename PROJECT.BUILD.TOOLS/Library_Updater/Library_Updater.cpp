@@ -29,6 +29,8 @@ Library_Updater::Library_Updater(char * DesPATH, char opr_sis):
 
     this->opr_sis = opr_sis;
 
+    this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
+
     this->Des_Reader.Read_Descriptor_File();
 
     this->Memory_Delete_Condition = false;
@@ -66,6 +68,8 @@ void Library_Updater::Build_Library(char * Library_Name){
      this->Clear_Dynamic_Memory();
 
      this->Receive_Library_Name(Library_Name);
+
+     this->Determine_Library_File_Name();
 
      this->warehouse_path = this->Des_Reader.Get_Warehouse_Location();
 
@@ -159,7 +163,8 @@ void Library_Updater::Build_Library(char * Library_Name){
 
      cmd[cmd_size] = '\0';
 
-     this->System_Interface.System_Function(cmd);     
+
+     this->System_Interface.System_Function(cmd);
 
      this->Send_Library_To_Libraries_Location();
 
@@ -212,19 +217,6 @@ void Library_Updater::Determine_Warehouse_Object_Dir(){
 
 void Library_Updater::Determine_Target_Library_Path(){
 
-
-     char library_prefix [] = {'l','i','b','\0'};
-
-     char library_subfix [] = {'.','a','\0'};
-
-
-     this->Place_Information(this->Library_File_Name,library_prefix);
-
-     this->Place_Information(this->Library_File_Name,this->library_name);
-
-     this->Place_Information(this->Library_File_Name,library_subfix);
-
-
      char warehouse_word [] = "WAREHOUSE";
 
      char directory_folder_name [] = "PROJECT.LIBRARY.FILES";
@@ -237,17 +229,13 @@ void Library_Updater::Determine_Target_Library_Path(){
 
 
 
-     size_t library_dir_size = warehouse_path_size + name_size + wr_word_size;
-
-
-
      for(size_t i=0;i<warehouse_path_size;i++){
 
          this->Target_Library_Path.push_back(this->warehouse_path[i]);
      }
 
 
-     this->Add_Directory_Character(this->warehouse_path);
+     this->Add_Directory_Character(this->Target_Library_Path);
 
 
 
@@ -257,7 +245,7 @@ void Library_Updater::Determine_Target_Library_Path(){
      }
 
 
-     this->Add_Directory_Character(this->warehouse_path);
+     this->Add_Directory_Character(this->Target_Library_Path);
 
 
      for(size_t i=0;i<name_size;i++){
@@ -266,7 +254,7 @@ void Library_Updater::Determine_Target_Library_Path(){
      }
 
 
-     this->Add_Directory_Character(this->warehouse_path);
+     this->Add_Directory_Character(this->Target_Library_Path);
 
 
      size_t library_name_size = this->Library_File_Name.length();
@@ -275,23 +263,12 @@ void Library_Updater::Determine_Target_Library_Path(){
 
          this->Target_Library_Path.push_back(this->Library_File_Name[i]);         
      }
+
+     this->Target_Library_Path.shrink_to_fit();
 }
 
 
 void Library_Updater::Determine_Current_Library_Path(){
-
-
-     char library_prefix [] = {'l','i','b','\0'};
-
-     char library_subfix [] = {'.','a','\0'};
-
-
-     this->Place_Information(this->Library_File_Name,library_prefix);
-
-     this->Place_Information(this->Library_File_Name,this->library_name);
-
-     this->Place_Information(this->Library_File_Name,library_subfix);
-
 
      char object_directory_folder_name [] = "PROJECT.OBJECT.FILES";
 
@@ -336,9 +313,25 @@ void Library_Updater::Determine_Current_Library_Path(){
      for(size_t i=0;i<library_name_size;i++){
 
          this->Current_Library_Path.push_back(this->Library_File_Name[i]);
-     }
-
+     } 
 }
+
+
+
+void Library_Updater::Determine_Library_File_Name(){
+     
+     char library_prefix [] = {'l','i','b','\0'};
+
+     char library_subfix [] = {'.','a','\0'};
+
+
+     this->Place_Information(this->Library_File_Name,library_prefix);
+
+     this->Place_Information(this->Library_File_Name,this->library_name);
+
+     this->Place_Information(this->Library_File_Name,library_subfix);
+}
+
 
 void Library_Updater::Send_Library_To_Libraries_Location(){
 
@@ -388,7 +381,7 @@ void Library_Updater::Place_Information(std::string & Pointer, std::string Infor
 
      size_t String_Size = Information.length();
 
-     for(int i=0;i<String_Size;i++){
+     for(size_t i=0;i<String_Size;i++){
          
          Pointer.push_back(Information[i]);         
      }

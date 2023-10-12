@@ -104,7 +104,7 @@ int CharOperator::DetermineCharacterRepitation(std::string list, char c){
 
      size_t ListSize = list.length();
 
-     for(int k=0;k<ListSize+1;k++){
+     for(size_t k=0;k<ListSize+1;k++){
 
           if(list[k]== c){
 

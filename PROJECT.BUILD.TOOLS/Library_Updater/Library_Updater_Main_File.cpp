@@ -18,13 +18,10 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Library_Updater Updater;
-
-    Updater.Receive_Descriptor_File(argv[1]);
+    Library_Updater Updater(argv[1],'w');
 
     Updater.Build_Library(argv[2]);
 
-    //Updater.Send_Library_New_Location(Object_Files_Location,Library_Directory,Library_Name);
 
     return 0;
 }

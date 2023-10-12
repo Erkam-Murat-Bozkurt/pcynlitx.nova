@@ -3,7 +3,7 @@
 
 Descriptor_File_Reader::Descriptor_File_Reader(char opr_sis) :
 
-  Syntax_Controller(opr_sis), Data_Collector(opr_sis)
+   Data_Collector(opr_sis), Syntax_Controller(opr_sis)
 {
    this->Initialize_Members();
 }
@@ -492,11 +492,9 @@ void Descriptor_File_Reader::Divide_Options(){
 
         size_t options_size = temp_opts.length();
 
-        char space = ' ';
-
         int space_counter = 0;
 
-        for(int i=0;i<options_size;i++){
+        for(size_t i=0;i<options_size;i++){
 
            if(temp_opts[i] == ' '){
 
@@ -504,7 +502,6 @@ void Descriptor_File_Reader::Divide_Options(){
             }
         }
 
-        int index = 0;
 
         if(space_counter>2){
 
