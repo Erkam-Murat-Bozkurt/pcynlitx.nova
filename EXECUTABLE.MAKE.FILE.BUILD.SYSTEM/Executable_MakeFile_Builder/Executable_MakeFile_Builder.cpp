@@ -646,12 +646,6 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
      this->FileManager.FileOpen(RWCf);
 
 
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("PROJECT_HEADERS_LOCATION=");
-
-     this->FileManager.WriteToFile(this->warehouse_head_dir);
-
 
      this->FileManager.WriteToFile("\n");
      this->FileManager.WriteToFile("\n");
@@ -659,6 +653,45 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
      this->FileManager.WriteToFile("PROJECT_OBJECTS_LOCATION=");
 
      this->FileManager.WriteToFile(this->warehouse_obj_dir);
+
+
+
+     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
+
+
+     std::string library_directory = "PROJECT_LIBRARY_LOCATION=";
+
+     library_directory += this->warehouse_path; 
+
+     if(this->opr_sis == 'w'){
+
+        library_directory.push_back('\\');
+     }
+
+     if(this->opr_sis == 'l'){
+
+        library_directory.push_back('/');
+     }
+
+     library_directory += "WAREHOUSE";
+
+     if(this->opr_sis == 'w'){
+
+        library_directory.push_back('\\');
+     }
+
+     if(this->opr_sis == 'l'){
+
+        library_directory.push_back('/');
+     }
+
+     library_directory += "PROJECT.LIBRARY.FILES";
+
+
+     this->FileManager.WriteToFile(library_directory);
+
+
 
 
      this->FileManager.WriteToFile("\n");
@@ -756,9 +789,6 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
 
      this->FileManager.WriteToFile("\n");
 
-
-     //size_t compiler_data_size = this->Com_Data_ptr->size();
-
      
 
      size_t dep_header_size = this->Simple_Data_Ptr->Dependent_Header_Names.size();
@@ -799,15 +829,6 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
      this->FileManager.WriteToFile(PathSpecifier);
 
 
-     this->FileManager.WriteToFile("$(PROJECT_HEADERS_LOCATION)");
-
-     this->FileManager.WriteToFile(NextLine);
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile(Ident);
-
-
      this->FileManager.WriteToFile("$(PROJECT_OBJECTS_LOCATION)");
 
      this->FileManager.WriteToFile(NextLine);
@@ -815,6 +836,16 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile(Ident);
+
+
+     this->FileManager.WriteToFile("$(PROJECT_LIBRARY_LOCATION)");
+
+     this->FileManager.WriteToFile(NextLine);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile(Ident);
+
 
 
      this->FileManager.WriteToFile("$(SOURCE_LOCATION)");
@@ -953,6 +984,20 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
 
          this->FileManager.WriteToFile("\n\t");     
      }
+
+     std::string project_library_name =  this->ComConstructor.Get_Project_Library_Name();
+
+
+     this->FileManager.WriteToFile("lib");
+
+     this->FileManager.WriteToFile(project_library_name);
+
+     this->FileManager.WriteToFile(".a");
+
+     this->FileManager.WriteToFile(" \\");
+
+     this->FileManager.WriteToFile("\n\t");
+
 
      this->FileManager.WriteToFile("\n\n");
 

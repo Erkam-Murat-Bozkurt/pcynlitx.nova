@@ -870,6 +870,8 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
 
     this->Extract_Repo_Directory_Name(repo_dir_name,repo_dir_path);
 
+    this->project_library_name = repo_dir_name;
+
     this->Place_Information(&this->Compiler_System_Command,link_symbol);
 
     this->Place_Information(&this->Compiler_System_Command,repo_dir_name);
@@ -1067,3 +1069,8 @@ std::string Executable_MakeFile_ComConstructor::Get_Compiler_System_Command(){
        return this->Compiler_System_Command;
 }
 
+
+std::string Executable_MakeFile_ComConstructor::Get_Project_Library_Name(){
+
+    return this->project_library_name;
+}

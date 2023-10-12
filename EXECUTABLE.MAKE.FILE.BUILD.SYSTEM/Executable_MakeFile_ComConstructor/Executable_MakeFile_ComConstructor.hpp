@@ -43,6 +43,7 @@ public:
  std::string Get_Src_File_Dr();
  std::string Get_Git_Src_Dr();
  std::string Get_Make_File_Name();
+ std::string Get_Project_Library_Name();
 protected:
  void Clear_String_Memory(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
@@ -83,6 +84,7 @@ protected:
  std::string git_src_dir;
  std::string source_file_name;
  std::string Compiler_System_Command;
+ std::string project_library_name;
  int  header_file_number;
  int  Data_Size;
  char opr_sis;
