@@ -48,13 +48,14 @@ protected:
  void Delete_Spaces_on_String(std::string & str);
  bool CheckStringLine(std::string str);
  bool Is_Header(std::string file_path);
- bool Is_this_file_included_on_anywhere(std::string file_path);
  void Determine_Git_Record_File_System_Path(std::string * sys_path,std::string file_path);
  bool Include_Decleration_Test(std::string string);
  void Extract_Header_File_Name_From_Decleration(std::string * header_name, std::string string);
  void Determine_Header_File_Name(std::string path);
  bool CompareString(std::string firstString, std::string secondString);
  void Delete_Spaces_on_String(std::string * str);
+ void Extract_File_Extention(std::string & ext, std::string file_path, 
+      bool & is_there_ext);
  Git_File_List_Receiver * Git_List_Receiver;
  Source_File_Determiner Src_Determiner;
  Descriptor_File_Reader * Des_Reader;

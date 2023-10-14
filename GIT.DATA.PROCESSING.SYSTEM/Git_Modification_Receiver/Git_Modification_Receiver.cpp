@@ -264,6 +264,7 @@ void Git_Modification_Receiver::Read_Modification_File()
 
         this->Convert_Windows_Paths();
      }
+
 }
 
 
@@ -432,120 +433,103 @@ bool Git_Modification_Receiver::CheckStringLine(std::string readedline){
 
 bool Git_Modification_Receiver::Is_Header(std::string file_path){
 
-     char inclusion_guard [] = "#ifndef";
+     std::string inclusion_guard  = "#ifndef";
 
-     char header_add_h [] = ".h";
+     std::string header_add_h = ".h";
 
-     char header_add_hpp [] = ".hpp";
+     std::string header_add_hpp  = ".hpp";
 
-     char source_file_ext [] = ".cpp";
+     std::string source_file_ext_cpp  = ".cpp";
+
+     std::string source_file_ext_cc  = ".cc";
+
+
+     std::string file_extention;
+
+     bool is_there_file_ext = false;
 
      bool is_header_file = false;
 
-     if(this->StringManager.CheckStringInclusion(file_path,source_file_ext)){
+     this->Extract_File_Extention(file_extention,file_path,is_there_file_ext);
+
+     if(!is_there_file_ext){
+
+         is_header_file = false;
+
+         return is_header_file;
+     }
+
+
+     is_header_file = false;
+
+     if(this->StringManager.CompareString(file_extention,source_file_ext_cpp)){
+
+        is_header_file = false;
 
         return is_header_file;
      }
 
-     is_header_file = this->StringManager.CheckStringInclusion(file_path,header_add_h);
 
-     if(is_header_file){
+     if(this->StringManager.CompareString(file_extention,source_file_ext_cc)){
+
+        is_header_file = false;
+
+        return is_header_file;
+     }
+
+
+     bool include_header_ext = this->StringManager.CompareString(file_extention,header_add_h);
+
+     if(include_header_ext){
+
+        is_header_file = true;
 
         return is_header_file;
      }
      else{
 
-          is_header_file = this->StringManager.CheckStringInclusion(file_path,header_add_hpp);
+          include_header_ext = this->StringManager.CompareString(file_extention,header_add_hpp);
 
-          if(is_header_file){
+          if(include_header_ext){
+        
+             is_header_file = true;
 
-              return is_header_file;
+            return is_header_file;
           }
-    }
-
-    if(this->Is_this_file_included_on_anywhere(file_path)){
-
-       is_header_file = true;
     }
 
     return is_header_file;
 }
 
 
+void Git_Modification_Receiver::Extract_File_Extention(std::string & ext, std::string file_path, 
 
+     bool & is_there_ext){
 
-bool Git_Modification_Receiver::Is_this_file_included_on_anywhere(std::string file_path){
+     size_t name_size   = file_path.length();
+     size_t start_point = 0;
 
-     bool Is_this_file_included_on_somewhere = false;
+     is_there_ext = false;
+     
+     for(size_t i=name_size;i>0;i--){
 
-     size_t git_record_size = this->Git_List_Receiver->Get_Git_File_Index_Size();
+         if(file_path[i] == '.'){
 
-     for(int i=0;git_record_size-1;i++){
+            is_there_ext = true;
 
-         std::string git_record_path = this->Git_List_Receiver->Get_Git_File_Index(i);
+            start_point=i;
 
-         std::string record_sys_path = "";
-
-         this->Determine_Git_Record_File_System_Path(&record_sys_path,git_record_path);
-
-         bool is_path_exist = this->FileManager.Is_Path_Exist(record_sys_path);
-
-         this->FileManager.SetFilePath(record_sys_path);
-
-         bool is_file_openned = this->FileManager.TryOpen('r');
-
-         bool file_exist = false;
-
-         if(is_path_exist && is_file_openned){
-
-            file_exist = true;
+            break;
          }
+     }
 
-         this->FileManager.Clear_Dynamic_Memory();
+     for(size_t i=start_point;i<name_size;i++){
 
-         if(file_exist){
+         ext.push_back(file_path[i]);
+     }
 
-            this->FileManager.Read_File(record_sys_path);
-
-            int FileSize = this->FileManager.GetFileSize();
-
-            for(int k=0;k<FileSize;k++){
-
-                std::string file_line = this->FileManager.GetFileLine(k);
-
-                // In order to remove possible spaces on the string
-
-                // a temporary string is constructed
-
-                this->Delete_Spaces_on_String(&file_line);
-
-                bool is_include_decleration = this->Include_Decleration_Test(file_line);
-
-
-                std::string header_name;
-
-                if(is_include_decleration){
-
-                   this->Extract_Header_File_Name_From_Decleration(&header_name,file_line);
-
-                   this->Determine_Header_File_Name(file_path);
-
-                   bool is_strings_equal = this->CompareString(header_name,this->Header_File_Name);
-
-                   if(is_strings_equal){
-
-                      Is_this_file_included_on_somewhere = true;
-
-                      break;
-                    }
-                }
-            }
-         }
-      }
-
-      return Is_this_file_included_on_somewhere;
+     ext.shrink_to_fit();     
 }
-
 
 
 void Git_Modification_Receiver::Determine_Git_Record_File_System_Path(std::string * sys_path,
