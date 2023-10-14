@@ -294,6 +294,18 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
      this->FileManager.WriteToFile("\n");
 
+     this->FileManager.WriteToFile("\nLibrary_Updater.exe ");
+
+     std::string des_path = this->Des_Reader->Get_Descriptor_File_Path();
+
+     this->FileManager.WriteToFile(des_path);
+
+     
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
      this->FileManager.WriteToFile("Write-Output \"\"");
 
      this->FileManager.WriteToFile("\n");

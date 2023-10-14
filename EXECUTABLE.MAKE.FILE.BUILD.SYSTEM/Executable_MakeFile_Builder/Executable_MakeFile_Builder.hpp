@@ -74,6 +74,7 @@ protected:
  std::string source_file_name;
  std::string Exe_File_Name;
  std::string new_dir_path;
+ std::string project_library_name;
  char opr_sis;
  bool Memory_Delete_Condition;
 };

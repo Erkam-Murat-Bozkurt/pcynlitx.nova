@@ -33,6 +33,7 @@ public:
  std::string Get_Options();
  std::string Get_Warehouse_Location();
  std::string Get_Repo_Directory_Location();
+ std::string Get_Descriptor_File_Path();
  int Get_Library_Directory_Number();
  int Get_Library_Files_Number();
  int Get_Source_File_Directory_Number();

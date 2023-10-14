@@ -63,6 +63,7 @@ protected:
  void Place_String(std::string * pointer, std::string string);
  void Place_Information(std::string * ptr,std::string in);
  void Place_Information(std::string * ptr, char * in);
+ void Determine_Project_Library_Name();
  Descriptor_File_Reader * Des_Reader;
  Source_File_Dependency_Determiner * Dep_Determiner;
  IntToCharTranslater Translater;

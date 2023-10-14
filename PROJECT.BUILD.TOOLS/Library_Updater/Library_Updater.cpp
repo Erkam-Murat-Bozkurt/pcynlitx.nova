@@ -22,16 +22,12 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Library_Updater.h"
 
-Library_Updater::Library_Updater(char * DesPATH, char opr_sis):
+Library_Updater::Library_Updater(char opr_sis):
 
     Des_Reader(opr_sis)
 {
 
     this->opr_sis = opr_sis;
-
-    this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
-
-    this->Des_Reader.Read_Descriptor_File();
 
     this->Memory_Delete_Condition = false;
 }
@@ -63,11 +59,56 @@ void Library_Updater::Clear_Dynamic_Memory(){
 }
 
 
-void Library_Updater::Build_Library(char * Library_Name){
+void Library_Updater::Receive_Descriptor_File_Path(char * DesPATH){
 
-     this->Clear_Dynamic_Memory();
+    this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
 
-     this->Receive_Library_Name(Library_Name);
+    this->Des_Reader.Read_Descriptor_File();
+}
+
+
+void Library_Updater::Receive_Descriptor_File_Path(std::string DesPATH){
+
+    this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
+
+    this->Des_Reader.Read_Descriptor_File();
+}
+
+
+/*
+
+void Library_Updater::Receive_Library_Name(char * lib_name){
+
+     size_t name_size = strlen(lib_name);
+
+     for(size_t i=0;i<name_size;i++){
+
+         this->library_name.push_back(lib_name[i]);
+     }
+
+     this->library_name.shrink_to_fit();
+}
+
+
+void Library_Updater::Receive_Library_Name(std::string lib_name){
+
+     size_t name_size = lib_name.length();
+
+     for(size_t i=0;i<name_size;i++){
+
+         this->library_name.push_back(lib_name[i]);
+     }
+
+     this->library_name.shrink_to_fit();
+}
+
+*/
+
+
+
+void Library_Updater::Build_Library(){
+
+     this->Determine_Project_Library_Name();
 
      this->Determine_Library_File_Name();
 
@@ -78,6 +119,7 @@ void Library_Updater::Build_Library(char * Library_Name){
      this->Determine_Current_Library_Path();
 
      this->Determine_Target_Library_Path();
+
 
      this->Memory_Delete_Condition = false;
 
@@ -109,7 +151,6 @@ void Library_Updater::Build_Library(char * Library_Name){
 
      char Space_Character [] = {' ','\0'};
 
-     int index_counter = 0;
 
      d = opendir(this->warehouse_obj_dir.c_str());
 
@@ -130,7 +171,7 @@ void Library_Updater::Build_Library(char * Library_Name){
             }
         }
 
-        this->Object_File_List[index_counter] = '\0';
+        this->Object_File_List.shrink_to_fit();
 
         closedir(d);
      }
@@ -142,7 +183,7 @@ void Library_Updater::Build_Library(char * Library_Name){
 
      this->Place_Information(this->Archive_Build_Command,Library_Construction_Command);
 
-     this->Place_Information(this->Archive_Build_Command,Library_Name);
+     this->Place_Information(this->Archive_Build_Command,this->library_name);
 
      this->Place_Information(this->Archive_Build_Command,Library_Add_word);
 
@@ -156,12 +197,16 @@ void Library_Updater::Build_Library(char * Library_Name){
     
      char * cmd = new char [5*cmd_size];
 
-     for(size_t i=0;i<cmd_size;i++){
+     int index = 0;
 
-         cmd[i] = this->Archive_Build_Command[i];         
+     for(size_t i=0;i<this->Archive_Build_Command.length();i++){
+
+         cmd[index] = this->Archive_Build_Command[i]; 
+
+         index++;        
      }
 
-     cmd[cmd_size] = '\0';
+     cmd[index] = '\0';
 
 
      this->System_Interface.System_Function(cmd);
@@ -213,6 +258,7 @@ void Library_Updater::Determine_Warehouse_Object_Dir(){
 
      this->warehouse_obj_dir.shrink_to_fit();
 }
+
 
 
 void Library_Updater::Determine_Target_Library_Path(){
@@ -333,6 +379,20 @@ void Library_Updater::Determine_Library_File_Name(){
 }
 
 
+
+void Library_Updater::Determine_Project_Library_Name(){
+
+    std::string repo_dir_path = this->Des_Reader.Get_Repo_Directory_Location();
+
+    std::string repo_dir_name;
+
+    this->Extract_Repo_Directory_Name(repo_dir_name,repo_dir_path);
+
+    this->library_name = repo_dir_name;     
+}
+
+
+
 void Library_Updater::Send_Library_To_Libraries_Location(){
 
      char * cur_dir = nullptr;
@@ -345,17 +405,34 @@ void Library_Updater::Send_Library_To_Libraries_Location(){
      this->FileManager.MoveFile_Win(cur_dir,tar_dir);
 }
 
-void Library_Updater::Receive_Library_Name(char * lib_name){
 
-     size_t name_size = strlen(lib_name);
 
-     for(size_t i=0;i<name_size;i++){
 
-         this->library_name.push_back(lib_name[i]);
+void Library_Updater::Extract_Repo_Directory_Name(std::string & name, 
+
+     std::string root_dir){
+
+     size_t root_dir_size = root_dir.size();
+
+     size_t start_point = root_dir_size;
+
+     for(size_t i=root_dir_size;i>0;i--){
+
+         if((root_dir[i] == '\\') || (root_dir[i] == '/') ){
+
+             start_point = i+1;
+             break;
+         }   
+     }    
+
+     for(size_t i=start_point;i<root_dir_size;i++){
+
+         name.push_back(tolower(root_dir[i]));
      }
 
-     this->library_name.shrink_to_fit();
+     name.shrink_to_fit();
 }
+
 
 
 void Library_Updater::Add_Directory_Character(std::string & str){

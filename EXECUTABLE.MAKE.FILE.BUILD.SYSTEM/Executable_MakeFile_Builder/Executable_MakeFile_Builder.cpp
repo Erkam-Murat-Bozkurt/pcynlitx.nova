@@ -27,7 +27,7 @@ Executable_MakeFile_Builder::Executable_MakeFile_Builder(char * des_path, char o
 
    Des_Reader(opr_sis), Git_Data_Proc(opr_sis), Dep_Determiner(des_path,opr_sis), 
    
-   ComConstructor(opr_sis), Script_Builder(opr_sis), Project_Rebuild_Script_Writer(opr_sis)
+   ComConstructor(opr_sis), Script_Builder(opr_sis), Project_Rebuild_Script_Writer(opr_sis)   
 {
      this->opr_sis = opr_sis;
 
@@ -64,7 +64,9 @@ void Executable_MakeFile_Builder::Clear_Dynamic_Memory(){
 }
 
 
-void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_Name, char strategy){
+void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, 
+
+     char * Exe_Name, char strategy){
 
      if(strategy == 'a'){
 
@@ -86,7 +88,7 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, char * Exe_
 
                 exit(0);
           }
-     }
+     }   
 }
 
 
@@ -577,6 +579,20 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
          this->FileManager.WriteToFile("\n\t");     
      }
 
+    this->project_library_name =  this->ComConstructor.Get_Project_Library_Name();
+
+
+     this->FileManager.WriteToFile("lib");
+
+     this->FileManager.WriteToFile(this->project_library_name);
+
+     this->FileManager.WriteToFile(".a");
+
+     this->FileManager.WriteToFile(" \\");
+
+     this->FileManager.WriteToFile("\n\t");
+
+
      this->FileManager.WriteToFile("\n\n");
 
      this->FileManager.WriteToFile("\n\t");
@@ -985,12 +1001,12 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
          this->FileManager.WriteToFile("\n\t");     
      }
 
-     std::string project_library_name =  this->ComConstructor.Get_Project_Library_Name();
+     this->project_library_name =  this->ComConstructor.Get_Project_Library_Name();
 
 
      this->FileManager.WriteToFile("lib");
 
-     this->FileManager.WriteToFile(project_library_name);
+     this->FileManager.WriteToFile(this->project_library_name);
 
      this->FileManager.WriteToFile(".a");
 

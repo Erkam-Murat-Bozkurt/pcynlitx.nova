@@ -107,6 +107,8 @@ void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(std::string
 
      this->Construct_Library_List();
 
+     this->Determine_Project_Library_Name();
+
 
      if(this->constraction_strategy == 'a'){
 
@@ -377,6 +379,8 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      char Objects_Location [] ="$(PROJECT_OBJECTS_LOCATION)";
 
+     char Library_Location [] = "$(PROJECT_LIBRARY_LOCATION)";
+
      char Source_Location []  ="$(SOURCE_LOCATION)";
 
 
@@ -490,7 +494,19 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
      }
 
 
-     int  library_dir_num = this->Des_Reader->Get_Library_Directory_Number();
+
+
+     this->Place_Information(&this->Compiler_System_Command,Link_Character);
+
+     this->Place_Information(&this->Compiler_System_Command,Library_Location);
+
+     this->Place_Information(&this->Compiler_System_Command,slash);
+
+     this->Place_Information(&this->Compiler_System_Command,new_line);
+
+     this->Place_Information(&this->Compiler_System_Command,tab);
+
+
 
      this->Place_Information(&this->Compiler_System_Command,Link_Character);
 
@@ -515,6 +531,8 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      this->Place_Information(&this->Compiler_System_Command,tab);
 
+
+     int  library_dir_num = this->Des_Reader->Get_Library_Directory_Number();
 
      sizer = 0;
 
@@ -617,6 +635,16 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
             this->Place_Information(&this->Compiler_System_Command,go_to_new_line);            
          }
      }
+
+     if(library_name_list_size>0){
+
+        this->Place_Information(&this->Compiler_System_Command,go_to_new_line);            
+
+     }
+
+     this->Place_Information(&this->Compiler_System_Command,link_symbol);
+
+     this->Place_Information(&this->Compiler_System_Command,this->project_library_name);
 }
 
 
@@ -639,11 +667,15 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
 
      char Space_Character [] = {' ','\0'};
 
-     char Headers_Location [] ="$(PROJECT_HEADERS_LOCATION)";
+     char Headers_Location [] = "$(PROJECT_HEADERS_LOCATION)";
 
-     char Objects_Location [] ="$(PROJECT_OBJECTS_LOCATION)";
+     char Objects_Location [] = "$(PROJECT_OBJECTS_LOCATION)";
 
-     char Source_Location []  ="$(SOURCE_LOCATION)";
+     char Library_Location [] = "$(PROJECT_LIBRARY_LOCATION)";
+
+     char Source_Location  [] = "$(SOURCE_LOCATION)";
+
+
 
 
      char slash [] = "\\";
@@ -756,13 +788,11 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
      }
 
 
-     int  library_dir_num = this->Des_Reader->Get_Library_Directory_Number();
 
 
      this->Place_Information(&this->Compiler_System_Command,Link_Character);
 
-     this->Place_Information(&this->Compiler_System_Command,Source_Location);
-
+     this->Place_Information(&this->Compiler_System_Command,Library_Location);
 
      this->Place_Information(&this->Compiler_System_Command,slash);
 
@@ -770,6 +800,20 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
 
      this->Place_Information(&this->Compiler_System_Command,tab);
 
+
+
+     this->Place_Information(&this->Compiler_System_Command,Link_Character);
+
+     this->Place_Information(&this->Compiler_System_Command,Source_Location);
+
+     this->Place_Information(&this->Compiler_System_Command,slash);
+
+     this->Place_Information(&this->Compiler_System_Command,new_line);
+
+     this->Place_Information(&this->Compiler_System_Command,tab);
+
+
+     int  library_dir_num = this->Des_Reader->Get_Library_Directory_Number();
 
      sizer = 0;
 
@@ -864,20 +908,23 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
 
     }
 
+    this->Place_Information(&this->Compiler_System_Command,link_symbol);
+
+    this->Place_Information(&this->Compiler_System_Command,this->project_library_name);
+
+}
+
+
+void Executable_MakeFile_ComConstructor::Determine_Project_Library_Name(){
+
     std::string repo_dir_path = this->Des_Reader->Get_Repo_Directory_Location();
 
     std::string repo_dir_name;
 
     this->Extract_Repo_Directory_Name(repo_dir_name,repo_dir_path);
 
-    this->project_library_name = repo_dir_name;
-
-    this->Place_Information(&this->Compiler_System_Command,link_symbol);
-
-    this->Place_Information(&this->Compiler_System_Command,repo_dir_name);
-
+    this->project_library_name = repo_dir_name;     
 }
-
 
 
 

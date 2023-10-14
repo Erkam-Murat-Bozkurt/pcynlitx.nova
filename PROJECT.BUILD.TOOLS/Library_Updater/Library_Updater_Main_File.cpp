@@ -5,11 +5,11 @@ void Place_String(char ** Pointer, const char * String);
 
 int main(int argc, char ** argv){
 
-    if(argc < 3){
+    if(argc < 2){
 
        std::cout << "\n\n";
 
-       std::cout << "\n usage: Library_Updater.exe <desciptor file> <library name>";
+       std::cout << "\n usage: Library_Updater.exe <desciptor file>";
 
        std::cout << "\n\n";
 
@@ -18,9 +18,13 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Library_Updater Updater(argv[1],'w');
+    Library_Updater Updater('w');
 
-    Updater.Build_Library(argv[2]);
+    Updater.Receive_Descriptor_File_Path(argv[1]);
+
+    //Updater.Receive_Library_Name(argv[2]);
+
+    Updater.Build_Library();
 
 
     return 0;

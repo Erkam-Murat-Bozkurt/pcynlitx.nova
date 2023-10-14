@@ -23,6 +23,15 @@ void Descriptor_File_Reader::Receive_Descriptor_File_Path(char * DesPATH){
      this->Data_Collector.Receive_Descriptor_File_Path(DesPATH);
 
      this->Syntax_Controller.Receive_Descriptor_File_Path(DesPATH);
+
+     size_t path_size = strlen(DesPATH);
+
+     for(size_t i=0;i<path_size;i++){
+
+        this->descriptor_file_path.push_back(DesPATH[i]);
+     }
+
+     this->descriptor_file_path.shrink_to_fit();
 }
 
 
@@ -31,6 +40,15 @@ void Descriptor_File_Reader::Receive_Descriptor_File_Path(std::string DesPATH){
      this->Data_Collector.Receive_Descriptor_File_Path(DesPATH);
 
      this->Syntax_Controller.Receive_Descriptor_File_Path(DesPATH);
+
+     size_t path_size = DesPATH.length();
+
+     for(size_t i=0;i<path_size;i++){
+
+        this->descriptor_file_path.push_back(DesPATH[i]);
+     }
+
+     this->descriptor_file_path.shrink_to_fit();
 }
 
 
@@ -65,6 +83,8 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
          this->Clear_String_Memory(&this->warehouse_location);
 
          this->Clear_String_Memory(&this->root_dir);
+
+         this->Clear_String_Memory(&this->descriptor_file_path);
 
          this->Data_Collector.Clear_Dynamic_Memory();
 
@@ -609,6 +629,12 @@ std::string Descriptor_File_Reader::Get_Repo_Directory_Location(){
 
        return this->root_dir;
 }
+
+std::string Descriptor_File_Reader::Get_Descriptor_File_Path(){
+
+     return this->descriptor_file_path;
+}
+
 
 int Descriptor_File_Reader::Get_Library_Directory_Number(){
 
