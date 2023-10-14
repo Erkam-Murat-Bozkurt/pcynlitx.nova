@@ -895,8 +895,6 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
 
          this->FileManager.WriteToFile(dir_index);
 
-         this->FileManager.WriteToFile("_PATH");
-
          this->FileManager.WriteToFile(")");
 
          this->FileManager.WriteToFile(NextLine);

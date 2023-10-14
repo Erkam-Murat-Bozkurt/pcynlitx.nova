@@ -794,6 +794,8 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
 
      this->Place_Information(&this->Compiler_System_Command,Library_Location);
 
+     this->Place_Information(&this->Compiler_System_Command,Space_Character);
+
      this->Place_Information(&this->Compiler_System_Command,slash);
 
      this->Place_Information(&this->Compiler_System_Command,new_line);
@@ -805,6 +807,8 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
      this->Place_Information(&this->Compiler_System_Command,Link_Character);
 
      this->Place_Information(&this->Compiler_System_Command,Source_Location);
+
+     this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
      this->Place_Information(&this->Compiler_System_Command,slash);
 
