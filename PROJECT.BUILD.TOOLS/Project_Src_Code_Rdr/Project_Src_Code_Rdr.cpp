@@ -139,7 +139,7 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
 
          bool is_src_file = this->Src_Determiner[trn]->Is_Source_File(file_sys_path);
 
-         
+
          if(is_header || is_src_file){
                              
             std::string class_function_pattern;
@@ -153,6 +153,10 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
             FileData buffer;  // DATA BUFFER DECLERATION
 
             buffer.sys_path = file_sys_path;
+
+            buffer.is_header_file = false;
+            buffer.is_main_file   = false;
+            buffer.is_source_file = false;
 
             if(is_header){
 
@@ -224,6 +228,17 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
 
             this->Determine_File_Combined_Name(file_sys_path,buffer.cmbn_name);
                         
+
+            if(is_src_file){
+
+                if(!buffer.is_main_file){
+
+                    if(!buffer.is_source_file){  // The source file is not a class but it is a source file
+
+                        buffer.is_source_file = true;
+                    }
+                }
+            }
 
             mt.lock();
 
