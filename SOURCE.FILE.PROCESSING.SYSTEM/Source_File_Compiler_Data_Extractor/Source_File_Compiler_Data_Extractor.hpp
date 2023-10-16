@@ -68,13 +68,8 @@ public:
 protected:    
  void Extract_Obj_File_Name_From_File_Name(std::string * object_name,
       std::string header_name);
- void is_this_independent_header(std::string name, bool & is_ind);
- void Extract_Header_File_Name_From_Path(std::string * name,
-      std::string path);
  void Process_Compiler_Data(int start, int end, int thm);
  void Extract_Compiler_Data_For_Single_Thread();
- void Extract_Src_Name_Without_Extention(std::string * src_name_without_ext, 
-      std::string file_name);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
  void Clear_Buffer_Memory(Compiler_Data * ptr);

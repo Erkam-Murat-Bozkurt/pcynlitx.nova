@@ -51,8 +51,8 @@ private:
  void Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path);
  void Determine_Source_File_Directory(std::string & git_path, std::string sys_path);
  void Determine_File_Name_Without_Ext(std::string & file_name, std::string file_name_wit_ext);
- void Clear_String_Memory(std::string * pointer);
- void Clear_Vector_Memory(std::vector<std::string> * pointer); 
+ void Clear_String_Memory(std::string & pointer);
+ void Clear_Vector_Memory(std::vector<std::string> & pointer); 
  void Determine_Make_File_Name();
  void Determine_Dependency_Code_Line();
  void Place_String(std::string * ptr, std::string Information);
@@ -61,6 +61,8 @@ private:
  void Determine_Compiler_System_Command();
  void Determine_Warehouse_Header_Dir();
  void Determine_Warehouse_Object_Dir();
+ bool Check_Include_Directory_Existance(std::vector<std::string> * hdr_dir, std::string dir);
+ void Find_Upper_Directory(std::string & upper, std::string dir);
  DirectoryOperations DirectoryManager;
  IntToCharTranslater Translater;
  Descriptor_File_Reader * Des_Reader;

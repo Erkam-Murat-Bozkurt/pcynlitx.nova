@@ -40,23 +40,23 @@ void MakeFile_Data_Collector::Clear_Object_Memory(){
 
 void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
 
-     this->Clear_String_Memory(&this->Source_File_Name_With_Ext);
+     this->Clear_String_Memory(this->Source_File_Name_With_Ext);
 
-     this->Clear_String_Memory(&this->Object_File_Name);
+     this->Clear_String_Memory(this->Object_File_Name);
 
-     this->Clear_String_Memory(&this->Compiler_System_Command);
+     this->Clear_String_Memory(this->Compiler_System_Command);
 
-     this->Clear_String_Memory(&this->Dependency_Code_Line);
+     this->Clear_String_Memory(this->Dependency_Code_Line);
 
-     this->Clear_String_Memory(&this->Make_File_Name);
+     this->Clear_String_Memory(this->Make_File_Name);
 
-     this->Clear_String_Memory(&this->warehouse_head_dir);
+     this->Clear_String_Memory(this->warehouse_head_dir);
 
-     this->Clear_String_Memory(&this->warehouse_obj_dir);
+     this->Clear_String_Memory(this->warehouse_obj_dir);
 
-     this->Clear_String_Memory(&this->Source_File_Name);
+     this->Clear_String_Memory(this->Source_File_Name);
 
-     this->Clear_String_Memory(&this->Source_File_Directory);     
+     this->Clear_String_Memory(this->Source_File_Directory);     
 }
 
 
@@ -370,19 +370,32 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      size_t hdr_dir_size = header_directories->size();
 
-     
+
+     std::vector<std::string> dir_buffer;
+ 
      for(size_t i=0;i<hdr_dir_size;i++){
 
           std::string dir = header_directories->at(i);
-          
-          this->Place_String(&this->Compiler_System_Command,Include_Character);
+                    
+          bool is_dir_exist = this->Check_Include_Directory_Existance(&dir_buffer,dir);
 
-          this->Place_String(&this->Compiler_System_Command,dir);
+          if(!is_dir_exist){
 
-          this->Place_String(&this->Compiler_System_Command,Space_Character);
+             this->Place_String(&this->Compiler_System_Command,Include_Character);
 
-          this->Place_String(&this->Compiler_System_Command,go_to_new_line);
-     }   
+             this->Place_String(&this->Compiler_System_Command,dir);
+
+             this->Place_String(&this->Compiler_System_Command,Space_Character);
+
+             this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+          }
+
+          dir_buffer.push_back(dir);
+     }
+
+     dir_buffer.shrink_to_fit();
+
+     this->Clear_Vector_Memory(dir_buffer);   
 
      this->Place_String(&this->Compiler_System_Command,Source_Location);
 
@@ -599,6 +612,57 @@ void MakeFile_Data_Collector::Determine_Source_File_Directory(std::string & src_
 
 }
 
+
+bool MakeFile_Data_Collector::Check_Include_Directory_Existance(std::vector<std::string> * hdr_dir_list, 
+
+     std::string dir){
+     
+     size_t dir_list_size = hdr_dir_list->size();
+
+     bool is_exist = false;
+
+     for(size_t j=0;j<dir_list_size;j++){
+
+          std::string header_dir = hdr_dir_list->at(j);
+
+          if(header_dir == dir){
+
+             is_exist = true;
+
+             break;
+          }
+     }
+
+     return is_exist;
+
+}
+
+
+void MakeFile_Data_Collector::Find_Upper_Directory(std::string & upper, std::string dir){
+
+     size_t dir_size = dir.size();
+
+     size_t end_point = dir_size;
+
+     for(size_t i=dir_size;i>0;i--){
+
+         if((dir[i]=='/') || (dir[i]=='\\')){
+
+            end_point = i;
+
+            break;
+         }
+     }
+
+     for(size_t i=0;i<end_point;i++){
+
+         upper.push_back(dir[i]);
+     }
+
+     upper.shrink_to_fit();
+}
+
+
 void MakeFile_Data_Collector::Determine_File_Name_Without_Ext(std::string & file_name, 
 
      std::string file_name_with_ext)
@@ -652,36 +716,29 @@ void MakeFile_Data_Collector::Place_CString(std::string * pointer,
      }
 }
 
-void MakeFile_Data_Collector::Clear_Vector_Memory(std::vector<std::string> * pointer){
+void MakeFile_Data_Collector::Clear_Vector_Memory(std::vector<std::string> & vec){
 
-     std::vector<std::string>::iterator it;
+     size_t vec_size = vec.size();
 
-     auto begin = pointer->begin();
-     auto end   = pointer->end();
+     for(size_t i=0;i<vec_size;i++){
 
-     for(auto it=begin;it<end;it++){
-
-        if(!it->empty()){
-
-            it->clear();
-            it->shrink_to_fit();
-        }
+         this->Clear_String_Memory(vec.at(i));
      }
 
-     if(!pointer->empty())
+     if(!vec.empty())
      {
-         pointer->clear();
-         pointer->shrink_to_fit();
+         vec.clear();
+         vec.shrink_to_fit();
      }
 }
 
-void MakeFile_Data_Collector::Clear_String_Memory(std::string * ptr)
+void MakeFile_Data_Collector::Clear_String_Memory(std::string & str)
 {
-     if(!ptr->empty()){
+     if(!str.empty()){
 
-         ptr->clear();
+         str.clear();
 
-         ptr->shrink_to_fit();
+         str.shrink_to_fit();
      }
 }
 
