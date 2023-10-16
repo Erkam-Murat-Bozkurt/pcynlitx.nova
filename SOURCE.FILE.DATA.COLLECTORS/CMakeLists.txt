@@ -6,14 +6,6 @@ add_library(src_dat_col
     ${CMAKE_CURRENT_SOURCE_DIR}/Header_File_Determiner/Header_File_Determiner.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Header_File_Determiner/Header_File_Determiner.h
 
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Project_Files_Data_Collector/Project_Files_Data_Collector.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Project_Files_Data_Collector/Project_Files_Data_Collector.hpp
-
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Project_Files_Lister/Project_Files_Lister.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Project_Files_Lister/Project_Files_Lister.h
-
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Data_Collector/Source_File_Data_Collector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Data_Collector/Source_File_Data_Collector.hpp
 
@@ -28,10 +20,6 @@ target_include_directories(src_dat_col PUBLIC
 
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Header_File_Determiner
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Project_Files_Data_Collector
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Project_Files_Lister
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Data_Collector
 
@@ -97,10 +85,6 @@ target_link_directories(src_dat_col PUBLIC
 
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Header_File_Determiner
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Project_Files_Data_Collector
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Project_Files_Lister
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Data_Collector
 

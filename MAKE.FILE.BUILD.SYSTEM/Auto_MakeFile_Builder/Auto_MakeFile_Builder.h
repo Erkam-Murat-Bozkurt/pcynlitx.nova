@@ -17,7 +17,6 @@
 #include <mutex>
 #include "Git_Data_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
-#include "Project_Files_Lister.h"
 #include "Make_File_Builder.h"
 #include "Make_File_Cleaner.hpp"
 #include "MakeFile_Data_Collector.hpp"
@@ -25,7 +24,6 @@
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Descriptor_File_Reader.hpp"
-#include "Project_Files_Lister.h"
 #include "Header_File_Determiner.h"
 #include "Cpp_FileOperations.h"
 #include "DirectoryOperations.h"

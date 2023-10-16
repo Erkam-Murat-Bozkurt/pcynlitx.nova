@@ -6,7 +6,6 @@
 #include <cstring>
 #include <string>
 #include "Source_File_Dependency_Determiner.hpp"
-#include "Project_Files_Lister.h"
 #include "Descriptor_File_Reader.hpp"
 #include "Git_Data_Processor.hpp"
 #include "DirectoryOperations.h"

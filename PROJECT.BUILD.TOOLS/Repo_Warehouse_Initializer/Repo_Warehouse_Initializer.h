@@ -21,7 +21,6 @@
 #include "Git_File_List_Writer.hpp"
 #include "Git_Ignoring_Files_Lister.hpp"
 #include "Descriptor_File_Reader.hpp"
-#include "Project_Files_Lister.h"
 #include "Header_File_Determiner.h"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"

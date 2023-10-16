@@ -18,7 +18,6 @@
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Descriptor_File_Reader.hpp"
-#include "Project_Files_Lister.h"
 #include "Header_File_Determiner.h"
 #include "Cpp_FileOperations.h"
 #include "DirectoryOperations.h"

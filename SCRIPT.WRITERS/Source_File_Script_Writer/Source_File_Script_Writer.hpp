@@ -4,7 +4,6 @@
 #define SOURCE_FILE_SCRPIT_WRITER_H
 
 #include <cstring>
-#include "Project_Files_Lister.h"
 #include "Descriptor_File_Reader.hpp"
 #include "Script_Data_Collector.hpp"
 #include "DirectoryOperations.h"

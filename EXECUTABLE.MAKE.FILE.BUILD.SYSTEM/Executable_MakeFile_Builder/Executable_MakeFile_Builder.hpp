@@ -26,7 +26,6 @@
 #include "Source_File_Information_Collector.hpp"
 #include "Git_Data_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
-#include "Project_Files_Lister.h"
 #include "Header_File_Determiner.h"
 #include "Repo_Warehouse_Initializer.h"
 #include "CharOperator.h"
