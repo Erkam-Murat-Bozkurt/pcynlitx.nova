@@ -63,6 +63,7 @@ protected:
  void Place_String(std::string * pointer, std::string string);
  void Place_Information(std::string * ptr,std::string in);
  void Place_Information(std::string * ptr, char * in);
+ bool Check_Include_Directory_Existance(std::vector<std::string> * hdr_dir, std::string dir);
  void Determine_Project_Library_Name();
  Descriptor_File_Reader * Des_Reader;
  Source_File_Dependency_Determiner * Dep_Determiner;
@@ -72,6 +73,7 @@ protected:
  std::vector<std::string> header_file_list;
  std::vector<std::string> header_file_paths;
  std::vector<std::string> header_file_dirs;
+ std::vector<std::string> header_file_upper_dirs;
  std::vector<std::string> object_file_list;
  std::vector<std::string> library_directory_list;
  std::vector<std::string> library_name_list;

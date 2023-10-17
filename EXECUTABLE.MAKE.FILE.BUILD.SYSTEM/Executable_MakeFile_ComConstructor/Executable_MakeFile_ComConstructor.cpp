@@ -144,6 +144,8 @@ void Executable_MakeFile_ComConstructor::Construct_Header_File_List(){
 
          std::string header_dir = Data.dependent_headers_dir.at(i);
 
+         std::string upper_dir  = Data.upper_directories.at(i);
+
          std::string header_path;
 
          if(!header_name.empty()){
@@ -167,6 +169,8 @@ void Executable_MakeFile_ComConstructor::Construct_Header_File_List(){
             header_path += header_name;
 
             this->header_file_paths.push_back(header_path);
+
+            this->header_file_upper_dirs.push_back(upper_dir);
          }
      }
 }
@@ -421,22 +425,56 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
 
 
+     std::vector<std::string> dir_buffer;
+
      // THE ADDITION OF INCLUDE DIRECTORIES PATHS
 
      for(size_t i=0;i<this->header_file_dirs.size();i++){
 
-         this->Place_Information(&this->Compiler_System_Command,Include_Character);
+         bool is_dir_exist = this->Check_Include_Directory_Existance(&dir_buffer,this->header_file_dirs[i]);
 
-         this->Place_Information(&this->Compiler_System_Command,this->header_file_dirs[i]);
+         if(!is_dir_exist){
 
-         this->Place_Information(&this->Compiler_System_Command,Space_Character);
+             this->Place_Information(&this->Compiler_System_Command,Include_Character);
 
-         this->Place_Information(&this->Compiler_System_Command,slash);
+             this->Place_Information(&this->Compiler_System_Command,this->header_file_dirs[i]);
 
-         this->Place_Information(&this->Compiler_System_Command,new_line);
+             this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-         this->Place_Information(&this->Compiler_System_Command,tab);
+             this->Place_Information(&this->Compiler_System_Command,slash);
+
+             this->Place_Information(&this->Compiler_System_Command,new_line);
+
+             this->Place_Information(&this->Compiler_System_Command,tab);
+         }
+
+         dir_buffer.push_back(this->header_file_dirs[i]);
      }
+
+
+     for(size_t i=0;i<this->header_file_upper_dirs.size();i++){
+
+         bool is_dir_exist = this->Check_Include_Directory_Existance(&dir_buffer,this->header_file_upper_dirs[i]);
+
+         if(!is_dir_exist){
+
+             this->Place_Information(&this->Compiler_System_Command,Include_Character);
+
+             this->Place_Information(&this->Compiler_System_Command,this->header_file_upper_dirs[i]);
+
+             this->Place_Information(&this->Compiler_System_Command,Space_Character);
+
+             this->Place_Information(&this->Compiler_System_Command,slash);
+
+             this->Place_Information(&this->Compiler_System_Command,new_line);
+
+             this->Place_Information(&this->Compiler_System_Command,tab);
+         }
+
+         dir_buffer.push_back(this->header_file_upper_dirs[i]);
+     }
+
+     this->Clear_Vector_Memory(&dir_buffer); 
 
 
      this->Place_Information(&this->Compiler_System_Command,Include_Character);
@@ -915,6 +953,30 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
     this->Place_Information(&this->Compiler_System_Command,link_symbol);
 
     this->Place_Information(&this->Compiler_System_Command,this->project_library_name);
+
+}
+
+bool Executable_MakeFile_ComConstructor::Check_Include_Directory_Existance(std::vector<std::string> * hdr_dir_list, 
+
+     std::string dir){
+     
+     size_t dir_list_size = hdr_dir_list->size();
+
+     bool is_exist = false;
+
+     for(size_t j=0;j<dir_list_size;j++){
+
+          std::string header_dir = hdr_dir_list->at(j);
+
+          if(header_dir == dir){
+
+             is_exist = true;
+
+             break;
+          }
+     }
+
+     return is_exist;
 
 }
 

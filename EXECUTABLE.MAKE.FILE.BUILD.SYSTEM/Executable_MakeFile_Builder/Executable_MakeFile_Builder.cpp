@@ -276,6 +276,43 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
      this->FileManager.WriteToFile("\n");
      this->FileManager.WriteToFile("\n");
 
+
+     std::string library_directory = "PROJECT_LIBRARY_LOCATION=";
+
+     library_directory += this->warehouse_path; 
+
+     if(this->opr_sis == 'w'){
+
+        library_directory.push_back('\\');
+     }
+
+     if(this->opr_sis == 'l'){
+
+        library_directory.push_back('/');
+     }
+
+     library_directory += "WAREHOUSE";
+
+     if(this->opr_sis == 'w'){
+
+        library_directory.push_back('\\');
+     }
+
+     if(this->opr_sis == 'l'){
+
+        library_directory.push_back('/');
+     }
+
+     library_directory += "PROJECT.LIBRARY.FILES";
+
+
+     this->FileManager.WriteToFile(library_directory);
+
+
+
+     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
+
      this->FileManager.WriteToFile("REPO_DIRECTORY=");
 
      this->FileManager.WriteToFile(this->warehouse_path);
@@ -420,6 +457,15 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
 
      this->FileManager.WriteToFile("$(PROJECT_OBJECTS_LOCATION)");
+
+     this->FileManager.WriteToFile(NextLine);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile(Ident);
+
+
+    this->FileManager.WriteToFile("$(PROJECT_LIBRARY_LOCATION)");
 
      this->FileManager.WriteToFile(NextLine);
 
