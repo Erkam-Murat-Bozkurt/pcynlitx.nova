@@ -49,6 +49,7 @@ struct Compiler_Data
   std::vector<std::string> dependent_headers;
   std::vector<std::string> dependent_headers_paths;
   std::vector<std::string> dependent_headers_dir;
+  std::vector<std::string> upper_directories;
   int  priority; // dependency
 };
 
@@ -74,6 +75,7 @@ protected:
  void Clear_String_Memory(std::string * pointer);
  void Clear_Buffer_Memory(Compiler_Data * ptr);
  void Clear_Data_Memory(std::vector<Compiler_Data> * ptr);
+ void Find_Upper_Directory(std::string & upper, std::string dir);
  Source_File_Dependency_Selector_For_Single_File * Dep_Selector_For_Single_File_Ptr;
  Source_File_Dependency_Selector * Dep_Selector_Ptr;
  Source_File_Information_Collector * Info_Collector;

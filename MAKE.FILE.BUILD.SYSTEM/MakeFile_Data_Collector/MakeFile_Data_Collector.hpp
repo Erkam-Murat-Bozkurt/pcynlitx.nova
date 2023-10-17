@@ -62,7 +62,6 @@ private:
  void Determine_Warehouse_Header_Dir();
  void Determine_Warehouse_Object_Dir();
  bool Check_Include_Directory_Existance(std::vector<std::string> * hdr_dir, std::string dir);
- void Find_Upper_Directory(std::string & upper, std::string dir);
  DirectoryOperations DirectoryManager;
  IntToCharTranslater Translater;
  Descriptor_File_Reader * Des_Reader;

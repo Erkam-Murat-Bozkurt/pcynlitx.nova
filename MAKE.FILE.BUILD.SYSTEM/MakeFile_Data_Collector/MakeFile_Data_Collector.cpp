@@ -395,7 +395,36 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      dir_buffer.shrink_to_fit();
 
+
+     std::vector<std::string> * upper_dirs = &this->Compiler_Data_Ptr->upper_directories;
+
+     for(size_t i=0;i<hdr_dir_size;i++){
+
+          std::string dir = upper_dirs->at(i);
+                    
+          bool is_dir_exist = this->Check_Include_Directory_Existance(&dir_buffer,dir);
+
+          if(!is_dir_exist){
+
+             this->Place_String(&this->Compiler_System_Command,Include_Character);
+
+             this->Place_String(&this->Compiler_System_Command,dir);
+
+             this->Place_String(&this->Compiler_System_Command,Space_Character);
+
+             this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+          }
+
+          dir_buffer.push_back(dir);
+     }
+
+     dir_buffer.shrink_to_fit();
+
      this->Clear_Vector_Memory(dir_buffer);   
+
+
+
+
 
      this->Place_String(&this->Compiler_System_Command,Source_Location);
 
@@ -635,31 +664,6 @@ bool MakeFile_Data_Collector::Check_Include_Directory_Existance(std::vector<std:
 
      return is_exist;
 
-}
-
-
-void MakeFile_Data_Collector::Find_Upper_Directory(std::string & upper, std::string dir){
-
-     size_t dir_size = dir.size();
-
-     size_t end_point = dir_size;
-
-     for(size_t i=dir_size;i>0;i--){
-
-         if((dir[i]=='/') || (dir[i]=='\\')){
-
-            end_point = i;
-
-            break;
-         }
-     }
-
-     for(size_t i=0;i<end_point;i++){
-
-         upper.push_back(dir[i]);
-     }
-
-     upper.shrink_to_fit();
 }
 
 

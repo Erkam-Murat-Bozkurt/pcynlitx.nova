@@ -61,11 +61,15 @@ void Source_File_Compiler_Data_Extractor::Clear_Data_Memory(std::vector<Compiler
 
      if(!Data->empty()){
 
-        for(auto it=Data->begin();it<Data->end();it++){
+        for(auto it=Data->begin();it!=Data->end();it++){
 
             this->Clear_Vector_Memory(&it->dependent_headers);
 
             this->Clear_Vector_Memory(&it->dependent_headers_paths);
+
+            this->Clear_Vector_Memory(&it->dependent_headers_dir);
+
+            this->Clear_Vector_Memory(&it->upper_directories);
 
             this->Clear_String_Memory(&it->source_file_path);
 
@@ -285,13 +289,23 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
 
                 buffer.dependent_headers_paths.push_back(hdr_path);  
 
-                buffer.dependent_headers_dir.push_back(hdr_dir);                                              
+                buffer.dependent_headers_dir.push_back(hdr_dir);     
+
+                std::string upper_dir;
+
+                this->Find_Upper_Directory(upper_dir,hdr_dir);
+
+                buffer.upper_directories.push_back(upper_dir);                                         
             }
 
 
             buffer.dependent_headers.shrink_to_fit();
 
             buffer.dependent_headers_paths.shrink_to_fit();
+
+            buffer.dependent_headers_dir.shrink_to_fit();
+
+            buffer.upper_directories.shrink_to_fit();
 
             this->compiler_dt[thm].push_back(buffer);
 
@@ -332,11 +346,42 @@ void Source_File_Compiler_Data_Extractor::Extract_Obj_File_Name_From_File_Name(s
 }
 
 
+
+void Source_File_Compiler_Data_Extractor::Find_Upper_Directory(std::string & upper, std::string dir){
+
+     size_t dir_size = dir.size();
+
+     size_t end_point = dir_size;
+
+     for(size_t i=dir_size;i>0;i--){
+
+         if((dir[i]=='/') || (dir[i]=='\\')){
+
+            end_point = i;
+
+            break;
+         }
+     }
+
+     for(size_t i=0;i<end_point;i++){
+
+         upper.push_back(dir[i]);
+     }
+
+     upper.shrink_to_fit();
+}
+
+
+
 void Source_File_Compiler_Data_Extractor::Clear_Buffer_Memory(Compiler_Data * ptr){
 
      this->Clear_Vector_Memory(&ptr->dependent_headers);
 
      this->Clear_Vector_Memory(&ptr->dependent_headers_paths);
+
+     this->Clear_Vector_Memory(&ptr->dependent_headers_dir);
+
+     this->Clear_Vector_Memory(&ptr->upper_directories);
 
      this->Clear_String_Memory(&ptr->source_file_path);
 
@@ -349,7 +394,6 @@ void Source_File_Compiler_Data_Extractor::Clear_Buffer_Memory(Compiler_Data * pt
      this->Clear_String_Memory(&ptr->src_git_record_dir);
 
      this->Clear_String_Memory(&ptr->src_sys_dir);
-
 }
 
 
