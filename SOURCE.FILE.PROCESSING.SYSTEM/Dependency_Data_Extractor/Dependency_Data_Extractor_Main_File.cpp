@@ -10,7 +10,6 @@
 #include <vector>
 #include "Dependency_Data_Extractor.hpp"
 #include "Project_Src_Code_Rdr.hpp"
-#include "Project_Files_Lister.h"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
 
@@ -47,7 +46,6 @@ int main(int argc, char ** argv){
 
     std::cout << "\n Code reading complated..";
 
-    //std::string path =  "D:\\PCYNLITX.BUILD.TEST\\PCYNLITX.PROJECT.WINDOWS\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
 
     Dependency_Data_Extractor Dep_Data_Extractor('w');
 

@@ -505,8 +505,6 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
          this->FileManager.WriteToFile(dir_index);
 
-         this->FileManager.WriteToFile("_PATH");
-
          this->FileManager.WriteToFile(")");
 
          this->FileManager.WriteToFile(NextLine);

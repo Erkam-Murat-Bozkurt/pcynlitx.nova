@@ -11,7 +11,6 @@
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector_For_Single_File.hpp"
 #include "Source_File_Information_Collector.hpp"
-#include "Project_Files_Lister.h"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
 
@@ -67,10 +66,10 @@ int main(int argc, char ** argv){
 
     std::cout << "\n The source code read";
 
-    std::string path =  "D:\\pcynlitx.build.gui\\wxLauncher.cpp";
+    //std::string path =  "D:\\pcynlitx.build.gui\\wxLauncher.cpp";
 
 
-    //  std::string path = "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\SERVER.CLASS.BUILDER\\Thread_Manager_Builder\\Thread_Manager_Builder.cpp";
+    std::string path = "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\KERNEL.DEVELOPMENT\\Kernel\\Kernel_Main_File.cpp";
 
 
     Source_File_Dependency_Selector_For_Single_File Dep_Selector('w');
@@ -94,10 +93,6 @@ int main(int argc, char ** argv){
 
 
     Source_File_Compiler_Data_Extractor Compiler_Data_Extractor('w');
-
-    Compiler_Data_Extractor.Receive_Git_Data_Processor(&Data_Processor);
-
-    std::cout << "\n Git Data Processor received";
 
     Compiler_Data_Extractor.Receive_Single_File_Dependency_Data(&Dep_Selector);
 
@@ -161,14 +156,6 @@ void print_compiler_data(std::vector<Compiler_Data> * data_ptr){
          size_t path_size = temp.dependent_headers.size();
 
          std::cout << "\n";
-
-
-         size_t dep_obj_size = temp.dependent_objs.size();
-
-        for(int k=0;k<dep_obj_size;k++){
-
-             std::cout << "\n dependenct objects:" << temp.dependent_objs[k];
-         } 
 
          
          for(int k=0;k<path_size;k++){

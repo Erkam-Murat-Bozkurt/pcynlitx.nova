@@ -515,20 +515,11 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
          this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-         sizer++;
+         this->Place_Information(&this->Compiler_System_Command,slash);
 
-         if(sizer >= 1){
+         this->Place_Information(&this->Compiler_System_Command,new_line);
 
-            this->Place_Information(&this->Compiler_System_Command,Space_Character);
-
-            this->Place_Information(&this->Compiler_System_Command,slash);
-
-            this->Place_Information(&this->Compiler_System_Command,new_line);
-
-            this->Place_Information(&this->Compiler_System_Command,tab);
-
-            sizer = 0;
-          }
+         this->Place_Information(&this->Compiler_System_Command,tab);
      }
 
 
@@ -537,6 +528,8 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
      this->Place_Information(&this->Compiler_System_Command,Link_Character);
 
      this->Place_Information(&this->Compiler_System_Command,Library_Location);
+
+     this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
      this->Place_Information(&this->Compiler_System_Command,slash);
 
@@ -550,6 +543,7 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      this->Place_Information(&this->Compiler_System_Command,Objects_Location);
 
+     this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
      this->Place_Information(&this->Compiler_System_Command,slash);
 
@@ -562,6 +556,7 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      this->Place_Information(&this->Compiler_System_Command,Source_Location);
 
+     this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
      this->Place_Information(&this->Compiler_System_Command,slash);
 
@@ -586,20 +581,11 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
          this->Place_Information(&this->Compiler_System_Command,Space_Character);
 
-         sizer++;
+         this->Place_Information(&this->Compiler_System_Command,slash);
 
-         if(sizer >= 1){
+         this->Place_Information(&this->Compiler_System_Command,new_line);
 
-            this->Place_Information(&this->Compiler_System_Command,Space_Character);
-
-            this->Place_Information(&this->Compiler_System_Command,slash);
-
-            this->Place_Information(&this->Compiler_System_Command,new_line);
-
-            this->Place_Information(&this->Compiler_System_Command,tab);
-
-            sizer = 0;
-          }
+         this->Place_Information(&this->Compiler_System_Command,tab);
      }
 
 

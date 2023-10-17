@@ -190,9 +190,10 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data,
               }
               else{
 
-                    dir_file_name_comb = inc_dec;
 
-                    File_Data_Ptr = this->Code_Rd->Find_File_Data_From_Name(inc_dec);                                
+                    File_Data_Ptr = this->Code_Rd->Find_File_Data_From_Name(inc_dec);
+
+                    dir_file_name_comb = File_Data_Ptr->cmbn_name;                                
               }
 
 
@@ -297,7 +298,11 @@ bool Dependency_Data_Extractor::Check_New_Dependency_Status(std::string string_l
             
              if(is_repo_header_file){
 
-                bool is_already_searched = this->Is_This_File_Aready_Searched(include_decleration);
+                const FileData  * FileDtPtr = this->Code_Rd->Find_File_Data_From_Name(include_decleration);
+
+                std::string file_dir_comb = FileDtPtr->cmbn_name;
+
+                bool is_already_searched = this->Is_This_File_Aready_Searched(file_dir_comb);
 
                 if(!is_already_searched){
 
