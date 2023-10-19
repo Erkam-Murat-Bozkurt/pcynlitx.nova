@@ -76,10 +76,6 @@ void Source_File_Dependency_Selector::Receive_Source_Code_Reader(Project_Src_Cod
 void Source_File_Dependency_Selector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
 
      this->Info_Collector.Receive_Descriptor_File_Reader(ptr);
-
-     this->warehouse_head_dir = this->Info_Collector.Get_Warehouse_Headers_Dir();
-
-     this->Data_Setter.Receive_Warehouse_Header_Directory(this->warehouse_head_dir);
 }
 
 
@@ -232,7 +228,7 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
 
      std::string path, std::string header_name){
     
-     std::string src_file_name, wrd_path, 
+     std::string src_file_name,
      
      hdr_sys_path, file_dir, object_file_name,
      
@@ -254,8 +250,6 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
 
      this->Data_Setter.Determine_File_Name_Without_Ext(path,file_name_without_ext);
 
-     this->Data_Setter.Determine_Header_Repo_Warehouse_Path(wrd_path,header_name,'w');
-
      this->Data_Setter.Determine_Header_System_Path(hdr_sys_path,header_name);
 
      this->Data_Setter.Determine_Object_File_Name(object_file_name,src_file_name);
@@ -273,8 +267,6 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
 
      this->Data_Setter.Copy_String(data.source_file_path,path);
 
-     this->Data_Setter.Copy_String(data.repo_warehouse_path,wrd_path);
-
      this->Data_Setter.Copy_String(data.dir,file_dir);
 
      this->Data_Setter.Copy_String(data.source_file_name_without_ext,file_name_without_ext);
@@ -290,8 +282,6 @@ void Source_File_Dependency_Selector::Set_Dependency_Data(Source_File_Dependency
 
 
      this->Clear_String_Memory(src_file_name);
-
-     this->Clear_String_Memory(wrd_path);
 
      this->Clear_String_Memory(hdr_sys_path);
 
@@ -433,8 +423,6 @@ void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
         this->Dependency_Data.shrink_to_fit();
     }
 
-     this->Clear_String_Memory(this->warehouse_head_dir);
-
      this->Clear_String_Memory(this->descriptor_file_path);
 
      this->Info_Collector.Clear_Dynamic_Memory();
@@ -537,11 +525,6 @@ std::vector<Source_File_Dependency> * Source_File_Dependency_Selector::Get_Depen
 size_t Source_File_Dependency_Selector::Get_Dependency_List_Size(){
 
     return this->Dependency_Data.size();
-}
-
-std::string Source_File_Dependency_Selector::Get_Warehouse_Headers_Dir(){
-
-     return this->Info_Collector.Get_Warehouse_Headers_Dir();
 }
 
 std::string Source_File_Dependency_Selector::Get_Warehouse_Objetcs_Dir(){

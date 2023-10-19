@@ -50,8 +50,6 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
 
      this->Clear_String_Memory(this->Make_File_Name);
 
-     this->Clear_String_Memory(this->warehouse_head_dir);
-
      this->Clear_String_Memory(this->warehouse_obj_dir);
 
      this->Clear_String_Memory(this->Source_File_Name);
@@ -86,7 +84,7 @@ void MakeFile_Data_Collector::Collect_Make_File_Data(std::string fileName){
 
      this->Clear_Dynamic_Memory();
 
-     this->Determine_Warehouse_Header_Dir();
+     //this->Determine_Warehouse_Header_Dir();
 
      this->Determine_Warehouse_Object_Dir();
 
@@ -100,6 +98,8 @@ void MakeFile_Data_Collector::Collect_Make_File_Data(std::string fileName){
 
      this->Determine_Make_File_Name();   
 }
+
+/*
 
 void MakeFile_Data_Collector::Determine_Warehouse_Header_Dir(){
 
@@ -163,11 +163,12 @@ void MakeFile_Data_Collector::Determine_Warehouse_Header_Dir(){
      }
 }
 
+*/
 
 
 void MakeFile_Data_Collector::Determine_Warehouse_Object_Dir(){
 
-     std::string object_directory = "PROJECT.OBJECT.FILES";
+     std::string object_directory = "OBJECT.FILES";
 
      std::string warehouse_word = "WAREHOUSE";
 
@@ -288,8 +289,6 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      std::string include_word = "-include";
 
-     std::string Headers_Location ="$(PROJECT_HEADERS_LOCATION)";
-
      std::string Source_Location  ="$(SOURCE_LOCATION)";
 
      char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
@@ -316,14 +315,6 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
      }
      
      // THE ADDITION OF INCLUDE DIRECTORIES PATHS
-
-     this->Place_String(&this->Compiler_System_Command,Include_Character);
-
-     this->Place_String(&this->Compiler_System_Command,Headers_Location);
-
-     this->Place_String(&this->Compiler_System_Command,Space_Character);
-
-     this->Place_String(&this->Compiler_System_Command,go_to_new_line);
 
 
      int  included_dir_num = this->Des_Reader->Get_Include_Directory_Number();
@@ -781,10 +772,6 @@ std::string MakeFile_Data_Collector::Get_Repo_Dir(){
      return this->repo_dir;
 }
 
-std::string MakeFile_Data_Collector::Get_Warehouse_Header_Dir(){
-
-     return this->warehouse_head_dir;
-}
 
 std::string MakeFile_Data_Collector::Get_Warehouse_Object_Dir(){
 

@@ -53,7 +53,6 @@ struct Source_File_Dependency
   std::string Header_Name;
   std::string Combined_Header_Name;
   std::string header_sys_path;
-  std::string repo_warehouse_path;
   std::string dir;
   std::string object_file_name;
   std::vector<std::string> External_Headers;
@@ -75,7 +74,6 @@ public:
  void Print_Dependency_List();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
- std::string Get_Warehouse_Headers_Dir();
  std::string Get_Warehouse_Objetcs_Dir();
  std::string Get_Warehouse_Path();
  std::vector<std::vector<Source_File_Dependency>> * Get_Dependency_List_Adress();
@@ -102,7 +100,6 @@ protected:
  std::vector<Source_File_Dependency> Dependent_List_Buffer;
  std::vector<Source_File_Data> * Source_File_Data_Ptr;
  std::vector<std::vector<Source_File_Dependency>> Dependency_Data;
- std::string warehouse_head_dir;
  std::string descriptor_file_path;
  StringOperator StringManager; 
  std::mutex mtx;

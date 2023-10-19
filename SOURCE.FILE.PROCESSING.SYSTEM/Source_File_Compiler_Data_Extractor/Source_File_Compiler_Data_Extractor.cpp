@@ -65,8 +65,6 @@ void Source_File_Compiler_Data_Extractor::Clear_Data_Memory(std::vector<Compiler
 
             this->Clear_Vector_Memory(&it->dependent_headers);
 
-            this->Clear_Vector_Memory(&it->dependent_headers_paths);
-
             this->Clear_Vector_Memory(&it->dependent_headers_dir);
 
             this->Clear_Vector_Memory(&it->upper_directories);
@@ -96,8 +94,6 @@ void Source_File_Compiler_Data_Extractor::Receive_Dependency_Data(Source_File_De
      this->Dep_Selector_Ptr = ptr;
 
      this->dep_data_ptr = this->Dep_Selector_Ptr->Get_Dependency_List_Adress();
-
-     this->warehouse_head_dir = this->Dep_Selector_Ptr->Get_Warehouse_Headers_Dir();
 }
 
 
@@ -106,8 +102,6 @@ void Source_File_Compiler_Data_Extractor::Receive_Single_File_Dependency_Data(So
      this->Dep_Selector_For_Single_File_Ptr = ptr;
 
      this->dep_data_ptr = this->Dep_Selector_For_Single_File_Ptr->Get_Dependency_List_Adress();
-
-     this->warehouse_head_dir = this->Dep_Selector_For_Single_File_Ptr->Get_Warehouse_Headers_Dir();
 }
 
 
@@ -215,20 +209,16 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Threa
             
                 std::string hdr_name = src_ptr->at(k).Header_Name;
 
-                std::string hdr_path = src_ptr->at(k).repo_warehouse_path;
-
                 std::string hdr_dir =  src_ptr->at(k).dir;            
                             
                 buffer.dependent_headers_dir.push_back(hdr_dir);
 
                 buffer.dependent_headers.push_back(hdr_name);
-
-                buffer.dependent_headers_paths.push_back(hdr_path);                                                
             }
 
             buffer.dependent_headers.shrink_to_fit();
 
-            buffer.dependent_headers_paths.shrink_to_fit();
+            buffer.dependent_headers_dir.shrink_to_fit();
 
             this->compiler_data.push_back(buffer);
          
@@ -287,8 +277,6 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
 
                 buffer.dependent_headers.push_back(hdr_name);
 
-                buffer.dependent_headers_paths.push_back(hdr_path);  
-
                 buffer.dependent_headers_dir.push_back(hdr_dir);     
 
                 std::string upper_dir;
@@ -300,8 +288,6 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
 
 
             buffer.dependent_headers.shrink_to_fit();
-
-            buffer.dependent_headers_paths.shrink_to_fit();
 
             buffer.dependent_headers_dir.shrink_to_fit();
 
@@ -376,8 +362,6 @@ void Source_File_Compiler_Data_Extractor::Find_Upper_Directory(std::string & upp
 void Source_File_Compiler_Data_Extractor::Clear_Buffer_Memory(Compiler_Data * ptr){
 
      this->Clear_Vector_Memory(&ptr->dependent_headers);
-
-     this->Clear_Vector_Memory(&ptr->dependent_headers_paths);
 
      this->Clear_Vector_Memory(&ptr->dependent_headers_dir);
 

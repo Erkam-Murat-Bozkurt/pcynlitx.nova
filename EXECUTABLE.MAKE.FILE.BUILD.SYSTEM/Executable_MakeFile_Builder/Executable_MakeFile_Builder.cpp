@@ -102,8 +102,6 @@ void Executable_MakeFile_Builder::Advanced_MakeFile_Construction(char * mn_src_p
      this->Dep_Determiner.Collect_Dependency_Information(mn_src_path);
 
 
-     this->warehouse_head_dir = this->Dep_Determiner.Get_Warehouse_Headers_Dir();
-
      this->warehouse_obj_dir  = this->Dep_Determiner.Get_Warehouse_Objetcs_Dir();
 
      this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
@@ -177,7 +175,6 @@ void Executable_MakeFile_Builder::Simple_MakeFile_Construction(char * mn_src_pat
 
     
 
-     this->warehouse_head_dir = this->Dep_Determiner.Get_Warehouse_Headers_Dir();
 
      this->warehouse_obj_dir  = this->Dep_Determiner.Get_Warehouse_Objetcs_Dir();
 
@@ -256,13 +253,6 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
      this->FileManager.SetFilePath(this->make_file_name);
 
      this->FileManager.FileOpen(RWCf);
-
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("PROJECT_HEADERS_LOCATION=");
-
-     this->FileManager.WriteToFile(this->warehouse_head_dir);
 
 
      this->FileManager.WriteToFile("\n");
@@ -445,15 +435,6 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile(PathSpecifier);
-
-
-     this->FileManager.WriteToFile("$(PROJECT_HEADERS_LOCATION)");
-
-     this->FileManager.WriteToFile(NextLine);
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile(Ident);
 
 
      this->FileManager.WriteToFile("$(PROJECT_OBJECTS_LOCATION)");

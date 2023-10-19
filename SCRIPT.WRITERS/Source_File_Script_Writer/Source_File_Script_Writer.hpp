@@ -33,7 +33,6 @@ void Determine_Compiler_Output_Path(std::string class_name);
  std::string Repo_Rood_Dir;
  std::string object_files_location;
  std::string compiler_output_location;
- std::string headers_locations;
  std::string script_path;
  std::string warehouse_path;
  char opr_sis;

@@ -61,7 +61,6 @@ public:
  bool Is_Source_File(std::string spath);
  bool Is_Header_File(std::string hpath);
  int  Get_Compiler_Data_Size();
- std::string Get_Warehouse_Headers_Dir();
  std::string Get_Warehouse_Objetcs_Dir();
  std::string Get_Warehouse_Path();
  void Print_Dependency_List();
@@ -86,7 +85,6 @@ protected:
  Source_File_Compiler_Data_Extractor Com_Data_Extractor;
  Source_File_Processor Src_Processor;
  Quick_Src_Dependency_Extractor Simple_Dep_Extractor;
- std::string Warehouse_Headers_Dir;
  std::string Warehouse_Objetcs_Dir;
  std::string Warehouse_Path;
  std::vector<Compiler_Data> * Compiler_Data_Ptr;

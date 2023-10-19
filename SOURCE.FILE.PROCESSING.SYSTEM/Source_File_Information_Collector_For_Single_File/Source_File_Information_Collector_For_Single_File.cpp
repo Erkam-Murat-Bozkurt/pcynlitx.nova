@@ -49,8 +49,6 @@ void Source_File_Information_Collector_For_Single_File::Receive_Descriptor_File_
 
      this->warehouse_path = this->Des_Reader->Get_Warehouse_Location();
 
-     this->Determine_Warehouse_Header_Dir();
-
      this->Determine_Warehouse_Object_Dir();
 }
 
@@ -301,81 +299,10 @@ bool  Source_File_Information_Collector_For_Single_File::Is_Header_File(std::str
 }
 
 
-void Source_File_Information_Collector_For_Single_File::Determine_Warehouse_Header_Dir()
-{
-     std::string warehouse_word = "WAREHOUSE";
-
-     std::string header_directory = "PROJECT.HEADER.FILES";
-
-     size_t warehouse_path_size = this->warehouse_path.length();
-
-     size_t head_dir_size = header_directory.length();
-
-     size_t wr_word_size  = warehouse_word.length();
-
-     for(size_t i=0;i<warehouse_path_size;i++){
-
-        this->warehouse_head_dir.push_back(this->warehouse_path[i]);
-     }
-
-     size_t index =  this->warehouse_head_dir.size(); // The last character index
-
-     char last_character = this->warehouse_head_dir[index];
-
-     if(this->opr_sis == 'w'){
-
-        if(last_character != '\\'){
-
-           this->warehouse_head_dir.push_back('\\');
-        }
-     }
-
-     if(this->opr_sis == 'l'){
-
-         if(last_character!= '/'){
-
-            this->warehouse_head_dir.push_back('/');
-         }
-     }
-
-     for(size_t i=0;i<wr_word_size;i++){
-
-         this->warehouse_head_dir.push_back(warehouse_word[i]);
-     }
-
-
-     index =  this->warehouse_head_dir.size(); // The last character index
-
-     last_character = this->warehouse_head_dir[index];
-
-
-     if(this->opr_sis == 'w'){
-
-        if(last_character != '\\'){
-
-           this->warehouse_head_dir.push_back('\\');
-        }
-     }
-
-     if(this->opr_sis == 'l'){
-
-        if(last_character != '/'){
-
-           this->warehouse_head_dir.push_back('/');
-        }
-     }
-
-     for(size_t i=0;i<head_dir_size;i++){
-
-         this->warehouse_head_dir.push_back(header_directory[i]);
-     }
-}
-
-
 
 void Source_File_Information_Collector_For_Single_File::Determine_Warehouse_Object_Dir(){
 
-     std::string object_directory  = "PROJECT.OBJECT.FILES";
+     std::string object_directory  = "OBJECT.FILES";
 
      std::string warehouse_word    = "WAREHOUSE";
 
@@ -468,8 +395,6 @@ void Source_File_Information_Collector_For_Single_File::Clear_Object_Memory()
      this->Clear_Dynamic_Memory();
 
      this->Clear_String_Memory(this->warehouse_path);
-
-     this->Clear_String_Memory(this->warehouse_head_dir);
 
      this->Clear_String_Memory(this->warehouse_obj_dir);
 }
@@ -612,13 +537,6 @@ Source_File_Data Source_File_Information_Collector_For_Single_File::Get_Dependen
 std::vector<Source_File_Data> * Source_File_Information_Collector_For_Single_File::Get_Source_File_Data_Address()
 {
      return &this->Src_Data_Holder;
-}
-
-
-
-std::string Source_File_Information_Collector_For_Single_File::Get_Warehouse_Headers_Dir(){
-
-     return this->warehouse_head_dir;
 }
 
 

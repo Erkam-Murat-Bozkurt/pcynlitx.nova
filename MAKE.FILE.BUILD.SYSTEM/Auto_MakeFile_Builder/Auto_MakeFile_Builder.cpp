@@ -30,8 +30,6 @@ void Auto_MakeFile_Builder::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         this->Clear_String_Memory(&this->repo_head_dir);
-
          this->Clear_String_Memory(&this->repo_obj_dir);
 
          this->DataMap.clear();
@@ -182,11 +180,7 @@ void Auto_MakeFile_Builder::Determine_Project_Directories(){
 
      this->Memory_Delete_Condition = false;
 
-     std::string Headers_Folder = "PROJECT.HEADER.FILES";
-
-     std::string Objects_Folder = "PROJECT.OBJECT.FILES";
-
-     this->Construct_Path(&(this->repo_head_dir),Headers_Folder,this->Warehouse_Path);
+     std::string Objects_Folder = "OBJECT.FILES";
 
      this->Construct_Path(&(this->repo_obj_dir),Objects_Folder,this->Warehouse_Path);
 }

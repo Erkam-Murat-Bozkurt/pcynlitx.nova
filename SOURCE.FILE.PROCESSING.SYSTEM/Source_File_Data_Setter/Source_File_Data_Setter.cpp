@@ -49,13 +49,6 @@ void Source_File_Data_Setter::Receive_Source_Code_Reader(Project_Src_Code_Rdr * 
 }
 
 
-void Source_File_Data_Setter::Receive_Warehouse_Header_Directory(std::string dir){
-
-     this->warehouse_head_dir = dir;
-}
-
-
-
 void Source_File_Data_Setter::Extract_Directory_From_Path(std::string path, std::string & dir){
 
      size_t path_size = path.size();
@@ -231,40 +224,6 @@ void Source_File_Data_Setter::Determine_Header_System_Path(std::string & path, s
 
      path = FileDtPtr->sys_path;
 }
-
-
-void Source_File_Data_Setter::Determine_Header_Repo_Warehouse_Path(std::string & wrd_path,
-
-     std::string file_name, char opr_sis)
-{
-
-     size_t name_size = file_name.length();
-
-     size_t wrd_path_size = this->warehouse_head_dir.length();
-
-     size_t path_size = name_size + wrd_path_size;
-
-     for(size_t i=0;i<wrd_path_size;i++){
-
-         wrd_path.push_back(this->warehouse_head_dir[i]);
-     }
-
-     if(opr_sis == 'w'){
-
-        wrd_path.push_back('\\');
-     }
-
-     if(opr_sis == 'l'){
-
-        wrd_path.push_back('/');
-     }
-
-     for(size_t i=0;i<name_size;i++){
-
-         wrd_path.push_back(file_name[i]);
-     }
-}
-
 
 void Source_File_Data_Setter::Determine_Object_File_Name(std::string & obj_name, 
  

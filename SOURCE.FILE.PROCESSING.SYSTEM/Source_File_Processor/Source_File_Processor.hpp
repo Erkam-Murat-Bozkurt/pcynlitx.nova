@@ -25,7 +25,6 @@ public:
  Source_File_Processor();
  virtual ~Source_File_Processor();
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
- //bool Is_Source_File(std::string file_path);
  void Determine_Source_File_Name(std::string path);
  void Determine_File_Name_Without_Ext(std::string path);
  void Determine_File_Name_Without_Ext(char * path);

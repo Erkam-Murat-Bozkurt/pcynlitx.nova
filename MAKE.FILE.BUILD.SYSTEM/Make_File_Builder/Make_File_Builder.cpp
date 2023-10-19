@@ -124,14 +124,6 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("PROJECT_HEADERS_LOCATION=");
-
-     std::string warehouse_head_dir = this->Data_Collector.Get_Warehouse_Header_Dir();
-
-     this->FileManager.WriteToFile(warehouse_head_dir);
-
-     this->FileManager.WriteToFile("\n");
-     this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("PROJECT_OBJECTS_LOCATION=");
 
@@ -237,15 +229,6 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile(PathSpecifier);
-
-
-     this->FileManager.WriteToFile("$(PROJECT_HEADERS_LOCATION)");
-
-     this->FileManager.WriteToFile(NextLine);
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile(Ident);
 
 
      this->FileManager.WriteToFile("$(PROJECT_OBJECTS_LOCATION)");

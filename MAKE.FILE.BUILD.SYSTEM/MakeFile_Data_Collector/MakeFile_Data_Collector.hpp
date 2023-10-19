@@ -42,7 +42,6 @@ public:
  std::string Get_System_Header_File_Dir();
  std::string Get_Source_File_Name_With_Extention();
  std::string Get_Repo_Dir();
- std::string Get_Warehouse_Header_Dir();
  std::string Get_Warehouse_Object_Dir();
  std::string Get_Warehouse_Path();
  void Clear_Dynamic_Memory(); 
@@ -67,7 +66,6 @@ private:
  Descriptor_File_Reader * Des_Reader;
  Compiler_Data * Compiler_Data_Ptr;
  std::string repo_dir;
- std::string warehouse_head_dir;
  std::string warehouse_obj_dir;
  std::string warehouse_path;
  std::string Make_File_Name;

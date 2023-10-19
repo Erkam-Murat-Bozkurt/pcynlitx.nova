@@ -52,14 +52,12 @@ public:
  Source_File_Data Get_Dependency_Data(int num);
  std::vector<Source_File_Data> * Get_Source_File_Data_Address();
  size_t       Get_Dependency_Data_Size();
- std::string  Get_Warehouse_Headers_Dir();
  std::string  Get_Warehouse_Objetcs_Dir();
  std::string  Get_Warehouse_Path();
 
 protected:
  void Determine_Source_File_List();
  void Determine_Warehouse_Object_Dir();
- void Determine_Warehouse_Header_Dir();
  void Clear_Buffer_Memory(Source_File_Data & data);
  void Clear_String_Memory(std::string & str);
  void Clear_Headers_Data();
@@ -67,7 +65,6 @@ protected:
  Descriptor_File_Reader * Des_Reader;
  Git_Data_Processor * Git_Data_Proc;
  std::vector<Source_File_Data> Src_Data_Holder;
- std::string warehouse_head_dir;
  std::string warehouse_obj_dir;
  std::string warehouse_path;
  char operating_sis;

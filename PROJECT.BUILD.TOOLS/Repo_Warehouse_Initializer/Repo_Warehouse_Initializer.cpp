@@ -110,7 +110,7 @@ void Repo_Warehouse_Initializer::Determine_Warehouse_Path(){
 
 void Repo_Warehouse_Initializer::Determine_Object_Files_Directory(){
 
-     std::string object_directory_folder_name = "PROJECT.OBJECT.FILES";
+     std::string object_directory_folder_name = "OBJECT.FILES";
 
      size_t warehouse_path_size = this->warehouse_path.length();
 
@@ -141,7 +141,7 @@ void Repo_Warehouse_Initializer::Determine_Object_Files_Directory(){
 
 void Repo_Warehouse_Initializer::Determine_Library_Files_Directory(){
 
-     std::string directory_folder_name = "PROJECT.LIBRARY.FILES";
+     std::string directory_folder_name = "LIBRARY.FILES";
 
      size_t warehouse_path_size = this->warehouse_path.length();
 
@@ -176,7 +176,7 @@ void Repo_Warehouse_Initializer::Determine_Library_Files_Directory(){
 
 void Repo_Warehouse_Initializer::Determine_Compiler_Output_Directory(){
 
-     std::string directory_folder_name = "COMPILER.OUTPUTS";
+     std::string directory_folder_name = "OUTPUTS";
 
      size_t warehouse_path_size = this->warehouse_path.length();
 

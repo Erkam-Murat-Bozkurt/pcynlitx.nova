@@ -600,7 +600,7 @@ void Project_Script_Writer::Determine_Object_Files_Location(char opr_sis){
 
      this->Clear_String_Memory(this->object_files_location);
 
-     std::string object_files_location_add = "PROJECT.OBJECT.FILES";
+     std::string object_files_location_add = "OBJECT.FILES";
 
      this->Memory_Delete_Condition = false;
 
@@ -612,7 +612,7 @@ void Project_Script_Writer::Determine_Compiler_Output_Path(std::string class_nam
 {
      this->Clear_String_Memory(this->compiler_output_location);
 
-     std::string output_directory = "WAREHOUSE\\COMPILER.OUTPUTS";
+     std::string output_directory = "WAREHOUSE\\OUTPUTS";
 
      std::string compiler_output_location_add = "_Compiler_Output.txt";
      

@@ -47,7 +47,6 @@ struct Compiler_Data
   std::string  src_git_record_dir;
   std::string  src_sys_dir;
   std::vector<std::string> dependent_headers;
-  std::vector<std::string> dependent_headers_paths;
   std::vector<std::string> dependent_headers_dir;
   std::vector<std::string> upper_directories;
   int  priority; // dependency
@@ -84,7 +83,6 @@ protected:
  std::vector<Compiler_Data> compiler_data;
  std::thread threads[16];
  Compiler_Data buffer;
- std::string warehouse_head_dir;
  std::string warehouse_obj_dir;
  std::string warehouse_path;
  char operating_sis;

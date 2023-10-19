@@ -106,8 +106,6 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->DepSelector_For_Single_File.Determine_Source_File_Dependencies(path);
 
-     this->Warehouse_Headers_Dir = this->DepSelector_For_Single_File.Get_Warehouse_Headers_Dir();
-
      this->Warehouse_Objetcs_Dir = this->DepSelector_For_Single_File.Get_Warehouse_Objetcs_Dir();
 
      this->Warehouse_Path = this->DepSelector_For_Single_File.Get_Warehouse_Path();
@@ -133,8 +131,6 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
       this->Clear_Dynamic_Memory();
 
       this->DepSelector.Determine_Source_File_Dependencies();
-
-      this->Warehouse_Headers_Dir = this->DepSelector.Get_Warehouse_Headers_Dir();
 
       this->Warehouse_Objetcs_Dir = this->DepSelector.Get_Warehouse_Objetcs_Dir();
 
@@ -340,12 +336,12 @@ void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
              std::cout << "\n Dependent header:" << Dep_Headers->at(k);         
          }
 
-         std::vector<std::string> * Dep_Headers_Paths = &this->Compiler_Data_Ptr->at(i).dependent_headers_paths;
+         std::vector<std::string> * Dep_Headers_Dirs = &this->Compiler_Data_Ptr->at(i).dependent_headers_dir;
 
 
          for(size_t k=0;k<dep_size;k++){
          
-             std::cout << "\n Dependent header path:" << Dep_Headers_Paths->at(k);         
+             std::cout << "\n Dependent header directory:" << Dep_Headers_Dirs->at(k);         
          }
 
          std::cout << "\n\n";
@@ -372,10 +368,6 @@ int Source_File_Dependency_Determiner::Get_Compiler_Data_Size(){
     return this->data_size;
 }
 
-std::string Source_File_Dependency_Determiner::Get_Warehouse_Headers_Dir(){
-
-       return this->Warehouse_Headers_Dir;
-}
 
 std::string Source_File_Dependency_Determiner::Get_Warehouse_Objetcs_Dir(){
 

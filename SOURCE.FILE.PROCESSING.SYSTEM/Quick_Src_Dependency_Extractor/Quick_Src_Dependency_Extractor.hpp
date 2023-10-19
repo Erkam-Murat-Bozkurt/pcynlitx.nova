@@ -87,14 +87,12 @@ public:
  const Simple_Source_File_Dependency * Get_Simple_Source_File_Dependency() const; 
  const std::vector<Search_Data> * Get_Dependency_Search_Data() const;
  const std::vector<std::string> * Get_Root_File_External_Headers() const;
- std::string  Get_Warehouse_Headers_Dir();
  std::string  Get_Warehouse_Objetcs_Dir();
  std::string  Get_Warehouse_Path();
 
 protected:
  void Extract_Dependency_Search_Data(std::string src_file_path); // Dependency data extraction for a single file
  void Determine_Warehouse_Object_Dir();
- void Determine_Warehouse_Header_Dir();
  void Set_Dependency_Data(std::string src_file_path);
  void Extract_Directory_File_Name_Combination(std::string path, std::string & dir_file_com);
  void Extract_Directory_From_Path(std::string & dir, std::string path);
@@ -112,7 +110,6 @@ protected:
  Project_Src_Code_Rdr   * Code_Rdr;
  Descriptor_File_Reader * Des_Reader;
  Git_Data_Processor     * Git_Data_Proc;
- std::string warehouse_head_dir;
  std::string warehouse_obj_dir;
  std::string warehouse_path;
  char opr_sis;

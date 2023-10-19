@@ -54,7 +54,6 @@ public:
  std::vector<Source_File_Data>  * Get_Source_File_Data_Address();
  const std::vector<std::string> * Get_Root_File_External_Headers() const;
  size_t       Get_Dependency_Data_Size();
- std::string  Get_Warehouse_Headers_Dir();
  std::string  Get_Warehouse_Objetcs_Dir();
  std::string  Get_Warehouse_Path();
 
@@ -65,7 +64,6 @@ protected:
       std::string & src_name, bool & is_there);
  void Find_File_Name_Without_Extantion(std::string hdr_name, std::string & file_name_with_ext);
  void Determine_Warehouse_Object_Dir();
- void Determine_Warehouse_Header_Dir();
  void Receive_String_Vector(std::vector<std::string> & target_vec, 
       const std::vector<std::string> * vec);
  void Clear_Buffer_Memory(Source_File_Data & data);
@@ -81,7 +79,6 @@ protected:
  Project_Src_Code_Rdr   * Code_Rdr;
  Descriptor_File_Reader * Des_Reader;
  Git_Data_Processor     * Git_Data_Proc;
- std::string warehouse_head_dir;
  std::string warehouse_obj_dir;
  std::string warehouse_path;
  char opr_sis;

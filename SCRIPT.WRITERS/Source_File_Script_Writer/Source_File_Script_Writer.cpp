@@ -33,8 +33,6 @@ void Source_File_Script_Writer::Clear_Dynamic_Memory(){
 
      this->Clear_String_Memory(this->script_path);
 
-     this->Clear_String_Memory(this->headers_locations);
-
      this->Clear_String_Memory(this->object_files_location);
 
      this->Clear_String_Memory(this->script_path);     
@@ -480,23 +478,18 @@ void Source_File_Script_Writer::Determine_Script_Path(char opr_sis){
 
 void Source_File_Script_Writer::Determine_Warehouse_Paths(char opr_sis){
 
-     this->Clear_String_Memory(this->headers_locations);
-
      this->Clear_String_Memory(this->object_files_location);
 
      this->Clear_String_Memory(this->compiler_output_location);
 
 
-     std::string headers_location_add = "PROJECT.HEADER.FILES";
 
-     std::string object_files_location_add = "PROJECT.OBJECT.FILES";
+     std::string object_files_location_add = "OBJECT.FILES";
 
      std::string compiler_output_location_add = "Compiler_Output.txt";
 
 
      this->Memory_Delete_Condition = false;
-
-     this->Construct_Path(this->headers_locations,headers_location_add,opr_sis);
 
      this->Construct_Path(this->object_files_location,object_files_location_add,opr_sis);
 
@@ -569,7 +562,7 @@ void Source_File_Script_Writer::Construct_Path(std::string & path,
 
 void Source_File_Script_Writer::Determine_Compiler_Output_Path(std::string class_name)
 {
-     std::string output_directory = "WAREHOUSE\\COMPILER.OUTPUTS";
+     std::string output_directory = "WAREHOUSE\\OUTPUTS";
 
      std::string compiler_output_location_add = "_Compiler_Output.txt";
      

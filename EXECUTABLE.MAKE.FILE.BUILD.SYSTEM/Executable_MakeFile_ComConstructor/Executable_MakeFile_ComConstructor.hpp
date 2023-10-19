@@ -79,7 +79,6 @@ protected:
  std::vector<std::string> library_name_list;
  std::string Exe_Name;
  std::string options;
- std::string warehouse_head_dir;
  std::string warehouse_obj_dir;
  std::string warehouse_path;
  std::string make_file_name;

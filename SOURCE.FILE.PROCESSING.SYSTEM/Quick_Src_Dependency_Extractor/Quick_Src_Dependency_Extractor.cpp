@@ -51,8 +51,6 @@ void Quick_Src_Dependency_Extractor::Receive_Descriptor_File_Reader(Descriptor_F
 
      this->warehouse_path = this->Des_Reader->Get_Warehouse_Location();
 
-     this->Determine_Warehouse_Header_Dir();
-
      this->Determine_Warehouse_Object_Dir();
 }
 
@@ -270,81 +268,9 @@ bool Quick_Src_Dependency_Extractor::Is_Header_File(std::string path){
 }
 
 
-void Quick_Src_Dependency_Extractor::Determine_Warehouse_Header_Dir()
-{
-     std::string warehouse_word = "WAREHOUSE";
-
-     std::string header_directory = "PROJECT.HEADER.FILES";
-
-     size_t warehouse_path_size = this->warehouse_path.length();
-
-     size_t head_dir_size = header_directory.length();
-
-     size_t wr_word_size  = warehouse_word.length();
-
-     for(size_t i=0;i<warehouse_path_size;i++){
-
-        this->warehouse_head_dir.push_back(this->warehouse_path[i]);
-     }
-
-     size_t index =  this->warehouse_head_dir.size(); // The last character index
-
-     char last_character = this->warehouse_head_dir[index];
-
-     if(this->opr_sis == 'w'){
-
-        if(last_character != '\\'){
-
-           this->warehouse_head_dir.push_back('\\');
-        }
-     }
-
-     if(this->opr_sis == 'l'){
-
-         if(last_character!= '/'){
-
-            this->warehouse_head_dir.push_back('/');
-         }
-     }
-
-     for(size_t i=0;i<wr_word_size;i++){
-
-         this->warehouse_head_dir.push_back(warehouse_word[i]);
-     }
-
-
-     index =  this->warehouse_head_dir.size(); // The last character index
-
-     last_character = this->warehouse_head_dir[index];
-
-
-     if(this->opr_sis == 'w'){
-
-        if(last_character != '\\'){
-
-           this->warehouse_head_dir.push_back('\\');
-        }
-     }
-
-     if(this->opr_sis == 'l'){
-
-        if(last_character != '/'){
-
-           this->warehouse_head_dir.push_back('/');
-        }
-     }
-
-     for(size_t i=0;i<head_dir_size;i++){
-
-         this->warehouse_head_dir.push_back(header_directory[i]);
-     }
-}
-
-
-
 void Quick_Src_Dependency_Extractor::Determine_Warehouse_Object_Dir(){
 
-     std::string object_directory  = "PROJECT.OBJECT.FILES";
+     std::string object_directory  = "OBJECT.FILES";
 
      std::string warehouse_word    = "WAREHOUSE";
 
@@ -467,8 +393,6 @@ void Quick_Src_Dependency_Extractor::Clear_Object_Memory()
      this->Clear_Dynamic_Memory();
 
      this->Clear_String_Memory(this->warehouse_path);
-
-     this->Clear_String_Memory(this->warehouse_head_dir);
 
      this->Clear_String_Memory(this->warehouse_obj_dir);
 
@@ -613,12 +537,6 @@ void Quick_Src_Dependency_Extractor::Clear_Vector_Memory(std::vector<std::string
 const std::vector<Search_Data> * Quick_Src_Dependency_Extractor::Get_Dependency_Search_Data() const 
 {
       return &this->Dep_Search_Data;
-}
-
-
-std::string Quick_Src_Dependency_Extractor::Get_Warehouse_Headers_Dir(){
-
-     return this->warehouse_head_dir;
 }
 
 

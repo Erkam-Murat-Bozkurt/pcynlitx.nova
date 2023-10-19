@@ -88,8 +88,6 @@ void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(std::string
 
      // Receiving the compiler data from the member objects
 
-     this->warehouse_head_dir = this->Dep_Determiner->Get_Warehouse_Headers_Dir();
-
      this->warehouse_obj_dir  = this->Dep_Determiner->Get_Warehouse_Objetcs_Dir();
 
      this->warehouse_path     = this->Dep_Determiner->Get_Warehouse_Path();
