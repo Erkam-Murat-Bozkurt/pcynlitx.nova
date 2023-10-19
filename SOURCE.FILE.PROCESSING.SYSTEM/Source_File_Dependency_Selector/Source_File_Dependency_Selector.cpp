@@ -372,6 +372,15 @@ void Source_File_Dependency_Selector::Print_Dependency_List()
             std::cout << "\n INCLUDED HEADER FILES NUM FOR INCL FILE:" 
             
             << ptr->at(0).included_file_hdr_num;
+
+            std::cout << "\n External Header Files:";
+
+            std::vector<std::string> * ext_headers = &ptr->at(0).External_Headers;
+
+            for(size_t k=0;k<ext_headers->size();k++){
+
+                 std::cout << "\n External Hdr [" << k << "]:" << ext_headers->at(k);
+            }
          }
       }
 }

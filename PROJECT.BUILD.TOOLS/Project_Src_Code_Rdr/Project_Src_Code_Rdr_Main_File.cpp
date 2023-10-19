@@ -42,6 +42,9 @@ int main(int argc, char ** argv){
 
     int index_size = Git_Data_Proc.Get_Git_File_Index_Size();
 
+
+    /*
+
     std::cout << "\n index_size:" << index_size;
 
 
@@ -56,12 +59,16 @@ int main(int argc, char ** argv){
         std::cout << "\n";
     }
 
+    */
 
     Project_Src_Code_Rdr Code_Rd('w');
 
     Code_Rd.Receive_Git_Data_Processor(&Git_Data_Proc);
 
     Code_Rd.Read_Project_Source_Code_Files();
+
+
+    std::cin.get();
 
     std::cout << "\n THE COMPUTATIONS COMPLATED";
 
@@ -93,7 +100,7 @@ int main(int argc, char ** argv){
 
        std::cout << "\n The obtained combained name:" << combined_name;
        */
-       
+
        const FileData * Data_Combined_Name = Code_Rd.Find_File_Data_From_Directory_File_Name_Combination(combined_name);
 
        std::cout << "\n";

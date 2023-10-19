@@ -22,8 +22,7 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) :
     this->Git_Data_Proc.Write_Git_Repo_List_File();
 
     this->Git_Data_Proc.Determine_Git_Repo_Info();
-
-    this->Git_Data_Proc.Set_Git_Ignoring_Files();
+    
 
     std::cout << "\n\n\e[1;32mThe data for git version controller has been collected \e[0m\n\n";
 

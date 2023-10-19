@@ -463,11 +463,19 @@ bool Project_Src_Code_Rdr::Include_Decleration_Test(std::string string, int thr_
 {
      bool include_decleration_cond = false;
 
-     char include_key [] = "#include\"";  // double_quotation_mark
+     char include_key_1 [] = "#include\"";  // double_quotation_mark
+     char include_key_2 [] = "#include<";  // double_quotation_mark
 
-     bool is_this_include_dec
 
-     = this->StringManager[thr_num].CheckStringInclusion(string,include_key);
+     bool include_dec_cond_1 = false;
+
+     bool include_dec_cond_2 = false;
+
+
+     include_dec_cond_1 = this->StringManager[thr_num].CheckStringInclusion(string,include_key_1);
+
+     include_dec_cond_2 = this->StringManager[thr_num].CheckStringInclusion(string,include_key_2);
+
 
      bool char_before_sharp = false; //  sharp symbol = #
 
@@ -486,7 +494,7 @@ bool Project_Src_Code_Rdr::Include_Decleration_Test(std::string string, int thr_
 
      if(!char_before_sharp){
 
-        if(is_this_include_dec){
+        if(include_dec_cond_1 || include_dec_cond_2){
 
            include_decleration_cond = true;
         }
@@ -543,7 +551,7 @@ std::string Project_Src_Code_Rdr::Extract_Include_Decleration(std::string string
 
      for(size_t k=0;k<size;k++){
 
-         if(string[k] == '\"'){
+         if((string[k] == '\"') || (string[k] == '<')) {
 
             break;
          }
@@ -559,7 +567,7 @@ std::string Project_Src_Code_Rdr::Extract_Include_Decleration(std::string string
 
      for(size_t k=start_point;k<size;k++){
 
-         if(string[k] == '\"'){
+         if((string[k] == '\"') || (string[k] == '>')){
 
             break;
          }

@@ -44,14 +44,12 @@ protected:
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * ptr);
  void Construct_Path(std::string * ptr, std::string str, std::string wrd);
- void Construct_Data_Map(int thr_num, int start, int end);
  void Perform_Data_Map_Construction();
  void Perform_MakeFile_Construction();
  Source_File_Dependency_Determiner * Dep_Determiner;
  Git_Data_Processor * Git_Data_Proc;
  std::vector<Compiler_Data> * Compiler_Data_Pointer;
  Make_File_Builder Mk_Builder[16];
- Make_File_Cleaner Mk_File_Clnr;
  Descriptor_File_Reader * Des_Reader;
  std::thread threads[16];
  std::mutex mtx;

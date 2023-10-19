@@ -47,7 +47,6 @@ int main(int argc, char ** argv){
 
     std::cout << "\n\e[1;32mDependency information have been determined..\e[0m\n";
 
-
     Auto_MakeFile_Builder Make_Builder(argv[1],'w');
 
     Make_Builder.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);

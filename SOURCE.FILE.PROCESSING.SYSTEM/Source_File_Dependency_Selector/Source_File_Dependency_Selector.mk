@@ -9,14 +9,12 @@ SYS_INT=D:\pcynlitx.build\BASIC.TOOLS\Custom_System_Interface
 
 
 HEAD_DET=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
-FILE_LISTER=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Lister
 SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
 INT_TO_CHAR=D:\pcynlitx.build\BASIC.TOOLS\IntToCharTranslater
 DES_READER=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
 DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
 DES_FILE_SYNT_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
 
-FILE_DAT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Data_Collector
 SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
 SRC_INF_COL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector
 HDR_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
@@ -38,9 +36,9 @@ GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiv
 
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 		$(SOURCE_DETR) $(DIR_ENUM) \
-	    $(STRING_OPS) $(HEAD_DET) $(FILE_LISTER) \
+	    $(STRING_OPS) $(HEAD_DET) \
 		$(INT_TO_CHAR) $(DES_DATA_COL) $(DES_READER) \
-		$(MAKE_DATA_COL) $(GIT_LIST) $(FILE_DAT_COL) \
+		$(MAKE_DATA_COL) $(GIT_LIST) \
 		$(SRC_DT_COL) $(DES_FILE_SYNT_COL) $(SRC_INF_COL) \
 		$(HDR_PROC) $(SRC_READER) $(DEP_DAT_EXT) \
 		$(SRC_PROCESSOR) $(SYS_INT) \
@@ -58,8 +56,6 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 	Source_File_Information_Collector.cpp \
 	Header_File_Processor.cpp \
 	Project_Src_Code_Rdr.cpp \
-	Project_Files_Lister.cpp \
-    Project_Files_Data_Collector.cpp \
 	Source_File_Data_Collector.cpp \
 	Source_File_Data_Setter.cpp \
 	Source_File_Determiner.cpp \
@@ -83,8 +79,6 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 	Source_File_Information_Collector.hpp \
 	Header_File_Processor.hpp \
 	Project_Src_Code_Rdr.hpp \
-	Project_Files_Lister.h \
-	Project_Files_Data_Collector.hpp \
 	Source_File_Data_Collector.hpp \
 	Source_File_Data_Setter.hpp \
 	Git_Data_Processor.hpp \
@@ -107,10 +101,10 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 	g++ -std=c++17 -g -o Source_File_Dependency_Selector.exe \
 	 -I$(DIR_OPS) -I$(CPP_OPS) -I$(CHAR_OPS) \
 	 -I$(SRC_INF_COL)   -I$(STRING_OPS)  -I$(HEAD_DET) \
-	 -I$(FILE_LISTER)   -I$(SOURCE_DETR) \
+	 -I$(SOURCE_DETR) \
 	 -I$(CLASS_SYNTAX)  -I$(DIR_ENUM)    -I$(INT_TO_CHAR) \
 	 -I$(DES_DATA_COL)  -I$(DES_READER) \
-	 -I$(MAKE_DATA_COL) -I$(FILE_DAT_COL) \
+	 -I$(MAKE_DATA_COL) \
 	 -I$(SRC_DT_COL)    -I$(DES_FILE_SYNT_COL) \
 	 -I$(HDR_PROC)      -I$(SRC_READER)  \
 	 -I$(DEP_DAT_EXT)	-I$(SRC_PROCESSOR) \
@@ -127,9 +121,8 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 	 -L$(CHAR_OPS)      -L$(INT_TO_CHAR) \
 	 -L$(DES_DATA_COL)  -L$(DES_READER)\
 	 -L$(DES_READER)    -L$(STRING_OPS) \
-	 -L$(HEAD_DET)      -L$(FILE_LISTER) \
+	 -L$(HEAD_DET) \
 	 -L$(SOURCE_DETR)   -L$(MAKE_DATA_COL) \
-	 -L$(FILE_DAT_COL) \
 	 -L$(SRC_DT_COL)    -L$(DES_FILE_SYNT_COL) \
 	 -L$(HDR_PROC)      -L$(SRC_READER) \
 	 -L$(DEP_DAT_EXT)	-L$(SRC_PROCESSOR) \
@@ -148,8 +141,6 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 		$(SRC_PROCESSOR)\Source_File_Processor.cpp \
 		$(HDR_PROC)\Header_File_Processor.cpp \
 		$(SRC_READER)\Project_Src_Code_Rdr.cpp \
-		$(FILE_LISTER)\Project_Files_Lister.cpp \
-		$(FILE_DAT_COL)\Project_Files_Data_Collector.cpp \
 		$(SRC_DT_COL)\Source_File_Data_Collector.cpp \
 		$(SRC_DATA_SETTER)\Source_File_Data_Setter.cpp \
 	    $(GIT_PROC)\Git_Data_Processor.cpp \
@@ -183,8 +174,6 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 		-include $(GIT_MOD_RCV)\Git_Modification_Receiver.hpp \
 		-include $(GIT_IGN)\Git_Ignoring_Files_Lister.hpp \
 		-include $(SRC_READER)\Project_Src_Code_Rdr.hpp \
-		-include $(FILE_LISTER)\Project_Files_Lister.h \
-		-include $(FILE_DAT_COL)\Project_Files_Data_Collector.hpp \
 		-include $(SRC_DT_COL)\Source_File_Data_Collector.hpp \
 		-include $(DES_READER)\Descriptor_File_Reader.hpp \
 		-include $(DES_DATA_COL)\Descriptor_File_Data_Collector.hpp \

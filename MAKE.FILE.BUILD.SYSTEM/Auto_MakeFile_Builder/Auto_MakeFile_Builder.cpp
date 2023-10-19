@@ -2,9 +2,7 @@
 
 #include "Auto_MakeFile_Builder.h"
 
-Auto_MakeFile_Builder::Auto_MakeFile_Builder(char * DesPath, char opr_sis) :
-   
-   Mk_File_Clnr(DesPath,opr_sis)
+Auto_MakeFile_Builder::Auto_MakeFile_Builder(char * DesPath, char opr_sis) 
 {
      this->Memory_Delete_Condition = true;
 
@@ -71,8 +69,6 @@ void Auto_MakeFile_Builder::Receive_Source_File_Dependency_Determiner(Source_Fil
 
          this->Mk_Builder[i].Receive_Compiler_Data_Pointer(dep_ptr->Get_Compiler_Data_Address());      
      }
-
-     this->Mk_File_Clnr.Receive_Compiler_Data_Pointer(dep_ptr->Get_Compiler_Data_Address());
 }
 
 
@@ -80,10 +76,6 @@ void Auto_MakeFile_Builder::Receive_Source_File_Dependency_Determiner(Source_Fil
 void Auto_MakeFile_Builder::Build_Make_Files(){
 
      // Determination of the directories recorded on the git repo
-
-     this->Mk_File_Clnr.Clear_Make_Files_Exist_On_Repo();
-    
-     std::cout << "\n\e[1;32mThe current make files on the project have been cleaned..\e[0m\n";
 
      this->Determine_Project_Directories();
 
@@ -98,8 +90,7 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
      std::cout << "\n";
 
      std::cout << "\n\e[1;32mThe new makefiles have been constructed..\e[0m";
-     std::cout << "\n";
-
+     std::cout << "\n";     
 }
 
 
