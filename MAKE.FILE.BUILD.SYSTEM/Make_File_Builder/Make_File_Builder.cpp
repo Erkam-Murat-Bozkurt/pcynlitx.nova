@@ -116,7 +116,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
      
      std::string Make_File_Path;
 
-     this->Determine_MakeFile_Path(Make_File_Path,Source_File_Directory,Make_File_Name);
+     this->Determine_MakeFile_Path(Make_File_Path,Make_File_Name);
 
      this->FileManager.SetFilePath(Make_File_Path);
 
@@ -323,6 +323,8 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
 }
 
 
+
+
 void Make_File_Builder::Write_Header_Paths_Shorts_Cuts(){
 
      
@@ -349,16 +351,21 @@ void Make_File_Builder::Write_Header_Paths_Shorts_Cuts(){
 
 void Make_File_Builder::Determine_MakeFile_Path(std::string & make_file_path, 
 
-     std::string src_file_dir, std::string make_file_name){
+     std::string make_file_name){
 
+
+     std::string warehouse_location = this->Des_Reader->Get_Warehouse_Location();
+
+     std::string warehouse_word = "WAREHOUSE";
      
-     size_t dir_size  = src_file_dir.length();
-     size_t name_size = make_file_name.length();
+     std::string make_file_dir_name = "MAKE.FILES";
 
 
-     for(size_t i=0;i<dir_size;i++){
+     size_t warehouse_dir_size  = warehouse_location.length();
 
-         make_file_path.push_back(src_file_dir[i]);
+     for(size_t i=0;i<warehouse_dir_size;i++){
+
+         make_file_path.push_back(warehouse_location[i]);
      }
 
      if(this->opr_sis == 'w'){
@@ -377,6 +384,57 @@ void Make_File_Builder::Determine_MakeFile_Path(std::string & make_file_path,
         }
      }
 
+
+     size_t warehouse_word_size = warehouse_word.length();
+
+     for(size_t i=0;i<warehouse_word_size;i++){
+
+         make_file_path.push_back(warehouse_word[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(make_file_path.back()!= '\\'){
+
+           make_file_path.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(make_file_path.back()!= '/'){
+
+           make_file_path.push_back('/');
+        }
+     }
+
+     
+     size_t make_dir_size = make_file_dir_name.length();
+
+     for(size_t i=0;i<make_dir_size;i++){
+
+         make_file_path.push_back(make_file_dir_name[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(make_file_path.back()!= '\\'){
+
+           make_file_path.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(make_file_path.back()!= '/'){
+
+           make_file_path.push_back('/');
+        }
+     }
+
+
+     size_t name_size = make_file_name.length();
+
      for(size_t i=0;i<name_size;i++){
 
          make_file_path.push_back(make_file_name[i]);
@@ -384,6 +442,8 @@ void Make_File_Builder::Determine_MakeFile_Path(std::string & make_file_path,
 
      make_file_path.shrink_to_fit();
 }
+
+
 
 
 void Make_File_Builder::Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path){

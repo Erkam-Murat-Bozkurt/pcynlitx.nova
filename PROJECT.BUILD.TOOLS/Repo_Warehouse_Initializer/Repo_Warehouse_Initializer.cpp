@@ -43,11 +43,14 @@ void Repo_Warehouse_Initializer::Build_Project_Warehouse(){
 
      this->Determine_Compiler_Output_Directory();
 
+     this->Determine_Make_Files_Directory();
 
 
      this->Construct_Warehouse_Path();
 
      this->Construct_Object_Files_Directory();
+
+     this->Construct_Make_Files_Directory();
 
      this->Construct_Library_Files_Directory();
 
@@ -72,6 +75,7 @@ void Repo_Warehouse_Initializer::Determine_Current_Directory(){
 
      this->current_directory.shrink_to_fit();
 }
+
 
 void Repo_Warehouse_Initializer::Determine_Warehouse_Path(){
 
@@ -138,6 +142,40 @@ void Repo_Warehouse_Initializer::Determine_Object_Files_Directory(){
 
      this->Object_Files_Directory.shrink_to_fit();
 }
+
+
+void Repo_Warehouse_Initializer::Determine_Make_Files_Directory(){
+
+     std::string make_files_directory_folder_name = "MAKE.FILES";
+
+     size_t warehouse_path_size = this->warehouse_path.length();
+
+     size_t object_folder_size= make_files_directory_folder_name.length();
+
+     for(size_t i=0;i<warehouse_path_size;i++){
+
+         this->Make_Files_Directory.push_back(this->warehouse_path[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        this->Make_Files_Directory.push_back('\\');
+     }
+     else{
+
+        this->Make_Files_Directory.push_back('/');
+     }
+
+
+     for(size_t i=0;i<object_folder_size;i++){
+
+         this->Make_Files_Directory.push_back(make_files_directory_folder_name[i]);
+     }
+
+     this->Make_Files_Directory.shrink_to_fit();
+
+}
+
 
 void Repo_Warehouse_Initializer::Determine_Library_Files_Directory(){
 
@@ -250,6 +288,29 @@ void Repo_Warehouse_Initializer::Construct_Object_Files_Directory(){
         }
      }
 }
+
+
+void Repo_Warehouse_Initializer::Construct_Make_Files_Directory(){
+
+     int return_condition = this->DirectoryManager.ChangeDirectory(this->Make_Files_Directory.c_str());
+
+     if(return_condition == 0){
+
+        int const_cond = this->DirectoryManager.MakeDirectory(this->Make_Files_Directory.c_str());
+
+        if(const_cond == 0){
+
+           std::cout << "\n The make files directory can not be constructed on:";
+
+           std::cout << "\n";
+
+           std::cout << this->Make_Files_Directory;
+
+           exit(0);
+        }
+     }
+}
+
 
 
 void Repo_Warehouse_Initializer::Construct_Library_Files_Directory(){

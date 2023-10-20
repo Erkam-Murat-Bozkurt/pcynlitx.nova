@@ -42,7 +42,7 @@ private:
  void Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path);
  void Write_Header_Paths_Shorts_Cuts();
  void Determine_MakeFile_Path(std::string & make_file_path, 
-      std::string src_file_path, std::string make_file_name);
+      std::string make_file_name);
  MakeFile_Data_Collector Data_Collector;
  Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;

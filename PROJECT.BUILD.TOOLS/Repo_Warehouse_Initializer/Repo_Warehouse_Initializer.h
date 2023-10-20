@@ -39,9 +39,11 @@ protected:
  void Determine_Object_Files_Directory();
  void Determine_Library_Files_Directory();
  void Determine_Compiler_Output_Directory();
+ void Determine_Make_Files_Directory();
  void Determine_Current_Directory();
  void Construct_Warehouse_Path();
  void Construct_Object_Files_Directory();
+ void Construct_Make_Files_Directory();
  void Construct_Library_Files_Directory();
  void Construct_Compiler_Outputs_Directory();
  void Clear_String_Memory(std::string * pointer);
@@ -51,7 +53,7 @@ protected:
  std::string warehouse_location;
  std::string warehouse_path;
  std::string current_directory;
- std::string Headers_Directory;
+ std::string Make_Files_Directory;
  std::string Object_Files_Directory;
  std::string Library_Files_Directory;
  std::string Compiler_Outputs_Directory; 
