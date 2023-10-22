@@ -58,7 +58,6 @@ private:
  void Place_CString(std::string * ptr, char * Information);
  void Find_Object_File_Name();
  void Determine_Compiler_System_Command();
- void Determine_Warehouse_Header_Dir();
  void Determine_Warehouse_Object_Dir();
  bool Check_Include_Directory_Existance(std::vector<std::string> * hdr_dir, std::string dir);
  DirectoryOperations DirectoryManager;
