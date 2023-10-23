@@ -45,6 +45,8 @@ void MakeFile_Directory_Constructor::Clear_Dynamic_Memory(){
 
      this->Clear_Vector_Memory(this->Ordered_MakeFile_Directories);
 
+     this->Clear_Vector_Memory(this->MakeFile_Construction_Directories);
+
      this->Clear_String_Memory(this->warehouse_path);
 }
 
@@ -83,7 +85,9 @@ void MakeFile_Directory_Constructor::Collect_Directory_Info(){
 
          this->Determine_MakeFile_File_Directory(mk_file_dir,git_record_dir);
 
-         this->MakeFile_Directories.push_back(mk_file_dir);         
+         this->MakeFile_Directories.push_back(mk_file_dir);
+
+         this->MakeFile_Construction_Directories.push_back(mk_file_dir);         
      }
 
      this->MakeFile_Directories.shrink_to_fit();
@@ -460,7 +464,7 @@ void MakeFile_Directory_Constructor::Clear_String_Memory(std::string & str)
 }
 
 
-std::vector<std::string> * MakeFile_Directory_Constructor::Get_MakeFile_Directories(){
+std::vector<std::string> * MakeFile_Directory_Constructor::Get_MakeFile_Construction_Directories(){
 
-      return &this->Ordered_MakeFile_Directories;
+      return &this->MakeFile_Construction_Directories;
 }

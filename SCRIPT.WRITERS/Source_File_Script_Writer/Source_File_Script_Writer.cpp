@@ -423,17 +423,101 @@ void Source_File_Script_Writer::Determine_Script_Path(char opr_sis){
 
      std::string src_name = this->Src_Data_Pointer->src_name_without_ext;
 
+     std::string git_record_dir = this->Src_Data_Pointer->source_file_git_record_dir;
+
+
+
+     std::string warehouse_location = this->Des_Reader_Ptr->Get_Warehouse_Location();
+
+     std::string warehouse_word = "WAREHOUSE";
+     
+     std::string make_file_dir_name = "MAKE.FILES";
+
+
+     size_t warehouse_dir_size  = warehouse_location.length();
+
+     for(size_t i=0;i<warehouse_dir_size;i++){
+
+         script_path.push_back(warehouse_location[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(script_path.back()!= '\\'){
+
+           script_path.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(script_path.back()!= '/'){
+
+           script_path.push_back('/');
+        }
+     }
+
+
+     size_t warehouse_word_size = warehouse_word.length();
+
+     for(size_t i=0;i<warehouse_word_size;i++){
+
+         script_path.push_back(warehouse_word[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(script_path.back()!= '\\'){
+
+           script_path.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(script_path.back()!= '/'){
+
+           script_path.push_back('/');
+        }
+     }
+
+     
+     size_t make_dir_size = make_file_dir_name.length();
+
+     for(size_t i=0;i<make_dir_size;i++){
+
+         script_path.push_back(make_file_dir_name[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(script_path.back()!= '\\'){
+
+           script_path.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(script_path.back()!= '/'){
+
+           script_path.push_back('/');
+        }
+     }
+
+
+
 
 
      size_t name_size = src_name.length();
 
-     size_t dir_size = src_dir.length();
+     size_t dir_size = git_record_dir.length();
 
      int index = 0;
 
      for(size_t i=0;i<dir_size;i++){
 
-         this->script_path.push_back(src_dir[i]);         
+         this->script_path.push_back(git_record_dir[i]);         
      }
 
      if(opr_sis == 'w'){

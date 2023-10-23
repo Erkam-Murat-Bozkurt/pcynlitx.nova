@@ -20,6 +20,7 @@
 #include "Make_File_Builder.h"
 #include "Make_File_Cleaner.hpp"
 #include "MakeFile_Data_Collector.hpp"
+#include "MakeFile_Directory_Constructor.hpp"
 #include "Source_File_Dependency_Determiner.hpp"
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
@@ -50,6 +51,7 @@ protected:
  Git_Data_Processor * Git_Data_Proc;
  std::vector<Compiler_Data> * Compiler_Data_Pointer;
  Make_File_Builder Mk_Builder[16];
+ MakeFile_Directory_Constructor Mk_Dir_Constructor;
  Descriptor_File_Reader * Des_Reader;
  std::thread threads[16];
  std::mutex mtx;

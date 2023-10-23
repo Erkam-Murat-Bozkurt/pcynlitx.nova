@@ -56,7 +56,7 @@ int main(int argc, char ** argv){
 
     Directory_Constructor.Collect_Directory_Info();
 
-    std::vector<std::string> * dirs = Directory_Constructor.Get_MakeFile_Directories();
+    std::vector<std::string> * dirs = Directory_Constructor.Get_MakeFile_Construction_Directories();
 
     for(size_t i=0;i<dirs->size();i++){
 

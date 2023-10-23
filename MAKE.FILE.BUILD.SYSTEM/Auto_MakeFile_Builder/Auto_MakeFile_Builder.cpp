@@ -12,6 +12,8 @@ Auto_MakeFile_Builder::Auto_MakeFile_Builder(char * DesPath, char opr_sis)
 
          this->Mk_Builder[i].Receive_Operating_System(opr_sis);
      }
+
+     this->Mk_Dir_Constructor.Receive_Operating_System(opr_sis);
 }
 
 
@@ -54,6 +56,8 @@ void Auto_MakeFile_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reade
 
          this->Mk_Builder[i].Receive_Descriptor_File_Reader(ptr);      
      }
+
+     this->Mk_Dir_Constructor.Receive_Descriptor_File_Reader(ptr);
 }
 
 
@@ -67,6 +71,8 @@ void Auto_MakeFile_Builder::Receive_Source_File_Dependency_Determiner(Source_Fil
 
          this->Mk_Builder[i].Receive_Compiler_Data_Pointer(dep_ptr->Get_Compiler_Data_Address());      
      }
+
+     this->Mk_Dir_Constructor.Receive_Compiler_Data_Pointer(dep_ptr->Get_Compiler_Data_Address());
 }
 
 
@@ -74,6 +80,10 @@ void Auto_MakeFile_Builder::Receive_Source_File_Dependency_Determiner(Source_Fil
 void Auto_MakeFile_Builder::Build_Make_Files(){
 
      // Determination of the directories recorded on the git repo
+
+     this->Mk_Dir_Constructor.Collect_Directory_Info();
+
+     this->Mk_Dir_Constructor.Construct_MakeFile_Directories();
 
      this->Determine_Project_Directories();
 

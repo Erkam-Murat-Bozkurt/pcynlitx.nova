@@ -32,7 +32,7 @@ public:
  void Receive_Operating_System(char opr_sis);
  void Construct_MakeFile_Directories();
  void Collect_Directory_Info();
- std::vector<std::string> * Get_MakeFile_Directories();
+ std::vector<std::string> * Get_MakeFile_Construction_Directories();
  void Clear_Dynamic_Memory(); 
  void Clear_Object_Memory();
 private:
@@ -52,6 +52,7 @@ private:
  Descriptor_File_Reader * Des_Reader;
  std::vector<Compiler_Data> * Compiler_Data_Ptr;
  std::vector<std::string> MakeFile_Directories;
+ std::vector<std::string> MakeFile_Construction_Directories;
  std::vector<std::string> Ordered_MakeFile_Directories;
  std::string warehouse_path;
  std::string make_files_root_directory;

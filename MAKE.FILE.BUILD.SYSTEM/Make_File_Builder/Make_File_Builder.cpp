@@ -354,6 +354,9 @@ void Make_File_Builder::Determine_MakeFile_Path(std::string & make_file_path,
      std::string make_file_name){
 
 
+     std::string git_record_dir = this->Data_Ptr->src_git_record_dir;
+
+
      std::string warehouse_location = this->Des_Reader->Get_Warehouse_Location();
 
      std::string warehouse_word = "WAREHOUSE";
@@ -414,6 +417,30 @@ void Make_File_Builder::Determine_MakeFile_Path(std::string & make_file_path,
      for(size_t i=0;i<make_dir_size;i++){
 
          make_file_path.push_back(make_file_dir_name[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(make_file_path.back()!= '\\'){
+
+           make_file_path.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(make_file_path.back()!= '/'){
+
+           make_file_path.push_back('/');
+        }
+     }
+
+
+     size_t git_dir_size = git_record_dir.length();
+
+     for(size_t i=0;i<git_dir_size;i++){
+
+         make_file_path.push_back(git_record_dir[i]);
      }
 
      if(this->opr_sis == 'w'){
