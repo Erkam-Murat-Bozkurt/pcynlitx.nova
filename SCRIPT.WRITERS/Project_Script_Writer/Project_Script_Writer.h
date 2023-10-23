@@ -40,6 +40,7 @@ protected:
  void Determine_Object_Files_Location(char opr_sis);
  void Clear_String_Memory(std::string & pointer);
  void Determine_Compiler_Output_Path(std::string class_name);
+ void Determine_Compiler_Output_File_Name(std::string & name, std::string class_name);
  void Determine_MakeFile_Directory(std::string & mkf_dir, std::string git_record_dir);
  void Determine_MakeFiles_Root_Directory();
  int  Determine_Decimal_Space(int total_src_num, int current_number);

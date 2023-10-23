@@ -607,28 +607,10 @@ void Source_File_Script_Writer::Determine_MakeFiles_Root_Directory(){
          this->MakeFiles_Root_Directory.push_back(make_file_dir_name[i]);
      }
 
-     /*
-
-     if(this->opr_sis == 'w'){
-
-        if(this->MakeFiles_Root_Directory.back()!= '\\'){
-
-           this->MakeFiles_Root_Directory.push_back('\\');
-        }
-     }
-
-     if(this->opr_sis == 'l'){
-
-        if(this->MakeFiles_Root_Directory.back()!= '/'){
-
-           this->MakeFiles_Root_Directory.push_back('/');
-        }
-     }
-
-     */
-
      this->MakeFiles_Root_Directory.shrink_to_fit();
 }
+
+
 
 void Source_File_Script_Writer::Construct_Path(std::string & path,
 

@@ -38,14 +38,12 @@ protected:
  void Determine_Warehouse_Path();
  void Determine_Object_Files_Directory();
  void Determine_Library_Files_Directory();
- void Determine_Compiler_Output_Directory();
  void Determine_Make_Files_Directory();
  void Determine_Current_Directory();
  void Construct_Warehouse_Path();
  void Construct_Object_Files_Directory();
  void Construct_Make_Files_Directory();
  void Construct_Library_Files_Directory();
- void Construct_Compiler_Outputs_Directory();
  void Clear_String_Memory(std::string * pointer);
  Git_Data_Processor * Git_Dt_Proc;
  DirectoryOperations DirectoryManager;
@@ -56,7 +54,6 @@ protected:
  std::string Make_Files_Directory;
  std::string Object_Files_Directory;
  std::string Library_Files_Directory;
- std::string Compiler_Outputs_Directory; 
  char opr_sis;
 };
 

@@ -302,12 +302,32 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).make_file_name);
 
-         this->Determine_Compiler_Output_Path(this->Data_Pointer->at(i).src_name_without_ext);
+         //this->Determine_Compiler_Output_Path(this->Data_Pointer->at(i).src_name_without_ext);
+
+         
 
 
          this->FileManager.WriteToFile(" 2>&1 > ");
 
-         this->FileManager.WriteToFile(this->compiler_output_location);
+
+
+
+
+
+         this->FileManager.WriteToFile("$MakeFiles_Location");
+
+         this->FileManager.WriteToFile("\\");
+      
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
+
+         this->FileManager.WriteToFile("\\");
+
+
+         std::string output_file_name;
+
+         this->Determine_Compiler_Output_File_Name(output_file_name,this->Data_Pointer->at(i).src_name_without_ext);
+
+         this->FileManager.WriteToFile(output_file_name);
 
          this->FileManager.WriteToFile("\n");
 
@@ -641,6 +661,32 @@ void Project_Script_Writer::Determine_Object_Files_Location(char opr_sis){
 
      this->Construct_Path(this->object_files_location,object_files_location_add,opr_sis);
 }
+
+
+void Project_Script_Writer::Determine_Compiler_Output_File_Name(std::string & name, std::string class_name){
+
+     std::string compiler_output_file_add = "_Compiler_Output.txt";
+     
+     size_t class_name_size = class_name.length();
+
+
+     for(size_t i=0;i<class_name_size;i++){
+
+         name.push_back(class_name[i]);
+     }
+
+
+     size_t file_add_size = compiler_output_file_add.length();
+
+     for(size_t i=0;i<file_add_size;i++){
+
+         name.push_back(compiler_output_file_add[i]);
+     }
+
+     name.shrink_to_fit();    
+}
+
+
 
 
 void Project_Script_Writer::Determine_Compiler_Output_Path(std::string class_name)
