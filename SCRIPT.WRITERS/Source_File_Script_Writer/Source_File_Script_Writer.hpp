@@ -27,6 +27,7 @@ public:
  void Clear_String_Memory(std::string & pointer);
 protected:
  void Determine_Compiler_Output_Path(std::string class_name);
+ void Determine_Compiler_Output_File_Name(std::string & name);
  void Determine_MakeFiles_Root_Directory();
  Descriptor_File_Reader * Des_Reader_Ptr;
  Script_Data * Src_Data_Pointer;

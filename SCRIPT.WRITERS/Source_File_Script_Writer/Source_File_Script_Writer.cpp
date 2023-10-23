@@ -243,7 +243,22 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile(" 2>&1 > ");
 
 
-     this->FileManager.WriteToFile(this->compiler_output_location);
+     std::string output_file_name;
+     
+     this->Determine_Compiler_Output_File_Name(output_file_name);
+
+     this->FileManager.WriteToFile("$Make_Files_Root_Dir");
+
+     this->FileManager.WriteToFile("\\");
+
+     if(!this->Src_Data_Pointer->source_file_git_record_dir.empty()){
+
+         this->FileManager.WriteToFile("$Make_File_Location");
+
+         this->FileManager.WriteToFile("\\");
+     }
+
+     this->FileManager.WriteToFile(output_file_name);
 
      this->FileManager.WriteToFile("\n");
 
@@ -438,6 +453,23 @@ void Source_File_Script_Writer::Determine_Script_Path(char opr_sis){
      }
 
 
+     if(this->opr_sis == 'w'){
+
+        if(this->script_path.back()!= '\\'){
+
+           this->script_path.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(this->script_path.back()!= '/'){
+
+           this->script_path.push_back('/');
+        }
+     }
+
+
      size_t name_size = src_name.length();
 
      size_t dir_size = git_record_dir.length();
@@ -575,6 +607,8 @@ void Source_File_Script_Writer::Determine_MakeFiles_Root_Directory(){
          this->MakeFiles_Root_Directory.push_back(make_file_dir_name[i]);
      }
 
+     /*
+
      if(this->opr_sis == 'w'){
 
         if(this->MakeFiles_Root_Directory.back()!= '\\'){
@@ -591,11 +625,9 @@ void Source_File_Script_Writer::Determine_MakeFiles_Root_Directory(){
         }
      }
 
+     */
+
      this->MakeFiles_Root_Directory.shrink_to_fit();
-
-     std::cout << "\n this->MakeFiles_Root_Directory:" << this->MakeFiles_Root_Directory;
-
-     std::cin.get();
 }
 
 void Source_File_Script_Writer::Construct_Path(std::string & path,
@@ -656,6 +688,32 @@ void Source_File_Script_Writer::Construct_Path(std::string & path,
      }
 
      path.shrink_to_fit();
+}
+
+
+void Source_File_Script_Writer::Determine_Compiler_Output_File_Name(std::string & name){
+
+     std::string compiler_output_file_add = "_Compiler_Output.txt";
+     
+     std::string class_name = this->Src_Data_Pointer->src_name_without_ext;
+
+     size_t class_name_size = class_name.length();
+
+
+     for(size_t i=0;i<class_name_size;i++){
+
+         name.push_back(class_name[i]);
+     }
+
+
+     size_t file_add_size = compiler_output_file_add.length();
+
+     for(size_t i=0;i<file_add_size;i++){
+
+         name.push_back(compiler_output_file_add[i]);
+     }
+
+     name.shrink_to_fit();    
 }
 
 

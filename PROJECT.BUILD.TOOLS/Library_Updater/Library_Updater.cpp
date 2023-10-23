@@ -75,37 +75,6 @@ void Library_Updater::Receive_Descriptor_File_Path(std::string DesPATH){
 }
 
 
-/*
-
-void Library_Updater::Receive_Library_Name(char * lib_name){
-
-     size_t name_size = strlen(lib_name);
-
-     for(size_t i=0;i<name_size;i++){
-
-         this->library_name.push_back(lib_name[i]);
-     }
-
-     this->library_name.shrink_to_fit();
-}
-
-
-void Library_Updater::Receive_Library_Name(std::string lib_name){
-
-     size_t name_size = lib_name.length();
-
-     for(size_t i=0;i<name_size;i++){
-
-         this->library_name.push_back(lib_name[i]);
-     }
-
-     this->library_name.shrink_to_fit();
-}
-
-*/
-
-
-
 void Library_Updater::Build_Library(){
 
      this->Determine_Project_Library_Name();
@@ -222,7 +191,7 @@ void Library_Updater::Build_Library(){
 
 void Library_Updater::Determine_Warehouse_Object_Dir(){
 
-     char object_directory [] = "PROJECT.OBJECT.FILES";
+     char object_directory [] = "OBJECT.FILES";
 
      char warehouse_word   [] = "WAREHOUSE";
 
@@ -265,7 +234,7 @@ void Library_Updater::Determine_Target_Library_Path(){
 
      char warehouse_word [] = "WAREHOUSE";
 
-     char directory_folder_name [] = "PROJECT.LIBRARY.FILES";
+     char directory_folder_name [] = "LIBRARY.FILES";
 
      size_t warehouse_path_size = this->warehouse_path.length();
 
@@ -316,7 +285,7 @@ void Library_Updater::Determine_Target_Library_Path(){
 
 void Library_Updater::Determine_Current_Library_Path(){
 
-     char object_directory_folder_name [] = "PROJECT.OBJECT.FILES";
+     char object_directory_folder_name [] = "OBJECT.FILES";
 
      char warehouse_word [] = "WAREHOUSE";
 

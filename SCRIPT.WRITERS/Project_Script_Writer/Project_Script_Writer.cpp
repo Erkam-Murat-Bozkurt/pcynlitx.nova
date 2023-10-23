@@ -54,6 +54,8 @@ void Project_Script_Writer::Build_Compiler_Script(){
 
      this->warehouse_path = this->Des_Reader->Get_Warehouse_Location();
 
+     this->Determine_MakeFiles_Root_Directory();
+
      this->Determine_Object_Files_Location('w');
 
      this->Determine_Project_Script_Path();
@@ -151,6 +153,21 @@ void Project_Script_Writer::Write_The_Project_Script(){
      this->FileManager.WriteToFile("\n");
 
 
+     this->FileManager.WriteToFile("# MakeFiles_Location is the root directory of make files ");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n$MakeFiles_Location=\"");
+
+     this->FileManager.WriteToFile(this->MakeFiles_Root_Directory);
+
+     this->FileManager.WriteToFile("\"");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("Write-Output \"\"");
 
@@ -219,8 +236,13 @@ void Project_Script_Writer::Write_The_Project_Script(){
          this->FileManager.WriteToFile(cd_word);
 
          this->FileManager.WriteToFile(" ");
+         
+         this->FileManager.WriteToFile("$MakeFiles_Location");
 
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
+         this->FileManager.WriteToFile("\\");
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
+
 
 
          this->FileManager.WriteToFile("\n");
@@ -230,8 +252,11 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
 
+         this->FileManager.WriteToFile("$MakeFiles_Location");
 
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
+         this->FileManager.WriteToFile("\\");
+      
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
 
          this->FileManager.WriteToFile("\\");
 
@@ -250,7 +275,11 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("   Remove-Item ");
 
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
+         this->FileManager.WriteToFile("$MakeFiles_Location");
+
+         this->FileManager.WriteToFile("\\");
+      
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
 
          this->FileManager.WriteToFile("\\");
 
@@ -326,7 +355,12 @@ void Project_Script_Writer::Write_The_Project_Script(){
          this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
 
 
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
+         this->FileManager.WriteToFile("$MakeFiles_Location");
+
+         this->FileManager.WriteToFile("\\");
+      
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
+
 
          this->FileManager.WriteToFile("\\");
 
@@ -380,15 +414,16 @@ void Project_Script_Writer::Write_The_Project_Script(){
          this->FileManager.WriteToFile("   Move-Item -Path ");
 
 
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_dir);
+         this->FileManager.WriteToFile("$MakeFiles_Location");
+
+
+         this->FileManager.WriteToFile("\\");
+      
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
 
          this->FileManager.WriteToFile("\\");
 
-
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
-
-
-
 
          this->FileManager.WriteToFile(" -Destination $Project_Objects_Location");
 
@@ -786,6 +821,111 @@ void Project_Script_Writer::Construct_Path(std::string & path,
 
      path.shrink_to_fit();
 }
+
+
+void Project_Script_Writer::Determine_MakeFiles_Root_Directory(){
+
+     std::string warehouse_location = this->Des_Reader->Get_Warehouse_Location();
+
+     std::string warehouse_word = "WAREHOUSE";
+     
+     std::string make_file_dir_name = "MAKE.FILES";
+
+
+     size_t warehouse_dir_size  = warehouse_location.length();
+
+     for(size_t i=0;i<warehouse_dir_size;i++){
+
+         this->MakeFiles_Root_Directory.push_back(warehouse_location[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(this->MakeFiles_Root_Directory.back()!= '\\'){
+
+           this->MakeFiles_Root_Directory.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(this->MakeFiles_Root_Directory.back()!= '/'){
+
+           this->MakeFiles_Root_Directory.push_back('/');
+        }
+     }
+
+
+     size_t warehouse_word_size = warehouse_word.length();
+
+     for(size_t i=0;i<warehouse_word_size;i++){
+
+         this->MakeFiles_Root_Directory.push_back(warehouse_word[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(this->MakeFiles_Root_Directory.back()!= '\\'){
+
+           this->MakeFiles_Root_Directory.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(this->MakeFiles_Root_Directory.back()!= '/'){
+
+           this->MakeFiles_Root_Directory.push_back('/');
+        }
+     }
+
+     
+     size_t make_dir_size = make_file_dir_name.length();
+
+     for(size_t i=0;i<make_dir_size;i++){
+
+         this->MakeFiles_Root_Directory.push_back(make_file_dir_name[i]);
+     }
+
+     this->MakeFiles_Root_Directory.shrink_to_fit();
+}
+
+
+void Project_Script_Writer::Determine_MakeFile_Directory(std::string & mkf_dir, std::string git_record_dir){
+
+     size_t root_size = this->MakeFiles_Root_Directory.size();
+
+     for(size_t i=0;i<root_size;i++){
+
+         mkf_dir.push_back(this->MakeFiles_Root_Directory.at(i));
+     }
+     
+     if(this->opr_sis == 'w'){
+
+        if(mkf_dir.back()!= '\\'){
+
+           mkf_dir.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(mkf_dir.back()!= '/'){
+
+           mkf_dir.push_back('/');
+        }
+     }
+
+     size_t git_dir_size = git_record_dir.size();
+
+     for(size_t i=0;i<git_dir_size;i++){
+
+         mkf_dir.push_back(git_record_dir.at(i));
+     }
+
+     mkf_dir.shrink_to_fit();
+}
+
 
 
 void Project_Script_Writer::Clear_String_Memory(std::string & str)

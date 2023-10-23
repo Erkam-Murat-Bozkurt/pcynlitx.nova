@@ -40,6 +40,8 @@ protected:
  void Determine_Object_Files_Location(char opr_sis);
  void Clear_String_Memory(std::string & pointer);
  void Determine_Compiler_Output_Path(std::string class_name);
+ void Determine_MakeFile_Directory(std::string & mkf_dir, std::string git_record_dir);
+ void Determine_MakeFiles_Root_Directory();
  int  Determine_Decimal_Space(int total_src_num, int current_number);
  Descriptor_File_Reader * Des_Reader;
  Script_Data_Processor Src_Data_Processor;
@@ -47,6 +49,7 @@ protected:
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
  IntToCharTranslater Translater;
+ std::string MakeFiles_Root_Directory;
  std::string Repo_Rood_Dir;
  std::string object_files_location;
  std::string compiler_output_location;
