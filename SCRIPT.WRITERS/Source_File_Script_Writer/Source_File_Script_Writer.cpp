@@ -35,7 +35,8 @@ void Source_File_Script_Writer::Clear_Dynamic_Memory(){
 
      this->Clear_String_Memory(this->object_files_location);
 
-     this->Clear_String_Memory(this->script_path);     
+     this->Clear_String_Memory(this->MakeFiles_Root_Directory);
+
 }
 
 
@@ -54,6 +55,8 @@ void Source_File_Script_Writer::Receive_Script_Data(Script_Data * Pointer){
 }
 
 void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
+
+     this->Determine_MakeFiles_Root_Directory();
 
      this->Determine_Script_Path('w');
 
@@ -82,9 +85,9 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile("\n");
 
 
-     this->FileManager.WriteToFile("$Repo_Root_Dir=\"");
+     this->FileManager.WriteToFile("$Make_Files_Root_Dir=\"");
 
-     this->FileManager.WriteToFile(this->Repo_Rood_Dir);
+     this->FileManager.WriteToFile(this->MakeFiles_Root_Directory);
 
      this->FileManager.WriteToFile("\"");
 
@@ -116,7 +119,7 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      if(!this->Src_Data_Pointer->source_file_git_record_dir.empty()){
 
-         this->FileManager.WriteToFile("$Source_File_Location=\"");
+         this->FileManager.WriteToFile("$Make_File_Location=\"");
 
          this->FileManager.WriteToFile(this->Src_Data_Pointer->source_file_git_record_dir);
 
@@ -181,14 +184,14 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
 
 
-     this->FileManager.WriteToFile("$Repo_Root_Dir");
+     this->FileManager.WriteToFile("$Make_Files_Root_Dir");
 
      this->FileManager.WriteToFile("\\");
 
      
      if(!this->Src_Data_Pointer->source_file_git_record_dir.empty()){
 
-         this->FileManager.WriteToFile("$Source_File_Location");
+         this->FileManager.WriteToFile("$Make_File_Location");
 
          this->FileManager.WriteToFile("\\");
      }
@@ -209,13 +212,13 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile("\n   Remove-Item ");
 
 
-     this->FileManager.WriteToFile("$Repo_Root_Dir");
+     this->FileManager.WriteToFile("$Make_Files_Root_Dir");
 
      this->FileManager.WriteToFile("\\");
 
      if(!this->Src_Data_Pointer->source_file_git_record_dir.empty()){
 
-         this->FileManager.WriteToFile("$Source_File_Location");
+         this->FileManager.WriteToFile("$Make_File_Location");
 
          this->FileManager.WriteToFile("\\");
      }
@@ -295,13 +298,13 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
       this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
 
 
-      this->FileManager.WriteToFile("$Repo_Root_Dir");
+      this->FileManager.WriteToFile("$Make_Files_Root_Dir");
 
       this->FileManager.WriteToFile("\\");
 
      if(!this->Src_Data_Pointer->source_file_git_record_dir.empty()){
 
-         this->FileManager.WriteToFile("$Source_File_Location");
+         this->FileManager.WriteToFile("$Make_File_Location");
 
          this->FileManager.WriteToFile("\\");
      }
@@ -357,14 +360,14 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
       this->FileManager.WriteToFile("   Move-Item -Path ");
 
 
-      this->FileManager.WriteToFile("$Repo_Root_Dir");
+      this->FileManager.WriteToFile("$Make_Files_Root_Dir");
 
       this->FileManager.WriteToFile("\\");
 
 
       if(!this->Src_Data_Pointer->source_file_git_record_dir.empty()){
 
-          this->FileManager.WriteToFile("$Source_File_Location");
+          this->FileManager.WriteToFile("$Make_File_Location");
 
           this->FileManager.WriteToFile("\\");
       }
@@ -427,86 +430,12 @@ void Source_File_Script_Writer::Determine_Script_Path(char opr_sis){
 
 
 
-     std::string warehouse_location = this->Des_Reader_Ptr->Get_Warehouse_Location();
+     size_t make_files_dir_size = this->MakeFiles_Root_Directory.size();
 
-     std::string warehouse_word = "WAREHOUSE";
-     
-     std::string make_file_dir_name = "MAKE.FILES";
+     for(size_t i=0;i<make_files_dir_size;i++){
 
-
-     size_t warehouse_dir_size  = warehouse_location.length();
-
-     for(size_t i=0;i<warehouse_dir_size;i++){
-
-         script_path.push_back(warehouse_location[i]);
+         this->script_path.push_back(this->MakeFiles_Root_Directory[i]);
      }
-
-     if(this->opr_sis == 'w'){
-
-        if(script_path.back()!= '\\'){
-
-           script_path.push_back('\\');
-        }
-     }
-
-     if(this->opr_sis == 'l'){
-
-        if(script_path.back()!= '/'){
-
-           script_path.push_back('/');
-        }
-     }
-
-
-     size_t warehouse_word_size = warehouse_word.length();
-
-     for(size_t i=0;i<warehouse_word_size;i++){
-
-         script_path.push_back(warehouse_word[i]);
-     }
-
-     if(this->opr_sis == 'w'){
-
-        if(script_path.back()!= '\\'){
-
-           script_path.push_back('\\');
-        }
-     }
-
-     if(this->opr_sis == 'l'){
-
-        if(script_path.back()!= '/'){
-
-           script_path.push_back('/');
-        }
-     }
-
-     
-     size_t make_dir_size = make_file_dir_name.length();
-
-     for(size_t i=0;i<make_dir_size;i++){
-
-         script_path.push_back(make_file_dir_name[i]);
-     }
-
-     if(this->opr_sis == 'w'){
-
-        if(script_path.back()!= '\\'){
-
-           script_path.push_back('\\');
-        }
-     }
-
-     if(this->opr_sis == 'l'){
-
-        if(script_path.back()!= '/'){
-
-           script_path.push_back('/');
-        }
-     }
-
-
-
 
 
      size_t name_size = src_name.length();
@@ -581,6 +510,93 @@ void Source_File_Script_Writer::Determine_Warehouse_Paths(char opr_sis){
 
 }
 
+
+void Source_File_Script_Writer::Determine_MakeFiles_Root_Directory(){
+
+     std::string warehouse_location = this->Des_Reader_Ptr->Get_Warehouse_Location();
+
+     std::string warehouse_word = "WAREHOUSE";
+     
+     std::string make_file_dir_name = "MAKE.FILES";
+
+
+     size_t warehouse_dir_size  = warehouse_location.length();
+
+     for(size_t i=0;i<warehouse_dir_size;i++){
+
+         this->MakeFiles_Root_Directory.push_back(warehouse_location[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(this->MakeFiles_Root_Directory.back()!= '\\'){
+
+           this->MakeFiles_Root_Directory.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(this->MakeFiles_Root_Directory.back()!= '/'){
+
+           this->MakeFiles_Root_Directory.push_back('/');
+        }
+     }
+
+
+     size_t warehouse_word_size = warehouse_word.length();
+
+     for(size_t i=0;i<warehouse_word_size;i++){
+
+         this->MakeFiles_Root_Directory.push_back(warehouse_word[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(this->MakeFiles_Root_Directory.back()!= '\\'){
+
+           this->MakeFiles_Root_Directory.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(this->MakeFiles_Root_Directory.back()!= '/'){
+
+           this->MakeFiles_Root_Directory.push_back('/');
+        }
+     }
+
+     
+     size_t make_dir_size = make_file_dir_name.length();
+
+     for(size_t i=0;i<make_dir_size;i++){
+
+         this->MakeFiles_Root_Directory.push_back(make_file_dir_name[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(this->MakeFiles_Root_Directory.back()!= '\\'){
+
+           this->MakeFiles_Root_Directory.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(this->MakeFiles_Root_Directory.back()!= '/'){
+
+           this->MakeFiles_Root_Directory.push_back('/');
+        }
+     }
+
+     this->MakeFiles_Root_Directory.shrink_to_fit();
+
+     std::cout << "\n this->MakeFiles_Root_Directory:" << this->MakeFiles_Root_Directory;
+
+     std::cin.get();
+}
 
 void Source_File_Script_Writer::Construct_Path(std::string & path,
 

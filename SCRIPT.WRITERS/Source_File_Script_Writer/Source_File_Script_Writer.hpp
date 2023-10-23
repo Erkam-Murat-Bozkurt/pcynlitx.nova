@@ -26,7 +26,8 @@ public:
  void Clear_Dynamic_Memory();
  void Clear_String_Memory(std::string & pointer);
 protected:
-void Determine_Compiler_Output_Path(std::string class_name);
+ void Determine_Compiler_Output_Path(std::string class_name);
+ void Determine_MakeFiles_Root_Directory();
  Descriptor_File_Reader * Des_Reader_Ptr;
  Script_Data * Src_Data_Pointer;
  Cpp_FileOperations FileManager;
@@ -35,6 +36,7 @@ void Determine_Compiler_Output_Path(std::string class_name);
  std::string compiler_output_location;
  std::string script_path;
  std::string warehouse_path;
+ std::string MakeFiles_Root_Directory;
  char opr_sis;
  bool Memory_Delete_Condition;
 };
