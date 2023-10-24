@@ -54,11 +54,15 @@ protected:
  void Check_Build_Success_Status(int index);
  void Move_Object_File_To_The_Warehouse(int index);
  void Print_Build_Output_To_Screen(int index);
+ void Determine_MakeFiles_Root_Directory();
+ void Determine_MakeFile_Directory(std::string & mkf_dir, std::string git_record_dir);
+ void Determine_Compiler_Output_File_Name(std::string & name, std::string class_name);
  Descriptor_File_Reader * Des_Reader;
  Script_Data_Processor Src_Data_Processor;
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
  IntToCharTranslater Translater;
+ std::string MakeFiles_Root_Directory;
  std::string Construction_Directory_Path;
  std::string Repo_Root_Dir;
  std::string object_files_location;

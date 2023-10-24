@@ -241,7 +241,15 @@ void Project_Script_Writer::Write_The_Project_Script(){
          
          this->FileManager.WriteToFile("$MakeFiles_Location");
 
-         this->FileManager.WriteToFile("\\");
+         if(this->opr_sis == 'w'){
+
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
 
@@ -256,11 +264,31 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("$MakeFiles_Location");
 
-         this->FileManager.WriteToFile("\\");
-      
+
+         if(this->opr_sis == 'w'){
+
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
+
+
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
 
-         this->FileManager.WriteToFile("\\");
+
+         if(this->opr_sis == 'w'){
+
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
+
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
 
@@ -279,11 +307,31 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("$MakeFiles_Location");
 
-         this->FileManager.WriteToFile("\\");
-      
+
+         if(this->opr_sis == 'w'){
+
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
+
+
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
 
-         this->FileManager.WriteToFile("\\");
+
+         if(this->opr_sis == 'w'){
+
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
+
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
 
@@ -304,22 +352,32 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).make_file_name);
          
-
-
          this->FileManager.WriteToFile(" 2>&1 > ");
-
-
-
-
-
 
          this->FileManager.WriteToFile("$MakeFiles_Location");
 
-         this->FileManager.WriteToFile("\\");
-      
+         if(this->opr_sis == 'w'){
+
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
+
+
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
 
-         this->FileManager.WriteToFile("\\");
+         if(this->opr_sis == 'w'){
+
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
 
 
          std::string output_file_name;
@@ -376,12 +434,31 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("$MakeFiles_Location");
 
-         this->FileManager.WriteToFile("\\");
-      
+         if(this->opr_sis == 'w'){
+
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
+
+
+
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
 
+         if(this->opr_sis == 'w'){
 
-         this->FileManager.WriteToFile("\\");
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
+
+
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
 
@@ -400,7 +477,16 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("$Project_Objects_Location");
 
-         this->FileManager.WriteToFile("\\");
+         if(this->opr_sis == 'w'){
+
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
+
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
 
@@ -418,7 +504,17 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("$Project_Objects_Location");
 
-         this->FileManager.WriteToFile("\\");
+
+         if(this->opr_sis == 'w'){
+
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
+
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
 
@@ -435,12 +531,31 @@ void Project_Script_Writer::Write_The_Project_Script(){
 
          this->FileManager.WriteToFile("$MakeFiles_Location");
 
+         if(this->opr_sis == 'w'){
 
-         this->FileManager.WriteToFile("\\");
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
+
+
       
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
 
-         this->FileManager.WriteToFile("\\");
+
+         if(this->opr_sis == 'w'){
+
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
+
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
 
@@ -711,7 +826,16 @@ void Project_Script_Writer::Write_Project_Build_Script(){
          
          this->FileManager.WriteToFile("$MakeFiles_Location");
 
-         this->FileManager.WriteToFile("\\");
+         if(this->opr_sis == 'w'){
+
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
+
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
 
@@ -726,11 +850,30 @@ void Project_Script_Writer::Write_Project_Build_Script(){
          
          this->FileManager.WriteToFile("$MakeFiles_Location");
 
-         this->FileManager.WriteToFile("\\");
+         if(this->opr_sis == 'w'){
+
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
+
+
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
 
-         this->FileManager.WriteToFile("\\");
+         if(this->opr_sis == 'w'){
+
+            this->FileManager.WriteToFile("\\");
+         }
+
+         if(this->opr_sis == 'l'){
+
+            this->FileManager.WriteToFile("/");
+         }
+
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).src_name_without_ext);
 
@@ -958,82 +1101,6 @@ void Project_Script_Writer::Determine_Compiler_Output_File_Name(std::string & na
      }
 
      name.shrink_to_fit();    
-}
-
-
-
-
-void Project_Script_Writer::Determine_Compiler_Output_Path(std::string class_name)
-{
-     this->Clear_String_Memory(this->compiler_output_location);
-
-     std::string output_directory = "WAREHOUSE\\OUTPUTS";
-
-     std::string compiler_output_location_add = "_Compiler_Output.txt";
-     
-     int index = 0;
-
-     size_t warehouse_path_size = this->warehouse_path.length();
-
-     for(size_t i=0;i<warehouse_path_size;i++){
-
-         this->compiler_output_location.push_back(this->warehouse_path[i]);
-     }
-
-     if(this->opr_sis == 'w'){
-
-        if(warehouse_path.back() != '\\'){
-
-           this->compiler_output_location.push_back('\\');        
-        }
-     }
-    
-     if(this->opr_sis == 'l'){
-
-        if(warehouse_path.back() != '/'){
-
-           this->compiler_output_location.push_back('/');        
-        }
-     }
-
-     size_t output_directory_size = output_directory.length();
-
-     for(size_t i=0;i<output_directory_size;i++){
-
-         this->compiler_output_location.push_back(output_directory[i]);
-     }
-
-     if(this->opr_sis == 'w'){
-
-        if(warehouse_path.back() != '\\'){
-
-           this->compiler_output_location.push_back('\\');        
-        }
-     }
-    
-     if(this->opr_sis == 'l'){
-
-        if(warehouse_path.back() != '/'){
-
-           this->compiler_output_location.push_back('/');        
-        }
-     }
-
-     size_t class_name_size = class_name.length();
-
-     for(size_t i=0;i<class_name_size;i++){
-
-        this->compiler_output_location.push_back(class_name[i]);
-     }
-
-     size_t add_string_size = compiler_output_location_add.length();
-
-     for(size_t i=0;i<add_string_size;i++){
-
-         this->compiler_output_location.push_back(compiler_output_location_add[i]);
-     }
-
-     this->compiler_output_location.shrink_to_fit();        
 }
 
 

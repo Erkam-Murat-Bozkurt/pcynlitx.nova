@@ -293,7 +293,7 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
         library_directory.push_back('/');
      }
 
-     library_directory += "PROJECT.LIBRARY.FILES";
+     library_directory += "LIBRARY.FILES";
 
 
      this->FileManager.WriteToFile(library_directory);
@@ -727,7 +727,7 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
         library_directory.push_back('/');
      }
 
-     library_directory += "PROJECT.LIBRARY.FILES";
+     library_directory += "LIBRARY.FILES";
 
 
      this->FileManager.WriteToFile(library_directory);

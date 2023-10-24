@@ -7,7 +7,6 @@ Executable_MakeFile_Script_Builder::Executable_MakeFile_Script_Builder(char opr_
 
     Src_Data_Processor(opr_sis)
 {
-
      this->Memory_Delete_Condition = true;
 
      this->source_file_num = 0;
@@ -153,6 +152,7 @@ void Executable_MakeFile_Script_Builder::Build_Compiler_Script_For_Executable_Fi
 
      this->warehouse_path = this->Des_Reader->Get_Warehouse_Location();
 
+     this->Determine_MakeFiles_Root_Directory();
 
      this->Determine_Object_Files_Location('w');
 
@@ -187,8 +187,30 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
      this->FileManager.WriteToFile("\n");
      this->FileManager.WriteToFile("\n");
 
-     char cd_word [] = "Set-Location ";
 
+
+     this->FileManager.WriteToFile("# MakeFiles_Location is the root directory of make files ");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n$MakeFiles_Location=\"");
+
+     this->FileManager.WriteToFile(this->MakeFiles_Root_Directory);
+
+     this->FileManager.WriteToFile("\"");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+
+     char cd_word [] = "Set-Location ";
 
      this->FileManager.WriteToFile("Write-Output \"\"");
 
@@ -243,45 +265,9 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
          this->Change_Directory(i);
 
-         //this->Determination_of_Up_to_date_Status(i);
-  
-         //this->FileManager.WriteToFile("if($UP_TO_DATE_COND -ne 0)){");
-
-         this->Remove_The_Current_Object_File(i);
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
          this->Compile_The_Source_File(i);
 
-         this->FileManager.WriteToFile("\n");
-
-         this->Check_Build_Success_Status(i);
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->Move_Object_File_To_The_Warehouse(i);
-
-         this->FileManager.WriteToFile("\n");
-
          this->Print_Build_Output_To_Screen(i);
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("\n");
 
@@ -381,7 +367,12 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
      this->FileManager.WriteToFile(" 2>&1 > ");
 
-     this->FileManager.WriteToFile(this->compiler_output_location);
+     std::string output_file_name;
+
+     this->Determine_Compiler_Output_File_Name(output_file_name,this->Data_Pointer->back().src_name_without_ext);
+
+
+     this->FileManager.WriteToFile(output_file_name);
 
      this->FileManager.WriteToFile("\n");
 
@@ -418,9 +409,6 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("}");
-
-
-
 
 
      this->FileManager.WriteToFile("\n");
@@ -520,11 +508,20 @@ int Executable_MakeFile_Script_Builder::Determine_Decimal_Space(int total_src_nu
 
       this->FileManager.WriteToFile(" ");
 
-      this->FileManager.WriteToFile(this->Data_Pointer->at(index).source_file_dir);
+      this->FileManager.WriteToFile("$MakeFiles_Location");
 
-      this->FileManager.WriteToFile("\n");
-         
-      this->FileManager.WriteToFile("\n");         
+      if(this->opr_sis == 'w'){
+
+         this->FileManager.WriteToFile("\\");
+      }
+
+      if(this->opr_sis == 'l'){
+
+         this->FileManager.WriteToFile("/");
+      }
+
+
+      this->FileManager.WriteToFile(this->Data_Pointer->at(index).source_file_git_record_dir);      
  }
 
 
@@ -547,61 +544,128 @@ void Executable_MakeFile_Script_Builder::Determination_of_Up_to_date_Status(int 
 }
 
 
- void Executable_MakeFile_Script_Builder::Remove_The_Current_Object_File(int index){
+
+
+void Executable_MakeFile_Script_Builder::Remove_The_Current_Object_File(int index){
       
-      this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
+     this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
 
-      this->FileManager.WriteToFile(this->Data_Pointer->at(index).source_file_dir);
 
-      this->FileManager.WriteToFile("\\");
+     this->FileManager.WriteToFile("$MakeFiles_Location");
 
-      this->FileManager.WriteToFile(this->Data_Pointer->at(index).object_file_name);
+     if(this->opr_sis == 'w'){
 
-      this->FileManager.WriteToFile("\n");
+        this->FileManager.WriteToFile("\\");
+     }
 
-      this->FileManager.WriteToFile("\n");
+     if(this->opr_sis == 'l'){
 
-      this->FileManager.WriteToFile("if($Condition){");
+        this->FileManager.WriteToFile("/");
+     }
 
-      this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).source_file_git_record_dir);
 
-      this->FileManager.WriteToFile("\n");
+     if(this->opr_sis == 'w'){
 
-      this->FileManager.WriteToFile("  Remove-Item ");
+        this->FileManager.WriteToFile("\\");
+     }
 
-      this->FileManager.WriteToFile(this->Data_Pointer->at(index).source_file_dir);
+     if(this->opr_sis == 'l'){
 
-      this->FileManager.WriteToFile("\\");
+        this->FileManager.WriteToFile("/");
+     }
 
-      this->FileManager.WriteToFile(this->Data_Pointer->at(index).object_file_name);
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).object_file_name);
 
-      this->FileManager.WriteToFile("\n");
-      
-      this->FileManager.WriteToFile("}");
+     this->FileManager.WriteToFile("\n");
 
-      this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("if($Condition){");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("  Remove-Item ");
+
+     this->FileManager.WriteToFile("$MakeFiles_Location");
+
+     if(this->opr_sis == 'w'){
+
+        this->FileManager.WriteToFile("\\");
+     }
+
+     if(this->opr_sis == 'l'){
+
+        this->FileManager.WriteToFile("/");
+     }
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).source_file_git_record_dir);
+
+     if(this->opr_sis == 'w'){
+
+        this->FileManager.WriteToFile("\\");
+     }
+
+     if(this->opr_sis == 'l'){
+
+        this->FileManager.WriteToFile("/");
+     }
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).object_file_name);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("}");
+
+     this->FileManager.WriteToFile("\n");
 
 }
+
+
 
 void Executable_MakeFile_Script_Builder::Compile_The_Source_File(int index){
 
      this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("mingw32-make -f ");
-
-     this->FileManager.WriteToFile(this->Data_Pointer->at(index).make_file_name);
-
-     this->Determine_Compiler_Output_Path(this->Data_Pointer->at(index).src_name_without_ext);
-
-     this->FileManager.WriteToFile(" 2>&1 > ");
-
-     this->FileManager.WriteToFile(this->compiler_output_location);
-
+         
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("powershell.exe ");
+         
+     this->FileManager.WriteToFile("$MakeFiles_Location");
+
+     if(this->opr_sis == 'w'){
+
+        this->FileManager.WriteToFile("\\");
+     }
+
+     if(this->opr_sis == 'l'){
+
+        this->FileManager.WriteToFile("/");
+     }
+
+
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).source_file_git_record_dir);
+
+     if(this->opr_sis == 'w'){
+
+        this->FileManager.WriteToFile("\\");
+     }
+
+     if(this->opr_sis == 'l'){
+
+        this->FileManager.WriteToFile("/");
+     }
+
+
+     this->FileManager.WriteToFile(this->Data_Pointer->at(index).src_name_without_ext);
+
+     this->FileManager.WriteToFile(".ps1");
 }
 
 
@@ -641,6 +705,67 @@ void Executable_MakeFile_Script_Builder::Check_Build_Success_Status(int index){
 
      this->FileManager.WriteToFile("\n");
 
+}
+
+
+void Executable_MakeFile_Script_Builder::Determine_MakeFile_Directory(std::string & mkf_dir, 
+
+     std::string git_record_dir){
+
+     size_t root_size = this->MakeFiles_Root_Directory.size();
+
+     for(size_t i=0;i<root_size;i++){
+
+         mkf_dir.push_back(this->MakeFiles_Root_Directory.at(i));
+     }
+     
+     if(this->opr_sis == 'w'){
+
+        if(mkf_dir.back()!= '\\'){
+
+           mkf_dir.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(mkf_dir.back()!= '/'){
+
+           mkf_dir.push_back('/');
+        }
+     }
+
+     size_t git_dir_size = git_record_dir.size();
+
+     for(size_t i=0;i<git_dir_size;i++){
+
+         mkf_dir.push_back(git_record_dir.at(i));
+     }
+
+     mkf_dir.shrink_to_fit();
+}
+
+void Executable_MakeFile_Script_Builder::Determine_Compiler_Output_File_Name(std::string & name, std::string class_name){
+
+     std::string compiler_output_file_add = "_Compiler_Output.txt";
+     
+     size_t class_name_size = class_name.length();
+
+
+     for(size_t i=0;i<class_name_size;i++){
+
+         name.push_back(class_name[i]);
+     }
+
+
+     size_t file_add_size = compiler_output_file_add.length();
+
+     for(size_t i=0;i<file_add_size;i++){
+
+         name.push_back(compiler_output_file_add[i]);
+     }
+
+     name.shrink_to_fit();    
 }
 
 
@@ -723,6 +848,7 @@ void Executable_MakeFile_Script_Builder::Print_Build_Output_To_Screen(int index)
 
      this->FileManager.WriteToFile("\n");
 
+     this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("Write-Host \"[\" -NoNewline ");
 
@@ -770,9 +896,76 @@ void Executable_MakeFile_Script_Builder::Print_Build_Output_To_Screen(int index)
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
+}
 
-     this->FileManager.WriteToFile("\n");
 
+
+
+void Executable_MakeFile_Script_Builder::Determine_MakeFiles_Root_Directory(){
+
+     std::string warehouse_location = this->Des_Reader->Get_Warehouse_Location();
+
+     std::string warehouse_word = "WAREHOUSE";
+     
+     std::string make_file_dir_name = "MAKE.FILES";
+
+
+     size_t warehouse_dir_size  = warehouse_location.length();
+
+     for(size_t i=0;i<warehouse_dir_size;i++){
+
+         this->MakeFiles_Root_Directory.push_back(warehouse_location[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(this->MakeFiles_Root_Directory.back()!= '\\'){
+
+           this->MakeFiles_Root_Directory.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(this->MakeFiles_Root_Directory.back()!= '/'){
+
+           this->MakeFiles_Root_Directory.push_back('/');
+        }
+     }
+
+
+     size_t warehouse_word_size = warehouse_word.length();
+
+     for(size_t i=0;i<warehouse_word_size;i++){
+
+         this->MakeFiles_Root_Directory.push_back(warehouse_word[i]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if(this->MakeFiles_Root_Directory.back()!= '\\'){
+
+           this->MakeFiles_Root_Directory.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(this->MakeFiles_Root_Directory.back()!= '/'){
+
+           this->MakeFiles_Root_Directory.push_back('/');
+        }
+     }
+
+     
+     size_t make_dir_size = make_file_dir_name.length();
+
+     for(size_t i=0;i<make_dir_size;i++){
+
+         this->MakeFiles_Root_Directory.push_back(make_file_dir_name[i]);
+     }
+
+     this->MakeFiles_Root_Directory.shrink_to_fit();
 }
 
 
