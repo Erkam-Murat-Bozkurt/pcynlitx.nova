@@ -33,6 +33,7 @@ public:
 protected:
  void Write_Source_File_Scripts();
  void Write_The_Project_Script();
+ void Write_Project_Build_Script();
  void Determine_Project_Script_Path();
  void Construct_Path(std::string & path, std::string str, std::string wp);
  void Construct_Path(std::string & pointer,

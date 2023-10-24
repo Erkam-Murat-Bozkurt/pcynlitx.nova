@@ -62,7 +62,9 @@ void Project_Script_Writer::Build_Compiler_Script(){
 
      this->Write_Source_File_Scripts();
 
-     this->Write_The_Project_Script();
+     //this->Write_The_Project_Script();
+
+     this->Write_Project_Build_Script();
 }
 
 
@@ -301,9 +303,6 @@ void Project_Script_Writer::Write_The_Project_Script(){
          this->FileManager.WriteToFile("mingw32-make -f ");
 
          this->FileManager.WriteToFile(this->Data_Pointer->at(i).make_file_name);
-
-         //this->Determine_Compiler_Output_Path(this->Data_Pointer->at(i).src_name_without_ext);
-
          
 
 
@@ -603,6 +602,281 @@ void Project_Script_Writer::Write_The_Project_Script(){
      this->FileManager.FileClose();
 }
 
+
+void Project_Script_Writer::Write_Project_Build_Script(){
+
+     std::string Repo_Rood_Dir = this->Des_Reader->Get_Repo_Directory_Location();
+
+     this->FileManager.SetFilePath(this->script_path);
+
+     this->FileManager.FileOpen(RWCf);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n$Project_Objects_Location=\"");
+
+     this->FileManager.WriteToFile(this->object_files_location);
+
+     this->FileManager.WriteToFile("\"");
+
+     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n");
+
+
+     this->FileManager.WriteToFile("# MakeFiles_Location is the root directory of make files ");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n$MakeFiles_Location=\"");
+
+     this->FileManager.WriteToFile(this->MakeFiles_Root_Directory);
+
+     this->FileManager.WriteToFile("\"");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("Write-Output \" THE OBJECT FILE CONSTRUCTION ( RE-CONSTRUCTION ) PROCESS STARTED\"");
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n\n");
+
+
+     this->FileManager.WriteToFile("Write-Output \" Total number of the source file: ");
+
+     this->FileManager.WriteToFile(this->Translater.Translate(this->source_file_num));
+
+     this->FileManager.WriteToFile("\"");
+
+
+     this->FileManager.WriteToFile("\n\n");
+
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n\n");
+
+
+
+     char cd_word [] = "Set-Location ";
+
+
+     for(int i=0;i<this->source_file_num;i++){
+
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n\n");
+
+         this->FileManager.WriteToFile("# Dependency: ");
+
+         std::string dep = std::to_string(this->Data_Pointer->at(i).dependency);
+
+         this->FileManager.WriteToFile(dep);
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile(cd_word);
+
+         this->FileManager.WriteToFile(" ");
+         
+         this->FileManager.WriteToFile("$MakeFiles_Location");
+
+         this->FileManager.WriteToFile("\\");
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
+
+
+
+         this->FileManager.WriteToFile("\n");
+         
+         this->FileManager.WriteToFile("\n");
+
+
+         this->FileManager.WriteToFile("powershell.exe ");
+         
+         this->FileManager.WriteToFile("$MakeFiles_Location");
+
+         this->FileManager.WriteToFile("\\");
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
+
+         this->FileManager.WriteToFile("\\");
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).src_name_without_ext);
+
+         this->FileManager.WriteToFile(".ps1");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+
+         this->FileManager.WriteToFile("Write-Host \"[ \" -NoNewline ");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+
+         int decimal_space =  this->Determine_Decimal_Space(this->source_file_num,i+1);
+
+
+         this->FileManager.WriteToFile("Write-Host \"");
+
+         for(int k=0;k<decimal_space;k++){
+
+             this->FileManager.WriteToFile(" ");
+
+         }
+
+
+         this->FileManager.WriteToFile("\" -NoNewline");
+
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+
+         this->FileManager.WriteToFile("Write-Host \"");
+
+
+         this->FileManager.WriteToFile(this->Translater.Translate(i+1));
+
+         this->FileManager.WriteToFile("\" -ForegroundColor Green -NoNewline");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+
+         this->FileManager.WriteToFile("Write-Host \"");
+
+
+         this->FileManager.WriteToFile(" / ");
+
+         this->FileManager.WriteToFile(this->Translater.Translate(this->source_file_num));
+
+         this->FileManager.WriteToFile("\" -ForegroundColor White -NoNewline");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("Write-Host \" ] Built for ");
+
+
+         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_name);
+
+
+         this->FileManager.WriteToFile(" complated\"");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+     }
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("Write-Output \"THE PROJECT OBJECT FILES CONSTRUCTED\"");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\nLibrary_Updater.exe ");
+
+     std::string des_path = this->Des_Reader->Get_Descriptor_File_Path();
+
+     this->FileManager.WriteToFile(des_path);
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("Write-Output \"THE PROJECT LIBRARY UPDATED\"");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+
+     this->FileManager.FileClose();
+}
 
 void Project_Script_Writer::Clear_Dynamic_Memory(){
 

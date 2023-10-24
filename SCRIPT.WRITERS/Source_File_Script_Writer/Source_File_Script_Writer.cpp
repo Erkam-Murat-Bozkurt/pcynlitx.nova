@@ -110,12 +110,7 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile("\n");
 
 
-
      this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-
 
      if(!this->Src_Data_Pointer->source_file_git_record_dir.empty()){
 
@@ -146,36 +141,6 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->FileManager.WriteToFile("\n");
 
-
-
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-     this->FileManager.WriteToFile("\n\n");
-
-     this->FileManager.WriteToFile("Write-Output \"");
-
-
-
-     this->FileManager.WriteToFile(this->Src_Data_Pointer->source_file_name);
-
-     this->FileManager.WriteToFile(" class object file construction started\"");
-
-     this->FileManager.WriteToFile("\n\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-     this->FileManager.WriteToFile("\n\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-     this->FileManager.WriteToFile("\n\n");
 
 
 
@@ -230,6 +195,7 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->FileManager.WriteToFile("\n}");
 
+     this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
 
@@ -302,13 +268,6 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
      this->FileManager.WriteToFile("\n");
 
 
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-
-
-      this->FileManager.WriteToFile("\n");
 
       this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
 
@@ -395,29 +354,12 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
       this->FileManager.WriteToFile("\n");
 
       this->FileManager.WriteToFile("}");
-
+      
       this->FileManager.WriteToFile("\n");
 
       this->FileManager.WriteToFile("\n");
 
-
-     this->FileManager.WriteToFile("Write-Output \"  # ");
-
-
-     this->FileManager.WriteToFile(this->Src_Data_Pointer->source_file_name);
-
-
-     this->FileManager.WriteToFile(" class has been compiled\"");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
+      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
 
