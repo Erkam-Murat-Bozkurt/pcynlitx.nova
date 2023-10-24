@@ -876,11 +876,19 @@ void Executable_MakeFile_Script_Builder::Print_Build_Output_To_Screen(int index)
 
      this->FileManager.WriteToFile(this->Translater.Translate(index+1));
 
+     this->FileManager.WriteToFile("\" -ForegroundColor Green -NoNewline");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("Write-Host \"");
+
      this->FileManager.WriteToFile(" / ");
 
      this->FileManager.WriteToFile(this->Translater.Translate(this->source_file_num));
 
-     this->FileManager.WriteToFile("\" -NoNewline");
+     this->FileManager.WriteToFile("\" -ForegroundColor White -NoNewline");
 
      this->FileManager.WriteToFile("\n");
 

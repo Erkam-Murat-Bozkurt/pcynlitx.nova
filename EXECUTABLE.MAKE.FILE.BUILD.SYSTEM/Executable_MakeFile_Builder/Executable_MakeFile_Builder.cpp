@@ -424,8 +424,6 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      char NextLine [] = " \\";
 
-     char header_add [] = ".h";
-
      char object_add [] = ".o";
 
 
@@ -857,8 +855,6 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
 
 
      char NextLine [] = " \\";
-
-     char header_add [] = ".h";
 
 
 

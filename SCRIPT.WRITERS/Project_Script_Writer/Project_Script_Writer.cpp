@@ -69,6 +69,10 @@ void Project_Script_Writer::Build_Compiler_Script(){
 
 
 void Project_Script_Writer::Build_Update_Script(){
+
+     this->Determine_MakeFiles_Root_Directory();
+
+     this->Determine_Object_Files_Location('w');
      
      this->Src_Data_Processor.Process_Script_Data();
 
@@ -87,7 +91,7 @@ void Project_Script_Writer::Build_Update_Script(){
         exit(EXIT_FAILURE);
      }
 
-     this->Write_The_Project_Script();
+     this->Write_Project_Build_Script();
 }
 
 
