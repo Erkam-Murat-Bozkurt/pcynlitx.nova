@@ -28,13 +28,11 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 Git_Data_Processor::Git_Data_Processor(char opr_sis) :
 
     Modf_Receiver(opr_sis), Modf_Lister(opr_sis), List_Writer(opr_sis), 
-    List_Receiver(opr_sis), Ing_Lister(opr_sis),  Des_Reader(opr_sis),
-    FileManager(opr_sis) 
+    List_Receiver(opr_sis), Des_Reader(opr_sis) 
 {
     this->opr_sis = opr_sis;
 
     this->Memory_Delete_Condition = false;
-
 }
 
 
@@ -56,8 +54,6 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(char * DesPath){
      this->List_Writer.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
      this->List_Receiver.Receive_Descriptor_File_Reader(&this->Des_Reader);
-
-     this->Ing_Lister.Receive_Descriptor_File_Reader(&this->Des_Reader);
 }
 
 void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
@@ -69,8 +65,6 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
      this->List_Writer.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
      this->List_Receiver.Receive_Descriptor_File_Reader(&this->Des_Reader);
-
-     this->Ing_Lister.Receive_Descriptor_File_Reader(&this->Des_Reader);
 }
 
 
@@ -87,8 +81,6 @@ void Git_Data_Processor::Clear_Dynamic_Memory()
          this->Modf_Lister.Clear_Dynamic_Memory();
 
          this->Modf_Receiver.Clear_Dynamic_Memory();
-
-         this->Ing_Lister.Clear_Dynamic_Memory();
 
          this->Des_Reader.Clear_Dynamic_Memory();
      }
@@ -122,12 +114,6 @@ void Git_Data_Processor::Receive_Git_Modifications(){
      this->Modf_Receiver.Receive_Git_List_Receiver(&this->List_Receiver);
 
      this->Modf_Receiver.Receive_Git_Modifications();
-}
-
-
-void Git_Data_Processor::Set_Git_Ignoring_Files(){
-
-     this->Ing_Lister.Write_Ignoring_File_List();
 }
 
 

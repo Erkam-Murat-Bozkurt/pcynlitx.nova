@@ -55,11 +55,11 @@ int main(int argc, char ** argv){
 
     std::cout << "\n\n";
 
-    Data_Processor.Set_Git_Ignoring_Files();
+    //Data_Processor.Set_Git_Ignoring_Files();
 
-    Data_Processor.Write_Git_Modification_File();
+    //Data_Processor.Write_Git_Modification_File();
 
-    Data_Processor.Receive_Git_Modifications();
+    //Data_Processor.Receive_Git_Modifications();
 
 
 

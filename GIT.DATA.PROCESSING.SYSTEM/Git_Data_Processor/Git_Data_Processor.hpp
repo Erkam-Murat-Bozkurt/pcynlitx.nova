@@ -52,17 +52,7 @@ protected:
  Git_Modification_Lister   Modf_Lister;
  Git_File_List_Writer      List_Writer;
  Git_File_List_Receiver    List_Receiver;
- Git_Ignoring_Files_Lister Ing_Lister;
- Descriptor_File_Reader Des_Reader;
- DirectoryOperations DirectoryManager;
- Cpp_FileOperations FileManager;
- Custom_System_Interface System_Interface;
- std::string Warehouse;
- std::string git_file_list_path;
- std::string git_listing_command;
- std::string git_check_command;
- std::string Repo_Dir;
- std::string std_error_file_path;
+ Descriptor_File_Reader    Des_Reader;
  char opr_sis;
  char * CString;
  int  File_Line_Number;
