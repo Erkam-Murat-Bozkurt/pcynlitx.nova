@@ -24,9 +24,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Dependency_Data_Extractor.hpp"
 
-Dependency_Data_Extractor::Dependency_Data_Extractor(char opr_sis)
-
-    : Header_Processor(opr_sis)
+Dependency_Data_Extractor::Dependency_Data_Extractor()
 {
    this->Memory_Delete_Condition = false;
 }
@@ -81,6 +79,12 @@ void Dependency_Data_Extractor::Clear_Dynamic_Memory()
 
          this->Map_Inc_Dec.clear();
      }     
+}
+
+
+void Dependency_Data_Extractor::Receive_Operating_System(char opr_sis){
+
+     this->Header_Processor.Receive_Operating_System(opr_sis);
 }
 
 

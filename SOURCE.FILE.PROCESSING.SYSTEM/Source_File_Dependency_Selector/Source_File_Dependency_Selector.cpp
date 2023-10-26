@@ -32,11 +32,11 @@ Source_File_Dependency_Selector::Source_File_Dependency_Selector( char opr_sis)
    this->Memory_Delete_Condition = false;
 
    this->opr_sis = opr_sis;
-   
-   this->Dep_Data_Collectors = nullptr;
 
-   this->Construct_Dependency_Data_Extractors();
+   for(size_t i=0;i<16;i++){
 
+      this->Dep_Data_Collectors[i].Receive_Operating_System(opr_sis);
+   }
 }
 
 
@@ -70,6 +70,11 @@ void Source_File_Dependency_Selector::Receive_Source_Code_Reader(Project_Src_Cod
      this->Data_Setter.Receive_Source_Code_Reader(ptr);
 
      this->Code_Rd = ptr;
+
+     for(size_t i=0;i<16;i++){
+
+         this->Dep_Data_Collectors[i].Receive_Source_Code_Reader(ptr);
+     }
 }
 
 
@@ -159,7 +164,6 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int s
      
          std::string path =this->Source_File_Data_Ptr->at(i).system_path;
 
-
          this->Extract_Dependency_Tree(path,thr_num);
 
          this->Set_Included_Header_Number(&this->Dependent_List[thr_num]);
@@ -186,13 +190,9 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int s
 
 void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,int thr_num){
 
-     this->Dep_Data_Collectors[thr_num] = new Dependency_Data_Extractor(this->opr_sis);
+     this->Dep_Data_Collectors[thr_num].Extract_Dependency_Tree(path);
 
-     this->Dep_Data_Collectors[thr_num]->Receive_Source_Code_Reader(this->Code_Rd);
-
-     this->Dep_Data_Collectors[thr_num]->Extract_Dependency_Tree(path);
-
-     std::vector<Search_Data> * Dep_Data_Ptr = this->Dep_Data_Collectors[thr_num]->Get_Search_Data();
+     std::vector<Search_Data> * Dep_Data_Ptr = this->Dep_Data_Collectors[thr_num].Get_Search_Data();
 
      size_t data_size = Dep_Data_Ptr->size();
           
@@ -206,7 +206,9 @@ void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,i
 
             this->Set_Dependency_Data(Data,path,header_name);
 
-            const std::vector<std::string> * Ext_Hdr = this->Dep_Data_Collectors[thr_num]->Get_External_Header_Files();
+            const std::vector<std::string> * Ext_Hdr 
+            
+               = this->Dep_Data_Collectors[thr_num].Get_External_Header_Files();
 
             this->Set_External_Header_File_Dependencies(Data,Ext_Hdr);
 
@@ -214,11 +216,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Tree(std::string path,i
         }
      }
 
-     this->Dep_Data_Collectors[thr_num]->Clear_Object_Memory();
-
-     delete this->Dep_Data_Collectors[thr_num];
-
-     this->Dep_Data_Collectors[thr_num] = nullptr;
+     this->Dep_Data_Collectors[thr_num].Clear_Dynamic_Memory();
 }
 
 
@@ -376,18 +374,6 @@ void Source_File_Dependency_Selector::Print_Dependency_List()
 }
 
 
-void Source_File_Dependency_Selector::Construct_Dependency_Data_Extractors(){
-
-     this->Dep_Data_Collectors = new Dependency_Data_Extractor * [16];   
-
-     for(int i=0;i<16;i++){
-
-        this->Dep_Data_Collectors[i] = nullptr;
-     }
-}
-
-
-
 
 
 /* THE MEMBER FUNCTIONS WHICH ARE RESPONSIBLE FROM MEMORY MENAGEMENT */
@@ -402,8 +388,14 @@ void Source_File_Dependency_Selector::Clear_Object_Memory(){
         this->Clear_Dynamic_Memory();
 
         this->Info_Collector.Clear_Object_Memory();
+
+        for(size_t i=0;i<16;i++){
+
+            this->Dep_Data_Collectors[i].Clear_Object_Memory();
+        }
      }
 }
+
 
 void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
 {
@@ -442,23 +434,9 @@ void Source_File_Dependency_Selector::Clear_String_Memory(std::string & str)
 
 void Source_File_Dependency_Selector::Clear_Dependency_Data_Extractors(){
 
-     if(this->Dep_Data_Collectors!=nullptr){
+     for(int i=0;i<16;i++){
 
-        for(int i=0;i<16;i++){
-
-            if(this->Dep_Data_Collectors[i]!= nullptr){
-
-               this->Dep_Data_Collectors[i]->Clear_Dynamic_Memory();
-
-               delete this->Dep_Data_Collectors[i];
-
-               this->Dep_Data_Collectors[i] = nullptr;
-           }
-        }
-
-        delete [] this->Dep_Data_Collectors;
-
-        this->Dep_Data_Collectors = nullptr;
+         this->Dep_Data_Collectors[i].Clear_Dynamic_Memory();
      }
 }
 

@@ -50,11 +50,13 @@ struct Search_Data
   int dep_counter;
 };
 
+
 class Dependency_Data_Extractor
 {
 public:
- Dependency_Data_Extractor(char opr_sis);
+ Dependency_Data_Extractor();
  virtual ~Dependency_Data_Extractor();
+ void Receive_Operating_System(char opr_sis);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Extract_Dependency_Tree(std::string path);
  std::vector<Search_Data> * Get_Search_Data();

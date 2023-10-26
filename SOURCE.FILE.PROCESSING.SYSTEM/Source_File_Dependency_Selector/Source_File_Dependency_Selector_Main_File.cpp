@@ -30,8 +30,6 @@ int main(int argc, char ** argv){
 
     Des_Reader.Read_Descriptor_File();
 
-    std::cout << "\n Descriptor File Readed";
-    std::cin.get();
 
     Git_Data_Processor Git_Data_Proc('w');
 
@@ -43,7 +41,6 @@ int main(int argc, char ** argv){
 
     int index_size = Git_Data_Proc.Get_Git_File_Index_Size();
 
-    std::cout << "\n index_size:" << index_size;
 
 
 
@@ -53,7 +50,6 @@ int main(int argc, char ** argv){
 
     Code_Rd.Read_Project_Source_Code_Files();
 
-    std::cout << "\n Code reading complated..";
 
 
     Source_File_Dependency_Selector Dep_Selector('w');
@@ -66,7 +62,7 @@ int main(int argc, char ** argv){
 
       Dep_Selector.Determine_Source_File_Dependencies();
 
-      Dep_Selector.Print_Dependency_List();
+      //Dep_Selector.Print_Dependency_List();
 
       std::cout << "\n Dependency size:" << Dep_Selector.Get_Dependency_List_Size();
     }

@@ -34,9 +34,10 @@ Source_File_Dependency_Selector_For_Single_File::Source_File_Dependency_Selector
 
    this->opr_sis = opr_sis;
    
-   this->Dep_Data_Collectors = nullptr;
+   for(size_t i=0;i<16;i++){
 
-   this->Construct_Dependency_Data_Extractors();
+      this->Dep_Data_Collectors[i].Receive_Operating_System(opr_sis);
+   }
 
 }
 
@@ -71,6 +72,11 @@ void Source_File_Dependency_Selector_For_Single_File::Receive_Source_Code_Reader
      this->Data_Setter.Receive_Source_Code_Reader(ptr);
 
      this->Code_Rd = ptr;
+
+     for(size_t i=0;i<16;i++){
+
+         this->Dep_Data_Collectors[i].Receive_Source_Code_Reader(ptr);
+     }
 }
 
 
@@ -145,8 +151,6 @@ void Source_File_Dependency_Selector_For_Single_File::Determine_Source_File_Depe
     this->Dependency_Data.shrink_to_fit();   
 
     this->Info_Collector.Clear_Dynamic_Memory();    
-
-    this->Clear_Dependency_Data_Extractors();
 }
 
 
@@ -189,13 +193,9 @@ void Source_File_Dependency_Selector_For_Single_File::Extract_Dependency_Data(in
 
 void Source_File_Dependency_Selector_For_Single_File::Extract_Dependency_Tree(std::string path,int thr_num){
 
-     this->Dep_Data_Collectors[thr_num] = new Dependency_Data_Extractor(this->opr_sis);
+     this->Dep_Data_Collectors[thr_num].Extract_Dependency_Tree(path);
 
-     this->Dep_Data_Collectors[thr_num]->Receive_Source_Code_Reader(this->Code_Rd);
-
-     this->Dep_Data_Collectors[thr_num]->Extract_Dependency_Tree(path);
-
-     std::vector<Search_Data> * Dep_Data_Ptr = this->Dep_Data_Collectors[thr_num]->Get_Search_Data();
+     std::vector<Search_Data> * Dep_Data_Ptr = this->Dep_Data_Collectors[thr_num].Get_Search_Data();
 
      size_t data_size = Dep_Data_Ptr->size();
 
@@ -213,12 +213,7 @@ void Source_File_Dependency_Selector_For_Single_File::Extract_Dependency_Tree(st
         }
      }
 
-
-     this->Dep_Data_Collectors[thr_num]->Clear_Object_Memory();
-
-     delete this->Dep_Data_Collectors[thr_num];
-
-     this->Dep_Data_Collectors[thr_num] = nullptr;
+     this->Dep_Data_Collectors[thr_num].Clear_Dynamic_Memory();
 }
 
 
@@ -341,6 +336,8 @@ void Source_File_Dependency_Selector_For_Single_File::Print_Dependency_List()
 }
 
 
+/*
+
 void Source_File_Dependency_Selector_For_Single_File::Construct_Dependency_Data_Extractors(){
 
      this->Dep_Data_Collectors = new Dependency_Data_Extractor * [16];   
@@ -351,7 +348,7 @@ void Source_File_Dependency_Selector_For_Single_File::Construct_Dependency_Data_
      }
 }
 
-
+*/
 
 
 
@@ -371,6 +368,11 @@ void Source_File_Dependency_Selector_For_Single_File::Clear_Object_Memory(){
         this->Info_Collector.Clear_Dynamic_Memory();
 
         this->Info_Collector.Clear_Object_Memory();
+
+        for(size_t i=0;i<16;i++){
+
+            this->Dep_Data_Collectors[i].Clear_Object_Memory();
+        }
      }
 }
 
@@ -404,7 +406,7 @@ void Source_File_Dependency_Selector_For_Single_File::Clear_String_Memory(std::s
      }
 }
 
-
+/*
 void Source_File_Dependency_Selector_For_Single_File::Clear_Dependency_Data_Extractors(){
 
      if(this->Dep_Data_Collectors!=nullptr){
@@ -426,6 +428,8 @@ void Source_File_Dependency_Selector_For_Single_File::Clear_Dependency_Data_Extr
         this->Dep_Data_Collectors = nullptr;
      }
 }
+
+*/
 
 
 

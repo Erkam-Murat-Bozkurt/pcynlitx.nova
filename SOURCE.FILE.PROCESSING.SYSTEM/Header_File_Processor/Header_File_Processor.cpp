@@ -2,10 +2,8 @@
 
 #include "Header_File_Processor.hpp"
 
-Header_File_Processor::Header_File_Processor(char opr_sis)
+Header_File_Processor::Header_File_Processor()
 {
-    this->operating_sis = opr_sis;
-
     this->include_decleration_cond = false;
 
     this->Memory_Delete_Condition = false;
@@ -34,10 +32,19 @@ void Header_File_Processor::Clear_Dynamic_Memory(){
      this->StringManager.Clear_Dynamic_Memory();
 }
 
+
+void Header_File_Processor::Receive_Operating_System(char opr_sis){
+
+     this->operating_sis = opr_sis;
+}
+
+
+
 void Header_File_Processor::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
 
      this->Code_Rdr = ptr;
 }
+
 
 bool Header_File_Processor::Is_this_file_included_on_anywhere(std::string file_path){
 
@@ -258,15 +265,6 @@ bool Header_File_Processor::Is_Header(std::string file_path){
             return this->is_header_file;
           }
     }
-
-    /*
-
-    if(this->Is_this_file_included_on_anywhere(file_path)){
-
-       this->is_header_file = true;
-    }
-
-    */
 
     return this->is_header_file;
 

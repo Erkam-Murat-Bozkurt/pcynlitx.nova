@@ -17,9 +17,7 @@ SRC_READER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Src_Code_Rdr
 
 
 HEAD_DET=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
-FILE_DAT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Data_Collector
 SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
-FILE_LISTER=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Lister
 SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
 
 
@@ -46,9 +44,8 @@ GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiv
 
 VPATH = $(DIR_OPS)       $(CPP_OPS)         $(CHAR_OPS) \
 		$(SOURCE_DETR)   $(DIR_ENUM)        $(SYS_INT) \
-	    $(STRING_OPS)    $(HEAD_DET)        $(FILE_LISTER) \
+	    $(STRING_OPS)    $(HEAD_DET)  \
 	    $(INT_TO_CHAR)   $(DES_DATA_COL)    $(DES_READER) \
-	    $(FILE_DAT_COL) \
 	    $(SRC_DT_COL)    $(SYNT_COL)        $(SRC_INF_CL) \
 	    $(SRC_DEP_SL)    $(SRC_COM_DT_EXT)  $(SRC_DER_RORD) \
 	    $(HDR_PROC)      $(SRC_READER)      $(DEP_DAT_EXT) \
@@ -77,8 +74,6 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 	Source_File_Processor.cpp \
 	Header_File_Processor.cpp \
 	Project_Src_Code_Rdr.cpp \
-	Project_Files_Lister.cpp \
-    Project_Files_Data_Collector.cpp \
 	Source_File_Data_Collector.cpp \
 	Git_Data_Processor.cpp \
 	Git_File_List_Receiver.cpp \
@@ -109,10 +104,8 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 	Source_File_Processor.hpp \
 	Header_File_Processor.hpp \
 	Project_Src_Code_Rdr.hpp \
-	Project_Files_Data_Collector.hpp \
 	Source_File_Data_Collector.hpp \
 	Source_File_Data_Setter.hpp \
-	Project_Files_Lister.h \
 	Git_Data_Processor.hpp \
 	Git_File_List_Receiver.hpp \
 	Git_File_List_Writer.hpp \
@@ -140,7 +133,6 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 	 	-I$(SRC_INF_CL) \
 		-I$(STRING_OPS) \
 		-I$(HEAD_DET) \
-	 	-I$(FILE_LISTER) \
 		-I$(SOURCE_DETR) \
 		-I$(GIT_LIST) \
 	 	-I$(DIR_ENUM) \
@@ -148,7 +140,6 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 	 	-I$(DES_DATA_COL) \
 		-I$(DES_READER) \
 		-I$(SRC_DER_RORD) \
-	 	-I$(FILE_DAT_COL) \
 		-I$(HDR_PROC) \
 		-I$(SRC_READER) \
 	 	-I$(SRC_DT_COL) \
@@ -178,8 +169,6 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 		-L$(STRING_OPS) \
 		-L$(CPP_OPS) \
 	 	-L$(HEAD_DET) \
-	    -L$(FILE_LISTER) \
-		-L$(FILE_DAT_COL) \
 	 	-L$(SOURCE_DETR) \
 		-L$(GIT_LIST) \
 		-L$(SRC_DER_RORD) \
@@ -216,8 +205,6 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 		$(SRC_PROCESSOR)\Source_File_Processor.cpp \
 		$(HDR_PROC)\Header_File_Processor.cpp \
 		$(SRC_READER)\Project_Src_Code_Rdr.cpp \
-		$(FILE_LISTER)\Project_Files_Lister.cpp \
-		$(FILE_DAT_COL)\Project_Files_Data_Collector.cpp \
 		$(SRC_DT_COL)\Source_File_Data_Collector.cpp \
 	    $(GIT_PROC)\Git_Data_Processor.cpp \
 		$(GIT_LIST)\Git_File_List_Writer.cpp \
@@ -250,7 +237,6 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 		-include $(SRC_PROCESSOR)\Source_File_Processor.hpp \
 		-include $(HDR_PROC)\Header_File_Processor.hpp \
 		-include $(SRC_READER)\Project_Src_Code_Rdr.hpp \
-		-include $(FILE_DAT_COL)\Project_Files_Data_Collector.hpp \
 		-include $(SRC_DT_COL)\Source_File_Data_Collector.hpp \
         -include $(GIT_PROC)\Git_Data_Processor.hpp \
 		-include $(GIT_LIST)\Git_File_List_Writer.hpp \

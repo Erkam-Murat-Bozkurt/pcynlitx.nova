@@ -105,6 +105,7 @@ protected:
  void Clear_Vector_Memory(std::vector<std::string> & str);
  Source_File_Data_Setter Data_Setter;
  Simple_Source_File_Dependency Dep_Data;
+ Dependency_Data_Extractor Dep_Extractor;
  std::vector<Search_Data> Dep_Search_Data;
  std::vector<std::string> Root_File_External_Headers;
  Project_Src_Code_Rdr   * Code_Rdr;

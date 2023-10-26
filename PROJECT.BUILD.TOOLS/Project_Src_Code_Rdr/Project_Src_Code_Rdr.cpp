@@ -216,6 +216,8 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
                    std::string include_decleration = this->Extract_Include_Decleration(string_line);
 
                    buffer.include_declerations.push_back(include_decleration);
+
+                   buffer.inclusion_number++;
                 }
             }
 
@@ -333,6 +335,8 @@ void Project_Src_Code_Rdr::Read_Source_Code_Single_Thread(){
                     std::string include_decleration = this->Extract_Include_Decleration(string_line);
 
                     buffer.include_declerations.push_back(include_decleration);
+
+                    buffer.inclusion_number++;
                 }                
             }
             

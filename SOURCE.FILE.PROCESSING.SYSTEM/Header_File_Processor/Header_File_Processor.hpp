@@ -24,8 +24,9 @@
 class Header_File_Processor
 {
 public:
- Header_File_Processor(char opr_sis);
+ Header_File_Processor();
  virtual ~Header_File_Processor();
+ void Receive_Operating_System(char opr_sis);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  bool Is_Header(std::string file_path);
  bool Include_Decleration_Test(std::string string);

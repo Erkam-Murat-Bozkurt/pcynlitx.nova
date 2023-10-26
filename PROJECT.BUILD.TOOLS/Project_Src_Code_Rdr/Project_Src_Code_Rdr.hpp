@@ -33,6 +33,7 @@ struct FileData
    std::string file_name;
    std::string cmbn_name;        
    std::vector<std::string> include_declerations;
+   int  inclusion_number;
    bool is_source_file;
    bool is_main_file;   
    bool is_header_file;

@@ -88,12 +88,11 @@ protected:
  void Set_Dependency_Data(Source_File_Dependency & data, std::string path, std::string header_name);
  std::string Get_Header_System_Path(std::string header_name);
  void Clear_Dependency_Data_Extractors();
- void Construct_Dependency_Data_Extractors();
  void Set_External_Header_File_Dependencies(Source_File_Dependency & data, 
  const std::vector<std::string> * vec);
  Source_File_Information_Collector Info_Collector; 
  Source_File_Data_Setter Data_Setter;
- Dependency_Data_Extractor ** Dep_Data_Collectors;
+ Dependency_Data_Extractor Dep_Data_Collectors[16];
  Project_Src_Code_Rdr * Code_Rd;
  Git_Data_Processor * Git_Data_Proc;
  std::vector<Source_File_Dependency> Dependent_List[16];

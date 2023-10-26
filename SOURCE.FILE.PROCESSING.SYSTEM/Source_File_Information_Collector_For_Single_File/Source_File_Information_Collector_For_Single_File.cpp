@@ -28,6 +28,8 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 Source_File_Information_Collector_For_Single_File::Source_File_Information_Collector_For_Single_File(char opr_sis)
 {
    this->opr_sis = opr_sis;
+
+   this->Dep_Extractor.Receive_Operating_System(opr_sis);
 }
 
 
@@ -56,6 +58,8 @@ void Source_File_Information_Collector_For_Single_File::Receive_Descriptor_File_
 void Source_File_Information_Collector_For_Single_File::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
 
      this->Code_Rdr = ptr;
+
+     this->Dep_Extractor.Receive_Source_Code_Reader(ptr);
 }
 
 
@@ -122,14 +126,12 @@ void Source_File_Information_Collector_For_Single_File::Extract_Dependency_Data(
 
 void Source_File_Information_Collector_For_Single_File::Determine_Root_Source_File_Header_Dependencies(std::string src_file_path)
 {
-     Dependency_Data_Extractor * Dep_Extractor = new Dependency_Data_Extractor(this->opr_sis);
+     this->Dep_Extractor.Clear_Dynamic_Memory();
 
-     Dep_Extractor->Receive_Source_Code_Reader(this->Code_Rdr);
-
-     Dep_Extractor->Extract_Dependency_Tree(src_file_path);
+     this->Dep_Extractor.Extract_Dependency_Tree(src_file_path);
     
 
-     std::vector<Search_Data> * Dep_Data_Ptr = Dep_Extractor->Get_Search_Data();
+     std::vector<Search_Data> * Dep_Data_Ptr = this->Dep_Extractor.Get_Search_Data();
 
      for(size_t i=0;i<Dep_Data_Ptr->size();i++){
 
@@ -139,11 +141,9 @@ void Source_File_Information_Collector_For_Single_File::Determine_Root_Source_Fi
      this->Dep_Search_Data.shrink_to_fit();
 
      
-     this->Receive_String_Vector(this->Root_File_External_Headers,Dep_Extractor->Get_External_Header_Files());
+     this->Receive_String_Vector(this->Root_File_External_Headers,this->Dep_Extractor.Get_External_Header_Files());
 
-     Dep_Extractor->Clear_Object_Memory();
-
-     delete Dep_Extractor;          
+     this->Dep_Extractor.Clear_Dynamic_Memory();
 }
 
 
@@ -397,6 +397,8 @@ void Source_File_Information_Collector_For_Single_File::Clear_Object_Memory()
      this->Clear_String_Memory(this->warehouse_path);
 
      this->Clear_String_Memory(this->warehouse_obj_dir);
+
+     this->Dep_Extractor.Clear_Object_Memory();
 }
 
 

@@ -72,6 +72,7 @@ protected:
  void Clear_Search_Data();
  void Clear_External_Headers_Memory();
  void Clear_Dependent_Source_File_Names();
+ Dependency_Data_Extractor Dep_Extractor;
  std::vector<Search_Data> Dep_Search_Data;
  std::vector<std::string> Dependent_Source_File_Names;
  std::vector<std::string> Root_File_External_Headers;
