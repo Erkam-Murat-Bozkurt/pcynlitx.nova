@@ -47,12 +47,16 @@ int main(int argc, char ** argv){
     std::cout << "\n Code reading complated..";
 
 
-    Dependency_Data_Extractor Dep_Data_Extractor('w');
+    Dependency_Data_Extractor Dep_Data_Extractor;
+
+    Dep_Data_Extractor.Receive_Operating_System('w');
 
     Dep_Data_Extractor.Receive_Source_Code_Reader(&Code_Rd);
 
     Dep_Data_Extractor.Extract_Dependency_Tree(argv[2]);
 
+
+    std::cout << "\n File path:" << argv[2];
 
     std::vector<Search_Data> * Data_Ptr = Dep_Data_Extractor.Get_Search_Data();
 

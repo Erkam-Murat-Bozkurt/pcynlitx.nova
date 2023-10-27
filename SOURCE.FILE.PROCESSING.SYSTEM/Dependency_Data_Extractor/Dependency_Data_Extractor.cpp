@@ -566,11 +566,94 @@ void Dependency_Data_Extractor::Insert_External_Header_File_For_Dependency(std::
 
      std::vector<std::string> & external_headers){
 
-     external_headers.push_back(hdr_file_name);
+     bool is_exist_on_records = this->Check_New_Record_Status(external_headers,hdr_file_name);
 
-     external_headers.shrink_to_fit();
+     if(!is_exist_on_records){
+
+         if(this->Is_There_Directory_Character(hdr_file_name)){
+
+             std::string fileName;
+
+             this->Extract_Header_File_Name(fileName,hdr_file_name);
+
+             external_headers.push_back(fileName);
+
+             external_headers.shrink_to_fit(); 
+         }
+         else{
+
+                external_headers.push_back(hdr_file_name);
+
+                external_headers.shrink_to_fit(); 
+         }
+     }
 }
 
+
+bool Dependency_Data_Extractor::Is_There_Directory_Character(std::string str){
+
+     bool is_exist = false;
+
+     for(size_t i=0;i<str.size();i++){
+
+         if((str.at(i) == '\\') || (str.at(i) == '/' )){
+
+             is_exist = true;
+
+             return is_exist;
+         }
+     }
+
+     return is_exist;
+}
+
+
+void Dependency_Data_Extractor::Extract_Header_File_Name(std::string & file_name, std::string str){
+    
+     this->Clear_String_Memory(file_name);
+
+     size_t string_size = str.length();
+
+     size_t start_point = string_size;
+
+     for(size_t i=string_size;i>0;i--){
+
+        if((str[i] == '/') || (str[i] == '\\')){
+
+          break;
+        }
+        else{
+
+            start_point--;
+        }
+     }
+
+     for(size_t i=start_point+1;i<string_size;i++){
+
+         file_name.push_back(str[i]);        
+     }
+
+     file_name.shrink_to_fit();
+}
+
+
+
+bool Dependency_Data_Extractor::Check_New_Record_Status(std::vector<std::string> & vec, std::string str){
+
+     bool record_exist = false;
+
+     for(size_t i=0;i<vec.size();i++){
+
+         if(vec.at(i) == str){
+
+            record_exist = true;
+
+            break;
+         }
+     }
+     
+     return record_exist;
+ }
 
 
 

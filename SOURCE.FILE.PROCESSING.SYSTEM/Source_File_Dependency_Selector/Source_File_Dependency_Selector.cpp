@@ -28,7 +28,6 @@ Source_File_Dependency_Selector::Source_File_Dependency_Selector( char opr_sis)
 
     : Info_Collector(opr_sis), Data_Setter(opr_sis)
 {
-
    this->Memory_Delete_Condition = false;
 
    this->opr_sis = opr_sis;

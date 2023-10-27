@@ -79,18 +79,22 @@ protected:
       std::vector<std::string> & external_headers);
  void Insert_External_Header_File_For_Dependency(std::string hdr_file, 
       std::vector<std::string> & external_headers);
+ bool Is_There_Directory_Character(std::string str);
+ void Extract_Header_File_Name(std::string & file_name, std::string path);
  bool Is_This_A_Combined_Include_Delaration(std::string name);
  void Extract_Directory_File_Name_Combination(std::string inc_dec, std::string & dir_file_com);
  void Clear_Vector_Memory(std::vector<std::string> & vec);
  const std::vector<std::string> * Get_File_Include_Delarations(std::string path) const;
  std::string Get_Header_System_Path(std::string header_name) const;
  std::string Get_File_Path_Form_Declaration(std::string declaration);
+ bool Check_New_Record_Status(std::vector<std::string> & vec, std::string str);
  Project_Src_Code_Rdr * Code_Rd;
  std::vector<Search_Data> searched_paths;
  std::unordered_map<std::string, Search_Data *> Map_Inc_Dec;
  std::vector<std::string> External_Header_Files;
  Header_File_Processor Header_Processor;  
  StringOperator StringManager; 
+ std::vector<std::string> records;
  bool Memory_Delete_Condition;
  bool is_this_repo_header;
  bool include_decleration_cond;
