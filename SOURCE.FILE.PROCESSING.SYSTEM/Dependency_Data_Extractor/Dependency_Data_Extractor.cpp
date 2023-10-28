@@ -97,100 +97,48 @@ void Dependency_Data_Extractor::Recursive_Dependency_Determination(std::string p
 
 
 
+
+
 int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data)
 {
 
-    int inclusion_number = this->Determine_Inclusion_Number(Src_Data.path);
-
-     /*  The inclusion number determined */
+    int inclusion_number = this->Determine_Inclusion_Number(Src_Data.path);          /*  The inclusion number determined */
 
     Src_Data.search_complated = true;
+
     Src_Data.dep_counter = inclusion_number;
 
 
     if(inclusion_number>0){
 
-       const std::vector<std::string> * Include_Delerations 
-       
-          = this->Get_File_Include_Delarations(Src_Data.path);
+       this->Include_Delerations = this->Get_File_Include_Delarations(Src_Data.path);
 
-       size_t Decleration_Number = Include_Delerations->size();
+       size_t Decleration_Number = this->Include_Delerations->size();
 
 
        for(size_t k=0;k<Decleration_Number;k++){
 
-           std::string inc_dec = Include_Delerations->at(k);
+           std::string inc_dec = this->Include_Delerations->at(k);
      
-           bool is_new_dep = this->Check_New_Dependency_Status(inc_dec);
-           
+           Search_Data buffer;
 
-           std::string dir_file_name_comb; 
+           if(this->Check_New_Dependency_Status(inc_dec)){
 
-
-           if(is_new_dep){
-              
-              const FileData * File_Data_Ptr;
-      
-              Search_Data buffer;     // Temporary data decleration           
-
-              if(this->Is_This_A_Combined_Include_Delaration(inc_dec)){
-                 
-                 /*
-                    If it is a combined header decleration, there may be more directory information 
-                    on the include decleration. For instance the include decleration can be in the 
-                    form as "somedir/sample/sample.h"
-                   
-                    The function "Extract_Directory_File_Name_Combination()" is used to find last 
-                    directory and file name
-                 */
-
-                 this->Extract_Directory_File_Name_Combination(inc_dec,dir_file_name_comb);  
-                 
-                 File_Data_Ptr = this->Code_Rd->Find_File_Data_From_Directory_File_Name_Combination(dir_file_name_comb);
-              }
-              else{
-
-
-                    File_Data_Ptr = this->Code_Rd->Find_File_Data_From_Name(inc_dec);
-
-                    dir_file_name_comb = File_Data_Ptr->cmbn_name;                                
-              }
-
-
-              buffer.name = File_Data_Ptr->file_name;  // This is the header name extracted from decleration
-
-              buffer.path = File_Data_Ptr->sys_path;
-
-              buffer.include_decleration = inc_dec;
-
-              buffer.dir_file_comb = dir_file_name_comb;
-
-              buffer.search_complated = false;
+              this->Determine_Dependent_File_Data_From_Decleration(buffer,inc_dec);
 
               this->Dependent_Headers.push_back(buffer);
 
               this->Map_Inc_Dec.insert(std::make_pair(buffer.dir_file_comb,&this->Dependent_Headers.back()));
-
-           }    
-        }           
+           }
+        }      
     }
     else{
-             if(this->Check_New_Dependency_Status_From_Path(Src_Data.path)){
 
-               const FileData * File_Data_Ptr =  this->Code_Rd->Find_File_Data_From_Path(Src_Data.path);
-
+            if(this->Check_New_Dependency_Status_From_Path(Src_Data.path)){
 
                Search_Data buffer;
 
-               buffer.path = File_Data_Ptr->sys_path;
-
-               buffer.include_decleration = File_Data_Ptr->cmbn_name;
-
-               buffer.dir_file_comb = File_Data_Ptr->cmbn_name;
-
-               buffer.name = File_Data_Ptr->file_name;
-               
-               buffer.search_complated = false;
+               this->Determine_Dependent_File_Data_From_Path(buffer,Src_Data.path);
 
                this->Dependent_Headers.push_back(buffer);
 
@@ -198,9 +146,72 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data)
             }
     }
 
+
     this->Dependent_Headers.shrink_to_fit();
 
     return inclusion_number;
+}
+
+
+
+
+
+void Dependency_Data_Extractor::Determine_Dependent_File_Data_From_Decleration(Search_Data & buffer, std::string inc_dec){
+
+     std::string dir_file_name_comb; 
+
+     const FileData * File_Data_Ptr;
+                
+     if(this->Is_This_A_Combined_Include_Delaration(inc_dec)){
+                 
+        /*
+          If it is a combined header decleration, there may be more directory information 
+          on the include decleration. For instance the include decleration can be in the 
+          form as "somedir/sample/sample.h"
+                   
+          The function "Extract_Directory_File_Name_Combination()" is used to find last 
+          directory and file name
+        */
+
+        this->Extract_Directory_File_Name_Combination(inc_dec,dir_file_name_comb);  
+                 
+        File_Data_Ptr = this->Code_Rd->Find_File_Data_From_Directory_File_Name_Combination(dir_file_name_comb);
+     }
+     else{
+
+           File_Data_Ptr = this->Code_Rd->Find_File_Data_From_Name(inc_dec);
+
+           dir_file_name_comb = File_Data_Ptr->cmbn_name;                                
+     }
+
+     buffer.name = File_Data_Ptr->file_name;  // This is the header name extracted from decleration
+
+     buffer.path = File_Data_Ptr->sys_path;
+
+     buffer.include_decleration = inc_dec;
+
+     buffer.dir_file_comb = dir_file_name_comb;
+
+     buffer.search_complated = false;
+}
+
+
+
+
+
+void Dependency_Data_Extractor::Determine_Dependent_File_Data_From_Path(Search_Data & buffer, std::string path){
+
+     const FileData * File_Data_Ptr =  this->Code_Rd->Find_File_Data_From_Path(path);
+
+     buffer.path = File_Data_Ptr->sys_path;
+
+     buffer.include_decleration = File_Data_Ptr->cmbn_name;
+
+     buffer.dir_file_comb = File_Data_Ptr->cmbn_name;
+
+     buffer.name = File_Data_Ptr->file_name;
+               
+     buffer.search_complated = false;
 }
 
 

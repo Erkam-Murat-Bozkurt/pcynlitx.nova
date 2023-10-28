@@ -89,7 +89,10 @@ protected:
  void Clear_Vector_Memory(std::vector<std::string> & vec);
  bool Check_New_Record_Status(std::vector<std::string> & vec, std::string str);
  void Clear_Search_Data_Memory(std::vector<Search_Data> & data);
+ void Determine_Dependent_File_Data_From_Decleration(Search_Data & buffer, std::string inc_dec);
+ void Determine_Dependent_File_Data_From_Path(Search_Data & buffer, std::string path);
  const std::vector<std::string> * Get_File_Include_Delarations(std::string path) const;
+ const std::vector<std::string> * Include_Delerations;
  Header_File_Processor Header_Processor;  
  Project_Src_Code_Rdr * Code_Rd;
  std::vector<Search_Data> Dependent_Headers;
