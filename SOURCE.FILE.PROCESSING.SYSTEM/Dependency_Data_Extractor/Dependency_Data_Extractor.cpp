@@ -41,47 +41,6 @@ Dependency_Data_Extractor::~Dependency_Data_Extractor()
 }
 
 
-void Dependency_Data_Extractor::Clear_Object_Memory(){
-
-     this->Clear_Dynamic_Memory();
-
-     this->Header_Processor.Clear_Object_Memory();
-}
-
-void Dependency_Data_Extractor::Clear_Dynamic_Memory()
-{
-     this->Clear_Vector_Memory(this->External_Header_Files);
-
-     if(!this->searched_paths.empty()){
-
-         for(size_t i=0;i<this->searched_paths.size();i++){
-
-             this->Clear_String_Memory(this->searched_paths.at(i).path);
-             
-             this->Clear_String_Memory(this->searched_paths.at(i).name);
-             
-             this->Clear_String_Memory(this->searched_paths.at(i).include_decleration);         
-         }
-    
-         this->searched_paths.clear();
-     
-         this->searched_paths.shrink_to_fit();
-     }
-
-     if(!this->External_Header_Files.empty()){
-
-         this->External_Header_Files.clear();
-
-         this->External_Header_Files.shrink_to_fit();
-     }
-
-     if(!this->Map_Inc_Dec.empty()){
-
-         this->Map_Inc_Dec.clear();
-     }     
-}
-
-
 void Dependency_Data_Extractor::Receive_Operating_System(char opr_sis){
 
      this->Header_Processor.Receive_Operating_System(opr_sis);
@@ -105,6 +64,7 @@ void Dependency_Data_Extractor::Extract_Dependency_Tree(std::string path){
      
      this->Re_Order_Dependencies();     
 }
+
 
 int Dependency_Data_Extractor::Recursive_Dependency_Determination(std::string path, 
 
@@ -223,11 +183,17 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data,
 
                const FileData * File_Data_Ptr =  this->Code_Rd->Find_File_Data_From_Path(Src_Data.path);
 
+
                Search_Data buffer;
-               buffer.path = File_Data_Ptr->sys_path;;
+
+               buffer.path = File_Data_Ptr->sys_path;
+
                buffer.include_decleration = File_Data_Ptr->cmbn_name;
+
                buffer.dir_file_comb = File_Data_Ptr->cmbn_name;
+
                buffer.name = File_Data_Ptr->file_name;
+               
                buffer.search_complated = false;
 
                data.push_back(buffer);
@@ -509,7 +475,6 @@ bool Dependency_Data_Extractor::Is_This_File_Aready_Searched(std::string inc_dec
 
 void Dependency_Data_Extractor::Re_Order_Dependencies(){
 
-
      for(size_t i=0;i<this->searched_paths.size();i++){
 
          std::string sub_path = this->searched_paths.at(i).path;
@@ -566,27 +531,26 @@ void Dependency_Data_Extractor::Insert_External_Header_File_For_Dependency(std::
 
      std::vector<std::string> & external_headers){
 
-     bool is_exist_on_records = this->Check_New_Record_Status(external_headers,hdr_file_name);
+
+     std::string fileName;
+
+     if(this->Is_There_Directory_Character(hdr_file_name)){
+
+        this->Extract_Header_File_Name(fileName,hdr_file_name);
+     }
+     else{
+
+           fileName = hdr_file_name;
+     }
+
+     bool is_exist_on_records = this->Check_New_Record_Status(external_headers,fileName);
 
      if(!is_exist_on_records){
 
-         if(this->Is_There_Directory_Character(hdr_file_name)){
+         external_headers.push_back(fileName);
 
-             std::string fileName;
-
-             this->Extract_Header_File_Name(fileName,hdr_file_name);
-
-             external_headers.push_back(fileName);
-
-             external_headers.shrink_to_fit(); 
-         }
-         else{
-
-                external_headers.push_back(hdr_file_name);
-
-                external_headers.shrink_to_fit(); 
-         }
-     }
+         external_headers.shrink_to_fit(); 
+     }     
 }
 
 
@@ -648,12 +612,58 @@ bool Dependency_Data_Extractor::Check_New_Record_Status(std::vector<std::string>
 
             record_exist = true;
 
-            break;
+            return record_exist;
          }
      }
      
      return record_exist;
  }
+
+
+
+
+// THE MEMORY MANAGEMENT FUNCTIONS
+
+void Dependency_Data_Extractor::Clear_Object_Memory(){
+
+     this->Clear_Dynamic_Memory();
+
+     this->Header_Processor.Clear_Object_Memory();
+}
+
+
+void Dependency_Data_Extractor::Clear_Dynamic_Memory()
+{
+     this->Clear_Vector_Memory(this->External_Header_Files);
+
+     if(!this->searched_paths.empty()){
+
+         for(size_t i=0;i<this->searched_paths.size();i++){
+
+             this->Clear_String_Memory(this->searched_paths.at(i).path);
+             
+             this->Clear_String_Memory(this->searched_paths.at(i).name);
+             
+             this->Clear_String_Memory(this->searched_paths.at(i).include_decleration);         
+         }
+    
+         this->searched_paths.clear();
+     
+         this->searched_paths.shrink_to_fit();
+     }
+
+     if(!this->External_Header_Files.empty()){
+
+         this->External_Header_Files.clear();
+
+         this->External_Header_Files.shrink_to_fit();
+     }
+
+     if(!this->Map_Inc_Dec.empty()){
+
+         this->Map_Inc_Dec.clear();
+     }     
+}
 
 
 
@@ -693,6 +703,13 @@ void Dependency_Data_Extractor::Clear_String_Memory(std::string & str)
      }
 }
 
+
+
+
+
+
+
+// GETTER FUNCTIONS
 
 const std::vector<std::string> * Dependency_Data_Extractor::Get_File_Include_Delarations(std::string path) const 
 {
