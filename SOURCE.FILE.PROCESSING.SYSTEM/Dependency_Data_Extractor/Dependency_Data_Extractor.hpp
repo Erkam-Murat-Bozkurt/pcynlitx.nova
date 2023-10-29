@@ -78,6 +78,7 @@ protected:
  bool Check_New_Dependency_Status_From_Path(std::string path);
  bool Is_This_File_Aready_Searched(std::string inc_dec);
  bool Is_This_Repo_HeaderFile(std::string head_name);
+ bool Is_This_RepoFile(std::string head_name);
  void Clear_String_Memory(std::string & str);
  int  Determine_Inclusion_Number(std::string path);
  int  Search_Dependencies(Search_Data & Src_Data);
@@ -86,13 +87,15 @@ protected:
  void Extract_Header_File_Name(std::string & file_name, std::string path);
  bool Is_This_A_Combined_Include_Delaration(std::string name);
  void Extract_Directory_File_Name_Combination(std::string inc_dec, std::string & dir_file_com);
- void Clear_Vector_Memory(std::vector<std::string> & vec);
  bool Check_New_Record_Status(std::vector<std::string> & vec, std::string str);
- void Clear_Search_Data_Memory(std::vector<Search_Data> & data);
  void Determine_Dependent_File_Data_From_Decleration(Search_Data & buffer, std::string inc_dec);
  void Determine_Dependent_File_Data_From_Path(Search_Data & buffer, std::string path);
+ void Add_Search_Data(Search_Data & buffer);
+ void Clear_Search_Data_Memory(std::vector<Search_Data> & data);
+ void Clear_Vector_Memory(std::vector<std::string> & vec);
+ void Clear_Map_Memory(std::unordered_map<std::string, Search_Data *> & Map_Inc_Dec);
  const std::vector<std::string> * Get_File_Include_Delarations(std::string path) const;
- const std::vector<std::string> * Include_Delerations;
+ const std::vector<std::string> * Include_Declerations;
  Header_File_Processor Header_Processor;  
  Project_Src_Code_Rdr * Code_Rd;
  std::vector<Search_Data> Dependent_Headers;

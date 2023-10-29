@@ -73,7 +73,6 @@ void Dependency_Data_Extractor::Recursive_Dependency_Determination(std::string p
      Head.path = path;
      Head.search_complated = false;
 
-
      this->Search_Dependencies(Head);
     
      for(size_t i=0;i<this->Dependent_Headers.size();i++){
@@ -88,11 +87,7 @@ void Dependency_Data_Extractor::Recursive_Dependency_Determination(std::string p
          }
      }
 
-
-     if(!this->Map_Inc_Dec.empty()){
-
-        this->Map_Inc_Dec.clear();
-     }
+     this->Clear_Map_Memory(this->Map_Inc_Dec);
 }
 
 
@@ -101,51 +96,46 @@ void Dependency_Data_Extractor::Recursive_Dependency_Determination(std::string p
 
 int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data)
 {
+    std::string filePath = Src_Data.path;
 
-    int inclusion_number = this->Determine_Inclusion_Number(Src_Data.path);          /*  The inclusion number determined */
+    int inclusion_number = this->Determine_Inclusion_Number(filePath);          /*  The inclusion number determined */
 
     Src_Data.search_complated = true;
 
     Src_Data.dep_counter = inclusion_number;
 
 
+    // THE START OF THE DEPENDENCY SEACRH
+
     if(inclusion_number>0){
 
-       this->Include_Delerations = this->Get_File_Include_Delarations(Src_Data.path);
+       this->Include_Declerations = this->Get_File_Include_Delarations(filePath);
 
-       size_t Decleration_Number = this->Include_Delerations->size();
+       for(size_t k=0;k<this->Include_Declerations->size();k++){
 
+          std::string inc_dec = this->Include_Declerations->at(k);
 
-       for(size_t k=0;k<Decleration_Number;k++){
+          if(this->Check_New_Dependency_Status(inc_dec)){
 
-           std::string inc_dec = this->Include_Delerations->at(k);
-     
-           Search_Data buffer;
+             Search_Data buffer;
 
-           if(this->Check_New_Dependency_Status(inc_dec)){
+             this->Determine_Dependent_File_Data_From_Decleration(buffer,inc_dec);
 
-              this->Determine_Dependent_File_Data_From_Decleration(buffer,inc_dec);
-
-              this->Dependent_Headers.push_back(buffer);
-
-              this->Map_Inc_Dec.insert(std::make_pair(buffer.dir_file_comb,&this->Dependent_Headers.back()));
-           }
-        }      
+             this->Add_Search_Data(buffer);
+          }
+       }      
     }
     else{
 
-            if(this->Check_New_Dependency_Status_From_Path(Src_Data.path)){
+        if(this->Check_New_Dependency_Status_From_Path(filePath)){
 
-               Search_Data buffer;
+           Search_Data buffer;
 
-               this->Determine_Dependent_File_Data_From_Path(buffer,Src_Data.path);
+           this->Determine_Dependent_File_Data_From_Path(buffer,filePath);
 
-               this->Dependent_Headers.push_back(buffer);
-
-               this->Map_Inc_Dec.insert(std::make_pair(buffer.dir_file_comb,&this->Dependent_Headers.back()));
-            }
+           this->Add_Search_Data(buffer);
+        }
     }
-
 
     this->Dependent_Headers.shrink_to_fit();
 
@@ -154,9 +144,18 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data)
 
 
 
+void Dependency_Data_Extractor::Add_Search_Data(Search_Data & buffer){
+
+     this->Dependent_Headers.push_back(buffer);
+
+     this->Map_Inc_Dec.insert(std::make_pair(buffer.dir_file_comb,&this->Dependent_Headers.back()));
+}
 
 
-void Dependency_Data_Extractor::Determine_Dependent_File_Data_From_Decleration(Search_Data & buffer, std::string inc_dec){
+
+void Dependency_Data_Extractor::Determine_Dependent_File_Data_From_Decleration(Search_Data & buffer, 
+
+     std::string inc_dec){
 
      std::string dir_file_name_comb; 
 
@@ -227,26 +226,21 @@ bool Dependency_Data_Extractor::Check_New_Dependency_Status(std::string string_l
      if(this->Is_This_A_Combined_Include_Delaration(include_decleration)){
 
         // There may be more directory information on the include decleration
-        // For instance the include decleration can be in the form as "somedir/sample/sample.h"
-        // The function Extract_Directory_File_Name_Combination is used to find last directory and file name
+        // For instance the include decleration can be in the form 
+        // as "somedir/sample/sample.h"
+        
+        // The function Extract_Directory_File_Name_Combination is used 
+        // to find last directory and file name
 
         std::string dir_file_name_comb;
 
         this->Extract_Directory_File_Name_Combination(include_decleration,dir_file_name_comb);  
-
-
-        bool is_repo_file = this->Code_Rd->Check_Repo_File_Status_From_Directory_File_Name_Combination(dir_file_name_comb);
-
  
-        if(is_repo_file){
+        if(this->Is_This_RepoFile(dir_file_name_comb)){
 
-           bool is_repo_header_file = this->Is_This_Repo_HeaderFile(dir_file_name_comb);
-
-           if(is_repo_header_file){
+           if(this->Is_This_Repo_HeaderFile(dir_file_name_comb)){
               
-               bool is_already_searched = this->Is_This_File_Aready_Searched(dir_file_name_comb);
-
-               if(!is_already_searched){
+               if(!this->Is_This_File_Aready_Searched(dir_file_name_comb)){
 
                    is_new_dependency = true;
 
@@ -265,21 +259,15 @@ bool Dependency_Data_Extractor::Check_New_Dependency_Status(std::string string_l
      }
      else{
 
-          bool is_repo_file = this->Code_Rd->Check_Repo_File_Status(string_line);
-
-          if(is_repo_file){
-
-             bool is_repo_header_file = this->Is_This_Repo_HeaderFile(include_decleration);
+          if(this->Is_This_RepoFile(string_line)){
             
-             if(is_repo_header_file){
+             if(this->Is_This_Repo_HeaderFile(include_decleration)){
 
                 const FileData  * FileDtPtr = this->Code_Rd->Find_File_Data_From_Name(include_decleration);
 
                 std::string file_dir_comb = FileDtPtr->cmbn_name;
 
-                bool is_already_searched = this->Is_This_File_Aready_Searched(file_dir_comb);
-
-                if(!is_already_searched){
+                if(!this->Is_This_File_Aready_Searched(file_dir_comb)){
 
                     is_new_dependency = true;
 
@@ -595,7 +583,32 @@ bool Dependency_Data_Extractor::Check_New_Record_Status(std::vector<std::string>
      }
      
      return record_exist;
- }
+}
+
+
+
+bool Dependency_Data_Extractor::Is_This_RepoFile(std::string file_name){
+
+     bool is_repo_file = false;
+
+     if(this->Is_This_A_Combined_Include_Delaration(file_name)){
+
+        is_repo_file 
+         
+        = this->Code_Rd->Check_Repo_File_Status_From_Directory_File_Name_Combination(file_name);
+
+     }
+     else{
+
+        is_repo_file = this->Code_Rd->Check_Repo_File_Status(file_name);
+     }
+
+     return is_repo_file;      
+}
+
+
+
+
 
 
 
@@ -616,17 +629,7 @@ void Dependency_Data_Extractor::Clear_Dynamic_Memory()
 
      this->Clear_Search_Data_Memory(this->Dependent_Headers);
 
-     if(!this->External_Header_Files.empty()){
-
-         this->External_Header_Files.clear();
-
-         this->External_Header_Files.shrink_to_fit();
-     }
-
-     if(!this->Map_Inc_Dec.empty()){
-
-         this->Map_Inc_Dec.clear();
-     }     
+     this->Clear_Map_Memory(this->Map_Inc_Dec);
 }
 
 
@@ -659,7 +662,7 @@ void Dependency_Data_Extractor::Clear_Vector_Memory(std::vector<std::string> & v
 
          auto end   = vec.end();
 
-         for(auto it=begin;it<end;it++){
+         for(auto it=begin;it!=end;it++){
 
              if(!it->empty()){
 
@@ -685,6 +688,15 @@ void Dependency_Data_Extractor::Clear_String_Memory(std::string & str)
      }
 }
 
+void Dependency_Data_Extractor::Clear_Map_Memory(std::unordered_map<std::string, 
+ 
+     Search_Data *> & Map){
+
+     if(!Map.empty()){
+
+         Map.clear();
+     }
+}
 
 
 
