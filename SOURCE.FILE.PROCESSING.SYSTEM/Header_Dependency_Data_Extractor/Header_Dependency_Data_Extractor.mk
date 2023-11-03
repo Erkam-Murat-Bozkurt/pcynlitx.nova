@@ -1,7 +1,5 @@
 
 
-
-
 STRING_OPS=D:\pcynlitx.build\BASIC.TOOLS\StringOperator
 DIR_OPS=D:\pcynlitx.build\BASIC.TOOLS\DirectoryOperations
 CPP_OPS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
@@ -28,15 +26,16 @@ GIT_IGN=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Ignoring_Files_Lister
 GIT_MOD_LST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Lister
 GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiver
 
+DEP_DAT_EXTR=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Extractor
 DEP_DAT_STCK=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Stack_Container
 
-VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
-		$(SOURCE_DETR) $(DIR_ENUM) \
-	    $(STRING_OPS) $(HEAD_DET) \
-		$(INT_TO_CHAR) $(DES_DATA_COL) $(DES_READER) \
+VPATH = $(DIR_OPS)       $(CPP_OPS) $(CHAR_OPS) \
+		$(SOURCE_DETR)   $(DIR_ENUM) \
+	    $(STRING_OPS)    $(HEAD_DET) \
+		$(INT_TO_CHAR)   $(DES_DATA_COL) $(DES_READER) \
 		$(MAKE_DATA_COL) $(GIT_LIST) \
-		$(SRC_DT_COL) $(DES_FILE_SYNT_COL) $(SRC_INF_COL) \
-		$(HDR_PROC) $(SRC_READER) $(SRC_PROCESSOR) \
+		$(SRC_DT_COL)    $(DES_FILE_SYNT_COL) $(SRC_INF_COL) \
+		$(HDR_PROC)      $(SRC_READER) $(SRC_PROCESSOR) \
 		$(GIT_PROC) \
 		$(GIT_LIST) \
 		$(GIT_REC) \
@@ -44,9 +43,11 @@ VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 		$(GIT_MOD_RCV) \
 		$(GIT_IGN) \
 		$(SYS_INT) \
+		$(DEP_DAT_EXTR) \
 		$(DEP_DAT_STCK)
 
-Source_File_Dependency_Selector.exe: Dependency_Data_Extractor_Main_File.cpp \
+Header_Dependency_Data_Extractor.exe: Header_Dependency_Data_Extractor_Main_File.cpp \
+	Header_Dependency_Data_Extractor.cpp \
 	Dependency_Data_Extractor.cpp \
 	Dependency_Data_Stack_Container.cpp \
 	Source_File_Information_Collector.cpp \
@@ -65,6 +66,7 @@ Source_File_Dependency_Selector.exe: Dependency_Data_Extractor_Main_File.cpp \
 	StringOperator.cpp \
 	CharOperator.cpp \
 	Cpp_FileOperations.cpp \
+	Header_Dependency_Data_Extractor.hpp \
 	Dependency_Data_Extractor.hpp \
 	Dependency_Data_Stack_Container.hpp \
 	Source_File_Information_Collector.hpp \
@@ -84,10 +86,10 @@ Source_File_Dependency_Selector.exe: Dependency_Data_Extractor_Main_File.cpp \
 	CharOperator.h \
 	Cpp_FileOperations.h
 
-	g++ -std=c++17 -ggdb -o Dependency_Data_Extractor.exe \
+	g++ -std=c++17  -ggdb -o Header_Dependency_Data_Extractor.exe \
 	 -I$(DIR_OPS)       -I$(CPP_OPS)     -I$(CHAR_OPS) \
 	 -I$(SRC_INF_COL)   -I$(STRING_OPS)  -I$(HEAD_DET) \
-	 -I$(SOURCE_DETR) -I$(GIT_LIST) \
+	 -I$(SOURCE_DETR)   -I$(GIT_LIST) \
 	 -I$(CLASS_SYNTAX)  -I$(DIR_ENUM)    -I$(INT_TO_CHAR) \
 	 -I$(DES_DATA_COL)  -I$(DES_READER) \
 	 -I$(MAKE_DATA_COL) \
@@ -100,6 +102,7 @@ Source_File_Dependency_Selector.exe: Dependency_Data_Extractor_Main_File.cpp \
 	 -I$(GIT_MOD_RCV) \
 	 -I$(GIT_IGN) \
 	 -I$(SYS_INT) \
+	 -I$(DEP_DAT_EXTR) \
 	 -I$(DEP_DAT_STCK) \
 	 -L$(SRC_INF_COL)   -L$(DIR_ENUM) \
 	 -L$(DIR_OPS)       -L$(CPP_OPS) \
@@ -118,9 +121,11 @@ Source_File_Dependency_Selector.exe: Dependency_Data_Extractor_Main_File.cpp \
 	 -L$(GIT_MOD_RCV) \
 	 -L$(GIT_IGN) \
 	 -L$(SYS_INT) \
+	 -L$(DEP_DAT_EXTR) \
 	 -L$(DEP_DAT_STCK) \
-		Dependency_Data_Extractor_Main_File.cpp \
-		Dependency_Data_Extractor.cpp \
+		Header_Dependency_Data_Extractor_Main_File.cpp \
+		Header_Dependency_Data_Extractor.cpp \
+		$(DEP_DAT_EXTR)\Dependency_Data_Extractor.cpp \
 		$(DEP_DAT_STCK)\Dependency_Data_Stack_Container.cpp \
 		$(SRC_INF_COL)\Source_File_Information_Collector.cpp \
 		$(SRC_PROCESSOR)\Source_File_Processor.cpp \
@@ -145,7 +150,8 @@ Source_File_Dependency_Selector.exe: Dependency_Data_Extractor_Main_File.cpp \
 		$(CPP_OPS)\Cpp_FileOperations.cpp \
 		$(INT_TO_CHAR)\IntToCharTranslater.cpp \
 		$(SYS_INT)\Custom_System_Interface.cpp \
-		-include Dependency_Data_Extractor.hpp \
+		-include Header_Dependency_Data_Extractor.hpp \
+		-include $(DEP_DAT_EXTR)\Dependency_Data_Extractor.hpp \
 		-include $(DEP_DAT_STCK)\Dependency_Data_Stack_Container.hpp \
 		-include $(SRC_INF_COL)\Source_File_Information_Collector.hpp \
 		-include $(SRC_PROCESSOR)\Source_File_Processor.hpp \

@@ -9,6 +9,7 @@
 #include <cstring>
 #include <vector>
 #include "Dependency_Data_Extractor.hpp"
+#include "Dependency_Data_Stack_Container.hpp"
 #include "Project_Src_Code_Rdr.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
@@ -46,6 +47,8 @@ int main(int argc, char ** argv){
 
     std::cout << "\n Code reading complated..";
 
+    Dependency_Data_Stack_Container Stack_Container;
+
 
     Dependency_Data_Extractor Dep_Data_Extractor;
 
@@ -53,38 +56,42 @@ int main(int argc, char ** argv){
 
     Dep_Data_Extractor.Receive_Source_Code_Reader(&Code_Rd);
 
+    Dep_Data_Extractor.Receive_Dependency_Data_Stack_Container(&Stack_Container);
+
     Dep_Data_Extractor.Extract_Dependency_Tree(argv[2]);
 
 
     std::cout << "\n File path:" << argv[2];
 
-    std::vector<Search_Data> * Data_Ptr = Dep_Data_Extractor.Get_Search_Data();
+    const Search_Data_Records * Data_Ptr = Dep_Data_Extractor.Get_Search_Data();
 
-    for(size_t i=0;i<Data_Ptr->size();i++){
+    for(size_t i=0;i<Data_Ptr->Dependent_Headers.size();i++){
 
         std::cout << "\n";
-        std::cout << "\n Dependency File <" << i << ">:" << Data_Ptr->at(i).name;
-        std::cout << "\n Dependency File <" << i << ">:" << Data_Ptr->at(i).include_decleration;
-        std::cout << "\n Dependency File <" << i << ">:" << Data_Ptr->at(i).path;
+        std::cout << "\n Dependency File <" << i << ">:" << Data_Ptr->Dependent_Headers.at(i).name;
+        std::cout << "\n Dependency File <" << i << ">:" << Data_Ptr->Dependent_Headers.at(i).include_decleration;
+        std::cout << "\n Dependency File <" << i << ">:" << Data_Ptr->Dependent_Headers.at(i).path;
     }
 
     std::cout << "\n\n";
     std::cout << "\n THE EXTERNAL HEADER FILES:";
     std::cout << "\n\n";
 
-    const std::vector<std::string> * external_headers = Dep_Data_Extractor.Get_External_Header_Files();
 
-    if(external_headers->size()==0){
+    if(Data_Ptr->External_Headers.size() > 0){
 
-       std::cout << "\n There is no external header";
+        for(size_t i=0;i<Data_Ptr->External_Headers.size();i++){
+
+            std::cout << "\n";
+            std::cout << "\n External Header[" << i << "]:" << Data_Ptr->External_Headers.at(i);
+        }
     }
     else{
 
-          for(size_t i=0;i<external_headers->size();i++){
-
-              std::cout << "\n External Header[" << i << "]:" << external_headers->at(i);
-          }
+            std::cout << "\n There is no external header";
     }
+
+
 
     std::cout << "\n\n THE END OF THE PROGRAM \n\n";
 

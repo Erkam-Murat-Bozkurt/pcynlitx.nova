@@ -55,6 +55,11 @@ void Dependency_Data_Extractor::Receive_Source_Code_Reader(Project_Src_Code_Rdr 
 }
 
 
+void Dependency_Data_Extractor::Receive_Dependency_Data_Stack_Container(Dependency_Data_Stack_Container * ptr){
+
+     this->Stack_Ptr = ptr;
+}
+
 
 void Dependency_Data_Extractor::Extract_Dependency_Tree(std::string path){
 
@@ -62,7 +67,7 @@ void Dependency_Data_Extractor::Extract_Dependency_Tree(std::string path){
 
      this->Recursive_Dependency_Determination(path);
      
-     this->Re_Order_Dependencies();     
+     //this->Re_Order_Dependencies();
 }
 
 
@@ -79,18 +84,57 @@ void Dependency_Data_Extractor::Recursive_Dependency_Determination(std::string p
 
         if(!this->Dependent_Headers.at(i).search_complated){
 
-            this->Search_Dependencies(this->Dependent_Headers.at(i));
 
-            this->Dependent_Headers.at(i).search_complated = true;
+            std::string filePath = this->Dependent_Headers.at(i).path;
+            
+            if(this->Stack_Ptr->Is_Exist_OnSearchStack(filePath)){
+                
+                const Search_Data_Records Search_Record 
+                    
+                  = this->Stack_Ptr->Find_Search_Data_From_Path(filePath);
+
+                this->Add_Search_Data_Vector(Search_Record.Dependent_Headers);
+
+                this->Dependent_Headers.at(i).search_complated = true;
+
+            }
+            else{
+
+                  this->Search_Dependencies(this->Dependent_Headers.at(i));
+
+                  this->Dependent_Headers.at(i).search_complated = true;
+            }
 
             i=0;
          }
      }
 
-     this->Clear_Map_Memory(this->Map_Inc_Dec);
+     this->Construct_Search_Data_Records_Structure(path);
 }
 
 
+void Dependency_Data_Extractor::Construct_Search_Data_Records_Structure(std::string path){
+
+     this->Dependent_Headers.shrink_to_fit();
+
+     this->External_Header_Files.shrink_to_fit();
+
+     for(size_t i=0;i<this->Dependent_Headers.size();i++){
+
+         this->Search_Record.Dependent_Headers.push_back(this->Dependent_Headers.at(i));         
+     }
+
+     for(size_t i=0;i<this->External_Header_Files.size();i++){
+
+         this->Search_Record.External_Headers.push_back(this->External_Header_Files.at(i));
+     }
+
+     this->Search_Record.path = path;
+
+     this->Search_Record.dep_counter = this->Dependent_Headers.size();
+     
+     this->Clear_Temporary_Memory(); 
+}
 
 
 
@@ -151,6 +195,16 @@ void Dependency_Data_Extractor::Add_Search_Data(Search_Data & buffer){
      this->Map_Inc_Dec.insert(std::make_pair(buffer.dir_file_comb,&this->Dependent_Headers.back()));
 }
 
+
+void Dependency_Data_Extractor::Add_Search_Data_Vector(const std::vector<Search_Data> & vec){
+
+     for(size_t i=0;i<vec.size();i++){
+
+         Search_Data Dat = vec.at(i);
+      
+         this->Add_Search_Data(Dat);
+     }
+}
 
 
 void Dependency_Data_Extractor::Determine_Dependent_File_Data_From_Decleration(Search_Data & buffer, 
@@ -441,6 +495,7 @@ bool Dependency_Data_Extractor::Is_This_File_Aready_Searched(std::string inc_dec
     return is_this_file_searched;
 }
 
+/*
 
 void Dependency_Data_Extractor::Re_Order_Dependencies(){
 
@@ -494,6 +549,7 @@ void Dependency_Data_Extractor::Re_Order_Dependencies(){
      }
 }
 
+*/
 
 
 void Dependency_Data_Extractor::Insert_External_Header_File_For_Dependency(std::string hdr_file_name){
@@ -617,6 +673,8 @@ bool Dependency_Data_Extractor::Is_This_RepoFile(std::string file_name){
 
 void Dependency_Data_Extractor::Clear_Object_Memory(){
 
+     this->Clear_Temporary_Memory();
+
      this->Clear_Dynamic_Memory();
 
      this->Header_Processor.Clear_Object_Memory();
@@ -625,6 +683,16 @@ void Dependency_Data_Extractor::Clear_Object_Memory(){
 
 void Dependency_Data_Extractor::Clear_Dynamic_Memory()
 {
+     this->Clear_Search_Data_Memory(this->Search_Record.Dependent_Headers);
+
+     this->Clear_Vector_Memory(this->Search_Record.External_Headers);
+
+     this->Clear_String_Memory(this->Search_Record.path);
+}
+
+
+void Dependency_Data_Extractor::Clear_Temporary_Memory(){
+
      this->Clear_Vector_Memory(this->External_Header_Files);
 
      this->Clear_Search_Data_Memory(this->Dependent_Headers);
@@ -719,7 +787,7 @@ const std::vector<std::string> * Dependency_Data_Extractor::Get_External_Header_
      return &this->External_Header_Files;
 }
 
-std::vector<Search_Data> * Dependency_Data_Extractor::Get_Search_Data(){
+const Search_Data_Records * Dependency_Data_Extractor::Get_Search_Data() const {
 
-      return &this->Dependent_Headers;
+      return &this->Search_Record;
 }

@@ -27,6 +27,7 @@
 #include <iterator>
 #include <utility>                     // std::pair, std::make_pair
 #include <stdexcept>                   // std::out_of_range
+#include "Dependency_Data_Stack_Container.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Header_File_Processor.hpp"
 #include "Project_Src_Code_Rdr.hpp"
@@ -40,24 +41,6 @@
 #include "IntToCharTranslater.h"
 
 
-struct Search_Data
-{
-  std::string path;
-  std::string name;
-  std::string include_decleration;
-  std::string dir_file_comb;
-  bool search_complated;
-  int dep_counter;
-};
-
-
-struct Search_Data_Records
-{
-  std::string path;
-  std::vector<Search_Data> Dependent_Headers;
-  std::vector<Search_Data> External_Headers;
-};
-
 
 class Dependency_Data_Extractor
 {
@@ -66,8 +49,9 @@ public:
  virtual ~Dependency_Data_Extractor();
  void Receive_Operating_System(char opr_sis);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
+ void Receive_Dependency_Data_Stack_Container(Dependency_Data_Stack_Container * ptr);
  void Extract_Dependency_Tree(std::string path);
- std::vector<Search_Data> * Get_Search_Data();
+ const Search_Data_Records * Get_Search_Data() const;
  const std::vector<std::string> * Get_External_Header_Files() const;
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
@@ -91,17 +75,23 @@ protected:
  void Determine_Dependent_File_Data_From_Decleration(Search_Data & buffer, std::string inc_dec);
  void Determine_Dependent_File_Data_From_Path(Search_Data & buffer, std::string path);
  void Add_Search_Data(Search_Data & buffer);
+ void Add_Search_Data_Vector(const std::vector<Search_Data> & vec);
  void Clear_Search_Data_Memory(std::vector<Search_Data> & data);
  void Clear_Vector_Memory(std::vector<std::string> & vec);
  void Clear_Map_Memory(std::unordered_map<std::string, Search_Data *> & Map_Inc_Dec);
+ void Clear_Temporary_Memory();
+ void Construct_Search_Data_Records_Structure(std::string path);
  const std::vector<std::string> * Get_File_Include_Delarations(std::string path) const;
  const std::vector<std::string> * Include_Declerations;
  Header_File_Processor Header_Processor;  
  Project_Src_Code_Rdr * Code_Rd;
+ Dependency_Data_Stack_Container * Stack_Ptr;
+ 
+ Search_Data_Records Search_Record;
  std::vector<Search_Data> Dependent_Headers;
- std::vector<Search_Data> Swap_Memory;
  std::vector<std::string> External_Header_Files;
  std::vector<std::string> records;
+ 
  std::unordered_map<std::string, Search_Data *> Map_Inc_Dec;
  bool Memory_Delete_Condition;
  bool is_this_repo_header;

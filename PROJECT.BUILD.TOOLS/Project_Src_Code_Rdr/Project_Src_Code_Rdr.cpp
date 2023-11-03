@@ -135,9 +135,12 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
      
          std::string file_sys_path = this->FilePaths.at(i);
 
+         
+
          bool is_header   = this->Hdr_Determiner[trn]->Is_Header(file_sys_path);
 
          bool is_src_file = this->Src_Determiner[trn]->Is_Source_File(file_sys_path);
+
 
 
          if(is_header || is_src_file){
@@ -157,6 +160,8 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
             buffer.is_header_file = false;
             buffer.is_main_file   = false;
             buffer.is_source_file = false;
+            buffer.inclusion_number = 0;
+
 
             if(is_header){
 
@@ -220,7 +225,6 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
                    buffer.inclusion_number++;
                 }
             }
-
 
             this->FileManager[trn].Clear_Dynamic_Memory();
             
