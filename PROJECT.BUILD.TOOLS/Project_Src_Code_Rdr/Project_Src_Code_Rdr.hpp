@@ -90,9 +90,9 @@ protected:
  Git_Data_Processor * Git_Data_Proc;
  Source_File_Determiner ** Src_Determiner;
  Header_File_Determiner ** Hdr_Determiner;
- Cpp_FileOperations FileManager[16];
- StringOperator StringManager[16];
- std::thread threads[16];
+ Cpp_FileOperations FileManager[32];
+ StringOperator StringManager[32];
+ std::thread threads[32];
  std::mutex  mtx;
  std::vector<FileData> Code_Dt;
  std::vector<std::string> FilePaths;

@@ -9,18 +9,18 @@ Project_Src_Code_Rdr::Project_Src_Code_Rdr(char opr_sis)
 
    this->opr_sis = opr_sis;
 
-   this->Hdr_Determiner = new Header_File_Determiner * [16];
+   this->Hdr_Determiner = new Header_File_Determiner * [32];
 
-   this->Src_Determiner = new Source_File_Determiner * [16];
+   this->Src_Determiner = new Source_File_Determiner * [32];
 
-   for(int i=0;i<16;i++){
+   for(int i=0;i<32;i++){
    
        this->Hdr_Determiner[i] = new Header_File_Determiner(opr_sis);
 
        this->Src_Determiner[i] = new Source_File_Determiner;
    }
 
-   for(int i=0;i<16;i++){
+   for(int i=0;i<32;i++){
    
        this->FileManager[i].Receive_Operating_System(opr_sis);
 
@@ -45,7 +45,7 @@ void Project_Src_Code_Rdr::Receive_Git_Data_Processor(Git_Data_Processor * ptr)
 {
      this->Git_Data_Proc = ptr;
 
-     for(int i=0;i<16;i++){
+     for(int i=0;i<32;i++){
    
          this->Hdr_Determiner[i]->Receive_Git_Data_Processor(ptr);
      }
@@ -77,17 +77,17 @@ void Project_Src_Code_Rdr::Read_Project_Source_Code_Files(){
 
      size_t repo_size = this->FilePaths.size();      
 
-     if(repo_size >= 16){
+     if(repo_size >= 32){
      
-        int division = repo_size/16;
+        int division = repo_size/32;
         
-        for(int i=0;i<16;i++){
+        for(int i=0;i<32;i++){
 
             int str  = i*division;
 
             int end  = (i+1)*division;
 
-            if(i==15){
+            if(i==32){
 
                 end = repo_size;
             }
@@ -95,7 +95,7 @@ void Project_Src_Code_Rdr::Read_Project_Source_Code_Files(){
             this->threads[i] = std::thread(Project_Src_Code_Rdr::Read_Source_Code,this,i,str,end);     
         }
     
-        for(int i=0;i<16;i++){
+        for(int i=0;i<32;i++){
      
             this->threads[i].join();
         }
@@ -811,7 +811,7 @@ void Project_Src_Code_Rdr::Clear_Dynamic_Memory(){
 
 void Project_Src_Code_Rdr::Clear_Thread_Objects_Memory(){
 
-     for(int i=0;i<16;i++){
+     for(int i=0;i<32;i++){
      
          if(this->Hdr_Determiner[i] != nullptr){
               
@@ -826,7 +826,7 @@ void Project_Src_Code_Rdr::Clear_Thread_Objects_Memory(){
      this->Hdr_Determiner = nullptr;
      
      
-     for(int i=0;i<16;i++){
+     for(int i=0;i<32;i++){
 
          if(this->Src_Determiner[i]!= nullptr){
 
@@ -841,9 +841,14 @@ void Project_Src_Code_Rdr::Clear_Thread_Objects_Memory(){
      this->Src_Determiner = nullptr;
 
 
-     for(int i=0;i<16;i++){
+     for(int i=0;i<32;i++){
 
         this->FileManager[i].Clear_Dynamic_Memory();
+     }
+
+     for(int i=0;i<32;i++){
+
+        this->StringManager[i].Clear_Dynamic_Memory();
      }
 
      this->Clear_Vector_Memory(this->FilePaths);

@@ -185,8 +185,6 @@ void Header_Dependency_Data_Extractor::Perform_Dependency_Search(){
                end = data_size;
            }
 
-
-
            this->threadPool.push_back(std::thread(Header_Dependency_Data_Extractor::Extract_Dependency_Search_Data,this,i,str,end));
        }
     
@@ -241,20 +239,17 @@ void Header_Dependency_Data_Extractor::Extract_Dependency_Search_Data(int thr_nu
 
 void Header_Dependency_Data_Extractor::Search_Dependency_Data_For_Path(std::string path,int thr_num){
 
-     if(!this->Is_This_File_Searched(path)){
+     this->Dep_Data_Collectors[thr_num]->Extract_Dependency_Tree(path);
 
-         this->Dep_Data_Collectors[thr_num]->Extract_Dependency_Tree(path);
+     const Search_Data_Records * Dep_Data_Ptr = this->Dep_Data_Collectors[thr_num]->Get_Search_Data();
 
-         const Search_Data_Records * Dep_Data_Ptr = this->Dep_Data_Collectors[thr_num]->Get_Search_Data();
+     std::unique_lock<std::mutex> mt(this->mtx);
 
-         std::unique_lock<std::mutex> mt(this->mtx);
+     this->Stack_Container->Receive_New_Search_Data(path,Dep_Data_Ptr);
 
-         this->Stack_Container->Receive_New_Search_Data(path,Dep_Data_Ptr);
+     mt.unlock();
 
-         mt.unlock();
-
-         this->Dep_Data_Collectors[thr_num]->Clear_Dynamic_Memory();
-     }
+     this->Dep_Data_Collectors[thr_num]->Clear_Dynamic_Memory();
 }
 
 
@@ -287,6 +282,8 @@ void Header_Dependency_Data_Extractor::Clear_Dynamic_Memory(){
         for(size_t i=0;i<object_num;i++){
 
              this->Dep_Data_Collectors.at(i)->Clear_Object_Memory();
+
+             delete this->Dep_Data_Collectors.at(i);
         }
 
         this->Dep_Data_Collectors.clear();

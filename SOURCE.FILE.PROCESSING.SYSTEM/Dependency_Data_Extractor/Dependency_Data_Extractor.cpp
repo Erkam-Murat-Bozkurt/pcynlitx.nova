@@ -84,26 +84,11 @@ void Dependency_Data_Extractor::Recursive_Dependency_Determination(std::string p
 
         if(!this->Dependent_Headers.at(i).search_complated){
 
-
             std::string filePath = this->Dependent_Headers.at(i).path;
             
-            if(this->Stack_Ptr->Is_Exist_OnSearchStack(filePath)){
-                
-                const Search_Data_Records Search_Record 
-                    
-                  = this->Stack_Ptr->Find_Search_Data_From_Path(filePath);
+            this->Search_Dependencies(this->Dependent_Headers.at(i));
 
-                this->Add_Search_Data_Vector(Search_Record.Dependent_Headers);
-
-                this->Dependent_Headers.at(i).search_complated = true;
-
-            }
-            else{
-
-                  this->Search_Dependencies(this->Dependent_Headers.at(i));
-
-                  this->Dependent_Headers.at(i).search_complated = true;
-            }
+            this->Dependent_Headers.at(i).search_complated = true;
 
             i=0;
          }

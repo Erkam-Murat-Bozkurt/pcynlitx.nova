@@ -33,6 +33,7 @@
 #include <stdexcept>                   // std::out_of_range
 #include <thread>
 #include <mutex>
+#include <stdlib.h>     //for using the function sleep
 #include "Dependency_Data_Extractor.hpp"
 #include "Dependency_Data_Stack_Container.hpp"
 #include "Source_File_Information_Collector.hpp"

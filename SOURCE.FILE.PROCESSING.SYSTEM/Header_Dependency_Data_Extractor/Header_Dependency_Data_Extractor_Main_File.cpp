@@ -92,7 +92,7 @@ int main(int argc, char ** argv){
 
     Header_Dep_Data_Extractor.Clear_Dynamic_Memory();
 
-    Print_Search_Data(&Header_Dep_Data_Extractor);
+    //Print_Search_Data(&Header_Dep_Data_Extractor);
 
     std::cout << "\n\n THE END OF THE PROGRAM \n\n";
 
@@ -144,7 +144,7 @@ void Print_Search_Data(Header_Dependency_Data_Extractor * ptr){
 
         std::cout << "\n\n";
 
-        sleep(0.5);
+        sleep(0.2);
     }
 
 }
