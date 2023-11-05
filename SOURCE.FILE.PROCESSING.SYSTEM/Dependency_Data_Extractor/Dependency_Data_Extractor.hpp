@@ -27,6 +27,7 @@
 #include <iterator>
 #include <utility>                     // std::pair, std::make_pair
 #include <stdexcept>                   // std::out_of_range
+#include <stdlib.h>                    //for using the function sleep
 #include "Dependency_Data_Stack_Container.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Header_File_Processor.hpp"
@@ -49,14 +50,16 @@ public:
  virtual ~Dependency_Data_Extractor();
  void Receive_Operating_System(char opr_sis);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
- void Receive_Dependency_Data_Stack_Container(Dependency_Data_Stack_Container * ptr);
+ void Receive_Stack_Container(Dependency_Data_Stack_Container * ptr);
  void Extract_Dependency_Tree(std::string path);
+ void Determine_Source_File_Dependencies(std::string path);
  const Search_Data_Records * Get_Search_Data() const;
  const std::vector<std::string> * Get_External_Header_Files() const;
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 protected:
  void Re_Order_Dependencies();
+ void Recursive_Source_File_Dependency_Determination(std::string path);
  void Recursive_Dependency_Determination(std::string path);
  bool Check_New_Dependency_Status(std::string path);
  bool Check_New_Dependency_Status_From_Path(std::string path);

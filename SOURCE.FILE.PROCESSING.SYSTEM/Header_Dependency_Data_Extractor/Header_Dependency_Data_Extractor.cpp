@@ -267,8 +267,6 @@ void Header_Dependency_Data_Extractor::Construct_Dependency_Data_Extractors(){
          this->Dep_Data_Collectors.push_back(Dep_Ext);
 
          this->Dep_Data_Collectors.back()->Receive_Source_Code_Reader(this->Code_Rdr);
-
-         this->Dep_Data_Collectors.back()->Receive_Dependency_Data_Stack_Container(this->Stack_Container);
      } 
 }
 

@@ -55,7 +55,7 @@ void Dependency_Data_Extractor::Receive_Source_Code_Reader(Project_Src_Code_Rdr 
 }
 
 
-void Dependency_Data_Extractor::Receive_Dependency_Data_Stack_Container(Dependency_Data_Stack_Container * ptr){
+void Dependency_Data_Extractor::Receive_Stack_Container(Dependency_Data_Stack_Container * ptr){
 
      this->Stack_Ptr = ptr;
 }
@@ -66,9 +66,54 @@ void Dependency_Data_Extractor::Extract_Dependency_Tree(std::string path){
      this->Clear_Dynamic_Memory();
 
      this->Recursive_Dependency_Determination(path);
-     
-     //this->Re_Order_Dependencies();
+
+     this->Construct_Search_Data_Records_Structure(path);
 }
+
+
+void Dependency_Data_Extractor::Determine_Source_File_Dependencies(std::string path){
+
+     this->Clear_Dynamic_Memory();
+
+     this->Recursive_Source_File_Dependency_Determination(path);
+
+     this->Construct_Search_Data_Records_Structure(path);
+}
+
+
+void Dependency_Data_Extractor::Recursive_Source_File_Dependency_Determination(std::string path){
+
+     Search_Data Head;
+
+     Head.path = path;
+     Head.search_complated = false;
+
+     this->Search_Dependencies(Head);
+    
+     for(size_t i=0;i<this->Dependent_Headers.size();i++){
+
+        if(!this->Dependent_Headers.at(i).search_complated){
+
+            std::string filePath = this->Dependent_Headers.at(i).path;
+
+            if(!this->Stack_Ptr->Is_Exist_OnSearchStack(filePath)){
+
+                this->Search_Dependencies(this->Dependent_Headers.at(i));                
+            }
+            else{
+
+                 const Search_Data_Records Record = this->Stack_Ptr->Find_Search_Data_From_Path(filePath);
+
+                 this->Add_Search_Data_Vector(Record.Dependent_Headers);
+            }
+
+            this->Dependent_Headers.at(i).search_complated = true;
+
+            i=0;
+         }
+     }     
+}
+
 
 
 void Dependency_Data_Extractor::Recursive_Dependency_Determination(std::string path){
@@ -83,9 +128,7 @@ void Dependency_Data_Extractor::Recursive_Dependency_Determination(std::string p
      for(size_t i=0;i<this->Dependent_Headers.size();i++){
 
         if(!this->Dependent_Headers.at(i).search_complated){
-
-            std::string filePath = this->Dependent_Headers.at(i).path;
-            
+                        
             this->Search_Dependencies(this->Dependent_Headers.at(i));
 
             this->Dependent_Headers.at(i).search_complated = true;
@@ -93,8 +136,6 @@ void Dependency_Data_Extractor::Recursive_Dependency_Determination(std::string p
             i=0;
          }
      }
-
-     this->Construct_Search_Data_Records_Structure(path);
 }
 
 
