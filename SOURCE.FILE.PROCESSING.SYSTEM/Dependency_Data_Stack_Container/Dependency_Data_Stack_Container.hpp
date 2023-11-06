@@ -69,7 +69,7 @@ public:
  void Receive_New_Search_Data(std::string path, const Search_Data_Records * ptr);
  bool Is_Exist_OnSearchStack(std::string path);
  const std::vector<Search_Data_Records> * Get_Search_Stack();
- const Search_Data_Records Find_Search_Data_From_Path(std::string path) const;
+ const Search_Data_Records * Find_Search_Data_From_Path(std::string path) const;
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 protected:

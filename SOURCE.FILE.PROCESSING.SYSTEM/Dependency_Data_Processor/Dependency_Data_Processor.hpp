@@ -32,6 +32,9 @@
 #include <thread>
 #include <mutex>
 #include <stdlib.h>                    //for using the function sleep
+#include <algorithm>
+#include <boost/sort/sort.hpp>
+#include <omp.h>
 #include "Header_Dependency_Data_Extractor.hpp"
 #include "Dependency_Data_Extractor.hpp"
 #include "Source_File_Information_Collector.hpp"
@@ -55,13 +58,18 @@ public:
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Perform_Dependency_Search();
- bool Is_This_File_Searched(std::string path);
  const Search_Data_Records * Find_Search_Data_From_Path(std::string path) const;
  const std::vector<Search_Data_Records> * Get_Search_Data() const;
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
- void Set_Dependency_Counters();
+ void Perform_Data_Reordering();
 protected:
+ bool CompareDataStructures(Search_Data_Records Str1, Search_Data_Records Str12); 
+ void Clear_Temporary_Memory();
+ bool Is_Exist_OnSearchStack(std::string path);
+ void ReOrder_Source_Files(int str, int end);
+ void ReOrder_Stack_Data(Search_Data_Records * ptr);
+ void Re_Order_Dependency_Data(int str, int end);
  void Clear_String_Memory(std::string & str);
  void Clear_Vector_Memory(std::vector<std::string> & vec);
  void Clear_Search_Data_Memory(std::vector<Search_Data> & data);

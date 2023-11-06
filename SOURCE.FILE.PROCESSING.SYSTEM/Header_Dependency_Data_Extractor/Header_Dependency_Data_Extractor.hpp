@@ -66,7 +66,7 @@ public:
  void Perform_Dependency_Search();
  void Clear_Dynamic_Memory();
  bool Is_This_File_Searched(std::string path);
- const Search_Data_Records Find_Search_Data_From_Path(std::string path) const;
+ const Search_Data_Records * Find_Search_Data_From_Path(std::string path) const;
  const std::vector<Search_Data_Records> * Get_Search_Data() const;
 protected:
  void Find_Header_Files();

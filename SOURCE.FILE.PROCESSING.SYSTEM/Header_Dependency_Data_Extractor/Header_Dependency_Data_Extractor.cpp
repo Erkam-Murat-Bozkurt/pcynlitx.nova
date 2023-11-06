@@ -306,7 +306,7 @@ bool Header_Dependency_Data_Extractor::Is_This_File_Searched(std::string path){
 
 
 
-const Search_Data_Records Header_Dependency_Data_Extractor::Find_Search_Data_From_Path(std::string path) const
+const Search_Data_Records * Header_Dependency_Data_Extractor::Find_Search_Data_From_Path(std::string path) const
 {
     return this->Stack_Container->Find_Search_Data_From_Path(path);
 }

@@ -2,6 +2,11 @@
 
 
 
+BOOST_LIB_DIR=D:\BOOST.LIB\libs
+BOOST_BASE_DIR=D:\BOOST.LIB
+BOOST_INC_1=D:\BOOST.LIB\boost
+BOOST_INC_2=D:\BOOST.LIB\boost\sort
+BOOST_INC_3=D:\BOOST.LIB\boost\sort\parallel_stable_sort
 
 
 STRING_OPS=D:\pcynlitx.build\BASIC.TOOLS\StringOperator
@@ -51,7 +56,12 @@ VPATH = $(DIR_OPS)       $(CPP_OPS) $(CHAR_OPS) \
 		$(SYS_INT) \
 		$(DEP_DAT_EXTR) \
 		$(DEP_DAT_STCK) \
-		$(HDR_DEP_EXT)
+		$(HDR_DEP_EXT) \
+		$(BOOST_LIB_DIR) \
+		$(BOOST_BASE_DIR) \
+		$(BOOST_INC_1) \
+		$(BOOST_INC_2) \
+		$(BOOST_INC_3) \
 
 Dependency_Data_Processor.exe: Dependency_Data_Processor_Main_File.cpp \
 	Dependency_Data_Processor.cpp \
@@ -95,7 +105,7 @@ Dependency_Data_Processor.exe: Dependency_Data_Processor_Main_File.cpp \
 	CharOperator.h \
 	Cpp_FileOperations.h
 
-	g++ -std=c++17  -ggdb -o Dependency_Data_Processor.exe \
+	g++ -fopenmp -std=c++17  -ggdb -o Dependency_Data_Processor.exe \
 	 -I$(DIR_OPS)       -I$(CPP_OPS)     -I$(CHAR_OPS) \
 	 -I$(SRC_INF_COL)   -I$(STRING_OPS)  -I$(HEAD_DET) \
 	 -I$(SOURCE_DETR)   -I$(GIT_LIST) \
@@ -114,6 +124,10 @@ Dependency_Data_Processor.exe: Dependency_Data_Processor_Main_File.cpp \
 	 -I$(DEP_DAT_EXTR) \
 	 -I$(DEP_DAT_STCK) \
 	 -I$(HDR_DEP_EXT) \
+	 -I$(BOOST_BASE_DIR) \
+	 -I$(BOOST_INC_1) \
+	 -I$(BOOST_INC_2) \
+	 -I$(BOOST_INC_3) \
 	 -L$(SRC_INF_COL)   -L$(DIR_ENUM) \
 	 -L$(DIR_OPS)       -L$(CPP_OPS) \
 	 -L$(CHAR_OPS)      -L$(INT_TO_CHAR) \
@@ -134,6 +148,8 @@ Dependency_Data_Processor.exe: Dependency_Data_Processor_Main_File.cpp \
 	 -L$(DEP_DAT_EXTR) \
 	 -L$(DEP_DAT_STCK) \
      -L$(HDR_DEP_EXT) \
+	 -L$(BOOST_LIB_DIR) \
+	 -L$(BOOST_BASE_DIR) \
 		Dependency_Data_Processor_Main_File.cpp \
 		Dependency_Data_Processor.cpp \
 		$(HDR_DEP_EXT)\Header_Dependency_Data_Extractor.cpp \
@@ -189,4 +205,5 @@ Dependency_Data_Processor.exe: Dependency_Data_Processor_Main_File.cpp \
 		-include $(CPP_OPS)\Cpp_FileOperations.h \
 		-include $(INT_TO_CHAR)\IntToCharTranslater.h \
 		-include $(SYS_INT)\Custom_System_Interface.h \
+		-include $(BOOST_INC_3)\parallel_stable_sort.hpp \
 		-lpthread

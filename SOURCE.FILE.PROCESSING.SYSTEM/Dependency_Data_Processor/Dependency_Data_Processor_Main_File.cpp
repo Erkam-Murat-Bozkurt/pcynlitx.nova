@@ -95,7 +95,7 @@ int main(int argc, char ** argv){
 
               std::cout << "\n File name:" << data_ptr->at(j).name;
               //std::cout << "\n File path:" << data_ptr->at(j).path;
-              std::cout << "\n Depdency :" << data_ptr->at(j).dep_counter;
+              //std::cout << "\n Depdency :" << data_ptr->at(j).dep_counter;
 
            }
         }
@@ -107,12 +107,9 @@ int main(int argc, char ** argv){
         for(size_t j=1;j<ext_hdr_ptr->size();j++){
 
              std::cout << "\n External Header:" << ext_hdr_ptr->at(j);
-
         }
 
         std::cout << "\n\n";
-
-        sleep(1);
     }
 
 

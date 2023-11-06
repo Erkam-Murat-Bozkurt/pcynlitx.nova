@@ -145,6 +145,12 @@ void Dependency_Data_Processor::Perform_Dependency_Search(){
     }
 
     this->Dependency_Search_Data.shrink_to_fit();    
+
+    std::cout << "\n Dependency data collected";
+
+    this->Clear_Temporary_Memory();
+
+    this->Perform_Data_Reordering();
 }
 
 
@@ -200,89 +206,175 @@ void Dependency_Data_Processor::Search_Dependency_Data_For_Path(std::string path
 
 
 
-void Dependency_Data_Processor::Set_Dependency_Counters(){
+void Dependency_Data_Processor::Perform_Data_Reordering(){
 
      size_t search_data_size = this->Dependency_Search_Data.size();
 
+     size_t thread_number = search_data_size/10;
+
+     if(search_data_size>20){
+
+       int division = search_data_size/thread_number;
+
+       int remaining_job = search_data_size%thread_number;
+
+       int str=0, end=0;
+
+       for(int i=0;i<thread_number;i++){
+
+           if(i==0){
+
+              str = 0;
+              end = division;              
+           }
+           else{
+
+               str = end;
+
+               end = end + division;
+
+               if(remaining_job>0){
+
+                  end = end+1;
+
+                  remaining_job--;
+               }
+           }
+
+
+           if(i==(thread_number-1)){
+            
+               end = search_data_size;
+           }
+
+           this->threadPool.push_back(std::thread(Dependency_Data_Processor::Re_Order_Dependency_Data,this,str,end));   
+       }
+    
+       for(int i=0;i<threadPool.size();i++){
+     
+          this->threadPool[i].join();
+       }
+    }
+    else{
+
+        this->Extract_Dependency_Search_Data(0,0,search_data_size);
+    }
+
+    this->Dependency_Search_Data.shrink_to_fit();    
+
+
+    std::cout << "\n First ordering complated..";
+
+
+    /*
+
+    std::sort(std::execution::parallel_policy,this->Dependency_Search_Data.begin(),this->Dependency_Search_Data.end(),
+    
+            [](Search_Data_Records a, Search_Data_Records b){ return a.dep_counter > b.dep_counter;});
+
+    */
+
+
+    /*
+
+    unsigned int con_threads = 200;
+    //con_threads = std::thread::hardware_concurrency(); // finding the number of threads available
+
+
+
+
+    boost::sort::parallel_stable_sort(this->Dependency_Search_Data.begin(),this->Dependency_Search_Data.end(),
+    
+            [](Search_Data_Records a, Search_Data_Records b){ return a.dep_counter > b.dep_counter;},con_threads);
+
+    */
+
+
+    # pragma omp parallel for num_threads(64)
+
      for(size_t i=0;i<search_data_size;i++){
 
-         std::vector<Search_Data> * ptr
-         
-            = &this->Dependency_Search_Data.at(i).Dependent_Headers;
-       
-         std::cout << "\n ptr->size():" << ptr->size();
-         std::cout << "\n path:" << ptr->at(0).path;
+         //std::cout << "\n Thread Number :" << omp_get_thread_num();
 
+         for(size_t j=0;j<search_data_size;j++){
 
-         if(ptr->size()>0){
+            if(this->Dependency_Search_Data.at(i).dep_counter
+            
+               > this->Dependency_Search_Data.at(j).dep_counter){
 
-            for(size_t j=0;j<ptr->size();j++){
+                  Search_Data_Records Temp = this->Dependency_Search_Data.at(i);
 
-                std::string _path = ptr->at(j).path;
+               #pragma omp critical
+               {
+                  this->Dependency_Search_Data.at(i) = this->Dependency_Search_Data.at(j);
 
-                std::cout << "\n _path:" << _path;
-
-                std::cout << "\n dep_counter:" << ptr->at(j).dep_counter;
-
-                std::cout << "\n this->Is_This_File_Searched(_path):" << this->Is_This_File_Searched(_path);
-
-                std::cin.get();
-
-                if(this->Is_This_File_Searched(_path)){
-
-                    const Search_Data_Records *  record = this->Find_Search_Data_From_Path(_path);
-                    
-                    ptr->at(j).dep_counter = record->Dependent_Headers.size();
-
-                    std::cout << "\n ptr->at(" << j << ").dep_counter" << ptr->at(j).dep_counter;
-
-                    std::cout << "\n record->path:" << record->path;
-
-                    std::cout << "\n record->Dependent_Headers:" << record->Dependent_Headers.size();
-
-                    std::cin.get();
-
-                } 
+                  this->Dependency_Search_Data.at(j) = Temp ;
+               }
             }
          }
      }
 }
 
 
+bool Dependency_Data_Processor::CompareDataStructures(Search_Data_Records Str1, Search_Data_Records Str2){
+
+     return (Str1.dep_counter > Str2.dep_counter);
+}
 
 
-bool Dependency_Data_Processor::Is_This_File_Searched(std::string path){
 
-     bool is_this_file_searched = false;
+void Dependency_Data_Processor::ReOrder_Source_Files(int str, int end){
 
-     if(this->Search_Data_Map.find(path)!=this->Search_Data_Map.end()){
+     
+}
 
-        is_this_file_searched = true;
+
+void Dependency_Data_Processor::Re_Order_Dependency_Data(int str, int end){
+
+     for(size_t i=str;i<end;i++){
+
+         this->ReOrder_Stack_Data(&this->Dependency_Search_Data.at(i));
      }
+}
 
-     return is_this_file_searched;
+
+void Dependency_Data_Processor::ReOrder_Stack_Data(Search_Data_Records * Data){
+     
+     std::vector<Search_Data> * ptr = &Data->Dependent_Headers;
+       
+     if(ptr->size()>0){
+
+        for(size_t j=0;j<ptr->size();j++){
+
+            std::string _path = ptr->at(j).path;
+
+            if(this->Is_Exist_OnSearchStack(_path)){
+
+               const Search_Data_Records *  record = this->Find_Search_Data_From_Path(_path);
+                    
+               ptr->at(j).dep_counter = record->Dependent_Headers.size();
+            } 
+        }
+
+        std::sort(ptr->begin(),ptr->end(),
+    
+            [](Search_Data a, Search_Data b){ return a.dep_counter > b.dep_counter;});
+
+    }
+}
+
+
+
+bool Dependency_Data_Processor::Is_Exist_OnSearchStack(std::string path){
+
+     return this->Stack_Container.Is_Exist_OnSearchStack(path);
 }
 
 
 
 const Search_Data_Records * Dependency_Data_Processor::Find_Search_Data_From_Path(std::string path) const
 {
-    try {        
-
-         return this->Search_Data_Map.at(path);
-    }
-    catch (const std::out_of_range & oor) {
-        
-         std::cerr << "\n Out of Range error: " << oor.what() << '\n';
-
-         std::cout << "\n Inside Dependency_Data_Holder instance,";
-
-         std::cout << "\n Inside Find_Search_Data_From_Path,";
-
-         std::cout << "\n the file located on " << path << " can not find!.\n";
-
-         exit(EXIT_FAILURE);
-    }     
+      return this->Stack_Container.Find_Search_Data_From_Path(path);
 }
 
 
@@ -355,6 +447,32 @@ void Dependency_Data_Processor::Clear_Search_Data_Memory(std::vector<Search_Data
      }
 }
 
+
+ void Dependency_Data_Processor::Clear_Temporary_Memory(){
+
+      if(!this->Dep_Data_Collectors.empty()){
+
+         size_t object_num = this->Dep_Data_Collectors.size();
+
+         for(size_t i=0;i<object_num;i++){
+
+             this->Dep_Data_Collectors.at(i)->Clear_Object_Memory();
+
+             delete this->Dep_Data_Collectors.at(i);
+         }
+
+         this->Dep_Data_Collectors.clear();
+
+         this->Dep_Data_Collectors.shrink_to_fit();
+      }
+
+      if(!this->threadPool.empty()){
+
+         this->threadPool.clear();
+
+         this->threadPool.shrink_to_fit();
+      }
+ }
 
 
 

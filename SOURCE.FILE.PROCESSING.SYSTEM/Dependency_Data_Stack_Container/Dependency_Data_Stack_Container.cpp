@@ -66,11 +66,11 @@ bool Dependency_Data_Stack_Container::Is_Exist_OnSearchStack(std::string path){
 }
 
 
-const Search_Data_Records Dependency_Data_Stack_Container::Find_Search_Data_From_Path(std::string path) const
+const Search_Data_Records * Dependency_Data_Stack_Container::Find_Search_Data_From_Path(std::string path) const
 {
     try {        
 
-         return this->Search_Stack_Map.at(path);
+         return &this->Search_Stack_Map.at(path);
     }
     catch (const std::out_of_range & oor) {
         

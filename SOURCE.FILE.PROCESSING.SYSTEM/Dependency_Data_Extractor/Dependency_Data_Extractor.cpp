@@ -102,9 +102,9 @@ void Dependency_Data_Extractor::Recursive_Source_File_Dependency_Determination(s
             }
             else{
 
-                 const Search_Data_Records Record = this->Stack_Ptr->Find_Search_Data_From_Path(filePath);
+                 const Search_Data_Records * Record = this->Stack_Ptr->Find_Search_Data_From_Path(filePath);
 
-                 this->Add_Search_Data_Vector(Record.Dependent_Headers);
+                 this->Add_Search_Data_Vector(Record->Dependent_Headers);
             }
 
             this->Dependent_Headers.at(i).search_complated = true;
