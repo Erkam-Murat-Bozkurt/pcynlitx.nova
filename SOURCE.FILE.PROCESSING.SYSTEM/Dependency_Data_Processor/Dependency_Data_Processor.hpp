@@ -64,7 +64,6 @@ public:
  void Clear_Object_Memory();
  void Perform_Data_Reordering();
 protected:
- bool CompareDataStructures(Search_Data_Records Str1, Search_Data_Records Str12); 
  void Clear_Temporary_Memory();
  bool Is_Exist_OnSearchStack(std::string path);
  void ReOrder_Source_Files(int str, int end);
@@ -84,6 +83,7 @@ protected:
  std::vector<Dependency_Data_Extractor *> Dep_Data_Collectors;
  std::vector<Source_File_Data> * Source_File_Data_Ptr;
  std::vector<Search_Data_Records> Dependency_Search_Data;
+ std::vector<Search_Data_Records> Process_Output_Data;
  std::unordered_map<std::string, Search_Data_Records *> Search_Data_Map;
  std::mutex mtx;
  std::thread threads[16];

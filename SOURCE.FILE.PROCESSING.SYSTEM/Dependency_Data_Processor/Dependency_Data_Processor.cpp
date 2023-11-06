@@ -47,11 +47,6 @@ Dependency_Data_Processor::~Dependency_Data_Processor()
 }
 
 
-void Dependency_Data_Processor::Clear_Object_Memory(){
-
-     this->Clear_Dynamic_Memory();
-}
-
 
 
 void Dependency_Data_Processor::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
@@ -205,7 +200,6 @@ void Dependency_Data_Processor::Search_Dependency_Data_For_Path(std::string path
 }
 
 
-
 void Dependency_Data_Processor::Perform_Data_Reordering(){
 
      size_t search_data_size = this->Dependency_Search_Data.size();
@@ -225,6 +219,7 @@ void Dependency_Data_Processor::Perform_Data_Reordering(){
            if(i==0){
 
               str = 0;
+              
               end = division;              
            }
            else{
@@ -265,60 +260,38 @@ void Dependency_Data_Processor::Perform_Data_Reordering(){
 
     std::cout << "\n First ordering complated..";
 
+    do{
 
-    /*
+           Search_Data_Records * biggest;
 
-    std::sort(std::execution::parallel_policy,this->Dependency_Search_Data.begin(),this->Dependency_Search_Data.end(),
-    
-            [](Search_Data_Records a, Search_Data_Records b){ return a.dep_counter > b.dep_counter;});
+           size_t index;
 
-    */
+           biggest = &this->Dependency_Search_Data.at(0);
 
+           for(size_t i=0;i<this->Dependency_Search_Data.size();i++){
 
-    /*
+               if(this->Dependency_Search_Data.at(i).dep_counter > biggest->dep_counter){
 
-    unsigned int con_threads = 200;
-    //con_threads = std::thread::hardware_concurrency(); // finding the number of threads available
+                  biggest = &this->Dependency_Search_Data.at(i);
 
-
-
-
-    boost::sort::parallel_stable_sort(this->Dependency_Search_Data.begin(),this->Dependency_Search_Data.end(),
-    
-            [](Search_Data_Records a, Search_Data_Records b){ return a.dep_counter > b.dep_counter;},con_threads);
-
-    */
-
-
-    # pragma omp parallel for num_threads(64)
-
-     for(size_t i=0;i<search_data_size;i++){
-
-         //std::cout << "\n Thread Number :" << omp_get_thread_num();
-
-         for(size_t j=0;j<search_data_size;j++){
-
-            if(this->Dependency_Search_Data.at(i).dep_counter
-            
-               > this->Dependency_Search_Data.at(j).dep_counter){
-
-                  Search_Data_Records Temp = this->Dependency_Search_Data.at(i);
-
-               #pragma omp critical
-               {
-                  this->Dependency_Search_Data.at(i) = this->Dependency_Search_Data.at(j);
-
-                  this->Dependency_Search_Data.at(j) = Temp ;
+                  index = i;
                }
-            }
-         }
-     }
-}
+           }   
+
+           this->Process_Output_Data.push_back(*biggest);
+
+           this->Dependency_Search_Data.erase(this->Dependency_Search_Data.begin()+index);
+
+           this->Dependency_Search_Data.shrink_to_fit();
 
 
-bool Dependency_Data_Processor::CompareDataStructures(Search_Data_Records Str1, Search_Data_Records Str2){
+    }while(this->Dependency_Search_Data.size()>0);
 
-     return (Str1.dep_counter > Str2.dep_counter);
+
+    this->Process_Output_Data.shrink_to_fit();
+
+    std::cout << "\n Second ordering complated..";
+
 }
 
 
@@ -403,6 +376,29 @@ void Dependency_Data_Processor::Clear_String_Memory(std::string & str)
 
 
 
+void Dependency_Data_Processor::Clear_Object_Memory(){
+
+     this->Clear_Dynamic_Memory();
+     
+      if(!this->Process_Output_Data.empty()){
+
+          for(size_t i=0;i<this->Process_Output_Data.size();i++){
+
+              this->Clear_Search_Data_Memory(this->Process_Output_Data.at(i).Dependent_Headers);
+
+              this->Clear_Vector_Memory(this->Process_Output_Data.at(i).External_Headers);
+
+              this->Clear_String_Memory(this->Process_Output_Data.at(i).path);
+          }        
+
+          this->Process_Output_Data.clear();
+
+          this->Process_Output_Data.shrink_to_fit();
+      }
+}
+
+
+
 void Dependency_Data_Processor::Clear_Dynamic_Memory()
 {
       if(!this->Dependency_Search_Data.empty()){
@@ -479,5 +475,5 @@ void Dependency_Data_Processor::Clear_Search_Data_Memory(std::vector<Search_Data
 
 const std::vector<Search_Data_Records> * Dependency_Data_Processor::Get_Search_Data() const {
 
-       return &this->Dependency_Search_Data;
+       return &this->Process_Output_Data;
 }
