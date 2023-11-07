@@ -47,9 +47,14 @@ Dependency_Data_Stack_Container::~Dependency_Data_Stack_Container()
 
 void Dependency_Data_Stack_Container::Receive_New_Search_Data(std::string path, const Search_Data_Records * dt){
 
-     this->Search_Stack.push_back(*dt);
+     const std::vector<Search_Data> * ptr = &dt->Dependent_Headers;
 
-     this->Search_Stack_Map.insert(std::make_pair(path,this->Search_Stack.back()));
+     if(ptr->size()>0){
+
+       this->Search_Stack.push_back(*dt);
+
+       this->Search_Stack_Map.insert(std::make_pair(path,this->Search_Stack.back()));
+     }
 }
 
 
@@ -76,7 +81,7 @@ const Search_Data_Records * Dependency_Data_Stack_Container::Find_Search_Data_Fr
         
          std::cerr << "\n Out of Range error: " << oor.what() << '\n';
 
-         std::cout << "\n Inside Dependency_Data_Holder instance,";
+         std::cout << "\n Inside Dependency_Data_Stack_Container instance,";
 
          std::cout << "\n Inside Find_Search_Data_From_Path,";
 

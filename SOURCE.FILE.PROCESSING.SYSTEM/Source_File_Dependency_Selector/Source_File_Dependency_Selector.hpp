@@ -22,17 +22,20 @@
 #include <windows.h>
 #include <thread>
 #include <mutex>
-#include "Git_Data_Processor.hpp"
-#include "Git_File_List_Receiver.hpp"
-#include "Git_File_List_Writer.hpp"
-#include "Git_Modification_Lister.hpp"
-#include "Git_Modification_Receiver.hpp"
+#include <stdlib.h>
+#include "Dependency_Data_Processor.hpp"
+#include "Header_Dependency_Data_Extractor.hpp"
+#include "Dependency_Data_Stack_Container.hpp"
 #include "Dependency_Data_Extractor.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Source_File_Data_Setter.hpp"
 #include "Header_File_Processor.hpp"
 #include "Project_Src_Code_Rdr.hpp"
+#include "Git_Data_Processor.hpp"
 #include "Git_File_List_Receiver.hpp"
+#include "Git_File_List_Writer.hpp"
+#include "Git_Modification_Lister.hpp"
+#include "Git_Modification_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Header_File_Determiner.h"
 #include "StringOperator.h"
@@ -80,33 +83,25 @@ public:
  std::vector<Source_File_Dependency> * Get_Dependency_List_Element_Adress(int num);
  size_t  Get_Dependency_List_Size();
 protected:
- void Extract_Dependency_Tree(std::string path, int thr_num);
+ void Extract_Dependency_Tree(size_t index,int thr_num, std::vector<Source_File_Dependency> & vec);
  void Extract_Dependency_Data(int thr_num, int start, int end);
  void Set_Included_Header_Number(std::vector<Source_File_Dependency> * ptr);
  void Clear_String_Memory(std::string & Pointer);
  void Clear_Vector_Memory(std::vector<Source_File_Dependency> * pointer);
  void Set_Dependency_Data(Source_File_Dependency & data, std::string path, std::string header_name);
  std::string Get_Header_System_Path(std::string header_name);
- void Clear_Dependency_Data_Extractors();
- void Set_External_Header_File_Dependencies(Source_File_Dependency & data, 
- const std::vector<std::string> * vec);
+ void Set_External_Header_File_Dependencies(Source_File_Dependency & data, const std::vector<std::string> * vec);
+ int  Split_Range(size_t range_size, size_t partition, size_t & ramaining_job);
+ Dependency_Data_Processor Dep_Data_Proccessor;
  Source_File_Information_Collector Info_Collector; 
  Source_File_Data_Setter Data_Setter;
- Dependency_Data_Extractor Dep_Data_Collectors[16];
  Project_Src_Code_Rdr * Code_Rd;
- Git_Data_Processor * Git_Data_Proc;
- std::vector<Source_File_Dependency> Dependent_List[16];
- std::vector<Source_File_Dependency> Dependent_List_Buffer;
+ const std::vector<Search_Data_Records> * Search_Data_Ptr;
  std::vector<Source_File_Data> * Source_File_Data_Ptr;
  std::vector<std::vector<Source_File_Dependency>> Dependency_Data;
- std::string descriptor_file_path;
- StringOperator StringManager; 
  std::mutex mtx;
- std::thread threads[16];
- char opr_sis;
- int  header_file_number;
+ std::vector<std::thread> threadPool;
  bool Memory_Delete_Condition;
- bool is_this_repo_header;
  bool include_decleration_cond;
  bool This_File_Exist;
 };

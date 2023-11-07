@@ -69,7 +69,6 @@ int main(int argc, char ** argv){
     Dep_Data_Processor.Perform_Dependency_Search();
 
 
-    /*
 
     const std::vector<Search_Data_Records> * src_data = Dep_Data_Processor.Get_Search_Data();
 
@@ -113,7 +112,6 @@ int main(int argc, char ** argv){
         std::cout << "\n\n";
     }
 
-    */
 
     //std::cin.get();
 

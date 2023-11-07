@@ -105,7 +105,7 @@ Dependency_Data_Processor.exe: Dependency_Data_Processor_Main_File.cpp \
 	CharOperator.h \
 	Cpp_FileOperations.h
 
-	g++ -fopenmp -std=c++17  -ggdb -o Dependency_Data_Processor.exe \
+	g++ -std=c++17  -o Dependency_Data_Processor.exe \
 	 -I$(DIR_OPS)       -I$(CPP_OPS)     -I$(CHAR_OPS) \
 	 -I$(SRC_INF_COL)   -I$(STRING_OPS)  -I$(HEAD_DET) \
 	 -I$(SOURCE_DETR)   -I$(GIT_LIST) \

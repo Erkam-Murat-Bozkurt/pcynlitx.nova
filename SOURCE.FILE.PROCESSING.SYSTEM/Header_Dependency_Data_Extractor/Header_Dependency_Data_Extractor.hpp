@@ -65,8 +65,6 @@ public:
  void Receive_Dependency_Data_Stack_Container(Dependency_Data_Stack_Container * ptr);
  void Perform_Dependency_Search();
  void Clear_Dynamic_Memory();
- bool Is_This_File_Searched(std::string path);
- const Search_Data_Records * Find_Search_Data_From_Path(std::string path) const;
  const std::vector<Search_Data_Records> * Get_Search_Data() const;
 protected:
  void Find_Header_Files();
@@ -86,7 +84,6 @@ protected:
  std::vector<std::thread> threadPool;
  std::vector<Dependency_Data_Extractor *> Dep_Data_Collectors;
  bool Memory_Delete_Condition;
- int total_thread_num;
  char opr_sis;
 };
 

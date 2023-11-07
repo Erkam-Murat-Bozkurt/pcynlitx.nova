@@ -257,8 +257,10 @@ void Dependency_Data_Processor::Perform_Data_Reordering(){
 
     this->Dependency_Search_Data.shrink_to_fit();    
 
-
+    
     std::cout << "\n First ordering complated..";
+
+    /*
 
     do{
 
@@ -290,16 +292,12 @@ void Dependency_Data_Processor::Perform_Data_Reordering(){
 
     this->Process_Output_Data.shrink_to_fit();
 
-    std::cout << "\n Second ordering complated..";
+    */
+
+    //std::cout << "\n Second ordering complated..";
 
 }
 
-
-
-void Dependency_Data_Processor::ReOrder_Source_Files(int str, int end){
-
-     
-}
 
 
 void Dependency_Data_Processor::Re_Order_Dependency_Data(int str, int end){
@@ -380,7 +378,9 @@ void Dependency_Data_Processor::Clear_Object_Memory(){
 
      this->Clear_Dynamic_Memory();
      
-      if(!this->Process_Output_Data.empty()){
+     /*
+
+     if(!this->Process_Output_Data.empty()){
 
           for(size_t i=0;i<this->Process_Output_Data.size();i++){
 
@@ -394,7 +394,9 @@ void Dependency_Data_Processor::Clear_Object_Memory(){
           this->Process_Output_Data.clear();
 
           this->Process_Output_Data.shrink_to_fit();
-      }
+     }
+
+     */
 }
 
 
@@ -415,11 +417,6 @@ void Dependency_Data_Processor::Clear_Dynamic_Memory()
           this->Dependency_Search_Data.clear();
 
           this->Dependency_Search_Data.shrink_to_fit();
-      }
-
-      if(!this->Search_Data_Map.empty()){
-
-          this->Search_Data_Map.clear();          
       }
 }
 
@@ -468,6 +465,8 @@ void Dependency_Data_Processor::Clear_Search_Data_Memory(std::vector<Search_Data
 
          this->threadPool.shrink_to_fit();
       }
+
+      this->Info_Collector.Clear_Object_Memory();
  }
 
 
@@ -475,5 +474,5 @@ void Dependency_Data_Processor::Clear_Search_Data_Memory(std::vector<Search_Data
 
 const std::vector<Search_Data_Records> * Dependency_Data_Processor::Get_Search_Data() const {
 
-       return &this->Process_Output_Data;
+       return &this->Dependency_Search_Data;
 }

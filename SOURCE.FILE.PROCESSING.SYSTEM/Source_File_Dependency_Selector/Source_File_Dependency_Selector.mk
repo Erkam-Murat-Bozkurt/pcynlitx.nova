@@ -31,6 +31,9 @@ GIT_IGN=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Ignoring_Files_Lister
 GIT_MOD_LST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Lister
 GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiver
 
+DEP_DAT_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Processor
+DEP_DAT_STCK=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Stack_Container
+HDR_DEP_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_Dependency_Data_Extractor
 
 
 
@@ -48,10 +51,16 @@ VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 		$(GIT_MOD_LST) \
 		$(GIT_MOD_RCV) \
 		$(GIT_IGN) \
-		$(SRC_DATA_SETTER)
+		$(SRC_DATA_SETTER) \
+		$(DEP_DAT_PROC) \
+		$(DEP_DAT_STCK) \
+		$(HDR_DEP_EXT)
 
 Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.cpp \
 	Source_File_Dependency_Selector.cpp \
+	Dependency_Data_Processor.cpp \
+	Header_Dependency_Data_Extractor.cpp \
+	Dependency_Data_Stack_Container.cpp \
 	Dependency_Data_Extractor.cpp \
 	Source_File_Information_Collector.cpp \
 	Header_File_Processor.cpp \
@@ -75,6 +84,9 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 	CharOperator.cpp \
 	Cpp_FileOperations.cpp \
 	Source_File_Dependency_Selector.hpp \
+	Dependency_Data_Processor.hpp \
+	Header_Dependency_Data_Extractor.hpp \
+	Dependency_Data_Stack_Container.hpp \
 	Dependency_Data_Extractor.hpp \
 	Source_File_Information_Collector.hpp \
 	Header_File_Processor.hpp \
@@ -116,6 +128,9 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 	 -I$(GIT_IGN) \
 	 -I$(SYS_INT) \
 	 -I$(SRC_DATA_SETTER) \
+	 -I$(DEP_DAT_PROC) \
+	 -I$(DEP_DAT_STCK) \
+	 -I$(HDR_DEP_EXT) \
 	 -L$(SRC_INF_COL)   -L$(DIR_ENUM) \
 	 -L$(DIR_OPS)       -L$(CPP_OPS) \
 	 -L$(CHAR_OPS)      -L$(INT_TO_CHAR) \
@@ -134,8 +149,14 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 	 -L$(GIT_IGN) \
 	 -L$(SYS_INT) \
 	 -L$(SRC_DATA_SETTER)\
+	 -L$(DEP_DAT_PROC) \
+	 -L$(DEP_DAT_STCK) \
+	 -L$(HDR_DEP_EXT) \
 		Source_File_Dependency_Selector_Main_File.cpp \
 		Source_File_Dependency_Selector.cpp \
+		$(DEP_DAT_PROC)\Dependency_Data_Processor.cpp \
+		$(HDR_DEP_EXT)\Header_Dependency_Data_Extractor.cpp \
+		$(DEP_DAT_STCK)\Dependency_Data_Stack_Container.cpp \
 		$(DEP_DAT_EXT)\Dependency_Data_Extractor.cpp \
 		$(SRC_INF_COL)\Source_File_Information_Collector.cpp \
 		$(SRC_PROCESSOR)\Source_File_Processor.cpp \
@@ -162,6 +183,9 @@ Source_File_Dependency_Selector.exe: Source_File_Dependency_Selector_Main_File.c
 		$(INT_TO_CHAR)\IntToCharTranslater.cpp \
 		$(SYS_INT)\Custom_System_Interface.cpp \
 		-include Source_File_Dependency_Selector.hpp \
+	    -include $(DEP_DAT_PROC)\Dependency_Data_Processor.hpp \
+		-include $(HDR_DEP_EXT)\Header_Dependency_Data_Extractor.hpp \
+		-include $(DEP_DAT_STCK)\Dependency_Data_Stack_Container.hpp \
 		-include $(DEP_DAT_EXT)\Dependency_Data_Extractor.hpp \
 		-include $(SRC_INF_COL)\Source_File_Information_Collector.hpp \
 		-include $(SRC_PROCESSOR)\Source_File_Processor.hpp \

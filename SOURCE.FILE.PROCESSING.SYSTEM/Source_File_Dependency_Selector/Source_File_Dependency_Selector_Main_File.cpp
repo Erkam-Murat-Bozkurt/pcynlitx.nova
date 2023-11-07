@@ -6,6 +6,7 @@
 #include <iostream>
 #include <cstring>
 #include <vector>
+#include <stdlib.h>
 #include "Source_File_Dependency_Selector.hpp"
 #include "Project_Src_Code_Rdr.hpp"
 #include "Git_File_List_Receiver.hpp"
@@ -62,7 +63,7 @@ int main(int argc, char ** argv){
 
       Dep_Selector.Determine_Source_File_Dependencies();
 
-      //Dep_Selector.Print_Dependency_List();
+      Dep_Selector.Print_Dependency_List();
 
       std::cout << "\n Dependency size:" << Dep_Selector.Get_Dependency_List_Size();
     }

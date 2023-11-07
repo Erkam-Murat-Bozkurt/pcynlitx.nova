@@ -27,7 +27,6 @@
 #include <iterator>
 #include <utility>                     // std::pair, std::make_pair
 #include <stdexcept>                   // std::out_of_range
-#include <stdlib.h>                    //for using the function sleep
 #include "Dependency_Data_Stack_Container.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Header_File_Processor.hpp"
@@ -58,7 +57,6 @@ public:
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 protected:
- void Re_Order_Dependencies();
  void Recursive_Source_File_Dependency_Determination(std::string path);
  void Recursive_Dependency_Determination(std::string path);
  bool Check_New_Dependency_Status(std::string path);

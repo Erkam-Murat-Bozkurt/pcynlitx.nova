@@ -33,8 +33,6 @@
 #include <mutex>
 #include <stdlib.h>                    //for using the function sleep
 #include <algorithm>
-#include <boost/sort/sort.hpp>
-#include <omp.h>
 #include "Header_Dependency_Data_Extractor.hpp"
 #include "Dependency_Data_Extractor.hpp"
 #include "Source_File_Information_Collector.hpp"
@@ -66,7 +64,6 @@ public:
 protected:
  void Clear_Temporary_Memory();
  bool Is_Exist_OnSearchStack(std::string path);
- void ReOrder_Source_Files(int str, int end);
  void ReOrder_Stack_Data(Search_Data_Records * ptr);
  void Re_Order_Dependency_Data(int str, int end);
  void Clear_String_Memory(std::string & str);
@@ -83,12 +80,10 @@ protected:
  std::vector<Dependency_Data_Extractor *> Dep_Data_Collectors;
  std::vector<Source_File_Data> * Source_File_Data_Ptr;
  std::vector<Search_Data_Records> Dependency_Search_Data;
- std::vector<Search_Data_Records> Process_Output_Data;
- std::unordered_map<std::string, Search_Data_Records *> Search_Data_Map;
+ //std::vector<Search_Data_Records> Process_Output_Data;
+ //std::unordered_map<std::string, Search_Data_Records *> Search_Data_Map;
  std::mutex mtx;
- std::thread threads[16];
  bool Memory_Delete_Condition;
- char opr_sis;
 };
 
 

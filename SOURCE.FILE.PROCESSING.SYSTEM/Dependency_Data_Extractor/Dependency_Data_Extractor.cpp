@@ -521,62 +521,6 @@ bool Dependency_Data_Extractor::Is_This_File_Aready_Searched(std::string inc_dec
     return is_this_file_searched;
 }
 
-/*
-
-void Dependency_Data_Extractor::Re_Order_Dependencies(){
-
-     this->Swap_Memory = this->Dependent_Headers;
-
-     for(size_t i=0;i<this->Swap_Memory.size();i++){
-
-         this->Clear_Search_Data_Memory(this->Dependent_Headers);
-
-         std::string sub_path = this->Swap_Memory.at(i).path;
-
-         this->Recursive_Dependency_Determination(sub_path);
-         
-         size_t Dependency_Size = this->Dependent_Headers.size();
-
-         if(Dependency_Size != 0){
-
-             this->Swap_Memory.at(i).dep_counter = this->Dependent_Headers.size();
-         }
-         else{
-
-               this->Swap_Memory.at(i).dep_counter = 0;              
-         }              
-     }
-
-     this->Clear_Search_Data_Memory(this->Dependent_Headers);
-
-     this->Dependent_Headers = this->Swap_Memory;
-
-     this->Clear_Search_Data_Memory(this->Swap_Memory);
-
-
-
-     for(size_t i=0;i<this->Dependent_Headers.size();i++){
-
-         for(size_t j=0;j<this->Dependent_Headers.size();j++){
-
-             int dep_i = this->Dependent_Headers.at(i).dep_counter;
-
-             int dep_j = this->Dependent_Headers.at(j).dep_counter;
-
-             if(dep_j<dep_i){
-
-                Search_Data temp = this->Dependent_Headers.at(i);
-
-                this->Dependent_Headers.at(i) = this->Dependent_Headers.at(j);
-
-                this->Dependent_Headers.at(j) = temp;
-             }
-         }                
-     }
-}
-
-*/
-
 
 void Dependency_Data_Extractor::Insert_External_Header_File_For_Dependency(std::string hdr_file_name){
 

@@ -71,7 +71,6 @@ void Header_Dependency_Data_Extractor::Find_Header_Files(){
 
          std::string path = this->Code_Rdr->Get_File_Path(i);
         
-
          if(this->Hdr_Processor.Is_Header(path)){
 
             const FileData * Data =  this->Code_Rdr->Find_File_Data_From_Path(path);
@@ -117,8 +116,6 @@ void Header_Dependency_Data_Extractor::Perform_Dependency_Search(){
 
      size_t thread_number = data_size/10;
 
-     this->total_thread_num = thread_number;
-
      size_t thread_div = thread_number/10;
 
      size_t thread_div_2 = thread_number - thread_div;
@@ -129,11 +126,13 @@ void Header_Dependency_Data_Extractor::Perform_Dependency_Search(){
         int str=0, end=0;
 
         int first_division  = 9*data_size/10;
+
         int second_division = data_size/10;
 
         int remaining_thread_num = thread_number - thread_div;
 
         int first_range_remaining_job = 0;
+        
         int second_range_remaining_job = 0;
 
         int first_range_  = this->Split_Range(first_division,thread_div,first_range_remaining_job);
@@ -295,21 +294,22 @@ void Header_Dependency_Data_Extractor::Clear_Dynamic_Memory(){
 
         this->threadPool.shrink_to_fit();
      }
+
+     if(!this->Header_Files.empty()){
+
+        for(size_t i=0;i<this->Header_Files.size();i++){
+
+            this->Clear_String_Memory(this->Header_Files.at(i).Header_File);
+        }
+
+        this->Header_Files.clear();
+
+        this->Header_Files.shrink_to_fit();
+     }
+
+     this->Hdr_Processor.Clear_Object_Memory();
 }
 
-
-
-bool Header_Dependency_Data_Extractor::Is_This_File_Searched(std::string path){
-
-     return this->Stack_Container->Is_Exist_OnSearchStack(path);     
-}
-
-
-
-const Search_Data_Records * Header_Dependency_Data_Extractor::Find_Search_Data_From_Path(std::string path) const
-{
-    return this->Stack_Container->Find_Search_Data_From_Path(path);
-}
 
 
 void Header_Dependency_Data_Extractor::Clear_Vector_Memory(std::vector<std::string> & vec){
