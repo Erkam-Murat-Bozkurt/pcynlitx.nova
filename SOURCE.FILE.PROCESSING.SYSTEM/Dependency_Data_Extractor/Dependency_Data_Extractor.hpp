@@ -87,16 +87,11 @@ protected:
  Header_File_Processor Header_Processor;  
  Project_Src_Code_Rdr * Code_Rd;
  Dependency_Data_Stack_Container * Stack_Ptr;
- 
  Search_Data_Records Search_Record;
  std::vector<Search_Data> Dependent_Headers;
  std::vector<std::string> External_Header_Files;
- std::vector<std::string> records;
- 
  std::unordered_map<std::string, Search_Data *> Map_Inc_Dec;
  bool Memory_Delete_Condition;
- bool is_this_repo_header;
- bool include_decleration_cond;
 };
 
 

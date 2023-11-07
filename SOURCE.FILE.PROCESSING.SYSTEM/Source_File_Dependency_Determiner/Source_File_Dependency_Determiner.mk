@@ -41,6 +41,11 @@ GIT_IGN=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Ignoring_Files_Lister
 GIT_MOD_LST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Lister
 GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiver
 
+DEP_DAT_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Processor
+DEP_DAT_STCK=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Stack_Container
+HDR_DEP_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_Dependency_Data_Extractor
+
+
 
 VPATH = $(DIR_OPS)       $(CPP_OPS)         $(CHAR_OPS) \
 		$(SOURCE_DETR)   $(DIR_ENUM)        $(SYS_INT) \
@@ -56,7 +61,10 @@ VPATH = $(DIR_OPS)       $(CPP_OPS)         $(CHAR_OPS) \
 		$(GIT_MOD_LST) \
 		$(GIT_MOD_RCV) \
 		$(GIT_IGN) \
-		$(SRC_INF_CL_SF) $(SRC_DEP_SL_SF)
+		$(SRC_INF_CL_SF) $(SRC_DEP_SL_SF) \
+	    $(DEP_DAT_PROC) \
+		$(DEP_DAT_STCK) \
+		$(HDR_DEP_EXT)
 
 		
 
@@ -65,6 +73,9 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 	Source_File_Dependency_ReOrderer.cpp \
 	Source_File_Dependency_Selector_For_Single_File.cpp \
 	Source_File_Dependency_Selector.cpp \
+	Dependency_Data_Processor.cpp \
+	Header_Dependency_Data_Extractor.cpp \
+	Dependency_Data_Stack_Container.cpp \
 	Dependency_Data_Extractor.cpp \
 	Source_File_Compiler_Data_Extractor.cpp \
 	Source_File_Information_Collector_For_Single_File.cpp \
@@ -96,6 +107,9 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 	Source_File_Dependency_ReOrderer.hpp \
 	Source_File_Dependency_Selector_For_Single_File.hpp\
 	Source_File_Dependency_Selector.hpp\
+	Dependency_Data_Processor.hpp \
+	Header_Dependency_Data_Extractor.hpp \
+	Dependency_Data_Stack_Container.hpp \
 	Source_File_Compiler_Data_Extractor.hpp \
 	Dependency_Data_Extractor.hpp \
 	Source_File_Information_Collector_For_Single_File.hpp \
@@ -125,7 +139,7 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 	Custom_System_Interface.h
 
 
-	g++ -std=c++17 -static-libgcc -static-libstdc++ -ggdb \
+	g++ -std=c++17 -static-libgcc -static-libstdc++ \
 		-o Source_File_Dependency_Determiner.exe \
 	 	-I$(DIR_OPS) \
 		-I$(CPP_OPS) \
@@ -159,6 +173,9 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 		-I$(SRC_DEP_SL_SF) \
 		-I$(SRC_DATA_SETTER) \
 		-I$(QUICK_SRC_EXT) \
+		-I$(DEP_DAT_PROC) \
+	 	-I$(DEP_DAT_STCK) \
+	 	-I$(HDR_DEP_EXT) \
 	 	-L$(SRC_INF_CL) \
 		-L$(DIR_ENUM) \
 		-L$(DIR_OPS)  \
@@ -191,11 +208,17 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 		-L$(SRC_DEP_SL_SF) \
 		-L$(SRC_DATA_SETTER) \
 		-L$(QUICK_SRC_EXT) \
+	    -L$(DEP_DAT_PROC) \
+	    -L$(DEP_DAT_STCK) \
+	    -L$(HDR_DEP_EXT) \
 	  	Source_File_Dependency_Determiner_Main_File.cpp \
 	  	Source_File_Dependency_Determiner.cpp \
 	  	$(SRC_DER_RORD)\Source_File_Dependency_ReOrderer.cpp \
 		$(SRC_DEP_SL_SF)\Source_File_Dependency_Selector_For_Single_File.cpp \
 		$(SRC_DEP_SL)\Source_File_Dependency_Selector.cpp \
+		$(DEP_DAT_PROC)\Dependency_Data_Processor.cpp \
+		$(HDR_DEP_EXT)\Header_Dependency_Data_Extractor.cpp \
+		$(DEP_DAT_STCK)\Dependency_Data_Stack_Container.cpp \
 		$(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.cpp \
 		$(DEP_DAT_EXT)\Dependency_Data_Extractor.cpp \
 		$(SRC_INF_CL_SF)\Source_File_Information_Collector_For_Single_File.cpp \
@@ -229,6 +252,9 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 		-include $(SRC_DER_RORD)\Source_File_Dependency_ReOrderer.hpp \
 		-include $(SRC_DEP_SL_SF)\Source_File_Dependency_Selector_For_Single_File.hpp \
 		-include $(SRC_DEP_SL)\Source_File_Dependency_Selector.hpp \
+		-include $(DEP_DAT_PROC)\Dependency_Data_Processor.hpp \
+		-include $(HDR_DEP_EXT)\Header_Dependency_Data_Extractor.hpp \
+		-include $(DEP_DAT_STCK)\Dependency_Data_Stack_Container.hpp \
 		-include $(SRC_INF_CL_SF)\Source_File_Information_Collector_For_Single_File.hpp \
 		-include $(SRC_INF_CL)\Source_File_Information_Collector.hpp \
 		-include $(QUICK_SRC_EXT)\Quick_Src_Dependency_Extractor.hpp \

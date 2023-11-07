@@ -118,11 +118,15 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Construct_Dependency_Map();
 
+     /*
+
      this->Re_Arrange_Priorities();
 
      this->Order_Priorities();
 
      this->Clear_Dynamic_Memory();
+
+     */
 }
 
 
@@ -144,11 +148,15 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
       this->Construct_Dependency_Map();
 
+      /*
+
       this->Re_Arrange_Priorities();
 
       this->Order_Priorities();
 
       this->Clear_Dynamic_Memory();
+
+      */
 }
 
 

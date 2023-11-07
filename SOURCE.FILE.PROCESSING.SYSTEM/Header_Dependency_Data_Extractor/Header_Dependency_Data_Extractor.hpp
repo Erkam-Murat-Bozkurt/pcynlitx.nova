@@ -73,7 +73,6 @@ protected:
  void Clear_Search_Data_Memory(std::vector<Search_Data> & data);
  void Extract_Dependency_Search_Data(int thr_num, int start, int end);
  void Search_Dependency_Data_For_Path(std::string path,int thr_num);
- void Construct_Dependency_Data_Extractors();
  int  Split_Range(int range_size, int partition, int & ramaining_job);
  Dependency_Data_Stack_Container * Stack_Container;
  Source_File_Information_Collector Info_Collector; 
@@ -82,7 +81,6 @@ protected:
  std::vector<Header_File_Data> Header_Files;
  std::mutex mtx;
  std::vector<std::thread> threadPool;
- std::vector<Dependency_Data_Extractor *> Dep_Data_Collectors;
  bool Memory_Delete_Condition;
  char opr_sis;
 };

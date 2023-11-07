@@ -75,8 +75,6 @@ void Source_File_Dependency_Selector::Receive_Descriptor_File_Reader(Descriptor_
 
 
 
-
-
 /* THE CONTROL FUNCTIONS (THE MEMBER FUNCTION PERFORMS CONTROL OPERATIONS) */
 
 bool Source_File_Dependency_Selector::Is_Header_File(std::string hpath){
@@ -172,7 +170,9 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
         this->threadPool.shrink_to_fit();
     }
 
-    this->Info_Collector.Clear_Dynamic_Memory();    
+    this->Info_Collector.Clear_Dynamic_Memory();
+
+    this->Dep_Data_Proccessor.Clear_Dynamic_Memory();
 }
 
 
@@ -368,56 +368,6 @@ void Source_File_Dependency_Selector::Set_External_Header_File_Dependencies(Sour
 }
 
 
-void Source_File_Dependency_Selector::Print_Dependency_List()
-{
-     size_t data_size = this->Dependency_Data.size();
-
-     for(size_t i=0;i<data_size;i++){
-
-         std::vector<Source_File_Dependency> * ptr = &this->Dependency_Data.at(i);
-
-         std::cout << "\n\n\n";
-
-         if(ptr->size()>0){
-         
-            std::cout << "\n FILE RESEARCHED:" << ptr->at(0).source_file_name;
-
-            std::vector<Source_File_Dependency>::iterator it;         
-
-            int counter=0;
-
-            for(auto it=ptr->begin();it<ptr->end();it++){
-         
-                std::cout << "\n";
-
-                std::cout << "\n list - " << counter << " " << it->Header_Name;     
-
-                std::cout << "\n list - " << counter << " " << it->dir;     
-
-                counter++;
-            }
-
-            std::cout << "\n INCLUDED HEADER FILES NUM FOR BASE FILE:" 
-            
-            << ptr->at(0).base_included_hdr_num;
-
-            std::cout << "\n INCLUDED HEADER FILES NUM FOR INCL FILE:" 
-            
-            << ptr->at(0).included_file_hdr_num;
-
-            std::cout << "\n External Header Files:";
-
-            std::vector<std::string> * ext_headers = &ptr->at(0).External_Headers;
-
-            for(size_t k=0;k<ext_headers->size();k++){
-
-                 std::cout << "\n External Hdr [" << k << "]:" << ext_headers->at(k);
-            }
-
-            sleep(1);
-         }
-      }
-}
 
 
 
@@ -484,12 +434,14 @@ void Source_File_Dependency_Selector::Clear_Vector_Memory(std::vector<Source_Fil
         if(!it->Header_Name.empty()){
 
             it->Header_Name.clear();
+
             it->Header_Name.shrink_to_fit();
         }
 
         if(!it->header_sys_path.empty()){
 
             it->header_sys_path.clear();
+
             it->header_sys_path.shrink_to_fit();
         }
      }
@@ -500,6 +452,63 @@ void Source_File_Dependency_Selector::Clear_Vector_Memory(std::vector<Source_Fil
          pointer->shrink_to_fit();
      }
 }
+
+
+
+
+
+void Source_File_Dependency_Selector::Print_Dependency_List()
+{
+     size_t data_size = this->Dependency_Data.size();
+
+     for(size_t i=0;i<data_size;i++){
+
+         std::vector<Source_File_Dependency> * ptr = &this->Dependency_Data.at(i);
+
+         std::cout << "\n\n\n";
+
+         if(ptr->size()>0){
+         
+            std::cout << "\n FILE RESEARCHED:" << ptr->at(0).source_file_name;
+
+            std::vector<Source_File_Dependency>::iterator it;         
+
+            int counter=0;
+
+            for(auto it=ptr->begin();it<ptr->end();it++){
+         
+                std::cout << "\n";
+
+                std::cout << "\n list - " << counter << " " << it->Header_Name;     
+
+                std::cout << "\n list - " << counter << " " << it->dir;     
+
+                counter++;
+            }
+
+            std::cout << "\n INCLUDED HEADER FILES NUM FOR BASE FILE:" 
+            
+            << ptr->at(0).base_included_hdr_num;
+
+            std::cout << "\n INCLUDED HEADER FILES NUM FOR INCL FILE:" 
+            
+            << ptr->at(0).included_file_hdr_num;
+
+            std::cout << "\n External Header Files:";
+
+            std::vector<std::string> * ext_headers = &ptr->at(0).External_Headers;
+
+            for(size_t k=0;k<ext_headers->size();k++){
+
+                 std::cout << "\n External Hdr [" << k << "]:" << ext_headers->at(k);
+            }
+
+            sleep(1);
+         }
+      }
+}
+
+
 
 
 

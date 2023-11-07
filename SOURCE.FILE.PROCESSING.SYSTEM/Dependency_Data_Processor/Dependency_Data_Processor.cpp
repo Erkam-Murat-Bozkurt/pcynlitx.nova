@@ -141,7 +141,7 @@ void Dependency_Data_Processor::Perform_Dependency_Search(){
 
     this->Dependency_Search_Data.shrink_to_fit();    
 
-    std::cout << "\n Dependency data collected";
+    std::cout << "\nDependency data collected";
 
     this->Clear_Temporary_Memory();
 
@@ -418,6 +418,8 @@ void Dependency_Data_Processor::Clear_Dynamic_Memory()
 
           this->Dependency_Search_Data.shrink_to_fit();
       }
+
+      this->Stack_Container.Clear_Object_Memory();
 }
 
 

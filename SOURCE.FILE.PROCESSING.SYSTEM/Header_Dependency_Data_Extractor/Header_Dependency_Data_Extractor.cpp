@@ -33,6 +33,8 @@ Header_Dependency_Data_Extractor::Header_Dependency_Data_Extractor(char opr_sis)
    this->Memory_Delete_Condition = false;
 
    this->Hdr_Processor.Receive_Operating_System(opr_sis);
+
+   this->opr_sis = opr_sis;
 }
 
 
@@ -109,8 +111,6 @@ void Header_Dependency_Data_Extractor::Find_Header_Files(){
 void Header_Dependency_Data_Extractor::Perform_Dependency_Search(){
 
      this->Find_Header_Files();
-
-     this->Construct_Dependency_Data_Extractors();
 
      size_t data_size = this->Header_Files.size();
 
@@ -216,16 +216,11 @@ int Header_Dependency_Data_Extractor::Split_Range(int range_size, int partition,
     ramaining_job = range_size%partition;
 
     return range;
-    
 }
 
 
 
 void Header_Dependency_Data_Extractor::Extract_Dependency_Search_Data(int thr_num, int start, int end){
-
-     std::unique_lock<std::mutex> mt(this->mtx);
-
-     mt.unlock();
 
      for(size_t i=start;i<end;i++){
      
@@ -238,9 +233,17 @@ void Header_Dependency_Data_Extractor::Extract_Dependency_Search_Data(int thr_nu
 
 void Header_Dependency_Data_Extractor::Search_Dependency_Data_For_Path(std::string path,int thr_num){
 
-     this->Dep_Data_Collectors[thr_num]->Extract_Dependency_Tree(path);
+     Dependency_Data_Extractor Dep_Ext;
 
-     const Search_Data_Records * Dep_Data_Ptr = this->Dep_Data_Collectors[thr_num]->Get_Search_Data();
+     Dep_Ext.Receive_Operating_System(this->opr_sis);
+
+     Dep_Ext.Receive_Source_Code_Reader(this->Code_Rdr);
+
+     Dep_Ext.Receive_Stack_Container(this->Stack_Container);
+
+     Dep_Ext.Extract_Dependency_Tree(path);
+
+     const Search_Data_Records * Dep_Data_Ptr = Dep_Ext.Get_Search_Data();
 
      std::unique_lock<std::mutex> mt(this->mtx);
 
@@ -248,45 +251,12 @@ void Header_Dependency_Data_Extractor::Search_Dependency_Data_For_Path(std::stri
 
      mt.unlock();
 
-     this->Dep_Data_Collectors[thr_num]->Clear_Dynamic_Memory();
+     Dep_Ext.Clear_Dynamic_Memory();
 }
 
-
-
-void Header_Dependency_Data_Extractor::Construct_Dependency_Data_Extractors(){
-
-     size_t data_size = this->Header_Files.size();
-
-     size_t data_extractor_num = data_size/10;
-
-     for(int i=0;i<data_extractor_num;i++){
-
-         Dependency_Data_Extractor * Dep_Ext = new Dependency_Data_Extractor;
-
-         this->Dep_Data_Collectors.push_back(Dep_Ext);
-
-         this->Dep_Data_Collectors.back()->Receive_Source_Code_Reader(this->Code_Rdr);
-     } 
-}
 
 
 void Header_Dependency_Data_Extractor::Clear_Dynamic_Memory(){
-
-     if(!this->Dep_Data_Collectors.empty()){
-
-        size_t object_num = this->Dep_Data_Collectors.size();
-
-        for(size_t i=0;i<object_num;i++){
-
-             this->Dep_Data_Collectors.at(i)->Clear_Object_Memory();
-
-             delete this->Dep_Data_Collectors.at(i);
-        }
-
-        this->Dep_Data_Collectors.clear();
-
-        this->Dep_Data_Collectors.shrink_to_fit();
-     }
 
      if(!this->threadPool.empty()){
 
