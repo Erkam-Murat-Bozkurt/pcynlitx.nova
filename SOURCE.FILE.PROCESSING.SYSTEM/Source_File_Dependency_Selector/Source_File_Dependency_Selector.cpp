@@ -176,7 +176,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
 }
 
 
-int Source_File_Dependency_Selector::Split_Range(size_t range_size, size_t partition, size_t & ramaining_job){
+int Source_File_Dependency_Selector::Split_Range(size_t range_size, size_t partition, size_t & remaining_job){
 
     if(range_size ==0){
 
@@ -190,10 +190,9 @@ int Source_File_Dependency_Selector::Split_Range(size_t range_size, size_t parti
         range = 1;
     }
 
-    ramaining_job = range_size%partition;
+    remaining_job = range_size%partition;
 
-    return range;
-    
+    return range;    
 }
 
 

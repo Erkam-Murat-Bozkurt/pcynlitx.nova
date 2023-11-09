@@ -86,6 +86,7 @@ void Dependency_Data_Extractor::Recursive_Source_File_Dependency_Determination(s
      Search_Data Head;
 
      Head.path = path;
+     
      Head.search_complated = false;
 
      this->Search_Dependencies(Head);
@@ -121,6 +122,7 @@ void Dependency_Data_Extractor::Recursive_Dependency_Determination(std::string p
      Search_Data Head;
 
      Head.path = path;
+
      Head.search_complated = false;
 
      this->Search_Dependencies(Head);
@@ -750,12 +752,6 @@ const std::vector<std::string> * Dependency_Data_Extractor::Get_File_Include_Del
      return &FileDtPtr->include_declerations;
 }
 
-
-const std::vector<std::string> * Dependency_Data_Extractor::Get_External_Header_Files() const
-{
-
-     return &this->External_Header_Files;
-}
 
 const Search_Data_Records * Dependency_Data_Extractor::Get_Search_Data() const {
 

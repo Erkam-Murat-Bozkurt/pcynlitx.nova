@@ -53,7 +53,6 @@ public:
  void Extract_Dependency_Tree(std::string path);
  void Determine_Source_File_Dependencies(std::string path);
  const Search_Data_Records * Get_Search_Data() const;
- const std::vector<std::string> * Get_External_Header_Files() const;
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 protected:

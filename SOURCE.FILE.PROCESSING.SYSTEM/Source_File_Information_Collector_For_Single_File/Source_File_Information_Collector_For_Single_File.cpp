@@ -69,6 +69,10 @@ void Source_File_Information_Collector_For_Single_File::Receive_Git_Data_Process
 }
 
 
+void Source_File_Information_Collector_For_Single_File::Receive_Stack_Container(Dependency_Data_Stack_Container * ptr){
+
+     this->Stack_Container = ptr;
+}
 
 
 
@@ -125,13 +129,15 @@ void Source_File_Information_Collector_For_Single_File::Extract_Dependency_Data(
 
 
 void Source_File_Information_Collector_For_Single_File::Determine_Root_Source_File_Header_Dependencies(std::string src_file_path)
-{
+{     
      this->Dep_Extractor.Clear_Dynamic_Memory();
 
      this->Dep_Extractor.Extract_Dependency_Tree(src_file_path);
     
 
-     std::vector<Search_Data> * Dep_Data_Ptr = this->Dep_Extractor.Get_Search_Data();
+     const Search_Data_Records * Ptr = this->Dep_Extractor.Get_Search_Data();
+
+     const std::vector<Search_Data> * Dep_Data_Ptr = &Ptr->Dependent_Headers;
 
      for(size_t i=0;i<Dep_Data_Ptr->size();i++){
 
@@ -141,7 +147,7 @@ void Source_File_Information_Collector_For_Single_File::Determine_Root_Source_Fi
      this->Dep_Search_Data.shrink_to_fit();
 
      
-     this->Receive_String_Vector(this->Root_File_External_Headers,this->Dep_Extractor.Get_External_Header_Files());
+     this->Receive_String_Vector(this->Root_File_External_Headers,&Ptr->External_Headers);
 
      this->Dep_Extractor.Clear_Dynamic_Memory();
 }
@@ -263,6 +269,9 @@ void Source_File_Information_Collector_For_Single_File::Is_There_Any_Related_Sou
         src_name.shrink_to_fit();
      }
 }
+
+
+
 
 void Source_File_Information_Collector_For_Single_File::Find_File_Name_Without_Extantion(std::string hdr_name, 
 
@@ -405,15 +414,15 @@ void Source_File_Information_Collector_For_Single_File::Clear_Object_Memory()
 
 void Source_File_Information_Collector_For_Single_File::Clear_Dynamic_Memory()
 {
-        // Clearing the header data
+     // Clearing the header data and related data 
 
-      this->Clear_Headers_Data();
+     this->Clear_Headers_Data();
 
-      this->Clear_External_Headers_Memory();
+     this->Clear_External_Headers_Memory();
 
-      this->Clear_Search_Data();
+     this->Clear_Search_Data();
 
-      this->Clear_Dependent_Source_File_Names();
+     this->Clear_Dependent_Source_File_Names();
 }
 
 
@@ -440,6 +449,8 @@ void Source_File_Information_Collector_For_Single_File::Clear_Headers_Data()
           this->Src_Data_Holder.shrink_to_fit();
       }
 }
+
+
 
 void Source_File_Information_Collector_For_Single_File::Clear_External_Headers_Memory(){
 
@@ -564,4 +575,12 @@ size_t Source_File_Information_Collector_For_Single_File::Get_Dependency_Data_Si
 const std::vector<std::string> * Source_File_Information_Collector_For_Single_File::Get_Root_File_External_Headers() const 
 {
     return &this->Root_File_External_Headers;
+}
+
+
+
+const std::vector<std::string> * Source_File_Information_Collector_For_Single_File::Get_Dependenct_Source_Files() const
+{
+
+    return &this->Dependent_Source_File_Names;
 }
