@@ -139,7 +139,7 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 	Custom_System_Interface.h
 
 
-	g++ -std=c++17 -static-libgcc -static-libstdc++ \
+	g++ -std=c++17 -g -static-libgcc -static-libstdc++ \
 		-o Source_File_Dependency_Determiner.exe \
 	 	-I$(DIR_OPS) \
 		-I$(CPP_OPS) \

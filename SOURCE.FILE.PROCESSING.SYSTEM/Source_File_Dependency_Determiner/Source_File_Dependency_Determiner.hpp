@@ -23,6 +23,8 @@
 #include <iterator>
 #include <utility>        // std::pair, std::make_pair
 #include <stdexcept>      // std::out_of_range
+#include <thread>
+#include <mutex>
 #include "Source_File_Compiler_Data_Extractor.hpp"
 #include "Source_File_Dependency_Selector_For_Single_File.hpp"
 #include "Source_File_Dependency_Selector.hpp"
@@ -76,7 +78,12 @@ protected:
  void Construct_Dependency_Map();
  bool Check_Dependecy_Search_Status(std::string name);
  void Extract_File_Name_Without_Extention(std::string & name, std::string name_with_ext);
+ void Control_Priorities(size_t start, size_t end);
  int Find_File_Priority(std::string name);
+ void Clear_Compiler_Data_Memory(Compiler_Data & Data);
+ void Clear_Vector_Memory(std::vector<std::string> & vec);
+ void Clear_String_Memory(std::string & str);
+ void Clear_Compiler_Data_Vector(std::vector<Compiler_Data> * Data);
  Git_Data_Processor * Git_Data_Proc;
  Descriptor_File_Reader * Des_Reader;
  Project_Src_Code_Rdr Code_Rd;
@@ -89,6 +96,8 @@ protected:
  std::string Warehouse_Path;
  std::vector<Compiler_Data> * Compiler_Data_Ptr;
  std::unordered_map<std::string, int> Dependency_Map;
+ std::vector<std::thread> threadPool;
+ std::mutex mtx;
  size_t  data_size;
  bool Memory_Delete_Condition;
 };

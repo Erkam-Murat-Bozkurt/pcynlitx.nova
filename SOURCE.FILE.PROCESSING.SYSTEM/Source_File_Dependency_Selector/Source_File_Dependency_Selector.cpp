@@ -104,6 +104,9 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
      size_t data_size =  this->Search_Data_Ptr->size();
     
 
+     std::cout << "\nThe source file data construction started";
+
+
      if(data_size>20){
 
         size_t str=0, end=0;
@@ -173,6 +176,8 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
     this->Info_Collector.Clear_Dynamic_Memory();
 
     this->Dep_Data_Proccessor.Clear_Dynamic_Memory();
+
+    std::cout << "\nThe source file data construction complated";
 }
 
 

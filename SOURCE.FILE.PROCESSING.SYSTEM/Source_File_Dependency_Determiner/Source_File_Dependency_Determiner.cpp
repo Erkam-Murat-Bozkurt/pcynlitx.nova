@@ -48,6 +48,8 @@ void Source_File_Dependency_Determiner::Clear_Object_Memory(){
 
      this->DepSelector.Clear_Object_Memory();
 
+     this->Clear_Compiler_Data_Vector(this->Compiler_Data_Ptr);
+
      this->Clear_Dynamic_Memory();
 }
 
@@ -59,7 +61,7 @@ void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
 
      this->DepSelector_For_Single_File.Clear_Dynamic_Memory();
 
-     this->Dependency_Map.clear();   
+     this->Dependency_Map.clear();  
 }
 
 
@@ -104,7 +106,11 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Clear_Dynamic_Memory();
 
+     std::cout << "\nThe source file data construction started";
+
      this->DepSelector_For_Single_File.Determine_Source_File_Dependencies(path);
+
+     std::cout << "\nThe source file data construction complated";
 
      this->Warehouse_Objetcs_Dir = this->DepSelector_For_Single_File.Get_Warehouse_Objetcs_Dir();
 
@@ -118,13 +124,9 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Construct_Dependency_Map();
 
-     /*
-
      this->Re_Arrange_Priorities();
 
      this->Order_Priorities();
-
-     */
 
      this->Clear_Dynamic_Memory();
 
@@ -141,21 +143,27 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
       this->Warehouse_Path = this->DepSelector.Get_Warehouse_Path();
 
+      std::cout << "\nThe interpretation of dependency data started";
+
       this->Com_Data_Extractor.Receive_Dependency_Data(&this->DepSelector);
 
       this->Com_Data_Extractor.Extract_Compiler_Data();
+
+      std::cout << "\nThe interpretation of dependency data complated";
 
       this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
       this->Construct_Dependency_Map();
 
-      /*
+      std::cout << "\nThe dependency map constructed";
 
       this->Re_Arrange_Priorities();
 
+      std::cout << "\nThe compiler data re-arranged";
+
       this->Order_Priorities();
 
-      */
+      std::cout << "\nThe priorities re-ordered.";
 
       this->Clear_Dynamic_Memory();
 
@@ -185,7 +193,74 @@ void Source_File_Dependency_Determiner::Construct_Dependency_Map(){
 
 void Source_File_Dependency_Determiner::Re_Arrange_Priorities(){
 
-     for(size_t i=0;i<this->Compiler_Data_Ptr->size();i++){
+     size_t comp_data_size = this->Compiler_Data_Ptr->size();
+
+     size_t thread_number = comp_data_size/10;
+
+     if(comp_data_size>20){
+
+       int division = comp_data_size/thread_number;
+
+       int remaining_job = comp_data_size%thread_number;
+
+       int str=0, end=0;
+
+       for(int i=0;i<thread_number;i++){
+
+           if(i==0){
+
+              str = 0;
+              
+              end = division;              
+           }
+           else{
+
+               str = end;
+
+               end = end + division;
+
+               if(remaining_job>0){
+
+                  end = end+1;
+
+                  remaining_job--;
+               }
+           }
+
+
+           if(i==(thread_number-1)){
+            
+               end = comp_data_size;
+           }
+
+           this->threadPool.push_back(std::thread(Source_File_Dependency_Determiner::Control_Priorities,this,str,end));   
+       }
+    
+       for(int i=0;i<this->threadPool.size();i++){
+     
+          this->threadPool[i].join();
+       }
+
+       if(this->threadPool.empty()){
+
+          this->threadPool.clear();
+
+          this->threadPool.shrink_to_fit();
+       }
+
+    }
+    else{
+
+        this->Control_Priorities(0,comp_data_size);
+    }
+
+    this->Compiler_Data_Ptr->shrink_to_fit();    
+
+}
+
+void Source_File_Dependency_Determiner::Control_Priorities(size_t start, size_t end){
+
+     for(size_t i=start;i<end;i++){
 
         for(size_t k=0;k<this->Compiler_Data_Ptr->at(i).dependent_headers.size();k++)
         {
@@ -282,7 +357,7 @@ void Source_File_Dependency_Determiner::Order_Priorities(){
 
              Compiler_Data temp;
 
-             if( dep_i < dep_j){
+             if( dep_i < dep_j ){
 
                  temp  = this->Compiler_Data_Ptr->at(i);
 
@@ -292,7 +367,62 @@ void Source_File_Dependency_Determiner::Order_Priorities(){
               }
           }
       }
+
 }
+
+
+
+void Source_File_Dependency_Determiner::Clear_Compiler_Data_Vector(std::vector<Compiler_Data> * Data){
+
+     std::vector<Compiler_Data>::iterator it;
+
+     if(!Data->empty()){
+
+        for(auto it=Data->begin();it!=Data->end();it++){
+
+            this->Clear_Vector_Memory(it->dependent_headers);
+
+            this->Clear_Vector_Memory(it->dependent_headers_dir);
+
+            this->Clear_Vector_Memory(it->upper_directories);
+
+            this->Clear_String_Memory(it->source_file_path);
+
+            this->Clear_String_Memory(it->source_file_name);
+
+            this->Clear_String_Memory(it->object_file_name);
+
+            this->Clear_String_Memory(it->source_file_name_witout_ext);
+        }
+
+        Data->clear();
+
+        Data->shrink_to_fit();
+      }
+}
+
+
+void Source_File_Dependency_Determiner::Clear_Compiler_Data_Memory(Compiler_Data & Data)
+{
+     // Clearing the Compiler Data
+
+     this->Clear_Vector_Memory(Data.dependent_headers);
+
+     this->Clear_Vector_Memory(Data.dependent_headers_dir);
+
+     this->Clear_Vector_Memory(Data.upper_directories);
+
+     this->Clear_String_Memory(Data.source_file_path);
+
+     this->Clear_String_Memory(Data.source_file_name);
+
+     this->Clear_String_Memory(Data.object_file_name);
+
+     this->Clear_String_Memory(Data.source_file_name_witout_ext);
+
+     Data.priority = 0;
+}
+
 
 bool Source_File_Dependency_Determiner::Is_Source_File(std::string path){
 
@@ -357,6 +487,38 @@ void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
          std::cout << "\n\n";
       }
 }
+
+
+void Source_File_Dependency_Determiner::Clear_Vector_Memory(std::vector<std::string> & vec){
+
+     if(!vec.empty()){
+
+         vec.shrink_to_fit();
+
+         size_t vec_size = vec.size();
+
+         for(size_t i=0;i<vec_size;i++){
+
+             this->Clear_String_Memory(vec.at(i));
+         }
+
+         vec.clear();
+
+         vec.shrink_to_fit();
+     }
+}
+
+
+void Source_File_Dependency_Determiner::Clear_String_Memory(std::string & str){
+
+    if(!str.empty()){
+
+        str.clear();
+
+        str.shrink_to_fit();
+    }
+}
+
 
 void Source_File_Dependency_Determiner::Print_Dependency_List(){
 

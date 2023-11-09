@@ -245,56 +245,20 @@ void Dependency_Data_Processor::Perform_Data_Reordering(){
            this->threadPool.push_back(std::thread(Dependency_Data_Processor::Re_Order_Dependency_Data,this,str,end));   
        }
     
-       for(int i=0;i<threadPool.size();i++){
+       for(int i=0;i<this->threadPool.size();i++){
      
           this->threadPool[i].join();
        }
     }
     else{
 
-        this->Extract_Dependency_Search_Data(0,0,search_data_size);
+        this->Re_Order_Dependency_Data(0,search_data_size);
     }
 
     this->Dependency_Search_Data.shrink_to_fit();    
 
     
-    std::cout << "\n First ordering complated..";
-
-    /*
-
-    do{
-
-           Search_Data_Records * biggest;
-
-           size_t index;
-
-           biggest = &this->Dependency_Search_Data.at(0);
-
-           for(size_t i=0;i<this->Dependency_Search_Data.size();i++){
-
-               if(this->Dependency_Search_Data.at(i).dep_counter > biggest->dep_counter){
-
-                  biggest = &this->Dependency_Search_Data.at(i);
-
-                  index = i;
-               }
-           }   
-
-           this->Process_Output_Data.push_back(*biggest);
-
-           this->Dependency_Search_Data.erase(this->Dependency_Search_Data.begin()+index);
-
-           this->Dependency_Search_Data.shrink_to_fit();
-
-
-    }while(this->Dependency_Search_Data.size()>0);
-
-
-    this->Process_Output_Data.shrink_to_fit();
-
-    */
-
-    //std::cout << "\n Second ordering complated..";
+    std::cout << "\nDependency data re-arranged..";
 
 }
 
@@ -376,27 +340,7 @@ void Dependency_Data_Processor::Clear_String_Memory(std::string & str)
 
 void Dependency_Data_Processor::Clear_Object_Memory(){
 
-     this->Clear_Dynamic_Memory();
-     
-     /*
-
-     if(!this->Process_Output_Data.empty()){
-
-          for(size_t i=0;i<this->Process_Output_Data.size();i++){
-
-              this->Clear_Search_Data_Memory(this->Process_Output_Data.at(i).Dependent_Headers);
-
-              this->Clear_Vector_Memory(this->Process_Output_Data.at(i).External_Headers);
-
-              this->Clear_String_Memory(this->Process_Output_Data.at(i).path);
-          }        
-
-          this->Process_Output_Data.clear();
-
-          this->Process_Output_Data.shrink_to_fit();
-     }
-
-     */
+     this->Clear_Dynamic_Memory();     
 }
 
 

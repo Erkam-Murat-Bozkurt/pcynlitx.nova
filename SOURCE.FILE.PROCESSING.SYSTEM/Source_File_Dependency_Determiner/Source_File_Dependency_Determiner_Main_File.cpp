@@ -40,7 +40,6 @@ int main(int argc, char ** argv){
 
     Des_Reader.Read_Descriptor_File();
 
-    std::cout << "\n Descriptor file readed";
 
     Git_Data_Processor Data_Processor('w');
 
@@ -51,9 +50,6 @@ int main(int argc, char ** argv){
     Data_Processor.Determine_Git_Repo_Info();
 
     size_t index_size = Data_Processor.Get_Git_File_Index_Size();
-
-    std::cout << "\n Git Data collected";
-    std::cout << "\n Index size:" << index_size;
 
 
     Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
@@ -69,7 +65,7 @@ int main(int argc, char ** argv){
 
        std::vector<Compiler_Data> * ptr = Dep_Determiner.Get_Compiler_Data_Address();
 
-       //Print_Advance_Data(ptr);         
+       Print_Advance_Data(ptr);         
     }
 
     if(argc > 2){
