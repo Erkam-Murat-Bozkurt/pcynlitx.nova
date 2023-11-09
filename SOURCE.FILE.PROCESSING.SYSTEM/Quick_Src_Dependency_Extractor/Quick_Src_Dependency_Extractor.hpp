@@ -97,7 +97,7 @@ protected:
  void Extract_Directory_File_Name_Combination(std::string path, std::string & dir_file_com);
  void Extract_Directory_From_Path(std::string & dir, std::string path);
  void Receive_String_Vector(std::vector<std::string> & target_vec, 
-      const std::vector<std::string> * vec);
+      const std::vector<std::string> & vec);
  void Clear_String_Memory(std::string & str);
  void Clear_Search_Data();
  void Clear_External_Headers_Memory();

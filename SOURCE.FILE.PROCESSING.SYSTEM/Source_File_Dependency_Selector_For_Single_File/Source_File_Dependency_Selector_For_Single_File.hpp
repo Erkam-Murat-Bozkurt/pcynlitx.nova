@@ -63,8 +63,8 @@ public:
  std::vector<Source_File_Dependency> * Get_Dependency_List_Element_Adress(int num);
  size_t  Get_Dependency_List_Size();
 protected:
- void Extract_Dependency_Tree(std::string path, int thr_num, std::vector<Source_File_Dependency> & vec);
- void Extract_Dependency_Data(int thr_num, int start, int end);
+ void Construct_Dependency_Data_Vector(std::string path, int thr_num, std::vector<Source_File_Dependency> & vec);
+ void Arrange_Dependency_Data(int thr_num, int start, int end);
  void Set_Included_Header_Number(std::vector<Source_File_Dependency> & ptr);
  void Clear_String_Memory(std::string & Pointer);
  void Clear_Source_File_Dependency_Data(std::vector<Source_File_Dependency> & vec);

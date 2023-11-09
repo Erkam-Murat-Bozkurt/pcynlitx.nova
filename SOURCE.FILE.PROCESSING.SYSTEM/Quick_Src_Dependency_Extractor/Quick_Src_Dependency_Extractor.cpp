@@ -98,16 +98,16 @@ void Quick_Src_Dependency_Extractor::Extract_Dependency_Search_Data(std::string 
      
      this->Dep_Extractor.Extract_Dependency_Tree(src_file_path);
     
-     std::vector<Search_Data> * Dep_Data_Ptr = this->Dep_Extractor.Get_Search_Data();
+     const Search_Data_Records *  Dep_Data_Ptr = this->Dep_Extractor.Get_Search_Data();
 
-     for(size_t i=0;i<Dep_Data_Ptr->size();i++){
+     for(size_t i=0;i<Dep_Data_Ptr->Dependent_Headers.size();i++){
 
-         this->Dep_Search_Data.push_back(Dep_Data_Ptr->at(i));
+         this->Dep_Search_Data.push_back(Dep_Data_Ptr->Dependent_Headers.at(i));
      }
 
      this->Dep_Search_Data.shrink_to_fit();
 
-     this->Receive_String_Vector(this->Root_File_External_Headers,this->Dep_Extractor.Get_External_Header_Files());
+     this->Receive_String_Vector(this->Root_File_External_Headers,Dep_Data_Ptr->External_Headers);
 
      this->Dep_Extractor.Clear_Dynamic_Memory();
 }
@@ -403,11 +403,11 @@ void Quick_Src_Dependency_Extractor::Clear_Object_Memory()
 
 void Quick_Src_Dependency_Extractor::Receive_String_Vector(std::vector<std::string> & target_vec,
 
-     const std::vector<std::string> * vec){
+     const std::vector<std::string> & vec){
    
-     for(size_t i=0;i<vec->size();i++){
+     for(size_t i=0;i<vec.size();i++){
 
-         target_vec.push_back(vec->at(i));
+         target_vec.push_back(vec.at(i));
      }
 
      target_vec.shrink_to_fit();

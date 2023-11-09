@@ -66,8 +66,7 @@ public:
  Compiler_Data Get_Compiler_Data(int num);
  std::vector<Compiler_Data> * Get_Compiler_Data_Address();
 protected:    
- void Extract_Obj_File_Name_From_File_Name(std::string * object_name,
-      std::string header_name);
+ void Extract_Obj_File_Name_From_File_Name(std::string * object_name, std::string hdr);
  void Process_Compiler_Data(int start, int end, int thm);
  void Extract_Compiler_Data_For_Single_Thread();
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
@@ -75,13 +74,15 @@ protected:
  void Clear_Buffer_Memory(Compiler_Data * ptr);
  void Clear_Data_Memory(std::vector<Compiler_Data> * ptr);
  void Find_Upper_Directory(std::string & upper, std::string dir);
+ size_t Split_Range(size_t range_size, size_t partition, size_t & remaining_job);
+ void Construct_Compiler_Data_Structures();
  Source_File_Dependency_Selector_For_Single_File * Dep_Selector_For_Single_File_Ptr;
  Source_File_Dependency_Selector * Dep_Selector_Ptr;
  Source_File_Information_Collector * Info_Collector;
  std::vector<std::vector<Source_File_Dependency>> * dep_data_ptr;
- std::vector<Compiler_Data> compiler_dt[16];
+ std::vector<std::vector<Compiler_Data>> Compiler_Data_Vectors;
  std::vector<Compiler_Data> compiler_data;
- std::thread threads[16];
+ std::vector<std::thread> threadPool;
  Compiler_Data buffer;
  std::string warehouse_obj_dir;
  std::string warehouse_path;

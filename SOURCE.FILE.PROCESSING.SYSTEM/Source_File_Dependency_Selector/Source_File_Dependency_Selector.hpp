@@ -83,15 +83,15 @@ public:
  std::vector<Source_File_Dependency> * Get_Dependency_List_Element_Adress(int num);
  size_t  Get_Dependency_List_Size();
 protected:
- void Extract_Dependency_Tree(size_t index,int thr_num, std::vector<Source_File_Dependency> & vec);
- void Extract_Dependency_Data(int thr_num, int start, int end);
+ void Construct_Dependency_Data_Vector(size_t index,int thr_num, std::vector<Source_File_Dependency> & vec);
+ void Arrange_Dependency_Data(int thr_num, int start, int end);
  void Set_Included_Header_Number(std::vector<Source_File_Dependency> * ptr);
  void Clear_String_Memory(std::string & Pointer);
- void Clear_Vector_Memory(std::vector<Source_File_Dependency> * pointer);
+ void Clear_Source_File_Dependency_Data(std::vector<Source_File_Dependency> & vec);
  void Set_Dependency_Data(Source_File_Dependency & data, std::string path, std::string header_name);
  std::string Get_Header_System_Path(std::string header_name);
  void Set_External_Header_File_Dependencies(Source_File_Dependency & data, const std::vector<std::string> * vec);
- int  Split_Range(size_t range_size, size_t partition, size_t & ramaining_job);
+ size_t Split_Range(size_t range_size, size_t partition, size_t & remaining_job);
  Dependency_Data_Processor Dep_Data_Proccessor;
  Source_File_Information_Collector Info_Collector; 
  Source_File_Data_Setter Data_Setter;

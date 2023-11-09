@@ -147,7 +147,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
                end = data_size;
            }
 
-           this->threadPool.push_back(std::thread(Source_File_Dependency_Selector::Extract_Dependency_Data,this,i,str,end));
+           this->threadPool.push_back(std::thread(Source_File_Dependency_Selector::Arrange_Dependency_Data,this,i,str,end));
         }
     
         for(size_t i=0;i<thread_num;i++){
@@ -157,7 +157,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
     }
     else{
 
-        this->Extract_Dependency_Data(0,0,data_size);
+        this->Arrange_Dependency_Data(0,0,data_size);
     }
 
     this->Dependency_Data.shrink_to_fit();   
@@ -176,7 +176,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
 }
 
 
-int Source_File_Dependency_Selector::Split_Range(size_t range_size, size_t partition, size_t & remaining_job){
+size_t Source_File_Dependency_Selector::Split_Range(size_t range_size, size_t partition, size_t & remaining_job){
 
     if(range_size ==0){
 
@@ -196,7 +196,7 @@ int Source_File_Dependency_Selector::Split_Range(size_t range_size, size_t parti
 }
 
 
-void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int start, int end){
+void Source_File_Dependency_Selector::Arrange_Dependency_Data(int thr_num, int start, int end){
 
      std::unique_lock<std::mutex> mt(this->mtx);
 
@@ -206,7 +206,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int s
 
          std::vector<Source_File_Dependency> Dep_List;
 
-         this->Extract_Dependency_Tree(i,thr_num,Dep_List);
+         this->Construct_Dependency_Data_Vector(i,thr_num,Dep_List);
 
          this->Set_Included_Header_Number(&Dep_List);
 
@@ -220,7 +220,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int s
          mt.unlock();
 
 
-         this->Clear_Vector_Memory(&Dep_List);  
+         this->Clear_Source_File_Dependency_Data(Dep_List);  
      }     
 }
 
@@ -229,7 +229,7 @@ void Source_File_Dependency_Selector::Extract_Dependency_Data(int thr_num, int s
 
 
 
-void Source_File_Dependency_Selector::Extract_Dependency_Tree(size_t index,int thr_num, 
+void Source_File_Dependency_Selector::Construct_Dependency_Data_Vector(size_t index,int thr_num, 
 
      std::vector<Source_File_Dependency> & Dep_List){
 
@@ -389,15 +389,13 @@ void Source_File_Dependency_Selector::Clear_Object_Memory(){
 
 void Source_File_Dependency_Selector::Clear_Dynamic_Memory()
 {
+    this->Dependency_Data.shrink_to_fit();
+
     if(!this->Dependency_Data.empty()){
     
-        std::vector<std::vector<Source_File_Dependency>>::iterator it;
+        for(size_t i=0;i<this->Dependency_Data.size();i++){
 
-        for(auto it=this->Dependency_Data.begin();it<this->Dependency_Data.end();it++){
-     
-            std::vector<Source_File_Dependency> * ptr = &(*it);
-
-            this->Clear_Vector_Memory(ptr);     
+            this->Clear_Source_File_Dependency_Data(this->Dependency_Data.at(i));     
         }
 
         this->Dependency_Data.clear();
@@ -420,38 +418,41 @@ void Source_File_Dependency_Selector::Clear_String_Memory(std::string & str)
 }
 
 
+void Source_File_Dependency_Selector::Clear_Source_File_Dependency_Data(std::vector<Source_File_Dependency> & vec){
+     
+     vec.shrink_to_fit();
 
-void Source_File_Dependency_Selector::Clear_Vector_Memory(std::vector<Source_File_Dependency> * pointer){
+     if(!vec.empty()){
 
-     std::vector<std::string>::iterator it;
+         for(size_t i=0;i<vec.size();i++){
 
-     auto begin = pointer->begin();
-     auto end   = pointer->end();
+             this->Clear_String_Memory(vec.at(i).Combined_Header_Name);
 
-     for(auto it=begin;it<end;it++){
+             this->Clear_String_Memory(vec.at(i).dir);
+         
+             this->Clear_String_Memory(vec.at(i).Header_Name);
 
-        if(!it->Header_Name.empty()){
+             this->Clear_String_Memory(vec.at(i).header_sys_path);
 
-            it->Header_Name.clear();
+             this->Clear_String_Memory(vec.at(i).object_file_name);
 
-            it->Header_Name.shrink_to_fit();
-        }
+             this->Clear_String_Memory(vec.at(i).source_file_name);
 
-        if(!it->header_sys_path.empty()){
+             this->Clear_String_Memory(vec.at(i).source_file_name_without_ext);
 
-            it->header_sys_path.clear();
+             vec.at(i).External_Headers.shrink_to_fit();
 
-            it->header_sys_path.shrink_to_fit();
-        }
-     }
+             for(size_t j=0;j<vec.at(i).External_Headers.size();j++){
 
-     if(!pointer->empty())
-     {
-         pointer->clear();
-         pointer->shrink_to_fit();
+                 this->Clear_String_Memory(vec.at(i).External_Headers.at(j));
+             }
+         }
+
+         vec.clear();
+
+         vec.shrink_to_fit();
      }
 }
-
 
 
 

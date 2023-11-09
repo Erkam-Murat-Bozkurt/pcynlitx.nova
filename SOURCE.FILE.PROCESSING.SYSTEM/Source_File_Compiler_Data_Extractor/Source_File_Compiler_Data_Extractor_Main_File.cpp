@@ -45,11 +45,7 @@ int main(int argc, char ** argv){
 
     Data_Processor.Write_Git_Repo_List_File();
 
-    std::cout << "\n Git repo file writed";
-
     Data_Processor.Determine_Git_Repo_Info();
-
-    std::cout << "\n Git repo info collected";
 
 
     size_t index_size = Data_Processor.Get_Git_File_Index_Size();
@@ -64,15 +60,16 @@ int main(int argc, char ** argv){
     Code_Rd.Read_Project_Source_Code_Files();
 
 
-    std::cout << "\n The source code read";
+    /*
 
     //std::string path =  "D:\\pcynlitx.build.gui\\wxLauncher.cpp";
 
-
     std::string path = "D:\\PCYNLITX.BUILD.TEST\\Pcynlitx.Win\\KERNEL.DEVELOPMENT\\Kernel\\Kernel_Main_File.cpp";
 
+    */
 
-    Source_File_Dependency_Selector_For_Single_File Dep_Selector('w');
+
+    Source_File_Dependency_Selector Dep_Selector('w');
 
     Dep_Selector.Receive_Source_Code_Reader(&Code_Rd);
 
@@ -80,35 +77,24 @@ int main(int argc, char ** argv){
 
     Dep_Selector.Receive_Descriptor_File_Reader(&Des_Reader);
 
-    Dep_Selector.Determine_Source_File_Dependencies(path);
-
-    std::cout << "\n Project Dependency Data Collected..\n\n";
+    Dep_Selector.Determine_Source_File_Dependencies();
 
 
     std::vector<std::vector<Source_File_Dependency>> * ptr = Dep_Selector.Get_Dependency_List_Adress();
 
-    std::string wr_hdr =  Dep_Selector.Get_Warehouse_Headers_Dir();
-
-
-
+ 
 
     Source_File_Compiler_Data_Extractor Compiler_Data_Extractor('w');
 
-    Compiler_Data_Extractor.Receive_Single_File_Dependency_Data(&Dep_Selector);
-
-    std::cout << "\n Dependency Data received";
+    Compiler_Data_Extractor.Receive_Dependency_Data(&Dep_Selector);
 
     Compiler_Data_Extractor.Extract_Compiler_Data();
-
-    std::cout << "\n Compiler data extracted..";
 
 
     std::vector<Compiler_Data> * data_ptr = Compiler_Data_Extractor.Get_Compiler_Data_Address();
 
-    std::cout << "\n data_ptr->size():" << data_ptr->size();
-    std::cin.get();
 
-    std::cout << "\n\n DATA FOR PATH:" << path;
+    std::cout << "\n\n DATA FOR REPOSITORY:";
 
     print_compiler_data(data_ptr);
 
@@ -129,9 +115,6 @@ void print_compiler_data(std::vector<Compiler_Data> * data_ptr){
 
      size_t data_size = data_ptr->size();
 
-     std::cout << "\n data_size:" << data_size;
-
-     std::cin.get();
 
      for(size_t i=0;i<data_size;i++){
 
@@ -153,14 +136,14 @@ void print_compiler_data(std::vector<Compiler_Data> * data_ptr){
              std::cout << "\n included header:" << temp.dependent_headers[k];
          }
 
-         size_t path_size = temp.dependent_headers.size();
+         size_t headers_size = temp.dependent_headers.size();
 
          std::cout << "\n";
 
          
-         for(int k=0;k<path_size;k++){
+         for(int k=0;k<headers_size;k++){
 
-             std::cout << "\n included header path:" << temp.dependent_headers_paths[k];
+             std::cout << "\n included header path:" << temp.dependent_headers[k];
          } 
 
          std::cout << "\n";
@@ -173,6 +156,19 @@ void print_compiler_data(std::vector<Compiler_Data> * data_ptr){
 
              std::cout << "\n included header directory:" << temp.dependent_headers_dir[k];
          } 
+
+
+         size_t upper_dir__size = temp.upper_directories.size();
+
+         std::cout << "\n";
+
+         
+         for(int k=0;k<upper_dir__size;k++){
+
+             std::cout << "\n included header path:" << temp.upper_directories[k];
+         } 
+
+         std::cout << "\n";
 
          std::cout << "\n";
 

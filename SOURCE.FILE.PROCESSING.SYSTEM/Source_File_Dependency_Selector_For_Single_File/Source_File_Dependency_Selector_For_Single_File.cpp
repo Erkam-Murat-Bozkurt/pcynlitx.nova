@@ -150,7 +150,7 @@ void Source_File_Dependency_Selector_For_Single_File::Determine_Source_File_Depe
                end = data_size;
            }
 
-           this->threadPool.push_back(std::thread(Source_File_Dependency_Selector_For_Single_File::Extract_Dependency_Data,this,i,str,end));
+           this->threadPool.push_back(std::thread(Source_File_Dependency_Selector_For_Single_File::Arrange_Dependency_Data,this,i,str,end));
         }
     
         for(size_t i=0;i<thread_num;i++){
@@ -160,7 +160,7 @@ void Source_File_Dependency_Selector_For_Single_File::Determine_Source_File_Depe
      }
      else{
 
-          this->Extract_Dependency_Data(0,0,data_size);
+          this->Arrange_Dependency_Data(0,0,data_size);
      }
 
      this->Dependency_Data.shrink_to_fit();   
@@ -181,7 +181,7 @@ void Source_File_Dependency_Selector_For_Single_File::Determine_Source_File_Depe
 
 
 
-void Source_File_Dependency_Selector_For_Single_File::Extract_Dependency_Data(int thr_num, int start, int end){
+void Source_File_Dependency_Selector_For_Single_File::Arrange_Dependency_Data(int thr_num, int start, int end){
 
      std::unique_lock<std::mutex> mt(this->mtx);
 
@@ -195,7 +195,7 @@ void Source_File_Dependency_Selector_For_Single_File::Extract_Dependency_Data(in
 
          std::vector<Source_File_Dependency> Dep_List;
     
-         this->Extract_Dependency_Tree(path,thr_num,Dep_List);
+         this->Construct_Dependency_Data_Vector(path,thr_num,Dep_List);
 
          this->Set_Included_Header_Number(Dep_List);
 
@@ -219,7 +219,7 @@ void Source_File_Dependency_Selector_For_Single_File::Extract_Dependency_Data(in
 
 
 
-void Source_File_Dependency_Selector_For_Single_File::Extract_Dependency_Tree(std::string path, int thr_num, 
+void Source_File_Dependency_Selector_For_Single_File::Construct_Dependency_Data_Vector(std::string path, int thr_num, 
 
      std::vector<Source_File_Dependency> & Dep_List){
 

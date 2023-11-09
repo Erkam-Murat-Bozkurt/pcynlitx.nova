@@ -124,9 +124,10 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Order_Priorities();
 
+     */
+
      this->Clear_Dynamic_Memory();
 
-     */
 }
 
 
@@ -154,9 +155,10 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
       this->Order_Priorities();
 
+      */
+
       this->Clear_Dynamic_Memory();
 
-      */
 }
 
 
