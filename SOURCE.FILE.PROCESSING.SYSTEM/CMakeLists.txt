@@ -16,8 +16,22 @@ add_library(src_proc_sys
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Dependency_Determiner/Source_File_Dependency_Determiner.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Dependency_Determiner/Source_File_Dependency_Determiner.hpp
 
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Extractor/Dependency_Data_Extractor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Extractor/Dependency_Data_Extractor.hpp
+
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Stack_Container/Dependency_Data_Stack_Container.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Stack_Container/Dependency_Data_Stack_Container.hpp
+
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Header_Dependency_Data_Extractor/Header_Dependency_Data_Extractor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Header_Dependency_Data_Extractor/Header_Dependency_Data_Extractor.hpp
+
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Processor/Dependency_Data_Processor.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Processor/Dependency_Data_Processor.hpp
+
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Dependency_Selector_For_Single_File/Source_File_Dependency_Selector_For_Single_File.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Dependency_Selector_For_Single_File/Source_File_Dependency_Selector_For_Single_File.hpp
@@ -71,6 +85,12 @@ target_include_directories(src_proc_sys PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Dependency_ReOrderer
     
     ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Extractor
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Stack_Container
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Header_Dependency_Data_Extractor
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Processor
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Source_File_Data_Setter
 
@@ -158,6 +178,13 @@ target_link_directories(src_proc_sys PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Extractor
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Quick_Src_Dependency_Determiner
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Stack_Container
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Header_Dependency_Data_Extractor
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Data_Processor
+
 
 
 

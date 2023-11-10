@@ -237,6 +237,12 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->FileManager.WriteToFile("\n");
 
+     this->FileManager.WriteToFile("   Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
      this->FileManager.WriteToFile("   Write-Output \"# Compiler fails on ");
 
      this->FileManager.WriteToFile(this->Src_Data_Pointer->object_file_name);
@@ -253,7 +259,7 @@ void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->FileManager.WriteToFile("\n\n");
 
-     this->FileManager.WriteToFile("   exit");
+     this->FileManager.WriteToFile("   exit $LASTEXITCODE");
 
      this->FileManager.WriteToFile("\n");
 

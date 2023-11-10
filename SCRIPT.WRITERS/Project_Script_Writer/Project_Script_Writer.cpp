@@ -888,6 +888,22 @@ void Project_Script_Writer::Write_Project_Build_Script(){
          this->FileManager.WriteToFile("\n");
 
 
+         this->FileManager.WriteToFile("if($LASTEXITCODE -ne 0){");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("   exit");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("}");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
          this->FileManager.WriteToFile("Write-Host \"[ \" -NoNewline ");
 
          this->FileManager.WriteToFile("\n");
