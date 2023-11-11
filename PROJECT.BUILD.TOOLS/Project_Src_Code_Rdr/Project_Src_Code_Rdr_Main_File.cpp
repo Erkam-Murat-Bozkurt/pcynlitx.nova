@@ -57,9 +57,12 @@ int main(int argc, char ** argv){
         std::cout << "\n System path     -"  << i << " :" << Git_Data_Proc.Get_File_System_Path(i);
 
         std::cout << "\n";
+
+        std::cin.get();
     }
 
     */
+
 
     Project_Src_Code_Rdr Code_Rd('w');
 
@@ -68,7 +71,6 @@ int main(int argc, char ** argv){
     Code_Rd.Read_Project_Source_Code_Files();
 
 
-    std::cin.get();
 
     std::cout << "\n THE COMPUTATIONS COMPLATED";
 

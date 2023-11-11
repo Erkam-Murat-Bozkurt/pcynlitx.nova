@@ -87,7 +87,7 @@ void Project_Src_Code_Rdr::Read_Project_Source_Code_Files(){
 
             int end  = (i+1)*division;
 
-            if(i==32){
+            if(i==31){
 
                 end = repo_size;
             }
@@ -117,8 +117,6 @@ void Project_Src_Code_Rdr::Read_Project_Source_Code_Files(){
          this->Map_Cmbn.insert(std::make_pair(this->Code_Dt.at(i).cmbn_name,&this->Code_Dt.at(i)));
      }
 
-
-
      this->Clear_Thread_Objects_Memory();
 }
 
@@ -129,7 +127,6 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
 
      mt.unlock();
 
-     
 
      for(int i=start_point;i<end_point;i++){
      
@@ -140,7 +137,6 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
          bool is_header   = this->Hdr_Determiner[trn]->Is_Header(file_sys_path);
 
          bool is_src_file = this->Src_Determiner[trn]->Is_Source_File(file_sys_path);
-
 
 
          if(is_header || is_src_file){
