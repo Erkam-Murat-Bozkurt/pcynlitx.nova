@@ -22,6 +22,14 @@
 #include "Header_File_Determiner.h"
 #include "DirectoryOperations.h"
 
+
+struct MakeFile_Directory_Data
+{
+    std::string directory;
+    size_t dir_size;
+};
+
+
 class MakeFile_Directory_Constructor
 {
 public:
@@ -41,19 +49,24 @@ private:
  void Determine_MakeFiles_Root_Directory();
  void Clear_String_Memory(std::string & pointer);
  void Clear_Vector_Memory(std::vector<std::string> & pointer); 
+ void Clear_Dir_Data_Memory(std::vector<MakeFile_Directory_Data> & vec);
  void Place_Std_String(std::string & target_str, std::string str);
  void Place_CString(std::string * ptr, char * Information);
- bool Check_Directory_Existance(std::vector<std::string> * hdr_dir, std::string dir);
+ bool Check_Directory_Existance(std::vector<std::string> & hdr_dir, std::string dir);
  void Find_Upper_Directory(std::string & upper_dir, std::string dir);
  void ReOrder_Directories();
  void Construct_Directory(std::string dir);
+ void Construct_MakeFile_Directory_Data();
  size_t Find_Shortest(std::vector<std::string> & vec);
+ void Replace_MakeFile_Directories();
+ std::string Search_For_New_Upper_Directory(std::vector<std::string> & dir_list, std::string dir);
  DirectoryOperations DirectoryManager;
  Descriptor_File_Reader * Des_Reader;
  std::vector<Compiler_Data> * Compiler_Data_Ptr;
+ std::vector<MakeFile_Directory_Data> Dir_Data;
  std::vector<std::string> MakeFile_Directories;
- std::vector<std::string> MakeFile_Construction_Directories;
- std::vector<std::string> Ordered_MakeFile_Directories;
+ //std::vector<std::string> MakeFile_Construction_Directories;
+ //std::vector<std::string> Ordered_MakeFile_Directories;
  std::string warehouse_path;
  std::string make_files_root_directory;
  char opr_sis;

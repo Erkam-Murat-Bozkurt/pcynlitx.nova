@@ -45,6 +45,12 @@ GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiv
 
 MK_DIR_CON=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\MakeFile_Directory_Constructor
 
+DEP_DAT_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Processor
+DEP_DAT_STCK=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Stack_Container
+HDR_DEP_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_Dependency_Data_Extractor
+
+
+
 
 VPATH = $(DIR_OPS)       $(CPP_OPS)         $(CHAR_OPS) \
 		$(SOURCE_DETR)   $(DIR_ENUM)        $(SYS_INT) \
@@ -61,7 +67,10 @@ VPATH = $(DIR_OPS)       $(CPP_OPS)         $(CHAR_OPS) \
 		$(GIT_MOD_RCV) \
 		$(GIT_IGN) \
 		$(SRC_INF_CL_SF) $(SRC_DEP_SL_SF) $(SRC_DEP_DETER) \
-		$(MK_DIR_CON)
+		$(MK_DIR_CON) \
+		$(DEP_DAT_PROC) \
+		$(DEP_DAT_STCK) \
+		$(HDR_DEP_EXT)
 
 		
 
@@ -168,6 +177,9 @@ MakeFile_Directory_Constructor.exe: MakeFile_Directory_Constructor_Main_File.cpp
 		-I$(QUICK_SRC_EXT) \
 		-I$(SRC_DEP_DETER) \
 		-I$(MK_DIR_CON) \
+		-I$(DEP_DAT_PROC) \
+		-I$(DEP_DAT_STCK) \
+		-I$(HDR_DEP_EXT) \
 	 	-L$(SRC_INF_CL) \
 		-L$(DIR_ENUM) \
 		-L$(DIR_OPS)  \
@@ -202,6 +214,9 @@ MakeFile_Directory_Constructor.exe: MakeFile_Directory_Constructor_Main_File.cpp
 		-L$(QUICK_SRC_EXT) \
 		-L$(SRC_DEP_DETER) \
 		-L$(MK_DIR_CON) \
+	    -L$(DEP_DAT_PROC) \
+	    -L$(DEP_DAT_STCK) \
+	    -L$(HDR_DEP_EXT) \
 	  	$(MK_DIR_CON)\MakeFile_Directory_Constructor_Main_File.cpp \
 		$(MK_DIR_CON)\MakeFile_Directory_Constructor.cpp \
 	  	$(SRC_DEP_DETER)\Source_File_Dependency_Determiner.cpp \
@@ -209,6 +224,9 @@ MakeFile_Directory_Constructor.exe: MakeFile_Directory_Constructor_Main_File.cpp
 		$(SRC_DEP_SL_SF)\Source_File_Dependency_Selector_For_Single_File.cpp \
 		$(SRC_DEP_SL)\Source_File_Dependency_Selector.cpp \
 		$(SRC_COM_DT_EXT)\Source_File_Compiler_Data_Extractor.cpp \
+		$(DEP_DAT_PROC)\Dependency_Data_Processor.cpp \
+		$(HDR_DEP_EXT)\Header_Dependency_Data_Extractor.cpp \
+		$(DEP_DAT_STCK)\Dependency_Data_Stack_Container.cpp \
 		$(DEP_DAT_EXT)\Dependency_Data_Extractor.cpp \
 		$(SRC_INF_CL_SF)\Source_File_Information_Collector_For_Single_File.cpp \
 		$(SRC_INF_CL)\Source_File_Information_Collector.cpp \
@@ -245,6 +263,9 @@ MakeFile_Directory_Constructor.exe: MakeFile_Directory_Constructor_Main_File.cpp
 		-include $(SRC_INF_CL_SF)\Source_File_Information_Collector_For_Single_File.hpp \
 		-include $(SRC_INF_CL)\Source_File_Information_Collector.hpp \
 		-include $(QUICK_SRC_EXT)\Quick_Src_Dependency_Extractor.hpp \
+	    -include $(DEP_DAT_PROC)\Dependency_Data_Processor.hpp \
+		-include $(HDR_DEP_EXT)\Header_Dependency_Data_Extractor.hpp \
+		-include $(DEP_DAT_STCK)\Dependency_Data_Stack_Container.hpp \
 		-include $(DEP_DAT_EXT)\Dependency_Data_Extractor.hpp \
 		-include $(SRC_DATA_SETTER)\Source_File_Data_Setter.hpp \
 		-include $(SRC_PROCESSOR)\Source_File_Processor.hpp \

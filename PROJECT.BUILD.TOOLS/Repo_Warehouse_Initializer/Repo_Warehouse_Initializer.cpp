@@ -10,8 +10,6 @@ Repo_Warehouse_Initializer::Repo_Warehouse_Initializer(char * DesPath, char opr_
 }
 
 
-
-
 Repo_Warehouse_Initializer::~Repo_Warehouse_Initializer(){
 
      this->Clear_Dynamic_Memory();
@@ -169,7 +167,6 @@ void Repo_Warehouse_Initializer::Determine_Make_Files_Directory(){
      }
 
      this->Make_Files_Directory.shrink_to_fit();
-
 }
 
 

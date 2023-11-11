@@ -43,11 +43,9 @@ void MakeFile_Directory_Constructor::Clear_Dynamic_Memory(){
 
      this->Clear_Vector_Memory(this->MakeFile_Directories);
 
-     this->Clear_Vector_Memory(this->Ordered_MakeFile_Directories);
-
-     this->Clear_Vector_Memory(this->MakeFile_Construction_Directories);
-
      this->Clear_String_Memory(this->warehouse_path);
+
+     this->Clear_Dir_Data_Memory(this->Dir_Data);
 }
 
 
@@ -85,9 +83,12 @@ void MakeFile_Directory_Constructor::Collect_Directory_Info(){
 
          this->Determine_MakeFile_File_Directory(mk_file_dir,git_record_dir);
 
-         this->MakeFile_Directories.push_back(mk_file_dir);
+         bool is_exist = this->Check_Directory_Existance(this->MakeFile_Directories,mk_file_dir);
 
-         this->MakeFile_Construction_Directories.push_back(mk_file_dir);         
+         if(!is_exist){
+
+             this->MakeFile_Directories.push_back(mk_file_dir);
+         }
      }
 
      this->MakeFile_Directories.shrink_to_fit();
@@ -98,65 +99,133 @@ void MakeFile_Directory_Constructor::Collect_Directory_Info(){
 
      for(size_t i=0;i<this->MakeFile_Directories.size();i++){
 
-         std::string upper_directory;
-
          std::string dir = this->MakeFile_Directories.at(i);
+         
+         size_t up_dir_size = 0;
 
-         this->Find_Upper_Directory(upper_directory,dir);
+         size_t root_dir_size = this->make_files_root_directory.size();
 
-         bool is_exist = this->Check_Directory_Existance(&this->MakeFile_Directories,upper_directory);
+         do{
 
-         if(!is_exist){
+            std::string upper_directory = 
+         
+            this->Search_For_New_Upper_Directory(this->MakeFile_Directories,dir);
 
-            size_t root_dir_size = this->make_files_root_directory.size();
+            this->Clear_String_Memory(dir);
 
-            size_t next_dir_size = upper_directory.size();
+            dir = upper_directory;
 
-            if(next_dir_size > root_dir_size){
+            up_dir_size = upper_directory.length();
 
-                this->MakeFile_Directories.push_back(upper_directory);
-            }
-
-            this->MakeFile_Directories.shrink_to_fit();
-         }
+         }while(up_dir_size>root_dir_size);
      }
 
+     this->Construct_MakeFile_Directory_Data();
+
      this->ReOrder_Directories();
+
+     this->Replace_MakeFile_Directories();
 }
+
+std::string MakeFile_Directory_Constructor::Search_For_New_Upper_Directory(std::vector<std::string> & dir_list,
+
+     std::string dir){
+     
+     std::string upper_directory;
+
+     this->Find_Upper_Directory(upper_directory,dir);
+        
+     bool is_exist = this->Check_Directory_Existance(dir_list,upper_directory);
+
+     if(!is_exist){
+
+         size_t root_dir_size = this->make_files_root_directory.size();
+
+         size_t next_dir_size = upper_directory.size();
+
+         if(next_dir_size > root_dir_size){
+
+            dir_list.push_back(upper_directory);
+         }
+
+         dir_list.shrink_to_fit();
+      }
+
+      upper_directory.shrink_to_fit();
+
+      return upper_directory;
+}
+
+
+
+void MakeFile_Directory_Constructor::Replace_MakeFile_Directories(){
+
+     this->Clear_Vector_Memory(this->MakeFile_Directories);
+
+     for(size_t i=0;i<this->Dir_Data.size();i++){
+
+         this->MakeFile_Directories.push_back(this->Dir_Data.at(i).directory);    
+     }
+
+     this->MakeFile_Directories.shrink_to_fit();
+
+     this->Clear_Dir_Data_Memory(this->Dir_Data);
+}
+
+
 
 
 void MakeFile_Directory_Constructor::Construct_MakeFile_Directories(){
 
-     for(size_t i=0;i<this->Ordered_MakeFile_Directories.size();i++){
-
-         this->Construct_Directory(this->Ordered_MakeFile_Directories.at(i));
+     for(size_t i=0;i<this->MakeFile_Directories.size();i++){
+         
+         this->Construct_Directory(this->MakeFile_Directories.at(i));
      }
-
-     this->Clear_Vector_Memory(this->Ordered_MakeFile_Directories);
 }
 
 
 void MakeFile_Directory_Constructor::ReOrder_Directories(){
+     
+     for(int i=0;i< this->Dir_Data.size();i++){
 
-     do{
+         for(int j=i;j< this->Dir_Data.size();j++){
 
-        size_t position = this->Find_Shortest(this->MakeFile_Directories);
+             int size_i = this->Dir_Data.at(i).dir_size;
 
-        this->Ordered_MakeFile_Directories.push_back(this->MakeFile_Directories.at(position));
+             int size_j = this->Dir_Data.at(j).dir_size;
 
-        this->Clear_String_Memory(this->MakeFile_Directories.at(position));
+             MakeFile_Directory_Data temp;
 
-        this->MakeFile_Directories.erase(this->MakeFile_Directories.begin() + position);
+             if( size_i > size_j ){
 
-        this->MakeFile_Directories.shrink_to_fit();
-         
+                 temp  = this->Dir_Data.at(i);
 
-     }while(this->MakeFile_Directories.size()>0);
+                 this->Dir_Data.at(i) = this->Dir_Data.at(j);
 
-     this->Clear_Vector_Memory(this->MakeFile_Directories);
+                 this->Dir_Data.at(j) = temp;
+              }
+          }
+      }
+}
 
-     this->Ordered_MakeFile_Directories.shrink_to_fit();
 
+
+void MakeFile_Directory_Constructor::Construct_MakeFile_Directory_Data(){
+
+     size_t  Dir_Size = this->MakeFile_Directories.size();
+
+     for(size_t i=0;i<Dir_Size;i++){
+
+         size_t mk_dir_size = this->MakeFile_Directories.at(i).size();
+
+         MakeFile_Directory_Data Dt;
+
+         Dt.dir_size  = mk_dir_size;
+
+         Dt.directory = this->MakeFile_Directories.at(i);
+
+         this->Dir_Data.push_back(Dt);
+     }
 }
 
 
@@ -178,6 +247,8 @@ size_t MakeFile_Directory_Constructor::Find_Shortest(std::vector<std::string> & 
      
      return shortest_index;
 }
+
+
 
 void MakeFile_Directory_Constructor::Determine_MakeFiles_Root_Directory(){
 
@@ -311,7 +382,6 @@ void MakeFile_Directory_Constructor::Determine_Git_Record_Directory(std::string 
      }
 
      git_dir.shrink_to_fit();
-
 }
 
 
@@ -336,6 +406,9 @@ void MakeFile_Directory_Constructor::Determine_MakeFile_File_Directory(std::stri
 
      mk_dir.shrink_to_fit();
 }
+
+
+
 
 void MakeFile_Directory_Constructor::Find_Upper_Directory(std::string & upper_dir, std::string dir){
 
@@ -362,17 +435,19 @@ void MakeFile_Directory_Constructor::Find_Upper_Directory(std::string & upper_di
 }
 
 
-bool MakeFile_Directory_Constructor::Check_Directory_Existance(std::vector<std::string> * dir_list, 
+
+
+bool MakeFile_Directory_Constructor::Check_Directory_Existance(std::vector<std::string> & dir_list, 
 
      std::string dir){
      
-     size_t dir_list_size = dir_list->size();
+     size_t dir_list_size = dir_list.size();
 
      bool is_exist = false;
 
      for(size_t j=0;j<dir_list_size;j++){
 
-          std::string header_dir = dir_list->at(j);
+          std::string header_dir = dir_list.at(j);
 
           if(header_dir == dir){
 
@@ -387,6 +462,8 @@ bool MakeFile_Directory_Constructor::Check_Directory_Existance(std::vector<std::
 }
 
 
+
+
 void MakeFile_Directory_Constructor::Construct_Directory(std::string dir){
 
      int return_condition = this->DirectoryManager.ChangeDirectory(dir.c_str());
@@ -397,7 +474,7 @@ void MakeFile_Directory_Constructor::Construct_Directory(std::string dir){
 
         if(const_cond == 0){
 
-           std::cout << "\n The object files directory can not be constructed on:";
+           std::cout << "\n The make files directory can not be constructed on:";
 
            std::cout << "\n";
 
@@ -407,6 +484,8 @@ void MakeFile_Directory_Constructor::Construct_Directory(std::string dir){
         }
      }
 }
+
+
 
 void MakeFile_Directory_Constructor::Place_Std_String(std::string & target_str, std::string str){
 
@@ -453,6 +532,25 @@ void MakeFile_Directory_Constructor::Clear_Vector_Memory(std::vector<std::string
 }
 
 
+
+
+void MakeFile_Directory_Constructor::Clear_Dir_Data_Memory(std::vector<MakeFile_Directory_Data> & vec){
+
+     if(!vec.empty()){
+
+        for(size_t i=0;i<vec.size();i++){
+
+            this->Clear_String_Memory(vec.at(i).directory);
+        }
+
+        vec.clear();
+
+        vec.shrink_to_fit();
+     }
+}
+
+
+
 void MakeFile_Directory_Constructor::Clear_String_Memory(std::string & str)
 {
      if(!str.empty()){
@@ -464,7 +562,10 @@ void MakeFile_Directory_Constructor::Clear_String_Memory(std::string & str)
 }
 
 
+
 std::vector<std::string> * MakeFile_Directory_Constructor::Get_MakeFile_Construction_Directories(){
 
-      return &this->MakeFile_Construction_Directories;
+      return &this->MakeFile_Directories;
 }
+
+

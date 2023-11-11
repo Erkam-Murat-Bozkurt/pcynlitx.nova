@@ -32,8 +32,6 @@ int main(int argc, char ** argv)
 
     Data_Processor.Determine_Git_Repo_Info();
 
-    Data_Processor.Set_Git_Ignoring_Files();
-
     size_t index_size = Data_Processor.Get_Git_File_Index_Size();
 
 
