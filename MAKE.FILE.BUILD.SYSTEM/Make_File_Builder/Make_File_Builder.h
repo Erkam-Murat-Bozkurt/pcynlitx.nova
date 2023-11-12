@@ -38,7 +38,7 @@ public:
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 private:
- Compiler_Data * Find_Compiler_Data_From_Source_File_Name(std::string name);
+ Compiler_Data * Find_Compiler_Data_From_Source_File_Path(std::string name);
  void Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path);
  void Write_Header_Paths_Shorts_Cuts();
  void Determine_MakeFile_Path(std::string & make_file_path, 

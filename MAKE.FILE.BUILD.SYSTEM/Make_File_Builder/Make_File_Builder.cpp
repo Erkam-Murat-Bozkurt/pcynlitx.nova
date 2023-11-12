@@ -81,28 +81,28 @@ void Make_File_Builder::Receive_DataMap(std::unordered_map<std::string, Compiler
 }
 
 
-Compiler_Data * Make_File_Builder::Find_Compiler_Data_From_Source_File_Name(std::string name)
+Compiler_Data * Make_File_Builder::Find_Compiler_Data_From_Source_File_Path(std::string path)
 {
     try {        
 
-         return  &this->DataMap_Pointer->at(name);
+         return  &this->DataMap_Pointer->at(path);
     }
     catch (const std::out_of_range & oor) {
         
          std::cerr << "\n Out of Range error: " << oor.what() << '\n';
 
-         std::cout << "\n the file named " << name << " can not find on Make_File_Builder object!.\n";
+         std::cout << "\n the file located on path " << path << " can not find on Make_File_Builder object!.\n";
 
          exit(EXIT_FAILURE);
     }     
 }
 
 
-void Make_File_Builder::Build_MakeFile(std::string file_name){
+void Make_File_Builder::Build_MakeFile(std::string file_path){
 
      this->Data_Collector.Clear_Dynamic_Memory();
 
-     this->Data_Ptr = this->Find_Compiler_Data_From_Source_File_Name(file_name);
+     this->Data_Ptr = this->Find_Compiler_Data_From_Source_File_Path(file_path);
 
      this->Data_Collector.Receive_Compiler_Data_Pointer(this->Data_Ptr);
 
@@ -133,6 +133,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
      this->FileManager.WriteToFile(warehouse_obj_dir);
 
      this->FileManager.WriteToFile("\n");
+     
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("REPO_DIR=");
@@ -142,6 +143,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
      this->FileManager.WriteToFile(project_repo_dir);
 
      this->FileManager.WriteToFile("\n");
+
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("SOURCE_LOCATION=$(REPO_DIR)");
@@ -191,6 +193,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
      }
 
      this->FileManager.WriteToFile("\n");
+
      this->FileManager.WriteToFile("\n");
 
 
@@ -226,6 +229,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
      char NextLine [] = " \\";
 
      this->FileManager.WriteToFile("\n");
+
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile(PathSpecifier);
@@ -298,11 +302,12 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
 
      this->FileManager.WriteToFile("\n");
 
+     this->FileManager.WriteToFile("\n");
 
+     this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
-     this->FileManager.WriteToFile("\n");
-     this->FileManager.WriteToFile("\n");
+     
      this->FileManager.WriteToFile("\n");
 
      std::string Dependency_Code_Line    = this->Data_Collector.Get_Dependency_Code_Line();
@@ -326,7 +331,6 @@ void Make_File_Builder::Build_MakeFile(std::string file_name){
 
 
 void Make_File_Builder::Write_Header_Paths_Shorts_Cuts(){
-
      
      std::vector<std::string> * header_directories = &this->Data_Ptr->dependent_headers_dir;
 
@@ -334,15 +338,18 @@ void Make_File_Builder::Write_Header_Paths_Shorts_Cuts(){
 
      size_t hdr_dir_size = header_directories->size();
 
-
      for(size_t i=0;i<hdr_dir_size;i++){
 
           std::string dir = header_directories->at(i);
+
           std::string name = header_names->at(i);
           
           this->FileManager.WriteToFile(name);
+
           this->FileManager.WriteToFile("_Path=");
+
           this->FileManager.WriteToFile(dir);
+
           this->FileManager.WriteToFile("\n\n");        ;
      }   
 }
@@ -478,7 +485,9 @@ void Make_File_Builder::Determine_Git_Record_Directory(std::string & git_dir, st
      std::string root_dir = this->Des_Reader->Get_Repo_Directory_Location();
 
      size_t path_size = sys_path.length();
+
      size_t end_point = path_size;
+
      size_t start_point = root_dir.length()+1;
 
      for(size_t i=path_size;i>0;i--){
@@ -519,5 +528,4 @@ void Make_File_Builder::Determine_Git_Record_Directory(std::string & git_dir, st
      }
 
      git_dir.shrink_to_fit();
-
 }

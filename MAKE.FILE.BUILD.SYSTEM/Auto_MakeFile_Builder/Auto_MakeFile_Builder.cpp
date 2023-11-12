@@ -8,7 +8,7 @@ Auto_MakeFile_Builder::Auto_MakeFile_Builder(char * DesPath, char opr_sis)
 
      this->opr_sis = opr_sis;
 
-     for(int i=0;i<16;i++){
+     for(int i=0;i<32;i++){
 
          this->Mk_Builder[i].Receive_Operating_System(opr_sis);
      }
@@ -36,7 +36,7 @@ void Auto_MakeFile_Builder::Clear_Dynamic_Memory(){
 
          this->DataMap.clear();
 
-         for(int i=0;i<16;i++){
+         for(int i=0;i<32;i++){
 
             this->Mk_Builder[i].Clear_Dynamic_Memory();
          }
@@ -52,7 +52,7 @@ void Auto_MakeFile_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reade
 
      this->Repo_Dir = this->Des_Reader->Get_Repo_Directory_Location();
 
-     for(int i=0;i<16;i++){
+     for(int i=0;i<32;i++){
 
          this->Mk_Builder[i].Receive_Descriptor_File_Reader(ptr);      
      }
@@ -67,7 +67,7 @@ void Auto_MakeFile_Builder::Receive_Source_File_Dependency_Determiner(Source_Fil
 
      this->Dep_Determiner = dep_ptr;
 
-     for(int i=0;i<16;i++){
+     for(int i=0;i<32;i++){
 
          this->Mk_Builder[i].Receive_Compiler_Data_Pointer(dep_ptr->Get_Compiler_Data_Address());      
      }
@@ -106,18 +106,17 @@ void Auto_MakeFile_Builder::Perform_MakeFile_Construction(){
 
      size_t data_size = this->Compiler_Data_Pointer->size();
 
-     if(data_size>16){
+     if(data_size>32){
 
-       int division = data_size/16;
+       int division = data_size/32;
 
-       for(int i=0;i<16;i++){
+       for(int i=0;i<32;i++){
 
            int str  = i*division;
 
            int end  = (i+1)*division;
 
-
-           if(i==15){
+           if(i==31){
             
                end = data_size;
            }
@@ -127,7 +126,7 @@ void Auto_MakeFile_Builder::Perform_MakeFile_Construction(){
                 = std::thread(Auto_MakeFile_Builder::Write_MakeFiles,this,i,str,end);     
        }
     
-       for(int i=0;i<16;i++){
+       for(int i=0;i<32;i++){
      
           this->threads[i].join();
        }
@@ -145,12 +144,12 @@ void Auto_MakeFile_Builder::Perform_Data_Map_Construction(){
 
      for(size_t i=0;i<data_size;i++){
 
-         std::string source_file_name = this->Compiler_Data_Pointer->at(i).source_file_name;
+         std::string source_file_path= this->Compiler_Data_Pointer->at(i).source_file_path;
 
-         this->DataMap.insert(std::make_pair(source_file_name,this->Compiler_Data_Pointer->at(i)));
+         this->DataMap.insert(std::make_pair(source_file_path,this->Compiler_Data_Pointer->at(i)));
      }
 
-     for(size_t i=0;i<16;i++){
+     for(size_t i=0;i<32;i++){
 
          this->Mk_Builder[i].Receive_DataMap(&this->DataMap);
      }
@@ -160,23 +159,17 @@ void Auto_MakeFile_Builder::Perform_Data_Map_Construction(){
 void Auto_MakeFile_Builder::Write_MakeFiles(int thr_num, int start, int end){
 
      std::unique_lock<std::mutex> mt(this->mtx);
-
+     
      mt.unlock();
+
 
      for(size_t i=start;i<end;i++){
 
-         std::string source_file_name = this->Compiler_Data_Pointer->at(i).source_file_name;
+         std::string source_file_path = this->Compiler_Data_Pointer->at(i).source_file_path;
 
          mt.lock();
          
-         this->Mk_Builder[thr_num].Build_MakeFile(source_file_name);
-
-         std::cout << "\n\e[0;37m[\e[1;32m+\e[0m] Target make file: [\e[0;33m " 
-         
-                   << source_file_name << ".make \e[0m]";
-                   
-         std::cout << "\n\n    The construction complated.";
-         std::cout << "\n\n";
+         this->Mk_Builder[thr_num].Build_MakeFile(source_file_path);
 
          mt.unlock();
 

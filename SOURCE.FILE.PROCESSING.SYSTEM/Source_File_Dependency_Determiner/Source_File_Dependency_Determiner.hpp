@@ -77,7 +77,6 @@ protected:
  void Re_Arrange_Priorities(); 
  void Construct_Dependency_Map();
  bool Check_Dependecy_Search_Status(std::string name);
- void Extract_File_Name_Without_Extention(std::string & name, std::string name_with_ext);
  void Control_Priorities(size_t start, size_t end);
  int Find_File_Priority(std::string name);
  void Clear_Compiler_Data_Memory(Compiler_Data & Data);

@@ -104,7 +104,7 @@ int main(int argc, char ** argv){
 
 void Print_Advance_Data(std::vector<Compiler_Data> * ptr){
 
-    for(size_t i=0;i<ptr->size();i++){
+     for(size_t i=0;i<ptr->size();i++){
 
         std::cout << " \n\n\n";
         std::cout << "\n source file name:" << ptr->at(i).source_file_name;
@@ -123,6 +123,13 @@ void Print_Advance_Data(std::vector<Compiler_Data> * ptr){
 
             std::cout << "\n Header: " << j << "-:" << ptr->at(i).dependent_headers.at(j);
         }
+
+       if(ptr->at(i).source_file_name == src_name){
+
+          std::cout << "\n source_file_exist";
+
+          break;
+       }
     }
 
     std::cout << "\n\n";

@@ -50,10 +50,10 @@ protected:
  Source_File_Dependency_Determiner * Dep_Determiner;
  Git_Data_Processor * Git_Data_Proc;
  std::vector<Compiler_Data> * Compiler_Data_Pointer;
- Make_File_Builder Mk_Builder[16];
+ Make_File_Builder Mk_Builder[32];
  MakeFile_Directory_Constructor Mk_Dir_Constructor;
  Descriptor_File_Reader * Des_Reader;
- std::thread threads[16];
+ std::thread threads[32];
  std::mutex mtx;
  std::unordered_map<std::string, Compiler_Data> DataMap;
  std::string Warehouse_Path;

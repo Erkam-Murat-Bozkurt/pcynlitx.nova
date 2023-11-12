@@ -181,11 +181,11 @@ void Source_File_Dependency_Determiner::Construct_Dependency_Map(){
 
      for(int i=0;i< this->Compiler_Data_Ptr->size();i++){
 
-         std::string name = this->Compiler_Data_Ptr->at(i).source_file_name_witout_ext;
+         std::string path = this->Compiler_Data_Ptr->at(i).source_file_path;
 
          int dep_counter  = this->Compiler_Data_Ptr->at(i).priority;
 
-         this->Dependency_Map.insert(std::make_pair(name,dep_counter));
+         this->Dependency_Map.insert(std::make_pair(path,dep_counter));
      }
 }
 
@@ -260,19 +260,17 @@ void Source_File_Dependency_Determiner::Re_Arrange_Priorities(){
 
 void Source_File_Dependency_Determiner::Control_Priorities(size_t start, size_t end){
 
-     for(size_t i=start;i<end;i++){
+     for(size_t i=start; i<end; i++){
 
         for(size_t k=0;k<this->Compiler_Data_Ptr->at(i).dependent_headers.size();k++)
         {
             std::string file_name_with_ext;
 
-            std::string header_name = this->Compiler_Data_Ptr->at(i).dependent_headers.at(k);
+            std::string header_path = this->Compiler_Data_Ptr->at(i).dependent_headers.at(k);
 
-            this->Extract_File_Name_Without_Extention(file_name_with_ext,header_name);
+            if(this->Check_Dependecy_Search_Status(header_path)){
 
-            if(this->Check_Dependecy_Search_Status(file_name_with_ext)){
-
-               int file_priority = this->Find_File_Priority(file_name_with_ext);
+               int file_priority = this->Find_File_Priority(header_path);
 
                int current_file_priority = this->Compiler_Data_Ptr->at(i).priority;
 
@@ -285,29 +283,6 @@ void Source_File_Dependency_Determiner::Control_Priorities(size_t start, size_t 
      }
 }
 
-
-void Source_File_Dependency_Determiner::Extract_File_Name_Without_Extention(std::string & name, std::string name_with_ext){
-
-     size_t name_size = name_with_ext.size();
-    
-     size_t end_point = 0;
-
-     for(size_t i=0;i<name_size;i++){
-
-         if(name_with_ext[i]== '.'){
-
-            end_point = i;
-         }
-     }
-
-     for(size_t i=0;i<end_point;i++){
-
-         name.push_back(name_with_ext[i]);
-     }
-
-     name.shrink_to_fit();
-
-}
 
 bool Source_File_Dependency_Determiner::Check_Dependecy_Search_Status(std::string name){
 
