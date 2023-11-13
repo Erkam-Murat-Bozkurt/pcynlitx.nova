@@ -302,7 +302,7 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
           std::string dir = header_directories->at(i);
                     
-          bool is_dir_exist = this->Check_Include_Directory_Existance(&dir_buffer,dir);
+          bool is_dir_exist = this->Check_String_Existance(dir_buffer,dir);
 
           if(!is_dir_exist){
 
@@ -327,7 +327,7 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
           std::string dir = upper_dirs->at(i);
                     
-          bool is_dir_exist = this->Check_Include_Directory_Existance(&dir_buffer,dir);
+          bool is_dir_exist = this->Check_String_Existance(dir_buffer,dir);
 
           if(!is_dir_exist){
 
@@ -373,43 +373,75 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
      this->Place_String(&this->Compiler_System_Command,go_to_new_line);
 
 
+
+     std::vector<std::string> inc_directive_buffer;
+
      size_t dep_header_size = this->Compiler_Data_Ptr->dependent_headers.size();
 
      for(size_t i=0;i<dep_header_size;i++){
 
-          std::string header_name = this->Compiler_Data_Ptr->dependent_headers.at(i);
+          std::string include_directive;
 
-          std::string dir = header_directories->at(i);
+          this->Determine_Include_Directive(&include_directive,i);
 
-          this->Place_String(&this->Compiler_System_Command,include_word);
+          bool inc_directive_exist = this->Check_String_Existance(inc_directive_buffer,include_directive);
 
-          this->Place_String(&this->Compiler_System_Command,Space_Character);
+          if(!inc_directive_exist){
 
-          this->Place_String(&this->Compiler_System_Command,dir);
+              this->Place_String(&this->Compiler_System_Command,include_directive);
 
-          if(this->opr_sis == 'w'){
+              this->Place_String(&this->Compiler_System_Command,Space_Character);
 
-             if(dir.back()!= '\\'){
+              this->Place_String(&this->Compiler_System_Command,go_to_new_line);
 
-                 this->Compiler_System_Command.push_back('\\');
-             }
+              inc_directive_buffer.push_back(include_directive);
           }
-          
-          if(this->opr_sis == 'l'){
-
-             if(dir.back()!= '\\'){
-
-                 this->Compiler_System_Command.push_back('\\');
-             }
-          }
-
-          this->Place_String(&this->Compiler_System_Command,header_name);
-
-          this->Place_String(&this->Compiler_System_Command,Space_Character);
-
-          this->Place_String(&this->Compiler_System_Command,go_to_new_line);
      }     
+
+     inc_directive_buffer.shrink_to_fit();
+
+     this->Clear_Vector_Memory(inc_directive_buffer);   
 }
+
+
+
+void MakeFile_Data_Collector::Determine_Include_Directive(std::string * directive, 
+
+     int index){
+
+     std::string include_word = "-include";
+
+     std::string Space_Character = " ";
+
+     std::string header_name = this->Compiler_Data_Ptr->dependent_headers.at(index);
+
+     std::string dir     = this->Compiler_Data_Ptr->dependent_headers_dir.at(index);
+
+     this->Place_String(directive,include_word);
+
+     this->Place_String(directive,Space_Character);
+
+     this->Place_String(directive,dir);
+
+     if(this->opr_sis == 'w'){
+
+        if(dir.back()!= '\\'){
+
+           directive->push_back('\\');
+        }
+     }
+          
+     if(this->opr_sis == 'l'){
+
+        if(dir.back()!= '/'){
+
+           directive->push_back('/');
+        }
+     }
+
+     this->Place_String(directive,header_name);
+}
+
 
 
 void MakeFile_Data_Collector::Determine_Dependency_Code_Line(){
@@ -453,16 +485,27 @@ void MakeFile_Data_Collector::Determine_Dependency_Code_Line(){
      size_t hdr_dir_size = header_files->size();
 
      
+     std::vector<std::string> header_files_buffer;
+
      for(size_t i=0;i<hdr_dir_size;i++){
 
           std::string header = header_files->at(i);
-          
-          this->Place_String(&this->Dependency_Code_Line,header);
 
-          this->Place_String(&this->Dependency_Code_Line,Space_Character);
+          bool is_exist = this->Check_String_Existance(header_files_buffer,header);
 
-          this->Place_String(&this->Dependency_Code_Line,go_to_new_line);
+          if(!is_exist){
+
+              this->Place_String(&this->Dependency_Code_Line,header);
+
+              this->Place_String(&this->Dependency_Code_Line,Space_Character);
+
+              this->Place_String(&this->Dependency_Code_Line,go_to_new_line);
+
+              header_files_buffer.push_back(header);
+          }
      }   
+
+     this->Clear_Vector_Memory(header_files_buffer);
 }
 
 
@@ -567,19 +610,19 @@ void MakeFile_Data_Collector::Determine_Source_File_Directory(std::string & src_
 }
 
 
-bool MakeFile_Data_Collector::Check_Include_Directory_Existance(std::vector<std::string> * hdr_dir_list, 
+bool MakeFile_Data_Collector::Check_String_Existance(std::vector<std::string> & list, 
 
-     std::string dir){
+     std::string str){
      
-     size_t dir_list_size = hdr_dir_list->size();
+     size_t list_size = list.size();
 
      bool is_exist = false;
 
-     for(size_t j=0;j<dir_list_size;j++){
+     for(size_t j=0;j<list_size;j++){
 
-          std::string header_dir = hdr_dir_list->at(j);
+          std::string header_dir = list.at(j);
 
-          if(header_dir == dir){
+          if(header_dir == str){
 
              is_exist = true;
 

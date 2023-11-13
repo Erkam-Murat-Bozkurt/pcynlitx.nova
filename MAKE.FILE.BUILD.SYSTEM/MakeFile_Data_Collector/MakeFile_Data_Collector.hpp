@@ -59,7 +59,8 @@ private:
  void Find_Object_File_Name();
  void Determine_Compiler_System_Command();
  void Determine_Warehouse_Object_Dir();
- bool Check_Include_Directory_Existance(std::vector<std::string> * hdr_dir, std::string dir);
+ bool Check_String_Existance(std::vector<std::string> & list, std::string str);
+ void Determine_Include_Directive(std::string * directive, int index);
  DirectoryOperations DirectoryManager;
  IntToCharTranslater Translater;
  Descriptor_File_Reader * Des_Reader;

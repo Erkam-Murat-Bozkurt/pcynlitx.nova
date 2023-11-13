@@ -43,6 +43,11 @@ private:
  void Write_Header_Paths_Shorts_Cuts();
  void Determine_MakeFile_Path(std::string & make_file_path, 
       std::string make_file_name);
+ void VPATH_Determiner(std::string & path, std::string hdr_name, std::string dir);
+ void VPATH_Alias_Determiner(std::string & path, std::string hdr_name);
+ bool Check_String_Existance(std::vector<std::string> & list, std::string str);
+ void Clear_String_Vector(std::vector<std::string> & str); 
+ void Clear_String_Memory(std::string & pointer);
  MakeFile_Data_Collector Data_Collector;
  Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;
