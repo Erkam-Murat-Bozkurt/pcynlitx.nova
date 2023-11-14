@@ -45,7 +45,10 @@ private:
       std::string make_file_name);
  void VPATH_Determiner(std::string & path, std::string hdr_name, std::string dir);
  void VPATH_Alias_Determiner(std::string & path, std::string hdr_name);
+ void Upper_Directory_VPATH_Determiner(std::string & upper_dir_vpath, std::string dir, int index);
+ void Upper_Directory_VPATH_Alias_Determiner(std::string & upper_dir_vpath_alias, int index);
  bool Check_String_Existance(std::vector<std::string> & list, std::string str);
+ void Determine_Upper_VPATH_Directories();
  void Clear_String_Vector(std::vector<std::string> & str); 
  void Clear_String_Memory(std::string & pointer);
  MakeFile_Data_Collector Data_Collector;
@@ -53,6 +56,8 @@ private:
  Cpp_FileOperations FileManager;
  DirectoryOperations DirectoryManager;
  IntToCharTranslater Translater;
+ std::vector<std::string> upper_directory_vpaths;
+ std::vector<std::string> upper_dir_vpaths_alias;
  std::unordered_map<std::string, Compiler_Data> * DataMap_Pointer;
  std::vector<Compiler_Data> * Comp_Data_Ptr;
  Compiler_Data * Data_Ptr;
