@@ -187,7 +187,6 @@ Source_File_Dependency_Determiner.exe: Source_File_Dependency_Determiner_Main_Fi
 		-L$(CPP_OPS) \
 	 	-L$(HEAD_DET) \
 	 	-L$(SOURCE_DETR) \
-		-L$(GIT_LIST) \
 		-L$(SRC_DER_RORD) \
 	 	-L$(SRC_DT_COL) \
 		-L$(SYNT_COL) \

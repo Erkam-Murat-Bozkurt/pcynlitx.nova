@@ -65,8 +65,6 @@ private:
  std::vector<Compiler_Data> * Compiler_Data_Ptr;
  std::vector<MakeFile_Directory_Data> Dir_Data;
  std::vector<std::string> MakeFile_Directories;
- //std::vector<std::string> MakeFile_Construction_Directories;
- //std::vector<std::string> Ordered_MakeFile_Directories;
  std::string warehouse_path;
  std::string make_files_root_directory;
  char opr_sis;
