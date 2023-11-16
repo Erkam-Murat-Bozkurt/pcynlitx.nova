@@ -41,6 +41,7 @@ public:
  std::string Get_Dependency_Code_Line();
  std::string Get_Compiler_System_Command();
  std::string Get_MakeFile_Path();
+ std::string Get_Source_File_Git_Record_Dir();
  std::vector<std::string> * Get_Header_Vpaths();
  std::vector<std::string> * Get_Header_Vpath_Alias();
  std::vector<std::string> * Get_Upper_Directory_Vpaths();
@@ -74,6 +75,8 @@ private:
  std::unordered_map<std::string, Compiler_Data> * DataMap_Pointer;
  std::vector<Compiler_Data> * Comp_Data_Ptr;
  Compiler_Data * Data_Ptr;
+ std::string source_file_git_record_dir;
+ std::string make_file_path;
  char opr_sis;
  bool Include_Line_Condition;
  bool Memory_Delete_Condition;

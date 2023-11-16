@@ -58,6 +58,10 @@ void MakeFile_Path_Determiner::Clear_Dynamic_Memory(){
          this->Clear_String_Vector(this->headers_vpath_alias);
 
          this->Clear_String_Vector(this->headers_vpaths);
+
+         this->Clear_String_Memory(this->source_file_git_record_dir);
+
+         this->Clear_String_Memory(this->make_file_path);
      }
 }
 
@@ -119,15 +123,16 @@ void MakeFile_Path_Determiner::Determine_MakeFile_Data(std::string file_path){
      std::string Make_File_Name = this->Data_Collector.Get_Make_File_Name();
      
 
-     std::string Make_File_Path;
 
-     this->Determine_MakeFile_Path(Make_File_Path,Make_File_Name);
+     this->Clear_String_Memory(this->make_file_path);
+
+     this->Determine_MakeFile_Path(this->make_file_path,Make_File_Name);
 
      std::string sys_path = this->Data_Ptr->source_file_path;
 
-     std::string source_file_dir;
+     this->Clear_String_Memory(this->source_file_git_record_dir);
 
-     this->Determine_Git_Record_Directory(source_file_dir,sys_path);
+     this->Determine_Git_Record_Directory(this->source_file_git_record_dir,sys_path);
 
      this->Research_For_More_Upper_Directory();
      
@@ -150,7 +155,9 @@ Compiler_Data * MakeFile_Path_Determiner::Find_Compiler_Data_From_Source_File_Pa
         
          std::cerr << "\n Out of Range error: " << oor.what() << '\n';
 
-         std::cout << "\n the file located on path " << path << " can not find on Make_File_Builder object!.\n";
+         std::cout << "\n the file located on path " << path 
+         
+         << " can not find on Make_File_Builder object!.\n";
 
          exit(EXIT_FAILURE);
     }     
@@ -254,7 +261,7 @@ void MakeFile_Path_Determiner::VPATH_Alias_Determiner(std::string & path_alias, 
 
      std::string Ident = "        ";
 
-     std::string NextLine = " \\";
+     std::string NextLine = " \\\n";
 
      std::string open_parantes = "$(";
 
@@ -393,7 +400,9 @@ void MakeFile_Path_Determiner::Upper_Directory_VPATH_Determiner(std::string & up
 
 void MakeFile_Path_Determiner::Upper_Directory_VPATH_Alias_Determiner(std::string & alias, int index){
      
-     std::string NextLine = " \\";
+     std::string Ident = "        ";
+
+     std::string NextLine = " \\\n";
 
      std::string alias_start = "$(UP_DR_";
 
@@ -419,6 +428,11 @@ void MakeFile_Path_Determiner::Upper_Directory_VPATH_Alias_Determiner(std::strin
      for(size_t i=0;i<NextLine.length();i++){
 
          alias.push_back(NextLine[i]);
+     }
+
+     for(size_t i=0;i<Ident.length();i++){
+
+         alias.push_back(Ident[i]);
      }
 
      alias.shrink_to_fit();
@@ -739,24 +753,38 @@ std::string MakeFile_Path_Determiner::Get_Dependency_Code_Line(){
 }
 
 
- std::vector<std::string> * MakeFile_Path_Determiner::Get_Header_Vpaths(){
+std::vector<std::string> * MakeFile_Path_Determiner::Get_Header_Vpaths(){
 
     return &this->headers_vpaths;
- }
+}
 
 
- std::vector<std::string> * MakeFile_Path_Determiner::Get_Header_Vpath_Alias(){
+std::vector<std::string> * MakeFile_Path_Determiner::Get_Header_Vpath_Alias(){
 
     return &this->headers_vpath_alias;
- }
+}
 
- std::vector<std::string> * MakeFile_Path_Determiner::Get_Upper_Directory_Vpaths(){
+
+
+std::vector<std::string> * MakeFile_Path_Determiner::Get_Upper_Directory_Vpaths(){
 
     return &this->upper_directory_vpaths;
- }
+}
 
 
- std::vector<std::string> * MakeFile_Path_Determiner::Get_Upper_Directory_Vpaths_Alias(){
+std::vector<std::string> * MakeFile_Path_Determiner::Get_Upper_Directory_Vpaths_Alias(){
 
     return &this->upper_dir_vpaths_alias;
- }
+}
+
+
+std::string MakeFile_Path_Determiner::Get_MakeFile_Path(){
+
+     return this->make_file_path;
+}
+
+
+std::string MakeFile_Path_Determiner::Get_Source_File_Git_Record_Dir(){
+
+     return this->source_file_git_record_dir;
+}

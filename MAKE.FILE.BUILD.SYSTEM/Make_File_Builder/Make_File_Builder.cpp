@@ -36,8 +36,6 @@ Make_File_Builder::~Make_File_Builder(){
 
 void Make_File_Builder::Clear_Object_Memory(){
 
-     this->Data_Collector.Clear_Object_Memory();
-
      this->Clear_Dynamic_Memory();
 }
 
@@ -46,14 +44,6 @@ void Make_File_Builder::Clear_Dynamic_Memory(){
      if(!this->Memory_Delete_Condition){
 
          this->Memory_Delete_Condition = true;
-
-         this->Data_Collector.Clear_Dynamic_Memory();
-
-         this->DirectoryManager.Clear_Dynamic_Memory();
-
-         this->Clear_String_Vector(this->upper_dir_vpaths_alias);
-
-         this->Clear_String_Vector(this->upper_directory_vpaths);
      }
 }
 
@@ -62,7 +52,7 @@ void Make_File_Builder::Receive_Operating_System(char opr_sis){
 
      this->opr_sis = opr_sis;
 
-     this->Data_Collector.Receive_Operating_System(opr_sis);
+     this->Path_Determiner.Receive_Operating_System(opr_sis);
 }
 
 
@@ -70,20 +60,22 @@ void Make_File_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reader * 
 
      this->Des_Reader = ptr;
 
-     this->Data_Collector.Receive_Descriptor_File_Reader(ptr);
+     this->Path_Determiner.Receive_Descriptor_File_Reader(ptr);
 }
 
 void Make_File_Builder::Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr)
 {
      this->Comp_Data_Ptr = ptr;
 
-     this->Data_Collector.Receive_Compiler_Data_Pointer(this->Data_Ptr);
+     this->Path_Determiner.Receive_Compiler_Data_Pointer(ptr);
 }
 
 
 void Make_File_Builder::Receive_DataMap(std::unordered_map<std::string, Compiler_Data> * ptr){
 
      this->DataMap_Pointer = ptr;
+
+     this->Path_Determiner.Receive_DataMap(ptr);
 }
 
 
@@ -108,23 +100,13 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
 
      this->Memory_Delete_Condition = false;
 
-     this->Data_Collector.Clear_Dynamic_Memory();
+     this->Path_Determiner.Determine_MakeFile_Data(file_path);
 
      this->Data_Ptr = this->Find_Compiler_Data_From_Source_File_Path(file_path);
 
-
-     std::string Source_File_Name = this->Data_Ptr->source_file_name;
-
-
-     this->Data_Collector.Collect_Make_File_Data(Source_File_Name);
-
-     std::string Source_File_Directory = this->Data_Collector.Get_Source_File_System_Directory();
-
-     std::string Make_File_Name = this->Data_Collector.Get_Make_File_Name();
      
-     std::string Make_File_Path;
+     std::string Make_File_Path = this->Path_Determiner.Get_MakeFile_Path();
 
-     this->Determine_MakeFile_Path(Make_File_Path,Make_File_Name);
 
      this->FileManager.SetFilePath(Make_File_Path);
 
@@ -136,7 +118,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
      this->FileManager.WriteToFile("PROJECT_OBJECTS_LOCATION=");
 
 
-     std::string warehouse_obj_dir = this->Data_Collector.Get_Warehouse_Object_Dir();
+     std::string warehouse_obj_dir = this->Path_Determiner.Get_Warehouse_Object_Dir();
 
      this->FileManager.WriteToFile(warehouse_obj_dir);
 
@@ -146,7 +128,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile("REPO_DIR=");
 
-     std::string project_repo_dir = this->Data_Collector.Get_Repo_Dir();
+     std::string project_repo_dir = this->Path_Determiner.Get_Repo_Dir();
 
      this->FileManager.WriteToFile(project_repo_dir);
 
@@ -157,13 +139,8 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
      this->FileManager.WriteToFile("SOURCE_LOCATION=$(REPO_DIR)");
 
 
-     std::string sys_path = this->Data_Ptr->source_file_path;
 
-
-
-     std::string source_file_dir;
-
-     this->Determine_Git_Record_Directory(source_file_dir,sys_path);
+     std::string source_file_dir = this->Path_Determiner.Get_Source_File_Git_Record_Dir();
      
 
      if(!source_file_dir.empty()){
@@ -205,38 +182,16 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
      this->FileManager.WriteToFile("\n");
 
 
-
      char Ident [] =         "        ";
 
      char NextLine [] = " \\";
 
 
-     this->Clear_String_Vector(this->upper_dir_vpaths_alias);
-
-     this->Clear_String_Vector(this->upper_directory_vpaths);
-
-     this->Determine_Upper_VPATH_Directories();
 
 
-     size_t upper_dir_vpaths_num = this->upper_directory_vpaths.size();
+     this->Write_Header_VPaths();
 
-     for(size_t i=0;i<upper_dir_vpaths_num;i++){
-
-         this->FileManager.WriteToFile(this->upper_directory_vpaths.at(i));
-
-         this->FileManager.WriteToFile(NextLine);
-
-         this->FileManager.WriteToFile("\n");
-     }
-
-
-     size_t dep_header_size = this->Data_Ptr->dependent_headers.size();
-
-     this->Write_Header_Paths_Shorts_Cuts();
-
-
-
-     char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
+     this->Write_Upper_Directory_VPaths();
 
 
      char PathSpecifier [] = "VPATH = ";
@@ -268,50 +223,10 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
 
 
 
+     this->Write_Header_VPaths_Alias();
 
-     std::vector<std::string> path_alias_list;
+     this->Write_Upper_Dir_VPaths_Alias();
 
-     for(size_t i=0;i<dep_header_size;i++){
-
-          std::string header_name = this->Data_Ptr->dependent_headers.at(i);
-
-          std::string dir = this->Data_Ptr->dependent_headers_dir.at(i);
-
-          std::string path_alias;
-
-          this->VPATH_Alias_Determiner(path_alias,header_name);
-
-          bool is_exist = this->Check_String_Existance(path_alias_list,path_alias);
-
-          if(!is_exist){
-
-             this->FileManager.WriteToFile(path_alias);
-
-             this->FileManager.WriteToFile(NextLine);
-
-             this->FileManager.WriteToFile("\n");
-
-             this->FileManager.WriteToFile(Ident);
-
-             path_alias_list.push_back(path_alias);
-          }
-     }
-
-     this->Clear_String_Vector(path_alias_list);
-
-
-     size_t upr_dr_alias_num = this->upper_dir_vpaths_alias.size();
-
-     for(size_t i=0;i<upr_dr_alias_num;i++){
-
-         this->FileManager.WriteToFile(this->upper_dir_vpaths_alias.at(i));
-
-         this->FileManager.WriteToFile(NextLine);
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile(Ident);
-     }
 
 
      for(int i=0;i<included_dir_num;i++){
@@ -350,9 +265,9 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
 
 
 
-     std::string Dependency_Code_Line    = this->Data_Collector.Get_Dependency_Code_Line();
+     std::string Dependency_Code_Line    = this->Path_Determiner.Get_Dependency_Code_Line();
 
-     std::string Compiler_System_Command = this->Data_Collector.Get_Compiler_System_Command();
+     std::string Compiler_System_Command = this->Path_Determiner.Get_Compiler_System_Command();
 
      this->FileManager.WriteToFile(Dependency_Code_Line);
 
@@ -369,397 +284,68 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
 
 
 
-void Make_File_Builder::VPATH_Alias_Determiner(std::string & path_alias, std::string hdr_name){
 
-     std::string open_parantes = "$(";
+void Make_File_Builder::Write_Upper_Directory_VPaths(){
 
-     std::string path_subfix = "_PATH";
-     
-     for(size_t i=0;i<open_parantes.length();i++){
+     std::vector<std::string> * upper_dir_vpaths = 
 
-         path_alias.push_back(open_parantes[i]);
+     this->Path_Determiner.Get_Upper_Directory_Vpaths();
+
+     for(size_t i=0;i<upper_dir_vpaths->size();i++){
+
+         this->FileManager.WriteToFile(upper_dir_vpaths->at(i));
+
+         this->FileManager.WriteToFile("\n");   
      }
 
-     for(size_t i=0;i<hdr_name.length();i++){
-
-         path_alias.push_back(hdr_name[i]);
-     }
-  
-     for(size_t i=0;i<path_subfix.length();i++){
-
-         path_alias.push_back(path_subfix[i]);
-     }
-  
-     path_alias.push_back(')');
-
-     path_alias.shrink_to_fit();
 }
 
 
+void Make_File_Builder::Write_Header_VPaths(){
+    
+     std::vector<std::string> * hdr_vpaths = 
 
+     this->Path_Determiner.Get_Header_Vpaths();
 
-void Make_File_Builder::VPATH_Determiner(std::string & path, std::string hdr_name, std::string dir){
+     for(size_t i=0;i<hdr_vpaths->size();i++){
 
-     std::string vpath_ext = "_Path=";
+         this->FileManager.WriteToFile(hdr_vpaths->at(i));
 
-     for(size_t i=0;i<hdr_name.length();i++){
-
-        path.push_back(hdr_name[i]);
-     }
-
-     for(size_t i=0;i<vpath_ext.length();i++){
-  
-         path.push_back(vpath_ext[i]);
-     }
-
-     for(size_t i=0;i<dir.length();i++){
-  
-         path.push_back(dir[i]);
-     }
-
-    path.shrink_to_fit();
-}
-
-
-
-
-bool Make_File_Builder::Check_String_Existance(std::vector<std::string> & list, std::string str){
-
-     size_t list_size = list.size();
-
-     bool is_exist = false;
-
-     for(size_t j=0;j<list_size;j++){
-
-         if(list.at(j) == str){
-
-            is_exist = true;
-
-            return is_exist;
-          }
-     }
-
-     return is_exist;
-}
-
-
-
-
-void Make_File_Builder::Write_Header_Paths_Shorts_Cuts(){
-     
-     std::vector<std::string> * header_directories = &this->Data_Ptr->dependent_headers_dir;
-
-     std::vector<std::string> * header_names = &this->Data_Ptr->dependent_headers;
-
-     std::vector<std::string> paths;
-
-     size_t hdr_dir_size = header_directories->size();
-
-     for(size_t i=0;i<hdr_dir_size;i++){
-
-          std::string dir  = header_directories->at(i);
-
-          std::string hdr_name = header_names->at(i);
-          
-          std::string vpath;
-
-          this->VPATH_Determiner(vpath,hdr_name,dir);
-
-          bool is_exist = this->Check_String_Existance(paths,vpath);
-
-          if(!is_exist){
-
-              this->FileManager.WriteToFile(vpath);
-
-              this->FileManager.WriteToFile("\n");   
-
-              paths.push_back(vpath);
-          }
-     }
-
-     this->Clear_String_Vector(paths);
-}
-
-
-
-
-void Make_File_Builder::Determine_Upper_VPATH_Directories(){
-
-     size_t dir_num = this->Data_Ptr->upper_directories.size();
-
-     std::vector<std::string> dir_list;
-
-     int index=0;
-
-     for(size_t i=0;i<dir_num;i++){
-
-         std::string dir = this->Data_Ptr->upper_directories.at(i);
-      
-         bool is_exist = this->Check_String_Existance(dir_list,dir);
-
-         if(!is_exist){
-
-            std::string upper_dir_vpath, updir_vpath_alias;
-
-            this->Upper_Directory_VPATH_Determiner(upper_dir_vpath,dir,index);
-
-            this->Upper_Directory_VPATH_Alias_Determiner(updir_vpath_alias,index);
-
-            index++;
-
-            this->upper_directory_vpaths.push_back(upper_dir_vpath);
-
-            this->upper_dir_vpaths_alias.push_back(updir_vpath_alias);
-
-            dir_list.push_back(dir);
-         }
-     }
-
-     this->upper_directory_vpaths.shrink_to_fit();
-
-     this->upper_dir_vpaths_alias.shrink_to_fit();
-
-     this->Clear_String_Vector(dir_list);
-}
-
-
-
-
-void Make_File_Builder::Upper_Directory_VPATH_Determiner(std::string & upper_dir_vpath, 
-
-     std::string dir, int index){
-
-     std::string vpath_ext = "_Path=";
-
-     std::string upper_dir_key = "UP_DR_";
-
-     for(size_t i=0;i<upper_dir_key.length();i++){
-
-         upper_dir_vpath.push_back(upper_dir_key[i]);
-     }
-
-     std::string str_int = std::to_string(index);
-
-     for(size_t i=0;i<str_int.length();i++){
-
-         upper_dir_vpath.push_back(str_int[i]);
-     }
-
-     for(size_t i=0;i<vpath_ext.length();i++){
-
-         upper_dir_vpath.push_back(vpath_ext[i]);
-     }
-
-     for(size_t i=0;i<dir.length();i++){
-
-         upper_dir_vpath.push_back(dir[i]);
+         this->FileManager.WriteToFile("\n");   
      }
 }
 
 
 
-void Make_File_Builder::Upper_Directory_VPATH_Alias_Determiner(std::string & alias, int index){
-     
-     std::string alias_start = "$(UP_DR_";
+void Make_File_Builder::Write_Header_VPaths_Alias(){
 
-     std::string alias_end   = "_Path)";
-     
-     for(size_t i=0;i<alias_start.length();i++){
+     std::vector<std::string> * hdr_vpath_alias = 
 
-         alias.push_back(alias_start.at(i));
+     this->Path_Determiner.Get_Header_Vpath_Alias();
+
+     for(size_t i=0;i<hdr_vpath_alias->size();i++){
+
+         this->FileManager.WriteToFile(hdr_vpath_alias->at(i));
      }
-
-     std::string str_int = std::to_string(index);
-
-     for(size_t i=0;i<str_int.length();i++){
-
-         alias.push_back(str_int[i]);
-     }
-
-     for(size_t i=0;i<alias_end.length();i++){
-
-         alias.push_back(alias_end.at(i));
-     }
-
-     alias.shrink_to_fit();
 }
 
 
+ void Make_File_Builder::Write_Upper_Dir_VPaths_Alias(){
 
-void Make_File_Builder::Determine_MakeFile_Path(std::string & make_file_path, 
+      std::vector<std::string> * up_dir_alias = 
 
-     std::string make_file_name){
+      this->Path_Determiner.Get_Upper_Directory_Vpaths_Alias();
 
-     std::string git_record_dir = this->Data_Ptr->src_git_record_dir;
+      for(size_t i=0;i<up_dir_alias->size();i++){
 
-     std::string warehouse_location = this->Des_Reader->Get_Warehouse_Location();
-
-     std::string warehouse_word = "WAREHOUSE";
-     
-     std::string make_file_dir_name = "MAKE.FILES";
-
-
-     size_t warehouse_dir_size  = warehouse_location.length();
-
-     for(size_t i=0;i<warehouse_dir_size;i++){
-
-         make_file_path.push_back(warehouse_location[i]);
+          this->FileManager.WriteToFile(up_dir_alias->at(i));
      }
+ }
 
-     if(this->opr_sis == 'w'){
 
-        if(make_file_path.back()!= '\\'){
 
-           make_file_path.push_back('\\');
-        }
-     }
 
-     if(this->opr_sis == 'l'){
-
-        if(make_file_path.back()!= '/'){
-
-           make_file_path.push_back('/');
-        }
-     }
-
-
-     size_t warehouse_word_size = warehouse_word.length();
-
-     for(size_t i=0;i<warehouse_word_size;i++){
-
-         make_file_path.push_back(warehouse_word[i]);
-     }
-
-     if(this->opr_sis == 'w'){
-
-        if(make_file_path.back()!= '\\'){
-
-           make_file_path.push_back('\\');
-        }
-     }
-
-     if(this->opr_sis == 'l'){
-
-        if(make_file_path.back()!= '/'){
-
-           make_file_path.push_back('/');
-        }
-     }
-
-     
-     size_t make_dir_size = make_file_dir_name.length();
-
-     for(size_t i=0;i<make_dir_size;i++){
-
-         make_file_path.push_back(make_file_dir_name[i]);
-     }
-
-     if(this->opr_sis == 'w'){
-
-        if(make_file_path.back()!= '\\'){
-
-           make_file_path.push_back('\\');
-        }
-     }
-
-     if(this->opr_sis == 'l'){
-
-        if(make_file_path.back()!= '/'){
-
-           make_file_path.push_back('/');
-        }
-     }
-
-
-     size_t git_dir_size = git_record_dir.length();
-
-     for(size_t i=0;i<git_dir_size;i++){
-
-         make_file_path.push_back(git_record_dir[i]);
-     }
-
-     if(this->opr_sis == 'w'){
-
-        if(make_file_path.back()!= '\\'){
-
-           make_file_path.push_back('\\');
-        }
-     }
-
-     if(this->opr_sis == 'l'){
-
-        if(make_file_path.back()!= '/'){
-
-           make_file_path.push_back('/');
-        }
-     }
-
-
-     size_t name_size = make_file_name.length();
-
-     for(size_t i=0;i<name_size;i++){
-
-         make_file_path.push_back(make_file_name[i]);
-     }
-
-     make_file_path.shrink_to_fit();
-}
-
-
-
-
-void Make_File_Builder::Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path){
-
-     std::string root_dir = this->Des_Reader->Get_Repo_Directory_Location();
-
-     size_t path_size = sys_path.length();
-
-     size_t end_point = path_size;
-
-     size_t start_point = root_dir.length()+1;
-
-     for(size_t i=path_size;i>0;i--){
-
-         if(this->opr_sis == 'w'){
-
-            if(sys_path[i]== '\\'){
-
-               break;
-          
-            }
-            else{
-
-                  end_point--;
-            }
-         }
-
-
-         if(this->opr_sis == 'l'){
-
-            if(sys_path[i]== '/'){
-
-               break;
-            }
-            else{
-
-                  end_point--;
-            }
-         }
-     }
-
-     git_dir.clear();
-
-
-     for(size_t i=start_point;i<end_point;i++){
-
-         git_dir.push_back(sys_path[i]);
-     }
-
-     git_dir.shrink_to_fit();
-}
-
-
- void Make_File_Builder::Clear_String_Vector(std::vector<std::string> & str){
+void Make_File_Builder::Clear_String_Vector(std::vector<std::string> & str){
 
      str.shrink_to_fit();
 

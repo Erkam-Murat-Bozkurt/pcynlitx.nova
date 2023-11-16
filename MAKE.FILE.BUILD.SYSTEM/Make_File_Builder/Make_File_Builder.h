@@ -15,6 +15,7 @@
 #include <map>
 #include <unordered_map>
 #include <iterator>
+#include "MakeFile_Path_Determiner.hpp"
 #include "MakeFile_Data_Collector.hpp"
 #include "Source_File_Dependency_Determiner.hpp"
 #include "Source_File_Dependency_Selector.hpp"
@@ -39,25 +40,16 @@ public:
  void Clear_Object_Memory();
 private:
  Compiler_Data * Find_Compiler_Data_From_Source_File_Path(std::string name);
- void Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path);
- void Write_Header_Paths_Shorts_Cuts();
- void Determine_MakeFile_Path(std::string & make_file_path, 
-      std::string make_file_name);
- void VPATH_Determiner(std::string & path, std::string hdr_name, std::string dir);
- void VPATH_Alias_Determiner(std::string & path, std::string hdr_name);
- void Upper_Directory_VPATH_Determiner(std::string & upper_dir_vpath, std::string dir, int index);
- void Upper_Directory_VPATH_Alias_Determiner(std::string & upper_dir_vpath_alias, int index);
- bool Check_String_Existance(std::vector<std::string> & list, std::string str);
- void Determine_Upper_VPATH_Directories();
+ void Write_Header_VPaths();
+ void Write_Upper_Directory_VPaths();
+ void Write_Header_VPaths_Alias();
+ void Write_Upper_Dir_VPaths_Alias();
  void Clear_String_Vector(std::vector<std::string> & str); 
  void Clear_String_Memory(std::string & pointer);
- MakeFile_Data_Collector Data_Collector;
+ MakeFile_Path_Determiner Path_Determiner;
  Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;
- DirectoryOperations DirectoryManager;
  IntToCharTranslater Translater;
- std::vector<std::string> upper_directory_vpaths;
- std::vector<std::string> upper_dir_vpaths_alias;
  std::unordered_map<std::string, Compiler_Data> * DataMap_Pointer;
  std::vector<Compiler_Data> * Comp_Data_Ptr;
  Compiler_Data * Data_Ptr;
