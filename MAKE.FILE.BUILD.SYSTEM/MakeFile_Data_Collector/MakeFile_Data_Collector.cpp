@@ -80,11 +80,16 @@ void MakeFile_Data_Collector::Receive_Compiler_Data_Pointer(Compiler_Data * ptr)
 }
 
 
+void MakeFile_Data_Collector::Receive_Determined_Upper_Directories(std::vector<std::string> * ptr){
+
+     this->Determined_Upper_Directories = ptr;
+}
+
+
+
 void MakeFile_Data_Collector::Collect_Make_File_Data(std::string fileName){
 
      this->Clear_Dynamic_Memory();
-
-     //this->Determine_Warehouse_Header_Dir();
 
      this->Determine_Warehouse_Object_Dir();
 
@@ -278,6 +283,7 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
          this->Place_String(&this->Compiler_System_Command,go_to_new_line);
      }
 
+
      this->Place_String(&this->Compiler_System_Command,Include_Character);
 
      this->Place_String(&this->Compiler_System_Command,Source_Location);
@@ -343,12 +349,34 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
           dir_buffer.push_back(dir);
      }
 
+ 
+     size_t up_directories_num = this->Determined_Upper_Directories->size();
+
+     for(size_t i=0;i<up_directories_num;i++){
+
+         std::string dir = this->Determined_Upper_Directories->at(i);
+
+         bool is_dir_exist = this->Check_String_Existance(dir_buffer,dir);
+
+          if(!is_dir_exist){
+
+             this->Place_String(&this->Compiler_System_Command,Include_Character);
+
+             this->Place_String(&this->Compiler_System_Command,dir);
+
+             this->Place_String(&this->Compiler_System_Command,Space_Character);
+
+             this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+          }
+
+          dir_buffer.push_back(dir);
+     }
+
+
      dir_buffer.shrink_to_fit();
 
-     this->Clear_Vector_Memory(dir_buffer);   
-
-
-
+     this->Clear_Vector_Memory(dir_buffer);  
+     
 
 
      this->Place_String(&this->Compiler_System_Command,Source_Location);

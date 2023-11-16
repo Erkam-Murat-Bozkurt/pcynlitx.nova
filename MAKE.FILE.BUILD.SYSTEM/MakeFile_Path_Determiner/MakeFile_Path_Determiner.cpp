@@ -59,9 +59,13 @@ void MakeFile_Path_Determiner::Clear_Dynamic_Memory(){
 
          this->Clear_String_Vector(this->headers_vpaths);
 
+         this->Clear_String_Vector(this->new_upper_directories);
+
          this->Clear_String_Memory(this->source_file_git_record_dir);
 
          this->Clear_String_Memory(this->make_file_path);
+
+         this->Clear_String_Memory(this->make_file_name);
      }
 }
 
@@ -97,36 +101,17 @@ void MakeFile_Path_Determiner::Receive_DataMap(std::unordered_map<std::string, C
 
 void MakeFile_Path_Determiner::Determine_MakeFile_Data(std::string file_path){
 
+     this->Clear_Dynamic_Memory();
+
      this->Memory_Delete_Condition = false;
-
-     this->Clear_String_Vector(this->upper_dir_vpaths_alias);
-
-     this->Clear_String_Vector(this->upper_directory_vpaths);
-
-     this->Clear_String_Vector(this->headers_vpath_alias);
-
-     this->Clear_String_Vector(this->headers_vpaths);
-
-     this->Data_Collector.Clear_Dynamic_Memory();
 
      this->Data_Ptr = this->Find_Compiler_Data_From_Source_File_Path(file_path);
 
-     this->Data_Collector.Receive_Compiler_Data_Pointer(this->Data_Ptr);
-
-     std::string Source_File_Name = this->Data_Ptr->source_file_name;
-
-
-     this->Data_Collector.Collect_Make_File_Data(Source_File_Name);
-
-     std::string Source_File_Directory = this->Data_Collector.Get_Source_File_System_Directory();
-
-     std::string Make_File_Name = this->Data_Collector.Get_Make_File_Name();
-     
-
+     this->Determine_Make_File_Name();
 
      this->Clear_String_Memory(this->make_file_path);
 
-     this->Determine_MakeFile_Path(this->make_file_path,Make_File_Name);
+     this->Determine_MakeFile_Path(this->make_file_path,this->make_file_name);
 
      std::string sys_path = this->Data_Ptr->source_file_path;
 
@@ -141,7 +126,15 @@ void MakeFile_Path_Determiner::Determine_MakeFile_Data(std::string file_path){
      this->Determine_Upper_VPATH_Directories();
 
      this->Determine_Header_Vpaths();
-  
+
+
+     std::string Source_File_Name = this->Data_Ptr->source_file_name;
+
+     this->Data_Collector.Receive_Compiler_Data_Pointer(this->Data_Ptr);
+
+     this->Data_Collector.Receive_Determined_Upper_Directories(this->Get_Determined_Upper_Directories());
+
+     this->Data_Collector.Collect_Make_File_Data(Source_File_Name);
 }
 
 
@@ -162,6 +155,31 @@ Compiler_Data * MakeFile_Path_Determiner::Find_Compiler_Data_From_Source_File_Pa
          exit(EXIT_FAILURE);
     }     
 }
+
+
+void MakeFile_Path_Determiner::Determine_Make_File_Name(){
+
+     std::string make_file_extention = ".make";
+
+     std::string Source_File_Name = this->Data_Ptr->source_file_name_witout_ext;
+
+     size_t src_name_size = Source_File_Name.length();
+
+     size_t extention_size = make_file_extention.length();
+
+     for(size_t i=0;i<src_name_size;i++){
+
+         this->make_file_name.push_back(Source_File_Name[i]);         
+     }
+
+     for(size_t i=0;i<extention_size;i++){
+
+         this->make_file_name.push_back(make_file_extention[i]);         
+     }
+
+     this->make_file_name.shrink_to_fit();
+}
+
 
 
 void MakeFile_Path_Determiner::Determine_Header_Vpaths(){
@@ -351,6 +369,8 @@ void MakeFile_Path_Determiner::Determine_Upper_VPATH_Directories(){
 
             this->upper_dir_vpaths_alias.push_back(updir_vpath_alias);
 
+            this->new_upper_directories.push_back(dir);
+
             dir_list.push_back(dir);
          }
      }
@@ -358,6 +378,8 @@ void MakeFile_Path_Determiner::Determine_Upper_VPATH_Directories(){
      this->upper_directory_vpaths.shrink_to_fit();
 
      this->upper_dir_vpaths_alias.shrink_to_fit();
+
+     this->new_upper_directories.shrink_to_fit();
 
      this->Clear_String_Vector(dir_list);
 }
@@ -775,6 +797,12 @@ std::vector<std::string> * MakeFile_Path_Determiner::Get_Upper_Directory_Vpaths(
 std::vector<std::string> * MakeFile_Path_Determiner::Get_Upper_Directory_Vpaths_Alias(){
 
     return &this->upper_dir_vpaths_alias;
+}
+
+
+std::vector<std::string> * MakeFile_Path_Determiner::Get_Determined_Upper_Directories(){
+
+    return &this->new_upper_directories;
 }
 
 

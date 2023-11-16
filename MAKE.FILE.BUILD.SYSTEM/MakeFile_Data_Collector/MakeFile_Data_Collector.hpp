@@ -33,6 +33,7 @@ public:
  void Receive_Git_Record_Data(std::string file_name);
  void Receive_Compiler_Data_Pointer(Compiler_Data * ptr); 
  void Receive_Operating_System(char opr_sis);
+ void Receive_Determined_Upper_Directories(std::vector<std::string> * ptr);
  std::string Get_Source_File_Name();
  std::string Get_Source_File_System_Directory();
  std::string Get_Make_File_Name();
@@ -65,6 +66,8 @@ private:
  IntToCharTranslater Translater;
  Descriptor_File_Reader * Des_Reader;
  Compiler_Data * Compiler_Data_Ptr;
+
+ std::vector<std::string> * Determined_Upper_Directories;
  std::string repo_dir;
  std::string warehouse_obj_dir;
  std::string warehouse_path;

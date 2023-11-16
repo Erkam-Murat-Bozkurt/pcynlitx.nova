@@ -46,6 +46,7 @@ public:
  std::vector<std::string> * Get_Header_Vpath_Alias();
  std::vector<std::string> * Get_Upper_Directory_Vpaths();
  std::vector<std::string> * Get_Upper_Directory_Vpaths_Alias();
+ std::vector<std::string> * Get_Determined_Upper_Directories();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 private:
@@ -53,6 +54,7 @@ private:
  void Determine_Dependent_Headers_Vpath_Alias();
  void Determine_Git_Record_Directory(std::string & git_dir, std::string sys_path);
  void Determine_Header_Vpaths();
+ void Determine_Make_File_Name();
  void Determine_MakeFile_Path(std::string & make_file_path, 
       std::string make_file_name);
  void VPATH_Determiner(std::string & path, std::string hdr_name, std::string dir);
@@ -72,11 +74,13 @@ private:
  std::vector<std::string> headers_vpath_alias;
  std::vector<std::string> upper_directory_vpaths;
  std::vector<std::string> upper_dir_vpaths_alias;
+ std::vector<std::string> new_upper_directories;
  std::unordered_map<std::string, Compiler_Data> * DataMap_Pointer;
  std::vector<Compiler_Data> * Comp_Data_Ptr;
  Compiler_Data * Data_Ptr;
  std::string source_file_git_record_dir;
  std::string make_file_path;
+ std::string make_file_name;
  char opr_sis;
  bool Include_Line_Condition;
  bool Memory_Delete_Condition;
