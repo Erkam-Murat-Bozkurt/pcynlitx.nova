@@ -92,7 +92,7 @@ void Auto_MakeFile_Builder::Perform_MakeFile_Construction(){
 
      size_t data_size = this->Compiler_Data_Pointer->size();
 
-     if(data_size>20){
+     if(data_size>50){
 
         size_t str=0, end=0;
 

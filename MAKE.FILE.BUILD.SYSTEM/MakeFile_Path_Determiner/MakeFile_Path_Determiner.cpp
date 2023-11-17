@@ -283,7 +283,7 @@ void MakeFile_Path_Determiner::VPATH_Alias_Determiner(std::string & path_alias, 
 
      std::string open_parantes = "$(";
 
-     std::string path_subfix = "_PATH";
+     std::string path_subfix = "_Path";
      
      for(size_t i=0;i<open_parantes.length();i++){
 

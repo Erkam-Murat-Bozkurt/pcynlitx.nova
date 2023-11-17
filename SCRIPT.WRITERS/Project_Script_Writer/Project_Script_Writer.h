@@ -8,6 +8,8 @@
 #include <cstdio>
 #include <iostream>
 #include <string>
+#include <thread>
+#include <mutex>
 #include "Descriptor_File_Reader.hpp"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
@@ -31,8 +33,8 @@ public:
  void Build_Update_Script();
  void Clear_Dynamic_Memory();
 protected:
- void Write_Source_File_Scripts();
- void Write_The_Project_Script();
+ void Write_Sub_Project_Scripts();
+ void Write_Source_File_Scripts(size_t start, size_t end);
  void Write_Project_Build_Script();
  void Determine_Project_Script_Path();
  void Construct_Path(std::string & path, std::string str, std::string wp);
@@ -40,14 +42,13 @@ protected:
       std::string string, char opr_sis);
  void Determine_Object_Files_Location(char opr_sis);
  void Clear_String_Memory(std::string & pointer);
- void Determine_Compiler_Output_Path(std::string class_name);
  void Determine_Compiler_Output_File_Name(std::string & name, std::string class_name);
  void Determine_MakeFile_Directory(std::string & mkf_dir, std::string git_record_dir);
  void Determine_MakeFiles_Root_Directory();
  int  Determine_Decimal_Space(int total_src_num, int current_number);
+ size_t Split_Range(size_t range_size, size_t partition, size_t & remaining_job);
  Descriptor_File_Reader * Des_Reader;
  Script_Data_Processor Src_Data_Processor;
- Source_File_Script_Writer Src_Script_Writer;
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
  IntToCharTranslater Translater;
@@ -59,6 +60,7 @@ protected:
  std::string warehouse_path;
  bool is_script_path_setted;
  int source_file_num;
+ std::vector<std::thread> threadPool;
  std::vector<Script_Data> * Data_Pointer;
  char opr_sis;
  bool Memory_Delete_Condition;

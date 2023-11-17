@@ -4,9 +4,8 @@
 
 Project_Script_Writer::Project_Script_Writer(char opr_sis) :
 
-    Src_Data_Processor(opr_sis), Src_Script_Writer(opr_sis)
+    Src_Data_Processor(opr_sis)
 {
-
      this->Memory_Delete_Condition = true;
 
      this->is_script_path_setted = true;
@@ -46,8 +45,6 @@ void Project_Script_Writer::Build_Compiler_Script(){
 
      this->Src_Data_Processor.Process_Script_Data();
 
-     this->Src_Script_Writer.Receive_Descriptor_File_Reader(this->Des_Reader);
-
      this->Data_Pointer = this->Src_Data_Processor.Get_Script_Data_Address();
 
      this->source_file_num = this->Src_Data_Processor.Get_Source_File_Number();
@@ -60,12 +57,100 @@ void Project_Script_Writer::Build_Compiler_Script(){
 
      this->Determine_Project_Script_Path();
 
-     this->Write_Source_File_Scripts();
-
-     //this->Write_The_Project_Script();
+     this->Write_Sub_Project_Scripts();
 
      this->Write_Project_Build_Script();
 }
+
+
+void Project_Script_Writer::Write_Sub_Project_Scripts(){
+
+     if(this->source_file_num >50){
+
+        size_t str=0, end=0;
+
+        size_t thread_num = this->source_file_num /50;
+
+        if(thread_num > 200){
+
+           thread_num = 200;
+        }
+
+        size_t remaining_job = 0;
+
+        size_t range =this->Split_Range(this->source_file_num,thread_num,remaining_job);
+
+
+        for(int i=0;i<thread_num;i++){
+
+            if(i==0){
+
+              str = 0;
+
+              end = range;
+            }
+            else{
+
+                 str  = end;
+
+                 end  = end + range;
+
+                 if(remaining_job > 0){
+
+                    end = end+1;
+
+                    remaining_job--;
+                 }
+            }
+
+           if(i==(thread_num-1)){
+            
+               end = this->source_file_num;
+           }
+
+           this->threadPool.push_back(std::thread(Project_Script_Writer::Write_Source_File_Scripts,this,str,end));
+        }
+    
+        for(size_t i=0;i<thread_num;i++){
+            
+            this->threadPool[i].join();
+        }
+
+        if(!this->threadPool.empty()){
+
+            this->threadPool.clear();
+
+            this->threadPool.shrink_to_fit();
+        }
+    }
+    else{
+
+        this->Write_Source_File_Scripts(0,this->source_file_num);
+    }     
+}
+
+
+
+
+size_t Project_Script_Writer::Split_Range(size_t range_size, size_t partition, size_t & remaining_job){
+
+    if(range_size ==0){
+
+        range_size = 1;
+    }
+
+    int range  = range_size/partition; 
+
+    if(range<1){
+
+        range = 1;
+    }
+
+    remaining_job = range_size%partition;
+
+    return range;    
+}
+
 
 
 void Project_Script_Writer::Build_Update_Script(){
@@ -75,8 +160,6 @@ void Project_Script_Writer::Build_Update_Script(){
      this->Determine_Object_Files_Location('w');
      
      this->Src_Data_Processor.Process_Script_Data();
-
-     this->Src_Script_Writer.Receive_Descriptor_File_Reader(this->Des_Reader);
 
      this->Data_Pointer = this->Src_Data_Processor.Get_Script_Data_Address();
 
@@ -115,610 +198,24 @@ void Project_Script_Writer::Set_Script_Path(std::string dir, std::string file_na
 
 
 
-void Project_Script_Writer::Write_Source_File_Scripts(){
+void Project_Script_Writer::Write_Source_File_Scripts(size_t start, size_t end){
 
-     for(int i=0;i<this->source_file_num;i++){
+     Source_File_Script_Writer Src_Script_Writer;
 
-        std::string src_dir = this->Data_Pointer->at(i).source_file_dir;
+     Src_Script_Writer.Receive_Operating_System(this->opr_sis);
 
-        this->DirectoryManager.ChangeDirectory(src_dir);
+     Src_Script_Writer.Receive_Descriptor_File_Reader(this->Des_Reader);
 
-        this->Src_Script_Writer.Clear_Dynamic_Memory();
-         
-        this->Src_Script_Writer.Receive_Script_Data(&this->Data_Pointer->at(i));
+     for(int i=start;i<end;i++){
 
-        this->Src_Script_Writer.Write_Source_File_Script('w');
-     }
-}
+        Src_Script_Writer.Receive_Script_Data(&this->Data_Pointer->at(i));
 
+        Src_Script_Writer.Write_Source_File_Script('w');
 
-
-void Project_Script_Writer::Write_The_Project_Script(){
-
-
-     std::string Repo_Rood_Dir = this->Des_Reader->Get_Repo_Directory_Location();
-
-     this->FileManager.SetFilePath(this->script_path);
-
-     this->FileManager.FileOpen(RWCf);
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n$Project_Objects_Location=\"");
-
-     this->FileManager.WriteToFile(this->object_files_location);
-
-     this->FileManager.WriteToFile("\"");
-
-     this->FileManager.WriteToFile("\n");
-     this->FileManager.WriteToFile("\n");
-     this->FileManager.WriteToFile("\n");
-
-
-     this->FileManager.WriteToFile("# MakeFiles_Location is the root directory of make files ");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n$MakeFiles_Location=\"");
-
-     this->FileManager.WriteToFile(this->MakeFiles_Root_Directory);
-
-     this->FileManager.WriteToFile("\"");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-     this->FileManager.WriteToFile("\n\n");
-
-     this->FileManager.WriteToFile("Write-Output \" THE OBJECT FILE CONSTRUCTION ( RE-CONSTRUCTION ) PROCESS STARTED\"");
-
-     this->FileManager.WriteToFile("\n\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-     this->FileManager.WriteToFile("\n\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-     this->FileManager.WriteToFile("\n\n");
-
-
-     this->FileManager.WriteToFile("Write-Output \" Total number of the source file: ");
-
-     this->FileManager.WriteToFile(this->Translater.Translate(this->source_file_num));
-
-     this->FileManager.WriteToFile("\"");
-
-
-     this->FileManager.WriteToFile("\n\n");
-
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-     this->FileManager.WriteToFile("\n\n");
-
-
-
-     char cd_word [] = "Set-Location ";
-
-
-     for(int i=0;i<this->source_file_num;i++){
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n\n");
-
-         this->FileManager.WriteToFile("# Dependency: ");
-
-         std::string dep = std::to_string(this->Data_Pointer->at(i).dependency);
-
-         this->FileManager.WriteToFile(dep);
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile(cd_word);
-
-         this->FileManager.WriteToFile(" ");
-         
-         this->FileManager.WriteToFile("$MakeFiles_Location");
-
-         if(this->opr_sis == 'w'){
-
-            this->FileManager.WriteToFile("\\");
-         }
-
-         if(this->opr_sis == 'l'){
-
-            this->FileManager.WriteToFile("/");
-         }
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
-
-
-
-         this->FileManager.WriteToFile("\n");
-         
-         this->FileManager.WriteToFile("\n");
-
-
-         this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
-
-         this->FileManager.WriteToFile("$MakeFiles_Location");
-
-
-         if(this->opr_sis == 'w'){
-
-            this->FileManager.WriteToFile("\\");
-         }
-
-         if(this->opr_sis == 'l'){
-
-            this->FileManager.WriteToFile("/");
-         }
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
-
-
-         if(this->opr_sis == 'w'){
-
-            this->FileManager.WriteToFile("\\");
-         }
-
-         if(this->opr_sis == 'l'){
-
-            this->FileManager.WriteToFile("/");
-         }
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
-
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("if($Condition){");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   Remove-Item ");
-
-         this->FileManager.WriteToFile("$MakeFiles_Location");
-
-
-         if(this->opr_sis == 'w'){
-
-            this->FileManager.WriteToFile("\\");
-         }
-
-         if(this->opr_sis == 'l'){
-
-            this->FileManager.WriteToFile("/");
-         }
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
-
-
-         if(this->opr_sis == 'w'){
-
-            this->FileManager.WriteToFile("\\");
-         }
-
-         if(this->opr_sis == 'l'){
-
-            this->FileManager.WriteToFile("/");
-         }
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("}");
-
-
-
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("mingw32-make -f ");
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).make_file_name);
-         
-         this->FileManager.WriteToFile(" 2>&1 > ");
-
-         this->FileManager.WriteToFile("$MakeFiles_Location");
-
-         if(this->opr_sis == 'w'){
-
-            this->FileManager.WriteToFile("\\");
-         }
-
-         if(this->opr_sis == 'l'){
-
-            this->FileManager.WriteToFile("/");
-         }
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
-
-         if(this->opr_sis == 'w'){
-
-            this->FileManager.WriteToFile("\\");
-         }
-
-         if(this->opr_sis == 'l'){
-
-            this->FileManager.WriteToFile("/");
-         }
-
-
-         std::string output_file_name;
-
-         this->Determine_Compiler_Output_File_Name(output_file_name,this->Data_Pointer->at(i).src_name_without_ext);
-
-         this->FileManager.WriteToFile(output_file_name);
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-
-
-         this->FileManager.WriteToFile("if($LASTEXITCODE -ne 0){");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   Write-Output \"# Compiler fails on ");
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
-
-         this->FileManager.WriteToFile(" creation!\"");
-
-         this->FileManager.WriteToFile("\n\n");
-
-         this->FileManager.WriteToFile("   Write-Output \"\"");
-
-         this->FileManager.WriteToFile("\n\n");
-
-         this->FileManager.WriteToFile("   Write-Output \"\"");
-
-         this->FileManager.WriteToFile("\n\n");
-
-         this->FileManager.WriteToFile("   exit");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("}");
-
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("$Condition = Test-Path -Path ");
-
-
-         this->FileManager.WriteToFile("$MakeFiles_Location");
-
-         if(this->opr_sis == 'w'){
-
-            this->FileManager.WriteToFile("\\");
-         }
-
-         if(this->opr_sis == 'l'){
-
-            this->FileManager.WriteToFile("/");
-         }
-
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
-
-         if(this->opr_sis == 'w'){
-
-            this->FileManager.WriteToFile("\\");
-         }
-
-         if(this->opr_sis == 'l'){
-
-            this->FileManager.WriteToFile("/");
-         }
-
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
-
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("if ($Condition){");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   $Exists_On_Obj_Dir = Test-Path -Path ");
-
-         this->FileManager.WriteToFile("$Project_Objects_Location");
-
-         if(this->opr_sis == 'w'){
-
-            this->FileManager.WriteToFile("\\");
-         }
-
-         if(this->opr_sis == 'l'){
-
-            this->FileManager.WriteToFile("/");
-         }
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   if($Exists_On_Obj_Dir){");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("      Remove-Item ");
-
-         this->FileManager.WriteToFile("$Project_Objects_Location");
-
-
-         if(this->opr_sis == 'w'){
-
-            this->FileManager.WriteToFile("\\");
-         }
-
-         if(this->opr_sis == 'l'){
-
-            this->FileManager.WriteToFile("/");
-         }
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   }");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("   Move-Item -Path ");
-
-
-         this->FileManager.WriteToFile("$MakeFiles_Location");
-
-         if(this->opr_sis == 'w'){
-
-            this->FileManager.WriteToFile("\\");
-         }
-
-         if(this->opr_sis == 'l'){
-
-            this->FileManager.WriteToFile("/");
-         }
-
-
-      
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_git_record_dir);
-
-
-         if(this->opr_sis == 'w'){
-
-            this->FileManager.WriteToFile("\\");
-         }
-
-         if(this->opr_sis == 'l'){
-
-            this->FileManager.WriteToFile("/");
-         }
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).object_file_name);
-
-         this->FileManager.WriteToFile(" -Destination $Project_Objects_Location");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("}");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-
-
-
-         this->FileManager.WriteToFile("Write-Host \"[ \" -NoNewline ");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-
-         int decimal_space =  this->Determine_Decimal_Space(this->source_file_num,i+1);
-
-
-         this->FileManager.WriteToFile("Write-Host \"");
-
-         for(int k=0;k<decimal_space;k++){
-
-             this->FileManager.WriteToFile(" ");
-
-         }
-
-
-         this->FileManager.WriteToFile("\" -NoNewline");
-
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-
-         this->FileManager.WriteToFile("Write-Host \"");
-
-
-         this->FileManager.WriteToFile(this->Translater.Translate(i+1));
-
-         this->FileManager.WriteToFile("\" -ForegroundColor Green -NoNewline");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-
-         this->FileManager.WriteToFile("Write-Host \"");
-
-
-         this->FileManager.WriteToFile(" / ");
-
-         this->FileManager.WriteToFile(this->Translater.Translate(this->source_file_num));
-
-         this->FileManager.WriteToFile("\" -ForegroundColor White -NoNewline");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("Write-Host \" ] Built for ");
-
-
-         this->FileManager.WriteToFile(this->Data_Pointer->at(i).source_file_name);
-
-
-         this->FileManager.WriteToFile(" complated\"");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("\n");
+        Src_Script_Writer.Clear_Dynamic_Memory();
      }
 
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-     this->FileManager.WriteToFile("\n\n");
-
-     this->FileManager.WriteToFile("Write-Output \"THE PROJECT OBJECT FILES CONSTRUCTED\"");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\nLibrary_Updater.exe ");
-
-     std::string des_path = this->Des_Reader->Get_Descriptor_File_Path();
-
-     this->FileManager.WriteToFile(des_path);
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("Write-Output \"THE PROJECT LIBRARY UPDATED\"");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("Write-Output \"\"");
-
-
-     this->FileManager.FileClose();
+     Src_Script_Writer.Clear_Object_Memory();
 }
 
 
@@ -743,7 +240,9 @@ void Project_Script_Writer::Write_Project_Build_Script(){
      this->FileManager.WriteToFile("\"");
 
      this->FileManager.WriteToFile("\n");
+
      this->FileManager.WriteToFile("\n");
+
      this->FileManager.WriteToFile("\n");
 
 
@@ -1052,7 +551,9 @@ void Project_Script_Writer::Clear_Dynamic_Memory(){
 int Project_Script_Writer::Determine_Decimal_Space(int total_src_num, int current_number){
      
     int decimal_power_for_total =0;
+
     int decimal_power_for_current = 0;
+
     int space = 0;
 
     int remainder = total_src_num/10;
@@ -1340,6 +841,7 @@ void Project_Script_Writer::Clear_String_Memory(std::string & str)
      if(!str.empty()){
 
          str.clear();
+
          str.shrink_to_fit();        
      }
 }

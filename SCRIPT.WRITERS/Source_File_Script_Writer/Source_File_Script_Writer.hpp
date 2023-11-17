@@ -14,16 +14,19 @@
 class Source_File_Script_Writer
 {
 public:
- Source_File_Script_Writer(char opr_sis);
+ Source_File_Script_Writer();
  virtual ~Source_File_Script_Writer();
+ void Receive_Operating_System(char opr_sis);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Pointer);
  void Receive_Script_Data(Script_Data * Pointer);
+ void Determine_Basic_Paths();
  void Write_Source_File_Script(char operating_sis);
  void Determine_Script_Path(char opr_sis);
  void Determine_Warehouse_Paths(char opr_sis);
  void Construct_Path(std::string & pointer,
       std::string string, char opr_sis);
  void Clear_Dynamic_Memory();
+ void Clear_Object_Memory();
  void Clear_String_Memory(std::string & pointer);
 protected:
  void Determine_Compiler_Output_Path(std::string class_name);

@@ -2,11 +2,9 @@
 
 #include "Source_File_Script_Writer.hpp"
 
-Source_File_Script_Writer::Source_File_Script_Writer(char opr_sis){
+Source_File_Script_Writer::Source_File_Script_Writer(){
 
      this->Memory_Delete_Condition = true;
-
-     this->opr_sis = opr_sis;
 }
 
 
@@ -20,23 +18,42 @@ Source_File_Script_Writer::~Source_File_Script_Writer(){
    }
 }
 
+
 void Source_File_Script_Writer::Clear_String_Memory(std::string & str)
 {
      if(!str.empty()){
 
          str.clear();
+
          str.shrink_to_fit();        
      }
+}
+
+
+void Source_File_Script_Writer::Clear_Object_Memory(){
+
+     this->Clear_String_Memory(this->warehouse_path);
+
+     this->Clear_String_Memory(this->Repo_Rood_Dir);
+
+     this->Clear_String_Memory(this->object_files_location);
+
+     this->Clear_String_Memory(this->MakeFiles_Root_Directory);
+
+     this->Clear_Dynamic_Memory();
 }
 
 void Source_File_Script_Writer::Clear_Dynamic_Memory(){
 
      this->Clear_String_Memory(this->script_path);
 
-     this->Clear_String_Memory(this->object_files_location);
+     this->Clear_String_Memory(this->compiler_output_location);
+}
 
-     this->Clear_String_Memory(this->MakeFiles_Root_Directory);
 
+void Source_File_Script_Writer::Receive_Operating_System(char opr_sis){
+
+    this->opr_sis = opr_sis;
 }
 
 
@@ -47,20 +64,30 @@ void Source_File_Script_Writer::Receive_Descriptor_File_Reader(Descriptor_File_R
      this->Repo_Rood_Dir = this->Des_Reader_Ptr->Get_Repo_Directory_Location();
 
      this->warehouse_path = this->Des_Reader_Ptr->Get_Warehouse_Location();
+
+     this->Determine_Basic_Paths();
 }
+
 
 void Source_File_Script_Writer::Receive_Script_Data(Script_Data * Pointer){
 
      this->Src_Data_Pointer = Pointer; 
 }
 
-void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
+ void Source_File_Script_Writer::Determine_Basic_Paths(){
 
-     this->Determine_MakeFiles_Root_Directory();
+      this->Determine_MakeFiles_Root_Directory();
+
+      this->Determine_Warehouse_Paths('w');
+ }
+
+
+
+void Source_File_Script_Writer::Write_Source_File_Script(char operating_sis){
 
      this->Determine_Script_Path('w');
 
-     this->Determine_Warehouse_Paths('w');
+     this->Determine_Compiler_Output_Path(this->Src_Data_Pointer->src_name_without_ext);
 
      this->FileManager.SetFilePath(this->script_path);
 
@@ -475,18 +502,13 @@ void Source_File_Script_Writer::Determine_Warehouse_Paths(char opr_sis){
 
      this->Clear_String_Memory(this->compiler_output_location);
 
-
-
      std::string object_files_location_add = "OBJECT.FILES";
 
      std::string compiler_output_location_add = "Compiler_Output.txt";
 
-
      this->Memory_Delete_Condition = false;
 
      this->Construct_Path(this->object_files_location,object_files_location_add,opr_sis);
-
-     this->Determine_Compiler_Output_Path(this->Src_Data_Pointer->src_name_without_ext);
 
 }
 
