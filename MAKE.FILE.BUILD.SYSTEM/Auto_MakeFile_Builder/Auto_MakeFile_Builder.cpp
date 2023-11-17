@@ -8,11 +8,6 @@ Auto_MakeFile_Builder::Auto_MakeFile_Builder(char * DesPath, char opr_sis)
 
      this->opr_sis = opr_sis;
 
-     for(int i=0;i<32;i++){
-
-         this->Mk_Builder[i].Receive_Operating_System(opr_sis);
-     }
-
      this->Mk_Dir_Constructor.Receive_Operating_System(opr_sis);
 }
 
@@ -32,14 +27,15 @@ void Auto_MakeFile_Builder::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         this->Clear_String_Memory(&this->repo_obj_dir);
+         this->Clear_String_Memory(this->repo_obj_dir);
+
+         this->Clear_String_Memory(this->Warehouse_Path);
+
+         this->Clear_String_Memory(this->Repo_Dir);
+
+         this->Mk_Dir_Constructor.Clear_Dynamic_Memory();
 
          this->DataMap.clear();
-
-         for(int i=0;i<32;i++){
-
-            this->Mk_Builder[i].Clear_Dynamic_Memory();
-         }
      }
 }
 
@@ -52,11 +48,6 @@ void Auto_MakeFile_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reade
 
      this->Repo_Dir = this->Des_Reader->Get_Repo_Directory_Location();
 
-     for(int i=0;i<32;i++){
-
-         this->Mk_Builder[i].Receive_Descriptor_File_Reader(ptr);      
-     }
-
      this->Mk_Dir_Constructor.Receive_Descriptor_File_Reader(ptr);
 }
 
@@ -66,11 +57,6 @@ void Auto_MakeFile_Builder::Receive_Source_File_Dependency_Determiner(Source_Fil
      * dep_ptr){
 
      this->Dep_Determiner = dep_ptr;
-
-     for(int i=0;i<32;i++){
-
-         this->Mk_Builder[i].Receive_Compiler_Data_Pointer(dep_ptr->Get_Compiler_Data_Address());      
-     }
 
      this->Mk_Dir_Constructor.Receive_Compiler_Data_Pointer(dep_ptr->Get_Compiler_Data_Address());
 }
@@ -106,36 +92,90 @@ void Auto_MakeFile_Builder::Perform_MakeFile_Construction(){
 
      size_t data_size = this->Compiler_Data_Pointer->size();
 
-     if(data_size>32){
+     if(data_size>20){
 
-       int division = data_size/32;
+        size_t str=0, end=0;
 
-       for(int i=0;i<32;i++){
+        size_t thread_num = data_size/50;
 
-           int str  = i*division;
+        if(thread_num > 200){
 
-           int end  = (i+1)*division;
+           thread_num = 200;
+        }
 
-           if(i==31){
+        size_t remaining_job = 0;
+
+        size_t range =this->Split_Range(data_size,thread_num,remaining_job);
+
+
+        for(int i=0;i<thread_num;i++){
+
+            if(i==0){
+
+              str = 0;
+
+              end = range;
+            }
+            else{
+
+                 str  = end;
+
+                 end  = end + range;
+
+                 if(remaining_job > 0){
+
+                    end = end+1;
+
+                    remaining_job--;
+                 }
+            }
+
+           if(i==(thread_num-1)){
             
                end = data_size;
            }
 
-           this->threads[i] 
-                
-                = std::thread(Auto_MakeFile_Builder::Write_MakeFiles,this,i,str,end);     
-       }
+           this->threadPool.push_back(std::thread(Auto_MakeFile_Builder::Write_MakeFiles,this,i,str,end));
+        }
     
-       for(int i=0;i<32;i++){
-     
-          this->threads[i].join();
-       }
-     }
-     else{
+        for(size_t i=0;i<thread_num;i++){
+            
+            this->threadPool[i].join();
+        }
 
-          this->Write_MakeFiles(0,0,data_size);
-     }
+        if(!this->threadPool.empty()){
+
+            this->threadPool.clear();
+
+            this->threadPool.shrink_to_fit();
+        }
+    }
+    else{
+
+        this->Write_MakeFiles(0,0,data_size);
+    }
 }
+
+
+size_t Auto_MakeFile_Builder::Split_Range(size_t range_size, size_t partition, size_t & remaining_job){
+
+    if(range_size ==0){
+
+        range_size = 1;
+    }
+
+    int range  = range_size/partition; 
+
+    if(range<1){
+
+        range = 1;
+    }
+
+    remaining_job = range_size%partition;
+
+    return range;    
+}
+
 
 
 void Auto_MakeFile_Builder::Perform_Data_Map_Construction(){
@@ -148,32 +188,28 @@ void Auto_MakeFile_Builder::Perform_Data_Map_Construction(){
 
          this->DataMap.insert(std::make_pair(source_file_path,this->Compiler_Data_Pointer->at(i)));
      }
-
-     for(size_t i=0;i<32;i++){
-
-         this->Mk_Builder[i].Receive_DataMap(&this->DataMap);
-     }
 }
 
 
 void Auto_MakeFile_Builder::Write_MakeFiles(int thr_num, int start, int end){
 
-     std::unique_lock<std::mutex> mt(this->mtx);
-     
-     mt.unlock();
+     Make_File_Builder Mk_Builder;
 
+     Mk_Builder.Receive_Compiler_Data_Pointer(this->Dep_Determiner->Get_Compiler_Data_Address());
+
+     Mk_Builder.Receive_Operating_System(this->opr_sis);
+
+     Mk_Builder.Receive_DataMap(&this->DataMap);
+
+     Mk_Builder.Receive_Descriptor_File_Reader(this->Des_Reader);
 
      for(size_t i=start;i<end;i++){
 
          std::string source_file_path = this->Compiler_Data_Pointer->at(i).source_file_path;
-
-         mt.lock();
          
-         this->Mk_Builder[thr_num].Build_MakeFile(source_file_path);
+         Mk_Builder.Build_MakeFile(source_file_path);
 
-         mt.unlock();
-
-         this->Mk_Builder[thr_num].Clear_Dynamic_Memory();
+         Mk_Builder.Clear_Dynamic_Memory();
      }
 }
 
@@ -230,35 +266,26 @@ void Auto_MakeFile_Builder::Construct_Path(std::string * pointer, std::string st
 }
 
 
-void Auto_MakeFile_Builder::Clear_Vector_Memory(std::vector<std::string> * pointer){
+void Auto_MakeFile_Builder::Clear_Vector_Memory(std::vector<std::string> & vec){
 
-     std::vector<std::string>::iterator it;
+    vec.shrink_to_fit();
 
-     auto begin = pointer->begin();
-     auto end   = pointer->end();
+    for(size_t i=0;i<vec.size();i++){
 
-     for(auto it=begin;it<end;it++){
+        this->Clear_String_Memory(vec.at(i));
+    }
 
-        if(!it->empty()){
+    vec.shrink_to_fit();
 
-            it->clear();
-            it->shrink_to_fit();
-        }
-     }
-
-     if(!pointer->empty())
-     {
-         pointer->clear();
-         pointer->shrink_to_fit();
-     }
+    vec.clear();
 }
 
-void Auto_MakeFile_Builder::Clear_String_Memory(std::string * ptr)
+void Auto_MakeFile_Builder::Clear_String_Memory(std::string & str)
 {
-     if(!ptr->empty()){
+     if(!str.empty()){
 
-         ptr->clear();
+         str.clear();
 
-         ptr->shrink_to_fit();
+         str.shrink_to_fit();
      }
 }

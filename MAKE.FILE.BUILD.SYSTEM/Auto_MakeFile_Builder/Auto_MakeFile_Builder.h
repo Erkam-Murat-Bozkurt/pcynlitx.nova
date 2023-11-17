@@ -15,7 +15,6 @@
 #include <stdlib.h>     //for using the function sleep
 #include <thread>
 #include <mutex>
-#include "Git_Data_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Make_File_Builder.h"
 #include "Make_File_Cleaner.hpp"
@@ -24,6 +23,7 @@
 #include "Source_File_Dependency_Determiner.hpp"
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
+#include "Git_Data_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Header_File_Determiner.h"
 #include "Cpp_FileOperations.h"
@@ -42,19 +42,17 @@ public:
 protected:
  void Determine_Project_Directories();
  void Write_MakeFiles(int thr_num, int start, int end);
- void Clear_Vector_Memory(std::vector<std::string> * pointer);
- void Clear_String_Memory(std::string * ptr);
+ void Clear_Vector_Memory(std::vector<std::string> & vec);
+ void Clear_String_Memory(std::string & str);
  void Construct_Path(std::string * ptr, std::string str, std::string wrd);
  void Perform_Data_Map_Construction();
  void Perform_MakeFile_Construction();
+ size_t Split_Range(size_t range_size, size_t partition, size_t & remaining_job);
  Source_File_Dependency_Determiner * Dep_Determiner;
- Git_Data_Processor * Git_Data_Proc;
  std::vector<Compiler_Data> * Compiler_Data_Pointer;
- Make_File_Builder Mk_Builder[32];
  MakeFile_Directory_Constructor Mk_Dir_Constructor;
  Descriptor_File_Reader * Des_Reader;
- std::thread threads[32];
- std::mutex mtx;
+ std::vector<std::thread> threadPool;
  std::unordered_map<std::string, Compiler_Data> DataMap;
  std::string Warehouse_Path;
  std::string Repo_Dir;

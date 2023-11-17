@@ -15,6 +15,9 @@ add_library(make_fbld_sys
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Cleaner/Make_File_Cleaner.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Cleaner/Make_File_Cleaner.hpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Path_Determiner/MakeFile_Path_Determiner.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Path_Determiner/MakeFile_Path_Determiner.hpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Data_Collector/MakeFile_Data_Collector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Data_Collector/MakeFile_Data_Collector.hpp
     
@@ -27,6 +30,7 @@ target_include_directories(make_fbld_sys PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Auto_MakeFile_Builder    
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Builder    
+    ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Path_Determiner    
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Cleaner    
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Data_Collector    
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Directory_Constructor    
@@ -119,6 +123,7 @@ target_link_directories(make_fbld_sys PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Auto_MakeFile_Builder    
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Builder    
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Cleaner    
+    ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Path_Determiner    
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Data_Collector    
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Directory_Constructor    
 

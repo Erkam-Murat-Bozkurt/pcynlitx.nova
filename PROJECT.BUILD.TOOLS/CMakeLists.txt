@@ -104,6 +104,9 @@ target_include_directories(proj_bld_tools PUBLIC
 
     ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Directory_Constructor 
 
+    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Path_Determiner    
+
+
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Cpp_FileOperations
 
@@ -143,6 +146,8 @@ target_link_directories(proj_bld_tools PUBLIC
     ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Make_File_Builder    
 
     ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Make_File_Cleaner    
+
+    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Path_Determiner    
 
     ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector    
 
