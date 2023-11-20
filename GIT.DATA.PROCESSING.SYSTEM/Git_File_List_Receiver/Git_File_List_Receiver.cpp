@@ -75,7 +75,7 @@ void Git_File_List_Receiver::Determine_Git_Repo_Info()
      this->Determine_Git_File_List_Path();
 
      this->Read_Repo_List_File();
-     
+
      this->Determine_File_System_Paths();
 
      this->Determine_Git_Record_Directories();
@@ -136,11 +136,14 @@ void Git_File_List_Receiver::Read_Repo_List_File()
 
      do {
 
-          std::string file_line = this->FileManager.Read();
+          std::string file_line = this->FileManager.ReadLine();
 
-          this->File_List_Content.push_back(file_line);
+          if(file_line.length()>0){
+          
+             this->File_List_Content.push_back(file_line);
 
-          this->File_Line_Number++;
+             this->File_Line_Number++;
+          }
 
           file_line.clear();
 
@@ -151,6 +154,7 @@ void Git_File_List_Receiver::Read_Repo_List_File()
      this->FileManager.FileClose();
 
      this->FileManager.Clear_Dynamic_Memory();
+
 
 
      if(this->opr_sis = 'w'){
@@ -188,7 +192,7 @@ void Git_File_List_Receiver::Determine_File_System_Paths(){
          std::string temp;
 
          temp+=this->Repo_Dir;
-
+      
          if(this->opr_sis == 'w'){
 
             if(temp[temp.size()]!= '\\'){
@@ -204,6 +208,7 @@ void Git_File_List_Receiver::Determine_File_System_Paths(){
                temp.push_back('/');
              }
          }
+
 
          temp+=this->File_List_Content[i];
 
@@ -373,6 +378,29 @@ void Git_File_List_Receiver::Determine_Git_Record_Paths(){
 }
 
 
+
+void Git_File_List_Receiver::Delete_Spaces_on_String(std::string * str){
+
+    size_t string_size = str->length();
+
+    bool search_cond = true;
+
+    do{
+
+      search_cond = false;
+
+      for(size_t i=0;i<str->length();i++){
+
+          if((*str)[i] == ' '){
+
+            search_cond = true;
+
+            str->erase(i,1);
+          }
+        }
+
+    }while(search_cond);
+}
 
 
 void Git_File_List_Receiver::Clear_Vector_Memory(std::vector<std::string> * pointer){

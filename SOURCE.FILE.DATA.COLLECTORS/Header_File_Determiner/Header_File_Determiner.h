@@ -52,7 +52,6 @@ protected:
  void Clear_String_Memory(std::string * pointer);
  Git_Data_Processor *  Git_Data_Proc;
  StringOperator StringManager;
- Cpp_FileOperations FileManager;
  std::string  Header_File_Directory;
  std::string  Header_File_Name;
  std::string  Header_File_Name_With_Extention;

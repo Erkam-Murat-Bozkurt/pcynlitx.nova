@@ -123,13 +123,6 @@ void Print_Advance_Data(std::vector<Compiler_Data> * ptr){
 
             std::cout << "\n Header: " << j << "-:" << ptr->at(i).dependent_headers.at(j);
         }
-
-       if(ptr->at(i).source_file_name == src_name){
-
-          std::cout << "\n source_file_exist";
-
-          break;
-       }
     }
 
     std::cout << "\n\n";

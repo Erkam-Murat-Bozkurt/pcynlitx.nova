@@ -56,7 +56,7 @@ int main(int argc, char ** argv){
 
     Dep_Data_Extractor.Receive_Source_Code_Reader(&Code_Rd);
 
-    Dep_Data_Extractor.Receive_Dependency_Data_Stack_Container(&Stack_Container);
+    Dep_Data_Extractor.Receive_Stack_Container(&Stack_Container);
 
     Dep_Data_Extractor.Extract_Dependency_Tree(argv[2]);
 

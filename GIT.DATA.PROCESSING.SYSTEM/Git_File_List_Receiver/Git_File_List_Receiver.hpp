@@ -43,6 +43,7 @@ protected:
  void Determine_File_Names();
  void Determine_File_System_Paths();
  void Convert_Windows_Paths();
+ void Delete_Spaces_on_String(std::string * str);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
  Descriptor_File_Reader * Des_Reader;

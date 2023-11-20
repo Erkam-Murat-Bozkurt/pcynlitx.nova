@@ -3,7 +3,7 @@
 
 Header_File_Determiner::Header_File_Determiner(char opr_sis) :
 
-   StringManager(opr_sis), FileManager(opr_sis)
+   StringManager(opr_sis)
 {
 
     this->include_decleration_cond = false;
@@ -36,7 +36,6 @@ void Header_File_Determiner::Clear_Dynamic_Memory(){
      this->Clear_String_Memory(&this->Header_File_System_Path);
 
      this->StringManager.Clear_Dynamic_Memory();
-     this->FileManager.Clear_Dynamic_Memory();   
 }
 
 
@@ -50,75 +49,6 @@ void Header_File_Determiner::Receive_Git_Data_Processor(Git_Data_Processor * ptr
 }
 
 
-bool Header_File_Determiner::Is_this_file_included_on_anywhere(std::string file_path){
-
-     this->Is_this_file_included_on_somewhere = false;
-
-     for(int i=0;i<this->git_record_size-1;i++){
-
-         std::string git_record_path = this->Git_Data_Proc->Get_Git_File_Index(i);
-
-         std::string record_sys_path = "";
-
-         this->Determine_Git_Record_File_System_Path(&record_sys_path,git_record_path);
-
-         bool is_path_exist = this->FileManager.Is_Path_Exist(record_sys_path);
-
-         this->FileManager.SetFilePath(record_sys_path);
-
-         bool is_file_openned = this->FileManager.TryOpen('r');
-
-         bool file_exist = false;
-
-         if(is_path_exist && is_file_openned){
-
-            file_exist = true;
-         }
-
-         this->FileManager.Clear_Dynamic_Memory();
-
-         if(file_exist){
-
-            this->FileManager.Read_File(record_sys_path);
-
-            int FileSize = this->FileManager.GetFileSize();
-
-            for(int k=0;k<FileSize;k++){
-
-                std::string file_line = this->FileManager.GetFileLine(k);
-
-                // In order to remove possible spaces on the string
-
-                // a temporary string is constructed
-
-                this->Delete_Spaces_on_String(&file_line);
-
-                bool is_include_decleration = this->Include_Decleration_Test(file_line);
-
-
-                std::string header_name;
-
-                if(is_include_decleration){
-
-                   this->Extract_Header_File_Name_From_Decleration(&header_name,file_line);
-
-                   this->Determine_Header_File_Name(file_path);
-
-                   bool is_strings_equal = this->CompareString(header_name,this->Header_File_Name);
-
-                   if(is_strings_equal){
-
-                      this->Is_this_file_included_on_somewhere = true;
-
-                      break;
-                    }
-                }
-            }
-         }
-      }
-
-      return this->Is_this_file_included_on_somewhere;
-}
 
 
 bool Header_File_Determiner::Include_Decleration_Test(std::string string){
@@ -332,15 +262,6 @@ bool Header_File_Determiner::Is_Header(std::string file_path){
             return this->is_header_file;
           }
     }
-
-    /*
-
-    if(this->Is_this_file_included_on_anywhere(file_path)){
-
-       this->is_header_file = true;
-    }
-
-    */
 
 
     return this->is_header_file;
