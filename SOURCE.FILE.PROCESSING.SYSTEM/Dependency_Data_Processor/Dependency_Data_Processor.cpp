@@ -78,115 +78,161 @@ void Dependency_Data_Processor::Perform_Dependency_Search(){
 
      this->Hdr_Dep_Extractor.Perform_Dependency_Search();
 
-     this->Clear_Dynamic_Memory();
-     
-     
-
+     this->Hdr_Dep_Extractor.Clear_Dynamic_Memory();
+    
+    
      this->Source_File_Data_Ptr   = this->Info_Collector.Get_Source_File_Data_Address();
 
-     this->Construct_Dependency_Data_Extractors();
-
-     
      size_t data_size = this->Source_File_Data_Ptr->size();
+
+     if(data_size>50){
+
+        this->Search_For_Large_Data_Set(data_size);        
+     }
+     else{
+
+         if(data_size>16){
+
+            this->Search_For_Middle_Data_Set(data_size);
+         }
+         else{
+
+             this->Search_For_Small_Data_Set(data_size);
+         }
+     }
+
+
+     this->Dependency_Search_Data.shrink_to_fit();    
+
+     std::cout << "\nDependency data collected";
+
+     this->Clear_Temporary_Memory();
+
+     this->Perform_Data_Reordering(data_size);
+}
+
+
+void Dependency_Data_Processor::Search_For_Large_Data_Set(size_t data_size){
 
      size_t thread_number = data_size/10;
 
-     if(data_size>20){
+     int division = data_size/thread_number;
 
-       int division = data_size/thread_number;
+     int remaining_job = data_size%thread_number;
 
-       int remaining_job = data_size%thread_number;
+     int str=0, end=0;
 
-       int str=0, end=0;
+     for(int i=0;i<thread_number;i++){
 
-       for(int i=0;i<thread_number;i++){
+         if(i==0){
 
-           if(i==0){
+            str = 0;
+            end = division;              
+         }
+         else{
 
-              str = 0;
-              end = division;              
-           }
-           else{
+            str = end;
 
-               str = end;
+            end = end + division;
 
-               end = end + division;
+            if(remaining_job>0){
 
-               if(remaining_job>0){
+               end = end+1;
 
-                  end = end+1;
+               remaining_job--;
+            }
+         }
 
-                  remaining_job--;
-               }
-           }
-
-
-           if(i==(thread_number-1)){
+         if(i==(thread_number-1)){
             
-               end = data_size;
-           }
+            end = data_size;
+         }
 
-           this->threadPool.push_back(std::thread(Dependency_Data_Processor::Extract_Dependency_Search_Data,this,i,str,end));   
-       }
+         this->threadPool.push_back(std::thread(Dependency_Data_Processor::Extract_Dependency_Search_Data,this,str,end));   
+     }
     
-       for(int i=0;i<threadPool.size();i++){
+     for(int i=0;i<threadPool.size();i++){
      
-          this->threadPool[i].join();
-       }
-    }
-    else{
+         this->threadPool[i].join();
+     }
 
-        this->Extract_Dependency_Search_Data(0,0,data_size);
-    }
 
-    this->Dependency_Search_Data.shrink_to_fit();    
+     if(!this->threadPool.empty()){
 
-    std::cout << "\nDependency data collected";
+        this->threadPool.clear();
 
-    this->Clear_Temporary_Memory();
+        this->threadPool.shrink_to_fit();
+     }
+}
 
-    this->Perform_Data_Reordering();
+
+void Dependency_Data_Processor::Search_For_Middle_Data_Set(size_t data_size){
+
+     int division = data_size/16;
+
+     for(int i=0;i<16;i++){
+
+         int str  = i*division;
+
+         int end  = (i+1)*division;
+
+         if(i==15){
+
+            end = data_size;
+         }
+
+         this->threadPool.push_back(std::thread(Dependency_Data_Processor::Extract_Dependency_Search_Data,this,str,end));
+     }
+    
+     for(int i=0;i<16;i++){
+     
+         this->threadPool[i].join();
+     }
+
+     if(!this->threadPool.empty()){
+
+        this->threadPool.clear();
+
+        this->threadPool.shrink_to_fit();
+     }
+}
+
+
+void Dependency_Data_Processor::Search_For_Small_Data_Set(size_t data_size){
+
+     for(size_t i=0;i<data_size;i++){
+     
+         std::string path =this->Source_File_Data_Ptr->at(i).system_path;
+
+         this->Search_Dependency_Data_For_Path(path);
+     }  
 }
 
 
 
-
-void Dependency_Data_Processor::Construct_Dependency_Data_Extractors(){
-
-     size_t data_size = this->Source_File_Data_Ptr->size();
-
-     size_t data_extractor_num = data_size/10;
-
-     for(int i=0;i<data_extractor_num;i++){
-
-         Dependency_Data_Extractor * Dep_Ext = new Dependency_Data_Extractor;
-
-         this->Dep_Data_Collectors.push_back(Dep_Ext);
-
-         this->Dep_Data_Collectors.back()->Receive_Source_Code_Reader(this->Code_Rdr);
-
-         this->Dep_Data_Collectors.back()->Receive_Stack_Container(&this->Stack_Container);
-     } 
-}
-
-
-
-void Dependency_Data_Processor::Extract_Dependency_Search_Data(int thr_num, int start, int end){
+void Dependency_Data_Processor::Extract_Dependency_Search_Data(int start, int end){
 
      for(size_t i=start;i<end;i++){
      
          std::string path =this->Source_File_Data_Ptr->at(i).system_path;
 
-         this->Search_Dependency_Data_For_Path(path,thr_num);
+         this->Search_Dependency_Data_For_Path(path);
      }     
 }
 
 
-void Dependency_Data_Processor::Search_Dependency_Data_For_Path(std::string path,int thr_num){
 
-     this->Dep_Data_Collectors[thr_num]->Determine_Source_File_Dependencies(path);
+void Dependency_Data_Processor::Search_Dependency_Data_For_Path(std::string path){
 
-     const Search_Data_Records * Dep_Data_Ptr = this->Dep_Data_Collectors[thr_num]->Get_Search_Data();
+     Dependency_Data_Extractor Dep_Data_Collector;
+
+     Dep_Data_Collector.Receive_Source_Code_Reader(this->Code_Rdr);
+
+     Dep_Data_Collector.Receive_Stack_Container(&this->Stack_Container);
+
+     Dep_Data_Collector.Determine_Source_File_Dependencies(path);
+
+     const Search_Data_Records * Dep_Data_Ptr = Dep_Data_Collector.Get_Search_Data();
 
      std::unique_lock<std::mutex> mt(this->mtx);
 
@@ -196,72 +242,129 @@ void Dependency_Data_Processor::Search_Dependency_Data_For_Path(std::string path
 
      mt.unlock();
 
-     this->Dep_Data_Collectors[thr_num]->Clear_Dynamic_Memory();
+     Dep_Data_Collector.Clear_Dynamic_Memory();
 }
 
 
-void Dependency_Data_Processor::Perform_Data_Reordering(){
+
+void Dependency_Data_Processor::Perform_Data_Reordering(size_t data_size){
+
+     if(data_size>100){
+
+        this->ReOrdering_For_Large_Data_Set(data_size);        
+     }
+     else{
+
+         if(data_size>16){
+
+            this->ReOrdering_For_Middle_Data_Set(data_size);
+         }
+         else{
+
+             this->ReOrdering_For_Small_Data_Set(data_size);
+         }
+     }
+
+    this->Dependency_Search_Data.shrink_to_fit();    
+    
+    std::cout << "\nDependency data re-arranged..";
+}
+
+
+
+void Dependency_Data_Processor::ReOrdering_For_Large_Data_Set(size_t data_size){
 
      size_t search_data_size = this->Dependency_Search_Data.size();
 
      size_t thread_number = search_data_size/10;
 
-     if(search_data_size>20){
+     int division = search_data_size/thread_number;
 
-       int division = search_data_size/thread_number;
+     int remaining_job = search_data_size%thread_number;
 
-       int remaining_job = search_data_size%thread_number;
+     int str=0, end=0;
 
-       int str=0, end=0;
+     for(int i=0;i<thread_number;i++){
 
-       for(int i=0;i<thread_number;i++){
+         if(i==0){
 
-           if(i==0){
-
-              str = 0;
+            str = 0;
               
-              end = division;              
-           }
-           else{
+            end = division;              
+         }
+         else{
 
-               str = end;
+            str = end;
 
-               end = end + division;
+            end = end + division;
 
-               if(remaining_job>0){
+            if(remaining_job>0){
 
-                  end = end+1;
+               end = end+1;
 
-                  remaining_job--;
-               }
-           }
+               remaining_job--;
+            }
+        }
 
 
-           if(i==(thread_number-1)){
+        if(i==(thread_number-1)){
             
-               end = search_data_size;
-           }
+           end = search_data_size;
+        }
 
-           this->threadPool.push_back(std::thread(Dependency_Data_Processor::Re_Order_Dependency_Data,this,str,end));   
-       }
+        this->threadPool.push_back(std::thread(Dependency_Data_Processor::Re_Order_Dependency_Data,this,str,end));   
+     }
     
-       for(int i=0;i<this->threadPool.size();i++){
+     for(int i=0;i<this->threadPool.size();i++){
      
-          this->threadPool[i].join();
-       }
-    }
-    else{
+         this->threadPool[i].join();
+     }
 
-        this->Re_Order_Dependency_Data(0,search_data_size);
-    }
-
-    this->Dependency_Search_Data.shrink_to_fit();    
-
-    
-    std::cout << "\nDependency data re-arranged..";
-
+     this->Dependency_Search_Data.shrink_to_fit();    
 }
 
+
+
+void Dependency_Data_Processor::ReOrdering_For_Middle_Data_Set(size_t data_size){
+
+     int division = data_size/16;
+
+     for(int i=0;i<16;i++){
+
+         int str  = i*division;
+
+         int end  = (i+1)*division;
+
+         if(i==15){
+
+            end = data_size;
+         }
+
+         this->threadPool.push_back(std::thread(Dependency_Data_Processor::Re_Order_Dependency_Data,this,str,end));
+     }
+    
+     for(int i=0;i<16;i++){
+     
+         this->threadPool[i].join();
+     }
+
+     if(!this->threadPool.empty()){
+
+        this->threadPool.clear();
+
+        this->threadPool.shrink_to_fit();
+     }
+}
+
+
+
+void Dependency_Data_Processor::ReOrdering_For_Small_Data_Set(size_t data_size){
+
+     for(size_t i=0;i<data_size;i++){
+
+         this->ReOrder_Stack_Data(&this->Dependency_Search_Data.at(i));
+     }
+}
 
 
 void Dependency_Data_Processor::Re_Order_Dependency_Data(int str, int end){
@@ -387,34 +490,17 @@ void Dependency_Data_Processor::Clear_Search_Data_Memory(std::vector<Search_Data
 }
 
 
- void Dependency_Data_Processor::Clear_Temporary_Memory(){
+void Dependency_Data_Processor::Clear_Temporary_Memory(){
 
-      if(!this->Dep_Data_Collectors.empty()){
-
-         size_t object_num = this->Dep_Data_Collectors.size();
-
-         for(size_t i=0;i<object_num;i++){
-
-             this->Dep_Data_Collectors.at(i)->Clear_Object_Memory();
-
-             delete this->Dep_Data_Collectors.at(i);
-         }
-
-         this->Dep_Data_Collectors.clear();
-
-         this->Dep_Data_Collectors.shrink_to_fit();
-      }
-
-      if(!this->threadPool.empty()){
+     if(!this->threadPool.empty()){
 
          this->threadPool.clear();
 
          this->threadPool.shrink_to_fit();
-      }
+     }
 
-      this->Info_Collector.Clear_Object_Memory();
- }
-
+     this->Info_Collector.Clear_Object_Memory();
+}
 
 
 

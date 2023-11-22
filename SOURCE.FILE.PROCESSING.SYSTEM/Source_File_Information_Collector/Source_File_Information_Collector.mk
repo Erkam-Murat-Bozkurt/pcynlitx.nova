@@ -9,13 +9,11 @@ SYS_INT=D:\pcynlitx.build\BASIC.TOOLS\Custom_System_Interface
 
 
 HEAD_DET=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
-FILE_LISTER=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Lister
 SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
 INT_TO_CHAR=D:\pcynlitx.build\BASIC.TOOLS\IntToCharTranslater
 DES_READER=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
 DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
 DES_FILE_SYNT_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
-FILE_DAT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Project_Files_Data_Collector
 SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
 HDR_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
 SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
@@ -34,9 +32,8 @@ GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiv
 
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 	    $(SOURCE_DETR) $(DIR_ENUM) $(SYS_INT) \
-	    $(STRING_OPS) $(HEAD_DET) $(FILE_LISTER) \
+	    $(STRING_OPS) $(HEAD_DET) \
 	    $(INT_TO_CHAR) $(DES_DATA_COL) $(DES_READER) \
-	    $(FILE_DAT_COL) \
 	    $(SRC_DT_COL) $(DES_FILE_SYNT_COL) \
 		$(HDR_PROC) $(SRC_READER) $(SRC_FILE_PROC) \
 		$(GIT_PROC) \
@@ -51,8 +48,6 @@ Source_File_Information_Collector.exe: Source_File_Information_Collector_Main_Fi
 	Source_File_Processor.cpp \
 	Header_File_Processor.cpp \
 	Project_Src_Code_Rdr.cpp \
-	Project_Files_Lister.cpp \
-	Project_Files_Data_Collector.cpp \
 	Source_File_Data_Collector.cpp \
 	Source_File_Determiner.cpp \
 	Header_File_Determiner.cpp \
@@ -74,8 +69,6 @@ Source_File_Information_Collector.exe: Source_File_Information_Collector_Main_Fi
 	Source_File_Processor.hpp \
 	Header_File_Processor.hpp \
 	Project_Src_Code_Rdr.hpp \
-	Project_Files_Lister.h \
-	Project_Files_Data_Collector.hpp \
 	Source_File_Data_Collector.cpp \
 	Git_Data_Processor.hpp \
 	Git_File_List_Writer.hpp \
@@ -98,10 +91,10 @@ Source_File_Information_Collector.exe: Source_File_Information_Collector_Main_Fi
 	-o Source_File_Information_Collector.exe \
 	 -I$(DIR_OPS)      -I$(CPP_OPS) -I$(CHAR_OPS) \
 	 -I$(STRING_OPS)   -I$(HEAD_DET) \
-	 -I$(FILE_LISTER)  -I$(SOURCE_DETR) -I$(GIT_LIST) \
+	 -I$(SOURCE_DETR) -I$(GIT_LIST) \
 	 -I$(CLASS_SYNTAX) -I$(DIR_ENUM) -I$(INT_TO_CHAR) \
 	 -I$(DES_DATA_COL) -I$(DES_READER) \
-	 -I$(FILE_DAT_COL) -I$(HDR_PROC) \
+	 -I$(HDR_PROC) \
 	 -I$(SRC_DT_COL)   -I$(DES_FILE_SYNT_COL) \
 	 -I$(SRC_READER)   -I$(SRC_FILE_PROC) -I$(SYS_INT) \
 	 -I$(GIT_PROC) \
@@ -114,9 +107,9 @@ Source_File_Information_Collector.exe: Source_File_Information_Collector_Main_Fi
 	 -L$(DIR_ENUM)     -L$(DIR_OPS)     -L$(CPP_OPS) \
 	 -L$(CHAR_OPS)     -L$(INT_TO_CHAR) -L$(DES_DATA_COL) \
 	 -L$(DES_READER)   -L$(STRING_OPS) \
-	 -L$(HEAD_DET)     -L$(FILE_LISTER) \
+	 -L$(HEAD_DET)  \
 	 -L$(SOURCE_DETR)  -L$(HDR_PROC) \
-	 -L$(GIT_LIST)     -L$(FILE_DAT_COL) \
+	 -L$(GIT_LIST)  \
 	 -L$(SRC_DT_COL)   -L$(DES_FILE_SYNT_COL) \
 	 -L$(SRC_READER)   -L$(SRC_FILE_PROC) -L$(SYS_INT) \
 	 -L$(GIT_PROC) \
@@ -131,8 +124,6 @@ Source_File_Information_Collector.exe: Source_File_Information_Collector_Main_Fi
 		$(SRC_FILE_PROC)\Source_File_Processor.cpp \
 		$(HDR_PROC)\Header_File_Processor.cpp \
 		$(SRC_READER)\Project_Src_Code_Rdr.cpp \
-		$(FILE_LISTER)\Project_Files_Lister.cpp \
-		$(FILE_DAT_COL)\Project_Files_Data_Collector.cpp \
 		$(SRC_DT_COL)\Source_File_Data_Collector.cpp \
 	    $(GIT_PROC)\Git_Data_Processor.cpp \
 		$(GIT_LIST)\Git_File_List_Writer.cpp \
@@ -156,8 +147,6 @@ Source_File_Information_Collector.exe: Source_File_Information_Collector_Main_Fi
 		-include $(SRC_FILE_PROC)\Source_File_Processor.hpp \
 		-include $(HDR_PROC)\Header_File_Processor.hpp \
 		-include $(SRC_READER)\Project_Src_Code_Rdr.hpp \
-		-include $(FILE_LISTER)\Project_Files_Lister.h \
-		-include $(FILE_DAT_COL)\Project_Files_Data_Collector.hpp \
 		-include $(SRC_DT_COL)\Source_File_Data_Collector.hpp \
         -include $(GIT_PROC)\Git_Data_Processor.hpp \
 		-include $(GIT_LIST)\Git_File_List_Writer.hpp \

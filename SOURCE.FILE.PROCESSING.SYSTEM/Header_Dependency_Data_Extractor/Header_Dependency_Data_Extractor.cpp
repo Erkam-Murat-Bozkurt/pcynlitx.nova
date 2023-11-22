@@ -114,6 +114,26 @@ void Header_Dependency_Data_Extractor::Perform_Dependency_Search(){
 
      size_t data_size = this->Header_Files.size();
 
+     if(data_size>100){
+
+        this->Search_For_Large_Data_Set(data_size);
+     }
+     else{
+
+         if(data_size>16){
+
+            this->Search_For_Middle_Data_Set(data_size);
+         }
+         else{
+
+            this->Search_For_Middle_Data_Set(data_size);
+         }
+     }
+}
+
+
+void Header_Dependency_Data_Extractor::Search_For_Large_Data_Set(size_t data_size){
+
      size_t thread_number = data_size/10;
 
      size_t thread_div = thread_number/10;
@@ -121,89 +141,138 @@ void Header_Dependency_Data_Extractor::Perform_Dependency_Search(){
      size_t thread_div_2 = thread_number - thread_div;
 
 
-     if(data_size>20){
+     int str=0, end=0;
 
-        int str=0, end=0;
+     int first_division  = 9*data_size/10;
 
-        int first_division  = 9*data_size/10;
+     int second_division = data_size/10;
 
-        int second_division = data_size/10;
+     int remaining_thread_num = thread_number - thread_div;
 
-        int remaining_thread_num = thread_number - thread_div;
-
-        int first_range_remaining_job = 0;
+     int first_range_remaining_job = 0;
         
-        int second_range_remaining_job = 0;
-
-        int first_range_  = this->Split_Range(first_division,thread_div,first_range_remaining_job);
-
-        int second_range_ = this->Split_Range(second_division,remaining_thread_num,second_range_remaining_job);
+     int second_range_remaining_job = 0;
 
 
-        for(int i=0;i<thread_number;i++){
+     int first_range_  = this->Split_Range(first_division,thread_div,first_range_remaining_job);
+
+     int second_range_ = this->Split_Range(second_division,remaining_thread_num,second_range_remaining_job);
+
+
+     for(int i=0;i<thread_number;i++){
             
-            if(i==0){
+         if(i==0){
 
-              str = 0;
+            str = 0;
 
-              end = first_range_;
+            end = first_range_;
+         }
+         else{
+
+            if(i<thread_div){
+
+               str  = end;
+
+               end  = end + first_range_;
+
+               if(first_range_remaining_job > 0){
+
+                  end = end+1;
+
+                  first_range_remaining_job--;
+               }
             }
-            else{
+            else{                
 
-                if(i<thread_div){
+                str  = end;
 
-                   str  = end;
+                end  = end + second_range_;
 
-                   end  = end + first_range_;
+                if(second_range_remaining_job > 0){
 
-                   if(first_range_remaining_job > 0){
+                   end = end+1;
 
-                      end = end+1;
-
-                      first_range_remaining_job--;
-                   }
+                   second_range_remaining_job--;
                 }
-                else{                
-
-                   str  = end;
-
-                   end  = end + second_range_;
-
-                   if(second_range_remaining_job > 0){
-
-                      end = end+1;
-
-                      second_range_remaining_job--;
-                   }
-                }
-            }
-            
-
-           if(i==(thread_number-1)){
-            
-               end = data_size;
            }
+        }            
 
-           this->threadPool.push_back(std::thread(Header_Dependency_Data_Extractor::Extract_Dependency_Search_Data,this,i,str,end));
-       }
+        if(i==(thread_number-1)){
+            
+           end = data_size;
+        }
+
+        this->threadPool.push_back(std::thread(Header_Dependency_Data_Extractor::Extract_Dependency_Search_Data,this,str,end));
+     }
     
-       for(int i=0;i<thread_number;i++){
+     for(int i=0;i<thread_number;i++){
      
-          this->threadPool[i].join();
-       }
-    }
-    else{
+        this->threadPool[i].join();
+     }
 
-        this->Extract_Dependency_Search_Data(0,0,data_size);
-    }    
+     if(!this->threadPool.empty()){
+
+        this->threadPool.clear();
+
+        this->threadPool.shrink_to_fit();
+     }
 }
 
 
-int Header_Dependency_Data_Extractor::Split_Range(int range_size, int partition, int & ramaining_job){
+void Header_Dependency_Data_Extractor::Search_For_Middle_Data_Set(size_t data_size){
 
-    if(range_size ==0){
+     int division = data_size/16;
+
+     for(int i=0;i<16;i++){
+
+         int str  = i*division;
+
+         int end  = (i+1)*division;
+
+         if(i==15){
+
+            end = data_size;
+         }
+
+         this->threadPool.push_back(std::thread(Header_Dependency_Data_Extractor::Extract_Dependency_Search_Data,this,str,end));
+     }
+    
+     for(int i=0;i<16;i++){
+     
+         this->threadPool[i].join();
+     }
+
+     if(!this->threadPool.empty()){
+
+        this->threadPool.clear();
+
+        this->threadPool.shrink_to_fit();
+     }
+}
+
+
+void Header_Dependency_Data_Extractor::Search_For_Small_Data_Set(size_t data_size){
+
+     for(size_t i=0;i<data_size;i++){
+     
+         std::string path = this->Header_Files.at(i).Header_File;
+
+         this->Search_Dependency_Data_For_Path(path);
+     }  
+}
+
+
+
+int Header_Dependency_Data_Extractor::Split_Range(int range_size, int partition, int & remaining_job){
+
+    if(range_size == 0){
 
         range_size = 1;
+    }
+
+    if(partition == 0){
+
+        partition = 1;
     }
 
     int range  = range_size/partition; 
@@ -213,25 +282,25 @@ int Header_Dependency_Data_Extractor::Split_Range(int range_size, int partition,
         range = 1;
     }
 
-    ramaining_job = range_size%partition;
+    remaining_job = range_size%partition;
 
     return range;
 }
 
 
 
-void Header_Dependency_Data_Extractor::Extract_Dependency_Search_Data(int thr_num, int start, int end){
+void Header_Dependency_Data_Extractor::Extract_Dependency_Search_Data(int start, int end){
 
      for(size_t i=start;i<end;i++){
      
          std::string path = this->Header_Files.at(i).Header_File;
 
-         this->Search_Dependency_Data_For_Path(path,thr_num);
+         this->Search_Dependency_Data_For_Path(path);
      }     
 }
 
 
-void Header_Dependency_Data_Extractor::Search_Dependency_Data_For_Path(std::string path,int thr_num){
+void Header_Dependency_Data_Extractor::Search_Dependency_Data_For_Path(std::string path){
 
      Dependency_Data_Extractor Dep_Ext;
 

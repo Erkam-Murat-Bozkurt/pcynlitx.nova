@@ -68,11 +68,14 @@ public:
  const std::vector<Search_Data_Records> * Get_Search_Data() const;
 protected:
  void Find_Header_Files();
+ void Search_For_Large_Data_Set(size_t data_size);
+ void Search_For_Middle_Data_Set(size_t data_size);
+ void Search_For_Small_Data_Set(size_t data_size);
  void Clear_String_Memory(std::string & str);
  void Clear_Vector_Memory(std::vector<std::string> & vec);
  void Clear_Search_Data_Memory(std::vector<Search_Data> & data);
- void Extract_Dependency_Search_Data(int thr_num, int start, int end);
- void Search_Dependency_Data_For_Path(std::string path,int thr_num);
+ void Extract_Dependency_Search_Data(int start, int end);
+ void Search_Dependency_Data_For_Path(std::string path);
  int  Split_Range(int range_size, int partition, int & ramaining_job);
  Dependency_Data_Stack_Container * Stack_Container;
  Source_File_Information_Collector Info_Collector; 

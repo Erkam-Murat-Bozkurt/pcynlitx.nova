@@ -60,7 +60,7 @@ public:
  const std::vector<Search_Data_Records> * Get_Search_Data() const;
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
- void Perform_Data_Reordering();
+ void Perform_Data_Reordering(size_t data_size);
 protected:
  void Clear_Temporary_Memory();
  bool Is_Exist_OnSearchStack(std::string path);
@@ -69,19 +69,21 @@ protected:
  void Clear_String_Memory(std::string & str);
  void Clear_Vector_Memory(std::vector<std::string> & vec);
  void Clear_Search_Data_Memory(std::vector<Search_Data> & data);
- void Extract_Dependency_Search_Data(int thr_num, int start, int end);
- void Search_Dependency_Data_For_Path(std::string path,int thr_num);
- void Construct_Dependency_Data_Extractors();
+ void Extract_Dependency_Search_Data(int start, int end);
+ void Search_Dependency_Data_For_Path(std::string path);
+ void ReOrdering_For_Large_Data_Set(size_t data_size);
+ void ReOrdering_For_Middle_Data_Set(size_t data_size);
+ void ReOrdering_For_Small_Data_Set(size_t data_size);
+ void Search_For_Large_Data_Set(size_t data_size);
+ void Search_For_Middle_Data_Set(size_t data_size);
+ void Search_For_Small_Data_Set(size_t data_size);
  Header_Dependency_Data_Extractor Hdr_Dep_Extractor;
  Dependency_Data_Stack_Container Stack_Container;
  Source_File_Information_Collector Info_Collector; 
  Project_Src_Code_Rdr * Code_Rdr;
  std::vector<std::thread> threadPool;
- std::vector<Dependency_Data_Extractor *> Dep_Data_Collectors;
  std::vector<Source_File_Data> * Source_File_Data_Ptr;
  std::vector<Search_Data_Records> Dependency_Search_Data;
- //std::vector<Search_Data_Records> Process_Output_Data;
- //std::unordered_map<std::string, Search_Data_Records *> Search_Data_Map;
  std::mutex mtx;
  bool Memory_Delete_Condition;
 };
