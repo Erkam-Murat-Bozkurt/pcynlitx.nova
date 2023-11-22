@@ -112,96 +112,150 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){
 
      // Compiler data extraction for whole project
 
-     this->Construct_Compiler_Data_Structures();
-
-     std::size_t dt_size = this->dep_data_ptr->size();
+     std::size_t data_size = this->dep_data_ptr->size();
      
      this->dep_data_ptr->shrink_to_fit();
 
-     if(dt_size>20){
+     if(data_size>50){
 
-        size_t str=0, end=0;
-
-        size_t thread_num = dt_size/20;
-
-        if(thread_num > 200){
-
-           thread_num = 200;
-        }
-
-        size_t remaining_job = 0;
-
-        size_t range =this->Split_Range(dt_size,thread_num,remaining_job);
-
-
-        for(int i=0;i<thread_num;i++){
-
-            if(i==0){
-
-              str = 0;
-
-              end = range;
-            }
-            else{
-
-                 str  = end;
-
-                 end  = end + range;
-
-                 if(remaining_job > 0){
-
-                    end = end+1;
-
-                    remaining_job--;
-                 }
-            }
-
-           if(i==(thread_num-1)){
-            
-               end = dt_size;
-           }
-
-           this->threadPool.push_back(std::thread(Source_File_Compiler_Data_Extractor::Process_Compiler_Data,this,i,str,end));
-        }
-    
-        for(size_t i=0;i<thread_num;i++){
-            
-            this->threadPool[i].join();
-        }
-
-        if(!this->threadPool.empty()){
-
-            this->threadPool.clear();
-
-            this->threadPool.shrink_to_fit();
-        }
-
-        for(int i=0;i<thread_num;i++){                     
-        
-            size_t d_size = this->Compiler_Data_Vectors[i].size();
-
-            for(int k=0;k<d_size;k++){
-              
-                this->compiler_data.push_back(this->Compiler_Data_Vectors[i].at(k));
-            }
-
-            this->Clear_Data_Memory(&this->Compiler_Data_Vectors[i]);              
-        }
-
-        if(!this->Compiler_Data_Vectors.empty()){
-
-            this->Compiler_Data_Vectors.clear();
-
-            this->Compiler_Data_Vectors.shrink_to_fit();
-        }
-
-        this->compiler_data.shrink_to_fit();
+        this->Search_For_Large_Data_Set(data_size);
      }
      else{
 
-           this->Extract_Compiler_Data_For_Single_Thread();
+           if(data_size>16){
+
+              this->Search_For_Middle_Data_Set(data_size);
+           }
+           else{
+
+                this->Search_For_Small_Data_Set(data_size);
+           }          
+     }
+
+     if(!this->threadPool.empty()){
+
+         this->threadPool.clear();
+
+         this->threadPool.shrink_to_fit();
+     }
+
+     this->Construct_Compiler_Data_List();
+}
+
+
+
+void Source_File_Compiler_Data_Extractor::Construct_Compiler_Data_List(){
+    
+     this->Compiler_Data_Vectors.shrink_to_fit();
+
+     size_t collected_data_size = this->Compiler_Data_Vectors.size();
+
+     for(int i=0;i<collected_data_size;i++){
+        
+         size_t d_size = this->Compiler_Data_Vectors[i].size();
+
+         for(int k=0;k<d_size;k++){
+              
+             this->compiler_data.push_back(this->Compiler_Data_Vectors[i].at(k));
+         }
+
+         this->Clear_Data_Memory(&this->Compiler_Data_Vectors[i]);              
+      }
+
+      if(!this->Compiler_Data_Vectors.empty()){
+
+          this->Compiler_Data_Vectors.clear();
+
+          this->Compiler_Data_Vectors.shrink_to_fit();
+      }
+
+      this->compiler_data.shrink_to_fit();
+}
+
+
+void Source_File_Compiler_Data_Extractor::Search_For_Large_Data_Set(size_t data_size){
+
+     size_t str=0, end=0;
+
+     size_t thread_num = data_size/20;
+
+     if(thread_num > 200){
+
+        thread_num = 200;
+     }
+
+     size_t remaining_job = 0;
+
+     size_t range =this->Split_Range(data_size,thread_num,remaining_job);
+
+     for(int i=0;i<thread_num;i++){
+
+         if(i==0){
+
+            str = 0;
+
+            end = range;
+         }
+         else{
+
+              str  = end;
+
+              end  = end + range;
+
+              if(remaining_job > 0){
+
+                 end = end+1;
+
+                 remaining_job--;
+              }
+         }
+
+        if(i==(thread_num-1)){
+            
+           end = data_size;
+        }
+
+        this->threadPool.push_back(std::thread(Source_File_Compiler_Data_Extractor::Process_Compiler_Data,this,str,end));
+     }
+    
+     for(size_t i=0;i<thread_num;i++){
+            
+         this->threadPool[i].join();
      }
 }
+
+
+
+void Source_File_Compiler_Data_Extractor::Search_For_Middle_Data_Set(size_t data_size){
+
+     int division = data_size/16;
+
+     for(int i=0;i<16;i++){
+
+         int str  = i*division;
+
+         int end  = (i+1)*division;
+
+         if(i==15){
+
+            end = data_size;
+         }
+
+         this->threadPool.push_back(std::thread(Source_File_Compiler_Data_Extractor::Process_Compiler_Data,this,str,end));
+     }
+    
+     for(int i=0;i<16;i++){
+     
+         this->threadPool[i].join();
+     }
+}
+
+
+void Source_File_Compiler_Data_Extractor::Search_For_Small_Data_Set(size_t data_size){
+
+     this->Process_Compiler_Data(0,data_size);
+}
+
 
 
 
@@ -226,90 +280,10 @@ size_t Source_File_Compiler_Data_Extractor::Split_Range(size_t range_size, size_
 
 
 
-void Source_File_Compiler_Data_Extractor::Construct_Compiler_Data_Structures(){
-
-     std::size_t dt_size = this->dep_data_ptr->size();
-
-     size_t data_structure_num = dt_size/10;
-
-     for(int i=0;i<data_structure_num;i++){
-
-         std::vector<Compiler_Data> Com_Dt;
-
-         this->Compiler_Data_Vectors.push_back(Com_Dt);
-     } 
-}
-
-
-
-void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data_For_Single_Thread(){ 
-     
-     std::size_t dt_size = this->dep_data_ptr->size();
-     
-     for(std::size_t i= 0;i<dt_size;i++){
-
-         std::vector<Source_File_Dependency> * src_ptr = &this->dep_data_ptr->at(i);
-
-         src_ptr->shrink_to_fit();
-
-         size_t data_size = src_ptr->size();
-
-         Compiler_Data buffer;
-
-         if(data_size>0){
-
-            buffer.source_file_name = src_ptr->at(0).source_file_name;
-
-            buffer.source_file_path = src_ptr->at(0).source_file_path;
-
-
-            buffer.priority = data_size;
-  
-
-            buffer.src_git_record_dir = src_ptr->at(0).src_git_record_dir;
-
-            buffer.source_file_name_witout_ext = src_ptr->at(0).source_file_name_without_ext; 
-
-            buffer.src_sys_dir = src_ptr->at(0).src_sys_dir;
-
-
-
-            this->Extract_Obj_File_Name_From_File_Name(&(buffer.object_file_name),
-            
-            buffer.source_file_name);
-
-            buffer.priority = data_size;
-
-
-            for(size_t k=0;k<data_size;k++){
-            
-                std::string hdr_name = src_ptr->at(k).Header_Name;
-
-                std::string hdr_dir =  src_ptr->at(k).dir;            
-                            
-                buffer.dependent_headers_dir.push_back(hdr_dir);
-
-                buffer.dependent_headers.push_back(hdr_name);
-            }
-
-            buffer.dependent_headers.shrink_to_fit();
-
-            buffer.dependent_headers_dir.shrink_to_fit();
-
-            this->compiler_data.push_back(buffer);
-         
-            this->Clear_Buffer_Memory(&buffer);
-         }
-      }
-
-      this->compiler_data.shrink_to_fit();
-}
-
-
-
-
-void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int start, int end){
+void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int start, int end){
     
+     std::vector<Compiler_Data> Com_Dt;
+
      for(std::size_t i=start;i<end;i++){
 
          std::vector<Source_File_Dependency> * src_ptr = &this->dep_data_ptr->at(i);
@@ -369,14 +343,20 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int thm, int sta
 
             buffer.upper_directories.shrink_to_fit();
 
-            this->Compiler_Data_Vectors[thm].push_back(buffer);
+            Com_Dt.push_back(buffer);
 
             this->Clear_Buffer_Memory(&buffer);
          }
       }
 
+      Com_Dt.shrink_to_fit();
 
-      this->Compiler_Data_Vectors[thm].shrink_to_fit();
+      std::unique_lock<std::mutex> mt(this->mtx);
+
+      this->Compiler_Data_Vectors.push_back(Com_Dt);
+
+      mt.unlock();
+
 }
 
 

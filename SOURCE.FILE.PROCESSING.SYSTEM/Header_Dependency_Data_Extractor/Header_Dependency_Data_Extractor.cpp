@@ -114,7 +114,7 @@ void Header_Dependency_Data_Extractor::Perform_Dependency_Search(){
 
      size_t data_size = this->Header_Files.size();
 
-     if(data_size>100){
+     if(data_size>50){
 
         this->Search_For_Large_Data_Set(data_size);
      }

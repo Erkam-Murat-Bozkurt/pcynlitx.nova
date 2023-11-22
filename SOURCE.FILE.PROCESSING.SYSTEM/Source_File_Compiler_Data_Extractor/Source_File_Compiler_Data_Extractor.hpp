@@ -67,15 +67,17 @@ public:
  std::vector<Compiler_Data> * Get_Compiler_Data_Address();
 protected:    
  void Extract_Obj_File_Name_From_File_Name(std::string * object_name, std::string hdr);
- void Process_Compiler_Data(int start, int end, int thm);
- void Extract_Compiler_Data_For_Single_Thread();
+ void Process_Compiler_Data(int start, int end);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
  void Clear_Buffer_Memory(Compiler_Data * ptr);
  void Clear_Data_Memory(std::vector<Compiler_Data> * ptr);
  void Find_Upper_Directory(std::string & upper, std::string dir);
  size_t Split_Range(size_t range_size, size_t partition, size_t & remaining_job);
- void Construct_Compiler_Data_Structures();
+ void Search_For_Large_Data_Set(size_t data_size);
+ void Search_For_Middle_Data_Set(size_t data_size);
+ void Search_For_Small_Data_Set(size_t data_size);
+ void Construct_Compiler_Data_List();
  Source_File_Dependency_Selector_For_Single_File * Dep_Selector_For_Single_File_Ptr;
  Source_File_Dependency_Selector * Dep_Selector_Ptr;
  Source_File_Information_Collector * Info_Collector;
@@ -86,6 +88,8 @@ protected:
  Compiler_Data buffer;
  std::string warehouse_obj_dir;
  std::string warehouse_path;
+ size_t thread_num;
+ std::mutex mtx;
  char operating_sis;
  bool include_decleration_cond;
  bool Memory_Delete_Condition;

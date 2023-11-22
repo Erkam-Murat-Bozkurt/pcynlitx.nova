@@ -107,7 +107,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
      std::cout << "\nThe source file data construction started";
 
 
-     if(data_size>50){
+     if(data_size>100){
 
         this->Search_For_Large_Data_Set(data_size);        
      }
