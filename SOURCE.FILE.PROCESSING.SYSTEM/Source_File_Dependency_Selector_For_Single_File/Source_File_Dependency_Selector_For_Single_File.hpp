@@ -63,7 +63,7 @@ public:
  std::vector<Source_File_Dependency> * Get_Dependency_List_Element_Adress(int num);
  size_t  Get_Dependency_List_Size();
 protected:
- void Construct_Dependency_Data_Vector(std::string path, int thr_num, std::vector<Source_File_Dependency> & vec);
+ void Construct_Dependency_Data_Vector(std::string path, std::vector<Source_File_Dependency> & vec);
  void Arrange_Dependency_Data(int thr_num, int start, int end);
  void Set_Included_Header_Number(std::vector<Source_File_Dependency> & ptr);
  void Clear_String_Memory(std::string & Pointer);
@@ -71,6 +71,9 @@ protected:
  void Set_Dependency_Data(Source_File_Dependency & data, std::string path, std::string header_name);
  std::string Get_Header_System_Path(std::string header_name);
  size_t Split_Range(size_t range_size, size_t partition, size_t & remaining_job);
+ void Search_For_Large_Data_Set(size_t data_size);
+ void Search_For_Middle_Data_Set(size_t data_size);
+ void Search_For_Small_Data_Set(size_t data_size);
  Source_File_Information_Collector_For_Single_File Info_Collector; 
  Dependency_Data_Stack_Container Stack_Container;
  Source_File_Data_Setter Data_Setter;

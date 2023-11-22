@@ -107,61 +107,22 @@ void Source_File_Dependency_Selector_For_Single_File::Determine_Source_File_Depe
 
      size_t data_size = this->Source_File_Data_Ptr->size();
 
-     if(data_size>20){
+     if(data_size>50){
 
-        size_t str=0, end=0;
-
-        size_t thread_num = data_size/20;
-
-        if(thread_num > 200){
-
-           thread_num = 200;
-        }
-
-        size_t remaining_job = 0;
-
-        size_t range =this->Split_Range(data_size,thread_num,remaining_job);
-
-
-        for(int i=0;i<thread_num;i++){
-
-            if(i==0){
-
-              str = 0;
-
-              end = range;
-            }
-            else{
-
-                 str  = end;
-
-                 end  = end + range;
-
-                 if(remaining_job > 0){
-
-                    end = end+1;
-
-                    remaining_job--;
-                 }
-            }
-
-           if(i==(thread_num-1)){
-            
-               end = data_size;
-           }
-
-           this->threadPool.push_back(std::thread(Source_File_Dependency_Selector_For_Single_File::Arrange_Dependency_Data,this,i,str,end));
-        }
-    
-        for(size_t i=0;i<thread_num;i++){
-            
-            this->threadPool[i].join();
-        }
+        this->Search_For_Large_Data_Set(data_size);        
      }
      else{
 
-          this->Arrange_Dependency_Data(0,0,data_size);
+         if(data_size>16){
+
+            this->Search_For_Middle_Data_Set(data_size);
+         }
+         else{
+
+             this->Search_For_Small_Data_Set(data_size);
+         }
      }
+
 
      this->Dependency_Data.shrink_to_fit();   
 
@@ -180,6 +141,106 @@ void Source_File_Dependency_Selector_For_Single_File::Determine_Source_File_Depe
 
 
 
+void Source_File_Dependency_Selector_For_Single_File::Search_For_Large_Data_Set(size_t data_size){
+
+     size_t str=0, end=0;
+
+     size_t thread_num = data_size/20;
+
+     if(thread_num > 200){
+
+         thread_num = 200;
+     }
+
+     size_t remaining_job = 0;
+
+     size_t range =this->Split_Range(data_size,thread_num,remaining_job);
+
+
+     for(int i=0;i<thread_num;i++){
+
+         if(i==0){
+
+            str = 0;
+
+            end = range;
+         }
+         else{
+
+             str  = end;
+
+             end  = end + range;
+
+             if(remaining_job > 0){
+
+                end = end+1;
+
+                remaining_job--;
+             }
+        }
+
+        if(i==(thread_num-1)){
+            
+           end = data_size;
+        }
+
+        this->threadPool.push_back(std::thread(Source_File_Dependency_Selector_For_Single_File::Arrange_Dependency_Data,this,i,str,end));
+     }
+    
+     for(size_t i=0;i<thread_num;i++){
+            
+            this->threadPool[i].join();
+     }
+}
+
+
+
+void Source_File_Dependency_Selector_For_Single_File::Search_For_Middle_Data_Set(size_t data_size){
+
+     int division = data_size/16;
+
+     for(int i=0;i<16;i++){
+
+         int str  = i*division;
+
+         int end  = (i+1)*division;
+
+         if(i==15){
+
+            end = data_size;
+         }
+
+         this->threadPool.push_back(std::thread(Source_File_Dependency_Selector_For_Single_File::Arrange_Dependency_Data,this,i,str,end));
+     }
+    
+     for(int i=0;i<16;i++){
+     
+         this->threadPool[i].join();
+     }
+}
+
+
+void Source_File_Dependency_Selector_For_Single_File::Search_For_Small_Data_Set(size_t data_size){
+
+     for(size_t i=0;i<data_size;i++){
+     
+         std::string path =this->Source_File_Data_Ptr->at(i).system_path;
+
+         std::vector<Source_File_Dependency> Dep_List;
+    
+         this->Construct_Dependency_Data_Vector(path,Dep_List);
+
+         this->Set_Included_Header_Number(Dep_List);
+
+         this->Dependency_Data.push_back(Dep_List);
+
+         this->Clear_Source_File_Dependency_Data(Dep_List);  
+     }  
+
+     this->Dependency_Data.shrink_to_fit();
+}
+
+
 
 void Source_File_Dependency_Selector_For_Single_File::Arrange_Dependency_Data(int thr_num, int start, int end){
 
@@ -195,7 +256,7 @@ void Source_File_Dependency_Selector_For_Single_File::Arrange_Dependency_Data(in
 
          std::vector<Source_File_Dependency> Dep_List;
     
-         this->Construct_Dependency_Data_Vector(path,thr_num,Dep_List);
+         this->Construct_Dependency_Data_Vector(path,Dep_List);
 
          this->Set_Included_Header_Number(Dep_List);
 
@@ -217,9 +278,7 @@ void Source_File_Dependency_Selector_For_Single_File::Arrange_Dependency_Data(in
 
 
 
-
-
-void Source_File_Dependency_Selector_For_Single_File::Construct_Dependency_Data_Vector(std::string path, int thr_num, 
+void Source_File_Dependency_Selector_For_Single_File::Construct_Dependency_Data_Vector(std::string path, 
 
      std::vector<Source_File_Dependency> & Dep_List){
 
@@ -266,6 +325,11 @@ size_t Source_File_Dependency_Selector_For_Single_File::Split_Range(size_t range
     if(range_size ==0){
 
         range_size = 1;
+    }
+
+    if(partition == 0){
+
+        partition = 1;
     }
 
     size_t range  = range_size/partition; 

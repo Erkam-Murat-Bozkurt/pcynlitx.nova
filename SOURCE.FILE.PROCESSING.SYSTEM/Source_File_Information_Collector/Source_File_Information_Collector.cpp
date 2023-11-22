@@ -86,6 +86,7 @@ void Source_File_Information_Collector::Determine_Source_File_List()
             Source_File_Data buffer;
 
             buffer.system_path = path;
+            
             buffer.source_file_name = source_file_name;
 
             this->Src_Data_Holder.push_back(buffer);
