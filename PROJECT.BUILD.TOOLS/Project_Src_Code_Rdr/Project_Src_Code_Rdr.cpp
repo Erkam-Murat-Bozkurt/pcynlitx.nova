@@ -8,24 +8,6 @@ Project_Src_Code_Rdr::Project_Src_Code_Rdr(char opr_sis)
    this->Memory_Delete_Condition = false;
 
    this->opr_sis = opr_sis;
-
-   this->Hdr_Determiner = new Header_File_Determiner * [32];
-
-   this->Src_Determiner = new Source_File_Determiner * [32];
-
-   for(int i=0;i<32;i++){
-   
-       this->Hdr_Determiner[i] = new Header_File_Determiner(opr_sis);
-
-       this->Src_Determiner[i] = new Source_File_Determiner;
-   }
-
-   for(int i=0;i<32;i++){
-   
-       this->FileManager[i].Receive_Operating_System(opr_sis);
-
-       this->StringManager[i].Receive_Operating_System(opr_sis);
-   }
 }
 
 
@@ -44,11 +26,6 @@ Project_Src_Code_Rdr::~Project_Src_Code_Rdr(){
 void Project_Src_Code_Rdr::Receive_Git_Data_Processor(Git_Data_Processor * ptr)
 {
      this->Git_Data_Proc = ptr;
-
-     for(int i=0;i<32;i++){
-   
-         this->Hdr_Determiner[i]->Receive_Git_Data_Processor(ptr);
-     }
 
      this->root_directory = this->Git_Data_Proc->Get_Git_Repo_Directory();
 }
@@ -77,29 +54,25 @@ void Project_Src_Code_Rdr::Read_Project_Source_Code_Files(){
 
      size_t repo_size = this->FilePaths.size();      
 
-     if(repo_size >= 32){
+     if(repo_size >= 50){
      
-        int division = repo_size/32;
-        
-        for(int i=0;i<32;i++){
+        this->Read_For_Large_Data_Set(repo_size);
+     }
+     else{
 
-            int str  = i*division;
+         if(repo_size>16){
 
-            int end  = (i+1)*division;
+             this->Read_For_Middle_Data_Set(repo_size);
+         }
+         else{
 
-            if(i==31){
+             this->Read_For_Small_Data_Set(repo_size);
+         }
+     }
 
-                end = repo_size;
-            }
+     if(!this->threadPool.empty()){
 
-            this->threads[i] = std::thread(Project_Src_Code_Rdr::Read_Source_Code,this,i,str,end);     
-        }
-    
-        for(int i=0;i<32;i++){
-     
-            this->threads[i].join();
-        }
-
+         this->threadPool.clear();
      }
 
      this->Code_Dt.shrink_to_fit();
@@ -118,22 +91,150 @@ void Project_Src_Code_Rdr::Read_Project_Source_Code_Files(){
 }
 
 
-void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_point){
+void Project_Src_Code_Rdr::Read_For_Large_Data_Set(size_t repo_size){
+
+     size_t str=0, end=0;
+
+     size_t thread_num = repo_size/20;
+
+     if(thread_num > 200){
+
+        thread_num = 200;
+     }
+
+     size_t remaining_job = 0;
+
+     size_t range =this->Split_Range(repo_size,thread_num,remaining_job);
+
+
+     for(int i=0;i<thread_num;i++){
+
+         if(i==0){
+
+            str = 0;
+
+            end = range;
+         }
+         else{
+               str  = end;
+
+               end  = end + range;
+
+               if(remaining_job > 0){
+
+                  end = end+1;
+
+                  remaining_job--;
+               }
+         }
+
+         if(i==(thread_num-1)){
+            
+            end = repo_size;
+         }
+
+         this->threadPool.push_back(std::thread(Project_Src_Code_Rdr::Read_Source_Code,this,str,end));
+     }
+    
+     for(size_t i=0;i<thread_num;i++){
+            
+         this->threadPool[i].join();
+     }
+}
+
+
+
+
+void Project_Src_Code_Rdr::Read_For_Middle_Data_Set(size_t repo_size){
+
+     int thread_number = 16;
+     
+     int division = repo_size/thread_number;
+        
+     for(int i=0;i<thread_number;i++){
+
+         int str  = i*division;
+
+         int end  = (i+1)*division;
+
+         if(i==(thread_number-1)){
+
+            end = repo_size;
+         }
+
+         this->threadPool.push_back(std::thread(Project_Src_Code_Rdr::Read_Source_Code,this,str,end));
+     }
+    
+     for(int i=0;i<thread_number;i++){
+     
+         this->threadPool[i].join();
+     }
+}
+
+void Project_Src_Code_Rdr::Read_For_Small_Data_Set(size_t repo_size){
+
+     this->Read_Source_Code(0,repo_size);
+}
+
+
+size_t Project_Src_Code_Rdr::Split_Range(size_t range_size, size_t partition, size_t & remaining_job){
+
+    if(range_size ==0){
+
+        range_size = 1;
+    }
+
+    if(partition == 0){
+
+        partition = 1;
+    }
+
+    int range  = range_size/partition; 
+
+    if(range<1){
+
+        range = 1;
+    }
+
+    remaining_job = range_size%partition;
+
+    return range;    
+}
+
+
+void Project_Src_Code_Rdr::Read_Source_Code(int start_point, int end_point){
 
      std::unique_lock<std::mutex> mt(this->mtx);
 
      mt.unlock();
 
 
+     Header_File_Determiner Hdr_Determiner(this->opr_sis);
+
+     Hdr_Determiner.Receive_Git_Data_Processor(this->Git_Data_Proc);
+
+     Source_File_Determiner Src_Determiner;
+
+     Cpp_FileOperations FileManager;
+
+     FileManager.Receive_Operating_System(this->opr_sis);
+
+     StringOperator StringManager;
+
+     StringManager.Receive_Operating_System(this->opr_sis);
+
+
      for(int i=start_point;i<end_point;i++){
+
+         Hdr_Determiner.Clear_Dynamic_Memory();
+
+         Src_Determiner.Clear_Dynamic_Memory();
      
          std::string file_sys_path = this->FilePaths.at(i);
-
          
+         bool is_header   = Hdr_Determiner.Is_Header(file_sys_path);
 
-         bool is_header   = this->Hdr_Determiner[trn]->Is_Header(file_sys_path);
-
-         bool is_src_file = this->Src_Determiner[trn]->Is_Source_File(file_sys_path);
+         bool is_src_file = Src_Determiner.Is_Source_File(file_sys_path);
 
 
          if(is_header || is_src_file){
@@ -163,13 +264,13 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
                buffer.is_source_file = false;
             }
 
-            this->FileManager[trn].Read_File(file_sys_path);
+            FileManager.Read_File(file_sys_path);
 
-            int FileSize = this->FileManager[trn].GetFileSize();
+            int FileSize = FileManager.GetFileSize();
 
             for(int k=0;k<FileSize;k++){
          
-                std::string string_line = this->FileManager[trn].GetFileLine(k);
+                std::string string_line = FileManager.GetFileLine(k);
 
                 this->Delete_Spaces_on_String(&string_line);
 
@@ -180,7 +281,7 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
 
                    bool is_main_key_exist 
                    
-                   = this->StringManager[trn].CheckStringInclusion(string_line,main_file_key);
+                   = StringManager.CheckStringInclusion(string_line,main_file_key);
 
 
                    if(is_main_key_exist){
@@ -193,7 +294,7 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
                                 
                    bool is_member_function_key_exist 
                    
-                   = this->StringManager[trn].CheckStringInclusion(string_line,class_function_pattern);
+                   = StringManager.CheckStringInclusion(string_line,class_function_pattern);
 
 
                    // It is the member function scop resolution key word 
@@ -207,7 +308,7 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
                    }
                 }
 
-                bool is_include_decleration = this->Include_Decleration_Test(string_line,trn);
+                bool is_include_decleration = this->Include_Decleration_Test(string_line,StringManager);
 
                 if(is_include_decleration){
 
@@ -221,20 +322,7 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
                       
                       if(this->Is_There_Upper_Directory_Symbol(comb_dec)){
 
-
-                         
-                         //mt.lock();
-
-                         //std::cout << "\n";
-                         //std::cout << "\n include_decleration:" << include_decleration;
-
                          std::string real_inc = this->Find_Real_Include_Decleration(file_sys_path,include_decleration);
-
-                         //std::cout << "\n real_inc=" << real_inc;
-                         //std::cout << "\n";
-                         //std::cin.get();
-
-                         //mt.unlock();
 
                          buffer.include_declerations.push_back(real_inc);
                     }
@@ -252,9 +340,9 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
                 }
             }
 
-            this->FileManager[trn].Clear_Dynamic_Memory();
+            FileManager.Clear_Dynamic_Memory();
             
-            this->StringManager[trn].Clear_Dynamic_Memory();
+            StringManager.Clear_Dynamic_Memory();
 
             this->Determine_File_Name(file_sys_path,buffer.file_name);
 
@@ -282,6 +370,8 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
             this->Clear_Buffer_Memory(buffer);
          }
      }
+
+
 
 }
 
@@ -334,9 +424,6 @@ std::string Project_Src_Code_Rdr::Find_Real_Include_Decleration(std::string file
 
      size_t path_start_point = 0, path_end_point =0, dec_start_point =0;
 
-     //std::cout << "\n file_path:" << file_path;
-
-
      for(size_t i=file_path.length()-1;i>0;i--){
 
          if((file_path.at(i)== '\\') || (file_path.at(i) == '/')){
@@ -354,9 +441,6 @@ std::string Project_Src_Code_Rdr::Find_Real_Include_Decleration(std::string file
          }
      }
 
-     //std::cout << "\n path_start_point:" << path_start_point;
-
-
      for(size_t i=path_start_point;i<file_path.length()-1;i++){
 
          if((file_path.at(i)== '\\') || (file_path.at(i) == '/')){
@@ -366,9 +450,6 @@ std::string Project_Src_Code_Rdr::Find_Real_Include_Decleration(std::string file
              break;
          }
      }
-
-     //std::cout << "\n path_end_point:" << path_end_point;
-
 
      for(size_t i=inc_dec.length()-1;i>0;i--){
 
@@ -380,8 +461,6 @@ std::string Project_Src_Code_Rdr::Find_Real_Include_Decleration(std::string file
          }
      }
 
-     //std::cout << "\n dec_start_point:" << dec_start_point;
-
      std::string real_dec;
 
      for(size_t i=path_start_point;i<path_end_point;i++){
@@ -389,9 +468,6 @@ std::string Project_Src_Code_Rdr::Find_Real_Include_Decleration(std::string file
          real_dec.push_back(file_path.at(i));
      }
 
-     //td::cout << "\n real_dec:" << real_dec;
-     //std::cout << "\n real_dec.beck():" << real_dec.back();
-     
      if(this->opr_sis == 'w'){
 
         if(real_dec.back()!='\\'){
@@ -399,8 +475,6 @@ std::string Project_Src_Code_Rdr::Find_Real_Include_Decleration(std::string file
             real_dec.push_back('\\');
         }
      }
-
-     //std::cout << "\n real_dec:" << real_dec;
 
 
      if(this->opr_sis == 'l'){
@@ -578,7 +652,7 @@ void Project_Src_Code_Rdr::Determine_File_Combined_Name(std::string path, std::s
 }
 
 
-bool Project_Src_Code_Rdr::Include_Decleration_Test(std::string string, int thr_num)
+bool Project_Src_Code_Rdr::Include_Decleration_Test(std::string string, StringOperator & str_opr)
 {
      bool include_decleration_cond = false;
 
@@ -590,11 +664,11 @@ bool Project_Src_Code_Rdr::Include_Decleration_Test(std::string string, int thr_
      bool include_dec_cond_1 = false;
 
      bool include_dec_cond_2 = false;
+     
 
+     include_dec_cond_1 = str_opr.CheckStringInclusion(string,include_key_1);
 
-     include_dec_cond_1 = this->StringManager[thr_num].CheckStringInclusion(string,include_key_1);
-
-     include_dec_cond_2 = this->StringManager[thr_num].CheckStringInclusion(string,include_key_2);
+     include_dec_cond_2 = str_opr.CheckStringInclusion(string,include_key_2);
 
 
      bool char_before_sharp = false; //  sharp symbol = #
@@ -902,8 +976,11 @@ void Project_Src_Code_Rdr::Clear_Dynamic_Memory(){
      for(auto it=this->Code_Dt.begin();it<this->Code_Dt.end();it++){
        
          this->Clear_Vector_Memory(it->include_declerations);
+
          this->Clear_String_Memory(it->sys_path);
+
          this->Clear_String_Memory(it->file_name);
+         
          this->Clear_String_Memory(it->cmbn_name);
      }
 
@@ -922,46 +999,6 @@ void Project_Src_Code_Rdr::Clear_Dynamic_Memory(){
 
 
 void Project_Src_Code_Rdr::Clear_Thread_Objects_Memory(){
-
-     for(int i=0;i<32;i++){
-     
-         if(this->Hdr_Determiner[i] != nullptr){
-              
-            delete this->Hdr_Determiner[i];
-
-            this->Hdr_Determiner[i] = nullptr;
-         }             
-     }
-         
-     delete [] this->Hdr_Determiner;
-
-     this->Hdr_Determiner = nullptr;
-     
-     
-     for(int i=0;i<32;i++){
-
-         if(this->Src_Determiner[i]!= nullptr){
-
-            delete this->Src_Determiner[i];
-
-            this->Src_Determiner[i] = nullptr;
-         }                 
-     }
-
-     delete [] this->Src_Determiner;
-
-     this->Src_Determiner = nullptr;
-
-
-     for(int i=0;i<32;i++){
-
-        this->FileManager[i].Clear_Dynamic_Memory();
-     }
-
-     for(int i=0;i<32;i++){
-
-        this->StringManager[i].Clear_Dynamic_Memory();
-     }
 
      this->Clear_Vector_Memory(this->FilePaths);
 }

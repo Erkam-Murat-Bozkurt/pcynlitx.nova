@@ -32,6 +32,7 @@ public:
  void Determine_File_Name_Without_Ext(std::string path);
  std::string Get_Source_File_Name();
  std::string Get_File_Name_Witout_Ext();
+ void Clear_Dynamic_Memory();
 protected:
  void Read_File(std::string path);
  void Determine_Class_Function_Pattern(std::string path);
@@ -39,7 +40,6 @@ protected:
  void Delete_Spaces_on_String(std::string * pointer);
  void Extract_File_Extention(std::string & ext, std::string file_path, 
      bool & is_there_ext);
- void Clear_Dynamic_Memory();
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
  StringOperator StringManager;
