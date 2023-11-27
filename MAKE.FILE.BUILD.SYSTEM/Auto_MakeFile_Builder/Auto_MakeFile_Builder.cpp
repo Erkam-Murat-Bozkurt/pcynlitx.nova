@@ -88,80 +88,128 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
 }
 
 
+void Auto_MakeFile_Builder::Construct_For_Large_Data_Set(size_t data_size){
+
+     size_t str=0, end=0;
+
+     size_t thread_num = data_size/50;
+
+     if(thread_num > 200){
+
+        thread_num = 200;
+     }
+
+     size_t remaining_job = 0;
+
+     size_t range = this->Split_Range(data_size,thread_num,remaining_job);
+
+
+     for(int i=0;i<thread_num;i++){
+
+         if(i==0){
+
+            str = 0;
+
+            end = range;
+         }
+         else{
+
+            str  = end;
+
+            end  = end + range;
+
+            if(remaining_job > 0){
+
+               end = end+1;
+
+               remaining_job--;
+            }
+         }
+
+         if(i==(thread_num-1)){
+            
+               end = data_size;
+         }
+
+         this->threadPool.push_back(std::thread(Auto_MakeFile_Builder::Write_MakeFiles,this,str,end));
+     }
+    
+     for(size_t i=0;i<thread_num;i++){
+            
+         this->threadPool[i].join();
+     }
+}
+
+void Auto_MakeFile_Builder::Construct_For_Middle_Data_Set(size_t data_size){
+
+     int division = data_size/16;
+
+     for(int i=0;i<16;i++){
+
+         int str  = i*division;
+
+         int end  = (i+1)*division;
+
+         if(i==15){
+
+            end = data_size;
+         }
+
+         this->threadPool.push_back(std::thread(Auto_MakeFile_Builder::Write_MakeFiles,this,str,end));
+     }
+    
+     for(int i=0;i<16;i++){
+     
+         this->threadPool[i].join();
+     }
+}
+
+void Auto_MakeFile_Builder::Construct_For_Small_Data_Set(size_t data_size){
+
+     this->Write_MakeFiles(0,data_size);    
+}
+
+
+
 void Auto_MakeFile_Builder::Perform_MakeFile_Construction(){
 
      size_t data_size = this->Compiler_Data_Pointer->size();
 
-     if(data_size>50){
+     if(data_size > 50){
 
-        size_t str=0, end=0;
+        this->Construct_For_Large_Data_Set(data_size);        
+     }
+     else{
 
-        size_t thread_num = data_size/50;
+         if(data_size>16){
 
-        if(thread_num > 200){
+             this->Construct_For_Middle_Data_Set(data_size);
+         }
+         else{
 
-           thread_num = 200;
-        }
+             this->Construct_For_Small_Data_Set(data_size);
+         }
+     }
 
-        size_t remaining_job = 0;
+    if(!this->threadPool.empty()){
 
-        size_t range =this->Split_Range(data_size,thread_num,remaining_job);
+        this->threadPool.clear();
 
-
-        for(int i=0;i<thread_num;i++){
-
-            if(i==0){
-
-              str = 0;
-
-              end = range;
-            }
-            else{
-
-                 str  = end;
-
-                 end  = end + range;
-
-                 if(remaining_job > 0){
-
-                    end = end+1;
-
-                    remaining_job--;
-                 }
-            }
-
-           if(i==(thread_num-1)){
-            
-               end = data_size;
-           }
-
-           this->threadPool.push_back(std::thread(Auto_MakeFile_Builder::Write_MakeFiles,this,i,str,end));
-        }
-    
-        for(size_t i=0;i<thread_num;i++){
-            
-            this->threadPool[i].join();
-        }
-
-        if(!this->threadPool.empty()){
-
-            this->threadPool.clear();
-
-            this->threadPool.shrink_to_fit();
-        }
+        this->threadPool.shrink_to_fit();
     }
-    else{
 
-        this->Write_MakeFiles(0,0,data_size);
-    }
 }
-
 
 size_t Auto_MakeFile_Builder::Split_Range(size_t range_size, size_t partition, size_t & remaining_job){
 
     if(range_size ==0){
 
         range_size = 1;
+    }
+
+    if(partition == 0){
+
+       partition = 1;
     }
 
     int range  = range_size/partition; 
@@ -191,7 +239,7 @@ void Auto_MakeFile_Builder::Perform_Data_Map_Construction(){
 }
 
 
-void Auto_MakeFile_Builder::Write_MakeFiles(int thr_num, int start, int end){
+void Auto_MakeFile_Builder::Write_MakeFiles(int start, int end){
 
      Make_File_Builder Mk_Builder;
 

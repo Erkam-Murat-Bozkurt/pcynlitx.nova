@@ -41,13 +41,16 @@ public:
  void Clear_Dynamic_Memory();
 protected:
  void Determine_Project_Directories();
- void Write_MakeFiles(int thr_num, int start, int end);
+ void Write_MakeFiles(int start, int end);
  void Clear_Vector_Memory(std::vector<std::string> & vec);
  void Clear_String_Memory(std::string & str);
  void Construct_Path(std::string * ptr, std::string str, std::string wrd);
  void Perform_Data_Map_Construction();
  void Perform_MakeFile_Construction();
  size_t Split_Range(size_t range_size, size_t partition, size_t & remaining_job);
+ void Construct_For_Large_Data_Set(size_t data_size);
+ void Construct_For_Middle_Data_Set(size_t data_size);
+ void Construct_For_Small_Data_Set(size_t data_size);
  Source_File_Dependency_Determiner * Dep_Determiner;
  std::vector<Compiler_Data> * Compiler_Data_Pointer;
  MakeFile_Directory_Constructor Mk_Dir_Constructor;
