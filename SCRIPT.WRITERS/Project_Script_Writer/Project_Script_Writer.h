@@ -34,7 +34,7 @@ public:
  void Clear_Dynamic_Memory();
 protected:
  void Write_Sub_Project_Scripts();
- void Write_Source_File_Scripts(size_t start, size_t end);
+ void Write_Source_File_Scripts(int start, int end);
  void Write_Project_Build_Script();
  void Determine_Project_Script_Path();
  void Construct_Path(std::string & path, std::string str, std::string wp);
@@ -46,7 +46,10 @@ protected:
  void Determine_MakeFile_Directory(std::string & mkf_dir, std::string git_record_dir);
  void Determine_MakeFiles_Root_Directory();
  int  Determine_Decimal_Space(int total_src_num, int current_number);
- size_t Split_Range(size_t range_size, size_t partition, size_t & remaining_job);
+ size_t Split_Range(int range_size, int partition, int & remaining_job);
+ void Construct_For_Large_Data_Set(int data_size);
+ void Construct_For_Middle_Data_Set(int data_size);
+ void Construct_For_Small_Data_Set(int data_size);
  Descriptor_File_Reader * Des_Reader;
  Script_Data_Processor Src_Data_Processor;
  DirectoryOperations DirectoryManager;
