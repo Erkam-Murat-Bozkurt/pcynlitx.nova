@@ -100,9 +100,6 @@ void Project_Src_Code_Rdr::Read_Project_Source_Code_Files(){
             this->threads[i].join();
         }
 
-     }else{
-     
-           this->Read_Source_Code_Single_Thread();
      }
 
      this->Code_Dt.shrink_to_fit();
@@ -216,7 +213,40 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
 
                    std::string include_decleration = this->Extract_Include_Decleration(string_line);
 
-                   buffer.include_declerations.push_back(include_decleration);
+                   if(this->Is_This_A_Combined_Include_Delaration(include_decleration)){
+
+                      std::string comb_dec;
+
+                      this->Extract_Directory_File_Name_Combination(include_decleration,comb_dec);
+                      
+                      if(this->Is_There_Upper_Directory_Symbol(comb_dec)){
+
+
+                         
+                         //mt.lock();
+
+                         //std::cout << "\n";
+                         //std::cout << "\n include_decleration:" << include_decleration;
+
+                         std::string real_inc = this->Find_Real_Include_Decleration(file_sys_path,include_decleration);
+
+                         //std::cout << "\n real_inc=" << real_inc;
+                         //std::cout << "\n";
+                         //std::cin.get();
+
+                         //mt.unlock();
+
+                         buffer.include_declerations.push_back(real_inc);
+                    }
+                    else{
+
+                        buffer.include_declerations.push_back(comb_dec);
+                    }
+                   }
+                   else{
+
+                        buffer.include_declerations.push_back(include_decleration);
+                   }
 
                    buffer.inclusion_number++;
                 }
@@ -256,107 +286,192 @@ void Project_Src_Code_Rdr::Read_Source_Code(int trn, int start_point, int end_po
 }
 
 
+bool Project_Src_Code_Rdr::Is_There_Upper_Directory_Symbol(std::string inc_dec){
 
-void Project_Src_Code_Rdr::Read_Source_Code_Single_Thread(){
+     bool is_there = false;
 
-     for(size_t i=0;i<this->FilePaths.size();i++){
+     StringOperator StringManager;
+
+     std::string up_w = "..\\";
+
+     std::string up_l = "../";
+
+     bool is_there_w = StringManager.CheckStringInclusion(inc_dec,up_w);
+
+     bool is_there_l = StringManager.CheckStringInclusion(inc_dec,up_l);
+
+     if(is_there_l || is_there_w){
+
+        is_there = true;
+     }
      
-         std::string file_sys_path = this->FilePaths.at(i);
-
-         bool is_header   = this->Hdr_Determiner[0]->Is_Header(file_sys_path);
-
-         bool is_src_file = this->Src_Determiner[0]->Is_Source_File(file_sys_path);
-
-         if(is_header || is_src_file){
-                             
-            FileData buffer;
-
-            buffer.sys_path = file_sys_path;
+     return is_there;
+}
 
 
-            std::string class_function_pattern;
+int Project_Src_Code_Rdr::How_Many_UpDir_Symbol_Exist(std::string inc_dec){
 
-            if(is_src_file){
+     int point_num = 0, up_dir_num=0;
 
-               this->Determine_Class_Function_Pattern(file_sys_path,class_function_pattern);               
-            }
+     for(size_t i=0;i<inc_dec.length();i++){
 
+         if(inc_dec[i] == '.'){
 
-            this->FileManager[0].Read_File(file_sys_path);
-
-            int FileSize = this->FileManager[0].GetFileSize();
-
-            for(int k=0;k<FileSize;k++){
-         
-                std::string string_line = this->FileManager[0].GetFileLine(k);
-
-                this->Delete_Spaces_on_String(&string_line);
-
-                this->Include_Decleration_Test(string_line,0);
-
-                if(is_src_file){
-
-                   std::string main_file_key   = "main(";
-
-                   bool is_main_key_exist 
-                   
-                   = this->StringManager[0].CheckStringInclusion(string_line,main_file_key);
-
-
-                   if(is_main_key_exist){
-
-                      buffer.is_main_file   = true;
-                      buffer.is_header_file = false;
-                      buffer.is_source_file = false;
-                   }
-
-                                
-                   bool is_member_function_key_exist 
-                   
-                   = this->StringManager[0].CheckStringInclusion(string_line,class_function_pattern);
-
-
-                   // It is the member function scop resolution key word 
-                   // For member function sample::function, it is "sample::"
-
-                   if(is_member_function_key_exist){      
-
-                      buffer.is_source_file = true;
-                      buffer.is_header_file = false;
-                      buffer.is_main_file   = false;
-                   }
-                }
-
-
-                bool is_include_decleration = this->Include_Decleration_Test(string_line,0);
-
-                if(is_include_decleration){
-
-                    std::string include_decleration = this->Extract_Include_Decleration(string_line);
-
-                    buffer.include_declerations.push_back(include_decleration);
-
-                    buffer.inclusion_number++;
-                }                
-            }
-            
-
-            this->Determine_File_Name(file_sys_path,buffer.file_name);
-
-            this->Determine_File_Combined_Name(file_sys_path,buffer.cmbn_name);
-
-
-
-            this->Code_Dt.push_back(buffer);
-
-            this->Clear_Buffer_Memory(buffer);
-
+             point_num++;
          }
      }
 
-     this->Clear_Thread_Objects_Memory();    
+     up_dir_num = point_num/2;
+
+     return up_dir_num;
 }
 
+
+
+std::string Project_Src_Code_Rdr::Find_Real_Include_Decleration(std::string file_path, std::string inc_dec){
+
+     int stage_num = this->How_Many_UpDir_Symbol_Exist(inc_dec) +1;
+
+     size_t path_start_point = 0, path_end_point =0, dec_start_point =0;
+
+     //std::cout << "\n file_path:" << file_path;
+
+
+     for(size_t i=file_path.length()-1;i>0;i--){
+
+         if((file_path.at(i)== '\\') || (file_path.at(i) == '/')){
+
+             if(stage_num>0){
+
+                stage_num--;
+             }
+             else{ 
+
+                  path_start_point = i+1;
+
+                  break;
+             }
+         }
+     }
+
+     //std::cout << "\n path_start_point:" << path_start_point;
+
+
+     for(size_t i=path_start_point;i<file_path.length()-1;i++){
+
+         if((file_path.at(i)== '\\') || (file_path.at(i) == '/')){
+
+             path_end_point = i;
+
+             break;
+         }
+     }
+
+     //std::cout << "\n path_end_point:" << path_end_point;
+
+
+     for(size_t i=inc_dec.length()-1;i>0;i--){
+
+         if((inc_dec.at(i)== '\\') || (inc_dec.at(i) == '/')){
+
+             dec_start_point = i+1;
+
+             break;
+         }
+     }
+
+     //std::cout << "\n dec_start_point:" << dec_start_point;
+
+     std::string real_dec;
+
+     for(size_t i=path_start_point;i<path_end_point;i++){
+
+         real_dec.push_back(file_path.at(i));
+     }
+
+     //td::cout << "\n real_dec:" << real_dec;
+     //std::cout << "\n real_dec.beck():" << real_dec.back();
+     
+     if(this->opr_sis == 'w'){
+
+        if(real_dec.back()!='\\'){
+
+            real_dec.push_back('\\');
+        }
+     }
+
+     //std::cout << "\n real_dec:" << real_dec;
+
+
+     if(this->opr_sis == 'l'){
+
+        if(real_dec.back()!='/'){
+
+            real_dec.push_back('/');
+        }
+     }
+
+     for(size_t i=dec_start_point;i<inc_dec.length();i++){
+
+         real_dec.push_back(inc_dec.at(i));
+     } 
+
+     return real_dec;
+}
+
+
+bool Project_Src_Code_Rdr::Is_This_A_Combined_Include_Delaration(std::string name)
+{
+     bool is_combined = false;
+
+     size_t name_size = name.length();
+
+     for(size_t i=0;i<name_size;i++){
+
+         if(((name[i]=='/') || (name[i]=='\\'))){
+
+            is_combined = true;
+
+            return is_combined;
+         }
+     }
+
+     return is_combined;
+}
+
+
+void Project_Src_Code_Rdr::Extract_Directory_File_Name_Combination(std::string inc_dec, 
+
+     std::string & dir_file_com)
+{
+     size_t dec_size = inc_dec.length();
+
+     size_t dir_char_num = 0, start_point = dec_size;
+
+     for(size_t i=dec_size;i>0;i--){
+
+         if((inc_dec[i] == '/') || (inc_dec[i] == '\\')){
+
+            dir_char_num++;
+
+            if(dir_char_num>1){
+
+               start_point = i+1;        
+
+               break;
+            }
+         }
+         
+         start_point--;        
+     }
+    
+     for(size_t i=start_point;i<dec_size;i++){
+
+         dir_file_com.push_back(inc_dec[i]);
+     }
+
+     dir_file_com.shrink_to_fit();
+}
 
 
 void Project_Src_Code_Rdr::Delete_Spaces_on_String(std::string * str){
@@ -468,6 +583,7 @@ bool Project_Src_Code_Rdr::Include_Decleration_Test(std::string string, int thr_
      bool include_decleration_cond = false;
 
      char include_key_1 [] = "#include\"";  // double_quotation_mark
+
      char include_key_2 [] = "#include<";  // double_quotation_mark
 
 

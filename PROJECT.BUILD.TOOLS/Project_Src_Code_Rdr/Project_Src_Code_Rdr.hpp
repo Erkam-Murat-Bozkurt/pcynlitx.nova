@@ -79,7 +79,6 @@ protected:
  void Clear_Thread_Objects_Memory();
  void Read_Source_Code(int th_num, int st, int end);
  void Delete_Spaces_on_String(std::string * str);
- void Read_Source_Code_Single_Thread();
  void Receive_File_Paths();
  void Determine_File_Name(std::string path, std::string & name);
  void Determine_File_Combined_Name(std::string path, std::string & file_name);
@@ -87,6 +86,11 @@ protected:
  void Determine_Class_Function_Pattern(std::string file_path,std::string & pattern);
  void Clear_Buffer_Memory(FileData & buffer);
  std::string Extract_Include_Decleration(std::string string);
+ bool Is_There_Upper_Directory_Symbol(std::string inc_dec);
+ int  How_Many_UpDir_Symbol_Exist(std::string inc_dec);
+ std::string Find_Real_Include_Decleration(std::string file_path, std::string inc_dec);
+ bool Is_This_A_Combined_Include_Delaration(std::string name);
+ void Extract_Directory_File_Name_Combination(std::string inc_dec, std::string & dir_file_com);
  Git_Data_Processor * Git_Data_Proc;
  Source_File_Determiner ** Src_Determiner;
  Header_File_Determiner ** Hdr_Determiner;
