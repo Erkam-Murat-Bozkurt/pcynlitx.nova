@@ -322,27 +322,20 @@ int Source_File_Dependency_Determiner::Find_File_Priority(std::string name){
 
 void Source_File_Dependency_Determiner::Order_Priorities(){
 
-     for(int i=0;i< this->Compiler_Data_Ptr->size();i++){
+     for(size_t i=0;i < this->Compiler_Data_Ptr->size();i++){
 
-         for(int j=i;j< this->Compiler_Data_Ptr->size();j++){
+         for(size_t j=i; j < this->Compiler_Data_Ptr->size();j++){
 
              int dep_i = this->Compiler_Data_Ptr->at(i).priority;
 
              int dep_j = this->Compiler_Data_Ptr->at(j).priority;
 
-             Compiler_Data temp;
+             if( dep_i > dep_j ){
 
-             if( dep_i < dep_j ){
-
-                 temp  = this->Compiler_Data_Ptr->at(i);
-
-                 this->Compiler_Data_Ptr->at(i) = this->Compiler_Data_Ptr->at(j);
-
-                 this->Compiler_Data_Ptr->at(j) = temp;
-              }
+                std::swap(this->Compiler_Data_Ptr->at(i),this->Compiler_Data_Ptr->at(j));
+             }                          
           }
       }
-
 }
 
 

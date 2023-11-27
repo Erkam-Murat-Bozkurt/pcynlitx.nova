@@ -25,6 +25,7 @@
 #include <stdexcept>      // std::out_of_range
 #include <thread>
 #include <mutex>
+#include <algorithm>    // std::swap
 #include "Source_File_Compiler_Data_Extractor.hpp"
 #include "Source_File_Dependency_Selector_For_Single_File.hpp"
 #include "Source_File_Dependency_Selector.hpp"
