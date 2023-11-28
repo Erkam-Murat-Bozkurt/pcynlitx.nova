@@ -397,6 +397,8 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
 
      size_t compiler_data_size = this->Com_Data_ptr->size();
+     
+     this->Com_Data_ptr->shrink_to_fit();
 
      size_t dep_header_size = this->Com_Data_ptr->at(0).dependent_headers.size();
 
@@ -408,14 +410,12 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
           this->FileManager.WriteToFile(header_name);
 
-          this->FileManager.WriteToFile("_PATH=");
+          this->FileManager.WriteToFile("_Path=");
 
           this->FileManager.WriteToFile(dir);
 
           this->FileManager.WriteToFile("\n");
      }
-
-
 
 
      char PathSpecifier [] = "VPATH = ";
@@ -505,7 +505,7 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
           this->FileManager.WriteToFile(header_name);
 
-          this->FileManager.WriteToFile("_PATH");
+          this->FileManager.WriteToFile("_Path");
 
           this->FileManager.WriteToFile(")");
 
@@ -840,7 +840,7 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
 
           this->FileManager.WriteToFile(header_name);
 
-          this->FileManager.WriteToFile("_PATH=");
+          this->FileManager.WriteToFile("_Path=");
 
           this->FileManager.WriteToFile(dir);
 
@@ -937,7 +937,7 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
 
           this->FileManager.WriteToFile(header_name);
 
-          this->FileManager.WriteToFile("_PATH");
+          this->FileManager.WriteToFile("_Path");
 
           this->FileManager.WriteToFile(")");
 

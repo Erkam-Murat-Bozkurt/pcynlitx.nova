@@ -116,9 +116,15 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Warehouse_Path = this->DepSelector_For_Single_File.Get_Warehouse_Path();
 
+     std::cout << "\nThe interpretation of dependency data started";
+
+
      this->Com_Data_Extractor.Receive_Single_File_Dependency_Data(&this->DepSelector_For_Single_File);
 
      this->Com_Data_Extractor.Extract_Compiler_Data();
+
+     std::cout << "\nThe interpretation of dependency data complated";
+
 
      this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
@@ -330,7 +336,7 @@ void Source_File_Dependency_Determiner::Order_Priorities(){
 
              int dep_j = this->Compiler_Data_Ptr->at(j).priority;
 
-             if( dep_i > dep_j ){
+             if( dep_i < dep_j ){
 
                 std::swap(this->Compiler_Data_Ptr->at(i),this->Compiler_Data_Ptr->at(j));
              }                          

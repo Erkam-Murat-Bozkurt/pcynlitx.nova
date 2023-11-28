@@ -343,6 +343,8 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int start, int e
 
             buffer.upper_directories.shrink_to_fit();
 
+            buffer.priority = buffer.dependent_headers.size();
+
             Com_Dt.push_back(buffer);
 
             this->Clear_Buffer_Memory(&buffer);
