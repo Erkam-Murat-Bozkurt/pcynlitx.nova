@@ -1,0 +1,111 @@
+
+
+DESCRIPTOR FILE FOR PCYNLITX BUILD SYSTEM
+
+
+[PROJECT-ROOT-DIR]{
+
+   D:\pcynlitx.build.gui
+}
+
+
+
+[PROJECT-WAREHOUSE-LOCATION]{
+
+  D:\PCYNLITX.BUILD.GUI.WAREHOUSE
+}
+
+
+[C++-STANDARD]{
+
+17
+
+}
+
+[INCLUDE-DIRECTORIES]{
+
+  D:\wxWidgets-3.2.0\lib\gcc_lib\mswud
+  D:\wxWidgets-3.2.0\include
+}
+
+
+[SOURCE-FILE-DIRECTORIES]{
+
+}
+
+[LIBRARY-DIRECTORIES]{
+
+C:\migw64\lib\gcc\x86_64-w64-mingw32\8.1.0
+
+D:\wxMSW-3.2.0_Dev_Files
+
+D:\wxMSW-3.2.0_Dev_Files\mswud
+
+D:\migw64\lib\gcc\x86_64-w64-mingw32\8.1.0
+
+}
+
+
+[LIBRARY-FILES]{
+
+  pthread
+  wxmsw32ud_core 
+  wxbase32ud 
+  wxtiffd 
+  wxjpegd 
+  wxpngd 
+  wxzlibd 
+  wxregexud 
+  wxexpatd 
+  wxbase32ud_xml 
+  wxmsw32ud_aui
+  wxmsw32ud_stc 
+  wxscintillad 
+  wxbase32ud_net 
+  wxmsw32ud_xrc 
+  wxmsw32ud_richtext
+  wxmsw32ud_webview 
+  wxmsw32ud_ribbon 
+  wxmsw32ud_propgrid 
+  wxmsw32ud_html
+  wxmsw32ud_adv 
+  wxmsw32ud_gl 
+  wxmsw32ud_media 
+  kernel32
+  user32 
+  gdi32 
+  comdlg32 
+  winspool 
+  winmm
+  shell32 
+  comctl32 
+  ole32 
+  oleaut32 
+  uuid 
+  rpcrt4 
+  advapi32 
+  wsock32 
+  wininet 
+  uxtheme 
+  oleacc
+  gcc 
+  stdc++
+}
+
+[OPTIONS]{
+
+  -g -O0 -mthreads -D__WXMSW__ -D_UNICODE -W -Wall -Wl,-subsystem,windows
+}
+
+[MAIN-FILE-NAMES]{
+
+  wxLauncher.cpp
+}
+
+
+[EXECUTABLE-FILE-NAMES]{
+
+
+}
+
+[END]:

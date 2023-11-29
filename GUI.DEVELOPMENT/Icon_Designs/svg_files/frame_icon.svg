@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1.587499mm"
+   height="1.5874902mm"
+   viewBox="0 0 1.587499 1.5874902"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="frame_icon.svg"
+   inkscape:export-filename="D:\Pcynlitx_Build_Platform\icons\frame_icon.png"
+   inkscape:export-xdpi="500"
+   inkscape:export-ydpi="500">
+  <defs
+     id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient831">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop827" />
+      <stop
+         style="stop-color:#000000;stop-opacity:0;"
+         offset="1"
+         id="stop829" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient831"
+       id="linearGradient833"
+       x1="72.944529"
+       y1="85.866058"
+       x2="73.818205"
+       y2="85.866058"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="74.155793"
+     inkscape:cx="2.1316161"
+     inkscape:cy="3.5496113"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="995"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     showguides="false">
+    <inkscape:grid
+       type="xygrid"
+       id="grid10"
+       originx="-72.76042"
+       originy="-210.34376" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-72.760414,-85.068779)">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:justify;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="79.375"
+       y="72.104164"
+       id="text16"><tspan
+         sodipodi:role="line"
+         id="tspan14"
+         x="79.375"
+         y="74.646294"
+         style="stroke-width:0.26458332" /></text>
+    <rect
+       style="fill:#c86464;fill-opacity:1;fill-rule:evenodd;stroke-width:0.26458228"
+       id="rect13"
+       width="1.587499"
+       height="1.5874902"
+       x="72.760414"
+       y="85.068779" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.46944427px;line-height:1.25;font-family:'Courier New';-inkscape-font-specification:'Courier New';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:justify;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.26458332"
+       x="73.266273"
+       y="86.362595"
+       id="text15"><tspan
+         sodipodi:role="line"
+         id="tspan13"
+         x="73.266273"
+         y="86.362595"
+         style="font-style:italic;font-variant:normal;font-weight:900;font-stretch:normal;font-size:1.41111112px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Heavy Italic';stroke-width:0.26458332;fill:#e1c864;fill-opacity:1">x</tspan></text>
+    <text
+       transform="translate(-2.0833326e-8,1.2291667e-6)"
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222223px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:justify;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.01;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       x="72.910767"
+       y="86.360085"
+       id="text20-0"><tspan
+         sodipodi:role="line"
+         id="tspan18-2"
+         x="72.910767"
+         y="86.360085"
+         style="font-style:italic;font-variant:normal;font-weight:900;font-stretch:normal;font-size:1.41111112px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Heavy Italic';fill:#f5f5f5;fill-opacity:1;stroke-width:0.01;stroke:#000000;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none">P</tspan></text>
+  </g>
+</svg>

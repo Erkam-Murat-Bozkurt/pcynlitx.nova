@@ -1,0 +1,32 @@
+
+
+
+
+
+LIB_1=D:\wxMSW-3.2.0_Dev_Files
+
+LIB_2=D:\wxMSW-3.2.0_Dev_Files\mswud
+
+LIB_3=D:\migw64\lib\gcc\x86_64-w64-mingw32\8.1.0
+
+
+
+Library_1=-lwxmsw32ud_core -lwxbase32ud -lwxtiffd -lwxjpegd -lwxpngd -lwxzlibd -lwxregexud -lwxexpatd -lwxbase32ud_xml -lwxmsw32ud_aui
+
+Library_2=-lwxmsw32ud_stc -lwxscintillad -lwxbase32ud_net -lwxmsw32ud_xrc -lwxmsw32ud_richtext
+
+Library_3=-lwxmsw32ud_webview -lwxmsw32ud_ribbon -lwxmsw32ud_propgrid -lwxmsw32ud_html
+
+Library_4=-lwxmsw32ud_adv -lwxmsw32ud_gl -lwxmsw32ud_media -lkernel32 -luser32 -lgdi32 -lcomdlg32 -lwinspool -lwinmm
+
+Library_5=-lshell32 -lcomctl32 -lole32 -loleaut32 -luuid -lrpcrt4 -ladvapi32 -lwsock32 -lwininet -luxtheme -loleacc
+
+Library_6=-lgcc -lstdc++
+
+
+LINKING_LIBRARIES=$(Library_1) $(Library_2)  $(Library_3) $(Library_4) $(Library_5) $(Library_6)
+
+LIBRARY_DIRECTORIES=-L$(LIB_1) -L$(LIB_2) -L$(LIB_3) -Wl,--subsystem,windows -mwindows
+
+
+CONFIGS=-static -static-libgcc -static-libstdc++ -DHAVE_W32API_H -D__WXMSW__ -D_UNICODE -D_WXUSE_UNICODE

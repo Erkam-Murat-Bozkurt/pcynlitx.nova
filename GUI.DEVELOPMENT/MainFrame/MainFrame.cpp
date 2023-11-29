@@ -1,0 +1,856 @@
+/*
+
+Copyright ©  2021,  Erkam Murat Bozkurt
+
+This file is part of the research project which is carried by Erkam Murat Bozkurt.
+
+This is a free software: you can redistribute it and/or modify it under the terms
+of the GNU General Public License as published by the Free Software Foundation
+either version 3 of the License, or any later version.
+
+This software is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.
+
+See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with
+this program. If not, see <http://www.gnu.org/licenses/>.
+
+*/
+
+#include "Event_Table_Header.h"
+
+MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
+
+        wxDefaultPosition, wxSize(1200,950),wxDEFAULT_FRAME_STYLE)
+{
+
+  this->is_custom_panel_constructed = false;
+
+  this->Interface_Manager.SetManagedWindow(this);
+
+  this->SetThemeEnabled(true);
+
+  this->SetDoubleBuffered(true);
+
+  this->SetExtraStyle(wxCLIP_CHILDREN);
+
+  this->SetExtraStyle(wxNO_FULL_REPAINT_ON_RESIZE);
+
+  this->SetBackgroundStyle(wxBG_STYLE_PAINT);
+
+  this->ClearBackground();
+
+
+  this->Default_Font = new wxFont(10,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
+
+                     wxFONTWEIGHT_NORMAL,false);
+
+
+  this->SetBackgroundColour(wxColour(225,225,225));
+
+  this->Interface_Manager.SetFlags(wxAUI_MGR_LIVE_RESIZE);
+
+
+  this->SetSize(wxSize(1200,950));
+
+  this->SetMinSize(wxSize(1200,950));
+
+  this->Refresh();
+
+  this->SetDoubleBuffered(true);
+
+  this->SetAutoLayout(true);
+
+
+  // THE CONSTRUCTION OF THE MENU BAR
+
+  this->MB_Options = new Menu_Bar_Options();
+
+  this->SetMenuBar(this->MB_Options->Get_MenuBar());
+
+
+  // THE CONSTRUCTION OF THE DOCKART POINTER
+
+  this->Dock_Art_Pointer = new Custom_DockArt();
+
+  this->Interface_Manager.SetArtProvider(this->Dock_Art_Pointer);
+
+
+
+  // THE CONSTRUCTION OF THE TOOLBAR..
+
+
+
+  this->Interface_Manager.Update();
+
+
+  // THE CONSTRUCTION OF THE CUSTOM PANEL FOR NOTEBOOK
+
+  this->Central_Pane_Info.CloseButton(false);
+
+  this->Central_Pane_Info.Centre();
+
+  this->Central_Pane_Info.Dock();
+
+  this->Central_Pane_Info.Show(true);
+
+  this->Central_Pane_Info.Resizable(true);
+
+  this->Central_Pane_Info.MinSize(910,650);
+
+
+
+  this->Custom_Main_Panel = new Custom_wxPanel(this,wxID_ANY,wxDefaultPosition,
+
+                            wxDefaultSize,wxColour(200,200,200),&this->Central_Pane_Info);
+
+  this->Custom_Main_Panel->SetSize(this->GetClientSize());
+
+  this->Custom_Main_Panel->Fit();
+
+  this->Custom_Main_Panel->SetAutoLayout(true);
+
+
+  // THE CONSTRUCTION OF THE NOTEBOOK
+
+  this->Book_Manager = new Custom_Notebook(this->Custom_Main_Panel,&this->Interface_Manager,
+
+                       *(this->Default_Font),this->GetClientSize());
+
+
+  this->Book_Manager->SetAutoLayout(true);
+
+  this->Custom_Main_Panel->Receive_Book_Manager_Window(this->Book_Manager);
+
+  this->Custom_Main_Panel->Initialize_Sizer();
+
+  this->Interface_Manager.AddPane(this->Custom_Main_Panel,this->Central_Pane_Info);
+
+  this->Interface_Manager.Update();
+
+  this->Book_Manager->Refresh();
+
+
+  this->is_custom_panel_constructed = true;
+
+  this->Interface_Manager.Update();
+
+  this->GetEventHandler()->Bind(wxEVT_PAINT,&MainFrame::OnPaint,this,wxID_ANY);
+
+
+  this->Interface_Manager.Update();
+
+
+  this->is_project_file_selected = false;
+
+  this->Descriptor_File_Path = wxT("");
+
+  this->Construction_Point = wxT("");
+
+  this->Memory_Delete_Condition = false;
+
+  this->Custom_Main_Panel->Refresh(true);
+
+  this->Interface_Manager.Update();
+
+
+  wxRect Main_Rect(this->GetSize());
+
+  this->Refresh(true,&Main_Rect);
+
+  this->SetAutoLayout(true);
+
+  this->Centre(wxBOTH);
+
+  this->Custom_Main_Panel->Refresh();
+
+  this->Book_Manager->Refresh();
+
+  this->PaintNow(this->Custom_Main_Panel);
+
+  this->PaintNow(this->Book_Manager);
+
+  this->PaintNow(this);
+
+  wxRect Central_Panel_Rect(this->Custom_Main_Panel->GetSize());
+
+  this->Custom_Main_Panel->Refresh(true,&Central_Panel_Rect);
+
+  this->Custom_Main_Panel->Update();
+
+
+  wxRect Book_Manager_Rect(this->Custom_Main_Panel->GetSize());
+
+  this->Book_Manager->Refresh(true,&Book_Manager_Rect);
+
+  this->Book_Manager->Update();
+
+  this->Raise();
+
+  this->PostSizeEvent();
+
+  this->Interface_Manager.Update();
+
+  this->is_descriptor_file_open = false;
+}
+
+MainFrame::~MainFrame()
+{
+   this->Interface_Manager.UnInit();
+
+   this->Close(true);
+}
+
+void MainFrame::PaintNow(wxWindow * wnd)
+{
+     wxClientDC dc(wnd);
+
+     wxRect rect(wnd->GetSize());
+
+     this->DrawBackground(dc,wnd,rect);
+
+     if(this->is_custom_panel_constructed)
+     {
+        this->Custom_Main_Panel->PaintNow(this->Custom_Main_Panel);
+
+        this->Book_Manager->PaintNow(this->Book_Manager);
+     }
+}
+
+void MainFrame::DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect& rect)
+{
+     dc.SetBrush(wxColour(225,225,225));
+
+     dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+10,rect.GetHeight()+5);
+}
+
+void MainFrame::OnPaint(wxPaintEvent & event)
+{
+     event.Skip(false);
+
+     wxPaintDC dc(this);
+
+     wxRect rect(this->GetSize());
+
+     this->DrawBackground(dc,this,rect);
+
+     if(this->is_custom_panel_constructed)
+     {
+        this->Custom_Main_Panel->PaintNow(this->Custom_Main_Panel);
+
+        this->Book_Manager->PaintNow(this->Book_Manager);
+     }
+}
+
+void MainFrame::Show_Project_File(wxCommandEvent & event){
+
+     if(event.GetId() == ID_SHOW_PROJECT_FILE){
+
+        event.Skip(true);
+
+        if(this->is_descriptor_file_open){
+
+           bool is_descriptor_file_open = false;
+
+           for(int i=0;i<20;i++){
+
+               wxString Path_Data =  this->Book_Manager->Get_Notebook_Page_File_Path(i);
+
+               if(Path_Data == this->Descriptor_File_Path){
+
+                  is_descriptor_file_open = true;
+
+                  break;
+               }
+            }
+
+            if(is_descriptor_file_open){
+
+                this->Book_Manager->Select_File(this->Descriptor_File_Path);
+            }
+            else{
+
+                  this->Book_Manager->Open_File(this->Descriptor_File_Path);
+            }
+        }
+        else{
+
+             this->Descriptor_File_Selection_Check();
+        }
+     }
+}
+
+void MainFrame::Show_Author(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_SHOW_AUTOR_INFO){
+
+        wxString message = wxT("\n");
+
+        message = message + wxT("   ERKAM MURAT BOZKURT\n\n");
+
+        message = message + wxT("   PCYNLITX Software, Istanbul / TURKEY\n\n");
+
+        message = message + wxT("   M.Sc. Control Sysytem Engineering\n\n");
+
+        message = message + wxT("   ORCID ID: 0000-0003-3690-2770\n\n");
+
+        message = message + wxT("   http://www.pcynlitx.com/developer/\n\n");
+
+        message = message + wxT("   pcynlitx.help@gmail.com\n\n");
+
+
+        wxRichMessageDialog * dial = new wxRichMessageDialog(this,
+
+                     message, wxT("    THE DEVELOPER OF THE PLATFORM"), wxOK|wxCENTRE);
+
+        if(dial->ShowModal() == ID_SHOW_AUTOR_INFO){
+
+           delete dial;
+        };
+     }
+}
+
+void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
+
+  if(event.GetId() == ID_RUN_BUILD_SYSTEM_CONSTRUCTOR)
+  {
+    event.Skip(true);
+
+    if(this->is_descriptor_file_open){
+
+        wxString shell_command =
+
+        "D:\\Pcynlitx_Build_Platform\\Build_Tools_Initializer.exe "
+
+        + this->Descriptor_File_Path;
+
+
+        this->Process_Event_Counter = 0;
+
+        this->Progress_Bar_Start_status = new bool;
+
+        *this->Progress_Bar_Start_status = false;
+
+        this->Process_Ptr = new Process_Manager(this,wxID_ANY);
+
+        this->Process_Ptr->Fork_Process(shell_command);
+
+
+        this->Thread_Ptr = new Custom_wxThread(this->Process_Ptr,this->Progress_Bar_Start_status,&this->cv);
+
+        this->Thread_Ptr->Run();
+
+
+        wxString label = wxT("Build System Construction");
+
+        this->Show_Progress(label);
+
+
+        wxRichMessageDialog * dial = new wxRichMessageDialog(this,
+
+        wxT("\n\n\n  THE PROJECT MANAGEMENT TOOLS CONSTRUCTED  \n\n\n\n"),
+
+        wxT("THE CONSTRUCTION PROCESS RESULT"), wxOK|wxCENTRE);
+
+        dial->ShowModal();
+
+    }
+    else{
+
+         this->Descriptor_File_Selection_Check();
+    }
+  }
+}
+
+
+void MainFrame::Process_End(wxProcessEvent & event){
+
+        (this->Process_Event_Counter)++;
+}
+
+
+void MainFrame::Show_Progress(wxString Process_Label){
+
+    if(this->Process_Event_Counter < 1){
+
+       int max = 10; // The maximum num of iteration for progress bar.
+
+       wxString title = wxT("Process Status");
+
+       wxProgressDialog dialog(title,Process_Label,max,this,
+
+       wxPD_APP_MODAL | wxPD_ESTIMATED_TIME | wxPD_AUTO_HIDE);
+
+
+       dialog.Centre(wxBOTH);
+
+       for(int i=0;i<=max;i++){
+
+           if(i>8){
+
+              if(this->Process_Event_Counter >= 1){
+
+                i= max;
+
+                dialog.Update(i);
+
+                break;
+              }
+
+              if(this->Process_Event_Counter < 1){
+
+                 if(i>= max -1){
+
+                   i--;
+                 }
+              }
+            }
+
+           wxMilliSleep(500);
+
+           dialog.Update(i);
+
+           *this->Progress_Bar_Start_status = true;
+
+           this->cv.notify_one();
+        }
+
+        dialog.Destroy();
+    }
+}
+
+
+void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
+{
+  if(event.GetId() == ID_OPEN_EMPTY_PROJECT_FILE)
+  {
+     wxString path = "";
+
+     wxDirDialog dlg(NULL, "Select Descriptor File Location", "",
+
+           wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
+
+     if(dlg.ShowModal() == wxID_OK){
+
+        path =dlg.GetPath();
+
+        this->Descriptor_File_Path = path + wxT("\\Pcb_Descriptor.txt");
+
+        this->Process_Ptr = new Process_Manager(this,wxID_ANY);
+
+        wxString shell_command = "D:\\Pcynlitx_Build_Platform\\Empty_Descriptor_File_Builder.exe " + path;
+
+        this->Process_Ptr->Fork_Process(shell_command);
+
+        delete this->Process_Ptr;
+
+        this->is_descriptor_file_open = true;
+     }
+   }
+}
+
+void MainFrame::Select_Project_File(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_SELECT_PROJECT_FILE ){
+
+       event.Skip(true);
+
+        wxFileDialog * openFileDialog
+
+              = new wxFileDialog(this,wxT("Select Project File"));
+
+        if (openFileDialog->ShowModal() == wxID_OK){
+
+            this->Descriptor_File_Path = openFileDialog->GetPath();
+
+            wxDir Dir_Ctrl;
+
+            if(Dir_Ctrl.Exists(this->Descriptor_File_Path)){
+
+               Dir_Ctrl.Open(this->Descriptor_File_Path);
+
+               if(Dir_Ctrl.IsOpened()){
+
+                  wxMessageDialog * dial = new wxMessageDialog(NULL,
+
+                    wxT(" This is a directory!\n A file must be selected ."),
+
+                         wxT("Error Message"), wxOK);
+
+                         dial->ShowModal();
+
+                    return;
+                }
+            }
+
+        delete openFileDialog;
+
+        this->is_descriptor_file_open = true;
+     }
+   }
+}
+
+void MainFrame::Open_Intro_Page(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_OPEN_INTROPAGE)
+     {
+        this->Book_Manager->OpenIntroPage();
+     }
+}
+
+void MainFrame::Enter_Git_Repo_Location(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_INPUT_GIT_REPO_LOCATION){
+
+       if(!this->is_descriptor_file_open){
+
+          this->Descriptor_File_Selection_Check();
+       }
+       else{
+
+            this->DataType = "PROJECT-ROOT-DIR";
+
+            this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+
+            this->data_panel_ptr->File_Slection_Status(false);
+
+            this->data_panel_ptr->Receive_Text_Enter_Status(false);
+
+            this->data_panel_ptr->Receive_Data_Type(this->DataType);
+
+            this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+            this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
+
+            this->data_panel_ptr->AppendTextColumn(wxT("Git repository location"));
+
+            this->data_panel_ptr->Show();
+
+            this->data_panel_ptr->GetDataViewListCtrl()->Show();
+       }
+     }
+}
+
+
+void MainFrame::Enter_Header_File_Location(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_INPUT_HEADER_FILE_LOCATION){
+
+        if(!this->is_descriptor_file_open){
+
+            this->Descriptor_File_Selection_Check();
+        }
+        else{
+              this->DataType = "INCLUDE-DIRECTORIES";
+
+              this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+
+              this->data_panel_ptr->File_Slection_Status(false);
+
+              this->data_panel_ptr->Receive_Text_Enter_Status(false);
+
+              this->data_panel_ptr->Receive_Data_Type(this->DataType);
+
+              this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+              this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
+
+              this->data_panel_ptr->AppendTextColumn(wxT("HEADER FILE LOCATIONS"));
+
+              this->data_panel_ptr->Show();
+
+              this->data_panel_ptr->GetDataViewListCtrl()->Show();
+        }
+     }
+}
+
+void MainFrame::Enter_Source_File_Location(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_INPUT_SOURCE_FILE_LOCATION){
+
+        if(!this->is_descriptor_file_open){
+
+            this->Descriptor_File_Selection_Check();
+        }
+        else{
+
+           this->DataType = "SOURCE-FILE-DIRECTORIES";
+
+           this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+
+           this->data_panel_ptr->File_Slection_Status(false);
+
+           this->data_panel_ptr->Receive_Text_Enter_Status(false);
+
+           this->data_panel_ptr->Receive_Data_Type(this->DataType);
+
+           this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+           this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
+
+           this->data_panel_ptr->AppendTextColumn(wxT("SOURCE FILE LOCATIONS"));
+
+           this->data_panel_ptr->Show();
+
+           this->data_panel_ptr->GetDataViewListCtrl()->Show();
+        }
+     }
+}
+
+void MainFrame::Enter_Library_Location(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_INPUT_LIBRARY_LOCATION){
+
+       if(!this->is_descriptor_file_open){
+
+           this->Descriptor_File_Selection_Check();
+       }
+       else{
+
+             this->DataType = "LIBRARY-DIRECTORIES";
+
+             this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+
+             this->data_panel_ptr->File_Slection_Status(false);
+
+             this->data_panel_ptr->Receive_Text_Enter_Status(false);
+
+             this->data_panel_ptr->Receive_Data_Type(this->DataType);
+
+             this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+             this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
+
+             this->data_panel_ptr->AppendTextColumn(wxT("LIBRARY PATHS"));
+
+             this->data_panel_ptr->Show();
+
+             this->data_panel_ptr->GetDataViewListCtrl()->Show();
+       }
+     }
+}
+
+
+void MainFrame::Enter_Library_Name(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_INPUT_LIBRARY_NAME){
+
+       if(!this->is_descriptor_file_open){
+
+          this->Descriptor_File_Selection_Check();
+       }
+       else{
+
+            this->DataType = "LIBRARY-FILES";
+
+            this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+
+            this->data_panel_ptr->File_Slection_Status(true);
+
+            this->data_panel_ptr->Receive_Text_Enter_Status(false);
+
+            this->data_panel_ptr->Receive_Data_Type(this->DataType);
+
+            this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+            this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
+
+            this->data_panel_ptr->AppendTextColumn(wxT("LIBRARY-FILES"));
+
+            this->data_panel_ptr->Show();
+
+            this->data_panel_ptr->GetDataViewListCtrl()->Show();
+       }
+     }
+}
+
+void MainFrame::Enter_Warehouse_Location(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_INPUT_CONSTRUCTION_POINT){
+
+       if(!this->is_descriptor_file_open){
+
+         this->Descriptor_File_Selection_Check();
+       }
+       else{
+
+           this->DataType = "PROJECT-WAREHOUSE-LOCATION";
+
+           this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+
+           this->data_panel_ptr->File_Slection_Status(false);
+
+           this->data_panel_ptr->Receive_Text_Enter_Status(false);
+
+           this->data_panel_ptr->Receive_Data_Type(this->DataType);
+
+           this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+           this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
+
+           this->data_panel_ptr->AppendTextColumn(wxT("Repo Warehouse Location"));
+
+           this->data_panel_ptr->Show();
+
+           this->data_panel_ptr->GetDataViewListCtrl()->Show();
+       }
+     }
+}
+
+void MainFrame::Enter_Exe_File_Name(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_INPUT_EXE_FILE_NAME){
+
+        if(!this->is_descriptor_file_open){
+
+           this->Descriptor_File_Selection_Check();
+        }
+        else{
+
+           this->DataType = "EXECUTABLE-FILE-NAMES";
+
+           this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+
+           this->data_panel_ptr->Receive_Data_Type(this->DataType);
+
+           this->data_panel_ptr->File_Slection_Status(false);
+
+           this->data_panel_ptr->Receive_Text_Enter_Status(true);
+
+           this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+           this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
+
+           this->data_panel_ptr->AppendTextColumn(wxT("Executable File Name"));
+
+           this->data_panel_ptr->Show();
+
+           this->data_panel_ptr->GetDataViewListCtrl()->Show();
+        }
+     }
+}
+
+void MainFrame::Enter_Main_File_Name(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_INPUT_MAIN_FILE_NAME){
+
+       if(!this->is_descriptor_file_open){
+
+           this->Descriptor_File_Selection_Check();
+       }
+       else{
+
+         this->DataType = "MAIN-FILE-NAMES";
+
+         this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+
+         this->data_panel_ptr->Receive_Data_Type(this->DataType);
+
+         this->data_panel_ptr->File_Slection_Status(false);
+
+         this->data_panel_ptr->Receive_Text_Enter_Status(true);
+
+         this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+         this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+         this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
+
+         this->data_panel_ptr->AppendTextColumn(wxT("Main file name"));
+
+         this->data_panel_ptr->Show();
+
+         this->data_panel_ptr->GetDataViewListCtrl()->Show();
+       }
+     }
+}
+
+void MainFrame::Enter_Standard(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_INPUT_C_STANDART){
+
+       if(!this->is_descriptor_file_open){
+
+           this->Descriptor_File_Selection_Check();
+       }
+       else{
+
+         this->DataType = "C++-STANDARD";
+
+         this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+
+         this->data_panel_ptr->Receive_Data_Type(this->DataType);
+
+         this->data_panel_ptr->File_Slection_Status(false);
+
+         this->data_panel_ptr->Receive_Text_Enter_Status(true);
+
+         this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+         this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+         this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
+
+         this->data_panel_ptr->AppendTextColumn(wxT("Main file name"));
+
+         this->data_panel_ptr->Show();
+
+         this->data_panel_ptr->GetDataViewListCtrl()->Show();
+       }
+     }
+}
+
+void MainFrame::Enter_Options(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_INPUT_OPTIONS){
+
+       if(!this->is_descriptor_file_open){
+
+           this->Descriptor_File_Selection_Check();
+       }
+       else{
+
+         this->DataType = "OPTIONS";
+
+         this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+
+         this->data_panel_ptr->Receive_Data_Type(this->DataType);
+
+         this->data_panel_ptr->File_Slection_Status(false);
+
+         this->data_panel_ptr->Receive_Text_Enter_Status(true);
+
+         this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+         this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+         this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
+
+         this->data_panel_ptr->AppendTextColumn(wxT("Main file name"));
+
+         this->data_panel_ptr->Show();
+
+         this->data_panel_ptr->GetDataViewListCtrl()->Show();
+       }
+     }
+}
+
+void MainFrame::Descriptor_File_Selection_Check(){
+
+     wxString Error_Message = "Descriptor file was not selected";
+
+     Error_Message = Error_Message + "\nPlease select a descriptor file";
+
+     Error_Message = Error_Message + "\nor construct an empty descriptor file";
+
+     wxMessageDialog * dial = new wxMessageDialog(NULL,
+
+      Error_Message, wxT("Info"), wxOK);
+
+     if(dial->ShowModal()== wxOK){
+
+        delete dial;
+      }
+}
