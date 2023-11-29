@@ -30,10 +30,13 @@ public:
  Kernel(char * DesPATH, char opr_sis);
  virtual ~Kernel();
  void Setup_Build_Tools();
+ void Build_MakeFile(char * mn_src_path, char * Exe_Name, char strategy);
 protected:
  void Clear_Dynamic_Memory();
  Build_Tools_Initializer Bld_Init;
  Executable_MakeFile_Builder Exe_Bld;
+ std::string DesPATH;
+ char strategy;
  bool Memory_Delete_Condition;
 };
 

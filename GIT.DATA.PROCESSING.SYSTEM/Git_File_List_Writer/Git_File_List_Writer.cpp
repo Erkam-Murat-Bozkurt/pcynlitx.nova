@@ -195,19 +195,31 @@ void Git_File_List_Writer::List_Files_in_Repo()
         this->FileManager.Delete_File(this->git_file_list_path.c_str());
      }
 
-     int dir_chg_cond = this->DirectoryManager.ChangeDirectory(this->Repo_Dir.c_str());
+     this->Determine_Current_Directory();
 
-     if(dir_chg_cond == 0){
+     if(this->Repo_Dir != this->CurrentDir){
 
-        std::cerr << "\n";
-        std::cerr << "\nERROR IN CONSTRUCTION:";
-        std::cerr << "\nGit repo directory is not exist";
-        std::cerr << "\nPlease check your declerations about project directory";
-        std::cerr << "\n";
-        std::cerr << "\n";
+        int dir_chg_cond = this->DirectoryManager.ChangeDirectory(this->Repo_Dir.c_str());
 
+        if(dir_chg_cond == 0){
 
-        exit(EXIT_FAILURE);
+           std::cerr << "\n";
+           std::cerr << "\nERROR IN CONSTRUCTION:";
+           std::cerr << "\nGit repo directory is not exist";
+           std::cerr << "\nPlease check your declerations about project directory";
+           std::cerr << "\n";
+           std::cerr << "\n";
+
+           exit(EXIT_FAILURE);
+        }
+        else{
+
+            this->Clear_CString_Buffer();
+
+            char * system_cmd = this->From_Std_String_To_Char(this->git_listing_command);
+
+            this->Execute_System_Call(system_cmd);
+        } 
      }
      else{
 
@@ -216,8 +228,24 @@ void Git_File_List_Writer::List_Files_in_Repo()
             char * system_cmd = this->From_Std_String_To_Char(this->git_listing_command);
 
             this->Execute_System_Call(system_cmd);
-
      }     
+}
+
+
+void Git_File_List_Writer::Determine_Current_Directory(){
+
+     this->Clear_String_Memory(&this->CurrentDir);
+
+     char * current_dir = this->DirectoryManager.GetCurrentlyWorkingDirectory();
+
+     size_t dir_size = strlen(current_dir);
+
+     for(size_t i=0;i<dir_size;i++){
+
+          this->CurrentDir.push_back(current_dir[i]);
+     }
+
+     this->CurrentDir.shrink_to_fit();
 }
 
 

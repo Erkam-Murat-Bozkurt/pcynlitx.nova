@@ -33,17 +33,7 @@ Executable_MakeFile_Builder::Executable_MakeFile_Builder(char * des_path, char o
 
      this->Des_Reader.Receive_Descriptor_File_Path(des_path);
 
-     this->Des_Reader.Read_Descriptor_File();
-
-     std::cout << "\nProject descriptions received";
-
      this->Git_Data_Proc.Receive_Descriptor_File_Path(des_path);
-
-     this->Git_Data_Proc.Write_Git_Repo_List_File();
-
-     this->Git_Data_Proc.Determine_Git_Repo_Info();
-
-     std::cout << "\nGit version control data collected";
 }
 
 
@@ -67,6 +57,14 @@ void Executable_MakeFile_Builder::Clear_Dynamic_Memory(){
 void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, 
 
      char * Exe_Name, char strategy){
+
+     this->Des_Reader.Read_Descriptor_File();
+
+     this->Git_Data_Proc.Write_Git_Repo_List_File();
+
+     this->Git_Data_Proc.Determine_Git_Repo_Info();
+
+     std::cout << "\nGit version control data collected";
 
      if(strategy == 'a'){
 

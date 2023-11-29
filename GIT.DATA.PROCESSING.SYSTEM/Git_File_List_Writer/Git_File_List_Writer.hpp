@@ -36,6 +36,7 @@ protected:
  char * From_Std_String_To_Char(std::string str);
  void Clear_String_Memory(std::string * pointer);
  void Clear_CString_Buffer();
+ void Determine_Current_Directory();
  Descriptor_File_Reader * Des_Reader;
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
@@ -46,6 +47,7 @@ protected:
  std::string git_check_command;
  std::string Repo_Dir;
  std::string std_error_file_path;
+ std::string CurrentDir;
  char opr_sis;
  char * CString;
  int  File_Line_Number;

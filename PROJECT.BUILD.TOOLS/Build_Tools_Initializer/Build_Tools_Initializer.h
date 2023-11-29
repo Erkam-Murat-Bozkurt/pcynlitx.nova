@@ -26,8 +26,8 @@ public:
  Build_Tools_Initializer(char * DesPATH, char opr_sis);
  virtual ~Build_Tools_Initializer();
  void Setup_Build_Tools();
-protected:
  void Clear_Dynamic_Memory();
+protected:
  Git_Data_Processor Git_Data_Proc;
  Descriptor_File_Reader Des_Reader;
  Repo_Warehouse_Initializer Rep_Init;
