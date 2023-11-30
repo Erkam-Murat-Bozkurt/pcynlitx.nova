@@ -7,6 +7,7 @@ set( CMAKE_C_COMPILER "D:/mingw64/bin/gcc.exe" )
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+
 cmake_minimum_required(VERSION 3.10)
 
 project(pcynlitx.build VERSION 1.0)
@@ -33,34 +34,42 @@ add_subdirectory(KERNEL.DEVELOPMENT)
 
 add_subdirectory(GUI.DEVELOPMENT)
 
+
 include_directories(
 
-        D:/wxWidgets-3.2.2.1/include
+        D:/wxWidgets-3.2.4/include
 
-        D:/wxWidgets-3.2.2.1/lib/gcc1220_x64_dll/mswud/wx
-
-        D:/wxWidgets-3.2.2.1/lib/gcc1220_x64_dll/mswud
+        D:/wxWidgets-3.2.4/lib/gcc810_x64_dll/mswu
 )
 
 link_directories(
 
-        D:/wxWidgets-3.2.2.1/lib/gcc1220_x64_dll
+        D:/wxWidgets-3.2.4/lib/gcc810_x64_dll
+
+        D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0
 )
 
-link_libraries( pthread wxmsw32ud_core wxbase32ud wxtiffd 
+link_libraries( pthread libwxmsw32ud_core.a libwxbase32ud.a libwxtiffd.a 
                       
-                wxjpegd wxpngd wxzlibd wxregexud wxexpatd wxbase32ud_xml wxmsw32ud_aui
+                libwxjpegd.a libwxpngd.a libwxzlibd.a libwxregexud.a libwxexpatd.a libwxbase32ud_xml.a libwxmsw32ud_aui.a
                 
-                wxmsw32ud_stc wxscintillad wxbase32ud_net wxmsw32ud_xrc wxmsw32ud_richtext
+                libwxmsw32ud_stc.a libwxscintillad.a libwxbase32ud_net.a libwxmsw32ud_xrc.a libwxmsw32ud_richtext.a
         
-                wxmsw32ud_webview wxmsw32ud_ribbon wxmsw32ud_propgrid wxmsw32ud_html wxmsw32ud_adv 
+                libwxmsw32ud_webview.a libwxmsw32ud_ribbon.a libwxmsw32ud_propgrid.a libwxmsw32ud_html.a libwxmsw32ud_adv.a 
         
-                wxmsw32ud_gl wxmsw32ud_media kernel32 user32 gdi32 comdlg32 winspool winmm
+                libwxmsw32ud_gl.a libwxmsw32ud_media.a libwxmsw32ud_core.a kernel32 user32 gdi32 comdlg32 winspool winmm
 
-                shell32 comctl32 ole32 oleaut32 uuid rpcrt4 advapi32 wsock32 wininet uxtheme 
-
-                oleacc gcc stdc++ 
+                shell32 comctl32 ole32 oleaut32 uuid rpcrt4 advapi32 wsock32 wininet uxtheme oleacc 
 )
+
+add_compile_options( -static-libgcc -static-libstdc++ 
+
+        -O0 -mthreads -D__WXMSW__ -D_UNICODE -W -Wall -Wl,
+        
+        -Bstatic )
+
+
+add_link_options( -Wl,--subsystem,windows -mwindows )
 
 
 add_executable(Project_Script_Writer 
@@ -92,7 +101,7 @@ add_executable(BuildSystem
 
 add_executable(build_gui
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/wxLauncher.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/wxLauncher.cpp )
 
 
 
@@ -129,7 +138,7 @@ target_link_libraries(build_gui PUBLIC BuildSystem_GUI pthread wxmsw32ud_core wx
                 
                      wxmsw32ud_stc wxscintillad wxbase32ud_net wxmsw32ud_xrc wxmsw32ud_richtext
         
-                     wxmsw32ud_webview wxmsw32ud_ribbon wxmsw32ud_propgrid wxmsw32ud_html wxmsw32ud_adv 
+                     wxmsw32ud_webview wxmsw32ud_ribbon wxmsw32u_propgrid wxmsw32ud_html wxmsw32ud_adv 
         
                      wxmsw32ud_gl wxmsw32ud_media kernel32 user32 gdi32 comdlg32 winspool winmm
 
