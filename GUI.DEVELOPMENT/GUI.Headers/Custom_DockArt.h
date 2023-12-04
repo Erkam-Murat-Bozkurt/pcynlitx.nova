@@ -40,27 +40,25 @@ public:
 
       this->m_borderSize = 0;
 
-      this->m_captionSize = 40;
+      this->m_captionSize = 2;
 
-      this->m_buttonSize = 27;
+      this->m_buttonSize = 2;
 
-      //this->m_baseColour = wxColour(174, 182, 191);
-
-      this->m_baseColour = wxColour(225,225,225);
+      this->m_baseColour = wxColour(200,200,200);
 
       this->m_backgroundBrush.SetColour(this->m_baseColour);
 
       this->m_sashBrush.SetColour(this->m_baseColour);
 
-      this->m_sashSize = 15;
+      this->m_sashSize = 5;
   }
 
 
   void DrawSash(wxDC& dc, wxWindow *window, int orientation, const wxRect& rect)
   {
-       dc.SetPen(wxColour(225,225,225));
+       dc.SetPen(wxColour(200,200,200));
 
-       dc.SetBrush(wxColour(225,225,225));
+       dc.SetBrush(wxColour(200,200,200));
 
        dc.DrawRectangle(rect.x, rect.y, rect.width+5, rect.height+2);
   }
@@ -68,9 +66,9 @@ public:
   void DrawBorder(wxDC& dc, wxWindow* window, const wxRect& _rect,
                                     wxAuiPaneInfo& pane)
   {
-      dc.SetPen(wxColour(225,225,225));
+      dc.SetPen(wxColour(200,200,200));
 
-      dc.SetBrush(wxColour(225,225,225));
+      dc.SetBrush(wxColour(200,200,200));
 
       wxRect rect = _rect;
 
@@ -80,7 +78,7 @@ public:
       {
           for (i = 0; i < border_width+5; ++i)
           {
-              dc.SetPen(wxColour(225,225,225));
+              dc.SetPen(wxColour(200,200,200));
               dc.DrawLine(rect.x, rect.y, rect.x+rect.width, rect.y);
               dc.DrawLine(rect.x, rect.y, rect.x, rect.y+rect.height);
               dc.SetPen(m_borderPen);
@@ -118,9 +116,7 @@ public:
   void SetColour(int id, const wxColor& colour)
   {
 
-    std::cout << "\n Inside SetColour..";
-
-      wxColor custom_colour = wxColour(225,225,225);
+    wxColor custom_colour = wxColour(200,200,200);
 
     switch (id)
     {
@@ -150,11 +146,11 @@ public:
 
     wxRect rect = _rect;
 
-    rect.height = rect.height + 3;
+    rect.height = rect.height;
 
     //dc.SetBrush(wxColour(174, 182, 191));
 
-    dc.SetBrush(wxColour(225,225,225));
+    dc.SetBrush(wxColour(200,200,200));
 
     dc.DrawRectangle(rect.GetX()-2, rect.GetY()-2, rect.GetWidth()+5, rect.GetHeight()+5);
   }

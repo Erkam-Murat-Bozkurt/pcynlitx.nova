@@ -48,10 +48,10 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
  void Custom_TabArt::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect & rect) {
 
-      dc.SetBrush(wxBrush(wnd->GetBackgroundColour()));
+      //dc.SetBrush(wxBrush(wnd->GetBackgroundColour()));
 
 
-      //dc.SetBrush(wxColour(150,150,150));
+      dc.SetBrush(wxColour(200,200,200));
 
       dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1,rect.GetWidth()+2,rect.GetHeight()+2);
  }
@@ -72,7 +72,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
        wxString caption = page.caption;
 
 
-       dc.SetFont(wnd->GetFont());
+       dc.SetFont(wnd->GetFont().Bold());
 
        dc.GetTextExtent(caption, &selected_textx, &selected_texty);
 
@@ -87,7 +87,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
        wxCoord tab_width = tab_size.x;
 
-       wxCoord tab_x = in_rect.x-4;
+       wxCoord tab_x = in_rect.x-2;
 
        wxCoord tab_y = in_rect.y;
 
@@ -99,7 +99,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
        }
        else
        {
-           dc.SetFont(wnd->GetFont());
+           dc.SetFont(wnd->GetFont().Bold());
 
            texty = normal_texty;
        }
@@ -157,9 +157,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
                 wxRect r(tab_x, tab_y,tab_width, tab_height+15);
 
-                dc.SetPen(wxPen(wxColour(200,200,200)));
+                dc.SetPen(wxPen(wxColour(160, 160, 160)));
 
-                dc.SetBrush(wxBrush(wxColour(200,200,200)));
+                dc.SetBrush(wxBrush(wxColour(160, 160, 160)));
 
                 // DrawRectangle member function: The first two parameters indicate the coordinates
                 // of the top left corner of the rectangle
@@ -179,9 +179,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
                 border_points[5] = wxPoint(tab_x+tab_width+1,tab_y+tab_height+20);
 
-                dc.SetPen(wxPen(wxColour(200,200,200)));
+                dc.SetPen(wxPen(wxColour(160,160,160)));
 
-                dc.SetBrush(wxColour(200,200,200));
+                dc.SetBrush(wxColour(160,160,160));
 
                 dc.DrawPolygon(WXSIZEOF(border_points), border_points);
         }
@@ -232,11 +232,11 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
          if(page.active){
 
-             dc.SetTextForeground(wxColour(50,50,50));
+             dc.SetTextForeground(wxColour(80,80,80));
          }
          else{
 
-               dc.SetTextForeground(wxColour(70,70,70));
+               dc.SetTextForeground(wxColour(250,250,250));
          }
 
 

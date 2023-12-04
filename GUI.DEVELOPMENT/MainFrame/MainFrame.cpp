@@ -48,7 +48,7 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
                      wxFONTWEIGHT_NORMAL,false);
 
 
-  this->SetBackgroundColour(wxColour(225,225,225));
+  this->SetBackgroundColour(wxColour(200,200,200));
 
   this->Interface_Manager.SetFlags(wxAUI_MGR_LIVE_RESIZE);
 
@@ -221,7 +221,7 @@ void MainFrame::PaintNow(wxWindow * wnd)
 
 void MainFrame::DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(225,225,225));
+     dc.SetBrush(wxColour(200,200,200));
 
      dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+10,rect.GetHeight()+5);
 }

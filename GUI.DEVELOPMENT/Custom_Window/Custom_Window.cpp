@@ -44,7 +44,7 @@ Custom_Window::Custom_Window(wxPanel * parent, wxPoint position, wxSize window_s
 
     this->tab_ctrl_hight = 0;
 
-    this->SetBackgroundColour(wxColour(240,240,240));
+    this->SetBackgroundColour(wxColour(200,200,200));
 
     this->SetPosition(this->Position);
 
@@ -97,7 +97,7 @@ void Custom_Window::render(wxDC & dc)
 {
     wxRect rect(this->GetSize());
 
-    dc.SetBrush(wxColour(240,240,240));
+    dc.SetBrush(wxColour(200,200,200));
 
     dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth()+5,rect.GetHeight()+15);
 }

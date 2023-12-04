@@ -43,7 +43,7 @@ Custom_Notebook::Custom_Notebook( wxPanel * parent, wxAuiManager * Interface_Man
 
    this->SetBackgroundStyle(wxBG_STYLE_PAINT);
 
-   this->SetBackgroundColour(wxColour(235,235,235));
+   this->SetBackgroundColour(wxColour(200,200,200));
 
    this->SetDoubleBuffered(true);
 
@@ -244,7 +244,7 @@ void Custom_Notebook::OnPaint(wxPaintEvent & event)
 
 void Custom_Notebook::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(235,235,235));
+     dc.SetBrush(wxColour(200,200,200));
 
      dc.DrawRectangle(rect.GetX()-1,rect.GetY()-1,rect.GetWidth()+5,rect.GetHeight()+5);
 };
