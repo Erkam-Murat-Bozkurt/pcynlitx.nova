@@ -444,8 +444,6 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
 
         this->Process_Ptr->Fork_Process(shell_command);
 
-        delete this->Process_Ptr;
-
         this->is_descriptor_file_open = true;
      }
    }

@@ -66,7 +66,7 @@ void CharOperator::ForwardFilePointer(Cpp_FileOperations * FileManager,int stepS
 
     for(int i=0;i<stepSize-1;i++){
 
-        FileManager->Read();
+        FileManager->ReadLine();
     }
 }
 

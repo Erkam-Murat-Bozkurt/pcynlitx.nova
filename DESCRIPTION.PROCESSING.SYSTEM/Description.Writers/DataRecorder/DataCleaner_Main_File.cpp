@@ -9,9 +9,7 @@ int main(int argc, char ** argv){
        std::cout << "\n The usage: <DataCleaner.exe> <Descriptor File Path> <Data Type>";
     }
 
-    DataRecorder Recorder;
-
-    Recorder.SetFilePath(argv[1]);
+    DataRecorder Recorder(argv[1],'w');
 
     // The argument is the data type which its data will be cleaned.
 

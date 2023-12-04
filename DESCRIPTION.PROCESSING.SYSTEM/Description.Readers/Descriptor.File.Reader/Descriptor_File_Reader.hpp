@@ -25,10 +25,16 @@ public:
  void Clear_Dynamic_Memory();
  void Receive_Descriptor_File_Path(char * DesPATH);
  void Receive_Descriptor_File_Path(std::string DesPATH);
+ void Receive_Data_Record_Condition(bool cond);
  std::string Get_Library_Directory(int i);
  std::string Get_Library_File(int i);
  std::string Get_Source_File_Directory(int i);
  std::string Get_Include_Directory(int i);
+ const std::vector<std::string> & Get_Include_Directories();
+ const std::vector<std::string> & Get_Library_Directories();
+ const std::vector<std::string> & Get_Source_File_Directories();
+ const std::vector<std::string> & Get_Library_Files();
+ const std::vector<std::string> & Get_Exe_File_Names();  
  std::string Get_Standard();
  std::string Get_Options();
  std::string Get_Warehouse_Location();
@@ -70,6 +76,7 @@ protected:
  std::vector<std::string> Library_Directories;
  std::vector<std::string> Library_Files;
  bool Memory_Delete_Condition;
+ bool Data_Record_Cond;
 };
 
 #endif /* DESCRIPTOR_FILE_READER */

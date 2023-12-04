@@ -26,6 +26,12 @@ target_include_directories(des_writer PUBLIC
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
 
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
+
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
+
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Reader
+
 )
 
 
@@ -51,7 +57,14 @@ target_link_directories(des_writer PUBLIC
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
 
 
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
+
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
+
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Reader
+
+
 )
 
 
-target_link_libraries(des_writer PUBLIC basic_tools)
+target_link_libraries(des_writer PUBLIC basic_tools des_reader)

@@ -10,7 +10,7 @@ int main(int argc, char ** argv)
 
     }
 
-    DataRecorder Recorder(argv[1]);
+    DataRecorder Recorder(argv[1],'w');
 
     Recorder.Add_Data_Record(argv[2],argv[3]);
 

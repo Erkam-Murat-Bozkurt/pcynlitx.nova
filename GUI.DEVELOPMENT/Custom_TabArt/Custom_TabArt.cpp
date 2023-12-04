@@ -120,9 +120,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
            //dc.SetBrush(wxBrush(wxColour(200,100,100)));
 
 
-           dc.SetPen(wxPen(wxColour(200,100,100)));
+           dc.SetPen(wxPen(wxColour(245,245,245)));
 
-           dc.SetBrush(wxBrush(wxColour(200,100,100)));
+           dc.SetBrush(wxBrush(wxColour(245,245,245)));
 
 
 
@@ -145,9 +145,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
            border_points[5] = wxPoint(tab_x+tab_width-1,tab_y+tab_height+18); // Right bottom corner
 
 
-           dc.SetPen(wxPen(wxColour(200,100,100)));
+           dc.SetPen(wxPen(wxColour(245,245,245)));
 
-           dc.SetBrush(wxColour(200,100,100));
+           dc.SetBrush(wxColour(245,245,245));
 
            dc.DrawPolygon(WXSIZEOF(border_points), border_points);
         }
@@ -232,7 +232,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
          if(page.active){
 
-             dc.SetTextForeground(wxColour(245,245,245));
+             dc.SetTextForeground(wxColour(50,50,50));
          }
          else{
 

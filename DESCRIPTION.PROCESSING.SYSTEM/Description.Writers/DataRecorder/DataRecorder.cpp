@@ -21,721 +21,583 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "DataRecorder.h"
 
-DataRecorder::DataRecorder(char * Path, char opr_sis) : StringOperations(opr_sis)
+DataRecorder::DataRecorder(char * Path, char opr_sis) : Des_Reader(opr_sis)
 
 {
+    if(!this->File_Manager.Is_Path_Exist(Path)){
+
+       std::cout << "\n The project file is not exist on the given path";
+
+       exit(EXIT_FAILURE);
+    }
+
+    if(this->File_Manager.Is_This_File_Empty(Path)){
+
+       std::cout << "\n The project file is empty";
+
+       exit(EXIT_FAILURE);
+    }
+
+    this->Des_Reader.Receive_Descriptor_File_Path(Path);
+
+    this->Des_Reader.Receive_Data_Record_Condition(true);
+
     this->File_Manager.SetFilePath(Path);
 
-    this->Up_Record = nullptr;
-
-    this->Down_Record = nullptr;
-
-    this->Data_Records = nullptr;
-
     this->Memory_Delete_Condition = false;
-
-    this->is_this_a_record_line = false;
-
-    this->is_this_a_brace_line = false;
-
-    this->is_this_on_the_inside_of_record_area = false;
-
-    this->Enter_Record_Area = false;
-
-    this->Record_Point = 0;
-
-    this->Up_Record_Number = 0;
-
-    this->Down_Record_Number = 0;
-
-    this->End_of_File = 0;
-
-    this->Data_Type_Record_Number = 0;
-
-    this->Data_Records_Number = 0;
 }
 
 DataRecorder::~DataRecorder(){
 
      if(!this->Memory_Delete_Condition){
 
+        this->Clear_Object_Memory();
+     }
+}
+
+void DataRecorder::Clear_Object_Memory(){
+
+     if(!this->Memory_Delete_Condition){
+
+        this->Memory_Delete_Condition = true;
+
         this->Clear_Dynamic_Memory();
+
+        this->File_Manager.Clear_Dynamic_Memory();
+
+        this->Des_Reader.Clear_Dynamic_Memory();
      }
 }
 
 void DataRecorder::Clear_Dynamic_Memory(){
 
-     if(!this->Memory_Delete_Condition){
-
-         this->Memory_Delete_Condition = true;
-
-         if(this->Up_Record != nullptr){
-
-            for(int i=0;i<this->Up_Record_Number;i++){
-
-               delete [] this->Up_Record[i];
-            }
-
-            delete [] this->Up_Record;
-
-            this->Up_Record = nullptr;
-         }
-
-         if(this->Down_Record != nullptr){
-
-            for(int i=0;i<this->Down_Record_Number;i++){
-
-               delete [] this->Down_Record[i];
-            }
-
-            delete [] this->Down_Record;
-
-            this->Down_Record = nullptr;
-         }
-
-         if(this->Data_Records != nullptr){
-
-            for(int i=0;i<this->Data_Records_Number;i++){
-
-                delete [] this->Data_Records[i];
-            }
-
-            delete [] this->Data_Records;
-
-            this->Data_Records = nullptr;
-         }
-
-         this->StringOperations.Clear_Dynamic_Memory();
-     }
+     this->Clear_Data_Memory();
 }
 
 
 void DataRecorder::Add_Data_Record(char * Data_Type, char * Data_Record){
+    
+     this->Receive_Decriptor_File();
 
-     this->Collect_Information_For_Data_Recording(Data_Type);
+     std::string data_type, data_record;
 
-     this->Memory_Delete_Condition = false;
+     this->Place_String_Data(Data_Type,data_type);
 
-     this->File_Manager.FileOpen(RWCf);
+     this->Place_String_Data(Data_Record,data_record);
 
-     for(int i=0;i<this->Get_Up_Record_Number();i++){
+     if(data_type == "PROJECT-ROOT-DIR"){
 
-         if(this->Get_Up_Record()[i][0] == '\0'){
-
-            this->File_Manager.WriteToFile("\n");
-         }
-         else{
-
-              if(this->Is_This_Inside_of_Record_Area(this->Get_Up_Record()[i])){
-
-                 this->File_Manager.WriteToFile("   ");
-              }
-
-              this->File_Manager.WriteToFile(" ");
-
-              this->File_Manager.WriteToFile(this->Get_Up_Record()[i]);
-
-              this->File_Manager.WriteToFile("\n");
-         }
+        this->Clear_String_Memory(this->root_dir);
+        
+        this->Place_String_Data(data_record,this->root_dir);
      }
 
-     if(this->Get_Data_Type_Record_Number() > 0){
+     if(data_type == "INCLUDE-DIRECTORIES"){
 
-        this->File_Manager.WriteToFile("\n");
+        this->Include_Directories.push_back(data_record);
      }
 
-     this->File_Manager.WriteToFile("\n");
+     if(data_type == "SOURCE-FILE-DIRECTORIES"){
 
-     this->File_Manager.WriteToFile("    ");
-
-     this->File_Manager.WriteToFile(Data_Record);
-
-     for(int i=0;i<this->Get_Down_Record_Number();i++){
-
-         if(this->Get_Down_Record()[i][0] == '\0'){
-
-            if(i < (this->Get_Down_Record_Number()-1)){
-
-               this->File_Manager.WriteToFile("\n");
-            }
-         }
-         else{
-
-              if(this->Is_This_Inside_of_Record_Area(this->Get_Down_Record()[i])){
-
-                 this->File_Manager.WriteToFile("   ");
-              }
-
-              this->File_Manager.WriteToFile(" ");
-
-              this->File_Manager.WriteToFile(this->Get_Down_Record()[i]);
-
-              if(i < (this->Get_Down_Record_Number())){
-
-                 this->File_Manager.WriteToFile("\n");
-              }
-         }
+        this->Source_File_Directories.push_back(data_record);
      }
 
-     this->File_Manager.FileClose();
+     if(data_type == "LIBRARY-DIRECTORIES"){
+
+        this->Library_Directories.push_back(data_record);
+     }
+
+     if(data_type == "LIBRARY-FILES"){
+
+        this->Library_Files.push_back(data_record);
+     }
+
+     if(data_type == "PROJECT-WAREHOUSE-LOCATION"){
+
+        this->Clear_String_Memory(this->warehouse_location);
+
+        this->Place_String_Data(this->warehouse_location,data_record);
+     }
+
+     if(data_type == "EXECUTABLE-FILE-NAMES"){
+
+        this->Exe_File_Names.push_back(data_record);
+     }
+
+     if(data_type == "MAIN-FILE-NAMES"){
+
+        this->Main_File_Names.push_back(data_record);
+     }                    
+
+     if(data_type == "C++-STANDARD"){
+
+        this->Clear_String_Memory(this->standard);
+
+        this->Place_String_Data(this->standard,data_record);
+     }  
+
+     if(data_type == "OPTIONS"){
+
+        this->Clear_String_Memory(this->options);
+
+        this->Place_String_Data(this->options,data_record);       
+     }    
+
+     this->Update_Descriptor_File();
 }
+
 
 void DataRecorder::Clear_Data_Record(char * Data_Type){
+          
+     this->Receive_Decriptor_File();
 
-     this->Collect_Information_For_Data_Clearing(Data_Type);
+     std::string data_type;
 
-     this->Memory_Delete_Condition = false;
+     this->Place_String_Data(Data_Type,data_type);
 
-     this->File_Manager.FileOpen(RWCf);
 
-     for(int i=0;i<this->Get_Up_Record_Number();i++){
+     if(data_type == "PROJECT-ROOT-DIR"){
 
-         if(this->Get_Up_Record()[i][0] == '\0'){
-
-            this->File_Manager.WriteToFile("\n");
-         }
-         else{
-
-              if(this->Is_This_Inside_of_Record_Area(this->Get_Up_Record()[i])){
-
-                 this->File_Manager.WriteToFile("   ");
-              }
-
-              this->File_Manager.WriteToFile(" ");
-
-              this->File_Manager.WriteToFile(this->Get_Up_Record()[i]);
-
-              this->File_Manager.WriteToFile("\n");
-         }
+        this->Clear_String_Memory(this->root_dir);        
      }
 
-     if(this->Get_Data_Type_Record_Number() > 0){
+     if(data_type == "INCLUDE-DIRECTORIES"){
+
+        this->Clear_String_Vector(this->Include_Directories);
+     }
+
+
+     if(data_type == "SOURCE-FILE-DIRECTORIES"){
+
+        this->Clear_String_Vector(this->Source_File_Directories);
+     }
+
+     if(data_type == "LIBRARY-DIRECTORIES"){
+
+        this->Clear_String_Vector(this->Library_Directories);
+     }
+
+     if(data_type == "LIBRARY-FILES"){
+
+        this->Clear_String_Vector(this->Library_Files);
+     }
+
+     if(data_type == "PROJECT-WAREHOUSE-LOCATION"){
+
+        this->Clear_String_Memory(this->warehouse_location);
+     }
+
+     if(data_type == "EXECUTABLE-FILE-NAMES"){
+
+        this->Clear_String_Vector(this->Exe_File_Names);
+     }
+
+     if(data_type == "MAIN-FILE-NAMES"){
+
+        this->Clear_String_Vector(this->Main_File_Names);
+     }                    
+
+     if(data_type == "C++-STANDARD"){
+
+        this->Clear_String_Memory(this->standard);
+     }  
+
+     if(data_type == "OPTIONS"){
+
+        this->Clear_String_Memory(this->options);
+     }     
+
+     this->Update_Descriptor_File();
+}
+
+
+void DataRecorder::Update_Descriptor_File(){
+     
+     this->File_Manager.FileOpen(RWCf);
+
+     this->File_Manager.WriteToFile("\n\n");
+
+     this->File_Manager.WriteToFile("DESCRIPTOR FILE FOR PCYNLITX BUILD SYSTEM");
+
+     int two_lines = 2, single_line=1;
+
+
+     this->WriteNewLines(two_lines);
+
+     this->File_Manager.WriteToFile("[PROJECT-ROOT-DIR]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_String_Data(this->root_dir);
+     
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+
+
+     this->WriteNewLines(two_lines);
+
+     this->File_Manager.WriteToFile("[PROJECT-WAREHOUSE-LOCATION]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_String_Data(this->warehouse_location);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+
+
+     this->WriteNewLines(two_lines);
+
+     this->File_Manager.WriteToFile("[C++-STANDARD]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_String_Data(this->standard);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+     this->WriteNewLines(two_lines);
+
+
+     this->File_Manager.WriteToFile("[INCLUDE-DIRECTORIES]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_Vector_Data(this->Include_Directories);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+     this->WriteNewLines(two_lines);
+
+
+     this->File_Manager.WriteToFile("[SOURCE-FILE-DIRECTORIES]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_Vector_Data(this->Source_File_Directories);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+     this->WriteNewLines(two_lines);
+
+
+     this->File_Manager.WriteToFile("[LIBRARY-DIRECTORIES]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_Vector_Data(this->Library_Directories);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+     this->WriteNewLines(two_lines);
+
+
+
+     this->File_Manager.WriteToFile("[LIBRARY-FILES]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_Vector_Data(this->Library_Files);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+     this->WriteNewLines(two_lines);
+
+
+     this->File_Manager.WriteToFile("[OPTIONS]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_String_Data(this->options);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+     this->WriteNewLines(two_lines);
+
+
+     this->File_Manager.WriteToFile("[MAIN-FILE-NAMES]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_Vector_Data(this->Main_File_Names);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+     this->WriteNewLines(two_lines);
+
+
+     this->File_Manager.WriteToFile("[EXECUTABLE-FILE-NAMES]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_Vector_Data(this->Exe_File_Names);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+     this->WriteNewLines(two_lines);
+
+
+     this->File_Manager.WriteToFile("[END]:");
+
+     this->WriteNewLines(two_lines);
+
+     this->File_Manager.FileClose();
+}
+
+
+
+void DataRecorder::Replace_Data_Record(char * Data_Type,  char * Data_Record){
+
+     this->Receive_Decriptor_File();
+
+     std::string data_type, data_record;
+
+     this->Place_String_Data(Data_Type,data_type);
+
+     this->Place_String_Data(Data_Record,data_record);
+
+     if(data_type == "PROJECT-ROOT-DIR"){
+
+        this->Clear_String_Memory(this->root_dir);
+        
+        this->Place_String_Data(data_record,this->root_dir);
+     }
+
+     if(data_type == "PROJECT-WAREHOUSE-LOCATION"){
+
+        this->Clear_String_Memory(this->warehouse_location);
+
+        this->Place_String_Data(data_record,this->warehouse_location);
+     }
+
+     if(data_type == "C++-STANDARD"){
+
+        this->Clear_String_Memory(this->standard);
+
+        this->Place_String_Data(data_record,this->standard);
+
+     }  
+
+     if(data_type == "OPTIONS"){
+
+        this->Clear_String_Memory(this->options);
+
+        this->Place_String_Data(data_record,this->options);
+     }     
+
+     this->Update_Descriptor_File();
+}
+
+
+
+void DataRecorder::Replace_Data_Record(char * Data_Type,  std::vector<std::string> & vec){
+
+     this->Receive_Decriptor_File();
+
+
+     std::string data_type, data_record;
+
+     this->Place_String_Data(Data_Type,data_type);
+
+     if(data_type == "INCLUDE-DIRECTORIES"){
+
+        this->Clear_String_Vector(this->Include_Directories);
+  
+        this->Place_Vector_Data(this->Include_Directories,vec);
+     }
+
+     if(data_type == "SOURCE-FILE-DIRECTORIES"){
+
+        this->Clear_String_Vector(this->Source_File_Directories);
+
+        this->Place_Vector_Data(this->Source_File_Directories,vec);
+     }
+
+     if(data_type == "LIBRARY-DIRECTORIES"){
+
+        this->Clear_String_Vector(this->Library_Directories);
+
+        this->Place_Vector_Data(this->Library_Directories,vec);
+     }
+
+     if(data_type == "LIBRARY-FILES"){
+
+        this->Clear_String_Vector(this->Library_Files);
+
+        this->Place_Vector_Data(this->Library_Files,vec);
+     }
+
+
+     if(data_type == "EXECUTABLE-FILE-NAMES"){
+
+        this->Clear_String_Vector(this->Exe_File_Names);
+
+        this->Place_Vector_Data(this->Exe_File_Names,vec);
+     }
+
+     if(data_type == "MAIN-FILE-NAMES"){
+
+        this->Clear_String_Vector(this->Main_File_Names);
+
+        this->Place_Vector_Data(this->Main_File_Names,vec);
+     }                    
+
+     this->Update_Descriptor_File();
+}
+
+
+void DataRecorder::Receive_Decriptor_File(){
+
+     this->Des_Reader.Read_Descriptor_File();
+
+     this->Place_Vector_Data(this->Des_Reader.Get_Include_Directories(),this->Include_Directories);
+
+     this->Place_Vector_Data(this->Des_Reader.Get_Source_File_Directories(),this->Source_File_Directories);
+
+     this->Place_Vector_Data(this->Des_Reader.Get_Library_Directories(),this->Library_Directories);
+
+     this->Place_Vector_Data(this->Des_Reader.Get_Library_Files(),this->Library_Files);
+
+     this->Place_String_Data(this->Des_Reader.Get_Warehouse_Location(),this->warehouse_location);
+
+     this->Place_String_Data(this->Des_Reader.Get_Repo_Directory_Location(),this->root_dir);
+
+     this->Place_String_Data(this->Des_Reader.Get_Options(),this->options);
+
+     this->Place_String_Data(this->Des_Reader.Get_Standard(),this->standard);   
+}
+
+
+void DataRecorder::WriteNewLines(int line_number){
+
+     for(int i=0;i<line_number;i++){
 
         this->File_Manager.WriteToFile("\n");
      }
+}
 
-     this->File_Manager.WriteToFile("    ");
+void DataRecorder::Write_Vector_Data(std::vector<std::string> & vec){
 
-     this->File_Manager.WriteToFile("\n");
+     for(size_t i=0;i<vec.size();i++){
 
-     for(int i=0;i<this->Get_Down_Record_Number();i++){
+         this->File_Manager.WriteToFile("\n ");   
 
-         if(this->Get_Down_Record()[i][0] == '\0'){
+         this->File_Manager.WriteToFile(vec.at(i));
+     }     
+}
 
-            if(i < (this->Get_Down_Record_Number()-1)){
 
-               this->File_Manager.WriteToFile("\n");
-            }
-         }
-         else{
+void DataRecorder::Write_String_Data(std::string dt){
 
-              if(this->Is_This_Inside_of_Record_Area(this->Get_Down_Record()[i])){
+     this->File_Manager.WriteToFile("\n  ");   
 
-                 this->File_Manager.WriteToFile("   ");
-              }
+     this->File_Manager.WriteToFile(dt);
+}
 
-              this->File_Manager.WriteToFile(" ");
+void DataRecorder::Clear_Data_Memory(){
 
-              this->File_Manager.WriteToFile(this->Get_Down_Record()[i]);
+     this->Clear_String_Vector(this->Include_Directories);
 
-              if(i < (this->Get_Down_Record_Number())){
+     this->Clear_String_Vector(this->Source_File_Directories);
 
-                 this->File_Manager.WriteToFile("\n");
-              }
-         }
+     this->Clear_String_Vector(this->Library_Directories);
+
+     this->Clear_String_Vector(this->Library_Files);
+
+     this->Clear_String_Memory(this->standard);
+
+     this->Clear_String_Memory(this->options);
+
+     this->Clear_String_Memory(this->warehouse_location);
+
+     this->Clear_String_Memory(this->root_dir);
+}
+
+
+void DataRecorder::Place_Vector_Data(const std::vector<std::string> & base_vec, 
+
+     std::vector<std::string> & target_vec){
+
+     for(size_t i=0;i<base_vec.size();i++){
+
+         target_vec.push_back(base_vec.at(i));
      }
 
-     this->File_Manager.FileClose();
+     target_vec.shrink_to_fit();
 }
 
 
-void DataRecorder::Replace_Data_Record(char * Data_Record){
+void DataRecorder::Place_String_Data(const std::string & base_str, std::string & target_str){
 
-     this->Memory_Delete_Condition = false;
+     for(size_t i=0;i<base_str.size();i++){
 
-     this->File_Manager.FileOpen(RWCf);
-
-     for(int i=0;i<this->Get_Up_Record_Number()-1;i++){
-
-         if(this->Get_Up_Record()[i][0] == '\0'){
-
-            this->File_Manager.WriteToFile("\n");
-         }
-         else{
-
-               if(this->Is_This_Inside_of_Record_Area(this->Get_Up_Record()[i])){
-
-                  this->File_Manager.WriteToFile("   ");
-               }
-
-               this->File_Manager.WriteToFile(" ");
-
-               this->File_Manager.WriteToFile(this->Get_Up_Record()[i]);
-
-               this->File_Manager.WriteToFile("\n");
-        }
+         target_str.push_back(base_str.at(i));
      }
 
-     if(this->Get_Data_Type_Record_Number() > 1){
+     target_str.shrink_to_fit();
+}
 
-        this->File_Manager.WriteToFile("\n");
+
+void DataRecorder::Place_String_Data(char * base_str, std::string & target_str){
+
+     for(size_t i=0;i<strlen(base_str);i++){
+
+         target_str.push_back(base_str[i]);
      }
 
-     this->File_Manager.WriteToFile("    ");
-
-     this->File_Manager.WriteToFile(Data_Record);
-
-     this->File_Manager.WriteToFile("\n");
-
-     for(int i=0;i<this->Get_Down_Record_Number();i++){
-
-         if(this->Get_Down_Record()[i][0] == '\0'){
-
-            this->File_Manager.WriteToFile("\n");
-         }
-         else{
-
-               if(this->Is_This_Inside_of_Record_Area(this->Get_Down_Record()[i])){
-
-                  this->File_Manager.WriteToFile("   ");
-               }
-
-               this->File_Manager.WriteToFile(" ");
-
-               this->File_Manager.WriteToFile(this->Get_Down_Record()[i]);
-
-               if(i < (this->Get_Down_Record_Number()-2)){
-
-                  this->File_Manager.WriteToFile("\n");
-               }
-         }
-     }
-
-     this->File_Manager.FileClose();
+     target_str.shrink_to_fit();
 }
 
-void DataRecorder::Collect_Information_For_Data_Recording(char * Record_Type){
 
-     this->Clear_Dynamic_Memory();
 
-     this->Memory_Delete_Condition = false;
 
-     int record_point = this->Determine_Record_Point(Record_Type);
+void DataRecorder::Clear_String_Vector(std::vector<std::string> & vec){
 
-     this->Read_Before_Record_Point(record_point);
+     vec.shrink_to_fit();
 
-     this->Read_After_Record_Point(record_point);
+     if(!vec.empty()){
 
-     this->Determine_Data_Type_Record_Number(Record_Type);
-}
+        for(size_t i=0;i<vec.size();i++){
 
-void DataRecorder::Collect_Information_For_Data_Clearing(char * Record_Type){
-
-     this->Clear_Dynamic_Memory();
-
-     this->Memory_Delete_Condition = false;
-
-     int Start_Point = this->Determine_Data_Record_Start_Point(Record_Type);
-
-     int End_Point   = this->Determine_Data_Record_End_Point(Record_Type);
-
-     this->Read_Before_Record_Point(Start_Point+1);
-
-     this->Read_After_Record_Point(End_Point-1);
-}
-
-int DataRecorder::Determine_Data_Record_Start_Point(char * Data_Type){
-
-     this->Data_Record_Start_Point = 0;
-
-     int Start_Point = 0;
-
-     Start_Point = this->StringOperations.FindNextWordLine(Data_Type,0);
-
-     char First_Brace_Line [] = {'{','\0'};
-
-     this->Data_Record_Start_Point
-
-     = this->StringOperations.FindNextWordLine(First_Brace_Line,Start_Point);
-
-     return this->Data_Record_Start_Point;
-}
-
-int DataRecorder::Determine_Data_Record_End_Point(char * Data_Type){
-
-     this->Data_Record_End_Point = 0;
-
-     char End_Brace_Line [] = {'}','\0'};
-
-     int Start_Point = this->Data_Record_Start_Point;
-
-     this->Data_Record_End_Point
-
-     = this->StringOperations.FindNextWordLine(End_Brace_Line,Start_Point);
-
-     return this->Data_Record_End_Point;
-}
-
-int DataRecorder::Determine_Record_Point(char * Data_Type){
-
-     this->Record_Point = 0;
-
-     int Start_Point = 0, End_Point = 0, Read_Point = 0;
-
-     Start_Point = this->StringOperations.FindNextWordLine(Data_Type,0);
-
-     char First_Brace_Line [] = {'{','\0'};
-
-     char Last_Brace_Line [] = {'}','\0'};
-
-     Start_Point = this->StringOperations.FindNextWordLine(First_Brace_Line,Start_Point);
-
-     End_Point  = this->StringOperations.FindNextWordLine(Last_Brace_Line,Start_Point);
-
-     Read_Point = End_Point -1;
-
-     std::string File_Line = this->StringOperations.ReadFileLine(Read_Point);
-
-     while(!this->Determine_Is_This_Line_A_Record_Line(File_Line)){
-
-           if(Read_Point == Start_Point){
-
-              break;
-           }
-           else{
-
-                Read_Point--;
-           }
-
-           File_Line = this->StringOperations.ReadFileLine(Read_Point);
-     }
-
-     this->Record_Point = Read_Point;
-
-     return this->Record_Point;
-}
-
-void DataRecorder::Read_Data_Records(char * Data_Type){
-
-     this->Clear_Dynamic_Memory();
-
-     this->Memory_Delete_Condition = false;
-
-     this->Determine_Data_Type_Record_Number(Data_Type);
-
-     if(this->Data_Records != nullptr){
-
-        for(int i=0;i<this->Data_Records_Number;i++){
-
-            delete [] this->Data_Records[i];
+            this->Clear_String_Memory(vec.at(i));
         }
 
-        delete [] this->Data_Records;
+        vec.clear();
 
-        this->Data_Records = nullptr;
-
-        this->Data_Records_Number = 0;
-     }
-
-     if(this->Get_Data_Type_Record_Number() > 0){
-
-        this->Data_Records = new char * [10*this->Get_Data_Type_Record_Number()];
-
-        char First_Brace_Line [] = {'{','\0'};
-
-        char Last_Brace_Line [] = {'}','\0'};
-
-        int Start_Point = this->StringOperations.FindNextWordLine(Data_Type,0);
-
-        Start_Point   = this->StringOperations.FindNextWordLine(First_Brace_Line,Start_Point) +1;
-
-        int End_Point = this->StringOperations.FindNextWordLine(Last_Brace_Line,Start_Point);
-
-        int index_counter = 0;
-
-        for(int i=Start_Point;i<End_Point;i++){
-
-            std::string File_Line = this->StringOperations.ReadFileLine(i);
-
-            int String_Size = File_Line.length();
-
-            if(this->Determine_Is_This_Line_A_Record_Line(File_Line)){
-
-               this->Data_Records[index_counter] = new char [10*String_Size];
-
-               int Read_Start_Point = 0;
-
-               for(int k=0;k<String_Size;k++){
-
-                   if(File_Line[k] == ']'){
-
-                      Read_Start_Point = k+1;
-                   }
-               }
-
-               for(int k=Read_Start_Point;k<String_Size;k++){
-
-                   if(File_Line[k] == ' '){
-
-                      Read_Start_Point++;
-                   }
-               }
-
-               int record_index = 0;
-
-               for(int k = Read_Start_Point;k<String_Size;k++){
-
-                   this->Data_Records[index_counter][record_index] = File_Line[k];
-
-                   record_index++;
-               }
-
-               this->Data_Records[index_counter][record_index] = '\0';
-
-               if(this->Data_Records[index_counter][record_index-1] == '/'){
-
-                  this->Data_Records[index_counter][record_index-1] = '\0';
-               }
-
-               index_counter++;
-
-               this->Data_Records_Number = index_counter;
-            }
-         }
-      }
-}
-
-void DataRecorder::Read_Before_Record_Point(int read_start_point){
-
-     this->Up_Record_Number = read_start_point;
-
-     this->Up_Record = new char * [10*this->Up_Record_Number];
-
-     for(int i=0;i<this->Up_Record_Number;i++){
-
-         std::string File_Line = this->StringOperations.ReadFileLine(i+1);
-
-         int File_Line_Size = File_Line.length();
-
-         if(File_Line_Size == 0){
-
-            this->Up_Record[i] = new char [10];
-
-            for(int k=0;k<5;k++){
-
-               this->Up_Record[i][k] = '\0';
-            }
-         }
-         else{
-
-              this->Up_Record[i] = new char [10*File_Line_Size];
-
-              int index_counter = 0;
-
-              for(int k=0;k<File_Line_Size;k++){
-
-                  this->Up_Record[i][index_counter] = File_Line[k];
-
-                  index_counter++;
-               }
-
-               this->Up_Record[i][index_counter] = '\0';
-         }
+        vec.shrink_to_fit();
      }
 }
 
-void DataRecorder::Read_After_Record_Point(int read_start_point){
 
-     this->File_Manager.FileOpen(Rf);
+void DataRecorder::Clear_String_Memory(std::string & str){
 
-     this->End_of_File = 0;
+     if(!str.empty()){
 
-     while(!this->File_Manager.Control_Stop_Condition()){
+         str.clear();
 
-           this->File_Manager.ReadLine();
-
-           this->End_of_File++;
-     }
-
-     this->File_Manager.FileClose();
-
-     this->Down_Record_Number = this->End_of_File - read_start_point;
-
-     this->Down_Record = new char * [10*this->Down_Record_Number];
-
-     int index_counter = 0;
-
-     for(int i=read_start_point;i<this->End_of_File;i++){
-
-         std::string File_Line = this->StringOperations.ReadFileLine(i+1);
-
-         int File_Line_Size = File_Line.length();
-
-         if(File_Line_Size == 0){
-
-            this->Down_Record[index_counter] = new char [10];
-
-            for(int k=0;k<5;k++){
-
-                this->Down_Record[index_counter][k] = '\0';
-            }
-         }
-         else{
-
-              this->Down_Record[index_counter] = new char [10*File_Line_Size];
-
-              int string_index_counter = 0;
-
-              for(int k=0;k<File_Line_Size;k++){
-
-                  this->Down_Record[index_counter][string_index_counter] = File_Line[k];
-
-                  string_index_counter++;
-              }
-
-              this->Down_Record[index_counter][string_index_counter] = '\0';
-         }
-
-         index_counter++;
+         str.shrink_to_fit();
      }
 }
 
-void DataRecorder::Determine_Data_Type_Record_Number(char * Data_Type){
 
-     this->Data_Type_Record_Number = 0;
 
-     char First_Brace_Line [] = {'{','\0'};
-
-     char Last_Brace_Line [] = {'}','\0'};
-
-     int Start_Point = this->StringOperations.FindNextWordLine(Data_Type,0);
-
-     Start_Point = this->StringOperations.FindNextWordLine(First_Brace_Line,Start_Point) +1;
-
-     int End_Point = this->StringOperations.FindNextWordLine(Last_Brace_Line,Start_Point);
-
-     for(int i=Start_Point;i<End_Point;i++){
-
-         std::string File_Line = this->StringOperations.ReadFileLine(i);
-
-         if(this->Determine_Is_This_Line_A_Record_Line(File_Line)){
-
-            this->Data_Type_Record_Number++;
-         }
-     }
-}
-
-bool DataRecorder::Determine_Is_This_Line_A_Record_Line(std::string File_Line){
-
-     this->is_this_a_record_line = false;
-
-     int Line_Size = File_Line.length();
-
-     for(int i=0;i<Line_Size;i++){
-
-         if(((File_Line[i]!= '\0') && (File_Line[i]!= ' ') &&
-
-             (File_Line[i]!= '\n') && (File_Line[i] != '\t'))){
-
-              this->is_this_a_record_line = true;
-         }
-     }
-
-     return this->is_this_a_record_line;
-}
-
-bool DataRecorder::Is_This_First_Brace(char * string){
-
-     this->is_this_a_brace_line = false;
-
-     int String_Size = strlen(string);
-
-     for(int i=0;i<String_Size;i++){
-
-        if((string[i] == '{')){
-
-           this->is_this_a_brace_line = true;
-        }
-     }
-
-     return this->is_this_a_brace_line;
-}
-
-bool DataRecorder::Is_This_Last_Brace(char * string){
-
-     this->is_this_a_brace_line = false;
-
-     int String_Size = strlen(string);
-
-     for(int i=0;i<String_Size;i++){
-
-        if((string[i] == '}')){
-
-           this->is_this_a_brace_line = true;
-        }
-     }
-
-     return this->is_this_a_brace_line;
-}
-
-bool DataRecorder::Is_This_Inside_of_Record_Area(char * string){
-
-     this->is_this_on_the_inside_of_record_area = false;
-
-     if(this->Is_This_First_Brace(string)){
-
-         this->Enter_Record_Area = true;
-     }
-
-     if(this->Is_This_Last_Brace(string)){
-
-        this->Enter_Record_Area = false;
-     }
-
-     if(((!this->Is_This_First_Brace(string)) && this->Enter_Record_Area)){
-
-         this->is_this_on_the_inside_of_record_area = true;
-     }
-
-     return this->is_this_on_the_inside_of_record_area;
-}
-
-char ** DataRecorder::Get_Up_Record(){
-
-        return this->Up_Record;
-}
-
-char ** DataRecorder::Get_Down_Record(){
-
-        return this->Down_Record;
-}
-
-char ** DataRecorder::Get_Data_Type_Records(){
-
-        return this->Data_Records;
-}
-
-int DataRecorder::Get_Up_Record_Number(){
-
-    return this->Up_Record_Number;
-}
-
-int DataRecorder::Get_Down_Record_Number(){
-
-    return this->Down_Record_Number;
-}
-
-int DataRecorder::Get_Data_Type_Record_Number(){
-
-    return this->Data_Type_Record_Number;
-}
-
-int DataRecorder::Get_Record_Point(){
-
-    return this->Record_Point;
-}
-
-int DataRecorder::Get_Data_Record_Start_Point(){
-
-    return this->Data_Record_Start_Point;
-}

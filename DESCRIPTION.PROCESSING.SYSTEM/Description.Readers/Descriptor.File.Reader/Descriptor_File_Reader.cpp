@@ -52,6 +52,11 @@ void Descriptor_File_Reader::Receive_Descriptor_File_Path(std::string DesPATH){
 }
 
 
+void Descriptor_File_Reader::Receive_Data_Record_Condition(bool cond){
+
+     this->Data_Record_Cond = cond;
+}
+
 void Descriptor_File_Reader::Initialize_Members(){
 
      this->include_dir_num     = 0;
@@ -141,7 +146,7 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
             record_num++;
          }
 
-         if(record_num > 1){
+         if((record_num > 1) && (this->Data_Record_Cond == false)){
 
             std::cout << "\n\n";
 
@@ -155,7 +160,7 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
          }
      }
 
-     if(record_num == 0){
+     if((record_num == 0) && (this->Data_Record_Cond == false)){
 
         std::cout << "\n\n";
 
@@ -199,7 +204,7 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
             record_num++;
          }
 
-         if(record_num > 1){
+         if((record_num > 1)  && (this->Data_Record_Cond == false)){
 
             std::cout << "\n\n";
 
@@ -213,7 +218,7 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
          }
      }
 
-     if(record_num == 0){
+     if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
         std::cout << "\n\n";
 
@@ -258,7 +263,7 @@ void Descriptor_File_Reader::Read_Standard(){
             record_num++;
          }
 
-         if(record_num > 1){
+         if((record_num > 1) && (this->Data_Record_Cond == false)) {
 
             std::cout << "\n\n";
 
@@ -587,6 +592,30 @@ void Descriptor_File_Reader::Clear_String_Memory(std::string * pointer){
          pointer->shrink_to_fit();
      }
 }
+
+
+
+const std::vector<std::string> & Descriptor_File_Reader::Get_Include_Directories(){
+
+    return this->Include_Directories;
+}
+
+
+const std::vector<std::string> & Descriptor_File_Reader::Get_Library_Directories(){
+
+     return this->Library_Directories;
+}
+
+const std::vector<std::string> & Descriptor_File_Reader::Get_Source_File_Directories(){
+
+     return this->Source_File_Directories;
+}
+
+const std::vector<std::string> & Descriptor_File_Reader::Get_Library_Files(){
+
+     return this->Library_Directories;
+}
+
 
 std::string Descriptor_File_Reader::Get_Library_Directory(int i){
 

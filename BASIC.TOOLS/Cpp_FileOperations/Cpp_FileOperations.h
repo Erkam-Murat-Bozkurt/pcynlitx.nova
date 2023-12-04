@@ -66,6 +66,7 @@ public:
  bool Is_This_File_Empty(std::string path);
  bool TryOpen(char path);
  int  GetFileSize() const;
+ std::string GetFilePath() const;
  std::string GetFileLine(int lnbr);
  void Printf();
  void Clear_Dynamic_Memory();

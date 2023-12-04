@@ -203,8 +203,6 @@ void Cpp_FileOperations::SetFilePath(char * FilePATH){
      this->Clear_String_Memory(&this->FilePath);
 
      this->Determine_File_Path(FilePATH);
-
-          
 }
 
 void Cpp_FileOperations::FileOpen(char Open_Mode){
@@ -249,6 +247,12 @@ void Cpp_FileOperations::FileOpen(char Open_Mode){
           std::cout << "\n\n";
 
           exit(0);
+     }
+     else{
+
+          this->file_open_status = true;
+
+          this->Read_Stop_Condition = false;
      }
 }
 
@@ -298,6 +302,10 @@ bool Cpp_FileOperations::TryOpen(char Open_Mode){
 void Cpp_FileOperations::FileClose(){
 
      this->DataFile.close();
+
+     this->file_open_status = false;
+
+     this->Read_Stop_Condition = false;
 }
 
 void Cpp_FileOperations::WriteToFile(std::string string_list){
@@ -336,10 +344,9 @@ void Cpp_FileOperations::WriteToFile(char * string_list){
 
 std::string Cpp_FileOperations::ReadLine(){
 
-     this->String_Line.clear();
-     this->String_Line.shrink_to_fit();
+     std::string string_line;
 
-     if(std::getline(this->DataFile,this->String_Line)){
+     if(std::getline(this->DataFile,string_line)){
 
          if(this->DataFile.good()){
 
@@ -355,7 +362,7 @@ std::string Cpp_FileOperations::ReadLine(){
             this->Read_Stop_Condition = true;
      }
 
-     return this->String_Line;
+     return string_line;
 }
 
 
@@ -882,4 +889,10 @@ void Cpp_FileOperations::Clear_Temporary_CString_Memory(){
 int Cpp_FileOperations::GetFileSize() const {
 
     return this->File_line_Number;
+}
+
+
+std::string Cpp_FileOperations::GetFilePath() const {
+
+     return this->FilePath;
 }
