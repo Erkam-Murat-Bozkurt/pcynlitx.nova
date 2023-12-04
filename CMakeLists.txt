@@ -62,14 +62,6 @@ link_libraries( pthread libwxmsw32ud_core.a libwxbase32ud.a libwxtiffd.a
                 shell32 comctl32 ole32 oleaut32 uuid rpcrt4 advapi32 wsock32 wininet uxtheme oleacc 
 )
 
-add_compile_options( -static-libgcc -static-libstdc++ 
-
-        -O0 -mthreads -D__WXMSW__ -D_UNICODE -W -Wall -Wl,
-        
-        -Bstatic )
-
-
-add_link_options( -Wl,--subsystem,windows -mwindows )
 
 
 add_executable(Project_Script_Writer 
