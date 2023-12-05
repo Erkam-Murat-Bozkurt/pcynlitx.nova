@@ -86,7 +86,7 @@ add_executable(Auto_MakeFile_Builder
         ${CMAKE_CURRENT_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Auto_MakeFile_Builder/Auto_MakeFile_Builder_Main_File.cpp)
 
 
-add_executable(BuildSystem
+add_executable(CBuild
 
         ${CMAKE_CURRENT_SOURCE_DIR}/KERNEL.DEVELOPMENT/Kernel_Main_File.cpp)
 
@@ -119,7 +119,7 @@ target_link_libraries(Auto_MakeFile_Builder PUBLIC make_fbld_sys proj_bld_tools
 
 
                    
-target_link_libraries(BuildSystem PUBLIC kernel proj_bld_tools exec_make_bld script_writers make_fbld_sys 
+target_link_libraries(CBuild PUBLIC kernel proj_bld_tools exec_make_bld script_writers make_fbld_sys 
 
                    src_proc_sys git_data_processing_system src_dat_col des_reader basic_tools)
 

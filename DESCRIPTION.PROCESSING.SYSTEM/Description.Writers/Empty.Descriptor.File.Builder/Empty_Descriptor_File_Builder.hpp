@@ -15,7 +15,7 @@
 class Empty_Descriptor_File_Builder
 {
 public:
- Empty_Descriptor_File_Builder();
+ Empty_Descriptor_File_Builder(char opr_sis);
  Empty_Descriptor_File_Builder(const Empty_Descriptor_File_Builder & orig);
  virtual ~Empty_Descriptor_File_Builder();
  void Build_Empty_File(char * path);
@@ -25,6 +25,7 @@ protected:
  void WriteNewLines(int line_number);
  Cpp_FileOperations FileManager;
  char * file_path;
+ char opr_sis;
  bool Memory_Delete_Condition;
 };
 

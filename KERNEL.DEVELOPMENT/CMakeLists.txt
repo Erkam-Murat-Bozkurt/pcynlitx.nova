@@ -50,6 +50,12 @@ target_include_directories(kernel PUBLIC
     ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
 
 
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Writers/Empty.Descriptor.File.Builder
+
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Writers/DataRecorder
+
+
+
     ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Header_File_Processor
 
     ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Compiler_Data_Extractor
@@ -252,6 +258,11 @@ target_link_directories(kernel PUBLIC
 
     ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
 
+
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Writers/Empty.Descriptor.File.Builder
+
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Writers/DataRecorder
+
     
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Cpp_FileOperations
 
@@ -268,4 +279,4 @@ target_link_directories(kernel PUBLIC
 
 target_link_libraries(kernel PUBLIC proj_bld_tools exec_make_bld script_writers make_fbld_sys 
 
-                      src_proc_sys git_data_processing_system src_dat_col des_reader basic_tools)
+                      src_proc_sys git_data_processing_system src_dat_col des_reader des_writer basic_tools)

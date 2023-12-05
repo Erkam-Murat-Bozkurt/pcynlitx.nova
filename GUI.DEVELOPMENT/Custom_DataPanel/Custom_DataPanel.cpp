@@ -237,10 +237,9 @@ void Custom_DataPanel::Save_Data(wxCommandEvent & event){
 
         this->Process_Ptr = new Process_Manager(this->frame_ptr,wxID_ANY);
 
-        wxString shell_command = "D:\\Pcynlitx_Build_Platform\\DataCleaner.exe " +
+        wxString shell_command = "D:\\Pcynlitx_Build_Platform\\CBuild.exe " +
 
-        this->Descriptor_File_Path + wxT(" ") + this->DataType;
-
+        this->Descriptor_File_Path + wxT(" -cr") + this->DataType;
 
         this->Process_Ptr->Fork_Process(shell_command);
 
@@ -253,29 +252,26 @@ void Custom_DataPanel::Save_Data(wxCommandEvent & event){
 
 
 
-         shell_command = "";
+        shell_command = "";
+         
+        this->Process_Ptr = new Process_Manager(this->frame_ptr,wxID_ANY);
 
-         this->Process_Ptr = new Process_Manager(this->frame_ptr,wxID_ANY);
+        shell_command = "D:\\Pcynlitx_Build_Platform\\CBuild.exe " +
 
-         shell_command = "D:\\Pcynlitx_Build_Platform\\DataRecorder.exe ";
+        this->Descriptor_File_Path + wxT(" -ar") + this->DataType;
 
-         shell_command = shell_command + this->Descriptor_File_Path;
+        shell_command = shell_command + " ";
 
-         shell_command = shell_command + " ";
+        shell_command = shell_command + item_data;
 
-         shell_command = shell_command + this->DataType;
 
-         shell_command = shell_command + " ";
+        this->Process_Ptr->Fork_Process(shell_command);
 
-         shell_command = shell_command + item_data;
+        Proc_ID = this->Process_Ptr->GetPid();
 
-         this->Process_Ptr->Fork_Process(shell_command);
+        status  = this->Process_Ptr->Get_Process_Exit_Status();
 
-         Proc_ID = this->Process_Ptr->GetPid();
-
-         status  = this->Process_Ptr->Get_Process_Exit_Status();
-
-         this->Process_Ptr->OnTerminate(Proc_ID,status);
+        this->Process_Ptr->OnTerminate(Proc_ID,status);
     }
 }
 

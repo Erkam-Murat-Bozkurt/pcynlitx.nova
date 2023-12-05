@@ -6,6 +6,8 @@ Descriptor_File_Reader::Descriptor_File_Reader(char opr_sis) :
    Data_Collector(opr_sis), Syntax_Controller(opr_sis)
 {
    this->Initialize_Members();
+
+   this->Data_Record_Cond = false;
 }
 
 
@@ -159,6 +161,7 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
             exit(0);
          }
      }
+
 
      if((record_num == 0) && (this->Data_Record_Cond == false)){
 

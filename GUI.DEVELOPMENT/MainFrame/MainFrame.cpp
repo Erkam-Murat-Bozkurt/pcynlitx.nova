@@ -322,9 +322,9 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
         wxString shell_command =
 
-        "D:\\Pcynlitx_Build_Platform\\Build_Tools_Initializer.exe "
+        "D:\\Pcynlitx_Build_Platform\\CBuild.exe "
 
-        + this->Descriptor_File_Path;
+        + this->Descriptor_File_Path + " -ip";
 
 
         this->Process_Event_Counter = 0;
@@ -440,7 +440,9 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
 
         this->Process_Ptr = new Process_Manager(this,wxID_ANY);
 
-        wxString shell_command = "D:\\Pcynlitx_Build_Platform\\Empty_Descriptor_File_Builder.exe " + path;
+        wxString shell_command = "D:\\Pcynlitx_Build_Platform\\CBuild.exe " 
+        
+        + this->Descriptor_File_Path + "-ed";
 
         this->Process_Ptr->Fork_Process(shell_command);
 

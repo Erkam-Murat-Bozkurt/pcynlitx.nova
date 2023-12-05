@@ -2,11 +2,13 @@
 #include "Empty_Descriptor_File_Builder.hpp"
 
 
-Empty_Descriptor_File_Builder::Empty_Descriptor_File_Builder(){
+Empty_Descriptor_File_Builder::Empty_Descriptor_File_Builder(char opr_sis){
 
       this->file_path = nullptr;
 
       this->Memory_Delete_Condition = true;
+
+      this->opr_sis = opr_sis;
 }
 
 Empty_Descriptor_File_Builder::Empty_Descriptor_File_Builder(const Empty_Descriptor_File_Builder & orig){
@@ -30,6 +32,8 @@ void Empty_Descriptor_File_Builder::Clear_Dynamic_Memory(){
         this->Memory_Delete_Condition = true;
 
         delete [] this->file_path;
+
+        this->FileManager.Clear_Dynamic_Memory();
     }
 
 }
@@ -55,7 +59,15 @@ void Empty_Descriptor_File_Builder::Receive_File_Path(char * path){
         index++;
      }
 
-     this->file_path[index] = '\\';
+     if(this->opr_sis == 'w'){
+
+        this->file_path[index] = '\\';
+     }
+
+     if(this->opr_sis == 'l'){
+
+        this->file_path[index] = '/';
+     }
 
      index++;
 

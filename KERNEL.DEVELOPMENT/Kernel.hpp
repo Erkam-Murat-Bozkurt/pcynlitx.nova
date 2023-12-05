@@ -23,6 +23,8 @@
 #include "Source_File_Dependency_Determiner.hpp"
 #include "Git_Data_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
+#include "Empty_Descriptor_File_Builder.hpp"
+#include "DataRecorder.h"
 
 class Kernel
 {
@@ -31,8 +33,8 @@ public:
  virtual ~Kernel();
  void Setup_Build_Tools();
  void Build_MakeFile(char * mn_src_path, char * Exe_Name, char strategy);
-protected:
  void Clear_Dynamic_Memory();
+protected:
  Build_Tools_Initializer Bld_Init;
  Executable_MakeFile_Builder Exe_Bld;
  std::string DesPATH;

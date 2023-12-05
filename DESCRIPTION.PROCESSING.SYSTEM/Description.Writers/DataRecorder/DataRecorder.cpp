@@ -40,7 +40,9 @@ DataRecorder::DataRecorder(char * Path, char opr_sis) : Des_Reader(opr_sis)
 
     this->Des_Reader.Receive_Descriptor_File_Path(Path);
 
-    this->Des_Reader.Receive_Data_Record_Condition(true);
+    bool Data_Receive_Cond = true;
+
+    this->Des_Reader.Receive_Data_Record_Condition(Data_Receive_Cond);
 
     this->File_Manager.SetFilePath(Path);
 

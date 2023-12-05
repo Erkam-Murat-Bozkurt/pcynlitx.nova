@@ -5,15 +5,14 @@
 Kernel::Kernel(char * DesPATH, char opr_sis) : Bld_Init(DesPATH,opr_sis),  
 
      Exe_Bld(DesPATH,opr_sis)
-{
-     
+{     
    
 }
 
 Kernel::~Kernel(){
 
-   
 }
+
 
 void Kernel::Setup_Build_Tools(){
 
@@ -28,7 +27,10 @@ void Kernel::Build_MakeFile(char * src_path,
      this->Exe_Bld.Build_MakeFile(src_path,Exe_Name,strategy);
 }
 
+
 void Kernel::Clear_Dynamic_Memory(){
 
      this->Bld_Init.Clear_Dynamic_Memory();
+
+     this->Exe_Bld.Clear_Dynamic_Memory();
 }

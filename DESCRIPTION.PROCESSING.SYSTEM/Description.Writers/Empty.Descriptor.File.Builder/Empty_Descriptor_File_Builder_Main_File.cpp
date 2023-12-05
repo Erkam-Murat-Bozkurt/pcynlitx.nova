@@ -19,7 +19,7 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Empty_Descriptor_File_Builder Emp_Builder;
+    Empty_Descriptor_File_Builder Emp_Builder('w');
 
     Emp_Builder.Build_Empty_File(argv[1]);
 
