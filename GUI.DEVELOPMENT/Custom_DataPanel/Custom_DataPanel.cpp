@@ -239,7 +239,7 @@ void Custom_DataPanel::Save_Data(wxCommandEvent & event){
 
         wxString shell_command = "D:\\Pcynlitx_Build_Platform\\CBuild.exe " +
 
-        this->Descriptor_File_Path + wxT(" -cr") + this->DataType;
+        this->Descriptor_File_Path + wxT(" -cr ") + this->DataType;
 
         this->Process_Ptr->Fork_Process(shell_command);
 
@@ -258,7 +258,7 @@ void Custom_DataPanel::Save_Data(wxCommandEvent & event){
 
         shell_command = "D:\\Pcynlitx_Build_Platform\\CBuild.exe " +
 
-        this->Descriptor_File_Path + wxT(" -ar") + this->DataType;
+        this->Descriptor_File_Path + wxT(" -ar ") + this->DataType;
 
         shell_command = shell_command + " ";
 

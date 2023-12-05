@@ -426,23 +426,21 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
 {
   if(event.GetId() == ID_OPEN_EMPTY_PROJECT_FILE)
   {
-     wxString path = "";
-
      wxDirDialog dlg(NULL, "Select Descriptor File Location", "",
 
            wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
 
      if(dlg.ShowModal() == wxID_OK){
 
-        path =dlg.GetPath();
+        wxString construction_dir =dlg.GetPath();
 
-        this->Descriptor_File_Path = path + wxT("\\Pcb_Descriptor.txt");
+        this->Descriptor_File_Path = construction_dir + wxT("\\Pcb_Descriptor.txt");
 
         this->Process_Ptr = new Process_Manager(this,wxID_ANY);
 
         wxString shell_command = "D:\\Pcynlitx_Build_Platform\\CBuild.exe " 
         
-        + this->Descriptor_File_Path + "-ed";
+        + construction_dir + " -ed";
 
         this->Process_Ptr->Fork_Process(shell_command);
 

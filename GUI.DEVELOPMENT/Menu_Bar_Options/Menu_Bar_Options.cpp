@@ -58,19 +58,19 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Library_Description_Menu->Append(wxID_NONE,                     "&# SOURCE FILE LOCATIONS "," ",wxITEM_NORMAL);
 
-  this->Library_Description_Menu->Append(ID_INPUT_SOURCE_FILE_LOCATION, "&   Enter Source File Location"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(ID_INPUT_SOURCE_FILE_LOCATION, "&   Enter External Source File Locations"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
 
   this->Library_Description_Menu->Append(wxID_NONE,                     "&# HEADER FILE LOCATIONS "," ",wxITEM_NORMAL);
 
-  this->Library_Description_Menu->Append(ID_INPUT_HEADER_FILE_LOCATION, "&   Enter Header File Location"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(ID_INPUT_HEADER_FILE_LOCATION, "&   Enter External Header File Locations"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
 
   this->Library_Description_Menu->Append(wxID_NONE,                     "&# LIBRARIY INFORMATION"," ",wxITEM_NORMAL);
 
-  this->Library_Description_Menu->Append(ID_INPUT_LIBRARY_NAME,         "&   Enter Library File For Linking"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(ID_INPUT_LIBRARY_NAME,         "&   Enter Libraries File For Linking"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(ID_INPUT_LIBRARY_LOCATION,"&   Enter Library File Location"," ",wxITEM_NORMAL);
 
@@ -82,9 +82,9 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
 
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&# MAIN FILE NAME"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&# MAIN FILE NAMES"," ",wxITEM_NORMAL);
 
-  this->Library_Description_Menu->Append(ID_INPUT_MAIN_FILE_NAME,      "&    Enter Main File Name"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(ID_INPUT_MAIN_FILE_NAME,      "&    Enter Main File Names"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
 
@@ -107,7 +107,7 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Menu_Bar->Append(this->Library_Description_Menu,wxT("Project Descriptions"));
 
-  this->Menu_Bar->Append(this->Description_Menu,wxT("Descriptor File Selection"));
+  this->Menu_Bar->Append(this->Description_Menu,wxT("Project Management"));
 
   this->Menu_Bar->Append(this->Construction_Menu,wxT("Build System"));
 
