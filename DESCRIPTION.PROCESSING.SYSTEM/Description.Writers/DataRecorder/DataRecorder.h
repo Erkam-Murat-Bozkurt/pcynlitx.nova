@@ -31,6 +31,8 @@ private:
   void WriteNewLines(int line_number);
   void Write_Vector_Data(std::vector<std::string> & vec);
   void Write_String_Data(std::string dt);
+  bool Is_Data_List(std::string data);
+  void Extract_Data_List(std::vector<std::string> & vec, std::string data);
   void Clear_Data_Memory();
   StringOperator StringOperations;
   Cpp_FileOperations File_Manager;

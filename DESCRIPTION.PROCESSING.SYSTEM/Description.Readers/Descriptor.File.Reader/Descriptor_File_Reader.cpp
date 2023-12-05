@@ -176,16 +176,19 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
         exit(0);
      }
 
-     for(int i=start_line+1;i<end_line;i++){
+     if(record_num >0){
 
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+       for(int i=start_line+1;i<end_line-1;i++){
 
-         if(this->StringManager.CheckStringLine(line)){
+           std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
-            this->root_dir = line;
+           if(this->StringManager.CheckStringLine(line)){
 
-            break;
-         }
+              this->root_dir = line;
+
+              break;
+           }
+       }
      }
 }
 

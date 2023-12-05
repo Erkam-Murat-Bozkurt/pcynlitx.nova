@@ -38,6 +38,10 @@ Custom_DataPanel::Custom_DataPanel(wxFrame * frm, wxSize frame_size)
 {
     this->frame_ptr = frm;
 
+    wxIcon Frame_Icon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+
+    this->SetIcon(Frame_Icon);
+
     this->listctrl = new wxDataViewListCtrl(this, wxID_ANY,wxDefaultPosition,frame_size);
 
     this->InsertButton  = new wxButton(this,ID_INSERT_ITEM,wxT("INSERT"),wxDefaultPosition, wxSize(75, 30));
@@ -230,29 +234,11 @@ void Custom_DataPanel::Save_Data(wxCommandEvent & event){
 
             item_data = item_data +
 
-            this->listctrl->GetTextValue(i,0) + "\n"
-
-            + wxT("    ");
+            this->listctrl->GetTextValue(i,0) + "\n";
         }
 
-        this->Process_Ptr = new Process_Manager(this->frame_ptr,wxID_ANY);
 
-        wxString shell_command = "D:\\Pcynlitx_Build_Platform\\CBuild.exe " +
-
-        this->Descriptor_File_Path + wxT(" -cr ") + this->DataType;
-
-        this->Process_Ptr->Fork_Process(shell_command);
-
-
-        int Proc_ID = this->Process_Ptr->GetPid();
-
-        int status  = this->Process_Ptr->Get_Process_Exit_Status();
-
-        this->Process_Ptr->OnTerminate(Proc_ID,status);
-
-
-
-        shell_command = "";
+        wxString shell_command = "";
          
         this->Process_Ptr = new Process_Manager(this->frame_ptr,wxID_ANY);
 
@@ -267,9 +253,9 @@ void Custom_DataPanel::Save_Data(wxCommandEvent & event){
 
         this->Process_Ptr->Fork_Process(shell_command);
 
-        Proc_ID = this->Process_Ptr->GetPid();
+        int Proc_ID = this->Process_Ptr->GetPid();
 
-        status  = this->Process_Ptr->Get_Process_Exit_Status();
+        int status  = this->Process_Ptr->Get_Process_Exit_Status();
 
         this->Process_Ptr->OnTerminate(Proc_ID,status);
     }

@@ -89,46 +89,62 @@ void DataRecorder::Add_Data_Record(char * Data_Type, char * Data_Record){
 
      if(data_type == "PROJECT-ROOT-DIR"){
 
+        if(this->Is_Data_List(data_record)){
+
+           std::cout << "\n There are more than one decleration for root directory";
+
+           exit(EXIT_FAILURE);
+        }
+
         this->Clear_String_Memory(this->root_dir);
         
         this->Place_String_Data(data_record,this->root_dir);
      }
 
+
+     if(data_type == "PROJECT-WAREHOUSE-LOCATION"){
+
+        if(this->Is_Data_List(data_record)){
+
+           std::cout << "\n There are more than one decleration for project warhouse";
+
+           exit(EXIT_FAILURE);
+        }
+
+        this->Clear_String_Memory(this->warehouse_location);
+
+        this->Place_String_Data(data_record,this->warehouse_location);
+     }
+
      if(data_type == "INCLUDE-DIRECTORIES"){
 
-        this->Include_Directories.push_back(data_record);
+        this->Extract_Data_List(this->Include_Directories,data_record);        
      }
 
      if(data_type == "SOURCE-FILE-DIRECTORIES"){
 
-        this->Source_File_Directories.push_back(data_record);
+        this->Extract_Data_List(this->Source_File_Directories,data_record);  
      }
 
      if(data_type == "LIBRARY-DIRECTORIES"){
 
-        this->Library_Directories.push_back(data_record);
+        this->Extract_Data_List(this->Library_Directories,data_record);        
      }
 
      if(data_type == "LIBRARY-FILES"){
 
-        this->Library_Files.push_back(data_record);
+        this->Extract_Data_List(this->Library_Files,data_record);        
      }
 
-     if(data_type == "PROJECT-WAREHOUSE-LOCATION"){
-
-        this->Clear_String_Memory(this->warehouse_location);
-
-        this->Place_String_Data(this->warehouse_location,data_record);
-     }
 
      if(data_type == "EXECUTABLE-FILE-NAMES"){
 
-        this->Exe_File_Names.push_back(data_record);
+        this->Extract_Data_List(this->Exe_File_Names,data_record);        
      }
 
      if(data_type == "MAIN-FILE-NAMES"){
 
-        this->Main_File_Names.push_back(data_record);
+        this->Extract_Data_List(this->Main_File_Names,data_record);        
      }                    
 
      if(data_type == "C++-STANDARD"){
@@ -380,12 +396,26 @@ void DataRecorder::Replace_Data_Record(char * Data_Type,  char * Data_Record){
 
      if(data_type == "PROJECT-ROOT-DIR"){
 
+        if(this->Is_Data_List(data_record)){
+
+           std::cout << "\n There are more than one decleration for root directory";
+
+           exit(EXIT_FAILURE);
+        }
+
         this->Clear_String_Memory(this->root_dir);
         
         this->Place_String_Data(data_record,this->root_dir);
      }
 
      if(data_type == "PROJECT-WAREHOUSE-LOCATION"){
+
+        if(this->Is_Data_List(data_record)){
+
+           std::cout << "\n There are more than one decleration for project warhouse";
+
+           exit(EXIT_FAILURE);
+        }
 
         this->Clear_String_Memory(this->warehouse_location);
 
@@ -502,9 +532,11 @@ void DataRecorder::Write_Vector_Data(std::vector<std::string> & vec){
 
      for(size_t i=0;i<vec.size();i++){
 
-         this->File_Manager.WriteToFile("\n ");   
+         this->File_Manager.WriteToFile("\n");
 
-         this->File_Manager.WriteToFile(vec.at(i));
+         this->File_Manager.WriteToFile(" ");
+
+         this->File_Manager.WriteToFile(vec.at(i));         
      }     
 }
 
@@ -535,6 +567,88 @@ void DataRecorder::Clear_Data_Memory(){
      this->Clear_String_Memory(this->root_dir);
 }
 
+
+bool DataRecorder::Is_Data_List(std::string data){
+
+     bool is_data_list = false;
+
+     size_t new_line_counter=0;
+
+     data.shrink_to_fit();
+
+     for(size_t i=0;i<data.size();i++){
+
+         if(data.at(i) == '\n') {
+
+             new_line_counter++;
+         }
+     }
+
+     if(new_line_counter>1){
+
+        is_data_list = true;
+     }
+
+     return is_data_list;
+}
+
+
+void DataRecorder::Extract_Data_List(std::vector<std::string> & vec, std::string data){
+
+     std::vector<std::string> temp_list;
+
+     data.shrink_to_fit();
+    
+     size_t start_point = 0, end_point=0;
+
+     for(size_t i=0;i<data.size();i++){
+
+         std::string line_data;
+
+         for(size_t k=start_point;k<data.size();k++){
+
+             if(data.at(k) == '\n'){
+
+                end_point = k+1; 
+
+                break;
+             }
+
+             if(k==(data.size()-1)){
+
+                end_point = k;
+             }
+         }
+
+
+         for(size_t k=start_point;k<end_point;k++){
+
+             if(data.at(k) != '\n'){
+
+               line_data.push_back(data.at(k));
+             }
+            
+             i++;
+         }
+
+         line_data.shrink_to_fit();
+
+         temp_list.push_back(line_data);
+
+         start_point = end_point;
+     }
+
+     temp_list.shrink_to_fit();
+
+     for(size_t i=0;i<temp_list.size();i++){
+
+         vec.push_back(temp_list.at(i));
+     }
+
+     vec.shrink_to_fit();
+
+     this->Clear_String_Vector(temp_list);
+}
 
 void DataRecorder::Place_Vector_Data(const std::vector<std::string> & base_vec, 
 
