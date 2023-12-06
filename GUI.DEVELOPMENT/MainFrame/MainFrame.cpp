@@ -23,7 +23,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
-        wxDefaultPosition, wxSize(1200,950),wxDEFAULT_FRAME_STYLE)
+        wxDefaultPosition, wxSize(1200,950),wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP)
 {
 
   this->is_custom_panel_constructed = false;
@@ -348,6 +348,8 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
         this->Show_Progress(label);
 
 
+        /*
+
         wxRichMessageDialog * dial = new wxRichMessageDialog(this,
 
         wxT("\n\n\n  THE PROJECT MANAGEMENT TOOLS CONSTRUCTED  \n\n\n\n"),
@@ -355,6 +357,8 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
         wxT("THE CONSTRUCTION PROCESS RESULT"), wxOK|wxCENTRE);
 
         dial->ShowModal();
+
+       */
 
     }
     else{
@@ -381,8 +385,9 @@ void MainFrame::Show_Progress(wxString Process_Label){
 
        wxProgressDialog dialog(title,Process_Label,max,this,
 
-       wxPD_APP_MODAL | wxPD_ESTIMATED_TIME | wxPD_AUTO_HIDE);
+       wxPD_APP_MODAL | wxPD_ESTIMATED_TIME );
 
+       // If wxPD_AUTO_HIDE style used, the dialog closes automatically after job done.
 
        dialog.Centre(wxBOTH);
 
