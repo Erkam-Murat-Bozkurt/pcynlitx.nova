@@ -104,7 +104,7 @@ void Dependency_Data_Processor::Perform_Dependency_Search(){
 
      this->Dependency_Search_Data.shrink_to_fit();    
 
-     std::cout << "\nDependency data collected";
+     std::cout << "\n Dependency data collected";
 
      this->Clear_Temporary_Memory();
 
@@ -267,7 +267,7 @@ void Dependency_Data_Processor::Perform_Data_Reordering(size_t data_size){
 
     this->Dependency_Search_Data.shrink_to_fit();    
     
-    std::cout << "\nDependency data re-arranged..";
+    std::cout << "\n Dependency data re-arranged..";
 }
 
 

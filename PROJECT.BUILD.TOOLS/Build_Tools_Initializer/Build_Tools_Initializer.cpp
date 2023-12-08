@@ -56,14 +56,14 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      this->Des_Reader.Read_Descriptor_File();
 
-     std::cout << "\n\n\e[1;32mThe project descriptor file read \e[0m\n\n";
+     std::cout << "\n\n The project descriptor file read ";
 
 
      this->Git_Data_Proc.Write_Git_Repo_List_File();
 
      this->Git_Data_Proc.Determine_Git_Repo_Info();    
 
-     std::cout << "\n\n\e[1;32mThe data for git version controller has been collected \e[0m\n\n";
+     std::cout << "\n\n The data for git version controller has been collected ";
 
 
      this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
@@ -72,7 +72,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      this->Dep_Determiner.Collect_Dependency_Information();
 
-     std::cout << "\n\n\e[1;32mSource file dependencies has been determined \e[0m\n\n";
+     std::cout << "\n\n Source file dependencies has been determined ";
 
 
 
@@ -95,7 +95,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      this->Rep_Init.Clear_Dynamic_Memory();
 
-     std::cout << "\n\n\e[1;32mThe project warehouse constructed \e[0m\n\n";
+     std::cout << "\n\n The project warehouse constructed ";
 
 
      this->Mk_Builder.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
@@ -105,11 +105,14 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
      this->Mk_Builder.Clear_Dynamic_Memory();
      
      
-     std::cout << "\n\n\e[1;32mThe project makefiles constructed \e[0m\n\n";
+     std::cout << "\n\n The project makefiles constructed ";
 
      this->Script_Writer.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
 
      this->Script_Writer.Build_Compiler_Script();
 
-     std::cout << "\n\n\e[1;32mThe project scripts constructed \e[0m\n\n";
+     std::cout << "\n\n The project scripts constructed ";
+
+     std::cout << "\n\n";
+
 }

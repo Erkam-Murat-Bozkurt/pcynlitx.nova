@@ -82,9 +82,9 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
      this->Perform_MakeFile_Construction();
 
      std::cout << "\n";
-
-     std::cout << "\n\e[1;32mThe new makefiles have been constructed..\e[0m";
-     std::cout << "\n";     
+     std::cout << "\n The new makefiles have been constructed..";
+     std::cout << "\n";
+     std::cout << "\n";
 }
 
 

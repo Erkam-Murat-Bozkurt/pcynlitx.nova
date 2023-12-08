@@ -29,8 +29,6 @@ public:
   void Print_Text(wxString std_out, wxString title);
   void Print_Error_Stream();
   void Print_Output_Stream(wxString title);
-  void Increase_Process_End_Counter();
-  void Set_Zero_To_Process_End_Counter();
   int  Get_Process_Exit_Status();
 private:
   wxFrame * Frame_Ptr;

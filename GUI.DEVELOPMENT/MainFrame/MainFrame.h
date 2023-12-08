@@ -23,6 +23,7 @@
 #include <wx\toolbar.h>
 #include <wx\richmsgdlg.h>
 #include <wx\textdlg.h>
+#include <wx/textctrl.h>
 #include <wx\colour.h>
 #include <wx\string.h>
 #include <wx\scrolwin.h>
@@ -32,7 +33,7 @@
 #include <wx\dataview.h>
 #include <wx\listctrl.h>
 #include <wx\listbox.h>
-#include <wx\textdlg.h>
+#include <wx/gauge.h>
 #include <mutex>
 #include <condition_variable>
 #include "Custom_DataPanel.hpp"
@@ -45,6 +46,7 @@
 #include "Custom_TabArt.h"
 #include "Process_Manager.hpp"
 #include "Custom_wxThread.hpp"
+#include "Custom_ProcessOutput.hpp"
 
 
 class MainFrame : public wxFrame

@@ -42,14 +42,14 @@ int main(int argc, char ** argv){
 
         Kernel Build_System(argv[1],'w');
 
-        std::cout << "\n\n\e[0;32mC++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED\e[0m\n";
+        std::cout << "\n\n C++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED \n";
 
         Build_System.Setup_Build_Tools();
 
         Build_System.Clear_Dynamic_Memory();
 
 
-        std::cout << "\n\e[0;32mTHE CONSTRUCTION COMPLATED\e[0m\n\n";
+        std::cout << "\n THE CONSTRUCTION COMPLATED ";
     }
 
 

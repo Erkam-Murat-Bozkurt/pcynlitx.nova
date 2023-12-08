@@ -106,24 +106,24 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Clear_Dynamic_Memory();
 
-     std::cout << "\nThe source file data construction started";
+     std::cout << "\n The source file data construction started";
 
      this->DepSelector_For_Single_File.Determine_Source_File_Dependencies(path);
 
-     std::cout << "\nThe source file data construction complated";
+     std::cout << "\n The source file data construction complated";
 
      this->Warehouse_Objetcs_Dir = this->DepSelector_For_Single_File.Get_Warehouse_Objetcs_Dir();
 
      this->Warehouse_Path = this->DepSelector_For_Single_File.Get_Warehouse_Path();
 
-     std::cout << "\nThe interpretation of dependency data started";
+     std::cout << "\n The interpretation of dependency data started";
 
 
      this->Com_Data_Extractor.Receive_Single_File_Dependency_Data(&this->DepSelector_For_Single_File);
 
      this->Com_Data_Extractor.Extract_Compiler_Data();
 
-     std::cout << "\nThe interpretation of dependency data complated";
+     std::cout << "\n The interpretation of dependency data complated";
 
 
      this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
@@ -149,27 +149,28 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
       this->Warehouse_Path = this->DepSelector.Get_Warehouse_Path();
 
-      std::cout << "\nThe interpretation of dependency data started";
+      std::cout << "\n The interpretation of dependency data started";
 
       this->Com_Data_Extractor.Receive_Dependency_Data(&this->DepSelector);
 
       this->Com_Data_Extractor.Extract_Compiler_Data();
 
-      std::cout << "\nThe interpretation of dependency data complated";
+      std::cout << "\n The interpretation of dependency data complated";
 
       this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
       this->Construct_Dependency_Map();
 
-      std::cout << "\nThe dependency map constructed";
+      std::cout << "\n The dependency map constructed";
 
       this->Re_Arrange_Priorities();
 
-      std::cout << "\nThe compiler data re-arranged";
+      std::cout << "\n The compiler data re-arranged";
 
       this->Order_Priorities();
 
-      std::cout << "\nThe priorities re-ordered.";
+      std::cout << "\n The priorities re-ordered.";
+      std::cout << "\n";
 
       this->Clear_Dynamic_Memory();
 

@@ -23,7 +23,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
-        wxDefaultPosition, wxSize(1200,950),wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP)
+        wxDefaultPosition, wxSize(1200,950),wxDEFAULT_FRAME_STYLE )
 {
 
   this->is_custom_panel_constructed = false;
@@ -337,29 +337,18 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
         this->Process_Ptr->Fork_Process(shell_command);
 
+        this->Process_Ptr->Redirect();
+
+
+
 
         this->Thread_Ptr = new Custom_wxThread(this->Process_Ptr,this->Progress_Bar_Start_status,&this->cv);
 
         this->Thread_Ptr->Run();
 
-
         wxString label = wxT("Build System Construction");
 
         this->Show_Progress(label);
-
-
-        /*
-
-        wxRichMessageDialog * dial = new wxRichMessageDialog(this,
-
-        wxT("\n\n\n  THE PROJECT MANAGEMENT TOOLS CONSTRUCTED  \n\n\n\n"),
-
-        wxT("THE CONSTRUCTION PROCESS RESULT"), wxOK|wxCENTRE);
-
-        dial->ShowModal();
-
-       */
-
     }
     else{
 
@@ -379,17 +368,16 @@ void MainFrame::Show_Progress(wxString Process_Label){
 
     if(this->Process_Event_Counter < 1){
 
-       int max = 10; // The maximum num of iteration for progress bar.
 
-       wxString title = wxT("Process Status");
+       Custom_ProcessOutput * Process_Output = new Custom_ProcessOutput((wxFrame * )NULL);
+ 
+       Process_Output->Receive_Process_Manager(this->Process_Ptr);
 
-       wxProgressDialog dialog(title,Process_Label,max,this,
 
-       wxPD_APP_MODAL | wxPD_ESTIMATED_TIME );
+       int max=10;
+     
+       Process_Output->Construct_Output(max);
 
-       // If wxPD_AUTO_HIDE style used, the dialog closes automatically after job done.
-
-       dialog.Centre(wxBOTH);
 
        for(int i=0;i<=max;i++){
 
@@ -399,7 +387,7 @@ void MainFrame::Show_Progress(wxString Process_Label){
 
                 i= max;
 
-                dialog.Update(i);
+                Process_Output->GetDialogAddress()->SetValue(i);
 
                 break;
               }
@@ -413,16 +401,16 @@ void MainFrame::Show_Progress(wxString Process_Label){
               }
             }
 
-           wxMilliSleep(500);
+           wxMilliSleep(250);
 
-           dialog.Update(i);
+           Process_Output->GetDialogAddress()->SetValue(i);
+
+           Process_Output->PrintProcessOutput();
 
            *this->Progress_Bar_Start_status = true;
 
-           this->cv.notify_one();
+           this->cv.notify_all();
         }
-
-        dialog.Destroy();
     }
 }
 
