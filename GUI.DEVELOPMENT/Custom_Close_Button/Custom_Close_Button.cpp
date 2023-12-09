@@ -67,9 +67,7 @@ Custom_Close_Button::Custom_Close_Button(Custom_Window * parent, wxPoint positio
 
     this->page_close_icon = new
 
-                wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\pane_close_icon.png"),
-
-                wxBITMAP_TYPE_ANY);
+                wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\pane_close_icon.png"),wxBITMAP_TYPE_ANY);
 
     this->SetMinSize(this->page_close_icon->GetSize());
 
@@ -108,6 +106,7 @@ void Custom_Close_Button::paintNow()
     this->Update_Window_Data();
 
     wxClientDC dc(this);
+    
     this->render(dc);
 }
 
@@ -146,9 +145,9 @@ void Custom_Close_Button::render(wxDC&  dc)
 {
     wxRect rect(this->GetSize());
 
-    dc.SetBrush(wxColour(235,235,235));
+    dc.SetBrush(wxColour(200,200,200));
 
-    dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth()+2,rect.GetHeight()+2);
+    dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth()+3,rect.GetHeight()+3);
 
     wxSize Bitmap_Size = this->page_close_icon->GetSize();
 
@@ -158,7 +157,7 @@ void Custom_Close_Button::render(wxDC&  dc)
 
     int y_extend = Panel_Size.y - Bitmap_Size.y;
 
-    dc.DrawBitmap(*this->page_close_icon,wxPoint(2+x_extend/2,2+y_extend/2));
+    dc.DrawBitmap(*this->page_close_icon,wxPoint(x_extend/2,y_extend/2));
 }
 
 void Custom_Close_Button::mouseDown(wxMouseEvent& event)
@@ -183,6 +182,7 @@ void Custom_Close_Button::mouseLeftWindow(wxMouseEvent& event)
     if (this->pressedDown)
     {
         this->pressedDown = false;
+
         this->paintNow();
     }
 }

@@ -204,9 +204,9 @@ void Custom_Tree_View_Panel::Initialize_Sizer()
 {
      this->panel_sizer = new wxBoxSizer(wxVERTICAL);
 
-     this->panel_sizer->Add(this->Top_Bar_Window,0, wxALL|wxEXPAND,0);
+     this->panel_sizer->Add(this->Top_Bar_Window,0, wxEXPAND | wxALL,0);
 
-     this->panel_sizer->Add(this->tree_control,0, wxALL|wxEXPAND,0);
+     this->panel_sizer->Add(this->tree_control,0, wxEXPAND | wxALL,0);
 
      this->windows_detach_condition = false;
 
@@ -237,7 +237,7 @@ void Custom_Tree_View_Panel::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxR
 {
      dc.SetBrush(wxColour(255,255,255));
 
-     dc.DrawRectangle(rect.GetX()-2, rect.GetY()-2, rect.GetWidth()+5,rect.GetHeight()+5);
+     dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth(),rect.GetHeight());
 }
 
 void Custom_Tree_View_Panel::PaintNow()

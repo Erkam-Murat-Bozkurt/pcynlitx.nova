@@ -156,6 +156,19 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
   this->Interface_Manager.Update();
 
 
+
+  // THE CONSTRUCTION OF THE DIRECTORY TREE VIEW
+
+  this->Dir_List_Manager = new Custom_Tree_View_Panel(this,wxID_ANY,wxDefaultPosition,
+
+                            wxSize(270,this->GetClientSize().y),&this->Interface_Manager,
+
+                            *(this->Default_Font),this->Book_Manager->GetTabCtrlHeight());
+
+  this->tree_control = this->Dir_List_Manager->GetTreeCtrl();
+
+
+
   wxRect Main_Rect(this->GetSize());
 
   this->Refresh(true,&Main_Rect);
@@ -311,6 +324,54 @@ void MainFrame::Show_Author(wxCommandEvent & event)
         };
      }
 }
+
+
+
+void MainFrame::Close_Directory_Pane(wxAuiManagerEvent & event)
+{
+     event.Veto(true);
+
+     event.StopPropagation();
+
+     this->Dir_List_Manager->RemoveProjectDirectory();
+
+     this->Dir_List_Manager->Close_Directory_Pane();
+
+     this->Interface_Manager.Update();
+}
+
+void MainFrame::DirectoryOpen(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_SHOW_PROJECT_WAREHOUSE){
+
+        wxDirDialog dir_dialog(this, "Select a directory","",
+
+                    wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
+
+
+        if(dir_dialog.ShowModal() == wxID_OK){
+
+           wxString DirectoryPath = dir_dialog.GetPath();
+
+           if(!this->Dir_List_Manager->Get_Panel_Open_Status()){
+
+              this->Dir_List_Manager->Load_Project_Directory(DirectoryPath);
+           }
+
+           this->Interface_Manager.Update();
+        }
+
+
+        this->Centre();
+
+        this->tree_control->Update();
+
+        this->PaintNow(this);
+
+        this->Update();
+     }
+}
+
 
 void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 

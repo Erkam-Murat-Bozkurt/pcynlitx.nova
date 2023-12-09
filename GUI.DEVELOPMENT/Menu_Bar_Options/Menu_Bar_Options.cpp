@@ -43,6 +43,12 @@ Menu_Bar_Options::Menu_Bar_Options(){
   this->Help_Menu->Append(wxID_ABOUT,"&Version 1.0","",wxITEM_NORMAL);
 
 
+
+  this->Description_Menu->Append(ID_SHOW_PROJECT_WAREHOUSE,
+
+                "&Open Directory List","",wxITEM_NORMAL);
+
+
   this->Description_Menu->Append(ID_OPEN_EMPTY_PROJECT_FILE,"Construct Empty Project File","",wxITEM_NORMAL);
 
   this->Description_Menu->Append(ID_SELECT_PROJECT_FILE,"Select Project File","",wxITEM_NORMAL);

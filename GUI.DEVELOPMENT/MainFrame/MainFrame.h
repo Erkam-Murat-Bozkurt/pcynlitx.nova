@@ -62,6 +62,7 @@ public:
   void Select_Project_File(wxCommandEvent&);
   void Show_Project_File(wxCommandEvent&);
   void Show_Progress(wxString Process_Label);
+  void DirectoryOpen(wxCommandEvent & event);
   wxAuiPaneInfo Central_Pane_Info;
 private:
   void Open_Empty_Project_File(wxCommandEvent & event);
@@ -81,6 +82,7 @@ private:
   void Start_Build_System_Construction(wxCommandEvent & event);
   void Process_End(wxProcessEvent & event);
   void Descriptor_File_Selection_Check();
+  void Close_Directory_Pane(wxAuiManagerEvent & event);
   Custom_DataPanel * data_panel_ptr;
   bool is_custom_panel_constructed;
   bool Memory_Delete_Condition;
@@ -92,6 +94,8 @@ private:
   wxString DataType;
   wxAuiDockArt * Dock_Art_Pointer;
   wxAuiManager Interface_Manager;
+  Custom_Tree_View_Panel * Dir_List_Manager;
+  Custom_wxTreeCtrl * tree_control;
   Custom_wxPanel * Custom_Main_Panel;
   Custom_Notebook * Book_Manager;
   Menu_Bar_Options * MB_Options;
