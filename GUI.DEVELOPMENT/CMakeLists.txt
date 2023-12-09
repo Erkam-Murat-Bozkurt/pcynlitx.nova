@@ -59,6 +59,10 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_Folder_Lister/Project_Folder_Lister.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_Folder_Lister/Project_Folder_Lister.h
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Style_Loader/Style_loader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Style_Loader/Style_loader.h
+
+
 )
 
 
@@ -99,6 +103,8 @@ target_include_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Dialog
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_Folder_Lister
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Style_Loader
 
     D:/wxWidgets-3.2.4/include
 
@@ -143,6 +149,8 @@ target_link_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Dialog
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_Folder_Lister
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Style_Loader
 
     D:/wxWidgets-3.2.4/lib/gcc810_x64_dll
 

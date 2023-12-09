@@ -24,6 +24,8 @@ BEGIN_EVENT_TABLE(MainFrame,wxFrame)
   EVT_MENU(ID_SHOW_PROJECT_WAREHOUSE,MainFrame::DirectoryOpen)
   EVT_MENU(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,MainFrame::Start_Build_System_Construction)
   EVT_END_PROCESS(wxID_ANY,MainFrame::Process_End)
+  EVT_TREE_ITEM_ACTIVATED(wxID_ANY,MainFrame::FileSelect)
+  EVT_TREE_BEGIN_LABEL_EDIT(wxID_ANY,MainFrame::FileNameEdit)
   EVT_PAINT(MainFrame::OnPaint)
 END_EVENT_TABLE()
 

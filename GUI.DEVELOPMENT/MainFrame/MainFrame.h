@@ -63,6 +63,7 @@ public:
   void Show_Project_File(wxCommandEvent&);
   void Show_Progress(wxString Process_Label);
   void DirectoryOpen(wxCommandEvent & event);
+  void FileSelect(wxTreeEvent& event);
   wxAuiPaneInfo Central_Pane_Info;
 private:
   void Open_Empty_Project_File(wxCommandEvent & event);
@@ -83,6 +84,7 @@ private:
   void Process_End(wxProcessEvent & event);
   void Descriptor_File_Selection_Check();
   void Close_Directory_Pane(wxAuiManagerEvent & event);
+  void FileNameEdit(wxTreeEvent& event);
   Custom_DataPanel * data_panel_ptr;
   bool is_custom_panel_constructed;
   bool Memory_Delete_Condition;
@@ -104,6 +106,7 @@ private:
   wxFont * Default_Font;
   int Process_Event_Counter;
   bool * Progress_Bar_Start_status;
+  wxDir    * dir_control;
   std::condition_variable  cv;
   DECLARE_EVENT_TABLE()
 };

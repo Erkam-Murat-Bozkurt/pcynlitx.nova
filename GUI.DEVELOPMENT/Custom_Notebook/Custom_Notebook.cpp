@@ -35,8 +35,8 @@ Custom_Notebook::Custom_Notebook( wxPanel * parent, wxAuiManager * Interface_Man
 
    this->SetThemeEnabled(false);
 
-   this->Custom_Notebook_TabArt = new Custom_TabArt();
 
+   this->Custom_Notebook_TabArt = new Custom_TabArt();
 
    this->SetArtProvider(this->Custom_Notebook_TabArt);
 
@@ -66,7 +66,7 @@ Custom_Notebook::Custom_Notebook( wxPanel * parent, wxAuiManager * Interface_Man
 
    this->GetEventHandler()->Bind(wxEVT_AUINOTEBOOK_PAGE_CHANGED,&Custom_Notebook::Determine_Current_Page,this,wxID_ANY);
 
-   wxCommandEvent File_Change(wxEVT_TEXT ,this->GetId());
+   wxStyledTextEvent File_Change(wxEVT_STC_CHANGE,this->GetId());
 
    this->GetEventHandler()->Bind(wxEVT_STC_CHANGE,&Custom_Notebook::Document_Change,this,wxID_ANY);
 
@@ -87,7 +87,9 @@ Custom_Notebook::Custom_Notebook( wxPanel * parent, wxAuiManager * Interface_Man
 
    this->SetTabCtrlHeight(47);
 
-   this->Default_Font = Default_Font;
+   this->Default_Font = new wxFont(11,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
+
+                     wxFONTWEIGHT_NORMAL,false,"Consolas");
 
    this->Show(true);
 
@@ -249,6 +251,30 @@ void Custom_Notebook::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& re
      dc.DrawRectangle(rect.GetX()-1,rect.GetY()-1,rect.GetWidth()+5,rect.GetHeight()+5);
 };
 
+void Custom_Notebook::Change_Cursor_Type()
+{
+     this->Style_Change_Operation = true;
+
+     int Selection = this->GetSelection();
+
+     for(int i=0;i<20;i++){
+
+         wxString File_Path = this->NoteBook_Page_Data[i].File_Path;
+
+         bool is_this_file_open = this->Is_File_Open(File_Path);
+
+         bool is_this_text_file = this->NoteBook_Page_Data[i].Is_This_Text_File;
+
+         if(is_this_file_open && is_this_text_file){
+
+            this->NoteBook_Page_Data[i].Text_Ctrl->SetSTCCursor(2);
+         }
+     }
+
+     this->SetSelection(Selection);
+
+     this->Style_Change_Operation = false;
+}
 
 void Custom_Notebook::Load_Default_Cursor()
 {
@@ -267,6 +293,116 @@ void Custom_Notebook::Load_Default_Cursor()
          if(is_this_file_open && is_this_text_file){
 
             this->NoteBook_Page_Data[i].Text_Ctrl->SetSTCCursor(-1);
+         }
+     }
+
+     this->SetSelection(Selection);
+
+     this->Style_Change_Operation = false;
+}
+
+void Custom_Notebook::Set_Caret_Line_InVisible()
+{
+     this->Style_Change_Operation = true;
+
+     int Selection = this->GetSelection();
+
+     for(int i=0;i<20;i++){
+
+         wxString File_Path = this->NoteBook_Page_Data[i].File_Path;
+
+         bool is_this_file_open = this->Is_File_Open(File_Path);
+
+         bool is_this_text_file = this->NoteBook_Page_Data[i].Is_This_Text_File;
+
+         if(is_this_file_open && is_this_text_file){
+
+            this->NoteBook_Page_Data[i].Text_Ctrl->SetCaretLineVisible(false);
+         }
+     }
+
+     this->SetSelection(Selection);
+
+     this->Style_Change_Operation = false;
+}
+
+void Custom_Notebook::Set_Caret_Line_Visible()
+{
+     this->Style_Change_Operation = true;
+
+     int Selection = this->GetSelection();
+
+     for(int i=0;i<20;i++){
+
+         wxString File_Path = this->NoteBook_Page_Data[i].File_Path;
+
+         bool is_this_file_open = this->Is_File_Open(File_Path);
+
+         bool is_this_text_file = this->NoteBook_Page_Data[i].Is_This_Text_File;
+
+         if(is_this_file_open && is_this_text_file){
+
+            this->NoteBook_Page_Data[i].Text_Ctrl->SetCaretLineVisible(true);
+
+            this->NoteBook_Page_Data[i].Text_Ctrl->SetCaretLineBackground(wxColour(220,220,220));
+        }
+     }
+
+     this->SetSelection(Selection);
+
+     this->Style_Change_Operation = false;
+}
+
+void Custom_Notebook::Use_Default_Caret()
+{
+     this->Style_Change_Operation = true;
+
+     int Selection = this->GetSelection();
+
+     for(int i=0;i<20;i++){
+
+         wxString File_Path = this->NoteBook_Page_Data[i].File_Path;
+
+         bool is_this_file_open = this->Is_File_Open(File_Path);
+
+         bool is_this_text_file = this->NoteBook_Page_Data[i].Is_This_Text_File;
+
+         if(is_this_file_open && is_this_text_file){
+
+            this->NoteBook_Page_Data[i].Text_Ctrl->SetCaretStyle(1);
+
+            this->NoteBook_Page_Data[i].Text_Ctrl->SetCaretWidth(1);
+
+            this->NoteBook_Page_Data[i].Text_Ctrl->SetCaretForeground(wxColour(50,50,50));
+         }
+     }
+
+     this->SetSelection(Selection);
+
+     this->Style_Change_Operation = false;
+}
+
+void Custom_Notebook::Use_Block_Caret()
+{
+     this->Style_Change_Operation = true;
+
+     int Selection = this->GetSelection();
+
+     for(int i=0;i<20;i++){
+
+         wxString File_Path = this->NoteBook_Page_Data[i].File_Path;
+
+         bool is_this_file_open = this->Is_File_Open(File_Path);
+
+         bool is_this_text_file = this->NoteBook_Page_Data[i].Is_This_Text_File;
+
+         if(is_this_file_open && is_this_text_file){
+
+            this->NoteBook_Page_Data[i].Text_Ctrl->SetCaretStyle(2);
+
+            this->NoteBook_Page_Data[i].Text_Ctrl->SetCaretWidth(1);
+
+            this->NoteBook_Page_Data[i].Text_Ctrl->SetCaretForeground(wxColour(150,150,150));
          }
      }
 
@@ -328,6 +464,7 @@ void Custom_Notebook::Add_New_File(wxString File_Path)
 
          this->NoteBook_Page_Data[Index_Number].Is_This_Text_File = true;
 
+         this->Text_Style_Loader.Set_Lexer_Style(*this->Default_Font,this->NoteBook_Page_Data[Index_Number].Text_Ctrl);
 
          this->Determine_File_Short_Name(File_Path);
 
@@ -387,6 +524,7 @@ void Custom_Notebook::Open_File(wxString File_Path)
 
          this->NoteBook_Page_Data[Index_Number].Window_ID = this->NoteBook_Page_Data[Index_Number].Text_Ctrl->GetId();
 
+         this->Text_Style_Loader.Set_Lexer_Style(*this->Default_Font,this->NoteBook_Page_Data[Index_Number].Text_Ctrl);
 
          this->Determine_File_Short_Name(File_Path);
 
@@ -420,6 +558,180 @@ void Custom_Notebook::Open_File(wxString File_Path)
 
            this->Refresh();
      }
+}
+
+void Custom_Notebook::Set_Font(wxFont Font)
+{
+     this->Style_Change_Operation = true;
+
+     int Selection = this->GetSelection();
+
+     for(int i=0;i<20;i++){
+
+         wxString File_Path = this->NoteBook_Page_Data[i].File_Path;
+
+         bool is_this_file_open = this->Is_File_Open(File_Path);
+
+         bool is_this_text_file = this->NoteBook_Page_Data[i].Is_This_Text_File;
+
+         if(is_this_file_open && is_this_text_file){
+
+            if( this->NoteBook_Page_Data[i].Window_ID != this->Introduction_Page_Id ){
+
+                this->Text_Style_Loader.Set_Lexer_Style(Font,this->NoteBook_Page_Data[i].Text_Ctrl);
+            }
+         }
+     }
+
+     this->SetSelection(Selection);
+
+     this->Style_Change_Operation = false;
+}
+
+void Custom_Notebook::Set_Lexer_Style(wxFont Default_Font)
+{
+     this->Style_Change_Operation = true;
+
+     int Selection = this->GetSelection();
+
+     for(int i=0;i<20;i++){
+
+         wxString File_Path = this->NoteBook_Page_Data[i].File_Path;
+
+         bool is_this_file_open = this->Is_File_Open(File_Path);
+
+         bool is_this_text_file = this->NoteBook_Page_Data[i].Is_This_Text_File;
+
+         if(is_this_file_open && is_this_text_file)
+         {
+            if( this->NoteBook_Page_Data[i].Window_ID != this->Introduction_Page_Id )
+            {
+                this->Text_Style_Loader.Set_Lexer_Style(Default_Font,
+
+                      this->NoteBook_Page_Data[i].Text_Ctrl);
+            }
+          }
+     }
+
+    this->SetSelection(Selection);
+
+    this->Style_Change_Operation = false;
+}
+
+void Custom_Notebook::Set_Style_Font(wxFont Font)
+{
+     this->Style_Change_Operation = true;
+
+     int Selection = this->GetSelection();
+
+     for(int i=0;i<20;i++){
+
+         wxString File_Path = this->NoteBook_Page_Data[i].File_Path;
+
+         bool is_this_file_open = this->Is_File_Open(File_Path);
+
+         bool is_this_text_file = this->NoteBook_Page_Data[i].Is_This_Text_File;
+
+         if(is_this_file_open && is_this_text_file)
+         {
+            if( this->NoteBook_Page_Data[i].Window_ID != this->Introduction_Page_Id )
+            {
+                this->Text_Style_Loader.Set_Style_Font(Font,this->NoteBook_Page_Data[i].Text_Ctrl);
+            }
+         }
+     }
+
+     this->SetSelection(Selection);
+
+     this->Style_Change_Operation = false;
+}
+
+void Custom_Notebook::Use_Bold_Styling()
+{
+     this->Style_Change_Operation = true;
+
+     int Selection = this->GetSelection();
+
+     for(int i=0;i<20;i++){
+
+         wxString File_Path = this->NoteBook_Page_Data[i].File_Path;
+
+         bool is_this_file_open = this->Is_File_Open(File_Path);
+
+         bool is_this_text_file = this->NoteBook_Page_Data[i].Is_This_Text_File;
+
+         if(is_this_file_open && is_this_text_file)
+         {
+            if( this->NoteBook_Page_Data[i].Window_ID != this->Introduction_Page_Id ){
+
+                this->Text_Style_Loader.Use_Bold_Styling(this->NoteBook_Page_Data[i].Text_Ctrl);
+            }
+         }
+     }
+
+     this->SetSelection(Selection);
+
+     this->Style_Change_Operation = false;
+}
+
+void Custom_Notebook::Clear_Style()
+{
+     this->Style_Change_Operation = true;
+
+     int Selection = this->GetSelection();
+
+     for(int i=0;i<20;i++){
+
+         wxString File_Path = this->NoteBook_Page_Data[i].File_Path;
+
+         bool is_this_file_open = this->Is_File_Open(File_Path);
+
+         bool is_this_text_file = this->NoteBook_Page_Data[i].Is_This_Text_File;
+
+         if(is_this_file_open && is_this_text_file)
+         {
+            if( this->NoteBook_Page_Data[i].Window_ID != this->Introduction_Page_Id )
+            {
+                this->Text_Style_Loader.Clear_Text_Control_Style(this->NoteBook_Page_Data[i].Text_Ctrl,
+
+                  *this->Default_Font);
+            }
+         }
+     }
+
+     this->SetSelection(Selection);
+
+     this->Style_Change_Operation = false;
+}
+
+void Custom_Notebook::Reload_Style()
+{
+     this->Style_Change_Operation = true;
+
+     int Selection = this->GetSelection();
+
+     for(int i=0;i<20;i++){
+
+        wxString File_Path = this->NoteBook_Page_Data[i].File_Path;
+
+        bool is_this_file_open = this->Is_File_Open(File_Path);
+
+        bool is_this_text_file = this->NoteBook_Page_Data[i].Is_This_Text_File;
+
+        if(is_this_file_open && is_this_text_file)
+        {
+           if( this->NoteBook_Page_Data[i].Window_ID != this->Introduction_Page_Id ){
+
+              this->Text_Style_Loader.Reload_Text_Control_Style(this->NoteBook_Page_Data[i].Text_Ctrl,
+
+                *this->Default_Font);
+           }
+        }
+     }
+
+     this->SetSelection(Selection);
+
+     this->Style_Change_Operation = false;
 }
 
 Custom_TextCtrl * Custom_Notebook::Get_Selected_Text_Ctrl()

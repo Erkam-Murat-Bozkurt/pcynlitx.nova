@@ -167,6 +167,7 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
   this->tree_control = this->Dir_List_Manager->GetTreeCtrl();
 
+  this->dir_control = new wxDir;
 
 
   wxRect Main_Rect(this->GetSize());
@@ -543,6 +544,48 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
      }
    }
 }
+
+
+
+void MainFrame::FileSelect(wxTreeEvent& event)
+{
+     event.Skip(true);
+
+     event.StopPropagation();
+
+     wxTreeItemId Item = this->tree_control->GetSelection();
+
+     wxString Path = this->Dir_List_Manager->GetItemPath(Item);
+
+     if(this->dir_control->Exists(Path)){
+
+        if(this->Dir_List_Manager->GetTreeCtrl()->IsExpanded(Item)){
+
+           this->Dir_List_Manager->GetTreeCtrl()->Collapse(Item);
+
+           this->Dir_List_Manager->GetTreeCtrl()->PaintNow();
+        }
+        else{
+
+             this->Dir_List_Manager->GetTreeCtrl()->Expand(Item);
+
+             this->Dir_List_Manager->GetTreeCtrl()->PaintNow();
+        }
+     }
+     else{
+
+            this->Book_Manager->Open_File(Path);
+     }
+}
+
+void MainFrame::FileNameEdit(wxTreeEvent& event)
+{
+     event.Veto();
+
+}
+
+
+
 
 void MainFrame::Open_Intro_Page(wxCommandEvent & event)
 {
