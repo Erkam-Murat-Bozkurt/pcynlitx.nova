@@ -47,6 +47,8 @@
 #include "Process_Manager.hpp"
 #include "Custom_wxThread.hpp"
 #include "Custom_ProcessOutput.hpp"
+#include "ToolBar_Initializer.h"
+
 
 
 class MainFrame : public wxFrame
@@ -98,6 +100,7 @@ private:
   wxAuiManager Interface_Manager;
   Custom_Tree_View_Panel * Dir_List_Manager;
   Custom_wxTreeCtrl * tree_control;
+  ToolBar_Initializer * ToolBar_Widget;
   Custom_wxPanel * Custom_Main_Panel;
   Custom_Notebook * Book_Manager;
   Menu_Bar_Options * MB_Options;
@@ -108,6 +111,7 @@ private:
   bool * Progress_Bar_Start_status;
   wxDir    * dir_control;
   std::condition_variable  cv;
+  int Toolbar_ID;
   DECLARE_EVENT_TABLE()
 };
 

@@ -62,6 +62,8 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/Style_Loader/Style_loader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Style_Loader/Style_loader.h
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/ToolBar_Initializer/ToolBar_Initializer.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/ToolBar_Initializer/ToolBar_Initializer.cpp
 
 )
 
@@ -105,6 +107,8 @@ target_include_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_Folder_Lister
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Style_Loader
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/ToolBar_Initializer
 
     D:/wxWidgets-3.2.4/include
 
@@ -151,6 +155,8 @@ target_link_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_Folder_Lister
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Style_Loader
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/ToolBar_Initializer
 
     D:/wxWidgets-3.2.4/lib/gcc810_x64_dll
 

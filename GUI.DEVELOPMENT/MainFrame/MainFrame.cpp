@@ -82,6 +82,15 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
   // THE CONSTRUCTION OF THE TOOLBAR..
 
 
+  this->ToolBar_Widget = new ToolBar_Initializer();
+
+  this->ToolBar_Widget->Initialize_ToolBar(this,this->Dock_Art_Pointer,&this->Interface_Manager);
+
+  this->Interface_Manager.Update();
+
+  this->Toolbar_ID = this->ToolBar_Widget->Get_ToolBar_Pointer()->GetId();
+
+
 
   this->Interface_Manager.Update();
 
