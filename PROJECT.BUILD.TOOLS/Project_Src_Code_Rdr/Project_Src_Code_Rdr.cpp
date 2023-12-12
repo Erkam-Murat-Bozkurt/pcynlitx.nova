@@ -97,9 +97,9 @@ void Project_Src_Code_Rdr::Read_For_Large_Data_Set(size_t repo_size){
 
      size_t thread_num = repo_size/20;
 
-     if(thread_num > 200){
+     if(thread_num > 64){
 
-        thread_num = 200;
+        thread_num = 64;
      }
 
      size_t remaining_job = 0;

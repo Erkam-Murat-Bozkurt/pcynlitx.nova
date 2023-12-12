@@ -135,6 +135,12 @@ void Header_Dependency_Data_Extractor::Perform_Dependency_Search(){
 void Header_Dependency_Data_Extractor::Search_For_Large_Data_Set(size_t data_size){
 
      size_t thread_number = data_size/10;
+ 
+     if(thread_number > 64){
+
+        thread_number = 64;
+     }
+
 
      size_t thread_div = thread_number/10;
 

@@ -179,9 +179,9 @@ void Source_File_Compiler_Data_Extractor::Search_For_Large_Data_Set(size_t data_
 
      size_t thread_num = data_size/20;
 
-     if(thread_num > 200){
+     if(thread_num > 64){
 
-        thread_num = 200;
+        thread_num = 64;
      }
 
      size_t remaining_job = 0;

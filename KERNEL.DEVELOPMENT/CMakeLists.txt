@@ -142,6 +142,9 @@ target_include_directories(kernel PUBLIC
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/IntToCharTranslater
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
+
+    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+
 )
 
 
@@ -273,6 +276,8 @@ target_link_directories(kernel PUBLIC
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/IntToCharTranslater
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
+
+    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
 
 )
 

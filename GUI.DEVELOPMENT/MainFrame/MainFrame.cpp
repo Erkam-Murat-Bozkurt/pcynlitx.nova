@@ -43,6 +43,13 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
   this->ClearBackground();
 
 
+  SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
+
+  this->Des_Reader = new Descriptor_File_Reader('w');
+
+
+
+
   this->Default_Font = new wxFont(10,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
 
                      wxFONTWEIGHT_NORMAL,false);
@@ -383,6 +390,8 @@ void MainFrame::DirectoryOpen(wxCommandEvent & event)
 }
 
 
+
+
 void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
   if(event.GetId() == ID_RUN_BUILD_SYSTEM_CONSTRUCTOR)
@@ -398,6 +407,13 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
         + this->Descriptor_File_Path + " -ip";
 
 
+
+        this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
+
+        this->Des_Reader->Read_Descriptor_File();
+
+
+
         this->Process_Event_Counter = 0;
 
         this->Progress_Bar_Start_status = new bool;
@@ -408,10 +424,8 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
         this->Process_Ptr->Fork_Process(shell_command);
 
+
         this->Process_Ptr->Redirect();
-
-
-
 
         this->Thread_Ptr = new Custom_wxThread(this->Process_Ptr,this->Progress_Bar_Start_status,&this->cv);
 
@@ -420,6 +434,17 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
         wxString label = wxT("Build System Construction");
 
         this->Show_Progress(label);
+
+
+        std::string warehose_word = "\\WAREHOUSE";
+
+        this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location() + warehose_word;
+
+        if(!this->Dir_List_Manager->Get_Panel_Open_Status()){
+
+            this->Dir_List_Manager->Load_Project_Directory(wxString(this->Warehouse_Location));
+        }
+
     }
     else{
 
@@ -439,51 +464,48 @@ void MainFrame::Show_Progress(wxString Process_Label){
 
     if(this->Process_Event_Counter < 1){
 
-
        Custom_ProcessOutput * Process_Output = new Custom_ProcessOutput((wxFrame * )NULL);
  
        Process_Output->Receive_Process_Manager(this->Process_Ptr);
 
-
-       int max=10;
+       int max=50;
      
        Process_Output->Construct_Output(max);
 
+       Process_Output->PrintProcessOutput();
 
-       for(int i=0;i<=max;i++){
 
-           if(i>8){
+       for(int i=0;true;i++){
+
+           int logNum = Process_Output->GetLogNumber();
+
+           if(i>max-2){
 
               if(this->Process_Event_Counter >= 1){
 
-                i= max;
+                i=max;
 
-                Process_Output->GetDialogAddress()->SetValue(i);
+                Process_Output->GetDialogAddress()->SetValue(max);
 
                 break;
               }
+           }
 
-              if(this->Process_Event_Counter < 1){
+           if(this->Process_Event_Counter < 1){
 
-                 if(i>= max -1){
+              Process_Output->GetDialogAddress()->SetValue(logNum);
 
-                   i--;
-                 }
-              }
-            }
+              Process_Output->PrintProcessOutput();
 
-           wxMilliSleep(250);
-
-           Process_Output->GetDialogAddress()->SetValue(i);
-
-           Process_Output->PrintProcessOutput();
+           }
 
            *this->Progress_Bar_Start_status = true;
 
            this->cv.notify_all();
-        }
+       }
     }
 }
+
 
 
 void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
@@ -499,6 +521,8 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
         wxString construction_dir =dlg.GetPath();
 
         this->Descriptor_File_Path = construction_dir + wxT("\\Pcb_Descriptor.txt");
+
+        this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
         this->Process_Ptr = new Process_Manager(this,wxID_ANY);
 
@@ -547,9 +571,11 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
                 }
             }
 
-        delete openFileDialog;
+            delete openFileDialog;
 
-        this->is_descriptor_file_open = true;
+            this->is_descriptor_file_open = true;
+
+            this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
      }
    }
 }

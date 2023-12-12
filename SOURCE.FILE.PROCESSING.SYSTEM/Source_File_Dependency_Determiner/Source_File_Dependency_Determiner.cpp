@@ -204,6 +204,12 @@ void Source_File_Dependency_Determiner::Re_Arrange_Priorities(){
 
      size_t thread_number = comp_data_size/10;
 
+     if(thread_number > 64){
+
+        thread_number = 64;
+     }
+
+
      if(comp_data_size>20){
 
        int division = comp_data_size/thread_number;

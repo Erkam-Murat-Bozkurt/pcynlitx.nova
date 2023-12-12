@@ -149,9 +149,9 @@ void Source_File_Dependency_Selector::Search_For_Large_Data_Set(size_t data_size
 
      size_t thread_num = data_size/20;
 
-     if(thread_num > 200){
+     if(thread_num > 32){
 
-        thread_num = 200;
+        thread_num = 32;
      }
 
      size_t remaining_job = 0;

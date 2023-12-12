@@ -70,9 +70,10 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
 
      this->Initialize_Properties(Folder);
 
+     this->item_counter = 0;
+
      this->total_item_number = 0;
 
-     this->item_counter = 0;
 
      this->count_sub_directories(Folder);
 
@@ -441,4 +442,13 @@ bool Project_Folder_Lister::GetProjectDirectoryOpenStatus(){
 void Project_Folder_Lister::Expand_Root(){
 
      this->treeCtrl->Expand(this->tree_item_list[0].item_id);
+}
+
+int Project_Folder_Lister::GetTotalItemNum(wxString Folder){
+
+    this->total_item_number = 0;
+
+    this->count_sub_directories(Folder);
+ 
+    return this->total_item_number;
 }

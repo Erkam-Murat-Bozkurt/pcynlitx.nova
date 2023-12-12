@@ -110,6 +110,26 @@ target_include_directories(BuildSystem_GUI PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/ToolBar_Initializer
 
+
+    ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector
+
+    ${CMAKE_SOURCE_DIR}/Descriptor.File.Reader
+
+    ${CMAKE_SOURCE_DIR}/Descriptor.File.Syntax.Controller
+
+    
+    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Cpp_FileOperations
+
+    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+
+    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/DirectoryOperations
+
+    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/IntToCharTranslater
+
+    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
+
+    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+
     D:/wxWidgets-3.2.4/include
 
     D:/wxWidgets-3.2.4/lib/gcc810_x64_dll/mswu
@@ -158,6 +178,28 @@ target_link_directories(BuildSystem_GUI PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/ToolBar_Initializer
 
+
+    ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector
+
+    ${CMAKE_SOURCE_DIR}/Descriptor.File.Reader
+
+    ${CMAKE_SOURCE_DIR}/Descriptor.File.Syntax.Controller
+
+    
+    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Cpp_FileOperations
+
+    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+
+    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/DirectoryOperations
+
+    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/IntToCharTranslater
+
+    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
+
+    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+
+
+
     D:/wxWidgets-3.2.4/lib/gcc810_x64_dll
 
     D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0
@@ -165,7 +207,7 @@ target_link_directories(BuildSystem_GUI PUBLIC
 )
 
 
-target_link_libraries(BuildSystem_GUI PUBLIC pthread wxmsw32u_core wxbase32u wxtiffd 
+target_link_libraries(BuildSystem_GUI PUBLIC des_reader pthread wxmsw32u_core wxbase32u wxtiffd 
                       
                      wxjpeg wxpng wxzlib wxregexu wxexpat wxbase32u_xml wxmsw32u_aui
                 

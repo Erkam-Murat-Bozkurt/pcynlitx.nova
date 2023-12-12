@@ -39,6 +39,8 @@ public:
 
   bool GetProjectDirectoryOpenStatus();
 
+  int GetTotalItemNum(wxString Folder);
+
   void Expand_Root();
 
 private:

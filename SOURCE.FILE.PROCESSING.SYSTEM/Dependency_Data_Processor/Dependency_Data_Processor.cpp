@@ -116,6 +116,12 @@ void Dependency_Data_Processor::Search_For_Large_Data_Set(size_t data_size){
 
      size_t thread_number = data_size/10;
 
+     if(thread_number > 64){
+
+        thread_number = 64;
+     }
+
+
      int division = data_size/thread_number;
 
      int remaining_job = data_size%thread_number;
@@ -277,6 +283,11 @@ void Dependency_Data_Processor::ReOrdering_For_Large_Data_Set(size_t data_size){
      size_t search_data_size = this->Dependency_Search_Data.size();
 
      size_t thread_number = search_data_size/10;
+
+     if(thread_number > 64){
+
+        thread_number = 64;
+     }
 
      int division = search_data_size/thread_number;
 

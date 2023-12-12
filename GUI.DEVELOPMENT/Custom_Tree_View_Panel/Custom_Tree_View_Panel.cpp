@@ -343,6 +343,13 @@ void Custom_Tree_View_Panel::Close_Directory_Pane()
     }
 }
 
+
+int Custom_Tree_View_Panel::GetTotalItemNum(wxString Folder){
+
+    return this->Folder_Lister->GetTotalItemNum(Folder);
+}
+
+
 void Custom_Tree_View_Panel::Set_Font(wxFont Font){
 
       this->tree_control->SetFont(Font);

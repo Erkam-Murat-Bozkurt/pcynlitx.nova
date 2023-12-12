@@ -48,7 +48,7 @@
 #include "Custom_wxThread.hpp"
 #include "Custom_ProcessOutput.hpp"
 #include "ToolBar_Initializer.h"
-
+#include "Descriptor_File_Reader.hpp"
 
 
 class MainFrame : public wxFrame
@@ -94,10 +94,12 @@ private:
   Process_Manager * Process_Ptr;
   Custom_wxThread * Thread_Ptr;
   wxString Descriptor_File_Path;
+  wxString Warehouse_Location;
   wxString Construction_Point;
   wxString DataType;
   wxAuiDockArt * Dock_Art_Pointer;
   wxAuiManager Interface_Manager;
+  Descriptor_File_Reader * Des_Reader;
   Custom_Tree_View_Panel * Dir_List_Manager;
   Custom_wxTreeCtrl * tree_control;
   ToolBar_Initializer * ToolBar_Widget;
@@ -112,6 +114,7 @@ private:
   wxDir    * dir_control;
   std::condition_variable  cv;
   int Toolbar_ID;
+  std::mutex mtx;
   DECLARE_EVENT_TABLE()
 };
 

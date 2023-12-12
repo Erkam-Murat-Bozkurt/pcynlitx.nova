@@ -44,6 +44,8 @@ public:
 
   Custom_wxTreeCtrl * GetTreeCtrl();
 
+  int GetTotalItemNum(wxString Folder);
+
   wxString GetItemPath(wxTreeItemId item_number);
 
   bool Get_Panel_Open_Status();

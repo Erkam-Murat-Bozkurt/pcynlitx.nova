@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstring>
 #include "Kernel.hpp"
+#include "Custom_System_Interface.h"
 
 
 std::string Convert_Std_String(char * str);
@@ -18,6 +19,13 @@ int main(int argc, char ** argv){
 
        exit(0);
     }
+
+    SetPriorityClass(GetCurrentProcess(),HIGH_PRIORITY_CLASS);
+
+    Custom_System_Interface System_Interface;
+
+    System_Interface.SetCpuRate();
+
 
     bool argument_pass_cond = false;
 

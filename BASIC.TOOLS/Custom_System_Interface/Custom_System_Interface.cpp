@@ -90,7 +90,85 @@ int Custom_System_Interface::System_Function(char * cmd){
      }
 }
 
+bool Custom_System_Interface::Create_Process(std::string std_cmd){
+
+     size_t cmd_size = std_cmd.length();
+
+     this->cmd = new char [5*cmd_size];
+
+     int index = 0;
+
+     for(size_t i=0;i<cmd_size;i++){
+
+          this->cmd[index] = std_cmd[i];
+
+          index++;
+     }
+
+     this->cmd[index] = '\0';
+
+     bool return_status = this->Create_Process(this->cmd);
+     
+     delete [] this->cmd;
+
+     return return_status;
+}
+
+
+void Custom_System_Interface::SetCpuRate(){
+
+
+     HANDLE hJobObject = NULL;
+
+     hJobObject = CreateJobObject(NULL,NULL);
+     
+     if (hJobObject == NULL) {
+    
+         std::cout << "\n Job CPU limit can not created"; 
+
+         exit(EXIT_FAILURE);         
+     }
+
+     JOBOBJECT_CPU_RATE_CONTROL_INFORMATION cpuRateInfo; 
+
+     cpuRateInfo.ControlFlags = JOB_OBJECT_CPU_RATE_CONTROL_ENABLE | JOB_OBJECT_CPU_RATE_CONTROL_HARD_CAP;
+
+     cpuRateInfo.CpuRate = 5000;
+
+     if (!SetInformationJobObject(hJobObject, JobObjectCpuRateControlInformation, &cpuRateInfo, 
+     
+          sizeof(JOBOBJECT_CPU_RATE_CONTROL_INFORMATION))) {
+    
+          std::cout << "\n Job CPU limit can not be assigned"; 
+
+          exit(EXIT_FAILURE);
+     }
+
+
+    if (!AssignProcessToJobObject(hJobObject,GetCurrentProcess())) {
+   
+       std::cout << "\n Job CPU limit can not be assigned"; 
+
+       exit(EXIT_FAILURE);
+    }
+
+    BOOL bInJob = FALSE;
+
+    IsProcessInJob(GetCurrentProcess(),NULL,&bInJob);
+
+    if (!bInJob)
+    {
+       std::cout << "\n The process is not on the job";
+               
+       exit(EXIT_FAILURE);
+    }
+
+}
+
 bool Custom_System_Interface::Create_Process(char * cmd){
+
+
+
 
      STARTUPINFO si;
      PROCESS_INFORMATION pi;
@@ -106,18 +184,19 @@ bool Custom_System_Interface::Create_Process(char * cmd){
           NULL,           // Process handle not inheritable
           NULL,           // Thread handle not inheritable
           FALSE,          // Set handle inheritance to FALSE
-          0,              // No creation flags
+          CREATE_NO_WINDOW | CREATE_PRESERVE_CODE_AUTHZ_LEVEL | HIGH_PRIORITY_CLASS | CREATE_NEW_PROCESS_GROUP,              // No creation flags
           NULL,           // Use parent's environment block
           NULL,           // Use parent's starting directory
           &si,            // Pointer to STARTUPINFO structure
           &pi );          // Pointer to PROCESS_INFORMATION structure
 
      // Start the child process.
-     if(!this->return_status)
-     {
+    if(!this->return_status)
+    {
           printf( "\\n CreateProcess failed \\n");
           return this->return_status;
-      }
+    }
+
 
     // Wait until child process exits.
     WaitForSingleObject( pi.hProcess, INFINITE );

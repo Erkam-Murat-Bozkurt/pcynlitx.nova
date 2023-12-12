@@ -20,6 +20,8 @@ public:
   Custom_System_Interface();
   Custom_System_Interface(const Custom_System_Interface & arg);
   virtual ~Custom_System_Interface();
+  void SetCpuRate();
+  bool Create_Process(std::string cmd);
   bool Create_Process(char * cmd);
   int System_Function(char * cmd);
 protected:
@@ -27,6 +29,7 @@ protected:
   int status;
   bool return_status;
   int return_value;
+  char * cmd;
 };
 
 #endif /* CUSTOM_SYSTEM_INTERFACE_H */

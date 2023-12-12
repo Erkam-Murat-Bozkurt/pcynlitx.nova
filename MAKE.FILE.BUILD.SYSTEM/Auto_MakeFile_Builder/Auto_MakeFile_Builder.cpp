@@ -94,9 +94,9 @@ void Auto_MakeFile_Builder::Construct_For_Large_Data_Set(size_t data_size){
 
      size_t thread_num = data_size/50;
 
-     if(thread_num > 200){
+     if(thread_num > 64){
 
-        thread_num = 200;
+        thread_num = 64;
      }
 
      size_t remaining_job = 0;

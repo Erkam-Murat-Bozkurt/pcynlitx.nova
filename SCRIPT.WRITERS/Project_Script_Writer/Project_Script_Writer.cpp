@@ -97,9 +97,9 @@ void Project_Script_Writer::Construct_For_Large_Data_Set(int data_size){
 
      int thread_num = this->source_file_num /50;
 
-     if(thread_num > 200){
+     if(thread_num > 64){
 
-        thread_num = 200;
+        thread_num = 64;
      }
 
      int remaining_job = 0;

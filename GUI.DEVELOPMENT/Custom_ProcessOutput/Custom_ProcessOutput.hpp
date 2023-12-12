@@ -14,6 +14,9 @@
 #include <wx/sizer.h>
 #include <wx/gauge.h>
 #include <wx/textctrl.h>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
 #include "Process_Manager.hpp"
 #include "Custom_DockArt.h"
 
@@ -37,13 +40,15 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
 
   void PaintNow(wxWindow * wnd);
 
-  void Construct_Output(int bar_size);
+  void Construct_Output(int size);
 
   void OnSize(wxSizeEvent & event);
 
   void Receive_Process_Manager(Process_Manager * Pr_Man);
 
   void PrintProcessOutput();
+
+  int GetLogNumber();
 
 private:
 
@@ -63,9 +68,15 @@ private:
 
   wxFont   * Default_Font;
 
+  bool * Progress_Bar_Start_status;
+
   Process_Manager * Process_Manager_Ptr;
 
   bool Memory_Delete_Condition;
+
+  bool progress_cond;
+
+  int log_num;
 };
 
 #endif /* CUSTOM_PROCESSOUTPUT_HPP */

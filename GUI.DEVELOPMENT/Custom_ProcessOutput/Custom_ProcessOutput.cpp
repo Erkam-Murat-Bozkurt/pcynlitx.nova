@@ -10,8 +10,9 @@ Custom_ProcessOutput::Custom_ProcessOutput(wxFrame *parent, wxWindowID id, const
    wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN | wxSTAY_ON_TOP)
 {
 
+     this->log_num =0;
 
-     this->Default_Font = new wxFont(11,wxFONTFAMILY_MODERN ,wxFONTSTYLE_NORMAL,
+     this->Default_Font = new wxFont(12,wxFONTFAMILY_MODERN ,wxFONTSTYLE_NORMAL,
 
                      wxFONTWEIGHT_NORMAL,false,"Segoe UI");
 
@@ -71,7 +72,9 @@ void Custom_ProcessOutput::Receive_Process_Manager(Process_Manager * mng){
      this->Process_Manager_Ptr = mng;
 }
 
-void Custom_ProcessOutput::Construct_Output(int bar_size){
+
+
+void Custom_ProcessOutput::Construct_Output(int size){
 
 
      this->text_ctrl_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,600));
@@ -85,7 +88,7 @@ void Custom_ProcessOutput::Construct_Output(int bar_size){
 
 
 
-     this->dialog = new wxGauge(this->dialog_panel,wxID_ANY,bar_size,
+     this->dialog = new wxGauge(this->dialog_panel,wxID_ANY,size,
      
                     wxDefaultPosition,wxSize(900,30),wxGA_HORIZONTAL | wxGA_SMOOTH );
 
@@ -154,8 +157,6 @@ void Custom_ProcessOutput::Construct_Output(int bar_size){
 
 void Custom_ProcessOutput::PrintProcessOutput(){
 
-     wxStreamToTextRedirector redirect(this->textctrl);
-
      wxInputStream * stream = this->Process_Manager_Ptr->GetInputStream();
 
      wxTextInputStream tStream(*stream);
@@ -164,10 +165,17 @@ void Custom_ProcessOutput::PrintProcessOutput(){
 
         wxString log_string = tStream.ReadLine() + wxT("\n");
                      
-        std::cout << log_string;
-        
+        if(!log_string.empty()){
+
+           this->textctrl->AppendText(log_string);
+
+           this->log_num++;
+        }
+
      }while(stream->CanRead());     
 }
+
+
 
 
 void Custom_ProcessOutput::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
@@ -206,4 +214,9 @@ wxGauge * Custom_ProcessOutput::GetDialogAddress() {
 wxTextCtrl * Custom_ProcessOutput::GetTextControl() const {
 
      return this->textctrl;
+}
+
+int Custom_ProcessOutput::GetLogNumber(){
+
+     return this->log_num;
 }
