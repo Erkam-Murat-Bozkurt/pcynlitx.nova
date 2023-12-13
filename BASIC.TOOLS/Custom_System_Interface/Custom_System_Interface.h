@@ -15,6 +15,7 @@
 #include <tchar.h>
 #include <shlwapi.h>
 #include <cwchar>
+#include "Cpp_FileOperations.h"
 
 class Custom_System_Interface
 {
@@ -35,6 +36,7 @@ protected:
   void DeterminePipePath(); 
   TCHAR * Convert_CString_To_TCHAR(char * cmd);  
   void Clear_Dynamic_Memory();
+  Cpp_FileOperations FileManager;
   bool Memory_Delete_Condition;
   TCHAR * TCHAR_string;
   TCHAR * StdOutPipe;

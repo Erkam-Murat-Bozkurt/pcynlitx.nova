@@ -65,14 +65,19 @@ void Custom_System_Interface::Clear_Dynamic_Memory(){
             delete [] this->StdOutPipe;
 
             this->StdOutPipe = nullptr;
-          }
+         }
 
-          if(this->TCHAR_string != nullptr){
+         if(this->TCHAR_string != nullptr){
 
-             delete [] this->TCHAR_string;
+            delete [] this->TCHAR_string;
 
             this->TCHAR_string = nullptr;
-          }
+         }
+
+         if(this->FileManager.Is_Path_Exist(this->GetPipePath_StdStr()))
+         {
+             this->FileManager.Delete_File(this->GetPipePath_StdStr());
+         }
      }
 }
 
@@ -397,8 +402,6 @@ void Custom_System_Interface::DeterminePipePath(){
 
      char PipeName [] = "CBuild_StdOut.txt";
 
-     size_t name_size = strlen(PipeName);
-
      size_t dir_size = strlen(Buffer);
 
      
@@ -484,7 +487,7 @@ TCHAR * Custom_System_Interface::Convert_CString_To_TCHAR(char * cmd){
 
      size_t index = 0;
 
-     for (int i = 0; i < cmd_size; i++) {
+     for (size_t i = 0; i < cmd_size; i++) {
      
           this->TCHAR_string[index] =cmd[i];
 
