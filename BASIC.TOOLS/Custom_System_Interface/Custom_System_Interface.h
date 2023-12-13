@@ -1,4 +1,5 @@
 
+
 #ifndef CUSTOM_SYSTEM_INTERFACE_H
 #define CUSTOM_SYSTEM_INTERFACE_H
 
@@ -13,18 +14,40 @@
 #include <stdio.h>
 #include <tchar.h>
 #include <shlwapi.h>
+#include <cwchar>
 
 class Custom_System_Interface
 {
 public:
   Custom_System_Interface();
-  Custom_System_Interface(const Custom_System_Interface & arg);
   virtual ~Custom_System_Interface();
   void SetCpuRate();
   bool Create_Process(std::string cmd);
   bool Create_Process(char * cmd);
   int System_Function(char * cmd);
+  bool Create_Process_With_Redirected_Stdout(char * cmd);
+  void SetChildProcess_For_StdOut_Redirection();
+  void WriteChildProcess_StdOutput();
+  TCHAR * GetPipePath();
+  std::string GetPipePath_StdStr();
+  void ReadFromPipe(void);
 protected:
+  void DeterminePipePath(); 
+  TCHAR * Convert_CString_To_TCHAR(char * cmd);  
+  void Clear_Dynamic_Memory();
+  bool Memory_Delete_Condition;
+  TCHAR * TCHAR_string;
+  TCHAR * StdOutPipe;
+  std::string std_str_pipe_path;
+  DWORD bufsize;
+  CHAR chBuf[4096]; 
+  DWORD dwRead;
+  DWORD dwWritten; 
+  HANDLE hStdin;
+  HANDLE hStdout; 
+  HANDLE g_hChildStd_OUT_Rd;
+  HANDLE g_hChildStd_OUT_Wr;
+  HANDLE g_hInputFile;
   pid_t pid;
   int status;
   bool return_status;

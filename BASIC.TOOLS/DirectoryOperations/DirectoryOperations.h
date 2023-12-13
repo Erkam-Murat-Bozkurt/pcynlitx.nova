@@ -53,7 +53,7 @@ public:
  int  Get_File_Number_In_Directory();
 private:
  void Initialize_Mermbers();
- void Place_String(char ** Pointer, char * String, int String_Size);
+ void Place_String(char ** Pointer, char * String, size_t String_Size);
  void Place_Information(char ** Pointer, const char * Information, int * index_counter);
  void Place_Information(char ** Pointer, char * Information, int * index_counter);
  void Clear_Pointer_Memory(char ** ptr);

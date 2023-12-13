@@ -28,17 +28,55 @@ Custom_System_Interface::Custom_System_Interface(){
     this->status = 0;
 
     this->return_status = false; // The return status of the system call..
+
+    this->hStdin = nullptr;
+    
+    this->hStdout = nullptr; 
+  
+    this->g_hChildStd_OUT_Rd = nullptr;
+  
+    this->g_hChildStd_OUT_Wr = nullptr;
+  
+    this->g_hInputFile = nullptr;
+
+    this->StdOutPipe = nullptr;
+
+    this->TCHAR_string = nullptr;
+
+    this->bufsize = 4096;
 }
-
-Custom_System_Interface::Custom_System_Interface(const Custom_System_Interface & arg){
-
-}
-
 
 Custom_System_Interface::~Custom_System_Interface(){
 
+    if(!this->Memory_Delete_Condition){
 
+         this->Clear_Dynamic_Memory();
+    }
 }
+
+void Custom_System_Interface::Clear_Dynamic_Memory(){
+
+     if(!this->Memory_Delete_Condition){
+
+         this->Memory_Delete_Condition = true;
+
+         if(this->StdOutPipe != nullptr){
+
+            delete [] this->StdOutPipe;
+
+            this->StdOutPipe = nullptr;
+          }
+
+          if(this->TCHAR_string != nullptr){
+
+             delete [] this->TCHAR_string;
+
+            this->TCHAR_string = nullptr;
+          }
+     }
+}
+
+
 
 int Custom_System_Interface::System_Function(char * cmd){
 
@@ -167,9 +205,6 @@ void Custom_System_Interface::SetCpuRate(){
 
 bool Custom_System_Interface::Create_Process(char * cmd){
 
-
-
-
      STARTUPINFO si;
      PROCESS_INFORMATION pi;
 
@@ -184,7 +219,8 @@ bool Custom_System_Interface::Create_Process(char * cmd){
           NULL,           // Process handle not inheritable
           NULL,           // Thread handle not inheritable
           FALSE,          // Set handle inheritance to FALSE
-          CREATE_NO_WINDOW | CREATE_PRESERVE_CODE_AUTHZ_LEVEL | HIGH_PRIORITY_CLASS | CREATE_NEW_PROCESS_GROUP,              // No creation flags
+          CREATE_NO_WINDOW | CREATE_PRESERVE_CODE_AUTHZ_LEVEL | 
+          HIGH_PRIORITY_CLASS | CREATE_NEW_PROCESS_GROUP,   // No creation flags
           NULL,           // Use parent's environment block
           NULL,           // Use parent's starting directory
           &si,            // Pointer to STARTUPINFO structure
@@ -206,4 +242,268 @@ bool Custom_System_Interface::Create_Process(char * cmd){
     CloseHandle( pi.hThread );
 
     return this->return_status;
+}
+
+
+
+bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
+
+     SECURITY_ATTRIBUTES saAttr; 
+      
+     saAttr.nLength = sizeof(SECURITY_ATTRIBUTES); 
+     saAttr.bInheritHandle = TRUE; 
+     saAttr.lpSecurityDescriptor = NULL; 
+
+     // Create a pipe for the child process's STDOUT. 
+
+     if (!CreatePipe(&g_hChildStd_OUT_Rd, &g_hChildStd_OUT_Wr, &saAttr, 0) ){
+
+         std::cout << "\n stdout pipe can not be created";
+
+         exit(EXIT_FAILURE);
+     }
+
+     // Ensure the read handle to the pipe for STDOUT is not inherited.
+
+     if (!SetHandleInformation(g_hChildStd_OUT_Rd, HANDLE_FLAG_INHERIT, 0) ){
+
+         std::cout << "\n stdout handle information can not be set";
+
+         exit(EXIT_FAILURE);       
+     }
+
+
+     PROCESS_INFORMATION piProcInfo; 
+     STARTUPINFO siStartInfo;
+     BOOL bSuccess = FALSE; 
+ 
+     // Set up members of the PROCESS_INFORMATION structure. 
+ 
+     ZeroMemory( &piProcInfo, sizeof(PROCESS_INFORMATION) );
+ 
+     // Set up members of the STARTUPINFO structure. 
+     // This structure specifies the STDIN and STDOUT handles for redirection.
+ 
+     ZeroMemory( &siStartInfo, sizeof(STARTUPINFO) );
+     siStartInfo.cb = sizeof(STARTUPINFO); 
+     siStartInfo.hStdError = g_hChildStd_OUT_Wr;
+     siStartInfo.hStdOutput = g_hChildStd_OUT_Wr;
+     siStartInfo.dwFlags |= STARTF_USESTDHANDLES;
+ 
+     // Create the child process. 
+    
+     TCHAR * Cmd_Line = this->Convert_CString_To_TCHAR(cmd);
+
+     bSuccess = CreateProcess(NULL, 
+      Cmd_Line,     // command line 
+      NULL,          // process security attributes 
+      NULL,          // primary thread security attributes 
+      TRUE,          // handles are inherited 
+      0,             // creation flags 
+      NULL,          // use parent's environment 
+      NULL,          // use parent's current directory 
+      &siStartInfo,  // STARTUPINFO pointer 
+      &piProcInfo);  // receives PROCESS_INFORMATION 
+   
+      // If an error occurs, exit the application. 
+      if ( ! bSuccess ) {
+
+          std::cout << "\n The child process can not be created";
+
+          exit(EXIT_FAILURE);
+      }
+      else 
+      {
+         // Close handles to the child process and its primary thread.
+         // Some applications might keep these handles to monitor the status
+         // of the child process, for example. 
+
+         WaitForSingleObject(piProcInfo.hProcess, INFINITE );
+
+         CloseHandle(piProcInfo.hProcess);
+         CloseHandle(piProcInfo.hThread);
+      
+         // Close handles to the stdin and stdout pipes no longer needed by the child process.
+         // If they are not explicitly closed, there is no way to recognize that the child process has ended.
+      
+         CloseHandle(g_hChildStd_OUT_Wr);      
+      }
+
+     // Get a handle to an input file for the parent. 
+     // This example assumes a plain text file and uses string output to verify data flow. 
+    
+     this->DeterminePipePath();
+
+     TCHAR * pipePath = this->GetPipePath();
+
+     g_hInputFile = CreateFile(
+       pipePath, 
+       GENERIC_READ, 
+       0, 
+       NULL, 
+       CREATE_ALWAYS,
+       FILE_ATTRIBUTE_READONLY, 
+       NULL); 
+
+   if ( g_hInputFile == INVALID_HANDLE_VALUE ){
+
+        std::cout << "\n pipe file can not be created";
+
+        exit(EXIT_FAILURE);
+   }
+ 
+   CloseHandle(g_hInputFile);
+
+
+   return 0; 
+}
+
+
+void Custom_System_Interface::ReadFromPipe(void) 
+
+     // Read output from the child process's pipe for STDOUT
+     // and write to the parent process's pipe for STDOUT.
+     // Stop when there is no more data.
+{ 
+     BOOL bSuccess = FALSE;
+
+     HANDLE hParentStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+
+     for (;;) 
+     { 
+        bSuccess = ReadFile(this->g_hChildStd_OUT_Rd,this->chBuf, this->bufsize, &this->dwRead, NULL);
+        if( ! bSuccess || this->dwRead == 0 ) break; 
+
+        bSuccess = WriteFile(hParentStdOut,this->chBuf, 
+                           this->dwRead, &this->dwWritten, NULL);
+
+        if (! bSuccess ) break; 
+     } 
+} 
+ 
+
+void Custom_System_Interface::DeterminePipePath(){
+
+     if(this->StdOutPipe != nullptr){
+
+          delete [] this->StdOutPipe;
+
+          this->StdOutPipe = nullptr;
+     }
+
+     CHAR Buffer[this->bufsize];
+
+     GetCurrentDirectory(this->bufsize,Buffer);
+
+     char PipeName [] = "CBuild_StdOut.txt";
+
+     size_t name_size = strlen(PipeName);
+
+     size_t dir_size = strlen(Buffer);
+
+     
+     for(size_t i=0;i<dir_size;i++){
+
+        this->std_str_pipe_path.push_back(Buffer[i]);
+     }
+
+     if(this->std_str_pipe_path.back()!= '\\'){
+
+        this->std_str_pipe_path.push_back('\\');
+     }
+
+     for(size_t i=0;i<dir_size;i++){
+
+        this->std_str_pipe_path.push_back(PipeName[i]);
+     }
+
+     this->std_str_pipe_path.shrink_to_fit();
+
+     size_t path_size = this->std_str_pipe_path.length();
+
+
+     this->StdOutPipe = new TCHAR [2*path_size];
+
+     size_t index = 0;
+
+     for(size_t i=0;i<path_size;i++){
+
+         this->StdOutPipe[index] = this->std_str_pipe_path[i];
+
+         index++;
+     }
+
+     this->StdOutPipe[index] = _T('\0');
+}
+
+
+
+void Custom_System_Interface::SetChildProcess_For_StdOut_Redirection(){
+ 
+     this->hStdout = GetStdHandle(STD_OUTPUT_HANDLE); 
+     this->hStdin  = GetStdHandle(STD_INPUT_HANDLE); 
+
+     if ((this->hStdout == INVALID_HANDLE_VALUE) || (this->hStdin == INVALID_HANDLE_VALUE)){
+
+         exit(EXIT_FAILURE); 
+     } 
+}
+
+void Custom_System_Interface::WriteChildProcess_StdOutput(){
+
+     BOOL bSuccess; 
+
+     for (;;){
+       
+       // Write to standard output and stop on error.
+        bSuccess = WriteFile(this->hStdout,this->chBuf,this->dwRead, &this->dwWritten, NULL);    
+        if (! bSuccess || this->dwRead == 0) 
+         break; 
+
+      } 
+}
+
+
+TCHAR * Custom_System_Interface::Convert_CString_To_TCHAR(char * cmd){
+
+     if(this->TCHAR_string != nullptr){
+
+          delete [] this->TCHAR_string;
+
+          this->TCHAR_string = nullptr;
+     }
+
+     size_t cmd_size= strlen(cmd);
+
+     this->TCHAR_string = new TCHAR[2*cmd_size];
+
+     for(size_t i=0;i<2*cmd_size;i++){
+
+         this->TCHAR_string[i] = _T('\0');
+     }
+
+     size_t index = 0;
+
+     for (int i = 0; i < cmd_size; i++) {
+     
+          this->TCHAR_string[index] =cmd[i];
+
+          index++;
+     }
+
+     this->TCHAR_string[index] = _T('\0');
+
+     return this->TCHAR_string;
+}
+
+
+TCHAR * Custom_System_Interface::GetPipePath(){
+
+     return this->StdOutPipe;
+}
+
+
+std::string Custom_System_Interface::GetPipePath_StdStr(){
+
+     return this->std_str_pipe_path;
 }
