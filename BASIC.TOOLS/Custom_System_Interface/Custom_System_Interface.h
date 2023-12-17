@@ -32,6 +32,8 @@ public:
   TCHAR * GetPipePath();
   std::string GetPipePath_StdStr();
   void ReadFromPipe(void);
+  PROCESS_INFORMATION piProcInfo; 
+  STARTUPINFO siStartInfo;
 protected:
   void DeterminePipePath(); 
   TCHAR * Convert_CString_To_TCHAR(char * cmd);  

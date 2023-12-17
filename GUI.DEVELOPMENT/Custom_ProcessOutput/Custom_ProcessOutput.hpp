@@ -44,13 +44,13 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
 
   void OnSize(wxSizeEvent & event);
 
-  void Receive_Process_Manager(Process_Manager * Pr_Man);
-
   void PrintProcessOutput();
 
   int GetLogNumber();
 
 private:
+
+  void OnClose(wxCloseEvent & ent);
 
   wxGauge * dialog;
 

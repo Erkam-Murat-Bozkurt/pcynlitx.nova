@@ -31,7 +31,8 @@ Custom_ProcessOutput::Custom_ProcessOutput(wxFrame *parent, wxWindowID id, const
 
      this->GetEventHandler()->Bind(wxEVT_SIZE,&Custom_ProcessOutput::OnSize,this,wxID_ANY);
 
-   
+     this->GetEventHandler()->Bind(wxEVT_CLOSE_WINDOW,&Custom_ProcessOutput::OnClose,this,wxID_ANY);
+
 
      this->SetThemeEnabled(true);
 
@@ -65,13 +66,6 @@ Custom_ProcessOutput::~Custom_ProcessOutput(){
 
 
 }
-
-
-void Custom_ProcessOutput::Receive_Process_Manager(Process_Manager * mng){
-
-     this->Process_Manager_Ptr = mng;
-}
-
 
 
 void Custom_ProcessOutput::Construct_Output(int size){
@@ -157,6 +151,8 @@ void Custom_ProcessOutput::Construct_Output(int size){
 
 void Custom_ProcessOutput::PrintProcessOutput(){
 
+     /*
+
      wxInputStream * stream = this->Process_Manager_Ptr->GetInputStream();
 
      wxTextInputStream tStream(*stream);
@@ -172,7 +168,9 @@ void Custom_ProcessOutput::PrintProcessOutput(){
            this->log_num++;
         }
 
-     }while(stream->CanRead());     
+     }while(stream->CanRead());
+
+     */     
 }
 
 
@@ -202,6 +200,23 @@ void Custom_ProcessOutput::OnSize(wxSizeEvent & event){
      event.Skip(true);
 
      this->PaintNow(this);
+}
+
+
+void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
+     
+     if(wxMessageBox("The construction Process continuos", "Please Confirm",
+     
+         wxICON_QUESTION |wxYES_NO) != wxYES){
+
+          event.Veto();
+
+          return;
+     }
+     else{
+
+          this->Destroy();
+     }
 }
 
 

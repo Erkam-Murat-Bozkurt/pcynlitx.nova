@@ -36,6 +36,7 @@
 #include <wx/gauge.h>
 #include <mutex>
 #include <condition_variable>
+#include <thread>
 #include "Custom_DataPanel.hpp"
 #include "Menu_Bar_Options.h"
 #include "Custom_Notebook.h"
@@ -49,6 +50,7 @@
 #include "Custom_ProcessOutput.hpp"
 #include "ToolBar_Initializer.h"
 #include "Descriptor_File_Reader.hpp"
+#include "Custom_System_Interface.h"
 
 
 class MainFrame : public wxFrame
@@ -87,6 +89,8 @@ private:
   void Descriptor_File_Selection_Check();
   void Close_Directory_Pane(wxAuiManagerEvent & event);
   void FileNameEdit(wxTreeEvent& event);
+  void ForkProcess(wxString cmd);
+  std::thread * fork_process;
   Custom_DataPanel * data_panel_ptr;
   bool is_custom_panel_constructed;
   bool Memory_Delete_Condition;
@@ -107,6 +111,7 @@ private:
   Custom_Notebook * Book_Manager;
   Menu_Bar_Options * MB_Options;
   Intro_Page_Loader * Intro_Page_Pointer;
+  Custom_ProcessOutput * Process_Output;
   bool is_descriptor_file_open;
   wxFont * Default_Font;
   int Process_Event_Counter;

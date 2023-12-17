@@ -261,7 +261,7 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
 
      // Create a pipe for the child process's STDOUT. 
 
-     if (!CreatePipe(&g_hChildStd_OUT_Rd, &g_hChildStd_OUT_Wr, &saAttr, 0) ){
+     if (!CreatePipe(&this->g_hChildStd_OUT_Rd, &this->g_hChildStd_OUT_Wr, &saAttr, 0) ){
 
          std::cout << "\n stdout pipe can not be created";
 
@@ -270,7 +270,7 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
 
      // Ensure the read handle to the pipe for STDOUT is not inherited.
 
-     if (!SetHandleInformation(g_hChildStd_OUT_Rd, HANDLE_FLAG_INHERIT, 0) ){
+     if (!SetHandleInformation(this->g_hChildStd_OUT_Rd, HANDLE_FLAG_INHERIT, 0) ){
 
          std::cout << "\n stdout handle information can not be set";
 
@@ -278,8 +278,6 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
      }
 
 
-     PROCESS_INFORMATION piProcInfo; 
-     STARTUPINFO siStartInfo;
      BOOL bSuccess = FALSE; 
  
      // Set up members of the PROCESS_INFORMATION structure. 
@@ -290,10 +288,10 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
      // This structure specifies the STDIN and STDOUT handles for redirection.
  
      ZeroMemory( &siStartInfo, sizeof(STARTUPINFO) );
-     siStartInfo.cb = sizeof(STARTUPINFO); 
-     siStartInfo.hStdError = g_hChildStd_OUT_Wr;
-     siStartInfo.hStdOutput = g_hChildStd_OUT_Wr;
-     siStartInfo.dwFlags |= STARTF_USESTDHANDLES;
+     this->siStartInfo.cb = sizeof(STARTUPINFO); 
+     this->siStartInfo.hStdError  = this->g_hChildStd_OUT_Wr;
+     this->siStartInfo.hStdOutput = this->g_hChildStd_OUT_Wr;
+     this->siStartInfo.dwFlags |= STARTF_USESTDHANDLES;
  
      // Create the child process. 
     
@@ -304,11 +302,11 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
       NULL,          // process security attributes 
       NULL,          // primary thread security attributes 
       TRUE,          // handles are inherited 
-      0,             // creation flags 
+      CREATE_NO_WINDOW, // creation flags 
       NULL,          // use parent's environment 
       NULL,          // use parent's current directory 
-      &siStartInfo,  // STARTUPINFO pointer 
-      &piProcInfo);  // receives PROCESS_INFORMATION 
+      &this->siStartInfo,  // STARTUPINFO pointer 
+      &this->piProcInfo);  // receives PROCESS_INFORMATION 
    
       // If an error occurs, exit the application. 
       if ( ! bSuccess ) {
@@ -323,15 +321,13 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
          // Some applications might keep these handles to monitor the status
          // of the child process, for example. 
 
-         WaitForSingleObject(piProcInfo.hProcess, INFINITE );
-
-         CloseHandle(piProcInfo.hProcess);
-         CloseHandle(piProcInfo.hThread);
+         CloseHandle(this->piProcInfo.hProcess);
+         CloseHandle(this->piProcInfo.hThread);
       
          // Close handles to the stdin and stdout pipes no longer needed by the child process.
          // If they are not explicitly closed, there is no way to recognize that the child process has ended.
       
-         CloseHandle(g_hChildStd_OUT_Wr);      
+         CloseHandle(this->g_hChildStd_OUT_Wr);      
       }
 
      // Get a handle to an input file for the parent. 
@@ -339,9 +335,15 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
     
      this->DeterminePipePath();
 
+
+     if(this->FileManager.Is_Path_Exist(this->GetPipePath_StdStr()))
+     {
+        this->FileManager.Delete_File(this->GetPipePath_StdStr());
+     }
+
      TCHAR * pipePath = this->GetPipePath();
 
-     g_hInputFile = CreateFile(
+     this->g_hInputFile = CreateFile(
        pipePath, 
        GENERIC_READ, 
        0, 
@@ -350,7 +352,7 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
        FILE_ATTRIBUTE_READONLY, 
        NULL); 
 
-   if ( g_hInputFile == INVALID_HANDLE_VALUE ){
+   if ( this->g_hInputFile == INVALID_HANDLE_VALUE ){
 
         std::cout << "\n pipe file can not be created";
 

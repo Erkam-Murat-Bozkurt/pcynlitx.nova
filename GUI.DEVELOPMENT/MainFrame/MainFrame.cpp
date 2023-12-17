@@ -408,11 +408,17 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
 
 
+
         this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
         this->Des_Reader->Read_Descriptor_File();
 
 
+        std::string warehose_word = "\\WAREHOUSE";
+
+        this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location() + warehose_word;
+
+  
 
         this->Process_Event_Counter = 0;
 
@@ -420,30 +426,38 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
         *this->Progress_Bar_Start_status = false;
 
+
+
+        /*
+
         this->Process_Ptr = new Process_Manager(this,wxID_ANY);
 
         this->Process_Ptr->Fork_Process(shell_command);
 
-
         this->Process_Ptr->Redirect();
 
+        //this->Process_Ptr->Detach();
+
+        */
+        
+
+        /*
         this->Thread_Ptr = new Custom_wxThread(this->Process_Ptr,this->Progress_Bar_Start_status,&this->cv);
 
         this->Thread_Ptr->Run();
+        
+        */
+
 
         wxString label = wxT("Build System Construction");
 
         this->Show_Progress(label);
 
 
-        std::string warehose_word = "\\WAREHOUSE";
+        this->fork_process = new std::thread(MainFrame::ForkProcess,this,shell_command);
 
-        this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location() + warehose_word;
+        this->fork_process->detach();
 
-        if(!this->Dir_List_Manager->Get_Panel_Open_Status()){
-
-            this->Dir_List_Manager->Load_Project_Directory(wxString(this->Warehouse_Location));
-        }
 
     }
     else{
@@ -454,6 +468,24 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 }
 
 
+void MainFrame::ForkProcess(wxString cmd){
+
+     std::string cmd_str = cmd.ToStdString();
+
+     Custom_System_Interface SysInt;
+
+     SysInt.Create_Process_With_Redirected_Stdout(cmd_str.c_str());
+
+     SysInt.ReadFromPipe();    
+
+     
+
+     if(!this->Dir_List_Manager->Get_Panel_Open_Status()){
+
+         this->Dir_List_Manager->Load_Project_Directory(wxString(this->Warehouse_Location));
+     }      
+}
+
 void MainFrame::Process_End(wxProcessEvent & event){
 
         (this->Process_Event_Counter)++;
@@ -462,22 +494,17 @@ void MainFrame::Process_End(wxProcessEvent & event){
 
 void MainFrame::Show_Progress(wxString Process_Label){
 
+     this->Process_Output = new Custom_ProcessOutput(this);
+ 
+     int max=50;
+     
+     this->Process_Output->Construct_Output(max);
+
     if(this->Process_Event_Counter < 1){
 
-       Custom_ProcessOutput * Process_Output = new Custom_ProcessOutput((wxFrame * )NULL);
- 
-       Process_Output->Receive_Process_Manager(this->Process_Ptr);
+       int max = 50;
 
-       int max=50;
-     
-       Process_Output->Construct_Output(max);
-
-       Process_Output->PrintProcessOutput();
-
-
-       for(int i=0;true;i++){
-
-           int logNum = Process_Output->GetLogNumber();
+       for(int i=0;i<max;i++){
 
            if(i>max-2){
 
@@ -485,7 +512,7 @@ void MainFrame::Show_Progress(wxString Process_Label){
 
                 i=max;
 
-                Process_Output->GetDialogAddress()->SetValue(max);
+                this->Process_Output->GetDialogAddress()->SetValue(max);
 
                 break;
               }
@@ -493,10 +520,7 @@ void MainFrame::Show_Progress(wxString Process_Label){
 
            if(this->Process_Event_Counter < 1){
 
-              Process_Output->GetDialogAddress()->SetValue(logNum);
-
-              Process_Output->PrintProcessOutput();
-
+              this->Process_Output->GetDialogAddress()->SetValue(i);
            }
 
            *this->Progress_Bar_Start_status = true;
@@ -504,6 +528,7 @@ void MainFrame::Show_Progress(wxString Process_Label){
            this->cv.notify_all();
        }
     }
+
 }
 
 
