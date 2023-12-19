@@ -29,11 +29,13 @@ public:
   bool Create_Process_With_Redirected_Stdout(char * cmd);
   void SetChildProcess_For_StdOut_Redirection();
   void WriteChildProcess_StdOutput();
+  bool TerminateChildProcess();
   TCHAR * GetPipePath();
   std::string GetPipePath_StdStr();
   void ReadFromPipe(void);
   PROCESS_INFORMATION piProcInfo; 
   STARTUPINFO siStartInfo;
+  UINT uExitCode;
 protected:
   void DeterminePipePath(); 
   TCHAR * Convert_CString_To_TCHAR(char * cmd);  
@@ -45,6 +47,7 @@ protected:
   std::string std_str_pipe_path;
   DWORD bufsize;
   CHAR chBuf[4096]; 
+  DWORD64 Child_PID; 
   DWORD dwRead;
   DWORD dwWritten; 
   HANDLE hStdin;

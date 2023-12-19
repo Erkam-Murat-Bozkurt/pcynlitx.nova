@@ -210,26 +210,28 @@ void Custom_System_Interface::SetCpuRate(){
 
 bool Custom_System_Interface::Create_Process(char * cmd){
 
-     STARTUPINFO si;
-     PROCESS_INFORMATION pi;
+     ZeroMemory(&this->siStartInfo, sizeof(STARTUPINFO) );
 
-     ZeroMemory( &si, sizeof(si) );
-     si.cb = sizeof(si);
-     ZeroMemory( &pi, sizeof(pi) );
+     this->siStartInfo.cb = sizeof(STARTUPINFO); 
+
+     
+     ZeroMemory(&this->piProcInfo, sizeof(PROCESS_INFORMATION) );
 
      this->return_status = true;
 
+     TCHAR * Cmd_Line = this->Convert_CString_To_TCHAR(cmd);
+
      this->return_status = CreateProcess( NULL,   // No module name (use command line)
-          cmd,        // Command line
+          Cmd_Line,        // Command line
           NULL,           // Process handle not inheritable
           NULL,           // Thread handle not inheritable
           FALSE,          // Set handle inheritance to FALSE
           CREATE_NO_WINDOW | CREATE_PRESERVE_CODE_AUTHZ_LEVEL | 
-          HIGH_PRIORITY_CLASS | CREATE_NEW_PROCESS_GROUP,   // No creation flags
+          HIGH_PRIORITY_CLASS,   // No creation flags
           NULL,           // Use parent's environment block
           NULL,           // Use parent's starting directory
-          &si,            // Pointer to STARTUPINFO structure
-          &pi );          // Pointer to PROCESS_INFORMATION structure
+          &this->siStartInfo,            // Pointer to STARTUPINFO structure
+          &this->piProcInfo);          // Pointer to PROCESS_INFORMATION structure
 
      // Start the child process.
     if(!this->return_status)
@@ -240,15 +242,48 @@ bool Custom_System_Interface::Create_Process(char * cmd){
 
 
     // Wait until child process exits.
-    WaitForSingleObject( pi.hProcess, INFINITE );
 
-    // Close process and thread handles.
-    CloseHandle( pi.hProcess );
-    CloseHandle( pi.hThread );
+    this->Child_PID = this->piProcInfo.dwProcessId;
+
+    CloseHandle(this->piProcInfo.hProcess);
+    CloseHandle(this->piProcInfo.hThread);
 
     return this->return_status;
 }
 
+
+bool Custom_System_Interface::TerminateChildProcess(){
+
+     bool termination_status = false;
+
+     HANDLE processHandle = OpenProcess(PROCESS_ALL_ACCESS, TRUE, this->Child_PID);
+
+     if(processHandle == NULL){
+
+        std::cout << "\n The child process can not be openned";
+
+        std::cout << "\n in process termination process";
+
+        exit(EXIT_FAILURE);
+     }
+     else{
+
+          BOOL success_status = TerminateProcess(processHandle,this->uExitCode);
+
+          if(success_status == 0){
+
+             std::cout << "\n Build System construction process can not be terminated";
+
+             exit(EXIT_FAILURE);
+          }
+          else{
+
+               termination_status = true;
+          }
+     }
+
+     return termination_status;
+}
 
 
 bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
@@ -282,12 +317,12 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
  
      // Set up members of the PROCESS_INFORMATION structure. 
  
-     ZeroMemory( &piProcInfo, sizeof(PROCESS_INFORMATION) );
+     ZeroMemory( &this->piProcInfo, sizeof(PROCESS_INFORMATION) );
  
      // Set up members of the STARTUPINFO structure. 
      // This structure specifies the STDIN and STDOUT handles for redirection.
  
-     ZeroMemory( &siStartInfo, sizeof(STARTUPINFO) );
+     ZeroMemory( &this->siStartInfo, sizeof(STARTUPINFO) );
      this->siStartInfo.cb = sizeof(STARTUPINFO); 
      this->siStartInfo.hStdError  = this->g_hChildStd_OUT_Wr;
      this->siStartInfo.hStdOutput = this->g_hChildStd_OUT_Wr;
@@ -359,7 +394,7 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
         exit(EXIT_FAILURE);
    }
  
-   CloseHandle(g_hInputFile);
+   CloseHandle(this->g_hInputFile);
 
 
    return 0; 
