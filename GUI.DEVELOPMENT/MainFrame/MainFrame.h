@@ -90,7 +90,11 @@ private:
   void Close_Directory_Pane(wxAuiManagerEvent & event);
   void FileNameEdit(wxTreeEvent& event);
   void ForkProcess(wxString cmd);
+  void WaidForChildProcess();
+  bool Child_Process_End_Status;
+  Custom_System_Interface SysInt;
   std::thread * fork_process;
+  std::thread * end_process;
   Custom_DataPanel * data_panel_ptr;
   bool is_custom_panel_constructed;
   bool Memory_Delete_Condition;
@@ -115,7 +119,7 @@ private:
   bool is_descriptor_file_open;
   wxFont * Default_Font;
   int Process_Event_Counter;
-  bool * Progress_Bar_Start_status;
+  bool Progress_Bar_Start_status;
   wxDir    * dir_control;
   std::condition_variable  cv;
   int Toolbar_ID;

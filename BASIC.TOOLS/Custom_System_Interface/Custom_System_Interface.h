@@ -25,11 +25,13 @@ public:
   void SetCpuRate();
   bool Create_Process(std::string cmd);
   bool Create_Process(char * cmd);
-  int System_Function(char * cmd);
+  int  System_Function(char * cmd);
   bool Create_Process_With_Redirected_Stdout(char * cmd);
   void SetChildProcess_For_StdOut_Redirection();
   void WriteChildProcess_StdOutput();
   bool TerminateChildProcess();
+  bool IsChildProcess_Still_Alive();
+  void WaitForChildProcess();
   TCHAR * GetPipePath();
   std::string GetPipePath_StdStr();
   void ReadFromPipe(void);
@@ -42,6 +44,7 @@ protected:
   void Clear_Dynamic_Memory();
   Cpp_FileOperations FileManager;
   bool Memory_Delete_Condition;
+  bool Is_Child_Process_Ended;
   TCHAR * TCHAR_string;
   TCHAR * StdOutPipe;
   std::string std_str_pipe_path;

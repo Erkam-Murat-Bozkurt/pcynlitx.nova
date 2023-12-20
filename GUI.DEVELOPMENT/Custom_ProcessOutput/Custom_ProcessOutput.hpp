@@ -36,6 +36,8 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
 
   wxGauge * GetDialogAddress();
 
+  void Receive_Process_End_Status(bool * status);
+
   void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect);
 
   void PaintNow(wxWindow * wnd);
@@ -51,6 +53,8 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
 private:
 
   void OnClose(wxCloseEvent & ent);
+
+  bool * process_end_status;
 
   wxGauge * dialog;
 

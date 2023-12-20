@@ -402,10 +402,17 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
         wxString shell_command =
 
-        "D:\\Pcynlitx_Build_Platform\\CBuild.exe "
+        "cmd /c D:\\Pcynlitx_Build_Platform\\CBuild.exe "
 
-        + this->Descriptor_File_Path + " -ip";
+        + this->Descriptor_File_Path + " -ip > D:\\Pcynlitx_Build_Platform\\Construction_output.txt";
 
+        wxMessageDialog * dial = new wxMessageDialog(NULL,
+
+                    shell_command,
+
+                         wxT("Process Command"), wxOK);
+
+                         dial->ShowModal();
 
 
 
@@ -420,44 +427,19 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
   
 
-        this->Process_Event_Counter = 0;
+        this->Progress_Bar_Start_status = false;
 
-        this->Progress_Bar_Start_status = new bool;
-
-        *this->Progress_Bar_Start_status = false;
-
-
-
-        /*
-
-        this->Process_Ptr = new Process_Manager(this,wxID_ANY);
-
-        this->Process_Ptr->Fork_Process(shell_command);
-
-        this->Process_Ptr->Redirect();
-
-        //this->Process_Ptr->Detach();
-
-        */
-        
-
-        /*
-        this->Thread_Ptr = new Custom_wxThread(this->Process_Ptr,this->Progress_Bar_Start_status,&this->cv);
-
-        this->Thread_Ptr->Run();
-        
-        */
-
-
-        wxString label = wxT("Build System Construction");
-
-        this->Show_Progress(label);
+        this->Child_Process_End_Status = false;
 
 
         this->fork_process = new std::thread(MainFrame::ForkProcess,this,shell_command);
 
         this->fork_process->detach();
 
+
+        wxString label = wxT("Build System Construction");
+
+        this->Show_Progress(label);
 
     }
     else{
@@ -470,15 +452,28 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
 void MainFrame::ForkProcess(wxString cmd){
 
+
+     std::unique_lock<std::mutex> lck(this->mtx);
+
+     if(!this->Progress_Bar_Start_status){
+
+         this->cv.wait(lck);
+     }
+
+     lck.unlock();
+
+
      std::string cmd_str = cmd.ToStdString();
 
-     Custom_System_Interface SysInt;
-
-     SysInt.Create_Process_With_Redirected_Stdout(cmd_str.c_str());
-
-     SysInt.ReadFromPipe();    
-
+     this->SysInt.Create_Process(cmd_str.c_str());
      
+
+     lck.lock();
+
+     this->Child_Process_End_Status = true;
+
+     lck.unlock();
+
 
      if(!this->Dir_List_Manager->Get_Panel_Open_Status()){
 
@@ -486,50 +481,73 @@ void MainFrame::ForkProcess(wxString cmd){
      }      
 }
 
+
 void MainFrame::Process_End(wxProcessEvent & event){
 
-        (this->Process_Event_Counter)++;
+     (this->Process_Event_Counter)++;
 }
 
 
 void MainFrame::Show_Progress(wxString Process_Label){
 
+     std::unique_lock<std::mutex> lck(this->mtx);
+
+     lck.unlock();
+
+
      this->Process_Output = new Custom_ProcessOutput(this);
  
-     int max=50;
+     this->Process_Output->Receive_Process_End_Status(&this->Child_Process_End_Status);
+
+     int max=20;
      
      this->Process_Output->Construct_Output(max);
 
-    if(this->Process_Event_Counter < 1){
+     for(int i=0;i<max;i++){
 
-       int max = 50;
+         if(this->Child_Process_End_Status){
+      
+            this->Process_Output->GetDialogAddress()->SetValue(max);
 
-       for(int i=0;i<max;i++){
+            break;              
+         }         
+         else{
 
-           if(i>max-2){
+             if(i==(max-1)){
 
-              if(this->Process_Event_Counter >= 1){
+                i--;
 
-                i=max;
+                this->Process_Output->GetDialogAddress()->SetValue(i);
+             }
+             else{
 
-                this->Process_Output->GetDialogAddress()->SetValue(max);
+                this->Process_Output->GetDialogAddress()->SetValue(i);
+             }
+         }
+                       
+         wxMilliSleep(10);
 
-                break;
-              }
-           }
+         wxYield();
 
-           if(this->Process_Event_Counter < 1){
 
-              this->Process_Output->GetDialogAddress()->SetValue(i);
-           }
+         lck.lock();
 
-           *this->Progress_Bar_Start_status = true;
+         if(!this->Progress_Bar_Start_status){
 
-           this->cv.notify_all();
-       }
-    }
+            this->Progress_Bar_Start_status = true;
+         
+            this->cv.notify_all();
 
+            lck.unlock();
+         }
+         else{
+
+             lck.unlock();
+         }         
+     }
 }
+
+
 
 
 

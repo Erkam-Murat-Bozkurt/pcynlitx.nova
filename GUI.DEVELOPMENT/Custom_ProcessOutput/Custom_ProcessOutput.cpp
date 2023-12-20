@@ -18,7 +18,6 @@ Custom_ProcessOutput::Custom_ProcessOutput(wxFrame *parent, wxWindowID id, const
 
      this->SetFont(*(this->Default_Font));
 
-
      this->Memory_Delete_Condition = false;
 
      wxIcon Frame_Icon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
@@ -148,6 +147,11 @@ void Custom_ProcessOutput::Construct_Output(int size){
      this->Update();
 }
 
+void Custom_ProcessOutput::Receive_Process_End_Status(bool * status){
+
+     this->process_end_status = status;
+}
+
 
 void Custom_ProcessOutput::PrintProcessOutput(){
 
@@ -205,13 +209,16 @@ void Custom_ProcessOutput::OnSize(wxSizeEvent & event){
 
 void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
      
-     if(wxMessageBox("The construction Process continuos", "Please Confirm",
+     if(*this->process_end_status == false){
+          
+         if(wxMessageBox("The construction Process continuos", "Please Confirm",
      
-         wxICON_QUESTION |wxYES_NO) != wxYES){
+             wxICON_QUESTION |wxYES_NO) != wxYES){
 
-          event.Veto();
+             event.Veto();
 
-          return;
+             return;
+         }
      }
      else{
 

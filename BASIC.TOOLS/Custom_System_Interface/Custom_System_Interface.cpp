@@ -226,8 +226,7 @@ bool Custom_System_Interface::Create_Process(char * cmd){
           NULL,           // Process handle not inheritable
           NULL,           // Thread handle not inheritable
           FALSE,          // Set handle inheritance to FALSE
-          CREATE_NO_WINDOW | CREATE_PRESERVE_CODE_AUTHZ_LEVEL | 
-          HIGH_PRIORITY_CLASS,   // No creation flags
+          CREATE_NO_WINDOW | HIGH_PRIORITY_CLASS,   // No creation flags
           NULL,           // Use parent's environment block
           NULL,           // Use parent's starting directory
           &this->siStartInfo,            // Pointer to STARTUPINFO structure
@@ -245,12 +244,46 @@ bool Custom_System_Interface::Create_Process(char * cmd){
 
     this->Child_PID = this->piProcInfo.dwProcessId;
 
+
+    WaitForSingleObject(this->piProcInfo.hProcess,INFINITE);
+
     CloseHandle(this->piProcInfo.hProcess);
     CloseHandle(this->piProcInfo.hThread);
 
     return this->return_status;
 }
 
+
+void Custom_System_Interface::WaitForChildProcess(){
+
+     WaitForSingleObject(this->piProcInfo.hProcess,INFINITE);
+
+     CloseHandle(this->piProcInfo.hProcess);
+     
+     CloseHandle(this->piProcInfo.hThread);
+}
+
+
+bool Custom_System_Interface::IsChildProcess_Still_Alive(){
+
+     bool is_alive = true;
+
+     LPDWORD ExitCode =0;
+
+     if(GetExitCodeProcess(this->piProcInfo.hProcess,ExitCode) !=0){
+
+          if(*ExitCode == STILL_ACTIVE){
+
+             is_alive = true;
+          }
+          else{
+
+             is_alive = false;
+          }
+     };
+
+     return is_alive;
+}
 
 bool Custom_System_Interface::TerminateChildProcess(){
 
