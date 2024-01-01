@@ -10,7 +10,6 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) :
  Mk_Builder(DesPATH,opr_sis), Script_Writer(opr_sis), 
  
  Git_Data_Proc(opr_sis), Des_Reader(opr_sis)
- 
 {    
     this->Memory_Delete_Condition = false;
 
@@ -52,18 +51,33 @@ void Build_Tools_Initializer::Clear_Dynamic_Memory(){
     }  
 }
 
+
+void Build_Tools_Initializer::Receive_System_Interface( Custom_System_Interface * Int){
+
+     this->SysInt = Int;
+}
+
+
 void Build_Tools_Initializer::Setup_Build_Tools(){
+
+     char read_opr [] = "\n\n The project descriptor file read ";
 
      this->Des_Reader.Read_Descriptor_File();
 
-     std::cout << "\n\n The project descriptor file read ";
+     std::cout << read_opr;
+
+     this->SysInt->WriteTo_NamedPipe_FromChild(read_opr);
 
 
      this->Git_Data_Proc.Write_Git_Repo_List_File();
 
      this->Git_Data_Proc.Determine_Git_Repo_Info();    
 
-     std::cout << "\n\n The data for git version controller has been collected ";
+     char git_data [] = "\n\n The data for git version controller has been collected ";
+
+     std::cout << git_data;
+
+     this->SysInt->WriteTo_NamedPipe_FromChild(git_data);
 
 
      this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
@@ -72,8 +86,11 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      this->Dep_Determiner.Collect_Dependency_Information();
 
-     std::cout << "\n\n Source file dependencies has been determined ";
+     char dependency_data [] = "\n\n Source file dependencies has been determined ";
 
+     std::cout << dependency_data;
+
+     this->SysInt->WriteTo_NamedPipe_FromChild(dependency_data);
 
 
      this->Rep_Init.Receive_Descriptor_File_Reader(&this->Des_Reader);
@@ -95,7 +112,12 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      this->Rep_Init.Clear_Dynamic_Memory();
 
-     std::cout << "\n\n The project warehouse constructed ";
+     char warehouse_constration [] = "\n\n The project warehouse constructed ";
+
+     std::cout << warehouse_constration;
+
+     this->SysInt->WriteTo_NamedPipe_FromChild(warehouse_constration);
+
 
 
      this->Mk_Builder.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
@@ -105,13 +127,23 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
      this->Mk_Builder.Clear_Dynamic_Memory();
      
      
-     std::cout << "\n\n The project makefiles constructed ";
+     char make_file_construction [] = "\n\n The project makefiles constructed ";
+
+     std::cout << make_file_construction;
+
+     this->SysInt->WriteTo_NamedPipe_FromChild(make_file_construction);
+
 
      this->Script_Writer.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
 
      this->Script_Writer.Build_Compiler_Script();
 
-     std::cout << "\n\n The project scripts constructed ";
+     char script_construction [] = "\n\n The project scripts constructed ";
+
+     std::cout << script_construction;
+
+     this->SysInt->WriteTo_NamedPipe_FromChild(script_construction);
+
 
      std::cout << "\n\n";
 

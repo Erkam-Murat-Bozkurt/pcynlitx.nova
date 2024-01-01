@@ -7,11 +7,16 @@ int main(int argc, char *argv[]){
 
     Custom_System_Interface SysInt;
 
-    SysInt.Create_Process(argv[1]);
+    SysInt.CreateNamedPipe_From_Parent();
 
-    SysInt.TerminateChildProcess();
+    std::cout << "\n Pipe created";
+    std::cin.get();
 
-    std::cout << "\n Is child process still alive:" << SysInt.IsChildProcess_Still_Alive();
+    SysInt.Create_Process_For_Named_Pipe(argv[1]);
+
+    SysInt.ReadFromPipe();
+
+    //std::cout << "\n Is child process still alive:" << SysInt.IsChildProcess_Still_Alive();
 
     std::cout << "\n The end of the parent class\n\n";
 

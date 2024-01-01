@@ -153,28 +153,9 @@ void Custom_ProcessOutput::Receive_Process_End_Status(bool * status){
 }
 
 
-void Custom_ProcessOutput::PrintProcessOutput(){
+void Custom_ProcessOutput::PrintProcessOutput(wxString text){
 
-     /*
-
-     wxInputStream * stream = this->Process_Manager_Ptr->GetInputStream();
-
-     wxTextInputStream tStream(*stream);
-
-     do{
-
-        wxString log_string = tStream.ReadLine() + wxT("\n");
-                     
-        if(!log_string.empty()){
-
-           this->textctrl->AppendText(log_string);
-
-           this->log_num++;
-        }
-
-     }while(stream->CanRead());
-
-     */     
+     this->textctrl->AppendText(text);  
 }
 
 

@@ -35,6 +35,7 @@
 #include <wx\listbox.h>
 #include <wx/gauge.h>
 #include <mutex>
+#include <chrono>
 #include <condition_variable>
 #include <thread>
 #include "Custom_DataPanel.hpp"
@@ -51,6 +52,7 @@
 #include "ToolBar_Initializer.h"
 #include "Descriptor_File_Reader.hpp"
 #include "Custom_System_Interface.h"
+#include "Cpp_FileOperations.h"
 
 
 class MainFrame : public wxFrame
@@ -76,8 +78,6 @@ private:
   void Enter_Library_Location(wxCommandEvent & event);
   void Enter_Git_Repo_Location(wxCommandEvent & event);
   void Enter_Main_File_Name(wxCommandEvent & event);
-  void Enter_Header_File(wxCommandEvent & event);
-  void Enter_Source_File(wxCommandEvent & event);
   void Enter_Library_Name(wxCommandEvent & event);
   void Enter_Warehouse_Location(wxCommandEvent & event);
   void Enter_Exe_File_Name(wxCommandEvent & event);
@@ -90,11 +90,12 @@ private:
   void Close_Directory_Pane(wxAuiManagerEvent & event);
   void FileNameEdit(wxTreeEvent& event);
   void ForkProcess(wxString cmd);
-  void WaidForChildProcess();
+  void ReadProcessOutput();
+  std::string process_output;
   bool Child_Process_End_Status;
   Custom_System_Interface SysInt;
   std::thread * fork_process;
-  std::thread * end_process;
+  std::thread * read_process_output;
   Custom_DataPanel * data_panel_ptr;
   bool is_custom_panel_constructed;
   bool Memory_Delete_Condition;

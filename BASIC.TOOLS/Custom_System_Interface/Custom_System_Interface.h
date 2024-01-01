@@ -15,7 +15,10 @@
 #include <tchar.h>
 #include <shlwapi.h>
 #include <cwchar>
+#include <sstream>  // std::stringstream
 #include "Cpp_FileOperations.h"
+
+#define BUFFER_SIZE 4092
 
 class Custom_System_Interface
 {
@@ -27,16 +30,25 @@ public:
   bool Create_Process(char * cmd);
   int  System_Function(char * cmd);
   bool Create_Process_With_Redirected_Stdout(char * cmd);
+  void CreateProcessWith_NamedPipe_From_Parent(char * argv);
+  void WriteTo_NamedPipe_FromChild(char * string);
+  bool IsChildProcessStillAlive(); 
+  std::string ReadNamedPipe_From_Parent();
+  void Connect_NamedPipe_From_Child_Process();
   void SetChildProcess_For_StdOut_Redirection();
   void WriteChildProcess_StdOutput();
   bool TerminateChildProcess();
   bool IsChildProcess_Still_Alive();
   void WaitForChildProcess();
+  void StartStdoutLogging();
+  void EndStdoutLogging();
   TCHAR * GetPipePath();
+  std::string GetStdoutLog();
   std::string GetPipePath_StdStr();
   void ReadFromPipe(void);
   PROCESS_INFORMATION piProcInfo; 
   STARTUPINFO siStartInfo;
+  SECURITY_ATTRIBUTES saAttr; 
   UINT uExitCode;
 protected:
   void DeterminePipePath(); 
@@ -45,8 +57,10 @@ protected:
   Cpp_FileOperations FileManager;
   bool Memory_Delete_Condition;
   bool Is_Child_Process_Ended;
+  std::stringstream stdout_log_buffer;
   TCHAR * TCHAR_string;
   TCHAR * StdOutPipe;
+  std::streambuf * prevcoutbuf;
   std::string std_str_pipe_path;
   DWORD bufsize;
   CHAR chBuf[4096]; 
@@ -58,6 +72,8 @@ protected:
   HANDLE g_hChildStd_OUT_Rd;
   HANDLE g_hChildStd_OUT_Wr;
   HANDLE g_hInputFile;
+  HANDLE hNamedPipe;
+  HANDLE hNamedPipe_Client_Connection;
   pid_t pid;
   int status;
   bool return_status;

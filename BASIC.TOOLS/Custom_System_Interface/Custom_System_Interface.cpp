@@ -83,6 +83,248 @@ void Custom_System_Interface::Clear_Dynamic_Memory(){
 
 
 
+void Custom_System_Interface::CreateProcessWith_NamedPipe_From_Parent(char * arg){
+
+     LPCTSTR g_szPipeName = TEXT("\\\\.\\pipe\\pcynlitx");
+
+     this->hNamedPipe = CreateNamedPipe(
+		g_szPipeName,             // pipe name 
+		PIPE_ACCESS_INBOUND |       // read/write access 
+          FILE_FLAG_OVERLAPPED,     // overlapped mode 
+		PIPE_TYPE_MESSAGE |       // message type pipe 
+		PIPE_READMODE_BYTE |   // message-read mode 
+		PIPE_WAIT,                // blocking mode 
+		1, // max. instances  
+		BUFFER_SIZE,              // output buffer size 
+		BUFFER_SIZE,              // input buffer size 
+		NMPWAIT_USE_DEFAULT_WAIT, // client time-out 
+		NULL);                    // default security attribute  
+
+
+	if (INVALID_HANDLE_VALUE == this->hNamedPipe)
+	{
+		printf("\nError occurred while creating the pipe: %d", GetLastError());
+		system("Pause");
+
+          exit(EXIT_FAILURE);
+	}
+
+
+   //PROCESS_INFORMATION piProcInfo; 
+   //STARTUPINFO siStartInfo;
+
+      
+   this->saAttr.nLength = sizeof(SECURITY_ATTRIBUTES); 
+   this->saAttr.bInheritHandle = TRUE; 
+   this->saAttr.lpSecurityDescriptor = NULL; 
+
+
+   BOOL bSuccess = FALSE; 
+ 
+   // Set up members of the PROCESS_INFORMATION structure. 
+ 
+   ZeroMemory( &piProcInfo, sizeof(PROCESS_INFORMATION) );
+ 
+   // Set up members of the STARTUPINFO structure. 
+   // This structure specifies the STDIN and STDOUT handles for redirection.
+ 
+   ZeroMemory( &siStartInfo, sizeof(STARTUPINFO) );
+   this->siStartInfo.cb = sizeof(STARTUPINFO); 
+   this->siStartInfo.dwFlags |= STARTF_USESTDHANDLES;
+ 
+   // Create the child process. 
+
+   TCHAR * Cmd_Line = Convert_CString_To_TCHAR(arg);
+
+
+   BOOL return_value = CreateProcess(NULL, 
+      Cmd_Line,     // command line 
+      NULL,          // process security attributes 
+      NULL,          // primary thread security attributes 
+      TRUE,          // handles are inherited 
+      CREATE_NO_WINDOW, // creation flags 
+      NULL,          // use parent's environment 
+      NULL,          // use parent's current directory 
+      &this->siStartInfo,  // STARTUPINFO pointer 
+      &this->piProcInfo);  // receives PROCESS_INFORMATION 
+   
+
+   // If an error occurs, exit the application. 
+   if ( ! return_value ) {
+
+          std::cout << "\n The child process can not be created";
+
+          exit(EXIT_FAILURE);
+   }
+   else 
+   {
+         // Close handles to the child process and its primary thread.
+         // Some applications might keep these handles to monitor the status
+         // of the child process, for example. 
+
+         //CloseHandle(this->piProcInfo.hProcess);
+         CloseHandle(this->piProcInfo.hThread);
+      
+         // Close handles to the stdin and stdout pipes no longer needed by the child process.
+         // If they are not explicitly closed, there is no way to recognize that the child process has ended.      
+   }
+
+
+
+	//Wait for the client to connect
+	BOOL bClientConnected = ConnectNamedPipe(this->hNamedPipe, NULL);
+
+ 	if (FALSE == bClientConnected)
+	{
+		printf("\nError occurred while connecting to the client: %d", GetLastError());
+		CloseHandle(this->hNamedPipe);
+		system("Pause");
+          exit(EXIT_FAILURE);
+	}
+}
+
+
+
+
+
+void Custom_System_Interface::Connect_NamedPipe_From_Child_Process(){
+
+     LPCTSTR g_szPipeName = TEXT("\\\\.\\pipe\\pcynlitx");
+
+
+     //Connect to the server pipe using CreateFile()
+     this->hNamedPipe_Client_Connection = CreateFile( 
+          g_szPipeName,   // pipe name           
+          GENERIC_WRITE, 
+          0,              // no sharing 
+          NULL,           // default security attributes
+          OPEN_EXISTING,  // opens existing pipe 
+          FILE_FLAG_OVERLAPPED,              // default attributes 
+          NULL);          // no template file 
+     
+     if (INVALID_HANDLE_VALUE == this->hNamedPipe_Client_Connection) 
+     {
+          printf("\nError occurred while connecting to the server: %d", GetLastError()); 
+
+		system("Pause");
+
+          exit(EXIT_FAILURE);
+     }
+
+     // The pipe connected; change to message-read mode. 
+ 
+     DWORD  dwMode = PIPE_READMODE_MESSAGE; 
+     BOOL fSuccess = SetNamedPipeHandleState( 
+      this->hNamedPipe_Client_Connection,    // pipe handle 
+      &dwMode,  // new pipe mode 
+      NULL,     // don't set maximum bytes 
+      NULL);    // don't set maximum time 
+   
+     if ( ! fSuccess) 
+     {
+          printf("SetNamedPipeHandleState failed. GLE=%d\n", GetLastError()); 
+      
+          exit(EXIT_FAILURE);
+     }
+}
+
+
+
+bool Custom_System_Interface::IsChildProcessStillAlive(){
+
+     bool is_alive = false;
+
+     DWORD ExitCode;
+
+     if(GetExitCodeProcess(this->piProcInfo.hProcess,&ExitCode) == FALSE){
+
+        std::cout << "\n The child process status can not be obtained";
+
+        exit(EXIT_FAILURE);
+     }
+     else{
+
+          if(ExitCode ==  STILL_ACTIVE){
+
+               is_alive = true;
+          }
+     }
+
+     return is_alive;
+}
+
+void Custom_System_Interface::WriteTo_NamedPipe_FromChild(char * string){
+
+     DWORD cbBytes;
+
+     BOOL bResult = WriteFile(
+		          this->hNamedPipe_Client_Connection,                // handle to pipe 
+		          string,               // buffer to write from 
+		          BUFFER_SIZE,   // number of bytes to write, include the NULL
+		          &cbBytes,             // number of bytes written 
+		               NULL);                // not overlapped I/O 
+}
+
+
+
+std::string Custom_System_Interface::ReadNamedPipe_From_Parent(){
+     
+
+     std::string pipe_string;
+
+     /*
+	OVERLAPPED overlapped;
+	overlapped.Offset = 0;
+	overlapped.OffsetHigh = 0;
+	overlapped.hEvent = 0;
+
+     */
+
+	DWORD cbBytes;   
+     DWORD numBytesAbailable = 0;
+     DWORD lpBytesLeftThisMessage = 0;
+     DWORD numBytesToRead2 = 0;
+
+     for(;;){
+
+         char szBuffer[BUFFER_SIZE];
+
+         for(size_t i=0;i < BUFFER_SIZE;i++){
+
+           szBuffer[i] = '\0';
+         }
+
+         if(PeekNamedPipe(this->hNamedPipe,szBuffer,sizeof(szBuffer),
+          
+                          &cbBytes,&numBytesAbailable,&lpBytesLeftThisMessage)){
+
+	        BOOL bResult = ReadFile(
+		      this->hNamedPipe,                // handle to pipe 
+		      szBuffer,             // buffer to receive data 
+		      sizeof(szBuffer),     // size of buffer 
+		      &cbBytes,             // number of bytes read 
+		      NULL);         
+
+         
+
+	      if ((!bResult) || (0 == cbBytes))
+	      {
+               break;
+	      }
+
+
+           for(size_t i=0;i<strlen(szBuffer);i++){
+
+               pipe_string.push_back(szBuffer[i]);
+           }
+   
+           pipe_string.shrink_to_fit();
+        }
+     }
+
+     return pipe_string;
+}
+
 int Custom_System_Interface::System_Function(char * cmd){
 
      this->return_value = 0;
@@ -535,6 +777,23 @@ void Custom_System_Interface::WriteChildProcess_StdOutput(){
 
       } 
 }
+
+
+void Custom_System_Interface::StartStdoutLogging(){
+
+     this->prevcoutbuf = std::cout.rdbuf(this->stdout_log_buffer.rdbuf());
+}
+
+std::string Custom_System_Interface::GetStdoutLog(){
+
+     return  this->stdout_log_buffer.str();
+}
+
+void Custom_System_Interface::EndStdoutLogging(){
+
+    std::cout.rdbuf(prevcoutbuf);
+}
+
 
 
 TCHAR * Custom_System_Interface::Convert_CString_To_TCHAR(char * cmd){

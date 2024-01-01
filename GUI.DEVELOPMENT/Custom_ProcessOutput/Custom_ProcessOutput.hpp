@@ -46,7 +46,7 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
 
   void OnSize(wxSizeEvent & event);
 
-  void PrintProcessOutput();
+  void PrintProcessOutput(wxString text);
 
   int GetLogNumber();
 

@@ -26,6 +26,8 @@ int main(int argc, char ** argv){
 
     System_Interface.SetCpuRate();
 
+    System_Interface.Connect_NamedPipe_From_Child_Process();
+
 
     bool argument_pass_cond = false;
 
@@ -51,6 +53,8 @@ int main(int argc, char ** argv){
         Kernel Build_System(argv[1],'w');
 
         std::cout << "\n\n C++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED \n";
+
+        Build_System.Receive_System_Interface(&System_Interface);
 
         Build_System.Setup_Build_Tools();
 
@@ -80,6 +84,8 @@ int main(int argc, char ** argv){
         Kernel Build_System(argv[1],'w');
 
         std::cout << "\n\e[0;32mTHE MAKEFILE CONSTRUCTION STARTED\e[0m\n";
+
+        Build_System.Receive_System_Interface(&System_Interface);
 
         Build_System.Build_MakeFile(argv[3],argv[4],*argv[5]);
 

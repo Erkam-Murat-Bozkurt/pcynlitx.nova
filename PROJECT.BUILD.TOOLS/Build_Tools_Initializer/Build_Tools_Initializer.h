@@ -24,6 +24,7 @@ class Build_Tools_Initializer
 {
 public:
  Build_Tools_Initializer(char * DesPATH, char opr_sis);
+ void Receive_System_Interface(Custom_System_Interface * sysInt);
  virtual ~Build_Tools_Initializer();
  void Setup_Build_Tools();
  void Clear_Dynamic_Memory();
@@ -34,6 +35,7 @@ protected:
  Source_File_Dependency_Determiner Dep_Determiner;
  Auto_MakeFile_Builder Mk_Builder;
  Project_Script_Writer Script_Writer;
+ Custom_System_Interface * SysInt;
  bool Memory_Delete_Condition;
 };
 

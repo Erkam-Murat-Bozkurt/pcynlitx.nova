@@ -406,15 +406,6 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
         + this->Descriptor_File_Path + " -ip > D:\\Pcynlitx_Build_Platform\\Construction_output.txt";
 
-        wxMessageDialog * dial = new wxMessageDialog(NULL,
-
-                    shell_command,
-
-                         wxT("Process Command"), wxOK);
-
-                         dial->ShowModal();
-
-
 
         this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
@@ -437,9 +428,15 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
         this->fork_process->detach();
 
 
+        this->read_process_output = new std::thread(MainFrame::ReadProcessOutput,this);
+
+        this->read_process_output->detach();
+     
+
         wxString label = wxT("Build System Construction");
 
         this->Show_Progress(label);
+
 
     }
     else{
@@ -461,6 +458,9 @@ void MainFrame::ForkProcess(wxString cmd){
      }
 
      lck.unlock();
+
+
+
 
 
      std::string cmd_str = cmd.ToStdString();
@@ -503,6 +503,7 @@ void MainFrame::Show_Progress(wxString Process_Label){
      
      this->Process_Output->Construct_Output(max);
 
+
      for(int i=0;i<max;i++){
 
          if(this->Child_Process_End_Status){
@@ -530,6 +531,9 @@ void MainFrame::Show_Progress(wxString Process_Label){
          wxYield();
 
 
+         //this->Process_Output->PrintProcessOutput();
+
+
          lck.lock();
 
          if(!this->Progress_Bar_Start_status){
@@ -548,6 +552,61 @@ void MainFrame::Show_Progress(wxString Process_Label){
 }
 
 
+void MainFrame::ReadProcessOutput(){
+
+     Cpp_FileOperations FileManager;
+
+     std::string output_file_path = "D:\\Pcynlitx_Build_Platform\\Construction_output.txt";
+     
+     do{
+
+         std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+     }while(FileManager.Is_Path_Exist(output_file_path));
+
+
+     FileManager.SetFilePath(output_file_path);
+
+     do{
+
+          FileManager.FileOpen(Rf);
+
+          do{
+               std::string string_line = FileManager.ReadLine();
+
+               for(size_t i=0;i<string_line.length();i++){
+
+                   this->process_output.push_back(string_line.at(i));
+               }
+
+          }while(!FileManager.Control_Stop_Condition());
+     
+          this->process_output.shrink_to_fit();
+          
+          std::this_thread::sleep_for(std::chrono::milliseconds(10));
+
+          FileManager.FileClose();
+
+     }while(!this->Child_Process_End_Status);
+
+
+
+     FileManager.FileOpen(Rf);
+
+     do{
+          std::string string_line = FileManager.ReadLine();
+
+          for(size_t i=0;i<string_line.length();i++){
+
+              this->process_output.push_back(string_line.at(i));
+          }
+
+     }while(!FileManager.Control_Stop_Condition());
+     
+     this->process_output.shrink_to_fit();
+
+     FileManager.FileClose();
+}
 
 
 

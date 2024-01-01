@@ -14,7 +14,14 @@ Kernel::~Kernel(){
 }
 
 
+void Kernel::Receive_System_Interface(Custom_System_Interface * Int){
+
+     this->SysInt = Int;
+}
+
 void Kernel::Setup_Build_Tools(){
+
+     this->Bld_Init.Receive_System_Interface(this->SysInt);
 
      this->Bld_Init.Setup_Build_Tools();
 }
