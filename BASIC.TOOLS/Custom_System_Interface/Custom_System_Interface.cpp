@@ -191,7 +191,8 @@ void Custom_System_Interface::Connect_NamedPipe_From_Child_Process(){
 
      LPCTSTR g_szPipeName = TEXT("\\\\.\\pipe\\pcynlitx");
 
-
+     WaitNamedPipe(g_szPipeName,NMPWAIT_WAIT_FOREVER);
+     
      //Connect to the server pipe using CreateFile()
      this->hNamedPipe_Client_Connection = CreateFile( 
           g_szPipeName,   // pipe name           
@@ -272,15 +273,15 @@ std::string Custom_System_Interface::ReadNamedPipe_From_Parent(){
 
      std::string pipe_string;
 
-     /*
 	OVERLAPPED overlapped;
 	overlapped.Offset = 0;
 	overlapped.OffsetHigh = 0;
 	overlapped.hEvent = 0;
 
-     */
+
 
 	DWORD cbBytes;   
+     DWORD Bytes;
      DWORD numBytesAbailable = 0;
      DWORD lpBytesLeftThisMessage = 0;
      DWORD numBytesToRead2 = 0;
@@ -294,6 +295,10 @@ std::string Custom_System_Interface::ReadNamedPipe_From_Parent(){
            szBuffer[i] = '\0';
          }
 
+         if(GetOverlappedResult(this->hNamedPipe,&overlapped,&Bytes,TRUE)){
+
+         }
+
          if(PeekNamedPipe(this->hNamedPipe,szBuffer,sizeof(szBuffer),
           
                           &cbBytes,&numBytesAbailable,&lpBytesLeftThisMessage)){
@@ -305,7 +310,6 @@ std::string Custom_System_Interface::ReadNamedPipe_From_Parent(){
 		      &cbBytes,             // number of bytes read 
 		      NULL);         
 
-         
 
 	      if ((!bResult) || (0 == cbBytes))
 	      {
@@ -319,6 +323,9 @@ std::string Custom_System_Interface::ReadNamedPipe_From_Parent(){
            }
    
            pipe_string.shrink_to_fit();
+
+           return pipe_string;
+
         }
      }
 
