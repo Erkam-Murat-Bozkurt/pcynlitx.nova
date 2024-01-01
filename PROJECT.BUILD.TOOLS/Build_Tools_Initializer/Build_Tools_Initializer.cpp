@@ -145,6 +145,9 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
      this->SysInt->WriteTo_NamedPipe_FromChild(script_construction);
 
 
-     std::cout << "\n\n";
+     char endLines [] = "\n\n";
 
+     std::cout << endLines;
+
+     this->SysInt->WriteTo_NamedPipe_FromChild(endLines);
 }

@@ -130,6 +130,7 @@ int main(int argc, char ** argv){
 
     std::cout << "\n";
 
+    System_Interface.Close_Child_Handles_For_Named_Pipe_Connection();
 
     return 0;
 }

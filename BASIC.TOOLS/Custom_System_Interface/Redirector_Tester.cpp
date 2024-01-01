@@ -56,6 +56,8 @@ int main(int argc, char ** argv){
     lck.unlock();
 
 
+    SysInt.Close_Parent_Handles_For_Named_Pipe_Connection();
+
     return 0;
 }
 
