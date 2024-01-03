@@ -101,6 +101,8 @@ void Custom_System_Interface::CreateProcessWith_NamedPipe_From_Parent(char * arg
 		NULL);                    // default security attribute  
 
 
+     this->pipe_handle_close_status = false;
+
 	if (INVALID_HANDLE_VALUE == this->hNamedPipe)
 	{
 		std::cout << "\nError occurred while creating the pipe, Error code:" << GetLastError();
@@ -157,6 +159,8 @@ void Custom_System_Interface::CreateProcessWith_NamedPipe_From_Parent(char * arg
          // Some applications might keep these handles to monitor the status
          // of the child process, for example. 
 
+         this->process_handle_close_status = false;
+
          CloseHandle(this->piProcInfo.hThread);
       
          // Close handles to the stdin and stdout pipes no longer needed by the child process.
@@ -178,14 +182,57 @@ void Custom_System_Interface::CreateProcessWith_NamedPipe_From_Parent(char * arg
 
           exit(EXIT_FAILURE);
 	}
+
+     //WaitForSingleObject(this->piProcInfo.hProcess,INFINITE);
+}
+
+
+bool Custom_System_Interface::IsPipeReadytoRead(){
+
+     bool is_pipe_ready = false;
+
+     char szBuffer[BUFFER_SIZE];
+
+     for(size_t i=0;i < BUFFER_SIZE;i++){
+
+         szBuffer[i] = '\0';
+     }
+
+	DWORD cbBytes;   
+     DWORD numBytesAbailable = 0;
+     DWORD lpBytesLeftThisMessage = 0;
+
+     if(PeekNamedPipe(this->hNamedPipe,szBuffer,sizeof(szBuffer),
+          
+                          &cbBytes,&numBytesAbailable,&lpBytesLeftThisMessage)){
+
+         if(numBytesAbailable >0){
+
+            is_pipe_ready = true;
+
+            return is_pipe_ready;
+         }
+     }
+
+     return is_pipe_ready;
 }
 
 
 void Custom_System_Interface::Close_Parent_Handles_For_Named_Pipe_Connection(){
 
-     CloseHandle(this->piProcInfo.hProcess);
+     if(!this->process_handle_close_status){
 
-     CloseHandle(this->hNamedPipe);
+         CloseHandle(this->piProcInfo.hProcess);
+
+         this->process_handle_close_status = true;
+     }
+
+     if(!this->pipe_handle_close_status){
+
+         CloseHandle(this->hNamedPipe);
+
+         this->pipe_handle_close_status = true;
+     }
 }
 
 

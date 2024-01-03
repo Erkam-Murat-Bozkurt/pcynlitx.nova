@@ -400,44 +400,89 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
     if(this->is_descriptor_file_open){
 
-        wxString shell_command =
+       char executable [] = "D:\\Pcynlitx_Build_Platform\\CBuild.exe ";
 
-        "cmd /c D:\\Pcynlitx_Build_Platform\\CBuild.exe "
+       char option [] = " -ip_for_gui";
 
-        + this->Descriptor_File_Path + " -ip > D:\\Pcynlitx_Build_Platform\\Construction_output.txt";
+       size_t exe_cmd_size  = strlen(executable);
+
+       size_t des_path_size = strlen(this->Descriptor_File_Path.c_str()); 
+
+       size_t option_size   = strlen(option);
+
+       size_t cmd_str_size = exe_cmd_size + des_path_size + option_size;
+
+       size_t cmd_size = 2*cmd_str_size;
+
+       char * cmd = new char[cmd_size];
+
+       for(size_t i=0;i<cmd_size;i++){
+
+           cmd[i] = '\0';
+       }
+
+       size_t index = 0;
+
+       for(size_t i=0;i<exe_cmd_size;i++){
+
+           cmd[index] = executable[i];
+
+           index++;
+       }
+
+       for(size_t i=0;i<des_path_size;i++){
+
+           cmd[index] = this->Descriptor_File_Path.c_str()[i];
+
+           index++;
+
+       }
+
+       for(size_t i=0;i<option_size;i++){
+
+           cmd[index] = option[i];
+
+           index++;
+       }
+
+       cmd[index] = '\0';
 
 
-        this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
-
-        this->Des_Reader->Read_Descriptor_File();
 
 
-        std::string warehose_word = "\\WAREHOUSE";
+       this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
-        this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location() + warehose_word;
-
-  
-
-        this->Progress_Bar_Start_status = false;
-
-        this->Child_Process_End_Status = false;
+       this->Des_Reader->Read_Descriptor_File();
 
 
-        this->fork_process = new std::thread(MainFrame::ForkProcess,this,shell_command);
+       std::string warehose_word = "\\WAREHOUSE";
 
-        this->fork_process->detach();
-
-
-        this->read_process_output = new std::thread(MainFrame::ReadProcessOutput,this);
-
-        this->read_process_output->detach();
-     
-
-        wxString label = wxT("Build System Construction");
-
-        this->Show_Progress(label);
+       this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location() + warehose_word;
 
 
+       this->Progress_Bar_Start_status = false;
+
+       this->Child_Process_End_Status  = false;
+
+       this->Child_Process_Started_to_Execution = false;
+
+
+
+
+       this->fork_process = new std::thread(MainFrame::ForkProcess,this,cmd);
+
+       this->fork_process->detach();
+
+
+
+       this->read_process_output = new std::thread(MainFrame::ReadProcessOutput,this);
+
+       this->read_process_output->detach();
+
+
+       wxString label = wxT("Build System Construction");
+
+       this->Show_Progress(label);
     }
     else{
 
@@ -447,32 +492,59 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 }
 
 
-void MainFrame::ForkProcess(wxString cmd){
-
+void MainFrame::ForkProcess(char * cmd){
 
      std::unique_lock<std::mutex> lck(this->mtx);
+
+     lck.unlock();
+
+     
+
+     this->SysInt.CreateProcessWith_NamedPipe_From_Parent(cmd);
+
+     delete [] cmd;
+
+
+     lck.lock();
+
+     this->Child_Process_Started_to_Execution = true;
+
+     lck.unlock();
+
+
+
+     lck.lock();
 
      if(!this->Progress_Bar_Start_status){
 
          this->cv.wait(lck);
+
+         lck.unlock();
      }
+     else{
 
-     lck.unlock();
+         lck.unlock();
+     }       
 
 
 
-
-
-     std::string cmd_str = cmd.ToStdString();
-
-     this->SysInt.Create_Process(cmd_str.c_str());
-     
 
      lck.lock();
 
-     this->Child_Process_End_Status = true;
+     if(!this->Child_Process_End_Status){
 
-     lck.unlock();
+         this->cv.wait(lck);
+
+         lck.unlock();
+     }
+     else{
+
+         lck.unlock();
+     }
+
+
+
+     this->SysInt.Close_Parent_Handles_For_Named_Pipe_Connection();
 
 
      if(!this->Dir_List_Manager->Get_Panel_Open_Status()){
@@ -482,10 +554,6 @@ void MainFrame::ForkProcess(wxString cmd){
 }
 
 
-void MainFrame::Process_End(wxProcessEvent & event){
-
-     (this->Process_Event_Counter)++;
-}
 
 
 void MainFrame::Show_Progress(wxString Process_Label){
@@ -502,6 +570,7 @@ void MainFrame::Show_Progress(wxString Process_Label){
      int max=20;
      
      this->Process_Output->Construct_Output(max);
+
 
 
      for(int i=0;i<max;i++){
@@ -526,89 +595,107 @@ void MainFrame::Show_Progress(wxString Process_Label){
              }
          }
                        
-         wxMilliSleep(10);
-
+         wxMilliSleep(1);
          wxYield();
 
 
-         //this->Process_Output->PrintProcessOutput();
+         if(!this->Child_Process_Started_to_Execution){
+
+            do{
+
+                wxYield();
+                wxMilliSleep(1);
+
+            }while(!this->Child_Process_Started_to_Execution);
+         }
 
 
+         
          lck.lock();
 
          if(!this->Progress_Bar_Start_status){
 
             this->Progress_Bar_Start_status = true;
-         
+   
             this->cv.notify_all();
 
             lck.unlock();
          }
          else{
 
-             lck.unlock();
-         }         
+            lck.unlock();
+         }
      }
 }
 
 
 void MainFrame::ReadProcessOutput(){
 
-     Cpp_FileOperations FileManager;
+     std::unique_lock<std::mutex> lck(this->mtx);
 
-     std::string output_file_path = "D:\\Pcynlitx_Build_Platform\\Construction_output.txt";
-     
+     lck.unlock();
+
+
+
+     lck.lock();
+
+     if(!this->Progress_Bar_Start_status){
+
+         this->cv.wait(lck);
+
+         lck.unlock();
+     }
+     else{
+
+         lck.unlock();
+     }       
+
+
+
      do{
 
-         std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        if(this->SysInt.IsPipeReadytoRead()){
 
-     }while(FileManager.Is_Path_Exist(output_file_path));
+            break;
+        }
+        else{
+
+            sleep(0.1);
+        }
+
+     }while(!this->SysInt.IsPipeReadytoRead());
 
 
-     FileManager.SetFilePath(output_file_path);
 
-     do{
+     for(;;)
+     {
+        std::string pipeStr = this->SysInt.ReadNamedPipe_From_Parent();
 
-          FileManager.FileOpen(Rf);
+        wxString text(pipeStr);
 
-          do{
-               std::string string_line = FileManager.ReadLine();
+        this->Process_Output->PrintProcessOutput(text);
 
-               for(size_t i=0;i<string_line.length();i++){
+        if(!this->SysInt.IsChildProcessStillAlive()){
 
-                   this->process_output.push_back(string_line.at(i));
-               }
-
-          }while(!FileManager.Control_Stop_Condition());
+            break;
+        }
+     } 
      
-          this->process_output.shrink_to_fit();
-          
-          std::this_thread::sleep_for(std::chrono::milliseconds(10));
+     lck.lock();
 
-          FileManager.FileClose();
+     this->Child_Process_End_Status = true;
 
-     }while(!this->Child_Process_End_Status);
+     this->cv.notify_all();
 
+     lck.unlock();
 
-
-     FileManager.FileOpen(Rf);
-
-     do{
-          std::string string_line = FileManager.ReadLine();
-
-          for(size_t i=0;i<string_line.length();i++){
-
-              this->process_output.push_back(string_line.at(i));
-          }
-
-     }while(!FileManager.Control_Stop_Condition());
-     
-     this->process_output.shrink_to_fit();
-
-     FileManager.FileClose();
 }
 
 
+void MainFrame::Process_End(wxProcessEvent & event){
+
+     (this->Process_Event_Counter)++;
+}
 
 void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
 {

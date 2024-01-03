@@ -32,7 +32,7 @@ public:
  Kernel(char * DesPATH, char opr_sis);
  virtual ~Kernel();
  void Receive_System_Interface(Custom_System_Interface * SysInt);
- void Setup_Build_Tools();
+ void Setup_Build_Tools(char type);
  void Build_MakeFile(char * mn_src_path, char * Exe_Name, char strategy);
  void Clear_Dynamic_Memory();
 protected:

@@ -89,10 +89,11 @@ private:
   void Descriptor_File_Selection_Check();
   void Close_Directory_Pane(wxAuiManagerEvent & event);
   void FileNameEdit(wxTreeEvent& event);
-  void ForkProcess(wxString cmd);
+  void ForkProcess(char * cmd);
   void ReadProcessOutput();
   std::string process_output;
   bool Child_Process_End_Status;
+  bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;
   std::thread * fork_process;
   std::thread * read_process_output;
@@ -123,6 +124,7 @@ private:
   bool Progress_Bar_Start_status;
   wxDir    * dir_control;
   std::condition_variable  cv;
+  bool is_pipe_ready;
   int Toolbar_ID;
   std::mutex mtx;
   DECLARE_EVENT_TABLE()

@@ -49,6 +49,7 @@ int main(int argc, char ** argv){
 
     pipe_reader.detach();
 
+
     std::unique_lock<std::mutex> lck(mtx);
 
     cv.wait(lck);
@@ -62,6 +63,20 @@ int main(int argc, char ** argv){
 }
 
 void Read_From_Pipe(Custom_System_Interface * SysInt){
+
+     do{
+
+        if(SysInt->IsPipeReadytoRead()){
+
+            std::cout << "\n The pipe is ready";
+        }
+        else{
+
+            std::cout << "\n not ready";
+        }
+
+     }while(!SysInt->IsPipeReadytoRead());
+
 
      for(;;)
      {

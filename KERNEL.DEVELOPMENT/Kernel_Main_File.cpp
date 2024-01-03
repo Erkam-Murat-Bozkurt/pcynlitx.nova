@@ -26,12 +26,18 @@ int main(int argc, char ** argv){
 
     System_Interface.SetCpuRate();
 
-    System_Interface.Connect_NamedPipe_From_Child_Process();
-
-
     bool argument_pass_cond = false;
 
     std::string str = Convert_Std_String(argv[2]);
+
+
+
+    if(str == "-ip_for_gui"){
+
+        System_Interface.Connect_NamedPipe_From_Child_Process();
+    }
+
+
 
     if(str == "-ed"){
 
@@ -46,7 +52,7 @@ int main(int argc, char ** argv){
 
 
 
-    if(str == "-ip"){
+    if(str == "-ip_for_gui"){
 
         argument_pass_cond = true;
 
@@ -56,7 +62,7 @@ int main(int argc, char ** argv){
 
         Build_System.Receive_System_Interface(&System_Interface);
 
-        Build_System.Setup_Build_Tools();
+        Build_System.Setup_Build_Tools('g');
 
         Build_System.Clear_Dynamic_Memory();
 
@@ -64,6 +70,23 @@ int main(int argc, char ** argv){
         std::cout << "\n THE CONSTRUCTION COMPLATED ";
     }
 
+
+
+    if(str == "-ip"){
+
+        argument_pass_cond = true;
+
+        Kernel Build_System(argv[1],'w');
+
+        std::cout << "\n\n C++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED \n";
+
+        Build_System.Setup_Build_Tools('n');
+
+        Build_System.Clear_Dynamic_Memory();
+
+
+        std::cout << "\n THE CONSTRUCTION COMPLATED ";
+    }
 
     if(str == "-if"){
 
@@ -130,7 +153,11 @@ int main(int argc, char ** argv){
 
     std::cout << "\n";
 
-    System_Interface.Close_Child_Handles_For_Named_Pipe_Connection();
+    if(str == "-ip_for_gui"){
+
+       System_Interface.Close_Child_Handles_For_Named_Pipe_Connection();
+
+    }
 
     return 0;
 }

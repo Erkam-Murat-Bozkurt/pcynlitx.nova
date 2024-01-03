@@ -58,7 +58,7 @@ void Build_Tools_Initializer::Receive_System_Interface( Custom_System_Interface 
 }
 
 
-void Build_Tools_Initializer::Setup_Build_Tools(){
+void Build_Tools_Initializer::Setup_Build_Tools(char type){
 
      char read_opr [] = "\n\n The project descriptor file read ";
 
@@ -66,7 +66,12 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      std::cout << read_opr;
 
-     this->SysInt->WriteTo_NamedPipe_FromChild(read_opr);
+     if(type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(read_opr);
+     }
+
+
 
 
      this->Git_Data_Proc.Write_Git_Repo_List_File();
@@ -77,7 +82,11 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      std::cout << git_data;
 
-     this->SysInt->WriteTo_NamedPipe_FromChild(git_data);
+
+     if(type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(git_data);
+     }
 
 
      this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
@@ -90,8 +99,10 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      std::cout << dependency_data;
 
-     this->SysInt->WriteTo_NamedPipe_FromChild(dependency_data);
+     if(type == 'g'){
 
+        this->SysInt->WriteTo_NamedPipe_FromChild(dependency_data);
+     }
 
      this->Rep_Init.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
@@ -116,7 +127,10 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      std::cout << warehouse_constration;
 
-     this->SysInt->WriteTo_NamedPipe_FromChild(warehouse_constration);
+     if(type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(warehouse_constration);
+     }
 
 
 
@@ -126,12 +140,16 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      this->Mk_Builder.Clear_Dynamic_Memory();
      
-     
      char make_file_construction [] = "\n\n The project makefiles constructed ";
 
      std::cout << make_file_construction;
 
-     this->SysInt->WriteTo_NamedPipe_FromChild(make_file_construction);
+     if(type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(make_file_construction);
+     }
+
+
 
 
      this->Script_Writer.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
@@ -142,12 +160,17 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      std::cout << script_construction;
 
-     this->SysInt->WriteTo_NamedPipe_FromChild(script_construction);
+     if(type == 'g'){
 
+        this->SysInt->WriteTo_NamedPipe_FromChild(script_construction);
+     }
 
      char endLines [] = "\n\n";
 
      std::cout << endLines;
 
-     this->SysInt->WriteTo_NamedPipe_FromChild(endLines);
+     if(type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(endLines);
+     }
 }

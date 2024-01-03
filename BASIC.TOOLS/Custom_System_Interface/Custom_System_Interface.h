@@ -33,6 +33,7 @@ public:
   void CreateProcessWith_NamedPipe_From_Parent(char * argv);
   void WriteTo_NamedPipe_FromChild(char * string);
   bool IsChildProcessStillAlive(); 
+  bool IsPipeReadytoRead();
   std::string ReadNamedPipe_From_Parent();
   void Connect_NamedPipe_From_Child_Process();
   void SetChildProcess_For_StdOut_Redirection();
@@ -70,6 +71,8 @@ protected:
   HANDLE g_hInputFile;
   HANDLE hNamedPipe;
   HANDLE hNamedPipe_Client_Connection;
+  bool process_handle_close_status;
+  bool pipe_handle_close_status;
   int status;
   bool return_status;
   int return_value;

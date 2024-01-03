@@ -26,7 +26,7 @@ public:
  Build_Tools_Initializer(char * DesPATH, char opr_sis);
  void Receive_System_Interface(Custom_System_Interface * sysInt);
  virtual ~Build_Tools_Initializer();
- void Setup_Build_Tools();
+ void Setup_Build_Tools(char type);
  void Clear_Dynamic_Memory();
 protected:
  Git_Data_Processor Git_Data_Proc;
