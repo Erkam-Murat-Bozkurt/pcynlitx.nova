@@ -90,7 +90,7 @@ private:
   void Close_Directory_Pane(wxAuiManagerEvent & event);
   void FileNameEdit(wxTreeEvent& event);
   void ForkProcess(char * cmd);
-  void ReadProcessOutput();
+  void ReadProcessOutput(int * prg);
   std::string process_output;
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
@@ -126,6 +126,7 @@ private:
   std::condition_variable  cv;
   bool is_pipe_ready;
   int Toolbar_ID;
+  int progress_point;
   std::mutex mtx;
   DECLARE_EVENT_TABLE()
 };

@@ -466,6 +466,7 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
        this->Child_Process_Started_to_Execution = false;
 
+       this->is_pipe_ready = false;
 
 
 
@@ -473,9 +474,10 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
        this->fork_process->detach();
 
+       this->progress_point = 0;
 
 
-       this->read_process_output = new std::thread(MainFrame::ReadProcessOutput,this);
+       this->read_process_output = new std::thread(MainFrame::ReadProcessOutput,this,&this->progress_point);
 
        this->read_process_output->detach();
 
@@ -527,8 +529,6 @@ void MainFrame::ForkProcess(char * cmd){
      }       
 
 
-
-
      lck.lock();
 
      if(!this->Child_Process_End_Status){
@@ -572,8 +572,7 @@ void MainFrame::Show_Progress(wxString Process_Label){
      this->Process_Output->Construct_Output(max);
 
 
-
-     for(int i=0;i<max;i++){
+     for(;;){
 
          if(this->Child_Process_End_Status){
       
@@ -583,16 +582,14 @@ void MainFrame::Show_Progress(wxString Process_Label){
          }         
          else{
 
-             if(i==(max-1)){
+               if(this->is_pipe_ready){
 
-                i--;
+                  this->Process_Output->GetDialogAddress()->SetValue(this->progress_point);
+               }
+               else{
 
-                this->Process_Output->GetDialogAddress()->SetValue(i);
-             }
-             else{
-
-                this->Process_Output->GetDialogAddress()->SetValue(i);
-             }
+                  this->Process_Output->GetDialogAddress()->SetValue(1);
+               }
          }
                        
          wxMilliSleep(1);
@@ -629,7 +626,7 @@ void MainFrame::Show_Progress(wxString Process_Label){
 }
 
 
-void MainFrame::ReadProcessOutput(){
+void MainFrame::ReadProcessOutput(int * prg){
 
      std::unique_lock<std::mutex> lck(this->mtx);
 
@@ -665,11 +662,28 @@ void MainFrame::ReadProcessOutput(){
 
      }while(!this->SysInt.IsPipeReadytoRead());
 
+     this->is_pipe_ready = true;
 
+     std::string total_text;
+
+     size_t text_size = 0;
 
      for(;;)
      {
         std::string pipeStr = this->SysInt.ReadNamedPipe_From_Parent();
+
+        total_text = total_text + pipeStr;
+
+        total_text.shrink_to_fit();
+
+        size_t next_size = total_text.size();
+
+        if(next_size > text_size){
+
+           *prg += 3;
+        }
+
+        text_size = next_size;
 
         wxString text(pipeStr);
 
