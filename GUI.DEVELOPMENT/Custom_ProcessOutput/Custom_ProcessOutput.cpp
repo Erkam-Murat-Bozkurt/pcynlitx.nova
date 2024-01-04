@@ -57,6 +57,8 @@ Custom_ProcessOutput::Custom_ProcessOutput(wxFrame *parent, wxWindowID id, const
 
      this->Show(true);
 
+     this->window_open_status = true;
+
 }
 
 
@@ -188,22 +190,43 @@ void Custom_ProcessOutput::OnSize(wxSizeEvent & event){
 }
 
 
+
+void Custom_ProcessOutput::Receive_System_Interface(Custom_System_Interface * Sys){
+
+     this->SysPtr = Sys;
+}
+
 void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
      
      if(*this->process_end_status == false){
           
-         if(wxMessageBox("The construction Process continuos", "Please Confirm",
-     
-             wxICON_QUESTION |wxYES_NO) != wxYES){
+        wxString message_1 = "The construction process continuos!";
+
+        wxString message_2 = "\nDo you want to cancel construction process?";
+        
+        wxString close_message = message_1 + message_2;
+
+        int answer = wxMessageBox(close_message, 
+         
+             "Please Confirm",wxICON_QUESTION | wxYES_NO);
+
+         if( answer == wxYES){
+
+             this->SysPtr->TerminateChildProcess();
 
              event.Veto();
 
-             return;
+             this->window_open_status = false;
+
+             this->Destroy();
          }
      }
      else{
 
+          event.Veto();
+
           this->Destroy();
+
      }
 }
 
@@ -222,4 +245,9 @@ wxTextCtrl * Custom_ProcessOutput::GetTextControl() const {
 int Custom_ProcessOutput::GetLogNumber(){
 
      return this->log_num;
+}
+
+bool Custom_ProcessOutput::GetWindowsOpenStatus(){
+
+     return this->window_open_status;
 }

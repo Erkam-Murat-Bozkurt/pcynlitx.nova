@@ -161,6 +161,8 @@ void Custom_System_Interface::CreateProcessWith_NamedPipe_From_Parent(char * arg
 
          this->process_handle_close_status = false;
 
+         this->Child_PID = this->piProcInfo.dwProcessId;
+
          CloseHandle(this->piProcInfo.hThread);
       
          // Close handles to the stdin and stdout pipes no longer needed by the child process.
@@ -220,18 +222,23 @@ bool Custom_System_Interface::IsPipeReadytoRead(){
 
 void Custom_System_Interface::Close_Parent_Handles_For_Named_Pipe_Connection(){
 
+     if(!this->pipe_handle_close_status){
+
+         FlushFileBuffers(this->hNamedPipe);
+
+         DisconnectNamedPipe(this->hNamedPipe);
+
+         CloseHandle(this->hNamedPipe);
+
+         this->pipe_handle_close_status = true;
+     }
+
+
      if(!this->process_handle_close_status){
 
          CloseHandle(this->piProcInfo.hProcess);
 
          this->process_handle_close_status = true;
-     }
-
-     if(!this->pipe_handle_close_status){
-
-         CloseHandle(this->hNamedPipe);
-
-         this->pipe_handle_close_status = true;
      }
 }
 
@@ -366,6 +373,8 @@ std::string Custom_System_Interface::ReadNamedPipe_From_Parent(){
 
 
 void Custom_System_Interface::Close_Child_Handles_For_Named_Pipe_Connection(){
+
+     DisconnectNamedPipe(this->hNamedPipe_Client_Connection);
 
      CloseHandle(this->hNamedPipe_Client_Connection);
 }
@@ -553,11 +562,15 @@ void Custom_System_Interface::WaitForChildProcess(){
 
 bool Custom_System_Interface::TerminateChildProcess(){
 
+     this->Close_Parent_Handles_For_Named_Pipe_Connection();
+
      bool termination_status = false;
 
-     HANDLE processHandle = OpenProcess(PROCESS_ALL_ACCESS, TRUE, this->Child_PID);
+     HANDLE processHandle = INVALID_HANDLE_VALUE;
 
-     if(processHandle == NULL){
+     processHandle = OpenProcess(PROCESS_ALL_ACCESS, TRUE, this->Child_PID);
+
+     if(processHandle == INVALID_HANDLE_VALUE){
 
         std::cout << "\n The child process can not be openned";
 
@@ -566,6 +579,7 @@ bool Custom_System_Interface::TerminateChildProcess(){
         exit(EXIT_FAILURE);
      }
      else{
+
 
           BOOL success_status = TerminateProcess(processHandle,this->uExitCode);
 

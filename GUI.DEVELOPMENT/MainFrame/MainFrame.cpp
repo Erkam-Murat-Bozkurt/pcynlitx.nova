@@ -564,6 +564,8 @@ void MainFrame::Show_Progress(wxString Process_Label){
 
 
      this->Process_Output = new Custom_ProcessOutput(this);
+
+     this->Process_Output->Receive_System_Interface(&this->SysInt);
  
      this->Process_Output->Receive_Process_End_Status(&this->Child_Process_End_Status);
 
@@ -576,7 +578,10 @@ void MainFrame::Show_Progress(wxString Process_Label){
 
          if(this->Child_Process_End_Status){
       
-            this->Process_Output->GetDialogAddress()->SetValue(max);
+            if(this->Process_Output->GetWindowsOpenStatus()){
+
+               this->Process_Output->GetDialogAddress()->SetValue(max);
+            }
 
             break;              
          }         
@@ -584,11 +589,25 @@ void MainFrame::Show_Progress(wxString Process_Label){
 
                if(this->is_pipe_ready){
 
-                  this->Process_Output->GetDialogAddress()->SetValue(this->progress_point);
+                  if(this->Process_Output->GetWindowsOpenStatus()){
+
+                      this->Process_Output->GetDialogAddress()->SetValue(this->progress_point);
+                  }
+                  else{
+
+                      break;
+                  }
                }
                else{
 
-                  this->Process_Output->GetDialogAddress()->SetValue(1);
+                     if(this->Process_Output->GetWindowsOpenStatus()){
+
+                        this->Process_Output->GetDialogAddress()->SetValue(1);
+                     }
+                     else{
+
+                         break;
+                     }
                }
          }
                        

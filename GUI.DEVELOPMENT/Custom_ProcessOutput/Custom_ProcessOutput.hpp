@@ -19,6 +19,8 @@
 #include <condition_variable>
 #include "Process_Manager.hpp"
 #include "Custom_DockArt.h"
+#include "Custom_System_Interface.h"
+
 
 class Custom_ProcessOutput : public wxFrame
 {
@@ -38,6 +40,8 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
 
   void Receive_Process_End_Status(bool * status);
 
+  void Receive_System_Interface(Custom_System_Interface * Sys);
+
   void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect);
 
   void PaintNow(wxWindow * wnd);
@@ -50,11 +54,15 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
 
   int GetLogNumber();
 
+  bool GetWindowsOpenStatus();
+
 private:
 
   void OnClose(wxCloseEvent & ent);
 
   bool * process_end_status;
+
+  Custom_System_Interface * SysPtr;
 
   wxGauge * dialog;
 
@@ -79,6 +87,8 @@ private:
   bool Memory_Delete_Condition;
 
   bool progress_cond;
+
+  bool window_open_status;
 
   int log_num;
 };
