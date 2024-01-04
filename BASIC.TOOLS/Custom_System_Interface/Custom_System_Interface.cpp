@@ -25,8 +25,6 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 Custom_System_Interface::Custom_System_Interface(){
 
-    this->status = 0;
-
     this->return_status = false; // The return status of the system call..
 
     this->hStdin = nullptr;
@@ -184,8 +182,6 @@ void Custom_System_Interface::CreateProcessWith_NamedPipe_From_Parent(char * arg
 
           exit(EXIT_FAILURE);
 	}
-
-     //WaitForSingleObject(this->piProcInfo.hProcess,INFINITE);
 }
 
 

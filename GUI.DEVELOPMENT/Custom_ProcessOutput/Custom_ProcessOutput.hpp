@@ -20,7 +20,7 @@
 #include "Process_Manager.hpp"
 #include "Custom_DockArt.h"
 #include "Custom_System_Interface.h"
-
+#include "Custom_Tree_View_Panel.h"
 
 class Custom_ProcessOutput : public wxFrame
 {
@@ -37,6 +37,10 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
   wxTextCtrl * GetTextControl() const;
 
   wxGauge * GetDialogAddress();
+
+  void Receive_Warehouse_Location(wxString loc);
+
+  void Receive_Tree_View_Panel(Custom_Tree_View_Panel * ptr);
 
   void Receive_Process_End_Status(bool * status);
 
@@ -64,6 +68,8 @@ private:
 
   Custom_System_Interface * SysPtr;
 
+  Custom_Tree_View_Panel * dir_list_ptr;
+
   wxGauge * dialog;
 
   wxPanel * text_ctrl_panel;
@@ -83,6 +89,8 @@ private:
   bool * Progress_Bar_Start_status;
 
   Process_Manager * Process_Manager_Ptr;
+
+  wxString warehouse_location;
 
   bool Memory_Delete_Condition;
 

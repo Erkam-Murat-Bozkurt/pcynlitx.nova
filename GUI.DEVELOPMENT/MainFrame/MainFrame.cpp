@@ -543,14 +543,8 @@ void MainFrame::ForkProcess(char * cmd){
      }
 
 
-
      this->SysInt.Close_Parent_Handles_For_Named_Pipe_Connection();
 
-
-     if(!this->Dir_List_Manager->Get_Panel_Open_Status()){
-
-         this->Dir_List_Manager->Load_Project_Directory(wxString(this->Warehouse_Location));
-     }      
 }
 
 
@@ -568,6 +562,10 @@ void MainFrame::Show_Progress(wxString Process_Label){
      this->Process_Output->Receive_System_Interface(&this->SysInt);
  
      this->Process_Output->Receive_Process_End_Status(&this->Child_Process_End_Status);
+
+     this->Process_Output->Receive_Warehouse_Location(this->Warehouse_Location);
+
+     this->Process_Output->Receive_Tree_View_Panel(this->Dir_List_Manager);
 
      int max=20;
      
@@ -699,7 +697,7 @@ void MainFrame::ReadProcessOutput(int * prg){
 
         if(next_size > text_size){
 
-           *prg += 3;
+           *prg += 2;
         }
 
         text_size = next_size;

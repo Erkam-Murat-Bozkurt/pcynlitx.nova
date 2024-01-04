@@ -91,7 +91,6 @@ private:
   void FileNameEdit(wxTreeEvent& event);
   void ForkProcess(char * cmd);
   void ReadProcessOutput(int * prg);
-  std::string process_output;
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;

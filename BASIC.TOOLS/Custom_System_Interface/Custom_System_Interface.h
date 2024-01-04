@@ -73,7 +73,6 @@ protected:
   HANDLE hNamedPipe_Client_Connection;
   bool process_handle_close_status;
   bool pipe_handle_close_status;
-  int status;
   bool return_status;
   int return_value;
   char * cmd;

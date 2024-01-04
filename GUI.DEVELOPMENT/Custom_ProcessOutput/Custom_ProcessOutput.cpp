@@ -160,7 +160,10 @@ void Custom_ProcessOutput::PrintProcessOutput(wxString text){
      this->textctrl->AppendText(text);  
 }
 
+void Custom_ProcessOutput::Receive_Tree_View_Panel(Custom_Tree_View_Panel * ptr){
 
+     this->dir_list_ptr = ptr;
+}
 
 
 void Custom_ProcessOutput::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
@@ -227,9 +230,21 @@ void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
 
           this->Destroy();
 
+          wxMilliSleep(100);
+
+          
+          if(!this->dir_list_ptr->Get_Panel_Open_Status()){
+
+              this->dir_list_ptr->Load_Project_Directory(wxString(this->warehouse_location));
+          }     
      }
 }
 
+
+void Custom_ProcessOutput::Receive_Warehouse_Location(wxString loc){
+
+     this->warehouse_location = loc;
+}
 
 wxGauge * Custom_ProcessOutput::GetDialogAddress() {
 
