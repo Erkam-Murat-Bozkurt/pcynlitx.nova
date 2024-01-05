@@ -26,7 +26,7 @@ Custom_Notebook::Custom_Notebook( wxPanel * parent, wxAuiManager * Interface_Man
 
        wxFont Default_Font,wxSize size)
 
-      : wxAuiNotebook(parent,wxID_ANY,wxDefaultPosition,size,wxAUI_NB_DEFAULT_STYLE | wxAUI_NB_TAB_FIXED_WIDTH)
+      : wxAuiNotebook(parent,wxID_ANY,wxDefaultPosition,size,wxAUI_NB_DEFAULT_STYLE )
 {
 
    this->Is_Intro_Page_Open = false;

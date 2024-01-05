@@ -31,7 +31,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
                              wxBITMAP_TYPE_ANY);
 
-    this->m_tabCtrlHeight = 40;
+    this->m_tabCtrlHeight = 45;
  }
 
  wxAuiTabArt * Custom_TabArt::Clone() {
@@ -48,9 +48,6 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
  void Custom_TabArt::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect & rect) {
 
-      //dc.SetBrush(wxBrush(wnd->GetBackgroundColour()));
-
-
       dc.SetBrush(wxColour(200,200,200));
 
       dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1,rect.GetWidth()+2,rect.GetHeight()+2);
@@ -63,7 +60,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
                  wxRect * out_tab_rect, wxRect * out_button_rect, int * x_extent)
  {
 
-       wxCoord normal_textx, normal_texty;
+       wxCoord normal_textx,   normal_texty;
 
        wxCoord selected_textx, selected_texty;
 
@@ -77,19 +74,23 @@ this program. If not, see <http://www.gnu.org/licenses/>.
        dc.GetTextExtent(caption, &selected_textx, &selected_texty);
 
        dc.GetTextExtent(caption, &normal_textx, &normal_texty);
+ 
+       caption = caption + "    "; // more area for the string must be allocted
+       
 
        // figure out the size of the tab
-       wxSize tab_size = GetTabSize(dc,wnd,page.caption,page.bitmap,
+       wxSize tab_size = this->GetTabSize(dc,wnd,caption,page.bitmap,
 
                                     page.active,close_button_state,x_extent);
 
        wxCoord tab_height = tab_size.y;
 
-       wxCoord tab_width = tab_size.x;
+       wxCoord tab_width  = tab_size.x;
 
-       wxCoord tab_x = in_rect.x-2;
+       wxCoord tab_x = in_rect.x+1;
 
        wxCoord tab_y = in_rect.y;
+
 
        if (page.active)
        {
@@ -105,7 +106,6 @@ this program. If not, see <http://www.gnu.org/licenses/>.
        }
 
 
-       wxPoint border_points[6];
 
        if (page.active)
        {
@@ -113,11 +113,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
            // draw base background color
 
-           wxRect r(tab_x, tab_y, tab_width, tab_height+14);
-
-           //dc.SetPen(wxPen(wxColour(200,100,100)));
-
-           //dc.SetBrush(wxBrush(wxColour(200,100,100)));
+           wxRect r(tab_x, tab_y+8, tab_width-2, tab_height+15);
 
 
            dc.SetPen(wxPen(wxColour(245,245,245)));
@@ -129,33 +125,14 @@ this program. If not, see <http://www.gnu.org/licenses/>.
            // DrawRectangle member function: The first two parameters indicate the coordinates
            // of the top left corner of the rectangle
 
-           dc.DrawRectangle(r.x+3, r.y+7, r.width-3, r.height+4);
+           dc.DrawRectangle(r.x, r.y, r.width, r.height);
 
-
-           border_points[0] = wxPoint(tab_x+3,tab_y+tab_height+18); // left bottom corner
-
-           border_points[1] = wxPoint(tab_x+3,tab_y+4);
-
-           border_points[2] = wxPoint(tab_x+3,tab_y+4); // left top corner
-
-           border_points[3] = wxPoint(tab_x+tab_width-1,tab_y+4); // Right top corner
-
-           border_points[4] = wxPoint(tab_x+tab_width-1,tab_y+4);
-
-           border_points[5] = wxPoint(tab_x+tab_width-1,tab_y+tab_height+18); // Right bottom corner
-
-
-           dc.SetPen(wxPen(wxColour(245,245,245)));
-
-           dc.SetBrush(wxColour(245,245,245));
-
-           dc.DrawPolygon(WXSIZEOF(border_points), border_points);
         }
         else{
 
                 // draw inactive tab
 
-                wxRect r(tab_x, tab_y,tab_width, tab_height+15);
+                wxRect r(tab_x, tab_y+8,tab_width-2, tab_height+16);
 
                 dc.SetPen(wxPen(wxColour(160, 160, 160)));
 
@@ -164,26 +141,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
                 // DrawRectangle member function: The first two parameters indicate the coordinates
                 // of the top left corner of the rectangle
 
-                dc.DrawRectangle(r.x+3, r.y+7, r.width-1, r.height+4);
-
-
-                border_points[0] = wxPoint(tab_x+3,tab_y+tab_height+20); // left bottom corner
-
-                border_points[1] = wxPoint(tab_x+3,tab_y+4); // left top corner
-
-                border_points[2] = wxPoint(tab_x+3,tab_y+4); // right top corner
-
-                border_points[3] = wxPoint(tab_x+tab_width+1,tab_y+4);
-
-                border_points[4] = wxPoint(tab_x+tab_width+1,tab_y+4);
-
-                border_points[5] = wxPoint(tab_x+tab_width+1,tab_y+tab_height+20);
-
-                dc.SetPen(wxPen(wxColour(160,160,160)));
-
-                dc.SetBrush(wxColour(160,160,160));
-
-                dc.DrawPolygon(WXSIZEOF(border_points), border_points);
+                dc.DrawRectangle(r.x, r.y, r.width, r.height);
         }
 
 
@@ -204,10 +162,11 @@ this program. If not, see <http://www.gnu.org/licenses/>.
                  bmp = m_disabledCloseBmp.GetBitmap(bmp_size);
             }
 
-             wxRect rect(tab_x + tab_width - bmp.GetScaledWidth() - 8,
+             wxRect rect(tab_x + tab_width - bmp.GetScaledWidth() - 10,
                          tab_y + (tab_height/2) - (bmp.GetScaledHeight()/2) + 6,
-                         bmp.GetScaledWidth(),
+                         bmp.GetScaledWidth()-7,
                          tab_height - 1);
+
              DrawButtons(dc,wxSize(1, 1), rect, bmp, *wxWHITE, close_button_state);
 
              *out_button_rect = rect;
@@ -219,40 +178,41 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
          wxSize Text_Extend = dc.GetTextExtent(draw_text);
 
-
          int text_offset = tab_x + (tab_width-Text_Extend.x)/2;
 
-         // set minimum text offset
-
-         if (text_offset < tab_x + tab_height){
-
-             text_offset = tab_x + tab_height -12;
-         }
 
 
          if(page.active){
 
-             dc.SetTextForeground(wxColour(80,80,80));
+            dc.SetTextForeground(wxColour(80,80,80));
          }
          else{
 
-               dc.SetTextForeground(wxColour(250,250,250));
+            dc.SetTextForeground(wxColour(250,250,250));
          }
 
 
          Text_Extend = dc.GetTextExtent(page.caption);
 
+         if(page.active){
 
-         if(Text_Extend.x < tab_width){
+            text_offset = text_offset - 10;
+         }
+         else{
 
-           dc.DrawText(draw_text,
-                 text_offset,
-                 (tab_y + tab_height)/2 - (texty/2) + 10);
-
+            text_offset = text_offset - 3;
          }
 
 
+         if(Text_Extend.x < tab_width){
+
+            dc.DrawText(draw_text,text_offset,
+
+                 (tab_y + tab_height)/2 - (texty/2) + 10);
+         }
+
          *out_tab_rect = wxRect(tab_x, tab_y, tab_width, tab_height+14);
+
  }
 
 
