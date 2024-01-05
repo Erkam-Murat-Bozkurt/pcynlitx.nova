@@ -574,39 +574,20 @@ void MainFrame::Show_Progress(wxString Process_Label){
 
      for(;;){
 
-         if(this->Child_Process_End_Status){
-      
+         if(this->is_pipe_ready){
+
             if(this->Process_Output->GetWindowsOpenStatus()){
 
-               this->Process_Output->GetDialogAddress()->SetValue(max);
+               this->Process_Output->GetDialogAddress()->SetValue(this->progress_point);
             }
+            else{
 
-            break;              
-         }         
-         else{
+                if(this->Process_Output->GetWindowsOpenStatus()){
 
-               if(this->is_pipe_ready){
+                   this->Process_Output->GetDialogAddress()->SetValue(1);
+                }
 
-                  if(this->Process_Output->GetWindowsOpenStatus()){
-
-                      this->Process_Output->GetDialogAddress()->SetValue(this->progress_point);
-                  }
-                  else{
-
-                      break;
-                  }
-               }
-               else{
-
-                     if(this->Process_Output->GetWindowsOpenStatus()){
-
-                        this->Process_Output->GetDialogAddress()->SetValue(1);
-                     }
-                     else{
-
-                         break;
-                     }
-               }
+            }
          }
                        
          wxMilliSleep(1);
@@ -639,6 +620,19 @@ void MainFrame::Show_Progress(wxString Process_Label){
 
             lck.unlock();
          }
+
+         
+
+        if(!this->SysInt.IsChildProcessStillAlive()){
+
+            if(this->Process_Output->GetWindowsOpenStatus()){
+
+               this->Process_Output->GetDialogAddress()->SetValue(max);
+            }
+
+            break;   
+        }
+
      }
 }
 
@@ -711,7 +705,8 @@ void MainFrame::ReadProcessOutput(int * prg){
             break;
         }
      } 
-     
+
+
      lck.lock();
 
      this->Child_Process_End_Status = true;

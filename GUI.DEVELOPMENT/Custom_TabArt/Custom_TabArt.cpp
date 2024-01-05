@@ -31,7 +31,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
                              wxBITMAP_TYPE_ANY);
 
-    this->m_tabCtrlHeight = 45;
+    this->m_tabCtrlHeight = 55;
  }
 
  wxAuiTabArt * Custom_TabArt::Clone() {
@@ -113,7 +113,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
            // draw base background color
 
-           wxRect r(tab_x, tab_y+8, tab_width-2, tab_height+15);
+           wxRect r(tab_x, tab_y+16, tab_width-2, tab_height+15);
 
 
            dc.SetPen(wxPen(wxColour(245,245,245)));
@@ -132,11 +132,11 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
                 // draw inactive tab
 
-                wxRect r(tab_x, tab_y+8,tab_width-2, tab_height+16);
+                wxRect r(tab_x, tab_y+16,tab_width-2, tab_height+15);
 
-                dc.SetPen(wxPen(wxColour(160, 160, 160)));
+                dc.SetPen(wxPen(wxColour(130, 130, 130)));
 
-                dc.SetBrush(wxBrush(wxColour(160, 160, 160)));
+                dc.SetBrush(wxBrush(wxColour(130, 130, 130)));
 
                 // DrawRectangle member function: The first two parameters indicate the coordinates
                 // of the top left corner of the rectangle
@@ -163,7 +163,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
             }
 
              wxRect rect(tab_x + tab_width - bmp.GetScaledWidth() - 10,
-                         tab_y + (tab_height/2) - (bmp.GetScaledHeight()/2) + 6,
+                         tab_y + (tab_height/2) - (bmp.GetScaledHeight()/2) + 15,
                          bmp.GetScaledWidth()-7,
                          tab_height - 1);
 
@@ -204,12 +204,20 @@ this program. If not, see <http://www.gnu.org/licenses/>.
          }
 
 
-         if(Text_Extend.x < tab_width){
+         //if(page.active){
 
             dc.DrawText(draw_text,text_offset,
 
-                 (tab_y + tab_height)/2 - (texty/2) + 10);
-         }
+                 (tab_y + tab_height)/2 - (texty/2) + 20);
+         //}
+         //else{
+
+            //dc.DrawText(draw_text,text_offset,
+
+                 //(tab_y + tab_height)/2 - (texty/2) + 20);
+             
+         //}
+
 
          *out_tab_rect = wxRect(tab_x, tab_y, tab_width, tab_height+14);
 
