@@ -25,7 +25,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 Menu_Bar_Options::Menu_Bar_Options(){
 
 
-  this->Launch_Menu = new wxMenu();
+  this->File_Menu = new wxMenu();
 
   this->Help_Menu   = new wxMenu();
 
@@ -43,11 +43,10 @@ Menu_Bar_Options::Menu_Bar_Options(){
   this->Help_Menu->Append(wxID_ABOUT,"&Version 1.0","",wxITEM_NORMAL);
 
 
+  this->File_Menu->Append(ID_FILE_SAVE,"&Save","",wxITEM_NORMAL);
 
-  this->Description_Menu->Append(ID_SHOW_PROJECT_WAREHOUSE,
 
-                "&Open Directory List","",wxITEM_NORMAL);
-
+  this->Description_Menu->Append(ID_OPEN_TREE_WIEW,"&Open Directory List","",wxITEM_NORMAL);
 
   this->Description_Menu->Append(ID_OPEN_EMPTY_PROJECT_FILE,"Construct Empty Project File","",wxITEM_NORMAL);
 
@@ -111,6 +110,8 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Menu_Bar->Append(this->Help_Menu,wxT("&Help"));
 
+  this->Menu_Bar->Append(this->File_Menu,wxT("&File"));
+
   this->Menu_Bar->Append(this->Library_Description_Menu,wxT("Project Descriptions"));
 
   this->Menu_Bar->Append(this->Description_Menu,wxT("Project Management"));
@@ -127,7 +128,7 @@ Menu_Bar_Options::~Menu_Bar_Options(){
 
         delete this->Construction_Menu;
 
-        delete this->Launch_Menu;
+        delete this->File_Menu;
 
         delete this->Help_Menu;
 

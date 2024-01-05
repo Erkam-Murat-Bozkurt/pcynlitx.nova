@@ -21,7 +21,7 @@ public:
 private:
   wxMenu  * Construction_Menu;
   wxMenu  * Help_Menu;;
-  wxMenu  * Launch_Menu;
+  wxMenu  * File_Menu;
   wxMenu  * Description_Menu;
   wxMenu  * Library_Description_Menu;
   wxMenuBar * Menu_Bar;

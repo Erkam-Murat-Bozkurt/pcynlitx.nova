@@ -84,6 +84,7 @@ public:
   Custom_Notebook * Get_NoteBook_Pointer();
   bool Get_Style_Change_Condition() const;
   int  Get_Current_Page_Index() const;
+  int  Get_Open_File_Number() const;
   bool Is_Current_Page_Text_File() const;
   wxString Get_Notebook_Page_File_Path(int index);
   wxAuiManager * Interface_Manager_Pointer;
@@ -94,6 +95,7 @@ public:
   bool Is_Intro_Page_Open;
   bool Is_Help_Page_Open;
 private:
+  int OpenFileNumber;
   void Determine_File_Short_Name(wxString File_Long_Name);
   int Get_Empty_Pointer_Index_Number();
   wxFont * Default_Font;

@@ -233,6 +233,28 @@ MainFrame::~MainFrame()
    this->Close(true);
 }
 
+void MainFrame::File_Save(wxCommandEvent & event){
+
+     if(event.GetId() == ID_FILE_SAVE){
+
+        if(this->Book_Manager->Get_Open_File_Number() > 0){
+
+           this->Book_Manager->File_Save();
+        }
+        else{
+
+                  wxMessageDialog * dial = new wxMessageDialog(NULL,
+
+                  wxT(" This is no any file currently open!\n A file must be open ."),
+
+                  wxT("Error Message"), wxOK);
+
+                  dial->ShowModal();
+            
+        }      
+     }
+}
+
 void MainFrame::PaintNow(wxWindow * wnd)
 {
      wxClientDC dc(wnd);
@@ -359,7 +381,7 @@ void MainFrame::Close_Directory_Pane(wxAuiManagerEvent & event)
 
 void MainFrame::DirectoryOpen(wxCommandEvent & event)
 {
-     if(event.GetId() == ID_SHOW_PROJECT_WAREHOUSE){
+     if(event.GetId() == ID_OPEN_TREE_WIEW){
 
         wxDirDialog dir_dialog(this, "Select a directory","",
 
@@ -718,10 +740,6 @@ void MainFrame::ReadProcessOutput(int * prg){
 }
 
 
-void MainFrame::Process_End(wxProcessEvent & event){
-
-     (this->Process_Event_Counter)++;
-}
 
 void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
 {
@@ -974,6 +992,14 @@ void MainFrame::Enter_Library_Location(wxCommandEvent & event)
 
              this->data_panel_ptr->GetDataViewListCtrl()->Show();
        }
+     }
+}
+
+void MainFrame::OpenTerminal(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_OPEN_TERMINAL){
+
+        wxExecute(wxT("powershell.exe"),wxEXEC_SYNC | wxEXEC_SHOW_CONSOLE);
      }
 }
 

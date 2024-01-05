@@ -48,7 +48,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->open_terminal = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\open_terminal.png"),wxBITMAP_TYPE_PNG);
 
-     this->file_save = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\save.png"),wxBITMAP_TYPE_PNG);
+     this->open_tree_view = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\OpenDirectory.png"),wxBITMAP_TYPE_PNG);
 
      this->toolBar = new wxAuiToolBar(Frame_Pointer,wxID_ANY,wxDefaultPosition,wxDefaultSize,wxAUI_TB_PLAIN_BACKGROUND);
 
@@ -92,7 +92,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->toolBar->AddTool(ID_OPEN_TERMINAL,wxT(""),*this->open_terminal,wxT(""));
 
-     this->toolBar->AddTool(ID_FILE_SAVE,wxT(""),*this->file_save,wxT(""));
+     this->toolBar->AddTool(ID_OPEN_TREE_WIEW,wxT(""),*this->open_tree_view,wxT(""));
 
      this->toolBar->SetMargins(-1,-1,3,3);
 

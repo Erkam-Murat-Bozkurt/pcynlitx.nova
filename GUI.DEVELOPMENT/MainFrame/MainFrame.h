@@ -84,13 +84,14 @@ private:
   void Enter_Standard(wxCommandEvent & event);
   void Enter_Options(wxCommandEvent & event);
   void Save_File_As(wxCommandEvent & event);
+  void File_Save(wxCommandEvent & event);
   void Start_Build_System_Construction(wxCommandEvent & event);
-  void Process_End(wxProcessEvent & event);
   void Descriptor_File_Selection_Check();
   void Close_Directory_Pane(wxAuiManagerEvent & event);
   void FileNameEdit(wxTreeEvent& event);
   void ForkProcess(char * cmd);
   void ReadProcessOutput(int * prg);
+  void OpenTerminal(wxCommandEvent & event);
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;

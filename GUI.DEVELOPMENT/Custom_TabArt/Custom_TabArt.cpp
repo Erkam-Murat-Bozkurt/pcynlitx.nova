@@ -100,7 +100,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
        }
        else
        {
-           dc.SetFont(wnd->GetFont().Bold());
+           dc.SetFont(wnd->GetFont());
 
            texty = normal_texty;
        }
@@ -134,9 +134,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
                 wxRect r(tab_x, tab_y+16,tab_width-2, tab_height+15);
 
-                dc.SetPen(wxPen(wxColour(130, 130, 130)));
+                dc.SetPen(wxPen(wxColour(225, 225, 225)));
 
-                dc.SetBrush(wxBrush(wxColour(130, 130, 130)));
+                dc.SetBrush(wxBrush(wxColour(225, 225, 225)));
 
                 // DrawRectangle member function: The first two parameters indicate the coordinates
                 // of the top left corner of the rectangle
@@ -188,7 +188,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
          }
          else{
 
-            dc.SetTextForeground(wxColour(250,250,250));
+            dc.SetTextForeground(wxColour(80,80,80));
          }
 
 
@@ -204,19 +204,10 @@ this program. If not, see <http://www.gnu.org/licenses/>.
          }
 
 
-         //if(page.active){
 
-            dc.DrawText(draw_text,text_offset,
+         dc.DrawText(draw_text,text_offset,
 
                  (tab_y + tab_height)/2 - (texty/2) + 20);
-         //}
-         //else{
-
-            //dc.DrawText(draw_text,text_offset,
-
-                 //(tab_y + tab_height)/2 - (texty/2) + 20);
-             
-         //}
 
 
          *out_tab_rect = wxRect(tab_x, tab_y, tab_width, tab_height+14);

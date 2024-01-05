@@ -29,6 +29,8 @@ Custom_Notebook::Custom_Notebook( wxPanel * parent, wxAuiManager * Interface_Man
       : wxAuiNotebook(parent,wxID_ANY,wxDefaultPosition,size,wxAUI_NB_DEFAULT_STYLE )
 {
 
+   this->OpenFileNumber = 0;
+
    this->Is_Intro_Page_Open = false;
 
    this->Interface_Manager_Pointer = Interface_Manager;
@@ -426,6 +428,8 @@ void Custom_Notebook::Add_New_File(wxString File_Path)
 
      if(!Is_File_Open){
 
+         this->OpenFileNumber++;
+
          int Index_Number = this->Get_Empty_Pointer_Index_Number();
 
          this->NoteBook_Page_Data[Index_Number].Text_Ctrl = new Custom_TextCtrl(this,wxID_ANY,wxDefaultPosition,
@@ -497,6 +501,8 @@ void Custom_Notebook::Open_File(wxString File_Path)
      bool Is_File_Open = this->Is_File_Open(File_Path);
 
      if(!Is_File_Open){
+
+         this->OpenFileNumber++;
 
          int Index_Number = this->Get_Empty_Pointer_Index_Number();
 
@@ -796,6 +802,8 @@ void Custom_Notebook::NoteBook_Page_Closed(wxAuiNotebookEvent & event)
 
      wxWindow * window_pointer = this->GetCurrentPage();
 
+     this->OpenFileNumber--;
+
      int closed_page_id = window_pointer->GetId();
 
      int index_number = 0;
@@ -994,4 +1002,10 @@ bool Custom_Notebook::Is_Current_Page_Text_File() const
 wxString Custom_Notebook::Get_Notebook_Page_File_Path(int index)
 {
     return this->NoteBook_Page_Data[index].File_Path;
+}
+
+
+int Custom_Notebook::Get_Open_File_Number() const {
+
+    return this->OpenFileNumber;
 }
