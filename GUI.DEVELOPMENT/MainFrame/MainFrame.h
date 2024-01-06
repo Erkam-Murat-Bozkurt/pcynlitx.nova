@@ -83,6 +83,19 @@ private:
   void Enter_Exe_File_Name(wxCommandEvent & event);
   void Enter_Standard(wxCommandEvent & event);
   void Enter_Options(wxCommandEvent & event);
+  void Clear_Style(wxCommandEvent & event);
+  void Reload_Default_Style(wxCommandEvent & event);
+  void Set_Caret_Line_Visible(wxCommandEvent & event);
+  void Set_Caret_Line_InVisible(wxCommandEvent & event);
+  void Use_Block_Caret(wxCommandEvent & event);
+  void Use_Default_Caret(wxCommandEvent & event);
+  void Undo_Changes(wxCommandEvent & event);
+  void Redo_Changes(wxCommandEvent & event);
+  void Clear_Text(wxCommandEvent & event);
+  void Load_Default_Cursor(wxCommandEvent & event);
+  void Change_Cursor_Type(wxCommandEvent & event);
+  void New_File(wxCommandEvent & event);
+  void Use_Bold_Styling(wxCommandEvent & event);
   void Save_File_As(wxCommandEvent & event);
   void File_Save(wxCommandEvent & event);
   void Start_Build_System_Construction(wxCommandEvent & event);
@@ -92,6 +105,8 @@ private:
   void ForkProcess(char * cmd);
   void ReadProcessOutput(int * prg);
   void OpenTerminal(wxCommandEvent & event);
+  void Increase_Font_Size(wxCommandEvent & event);
+  void Decrease_Font_Size(wxCommandEvent & event);
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;
@@ -127,6 +142,7 @@ private:
   bool is_pipe_ready;
   int Toolbar_ID;
   int progress_point;
+  bool is_bold_style_selected;
   std::mutex mtx;
   DECLARE_EVENT_TABLE()
 };

@@ -29,11 +29,11 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Help_Menu   = new wxMenu();
 
-  this->Description_Menu = new wxMenu();
+  this->Project_Management = new wxMenu();
 
   this->Library_Description_Menu = new wxMenu();
 
-  this->Construction_Menu = new wxMenu();
+  this->Edit_Menu = new wxMenu();
 
 
   this->Help_Menu->Append(ID_OPEN_INTROPAGE,"&Intro Page","",wxITEM_NORMAL);
@@ -43,23 +43,60 @@ Menu_Bar_Options::Menu_Bar_Options(){
   this->Help_Menu->Append(wxID_ABOUT,"&Version 1.0","",wxITEM_NORMAL);
 
 
+
   this->File_Menu->Append(ID_FILE_SAVE,"&Save","",wxITEM_NORMAL);
 
+  this->File_Menu->Append(ID_SAVE_AS,"Save As","",wxITEM_NORMAL);
 
-  this->Description_Menu->Append(ID_OPEN_TREE_WIEW,"&Open Directory List","",wxITEM_NORMAL);
+  this->File_Menu->Append(ID_NEW_FILE,"&Open New file as","",wxITEM_NORMAL);
 
-  this->Description_Menu->Append(ID_OPEN_EMPTY_PROJECT_FILE,"Construct Empty Project File","",wxITEM_NORMAL);
 
-  this->Description_Menu->Append(ID_SELECT_PROJECT_FILE,"Select Project File","",wxITEM_NORMAL);
 
-  this->Description_Menu->Append(ID_SHOW_PROJECT_FILE,"Show Project File","",wxITEM_NORMAL);
+  this->Edit_Menu->Append(ID_INCREASE_FONT_SIZE,"&Increase Font Size","",wxITEM_NORMAL);
+
+  this->Edit_Menu->Append(ID_DECREASE_FONT_SIZE,"Decrease Font Size",wxT(""),wxITEM_NORMAL);
+
+
+  this->Edit_Menu->Append(ID_UNDO_CHANGES,"&Undo   Ctrl+Z","",wxITEM_NORMAL);
+
+  this->Edit_Menu->Append(ID_REDO_CHANGES,"&Redo   Ctrl+Y","",wxITEM_NORMAL);
+
+  this->Edit_Menu->Append(ID_CLEAR_TEXT,"&Clear Text"," ",wxITEM_NORMAL);
+
+  this->Edit_Menu->Append(ID_SET_CURSOR_TYPE_DEFAULT,"&Use Default Cursor","",wxITEM_NORMAL);
+
+  this->Edit_Menu->Append(ID_CHANGE_CURSOR_TYPE,"&Use System Cursor","",wxITEM_NORMAL);
+
+  this->Edit_Menu->Append(ID_SET_CARET_LINE_VISIBLE,"&Set Caret Line Visible","",wxITEM_NORMAL);
+
+  this->Edit_Menu->Append(ID_SET_CARET_LINE_INVISIBLE,"&Set Caret Line Invisible","",wxITEM_NORMAL);
+
+  this->Edit_Menu->Append(ID_USE_BLOCK_CARET,"&Use Block Caret","",wxITEM_NORMAL);
+
+  this->Edit_Menu->Append(ID_USE_DEFAULT_CARET,"&Use Default Caret","",wxITEM_NORMAL);
+
+  this->Edit_Menu->Append(ID_CLEAR_STYLE,"&Clear Styling","",wxITEM_NORMAL);
+
+  this->Edit_Menu->Append(ID_RELOAD_STYLE,"&Reload Default Style","",wxITEM_NORMAL);
+
+  this->Edit_Menu->Append(ID_BOLD_STYLE,"&Use Bold Styling","",wxITEM_NORMAL);
+
+
+  this->Project_Management->Append(ID_OPEN_TREE_WIEW,"&Open Directory List","",wxITEM_NORMAL);
+
+  this->Project_Management->Append(ID_OPEN_EMPTY_PROJECT_FILE,"Construct Empty Project File","",wxITEM_NORMAL);
+
+  this->Project_Management->Append(ID_SELECT_PROJECT_FILE,"Select Project File","",wxITEM_NORMAL);
+
+  this->Project_Management->Append(ID_SHOW_PROJECT_FILE,"Show Project File","",wxITEM_NORMAL);
+
+  this->Project_Management->Append(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,      "&Run Build System Initializer"," ",wxITEM_NORMAL);
 
 
 
   this->Library_Description_Menu->Append(wxID_NONE,                     "&# MAIN DESCRIPTIONS"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(ID_INPUT_GIT_REPO_LOCATION,       "&   Enter Git Repo Directory"," ",wxITEM_NORMAL);
-
 
   this->Library_Description_Menu->Append(wxID_NONE,                     "&# SOURCE FILE LOCATIONS "," ",wxITEM_NORMAL);
 
@@ -83,13 +120,13 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Library_Description_Menu->Append(wxID_NONE,                     "&# EXECUTABLE FILE NAME"," ",wxITEM_NORMAL);
 
-  this->Library_Description_Menu->Append(ID_INPUT_EXE_FILE_NAME,       "&   Enter Executable File Name"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(ID_INPUT_EXE_FILE_NAME,        "&   Enter Executable File Name"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
 
   this->Library_Description_Menu->Append(wxID_NONE,                     "&# MAIN FILE NAMES"," ",wxITEM_NORMAL);
 
-  this->Library_Description_Menu->Append(ID_INPUT_MAIN_FILE_NAME,      "&    Enter Main File Names"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(ID_INPUT_MAIN_FILE_NAME,       "&    Enter Main File Names"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
 
@@ -99,11 +136,10 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Library_Description_Menu->Append(wxID_NONE,                     "&# OPTIONS"," ",wxITEM_NORMAL);
 
-  this->Library_Description_Menu->Append(ID_INPUT_OPTIONS,           "&   Enter Options "," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(ID_INPUT_OPTIONS,              "&   Enter Options "," ",wxITEM_NORMAL);
 
 
 
-  this->Construction_Menu->Append(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,      "& Run Build System Initializer"," ",wxITEM_NORMAL);
 
 
   this->Menu_Bar = new wxMenuBar();
@@ -114,25 +150,25 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Menu_Bar->Append(this->Library_Description_Menu,wxT("Project Descriptions"));
 
-  this->Menu_Bar->Append(this->Description_Menu,wxT("Project Management"));
+  this->Menu_Bar->Append(this->Project_Management,wxT("Project Management"));
 
-  this->Menu_Bar->Append(this->Construction_Menu,wxT("Build System"));
+  this->Menu_Bar->Append(this->Edit_Menu,wxT("&Edit"));
 
 }
 
 Menu_Bar_Options::~Menu_Bar_Options(){
 
-        delete this->Description_Menu;
+        delete this->Project_Management;
 
         delete this->Library_Description_Menu;
-
-        delete this->Construction_Menu;
 
         delete this->File_Menu;
 
         delete this->Help_Menu;
 
         delete this->Menu_Bar;
+
+        delete this->Edit_Menu;
 }
 
 wxMenuBar * Menu_Bar_Options::Get_MenuBar(){

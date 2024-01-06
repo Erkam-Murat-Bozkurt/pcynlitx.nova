@@ -22,8 +22,9 @@ private:
   wxMenu  * Construction_Menu;
   wxMenu  * Help_Menu;;
   wxMenu  * File_Menu;
-  wxMenu  * Description_Menu;
+  wxMenu  * Project_Management;
   wxMenu  * Library_Description_Menu;
+  wxMenu  * Edit_Menu;
   wxMenuBar * Menu_Bar;
 };
 

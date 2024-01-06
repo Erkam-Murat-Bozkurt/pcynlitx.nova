@@ -54,6 +54,8 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
                      wxFONTWEIGHT_NORMAL,false);
 
+  this->is_bold_style_selected = false;
+
 
   this->SetBackgroundColour(wxColour(200,200,200));
 
@@ -254,6 +256,10 @@ void MainFrame::File_Save(wxCommandEvent & event){
         }      
      }
 }
+
+
+
+
 
 void MainFrame::PaintNow(wxWindow * wnd)
 {
@@ -1225,3 +1231,258 @@ void MainFrame::Descriptor_File_Selection_Check(){
         delete dial;
       }
 }
+
+
+
+void MainFrame::Increase_Font_Size(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_INCREASE_FONT_SIZE){
+
+        event.StopPropagation();
+
+        bool is_this_text_file = this->Book_Manager->Is_Current_Page_Text_File();
+
+        if(is_this_text_file){
+
+           wxFont Font = this->Book_Manager->Get_Selected_Text_Ctrl()->StyleGetFont(wxSTC_C_REGEX);
+
+           Font.SetPointSize(Font.GetPointSize()+1);
+
+           this->Book_Manager->Set_Font(Font);
+
+           if(this->is_bold_style_selected){
+
+              this->Book_Manager->Use_Bold_Styling();
+           }
+        }
+     }
+}
+
+void MainFrame::Decrease_Font_Size(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_DECREASE_FONT_SIZE){
+
+        event.StopPropagation();
+
+        bool is_this_text_file = this->Book_Manager->Is_Current_Page_Text_File();
+
+        if(is_this_text_file){
+
+           wxFont Font = this->Book_Manager->Get_Selected_Text_Ctrl()->StyleGetFont(wxSTC_C_REGEX);
+
+           Font.SetPointSize(Font.GetPointSize()-1);
+
+           this->Book_Manager->Set_Font(Font);
+
+           if(this->is_bold_style_selected){
+
+              this->Book_Manager->Use_Bold_Styling();
+            }
+        }
+     }
+}
+
+
+
+
+
+void MainFrame::Undo_Changes(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_UNDO_CHANGES){
+
+        event.StopPropagation();
+
+        bool is_this_text_file = this->Book_Manager->Is_Current_Page_Text_File();
+
+        if(is_this_text_file){
+
+           this->Book_Manager->Get_Selected_Text_Ctrl()->Undo();
+        }
+     }
+}
+
+void MainFrame::Redo_Changes(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_REDO_CHANGES){
+
+        event.StopPropagation();
+
+        bool is_this_text_file = this->Book_Manager->Is_Current_Page_Text_File();
+
+        if(is_this_text_file){
+
+           this->Book_Manager->Get_Selected_Text_Ctrl()->Redo();
+        }
+     }
+}
+
+void MainFrame::Clear_Style(wxCommandEvent & event)
+{
+     if(event.GetId() ==  ID_CLEAR_STYLE){
+
+        event.StopPropagation();
+
+        this->is_bold_style_selected = false;
+
+        this->Book_Manager->Clear_Style();
+     }
+}
+
+void MainFrame::Reload_Default_Style(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_RELOAD_STYLE){
+
+        event.StopPropagation();
+
+        this->is_bold_style_selected = false;
+
+        this->Book_Manager->Reload_Style();
+     }
+}
+
+void MainFrame::Clear_Text(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_CLEAR_TEXT){
+
+        event.StopPropagation();
+
+        bool is_this_text_file = this->Book_Manager->Is_Current_Page_Text_File();
+
+        if(is_this_text_file){
+
+           this->Book_Manager->Get_Selected_Text_Ctrl()->ClearAll();
+        }
+     }
+}
+
+void MainFrame::Change_Cursor_Type(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_CHANGE_CURSOR_TYPE){
+
+       event.StopPropagation();
+
+       this->Book_Manager->Change_Cursor_Type();
+     }
+}
+
+void MainFrame::Load_Default_Cursor(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_SET_CURSOR_TYPE_DEFAULT){
+
+        event.StopPropagation();
+
+        this->Book_Manager->Load_Default_Cursor();
+     }
+}
+
+void MainFrame::Set_Caret_Line_Visible(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_SET_CARET_LINE_VISIBLE){
+
+       event.StopPropagation();
+
+       this->Book_Manager->Set_Caret_Line_Visible();
+     }
+}
+
+void MainFrame::Set_Caret_Line_InVisible(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_SET_CARET_LINE_INVISIBLE){
+
+        event.StopPropagation();
+
+        this->Book_Manager->Set_Caret_Line_InVisible();
+     }
+}
+
+void MainFrame::Use_Block_Caret(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_USE_BLOCK_CARET){
+
+       event.StopPropagation();
+
+       this->Book_Manager->Use_Block_Caret();
+     }
+}
+
+void MainFrame::Use_Default_Caret(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_USE_DEFAULT_CARET){
+
+        this->Book_Manager->Use_Default_Caret();
+     }
+}
+
+void MainFrame::Use_Bold_Styling(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_BOLD_STYLE){
+
+       event.StopPropagation();
+
+       this->is_bold_style_selected = true;
+
+       this->Book_Manager->Use_Bold_Styling();
+     }
+}
+
+void MainFrame::Save_File_As(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_SAVE_AS){
+
+        bool is_this_text_file = this->Book_Manager->Is_Current_Page_Text_File();
+
+        if(is_this_text_file){
+
+           wxString File_Path;
+
+           wxString message = wxT("Text files (*.txt)|*.txt|C++ Source Files (*.cpp)|");
+
+           message = message + wxT("*.cpp|C Source files (*.c)|*.c|C header files (*.h)|*.h");
+
+           wxFileDialog * SaveDialog = new wxFileDialog(this,wxT("Save File As ?"), wxEmptyString,
+
+           wxEmptyString, message, wxFD_OVERWRITE_PROMPT | wxFD_SAVE, wxDefaultPosition);
+
+           if(SaveDialog->ShowModal() == wxID_OK) // If the user clicked "OK"
+           {
+              File_Path = SaveDialog->GetPath();
+
+              this->Book_Manager->Get_Selected_Text_Ctrl()->SaveFile(File_Path);
+           }
+
+           SaveDialog->Destroy();
+        }
+     }
+}
+
+
+void MainFrame::New_File(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_NEW_FILE){
+
+        wxString File_Path;
+
+        wxFileDialog * File_Dialog = new wxFileDialog(this,wxT("New File"),
+
+               wxEmptyString, wxEmptyString,wxT(""),
+
+               wxFD_OVERWRITE_PROMPT | wxFD_SAVE, wxDefaultPosition);
+
+        if(File_Dialog->ShowModal() == wxID_OK) // If the user clicked "OK"
+        {
+           File_Path = File_Dialog->GetPath();
+
+           wxTextFile File_Manager(File_Path);
+
+           if(!File_Manager.Exists()){
+
+              File_Manager.Create();
+           }
+
+           this->Book_Manager->Add_New_File(File_Path);
+        }
+
+        File_Dialog->Destroy();
+     }
+}
+
