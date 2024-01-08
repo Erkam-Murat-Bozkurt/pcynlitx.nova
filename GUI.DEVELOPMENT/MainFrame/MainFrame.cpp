@@ -47,12 +47,31 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
   this->Des_Reader = new Descriptor_File_Reader('w');
 
+  this->Process_Ptr = new Process_Manager(this,wxID_ANY);
+
+  char Builder_Path [] = "D:\\Pcynlitx_Build_Platform\\CBuild.exe";
+
+  this->Process_Ptr->Receive_Builder_Path(Builder_Path);
 
 
+  std::string tabart_font = "Segoe UI";
 
-  this->Default_Font = new wxFont(10,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
+  std::string face_name = "JetBrains Mono NL"; 
 
-                     wxFONTWEIGHT_NORMAL,false);
+
+  /*
+  this->Default_Font = new wxFont(9,wxString(face_name),wxFONTSTYLE_NORMAL,
+
+                     wxFONTWEIGHT_NORMAL,true);
+
+   */
+
+  this->Default_Font = new wxFont(9,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
+
+                     wxFONTWEIGHT_NORMAL,false,wxString(face_name));
+
+  this->SetFont(*(this->Default_Font));
+
 
   this->is_bold_style_selected = false;
 
@@ -245,13 +264,13 @@ void MainFrame::File_Save(wxCommandEvent & event){
         }
         else{
 
-                  wxMessageDialog * dial = new wxMessageDialog(NULL,
+         wxMessageDialog * dial = new wxMessageDialog(NULL,
 
-                  wxT(" This is no any file currently open!\n A file must be open ."),
+         wxT(" This is no any file currently open!\n A file must be open ."),
 
-                  wxT("Error Message"), wxOK);
+         wxT("Error Message"), wxOK);
 
-                  dial->ShowModal();
+         dial->ShowModal();
             
         }      
      }
@@ -428,55 +447,7 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
     if(this->is_descriptor_file_open){
 
-       char executable [] = "D:\\Pcynlitx_Build_Platform\\CBuild.exe ";
-
-       char option [] = " -ip_for_gui";
-
-       size_t exe_cmd_size  = strlen(executable);
-
-       size_t des_path_size = strlen(this->Descriptor_File_Path.c_str()); 
-
-       size_t option_size   = strlen(option);
-
-       size_t cmd_str_size = exe_cmd_size + des_path_size + option_size;
-
-       size_t cmd_size = 2*cmd_str_size;
-
-       char * cmd = new char[cmd_size];
-
-       for(size_t i=0;i<cmd_size;i++){
-
-           cmd[i] = '\0';
-       }
-
-       size_t index = 0;
-
-       for(size_t i=0;i<exe_cmd_size;i++){
-
-           cmd[index] = executable[i];
-
-           index++;
-       }
-
-       for(size_t i=0;i<des_path_size;i++){
-
-           cmd[index] = this->Descriptor_File_Path.c_str()[i];
-
-           index++;
-
-       }
-
-       for(size_t i=0;i<option_size;i++){
-
-           cmd[index] = option[i];
-
-           index++;
-       }
-
-       cmd[index] = '\0';
-
-
-
+       this->Process_Ptr->Determine_Build_System_Initialization_Command();
 
        this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
@@ -496,14 +467,18 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
        this->is_pipe_ready = false;
 
+       this->progres_wait = false;
 
+
+
+       char * cmd = this->Process_Ptr->Get_Process_Command();
 
        this->fork_process = new std::thread(MainFrame::ForkProcess,this,cmd);
 
        this->fork_process->detach();
 
-       this->progress_point = 0;
 
+       this->progress_point = 0;
 
        this->read_process_output = new std::thread(MainFrame::ReadProcessOutput,this,&this->progress_point);
 
@@ -528,40 +503,32 @@ void MainFrame::ForkProcess(char * cmd){
 
      lck.unlock();
 
-     
 
      this->SysInt.CreateProcessWith_NamedPipe_From_Parent(cmd);
-
-     delete [] cmd;
 
 
      lck.lock();
 
      this->Child_Process_Started_to_Execution = true;
 
-     lck.unlock();
+     if(this->progres_wait){
 
+        this->cv_prog.notify_all();
 
-
-     lck.lock();
-
-     if(!this->Progress_Bar_Start_status){
-
-         this->cv.wait(lck);
-
-         lck.unlock();
+        lck.unlock();
      }
      else{
 
-         lck.unlock();
-     }       
+        lck.unlock();
+     }
+
 
 
      lck.lock();
 
      if(!this->Child_Process_End_Status){
 
-         this->cv.wait(lck);
+         this->cv_fork.wait(lck);
 
          lck.unlock();
      }
@@ -617,20 +584,27 @@ void MainFrame::Show_Progress(wxString Process_Label){
 
             }
          }
-                       
-         wxMilliSleep(1);
+
+         wxMilliSleep(5);
          wxYield();
 
+         lck.lock();
 
          if(!this->Child_Process_Started_to_Execution){
 
-            do{
+             this->progres_wait = true;
 
-                wxYield();
-                wxMilliSleep(1);
+             this->cv_prog.wait(lck);
+       
+             this->progres_wait = false;
 
-            }while(!this->Child_Process_Started_to_Execution);
+             lck.unlock();
          }
+         else{
+
+             lck.unlock();
+         }
+         
 
 
          
@@ -640,7 +614,9 @@ void MainFrame::Show_Progress(wxString Process_Label){
 
             this->Progress_Bar_Start_status = true;
    
-            this->cv.notify_all();
+            this->cv_read.notify_all();
+
+            this->Progress_Bar_Start_status = false;
 
             lck.unlock();
          }
@@ -677,7 +653,7 @@ void MainFrame::ReadProcessOutput(int * prg){
 
      if(!this->Progress_Bar_Start_status){
 
-         this->cv.wait(lck);
+         this->cv_read.wait(lck);
 
          lck.unlock();
      }
@@ -696,7 +672,7 @@ void MainFrame::ReadProcessOutput(int * prg){
         }
         else{
 
-            sleep(0.1);
+            sleep(1);
         }
 
      }while(!this->SysInt.IsPipeReadytoRead());
@@ -739,7 +715,7 @@ void MainFrame::ReadProcessOutput(int * prg){
 
      this->Child_Process_End_Status = true;
 
-     this->cv.notify_all();
+     this->cv_fork.notify_all();
 
      lck.unlock();
 
@@ -763,13 +739,13 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
 
         this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
-        this->Process_Ptr = new Process_Manager(this,wxID_ANY);
-
         wxString shell_command = "D:\\Pcynlitx_Build_Platform\\CBuild.exe " 
         
         + construction_dir + " -ed";
 
         this->Process_Ptr->Fork_Process(shell_command);
+
+        this->Process_Ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
 
         this->is_descriptor_file_open = true;
      }
@@ -815,6 +791,8 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
             this->is_descriptor_file_open = true;
 
             this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
+
+            this->Process_Ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
      }
    }
 }
@@ -1486,3 +1464,25 @@ void MainFrame::New_File(wxCommandEvent & event)
      }
 }
 
+void MainFrame::Change_Font(wxCommandEvent & event){
+
+     if(event.GetId() == ID_FONT_CHANGE){
+
+        wxFontData data;
+
+        data.SetInitialFont(*this->Default_Font);
+
+        wxFontDialog dialog(this,data);
+
+        dialog.Centre(wxBOTH);
+
+        if(dialog.ShowModal() == wxID_OK)
+        {     
+           wxFontData FData = dialog.GetFontData();
+           
+           wxFont SelectedFont = FData.GetChosenFont();
+
+           this->Book_Manager->Set_Font(SelectedFont);
+        }
+     }
+}

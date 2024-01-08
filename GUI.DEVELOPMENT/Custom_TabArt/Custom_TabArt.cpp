@@ -31,6 +31,12 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
                              wxBITMAP_TYPE_ANY);
 
+    std::string tabart_font = "Segoe UI";
+
+    this->Default_Font = new wxFont(9,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
+
+                     wxFONTWEIGHT_NORMAL,false,wxString(tabart_font));
+
     this->m_tabCtrlHeight = 55;
  }
 
@@ -69,7 +75,8 @@ this program. If not, see <http://www.gnu.org/licenses/>.
        wxString caption = page.caption;
 
 
-       dc.SetFont(wnd->GetFont().Bold());
+
+       dc.SetFont(*this->Default_Font);
 
        dc.GetTextExtent(caption, &selected_textx, &selected_texty);
 
@@ -94,13 +101,13 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
        if (page.active)
        {
-           dc.SetFont(wnd->GetFont());
+           dc.SetFont(*this->Default_Font);
 
            texty = selected_texty;
        }
        else
        {
-           dc.SetFont(wnd->GetFont());
+           dc.SetFont(*this->Default_Font);
 
            texty = normal_texty;
        }

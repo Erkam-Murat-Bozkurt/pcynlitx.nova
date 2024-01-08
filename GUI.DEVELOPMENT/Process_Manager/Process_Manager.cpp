@@ -27,12 +27,32 @@ Process_Manager::Process_Manager(wxFrame * Frame, int ID) : wxProcess(Frame,ID)
      this->error_stream_status = false;
 
      this->Frame_Ptr = Frame;
+
+     this->procCmd = nullptr;
+
+     this->Memory_Delete_Condition = false;
 }
 
 Process_Manager::~Process_Manager(){
 
+    if(!this->Memory_Delete_Condition){
+
+        this->Memory_Delete_Condition = true;
+
+        this->Clear_String_Memory(this->procCmd);
+    }
 }
 
+
+void Process_Manager::Clear_String_Memory(char * ptr){
+
+     if(ptr != nullptr){
+
+        delete [] ptr;
+
+        ptr = nullptr;
+     }
+}
 
 void Process_Manager::Fork_Process(wxString shell_command){
 
@@ -74,7 +94,7 @@ void Process_Manager::Print_Error_Stream(){
 
      this->error_stream_status = true;
 
-     wxInputStream * Error_Stream =  this->GetErrorStream( );
+     wxInputStream * Error_Stream =  this->GetErrorStream();
 
      wxTextInputStream tStream(*Error_Stream);
 
@@ -121,7 +141,183 @@ void Process_Manager::Print_Output_Stream(wxString title){
      this->CloseOutput();
 }
 
+
+
+void Process_Manager::Receive_Descriptor_File_Path(wxString Path){
+
+     this->Des_Path = Path;
+}
+
+void Process_Manager::Receive_Builder_Path(wxString Path){
+
+     this->Builder_Path = Path;
+}
+
+void Process_Manager::Exec_Cmd_For_Single_Src_File(char * src_path, char * exe_file_name, char strategy){
+
+     char option [] = " -if_for_gui";
+
+     char space = ' ';
+
+     size_t builder_path_size  = this->Builder_Path.size();
+
+     size_t des_path_size = strlen(this->Des_Path.c_str()); 
+
+     size_t option_size   = strlen(option);
+
+     size_t src_path_size = strlen(src_path);
+
+     size_t name_size     = strlen(exe_file_name);
+
+     size_t cmd_str_size  = builder_path_size + des_path_size 
+     
+                          + option_size + src_path_size + name_size;
+
+
+     // Command initialization
+
+     this->Clear_String_Memory(this->procCmd);
+
+     size_t cmd_size = 2*cmd_str_size;
+
+     this->procCmd = new char[cmd_size];
+
+     for(size_t i=0;i<cmd_size;i++){
+
+         this->procCmd[i] = '\0';
+     }
+
+
+     // Command construction
+
+     size_t index = 0;
+
+     for(size_t i=0;i<builder_path_size;i++){
+
+         this->procCmd[index] = this->Builder_Path[i];
+
+         index++;
+     }
+
+     for(size_t i=0;i<des_path_size;i++){
+
+         this->procCmd[index] = this->Des_Path.c_str()[i];
+
+         index++;
+     }
+
+     for(size_t i=0;i<option_size;i++){
+
+         this->procCmd[index] = option[i];
+
+         index++;
+     }
+
+     this->procCmd[index] = space;
+
+     index++;
+
+     for(size_t i=0;i<src_path_size;i++){
+
+         this->procCmd[index] = src_path[i];
+
+         index++;
+     }
+
+     this->procCmd[index] = space;
+
+     index++;
+
+     for(size_t i=0;i<name_size;i++){
+
+         this->procCmd[index] = exe_file_name[i];
+
+         index++;
+     }
+
+     this->procCmd[index] = space;
+
+     index++;
+
+     this->procCmd[index] = strategy;
+
+     this->procCmd[index] = '\0';
+}
+
+
+
+void Process_Manager::Determine_Build_System_Initialization_Command(){
+
+     char option [] = "-ip_for_gui";
+
+     char space = ' ';
+
+     size_t builder_path_size  = this->Builder_Path.size();
+
+     size_t des_path_size = strlen(this->Des_Path.c_str()); 
+
+     size_t option_size   = strlen(option);
+
+     size_t cmd_str_size = builder_path_size + des_path_size + option_size;
+
+     size_t cmd_size = 2*cmd_str_size;
+
+     // Command Initialization
+
+     this->Clear_String_Memory(this->procCmd);
+
+     this->procCmd= new char[cmd_size];
+
+     for(size_t i=0;i<cmd_size;i++){
+
+         this->procCmd[i] = '\0';
+     }
+
+
+
+     size_t index = 0;
+
+     for(size_t i=0;i<builder_path_size;i++){
+
+         this->procCmd[index] = this->Builder_Path[i];
+
+         index++;
+     }
+
+     this->procCmd[index] = space;
+
+     index++;
+
+     for(size_t i=0;i<des_path_size;i++){
+
+         this->procCmd[index] = this->Des_Path.c_str()[i];
+
+         index++;
+     }
+
+     this->procCmd[index] = space;
+
+     index++;
+
+     for(size_t i=0;i<option_size;i++){
+
+         this->procCmd[index] = option[i];
+
+         index++;
+     }
+
+     this->procCmd[index] = '\0';
+}
+
+
+
 int Process_Manager::Get_Process_Exit_Status(){
 
      return this->Process_Exit_Status;
+}
+
+
+char * Process_Manager::Get_Process_Command(){
+
+     return this->procCmd;
 }

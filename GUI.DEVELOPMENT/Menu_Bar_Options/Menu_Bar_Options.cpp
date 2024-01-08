@@ -81,6 +81,9 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Edit_Menu->Append(ID_BOLD_STYLE,"&Use Bold Styling","",wxITEM_NORMAL);
 
+  this->Edit_Menu->Append(ID_FONT_CHANGE,"&Change Font","",wxITEM_NORMAL);
+
+
 
   this->Project_Management->Append(ID_OPEN_TREE_WIEW,"&Open Directory List","",wxITEM_NORMAL);
 

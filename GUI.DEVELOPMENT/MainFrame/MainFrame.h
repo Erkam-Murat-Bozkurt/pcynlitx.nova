@@ -107,6 +107,7 @@ private:
   void OpenTerminal(wxCommandEvent & event);
   void Increase_Font_Size(wxCommandEvent & event);
   void Decrease_Font_Size(wxCommandEvent & event);
+  void Change_Font(wxCommandEvent & event);
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;
@@ -138,11 +139,14 @@ private:
   int Process_Event_Counter;
   bool Progress_Bar_Start_status;
   wxDir    * dir_control;
-  std::condition_variable  cv;
+  std::condition_variable cv_fork;
+  std::condition_variable cv_read;
+  std::condition_variable cv_prog;
   bool is_pipe_ready;
   int Toolbar_ID;
   int progress_point;
   bool is_bold_style_selected;
+  bool progres_wait;
   std::mutex mtx;
   DECLARE_EVENT_TABLE()
 };

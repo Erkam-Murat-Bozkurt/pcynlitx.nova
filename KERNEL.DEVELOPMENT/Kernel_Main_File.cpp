@@ -108,6 +108,37 @@ int main(int argc, char ** argv){
 
         std::cout << "\n\e[0;32mTHE MAKEFILE CONSTRUCTION STARTED\e[0m\n";
 
+        Build_System.Build_MakeFile(argv[3],argv[4],*argv[5]);
+
+        Build_System.Clear_Dynamic_Memory();
+
+        std::cout << "\n";
+
+        std::cout << "\n\e[0;32mTHE MAKEFILE CONSTRUCTED\e[0m\n\n";
+
+    }
+
+
+    if(str == "-if_for_gui"){
+
+        if(argc < 6){
+            
+           std::cout << "\n You must also specify the name of the executable";
+           std::cout << "\n and construction strategy";
+           std::cout << "\n";
+           std::cout << "\n usage: BuildSystem [Descriptor File Path] [operation] \\";
+           std::cout << "\n        [Source File Path] [Executable File Name] [Strategy]";
+
+           std::cout << "\n";
+           std::cout << "\n";
+        }
+
+        argument_pass_cond = true;
+
+        Kernel Build_System(argv[1],'w');
+
+        std::cout << "\n\e[0;32mTHE MAKEFILE CONSTRUCTION STARTED\e[0m\n";
+
         Build_System.Receive_System_Interface(&System_Interface);
 
         Build_System.Build_MakeFile(argv[3],argv[4],*argv[5]);
@@ -119,7 +150,6 @@ int main(int argc, char ** argv){
         std::cout << "\n\e[0;32mTHE MAKEFILE CONSTRUCTED\e[0m\n\n";
 
     }
-
 
 
 

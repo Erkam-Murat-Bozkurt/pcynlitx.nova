@@ -53,6 +53,8 @@ public:
                     int bitmap_id,int button_state,int orientation, wxRect* out_rect);
 
   wxBitmap * page_close_icon;
+
+  wxFont * Default_Font;
 };
 
 #endif /* CUSTOM_TABART_H */
