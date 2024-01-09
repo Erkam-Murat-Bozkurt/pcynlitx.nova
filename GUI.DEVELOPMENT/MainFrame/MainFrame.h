@@ -103,7 +103,7 @@ private:
   void Close_Directory_Pane(wxAuiManagerEvent & event);
   void FileNameEdit(wxTreeEvent& event);
   void ForkProcess(char * cmd);
-  void ReadProcessOutput(int * prg);
+  void ReadProcessOutput();
   void OpenTerminal(wxCommandEvent & event);
   void Increase_Font_Size(wxCommandEvent & event);
   void Decrease_Font_Size(wxCommandEvent & event);
@@ -147,6 +147,8 @@ private:
   int progress_point;
   bool is_bold_style_selected;
   bool progres_wait;
+  bool fork_wait;
+  bool read_wait;
   std::mutex mtx;
   DECLARE_EVENT_TABLE()
 };

@@ -469,6 +469,31 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
        this->progres_wait = false;
 
+       this->fork_wait = false;
+
+       this->read_wait = false;
+
+
+
+
+       wxString label = wxT("Build System Construction");
+
+
+       this->Process_Output = new Custom_ProcessOutput(this);
+
+       this->Process_Output->Receive_System_Interface(&this->SysInt);
+ 
+       this->Process_Output->Receive_Process_End_Status(&this->Child_Process_End_Status);
+
+       this->Process_Output->Receive_Warehouse_Location(this->Warehouse_Location);
+
+       this->Process_Output->Receive_Tree_View_Panel(this->Dir_List_Manager);
+
+       int max=20;
+     
+       this->Process_Output->Construct_Output(max);
+
+
 
 
        char * cmd = this->Process_Ptr->Get_Process_Command();
@@ -478,16 +503,6 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
        this->fork_process->detach();
 
 
-       this->progress_point = 0;
-
-       this->read_process_output = new std::thread(MainFrame::ReadProcessOutput,this,&this->progress_point);
-
-       this->read_process_output->detach();
-
-
-       wxString label = wxT("Build System Construction");
-
-       this->Show_Progress(label);
     }
     else{
 
@@ -507,20 +522,12 @@ void MainFrame::ForkProcess(char * cmd){
      this->SysInt.CreateProcessWith_NamedPipe_From_Parent(cmd);
 
 
-     lck.lock();
+     this->progress_point = 0;
 
-     this->Child_Process_Started_to_Execution = true;
+     this->read_process_output = new std::thread(MainFrame::ReadProcessOutput,this);
 
-     if(this->progres_wait){
+     this->read_process_output->detach();
 
-        this->cv_prog.notify_all();
-
-        lck.unlock();
-     }
-     else{
-
-        lck.unlock();
-     }
 
 
 
@@ -528,7 +535,11 @@ void MainFrame::ForkProcess(char * cmd){
 
      if(!this->Child_Process_End_Status){
 
+         this->fork_wait = true;
+
          this->cv_fork.wait(lck);
+
+         this->fork_wait = false;
 
          lck.unlock();
      }
@@ -545,124 +556,15 @@ void MainFrame::ForkProcess(char * cmd){
 
 
 
-void MainFrame::Show_Progress(wxString Process_Label){
+
+void MainFrame::ReadProcessOutput(){
 
      std::unique_lock<std::mutex> lck(this->mtx);
 
      lck.unlock();
 
-
-     this->Process_Output = new Custom_ProcessOutput(this);
-
-     this->Process_Output->Receive_System_Interface(&this->SysInt);
- 
-     this->Process_Output->Receive_Process_End_Status(&this->Child_Process_End_Status);
-
-     this->Process_Output->Receive_Warehouse_Location(this->Warehouse_Location);
-
-     this->Process_Output->Receive_Tree_View_Panel(this->Dir_List_Manager);
 
      int max=20;
-     
-     this->Process_Output->Construct_Output(max);
-
-
-     for(;;){
-
-         if(this->is_pipe_ready){
-
-            if(this->Process_Output->GetWindowsOpenStatus()){
-
-               this->Process_Output->GetDialogAddress()->SetValue(this->progress_point);
-            }
-            else{
-
-                if(this->Process_Output->GetWindowsOpenStatus()){
-
-                   this->Process_Output->GetDialogAddress()->SetValue(1);
-                }
-
-            }
-         }
-
-         wxMilliSleep(5);
-         wxYield();
-
-         lck.lock();
-
-         if(!this->Child_Process_Started_to_Execution){
-
-             this->progres_wait = true;
-
-             this->cv_prog.wait(lck);
-       
-             this->progres_wait = false;
-
-             lck.unlock();
-         }
-         else{
-
-             lck.unlock();
-         }
-         
-
-
-         
-         lck.lock();
-
-         if(!this->Progress_Bar_Start_status){
-
-            this->Progress_Bar_Start_status = true;
-   
-            this->cv_read.notify_all();
-
-            this->Progress_Bar_Start_status = false;
-
-            lck.unlock();
-         }
-         else{
-
-            lck.unlock();
-         }
-
-         
-
-        if(!this->SysInt.IsChildProcessStillAlive()){
-
-            if(this->Process_Output->GetWindowsOpenStatus()){
-
-               this->Process_Output->GetDialogAddress()->SetValue(max);
-            }
-
-            break;   
-        }
-
-     }
-}
-
-
-void MainFrame::ReadProcessOutput(int * prg){
-
-     std::unique_lock<std::mutex> lck(this->mtx);
-
-     lck.unlock();
-
-
-
-     lck.lock();
-
-     if(!this->Progress_Bar_Start_status){
-
-         this->cv_read.wait(lck);
-
-         lck.unlock();
-     }
-     else{
-
-         lck.unlock();
-     }       
-
-
 
      do{
 
@@ -672,12 +574,14 @@ void MainFrame::ReadProcessOutput(int * prg){
         }
         else{
 
-            sleep(1);
+            sleep(0.1);
         }
 
      }while(!this->SysInt.IsPipeReadytoRead());
 
-     this->is_pipe_ready = true;
+
+
+
 
      std::string total_text;
 
@@ -685,6 +589,8 @@ void MainFrame::ReadProcessOutput(int * prg){
 
      for(;;)
      {
+
+
         std::string pipeStr = this->SysInt.ReadNamedPipe_From_Parent();
 
         total_text = total_text + pipeStr;
@@ -695,16 +601,29 @@ void MainFrame::ReadProcessOutput(int * prg){
 
         if(next_size > text_size){
 
-           *prg += 2;
+           this->progress_point += 2;
         }
 
         text_size = next_size;
+
+
 
         wxString text(pipeStr);
 
         this->Process_Output->PrintProcessOutput(text);
 
+        if(this->Process_Output->GetWindowsOpenStatus()){
+
+           this->Process_Output->GetDialogAddress()->SetValue(this->progress_point);
+        }
+ 
+
         if(!this->SysInt.IsChildProcessStillAlive()){
+
+            if(this->Process_Output->GetWindowsOpenStatus()){
+
+               this->Process_Output->GetDialogAddress()->SetValue(max);
+            }
 
             break;
         }
@@ -715,10 +634,16 @@ void MainFrame::ReadProcessOutput(int * prg){
 
      this->Child_Process_End_Status = true;
 
-     this->cv_fork.notify_all();
-
      lck.unlock();
 
+
+     do{
+
+         this->cv_fork.notify_all();
+
+         sleep(0.1);
+
+     }while(this->fork_wait);
 }
 
 
