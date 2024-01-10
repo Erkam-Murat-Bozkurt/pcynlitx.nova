@@ -1,6 +1,11 @@
 
 #include "Custom_ProcessOutput.hpp"
 
+
+BEGIN_EVENT_TABLE(Custom_ProcessOutput,wxFrame)
+    EVT_BUTTON(ID_CLOSE_WINDOW,Custom_ProcessOutput::CloseWindow)
+END_EVENT_TABLE()
+
 Custom_ProcessOutput::Custom_ProcessOutput(wxFrame *parent, wxWindowID id, const wxString & title, 
 
    const wxPoint &pos, const wxSize &size, 
@@ -12,7 +17,7 @@ Custom_ProcessOutput::Custom_ProcessOutput(wxFrame *parent, wxWindowID id, const
 
      this->log_num =0;
 
-     this->Default_Font = new wxFont(12,wxFONTFAMILY_MODERN ,wxFONTSTYLE_NORMAL,
+     this->Default_Font = new wxFont(10,wxFONTFAMILY_MODERN ,wxFONTSTYLE_NORMAL,
 
                      wxFONTWEIGHT_NORMAL,false,"Segoe UI");
 
@@ -76,6 +81,11 @@ void Custom_ProcessOutput::Construct_Output(int size){
 
      this->dialog_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,30));
 
+     this->close_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,70));
+
+     this->CloseButton  = new wxButton(this,ID_CLOSE_WINDOW,wxT("CLOSE"),wxDefaultPosition, wxSize(80, 40));
+
+
 
      this->textctrl = new wxTextCtrl(this->text_ctrl_panel,wxID_ANY, wxT(""), 
      
@@ -92,7 +102,7 @@ void Custom_ProcessOutput::Construct_Output(int size){
 
      this->ctrl_box = new wxBoxSizer(wxHORIZONTAL);
 
-     this->ctrl_box->Add(this->text_ctrl_panel,1,wxEXPAND);
+     this->ctrl_box->Add(this->text_ctrl_panel,1,wxEXPAND,2);
 
      this->ctrl_box->Layout();
 
@@ -106,12 +116,27 @@ void Custom_ProcessOutput::Construct_Output(int size){
 
 
 
+     this->close_button_sizer = new wxBoxSizer(wxVERTICAL);
+
+     this->close_button_sizer->AddStretchSpacer();
+
+     this->close_button_sizer->Add(this->CloseButton,0, wxALIGN_CENTER_HORIZONTAL | wxFIXED_MINSIZE  | wxALL,5);
+
+     this->close_button_sizer->AddStretchSpacer();
+
+     this->close_button_sizer->Layout();
+
+     
 
      this->frame_box = new wxBoxSizer(wxVERTICAL);
 
-     this->frame_box->Add(this->ctrl_box,1, wxEXPAND | wxTOP | wxALL,5);
+     this->frame_box->Add(this->ctrl_box,1,    wxEXPAND | wxTOP    |  wxALL,5);
+ 
+     this->frame_box->Add(this->dialog_box,0,  wxEXPAND | wxBOTTOM |  wxALL,5);
 
-     this->frame_box->Add(this->dialog_box,0, wxEXPAND | wxBOTTOM |  wxALL,5);
+     this->frame_box->Add(this->close_button_sizer,0,   wxEXPAND | wxBOTTOM  | wxALL,5);
+
+
 
      this->frame_box->Layout();
 
@@ -120,7 +145,6 @@ void Custom_ProcessOutput::Construct_Output(int size){
 
      this->frame_box->SetSizeHints(this);
 
-
      this->frame_box->Fit(this);
 
 
@@ -128,6 +152,9 @@ void Custom_ProcessOutput::Construct_Output(int size){
      this->text_ctrl_panel->SetSize(this->text_ctrl_panel->GetClientSize());
 
      this->dialog_panel->SetSize(this->dialog_panel->GetClientSize());
+
+     this->close_panel->SetSize(this->close_panel->GetClientSize());
+
 
      this->text_ctrl_panel->Update();
 
@@ -199,6 +226,25 @@ void Custom_ProcessOutput::Receive_System_Interface(Custom_System_Interface * Sy
      this->SysPtr = Sys;
 }
 
+
+
+void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
+
+     if(event.GetId() == ID_CLOSE_WINDOW){
+
+          this->Destroy();
+
+          wxMilliSleep(100);
+
+          
+          if(!this->dir_list_ptr->Get_Panel_Open_Status()){
+
+              this->dir_list_ptr->Load_Project_Directory(wxString(this->warehouse_location));
+          }   
+
+     }
+}
+
 void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
      
      if(*this->process_end_status == false){
@@ -245,6 +291,7 @@ void Custom_ProcessOutput::Receive_Warehouse_Location(wxString loc){
 
      this->warehouse_location = loc;
 }
+
 
 wxGauge * Custom_ProcessOutput::GetDialogAddress() {
 

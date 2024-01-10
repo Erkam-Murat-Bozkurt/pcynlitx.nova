@@ -14,6 +14,7 @@
 #include <wx/sizer.h>
 #include <wx/gauge.h>
 #include <wx/textctrl.h>
+#include <wx/stattext.h>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -22,13 +23,19 @@
 #include "Custom_System_Interface.h"
 #include "Custom_Tree_View_Panel.h"
 
+
+enum
+{
+  ID_CLOSE_WINDOW = 70
+};
+
 class Custom_ProcessOutput : public wxFrame
 {
 public:
 
 Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & title=wxT(""), 
 
-   const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(900,650), 
+   const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(900,750), 
    
    long style=wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP);
 
@@ -64,6 +71,8 @@ private:
 
   void OnClose(wxCloseEvent & ent);
 
+  void CloseWindow(wxCommandEvent & event);
+
   bool * process_end_status;
 
   Custom_System_Interface * SysPtr;
@@ -76,13 +85,24 @@ private:
 
   wxPanel * dialog_panel;
 
+  wxPanel * close_panel;
+
   wxTextCtrl * textctrl;
 
   wxBoxSizer * ctrl_box;
 
   wxBoxSizer * dialog_box;
 
+  wxBoxSizer * close_box;
+
+
+  wxBoxSizer * close_panel_sizer;
+
+  wxBoxSizer * close_button_sizer;
+
   wxBoxSizer * frame_box;
+
+  wxButton * CloseButton;
 
   wxFont   * Default_Font;
 
@@ -99,6 +119,8 @@ private:
   bool window_open_status;
 
   int log_num;
+
+  DECLARE_EVENT_TABLE()
 };
 
 #endif /* CUSTOM_PROCESSOUTPUT_HPP */

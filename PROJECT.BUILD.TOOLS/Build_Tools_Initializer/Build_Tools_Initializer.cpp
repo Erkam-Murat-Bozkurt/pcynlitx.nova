@@ -60,7 +60,7 @@ void Build_Tools_Initializer::Receive_System_Interface( Custom_System_Interface 
 
 void Build_Tools_Initializer::Setup_Build_Tools(char type){
 
-     char read_opr [] = "\n\n The project descriptor file read ";
+     char read_opr [] = "\n\n   The project descriptor file read ";
 
      this->Des_Reader.Read_Descriptor_File();
 
@@ -78,7 +78,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(char type){
 
      this->Git_Data_Proc.Determine_Git_Repo_Info();    
 
-     char git_data [] = "\n\n The data for git version controller has been collected ";
+     char git_data [] = "\n\n   The data for git version controller has been collected ";
 
      std::cout << git_data;
 
@@ -95,7 +95,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(char type){
 
      this->Dep_Determiner.Collect_Dependency_Information();
 
-     char dependency_data [] = "\n\n Source file dependencies has been determined ";
+     char dependency_data [] = "\n\n   Source file dependencies has been determined ";
 
      std::cout << dependency_data;
 
@@ -123,7 +123,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(char type){
 
      this->Rep_Init.Clear_Dynamic_Memory();
 
-     char warehouse_constration [] = "\n\n The project warehouse constructed ";
+     char warehouse_constration [] = "\n\n   The project warehouse constructed ";
 
      std::cout << warehouse_constration;
 
@@ -140,7 +140,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(char type){
 
      this->Mk_Builder.Clear_Dynamic_Memory();
      
-     char make_file_construction [] = "\n\n The project makefiles constructed ";
+     char make_file_construction [] = "\n\n   The project makefiles constructed ";
 
      std::cout << make_file_construction;
 
@@ -156,7 +156,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(char type){
 
      this->Script_Writer.Build_Compiler_Script();
 
-     char script_construction [] = "\n\n The project scripts constructed ";
+     char script_construction [] = "\n\n   The project scripts constructed ";
 
      std::cout << script_construction;
 

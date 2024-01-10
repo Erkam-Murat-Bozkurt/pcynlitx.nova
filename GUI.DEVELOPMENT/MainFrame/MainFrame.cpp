@@ -476,10 +476,10 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
 
 
-       wxString label = wxT("Build System Construction");
+       wxString label = wxT("BUILD SYSTEM CONSTRUCTION PROCESS");
 
 
-       this->Process_Output = new Custom_ProcessOutput(this);
+       this->Process_Output = new Custom_ProcessOutput(this,wxID_ANY,label);
 
        this->Process_Output->Receive_System_Interface(&this->SysInt);
  
@@ -581,6 +581,16 @@ void MainFrame::ReadProcessOutput(){
 
 
 
+     this->Process_Output->GetTextControl()->SetDefaultStyle(wxTextAttr(wxColor(200,100,100)));
+
+     
+     wxString start_text = wxT("\n   BUILD SYSTEM CONSTRUCTION STARTED");
+
+
+
+     this->Process_Output->GetTextControl()->AppendText(start_text);
+
+     this->Process_Output->GetTextControl()->SetDefaultStyle(wxTextAttr(wxColor(50,50,50)));
 
 
      std::string total_text;
