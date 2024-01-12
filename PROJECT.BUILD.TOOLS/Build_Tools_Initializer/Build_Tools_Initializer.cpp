@@ -57,8 +57,13 @@ void Build_Tools_Initializer::Receive_System_Interface( Custom_System_Interface 
      this->SysInt = Int;
 }
 
+void Build_Tools_Initializer::Receive_Build_Type(char BuildType){
 
-void Build_Tools_Initializer::Setup_Build_Tools(char type){
+     this->build_type = BuildType;
+}
+
+
+void Build_Tools_Initializer::Setup_Build_Tools(){
 
      char read_opr [] = "\n\n   The project descriptor file read ";
 
@@ -66,7 +71,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(char type){
 
      std::cout << read_opr;
 
-     if(type == 'g'){
+     if(this->build_type == 'g'){
 
         this->SysInt->WriteTo_NamedPipe_FromChild(read_opr);
      }
@@ -83,7 +88,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(char type){
      std::cout << git_data;
 
 
-     if(type == 'g'){
+     if(this->build_type == 'g'){
 
         this->SysInt->WriteTo_NamedPipe_FromChild(git_data);
      }
@@ -99,7 +104,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(char type){
 
      std::cout << dependency_data;
 
-     if(type == 'g'){
+     if(this->build_type == 'g'){
 
         this->SysInt->WriteTo_NamedPipe_FromChild(dependency_data);
      }
@@ -127,7 +132,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(char type){
 
      std::cout << warehouse_constration;
 
-     if(type == 'g'){
+     if(this->build_type == 'g'){
 
         this->SysInt->WriteTo_NamedPipe_FromChild(warehouse_constration);
      }
@@ -144,7 +149,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(char type){
 
      std::cout << make_file_construction;
 
-     if(type == 'g'){
+     if(this->build_type == 'g'){
 
         this->SysInt->WriteTo_NamedPipe_FromChild(make_file_construction);
      }
@@ -160,7 +165,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(char type){
 
      std::cout << script_construction;
 
-     if(type == 'g'){
+     if(this->build_type == 'g'){
 
         this->SysInt->WriteTo_NamedPipe_FromChild(script_construction);
      }
@@ -169,7 +174,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(char type){
 
      std::cout << endLines;
 
-     if(type == 'g'){
+     if(this->build_type == 'g'){
 
         this->SysInt->WriteTo_NamedPipe_FromChild(endLines);
      }

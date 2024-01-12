@@ -245,6 +245,8 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
   this->Interface_Manager.Update();
 
   this->is_descriptor_file_open = false;
+
+  this->opr_sis = 'w';
 }
 
 MainFrame::~MainFrame()
@@ -438,6 +440,57 @@ void MainFrame::DirectoryOpen(wxCommandEvent & event)
 
 
 
+void MainFrame::Single_File_Script_Construction(wxCommandEvent & event){
+    
+     if(event.GetId() == ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR){
+
+        event.Skip(true);
+
+        if(this->is_descriptor_file_open){
+
+            wxString FilePath;
+
+            wxString title(wxT("Select source file"));
+
+            this->Select_File(FilePath,title);
+
+
+            this->Exe_File_Name = wxGetTextFromUser(wxT("What will the name of the executable file be?"),
+
+            wxT("   ENTER EXECUTABLE FILE NAME  "));
+
+
+
+            this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
+
+            this->Des_Reader->Read_Descriptor_File();
+
+            this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location();
+
+
+            this->Determine_Executable_File_Script_Construction_Point();
+
+            wxString Construction_Point(this->Executable_File_Script_Construction_Point);
+ 
+
+         
+            std::string src_path = FilePath.ToStdString();
+
+            std::string exe_name = this->Exe_File_Name.ToStdString();
+
+            char strategy = 's';
+
+            this->Process_Ptr->Exec_Cmd_For_Single_Src_File(src_path,exe_name,strategy);
+
+            wxString label = wxT("BUILD SYSTEM CONSTRUCTION FOR SOURCE FILE");
+
+
+            this->Start_Construction_Process(label,this->Executable_File_Script_Construction_Point);
+        }
+     }
+}
+
+
 
 void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
@@ -458,51 +511,9 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
        this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location() + warehose_word;
 
-
-       this->Progress_Bar_Start_status = false;
-
-       this->Child_Process_End_Status  = false;
-
-       this->Child_Process_Started_to_Execution = false;
-
-       this->is_pipe_ready = false;
-
-       this->progres_wait = false;
-
-       this->fork_wait = false;
-
-       this->read_wait = false;
-
-
-
-
        wxString label = wxT("BUILD SYSTEM CONSTRUCTION PROCESS");
 
-
-       this->Process_Output = new Custom_ProcessOutput(this,wxID_ANY,label);
-
-       this->Process_Output->Receive_System_Interface(&this->SysInt);
- 
-       this->Process_Output->Receive_Process_End_Status(&this->Child_Process_End_Status);
-
-       this->Process_Output->Receive_Warehouse_Location(this->Warehouse_Location);
-
-       this->Process_Output->Receive_Tree_View_Panel(this->Dir_List_Manager);
-
-       int max=20;
-     
-       this->Process_Output->Construct_Output(max);
-
-
-
-
-       char * cmd = this->Process_Ptr->Get_Process_Command();
-
-       this->fork_process = new std::thread(MainFrame::ForkProcess,this,cmd);
-
-       this->fork_process->detach();
-
-
+       this->Start_Construction_Process(label,this->Warehouse_Location);
     }
     else{
 
@@ -511,6 +522,46 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
   }
 }
 
+
+
+void MainFrame::Start_Construction_Process(wxString label, wxString dir_open){
+      
+     this->Progress_Bar_Start_status = false;
+
+     this->Child_Process_End_Status  = false;
+
+     this->Child_Process_Started_to_Execution = false;
+
+     this->is_pipe_ready = false;
+
+     this->progres_wait = false;
+
+     this->fork_wait = false;
+
+     this->read_wait = false;
+
+     this->Process_Output = new Custom_ProcessOutput(this,wxID_ANY,label);
+
+     this->Process_Output->Receive_System_Interface(&this->SysInt);
+ 
+     this->Process_Output->Receive_Process_End_Status(&this->Child_Process_End_Status);
+
+     this->Process_Output->Receive_Directory_Open_Location(dir_open);
+
+     this->Process_Output->Receive_Tree_View_Panel(this->Dir_List_Manager);
+
+     int max=20;
+     
+     this->Process_Output->Construct_Output(max);
+
+
+     char * cmd = this->Process_Ptr->Get_Process_Command();
+
+     this->fork_process = new std::thread(MainFrame::ForkProcess,this,cmd);
+
+     this->fork_process->detach();
+
+}
 
 void MainFrame::ForkProcess(char * cmd){
 
@@ -584,7 +635,7 @@ void MainFrame::ReadProcessOutput(){
      this->Process_Output->GetTextControl()->SetDefaultStyle(wxTextAttr(wxColor(200,100,100)));
 
      
-     wxString start_text = wxT("\n   BUILD SYSTEM CONSTRUCTION STARTED");
+     wxString start_text = wxT("\n\n   BUILD SYSTEM CONSTRUCTION STARTED");
 
 
 
@@ -599,8 +650,6 @@ void MainFrame::ReadProcessOutput(){
 
      for(;;)
      {
-
-
         std::string pipeStr = this->SysInt.ReadNamedPipe_From_Parent();
 
         total_text = total_text + pipeStr;
@@ -693,45 +742,52 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
 
        event.Skip(true);
 
-        wxFileDialog * openFileDialog
+       wxString title(wxT("Select Project File"));
 
-              = new wxFileDialog(this,wxT("Select Project File"));
+       this->Select_File(this->Descriptor_File_Path,title);
 
-        if (openFileDialog->ShowModal() == wxID_OK){
+       this->is_descriptor_file_open = true;
 
-            this->Descriptor_File_Path = openFileDialog->GetPath();
+       this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
-            wxDir Dir_Ctrl;
-
-            if(Dir_Ctrl.Exists(this->Descriptor_File_Path)){
-
-               Dir_Ctrl.Open(this->Descriptor_File_Path);
-
-               if(Dir_Ctrl.IsOpened()){
-
-                  wxMessageDialog * dial = new wxMessageDialog(NULL,
-
-                    wxT(" This is a directory!\n A file must be selected ."),
-
-                         wxT("Error Message"), wxOK);
-
-                         dial->ShowModal();
-
-                    return;
-                }
-            }
-
-            delete openFileDialog;
-
-            this->is_descriptor_file_open = true;
-
-            this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
-
-            this->Process_Ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-     }
+       this->Process_Ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
    }
 }
 
+
+void MainFrame::Select_File(wxString & FilePATH, wxString Title){
+
+     wxFileDialog * openFileDialog
+
+              = new wxFileDialog(this,Title);
+
+     if (openFileDialog->ShowModal() == wxID_OK){
+
+         FilePATH = openFileDialog->GetPath();
+
+         wxDir Dir_Ctrl;
+
+         if(Dir_Ctrl.Exists(FilePATH)){
+
+            Dir_Ctrl.Open(FilePATH);
+
+            if(Dir_Ctrl.IsOpened()){
+
+               wxMessageDialog * dial = new wxMessageDialog(NULL,
+
+               wxT(" This is a directory!\n A file must be selected ."),
+
+                   wxT("Error Message"), wxOK);
+
+               dial->ShowModal();
+
+               return;
+            }
+         }
+
+         delete openFileDialog;
+     }
+}
 
 
 void MainFrame::FileSelect(wxTreeEvent& event)
@@ -1419,5 +1475,80 @@ void MainFrame::Change_Font(wxCommandEvent & event){
 
            this->Book_Manager->Set_Font(SelectedFont);
         }
+     }
+}
+
+
+
+
+
+
+void MainFrame::Determine_Executable_File_Script_Construction_Point(){
+
+     std::string warehouse_word  ="WAREHOUSE";
+
+     this->Executable_File_Script_Construction_Point = this->Warehouse_Location;
+
+     if(this->opr_sis == 'w'){
+
+        if(this->Executable_File_Script_Construction_Point.back()!='\\'){
+
+            this->Executable_File_Script_Construction_Point.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(this->Executable_File_Script_Construction_Point.back()!='/'){
+
+            this->Executable_File_Script_Construction_Point.push_back('/');
+        }
+     }
+
+
+     for(size_t i=0;i<warehouse_word.length();i++){
+
+         this->Executable_File_Script_Construction_Point.push_back(warehouse_word[i]);
+     }
+
+
+
+     if(this->opr_sis == 'w'){
+
+        if(this->Executable_File_Script_Construction_Point.back()!='\\'){
+
+            this->Executable_File_Script_Construction_Point.push_back('\\');
+        }
+     }
+
+     if(this->opr_sis == 'l'){
+
+        if(this->Executable_File_Script_Construction_Point.back()!='/'){
+
+            this->Executable_File_Script_Construction_Point.push_back('/');
+        }
+     }
+
+
+
+     size_t name_size = this->Exe_File_Name.length();
+
+     for(size_t i=0;i<name_size;i++){
+ 
+         char upper_case = toupper(this->Exe_File_Name[i]);
+
+         if(upper_case == '.'){
+
+            upper_case = '_';
+         }
+
+         this->Executable_File_Script_Construction_Point.push_back(upper_case);
+     }
+
+     std::string dir_add_word = "_BUILDER";
+
+     for(size_t i=0;i<dir_add_word.length();i++){
+
+         this->Executable_File_Script_Construction_Point.push_back(dir_add_word[i]);
      }
 }

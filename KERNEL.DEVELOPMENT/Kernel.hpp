@@ -31,8 +31,9 @@ class Kernel
 public:
  Kernel(char * DesPATH, char opr_sis);
  virtual ~Kernel();
+ void Receive_Build_Type(char BuildType);
  void Receive_System_Interface(Custom_System_Interface * SysInt);
- void Setup_Build_Tools(char type);
+ void Setup_Build_Tools();
  void Build_MakeFile(char * mn_src_path, char * Exe_Name, char strategy);
  void Clear_Dynamic_Memory();
 protected:
@@ -41,6 +42,7 @@ protected:
  Custom_System_Interface * SysInt;
  std::string DesPATH;
  char strategy;
+ char build_type;
  bool Memory_Delete_Condition;
 };
 

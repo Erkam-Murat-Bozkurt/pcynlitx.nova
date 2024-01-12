@@ -14,22 +14,33 @@ Kernel::~Kernel(){
 }
 
 
+void Kernel::Receive_Build_Type(char BuildType){
+
+     this->build_type = BuildType;
+
+     this->Exe_Bld.Receive_Build_Type(BuildType);
+
+     this->Bld_Init.Receive_Build_Type(BuildType);
+}
+
 void Kernel::Receive_System_Interface(Custom_System_Interface * Int){
 
      this->SysInt = Int;
 }
 
-void Kernel::Setup_Build_Tools(char type){
+void Kernel::Setup_Build_Tools(){
 
      this->Bld_Init.Receive_System_Interface(this->SysInt);
 
-     this->Bld_Init.Setup_Build_Tools(type);
+     this->Bld_Init.Setup_Build_Tools();
 }
 
 
 void Kernel::Build_MakeFile(char * src_path, 
 
      char * Exe_Name, char strategy){
+
+     this->Exe_Bld.Receive_System_Interface(this->SysInt);
 
      this->Exe_Bld.Build_MakeFile(src_path,Exe_Name,strategy);
 }

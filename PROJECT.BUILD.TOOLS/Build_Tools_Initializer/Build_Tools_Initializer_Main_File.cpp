@@ -22,7 +22,24 @@ int main(int argc, char ** argv){
 
     Build_Tools_Initializer Initializer(argv[1],'w');
 
-    Initializer.Setup_Build_Tools('n');
+    if(argc > 2){
+
+        if(*argv[2] == 'g'){
+
+           Initializer.Receive_Build_Type('g');
+        }
+        else{
+
+           Initializer.Receive_Build_Type('n');
+        }
+    }
+    else{
+
+           Initializer.Receive_Build_Type('n');
+    }
+
+
+    Initializer.Setup_Build_Tools();
 
     std::cout << "\n";
 

@@ -153,7 +153,7 @@ void Process_Manager::Receive_Builder_Path(wxString Path){
      this->Builder_Path = Path;
 }
 
-void Process_Manager::Exec_Cmd_For_Single_Src_File(char * src_path, char * exe_file_name, char strategy){
+void Process_Manager::Exec_Cmd_For_Single_Src_File(std::string src_path, std::string exe_file_name, char strategy){
 
      char option [] = " -if_for_gui";
 
@@ -165,9 +165,9 @@ void Process_Manager::Exec_Cmd_For_Single_Src_File(char * src_path, char * exe_f
 
      size_t option_size   = strlen(option);
 
-     size_t src_path_size = strlen(src_path);
+     size_t src_path_size = src_path.length();
 
-     size_t name_size     = strlen(exe_file_name);
+     size_t name_size     = exe_file_name.length();
 
      size_t cmd_str_size  = builder_path_size + des_path_size 
      
@@ -198,6 +198,10 @@ void Process_Manager::Exec_Cmd_For_Single_Src_File(char * src_path, char * exe_f
 
          index++;
      }
+
+     this->procCmd[index] = space;
+
+     index++;
 
      for(size_t i=0;i<des_path_size;i++){
 
@@ -240,6 +244,8 @@ void Process_Manager::Exec_Cmd_For_Single_Src_File(char * src_path, char * exe_f
      index++;
 
      this->procCmd[index] = strategy;
+
+     index++;
 
      this->procCmd[index] = '\0';
 }

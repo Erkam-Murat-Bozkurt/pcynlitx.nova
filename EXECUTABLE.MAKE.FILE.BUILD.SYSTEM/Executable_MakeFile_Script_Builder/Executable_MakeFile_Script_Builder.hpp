@@ -32,6 +32,7 @@ public:
  void Receive_Exe_File_Name(char * exe_file_name);
  void Build_Compiler_Script_For_Executable_File(char * src_name);
  void Clear_Dynamic_Memory();
+ std::string Get_Construction_Directory_Path();
  std::string Get_Src_File_Name_Without_Ext();
  std::string Get_Src_File_Name();
 protected:

@@ -50,6 +50,7 @@
 #include "Custom_wxThread.hpp"
 #include "Custom_ProcessOutput.hpp"
 #include "ToolBar_Initializer.h"
+#include "Project_File_Selection_Dialog.h"
 #include "Descriptor_File_Reader.hpp"
 #include "Custom_System_Interface.h"
 #include "Cpp_FileOperations.h"
@@ -99,6 +100,8 @@ private:
   void Save_File_As(wxCommandEvent & event);
   void File_Save(wxCommandEvent & event);
   void Start_Build_System_Construction(wxCommandEvent & event);
+  void Single_File_Script_Construction(wxCommandEvent & event);
+  void Start_Construction_Process(wxString label, wxString dir_open);
   void Descriptor_File_Selection_Check();
   void Close_Directory_Pane(wxAuiManagerEvent & event);
   void FileNameEdit(wxTreeEvent& event);
@@ -108,6 +111,8 @@ private:
   void Increase_Font_Size(wxCommandEvent & event);
   void Decrease_Font_Size(wxCommandEvent & event);
   void Change_Font(wxCommandEvent & event);
+  void Select_File(wxString & file_path, wxString Title);
+  void Determine_Executable_File_Script_Construction_Point();
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;
@@ -119,12 +124,17 @@ private:
   bool is_project_file_selected;
   Process_Manager * Process_Ptr;
   Custom_wxThread * Thread_Ptr;
+  char opr_sis;
   wxString Descriptor_File_Path;
   wxString Warehouse_Location;
   wxString Construction_Point;
   wxString DataType;
+  std::string Executable_File_Script_Construction_Point;
+  wxString Exe_File_Name;
+  wxString Directory_Open_Point;
   wxAuiDockArt * Dock_Art_Pointer;
   wxAuiManager Interface_Manager;
+  Project_File_Selection_Dialog * Selection_Dialog;
   Descriptor_File_Reader * Des_Reader;
   Custom_Tree_View_Panel * Dir_List_Manager;
   Custom_wxTreeCtrl * tree_control;

@@ -54,6 +54,17 @@ void Executable_MakeFile_Builder::Clear_Dynamic_Memory(){
 }
 
 
+void Executable_MakeFile_Builder::Receive_System_Interface(Custom_System_Interface * sysInt){
+
+     this->SysInt = sysInt;
+}
+
+
+void Executable_MakeFile_Builder::Receive_Build_Type(char BuildType){
+
+     this->build_type = BuildType;
+}
+
 void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, 
 
      char * Exe_Name, char strategy){
@@ -64,7 +75,15 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path,
 
      this->Git_Data_Proc.Determine_Git_Repo_Info();
 
-     std::cout << "\nGit version control data collected";
+     char git_data_collection [] = "\n\n   Git version control data collected";
+
+     std::cout << git_data_collection;
+
+     if(this->build_type  == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(git_data_collection);
+     }
+
 
      if(strategy == 'a'){
 
@@ -104,8 +123,16 @@ void Executable_MakeFile_Builder::Advanced_MakeFile_Construction(char * mn_src_p
 
      this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
 
-     
-     std::cout << "\nThe source file dependencies determined";
+
+     char dependency_determination [] =  "\n\n   The source file dependencies determined";
+
+     std::cout << dependency_determination;
+
+
+     if(this->build_type  == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(dependency_determination);
+     }
 
 
      this->Receive_Exe_File_Name(Exe_Name);
@@ -128,7 +155,16 @@ void Executable_MakeFile_Builder::Advanced_MakeFile_Construction(char * mn_src_p
 
      this->Script_Builder.Build_Compiler_Script_For_Executable_File(mn_src_path);
 
-     std::cout << "\nThe construction script writed";
+
+     char script_writing [] =  "\n   The construction script writed";
+
+     std::cout << script_writing;
+
+     if(this->build_type  == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(script_writing);
+     }
+
 
 
      this->Com_Data_ptr = this->Dep_Determiner.Get_Compiler_Data_Address();
@@ -206,8 +242,14 @@ void Executable_MakeFile_Builder::Simple_MakeFile_Construction(char * mn_src_pat
 
      this->Project_Rebuild_Script_Writer.Clear_Dynamic_Memory();
 
-     std::cout << "\nThe project compiler script has been constructed";
+     char script_construction [] = "\n\n   The project compiler script has been constructed";
 
+     std::cout << script_construction;
+
+     if(this->build_type  == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(script_construction);
+     }
 
      this->Dep_Determiner.Clear_Dynamic_Memory();
 

@@ -25,7 +25,7 @@ class Process_Manager : public wxProcess
 public:
   Process_Manager(wxFrame * Frame, int ID);
   virtual ~Process_Manager();
-  void Exec_Cmd_For_Single_Src_File(char * path, char * exe_name, char str);
+  void Exec_Cmd_For_Single_Src_File(std::string path, std::string exe_name, char str);
   void Determine_Build_System_Initialization_Command();
   void Receive_Builder_Path(wxString bldr_path);
   void Receive_Descriptor_File_Path(wxString Path);

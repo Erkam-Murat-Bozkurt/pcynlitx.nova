@@ -236,14 +236,14 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
 
           wxMilliSleep(100);
 
-          
           if(!this->dir_list_ptr->Get_Panel_Open_Status()){
 
-              this->dir_list_ptr->Load_Project_Directory(wxString(this->warehouse_location));
+              this->dir_list_ptr->Load_Project_Directory(wxString(this->directory_open_location));
           }   
-
      }
 }
+
+
 
 void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
      
@@ -281,15 +281,15 @@ void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
           
           if(!this->dir_list_ptr->Get_Panel_Open_Status()){
 
-              this->dir_list_ptr->Load_Project_Directory(wxString(this->warehouse_location));
+              this->dir_list_ptr->Load_Project_Directory(wxString(this->directory_open_location));
           }     
      }
 }
 
 
-void Custom_ProcessOutput::Receive_Warehouse_Location(wxString loc){
+void Custom_ProcessOutput::Receive_Directory_Open_Location(wxString loc){
 
-     this->warehouse_location = loc;
+     this->directory_open_location = loc;
 }
 
 

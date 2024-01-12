@@ -38,6 +38,11 @@ int main(int argc, char ** argv){
     }
 
 
+    if(str == "-if_for_gui"){
+
+        System_Interface.Connect_NamedPipe_From_Child_Process();
+    }
+
 
     if(str == "-ed"){
 
@@ -60,9 +65,11 @@ int main(int argc, char ** argv){
 
         std::cout << "\n\n C++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED \n";
 
+        Build_System.Receive_Build_Type('g');
+
         Build_System.Receive_System_Interface(&System_Interface);
 
-        Build_System.Setup_Build_Tools('g');
+        Build_System.Setup_Build_Tools();
 
         Build_System.Clear_Dynamic_Memory();
 
@@ -80,7 +87,9 @@ int main(int argc, char ** argv){
 
         std::cout << "\n\n C++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED \n";
 
-        Build_System.Setup_Build_Tools('n');
+        Build_System.Receive_Build_Type('n');
+
+        Build_System.Setup_Build_Tools();
 
         Build_System.Clear_Dynamic_Memory();
 
@@ -108,7 +117,10 @@ int main(int argc, char ** argv){
 
         std::cout << "\n\e[0;32mTHE MAKEFILE CONSTRUCTION STARTED\e[0m\n";
 
+        Build_System.Receive_Build_Type('n');
+
         Build_System.Build_MakeFile(argv[3],argv[4],*argv[5]);
+
 
         Build_System.Clear_Dynamic_Memory();
 
@@ -140,6 +152,8 @@ int main(int argc, char ** argv){
         std::cout << "\n\e[0;32mTHE MAKEFILE CONSTRUCTION STARTED\e[0m\n";
 
         Build_System.Receive_System_Interface(&System_Interface);
+
+        Build_System.Receive_Build_Type('g');
 
         Build_System.Build_MakeFile(argv[3],argv[4],*argv[5]);
 
@@ -184,6 +198,12 @@ int main(int argc, char ** argv){
     std::cout << "\n";
 
     if(str == "-ip_for_gui"){
+
+       System_Interface.Close_Child_Handles_For_Named_Pipe_Connection();
+
+    }
+
+    if(str == "-if_for_gui"){
 
        System_Interface.Close_Child_Handles_For_Named_Pipe_Connection();
 

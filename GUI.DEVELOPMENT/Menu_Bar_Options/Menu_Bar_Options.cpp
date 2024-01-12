@@ -95,6 +95,7 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Project_Management->Append(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,      "&Run Build System Initializer"," ",wxITEM_NORMAL);
 
+  this->Project_Management->Append(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Run Single File Script Constructor"," ",wxITEM_NORMAL);
 
 
   this->Library_Description_Menu->Append(wxID_NONE,                     "&# MAIN DESCRIPTIONS"," ",wxITEM_NORMAL);

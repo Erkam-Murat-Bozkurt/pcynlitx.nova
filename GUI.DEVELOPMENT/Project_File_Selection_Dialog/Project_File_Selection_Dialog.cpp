@@ -86,6 +86,8 @@ Project_File_Selection_Dialog::Project_File_Selection_Dialog(wxFrame * Frame){
     this->File_Selection_Dialog->Centre();
 
     this->File_Selection_Dialog->SetAutoLayout(true);
+
+    this->File_Selection_Dialog->Show(true);
 }
 
 Project_File_Selection_Dialog::~Project_File_Selection_Dialog(){

@@ -35,7 +35,7 @@ public:
 
 Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & title=wxT(""), 
 
-   const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(900,750), 
+   const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(900,770), 
    
    long style=wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP);
 
@@ -45,7 +45,7 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
 
   wxGauge * GetDialogAddress();
 
-  void Receive_Warehouse_Location(wxString loc);
+  void Receive_Directory_Open_Location(wxString loc);
 
   void Receive_Tree_View_Panel(Custom_Tree_View_Panel * ptr);
 
@@ -110,7 +110,7 @@ private:
 
   Process_Manager * Process_Manager_Ptr;
 
-  wxString warehouse_location;
+  wxString directory_open_location;
 
   bool Memory_Delete_Condition;
 

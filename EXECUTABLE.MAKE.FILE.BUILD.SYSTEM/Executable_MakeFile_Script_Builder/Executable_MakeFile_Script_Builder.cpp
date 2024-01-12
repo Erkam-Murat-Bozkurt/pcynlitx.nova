@@ -1342,3 +1342,8 @@ std::string Executable_MakeFile_Script_Builder::Get_Src_File_Name(){
 
      return this->src_file_name;   
 }
+
+std::string Executable_MakeFile_Script_Builder::Get_Construction_Directory_Path(){
+
+     return this->Construction_Directory_Path;
+}

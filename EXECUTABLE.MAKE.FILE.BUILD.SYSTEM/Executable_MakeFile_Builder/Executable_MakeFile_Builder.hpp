@@ -38,6 +38,8 @@ class Executable_MakeFile_Builder
 public:
  Executable_MakeFile_Builder(char * des_path, char opr_sis);
  virtual ~Executable_MakeFile_Builder();
+ void Receive_Build_Type(char build_type);
+ void Receive_System_Interface(Custom_System_Interface * sysInt);
  void Build_MakeFile(char * path, char * Exe_Name, char c);
  void Clear_Dynamic_Memory();
 protected:
@@ -73,6 +75,8 @@ protected:
  std::string Exe_File_Name;
  std::string new_dir_path;
  std::string project_library_name;
+ Custom_System_Interface * SysInt;
+ char build_type;
  char opr_sis;
  bool Memory_Delete_Condition;
 };
