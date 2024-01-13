@@ -38,6 +38,7 @@
 #include <chrono>
 #include <condition_variable>
 #include <thread>
+#include "Custom_DataPanel_Processor.hpp"
 #include "Custom_DataPanel.hpp"
 #include "Menu_Bar_Options.h"
 #include "Custom_Notebook.h"
@@ -68,7 +69,7 @@ public:
   void Show_Author(wxCommandEvent & event);
   void Select_Project_File(wxCommandEvent&);
   void Show_Project_File(wxCommandEvent&);
-  void Show_Progress(wxString Process_Label);
+  //void Show_Progress(wxString Process_Label);
   void DirectoryOpen(wxCommandEvent & event);
   void FileSelect(wxTreeEvent& event);
   wxAuiPaneInfo Central_Pane_Info;
@@ -113,6 +114,8 @@ private:
   void Change_Font(wxCommandEvent & event);
   void Select_File(wxString & file_path, wxString Title);
   void Determine_Executable_File_Script_Construction_Point();
+  void Custom_DataPanel_Constructor(wxString Dtyp, wxString Title, wxString text, bool sel, bool status);
+  void Process_End(wxProcessEvent & event);
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;
@@ -144,6 +147,7 @@ private:
   Menu_Bar_Options * MB_Options;
   Intro_Page_Loader * Intro_Page_Pointer;
   Custom_ProcessOutput * Process_Output;
+  Custom_DataPanel_Processor * DataPanel_Processor;
   bool is_descriptor_file_open;
   wxFont * Default_Font;
   int Process_Event_Counter;
@@ -153,6 +157,7 @@ private:
   std::condition_variable cv_read;
   std::condition_variable cv_prog;
   bool is_pipe_ready;
+  int process_end_counter;
   int Toolbar_ID;
   int progress_point;
   bool is_bold_style_selected;

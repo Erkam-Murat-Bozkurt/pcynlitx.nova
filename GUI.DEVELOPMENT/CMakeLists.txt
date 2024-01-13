@@ -65,6 +65,10 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/ToolBar_Initializer/ToolBar_Initializer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/ToolBar_Initializer/ToolBar_Initializer.cpp
 
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_DataPanel_Processor/Custom_DataPanel_Processor.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_DataPanel_Processor/Custom_DataPanel_Processor.cpp
+
 )
 
 
@@ -109,6 +113,8 @@ target_include_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Style_Loader
 
     ${CMAKE_CURRENT_SOURCE_DIR}/ToolBar_Initializer
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_DataPanel_Processor
 
 
     ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector
@@ -177,6 +183,8 @@ target_link_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Style_Loader
 
     ${CMAKE_CURRENT_SOURCE_DIR}/ToolBar_Initializer
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_DataPanel_Processor
 
 
     ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector

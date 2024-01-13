@@ -47,7 +47,7 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
   this->Des_Reader = new Descriptor_File_Reader('w');
 
-  this->Process_Ptr = new Process_Manager(this,wxID_ANY);
+  this->Process_Ptr = new Process_Manager(this);
 
   char Builder_Path [] = "D:\\Pcynlitx_Build_Platform\\CBuild.exe";
 
@@ -59,12 +59,7 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
   std::string face_name = "JetBrains Mono NL"; 
 
 
-  /*
-  this->Default_Font = new wxFont(9,wxString(face_name),wxFONTSTYLE_NORMAL,
 
-                     wxFONTWEIGHT_NORMAL,true);
-
-   */
 
   this->Default_Font = new wxFont(9,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
 
@@ -256,6 +251,22 @@ MainFrame::~MainFrame()
    this->Close(true);
 }
 
+
+
+void MainFrame::Process_End(wxProcessEvent & event)
+{
+     event.Skip(false);
+     
+        wxMessageDialog  *  dial = new wxMessageDialog(NULL,
+
+         wxT("The end of the process"), wxT("Info"), wxOK);
+
+       if(dial->ShowModal()== wxOK){
+
+           delete dial;
+        }
+}
+
 void MainFrame::File_Save(wxCommandEvent & event){
 
      if(event.GetId() == ID_FILE_SAVE){
@@ -277,9 +288,6 @@ void MainFrame::File_Save(wxCommandEvent & event){
         }      
      }
 }
-
-
-
 
 
 void MainFrame::PaintNow(wxWindow * wnd)
@@ -323,6 +331,8 @@ void MainFrame::OnPaint(wxPaintEvent & event)
      }
 }
 
+
+
 void MainFrame::Show_Project_File(wxCommandEvent & event){
 
      if(event.GetId() == ID_SHOW_PROJECT_FILE){
@@ -360,6 +370,9 @@ void MainFrame::Show_Project_File(wxCommandEvent & event){
         }
      }
 }
+
+
+
 
 void MainFrame::Show_Author(wxCommandEvent & event)
 {
@@ -405,6 +418,8 @@ void MainFrame::Close_Directory_Pane(wxAuiManagerEvent & event)
 
      this->Interface_Manager.Update();
 }
+
+
 
 void MainFrame::DirectoryOpen(wxCommandEvent & event)
 {
@@ -848,25 +863,13 @@ void MainFrame::Enter_Git_Repo_Location(wxCommandEvent & event)
        }
        else{
 
-            this->DataType = "PROJECT-ROOT-DIR";
+            wxString DataType(wxT("PROJECT-ROOT-DIR"));
 
-            this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+            wxString Title(wxT("INSERT YOUR CHOICE"));
 
-            this->data_panel_ptr->File_Slection_Status(false);
+            wxString Text(wxT("Git repository location"));
 
-            this->data_panel_ptr->Receive_Text_Enter_Status(false);
-
-            this->data_panel_ptr->Receive_Data_Type(this->DataType);
-
-            this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
-            this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
-
-            this->data_panel_ptr->AppendTextColumn(wxT("Git repository location"));
-
-            this->data_panel_ptr->Show();
-
-            this->data_panel_ptr->GetDataViewListCtrl()->Show();
+            this->Custom_DataPanel_Constructor(DataType,Title,Text,false,false);
        }
      }
 }
@@ -881,25 +884,16 @@ void MainFrame::Enter_Header_File_Location(wxCommandEvent & event)
             this->Descriptor_File_Selection_Check();
         }
         else{
-              this->DataType = "INCLUDE-DIRECTORIES";
 
-              this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
 
-              this->data_panel_ptr->File_Slection_Status(false);
+            wxString DataType(wxT("INCLUDE-DIRECTORIES"));
 
-              this->data_panel_ptr->Receive_Text_Enter_Status(false);
+            wxString Title(wxT("INSERT YOUR CHOICE"));
 
-              this->data_panel_ptr->Receive_Data_Type(this->DataType);
+            wxString Text(wxT("HEADER FILE LOCATIONS"));
 
-              this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+            this->Custom_DataPanel_Constructor(DataType,Title,Text,false,false);
 
-              this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
-
-              this->data_panel_ptr->AppendTextColumn(wxT("HEADER FILE LOCATIONS"));
-
-              this->data_panel_ptr->Show();
-
-              this->data_panel_ptr->GetDataViewListCtrl()->Show();
         }
      }
 }
@@ -914,25 +908,13 @@ void MainFrame::Enter_Source_File_Location(wxCommandEvent & event)
         }
         else{
 
-           this->DataType = "SOURCE-FILE-DIRECTORIES";
+            wxString DataType(wxT("SOURCE-FILE-DIRECTORIES"));
 
-           this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+            wxString Title(wxT("INSERT YOUR CHOICE"));
 
-           this->data_panel_ptr->File_Slection_Status(false);
+            wxString Text(wxT("SOURCE FILE LOCATIONS"));
 
-           this->data_panel_ptr->Receive_Text_Enter_Status(false);
-
-           this->data_panel_ptr->Receive_Data_Type(this->DataType);
-
-           this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
-           this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
-
-           this->data_panel_ptr->AppendTextColumn(wxT("SOURCE FILE LOCATIONS"));
-
-           this->data_panel_ptr->Show();
-
-           this->data_panel_ptr->GetDataViewListCtrl()->Show();
+            this->Custom_DataPanel_Constructor(DataType,Title,Text,false,false);
         }
      }
 }
@@ -947,25 +929,13 @@ void MainFrame::Enter_Library_Location(wxCommandEvent & event)
        }
        else{
 
-             this->DataType = "LIBRARY-DIRECTORIES";
+            wxString DataType(wxT("LIBRARY-DIRECTORIES"));
 
-             this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+            wxString Title(wxT("INSERT YOUR CHOICE"));
 
-             this->data_panel_ptr->File_Slection_Status(false);
+            wxString Text(wxT("LIBRARY PATHS"));
 
-             this->data_panel_ptr->Receive_Text_Enter_Status(false);
-
-             this->data_panel_ptr->Receive_Data_Type(this->DataType);
-
-             this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
-             this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
-
-             this->data_panel_ptr->AppendTextColumn(wxT("LIBRARY PATHS"));
-
-             this->data_panel_ptr->Show();
-
-             this->data_panel_ptr->GetDataViewListCtrl()->Show();
+            this->Custom_DataPanel_Constructor(DataType,Title,Text,false,false);
        }
      }
 }
@@ -989,25 +959,13 @@ void MainFrame::Enter_Library_Name(wxCommandEvent & event)
        }
        else{
 
-            this->DataType = "LIBRARY-FILES";
+            wxString DataType(wxT("LIBRARY-FILES"));
 
-            this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+            wxString Title(wxT("INSERT YOUR CHOICE"));
 
-            this->data_panel_ptr->File_Slection_Status(true);
+            wxString Text(wxT("LIBRARY PATHS"));
 
-            this->data_panel_ptr->Receive_Text_Enter_Status(false);
-
-            this->data_panel_ptr->Receive_Data_Type(this->DataType);
-
-            this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
-            this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
-
-            this->data_panel_ptr->AppendTextColumn(wxT("LIBRARY-FILES"));
-
-            this->data_panel_ptr->Show();
-
-            this->data_panel_ptr->GetDataViewListCtrl()->Show();
+            this->Custom_DataPanel_Constructor(DataType,Title,Text,true,false);
        }
      }
 }
@@ -1022,25 +980,13 @@ void MainFrame::Enter_Warehouse_Location(wxCommandEvent & event)
        }
        else{
 
-           this->DataType = "PROJECT-WAREHOUSE-LOCATION";
+            wxString DataType(wxT("PROJECT-WAREHOUSE-LOCATION"));
 
-           this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+            wxString Title(wxT("INSERT YOUR CHOICE"));
 
-           this->data_panel_ptr->File_Slection_Status(false);
+            wxString Text(wxT("Repo Warehouse Location"));
 
-           this->data_panel_ptr->Receive_Text_Enter_Status(false);
-
-           this->data_panel_ptr->Receive_Data_Type(this->DataType);
-
-           this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
-           this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
-
-           this->data_panel_ptr->AppendTextColumn(wxT("Repo Warehouse Location"));
-
-           this->data_panel_ptr->Show();
-
-           this->data_panel_ptr->GetDataViewListCtrl()->Show();
+            this->Custom_DataPanel_Constructor(DataType,Title,Text,false,false);
        }
      }
 }
@@ -1055,25 +1001,13 @@ void MainFrame::Enter_Exe_File_Name(wxCommandEvent & event)
         }
         else{
 
-           this->DataType = "EXECUTABLE-FILE-NAMES";
+           wxString DataType(wxT("EXECUTABLE-FILE-NAMES"));
 
-           this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+           wxString Title(wxT("INSERT YOUR CHOICE"));
 
-           this->data_panel_ptr->Receive_Data_Type(this->DataType);
+           wxString Text(wxT("Executable File Name"));
 
-           this->data_panel_ptr->File_Slection_Status(false);
-
-           this->data_panel_ptr->Receive_Text_Enter_Status(true);
-
-           this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
-           this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
-
-           this->data_panel_ptr->AppendTextColumn(wxT("Executable File Name"));
-
-           this->data_panel_ptr->Show();
-
-           this->data_panel_ptr->GetDataViewListCtrl()->Show();
+           this->Custom_DataPanel_Constructor(DataType,Title,Text,false,true);
         }
      }
 }
@@ -1088,27 +1022,13 @@ void MainFrame::Enter_Main_File_Name(wxCommandEvent & event)
        }
        else{
 
-         this->DataType = "MAIN-FILE-NAMES";
+           wxString DataType(wxT("MAIN-FILE-NAMES"));
 
-         this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+           wxString Title(wxT("INSERT YOUR CHOICE"));
 
-         this->data_panel_ptr->Receive_Data_Type(this->DataType);
+           wxString Text(wxT("Main file name"));
 
-         this->data_panel_ptr->File_Slection_Status(false);
-
-         this->data_panel_ptr->Receive_Text_Enter_Status(true);
-
-         this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
-         this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
-         this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
-
-         this->data_panel_ptr->AppendTextColumn(wxT("Main file name"));
-
-         this->data_panel_ptr->Show();
-
-         this->data_panel_ptr->GetDataViewListCtrl()->Show();
+           this->Custom_DataPanel_Constructor(DataType,Title,Text,false,true);
        }
      }
 }
@@ -1123,27 +1043,13 @@ void MainFrame::Enter_Standard(wxCommandEvent & event)
        }
        else{
 
-         this->DataType = "C++-STANDARD";
+            wxString DataType(wxT("C++-STANDARD"));
 
-         this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+            wxString Title(wxT("INSERT YOUR CHOICE"));
 
-         this->data_panel_ptr->Receive_Data_Type(this->DataType);
+            wxString Text(wxT("C++ Standard"));
 
-         this->data_panel_ptr->File_Slection_Status(false);
-
-         this->data_panel_ptr->Receive_Text_Enter_Status(true);
-
-         this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
-         this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
-         this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
-
-         this->data_panel_ptr->AppendTextColumn(wxT("Main file name"));
-
-         this->data_panel_ptr->Show();
-
-         this->data_panel_ptr->GetDataViewListCtrl()->Show();
+            this->Custom_DataPanel_Constructor(DataType,Title,Text,false,true);
        }
      }
 }
@@ -1158,27 +1064,13 @@ void MainFrame::Enter_Options(wxCommandEvent & event)
        }
        else{
 
-         this->DataType = "OPTIONS";
+            wxString DataType(wxT("OPTIONS"));
 
-         this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+            wxString Title(wxT("INSERT YOUR CHOICE"));
 
-         this->data_panel_ptr->Receive_Data_Type(this->DataType);
+            wxString Text(wxT("Compiler Options"));
 
-         this->data_panel_ptr->File_Slection_Status(false);
-
-         this->data_panel_ptr->Receive_Text_Enter_Status(true);
-
-         this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
-         this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
-         this->data_panel_ptr->SetTitle(wxT("INSERT YOUR CHOICE"));
-
-         this->data_panel_ptr->AppendTextColumn(wxT("Main file name"));
-
-         this->data_panel_ptr->Show();
-
-         this->data_panel_ptr->GetDataViewListCtrl()->Show();
+            this->Custom_DataPanel_Constructor(DataType,Title,Text,false,true);
        }
      }
 }
@@ -1551,4 +1443,29 @@ void MainFrame::Determine_Executable_File_Script_Construction_Point(){
 
          this->Executable_File_Script_Construction_Point.push_back(dir_add_word[i]);
      }
+}
+
+
+
+void MainFrame::Custom_DataPanel_Constructor(wxString DataType, wxString Title, wxString Column_Text,
+
+     bool file_selection, bool text_enter_status){
+
+     this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
+
+     this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+     this->data_panel_ptr->File_Slection_Status(file_selection);
+
+     this->data_panel_ptr->Receive_Text_Enter_Status(text_enter_status);
+
+     this->data_panel_ptr->Receive_Data_Type(DataType);
+
+     this->data_panel_ptr->SetTitle(Title);
+
+     this->data_panel_ptr->AppendTextColumn(Column_Text);
+
+     this->data_panel_ptr->Show();
+
+     this->data_panel_ptr->GetDataViewListCtrl()->Show();
 }

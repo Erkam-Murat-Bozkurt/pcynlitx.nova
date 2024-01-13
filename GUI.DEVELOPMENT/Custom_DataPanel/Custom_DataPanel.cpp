@@ -240,7 +240,7 @@ void Custom_DataPanel::Save_Data(wxCommandEvent & event){
 
         wxString shell_command = "";
          
-        this->Process_Ptr = new Process_Manager(this->frame_ptr,wxID_ANY);
+        this->Process_Ptr = new Process_Manager(this->frame_ptr);
 
         shell_command = "D:\\Pcynlitx_Build_Platform\\CBuild.exe " +
 
@@ -253,11 +253,10 @@ void Custom_DataPanel::Save_Data(wxCommandEvent & event){
 
         this->Process_Ptr->Fork_Process(shell_command);
 
-        int Proc_ID = this->Process_Ptr->GetPid();
-
         int status  = this->Process_Ptr->Get_Process_Exit_Status();
 
-        this->Process_Ptr->OnTerminate(Proc_ID,status);
+        delete this->Process_Ptr;
+
     }
 }
 

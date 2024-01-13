@@ -52,6 +52,10 @@ int main(int argc, char ** argv){
 
        Empd_Builder.Build_Empty_File(argv[1]);
 
+       System_Interface.WriteChildProcess_StdOutput();
+
+       System_Interface.WriteChildProcess_StdError();
+       
        exit(0);
     }
 
@@ -72,7 +76,6 @@ int main(int argc, char ** argv){
         Build_System.Setup_Build_Tools();
 
         Build_System.Clear_Dynamic_Memory();
-
 
         std::cout << "\n THE CONSTRUCTION COMPLATED ";
     }
@@ -120,7 +123,6 @@ int main(int argc, char ** argv){
         Build_System.Receive_Build_Type('n');
 
         Build_System.Build_MakeFile(argv[3],argv[4],*argv[5]);
-
 
         Build_System.Clear_Dynamic_Memory();
 
@@ -176,6 +178,11 @@ int main(int argc, char ** argv){
        Dt_Recorder.Add_Data_Record(argv[3],argv[4]);
 
        Dt_Recorder.Clear_Object_Memory();
+
+       System_Interface.WriteChildProcess_StdOutput();
+
+       System_Interface.WriteChildProcess_StdError();
+       
     }
 
     if(str == "-cr"){
@@ -186,11 +193,18 @@ int main(int argc, char ** argv){
 
        Dt_Recorder.Clear_Data_Record(argv[3]);
 
+       System_Interface.WriteChildProcess_StdOutput();
+
+       System_Interface.WriteChildProcess_StdError();
     }
 
     if(!argument_pass_cond){
 
         std::cout << "\n You did not entered an acceptable option";
+
+        System_Interface.WriteChildProcess_StdOutput();
+
+        System_Interface.WriteChildProcess_StdError();
 
         exit(0);
     }

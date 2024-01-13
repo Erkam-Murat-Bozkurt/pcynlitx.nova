@@ -609,7 +609,11 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
 
          std::cout << "\n stdout pipe can not be created";
 
-         exit(EXIT_FAILURE);
+         std::cerr <<  "\n stdout pipe can not be created";
+
+         this->anonymous_piped_process_exit_code = 0;
+
+         return false;
      }
 
      // Ensure the read handle to the pipe for STDOUT is not inherited.
@@ -618,7 +622,11 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
 
          std::cout << "\n stdout handle information can not be set";
 
-         exit(EXIT_FAILURE);       
+         std::cerr << "\n stdout handle information can not be set";
+
+         this->anonymous_piped_process_exit_code = 0;
+
+         return false;
      }
 
 
@@ -657,7 +665,11 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
 
           std::cout << "\n The child process can not be created";
 
-          exit(EXIT_FAILURE);
+          std::cerr <<  "\n The child process can not be created";
+
+          this->anonymous_piped_process_exit_code = 0;
+
+          return false;
       }
       else 
       {
@@ -666,6 +678,7 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
          // of the child process, for example. 
 
          CloseHandle(this->piProcInfo.hProcess);
+
          CloseHandle(this->piProcInfo.hThread);
       
          // Close handles to the stdin and stdout pipes no longer needed by the child process.
@@ -678,7 +691,6 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
      // This example assumes a plain text file and uses string output to verify data flow. 
     
      this->DeterminePipePath();
-
 
      if(this->FileManager.Is_Path_Exist(this->GetPipePath_StdStr()))
      {
@@ -699,14 +711,23 @@ bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){
    if ( this->g_hInputFile == INVALID_HANDLE_VALUE ){
 
         std::cout << "\n pipe file can not be created";
+        
+        this->anonymous_piped_process_exit_code = 0;
 
-        exit(EXIT_FAILURE);
+        return false;        
    }
  
    CloseHandle(this->g_hInputFile);
 
+   this->anonymous_piped_process_exit_code = 1;
 
-   return 0; 
+   return true; 
+}
+
+
+int Custom_System_Interface::Get_Anonymously_PipedProcess_ExitCode(){
+
+    return this->anonymous_piped_process_exit_code;
 }
 
 
@@ -725,13 +746,26 @@ void Custom_System_Interface::ReadFromPipe(void)   // For Anonymous pipe connect
         bSuccess = ReadFile(this->g_hChildStd_OUT_Rd,this->chBuf, this->bufsize, &this->dwRead, NULL);
         if( ! bSuccess || this->dwRead == 0 ) break; 
 
+        for(DWORD i=0;i<this->dwRead;i++){
+
+            this->anonymous_pipe_string.push_back(this->chBuf[i]);
+        }
+
         bSuccess = WriteFile(hParentStdOut,this->chBuf, 
                            this->dwRead, &this->dwWritten, NULL);
 
         if (! bSuccess ) break; 
      } 
+
+     this->anonymous_pipe_string.shrink_to_fit();
 } 
- 
+
+
+std::string Custom_System_Interface::GetAnonymousPipe_String(){
+
+     return this->anonymous_pipe_string;
+}
+
 
 void Custom_System_Interface::DeterminePipePath(){
 
@@ -789,10 +823,10 @@ void Custom_System_Interface::DeterminePipePath(){
 
 void Custom_System_Interface::SetChildProcess_For_StdOut_Redirection(){  // For Anonymous pipe connection
  
-     this->hStdout = GetStdHandle(STD_OUTPUT_HANDLE); 
-     this->hStdin  = GetStdHandle(STD_INPUT_HANDLE); 
+     this->hStdout    = GetStdHandle(STD_OUTPUT_HANDLE); 
+     this->hStdError  = GetStdHandle(STD_ERROR_HANDLE); 
 
-     if ((this->hStdout == INVALID_HANDLE_VALUE) || (this->hStdin == INVALID_HANDLE_VALUE)){
+     if ((this->hStdout == INVALID_HANDLE_VALUE) || (this->hStdError == INVALID_HANDLE_VALUE)){
 
          exit(EXIT_FAILURE); 
      } 
@@ -806,8 +840,27 @@ void Custom_System_Interface::WriteChildProcess_StdOutput(){ // For Anonymous pi
        
        // Write to standard output and stop on error.
         bSuccess = WriteFile(this->hStdout,this->chBuf,this->dwRead, &this->dwWritten, NULL);    
-        if (! bSuccess || this->dwRead == 0) 
-         break; 
+        if (! bSuccess || this->dwRead == 0){
+
+           break; 
+        }
+
+      } 
+}
+
+
+void Custom_System_Interface::WriteChildProcess_StdError(){ // For Anonymous pipe connection
+
+     BOOL bSuccess; 
+
+     for (;;){
+       
+       // Write to standard output and stop on error.
+        bSuccess = WriteFile(this->hStdError,this->chBuf,this->dwRead, &this->dwWritten, NULL);    
+        if (! bSuccess || this->dwRead == 0){
+
+           break; 
+        }
 
       } 
 }

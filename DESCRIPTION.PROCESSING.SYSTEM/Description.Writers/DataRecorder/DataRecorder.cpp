@@ -87,6 +87,7 @@ void DataRecorder::Add_Data_Record(char * Data_Type, char * Data_Record){
 
      this->Place_String_Data(Data_Record,data_record);
 
+
      if(data_type == "PROJECT-ROOT-DIR"){
 
         if(this->Is_Data_List(data_record)){
@@ -151,14 +152,14 @@ void DataRecorder::Add_Data_Record(char * Data_Type, char * Data_Record){
 
         this->Clear_String_Memory(this->standard);
 
-        this->Place_String_Data(this->standard,data_record);
+        this->Place_String_Data(data_record,this->standard);
      }  
 
      if(data_type == "OPTIONS"){
 
         this->Clear_String_Memory(this->options);
 
-        this->Place_String_Data(this->options,data_record);       
+        this->Place_String_Data(data_record,this->options);       
      }    
 
      this->Update_Descriptor_File();

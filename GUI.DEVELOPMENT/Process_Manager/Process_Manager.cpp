@@ -22,15 +22,15 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Process_Manager.hpp"
 
-Process_Manager::Process_Manager(wxFrame * Frame, int ID) : wxProcess(Frame,ID)
+Process_Manager::Process_Manager(wxFrame * Frame)
 {
      this->error_stream_status = false;
-
-     this->Frame_Ptr = Frame;
 
      this->procCmd = nullptr;
 
      this->Memory_Delete_Condition = false;
+
+     this->Frame_Ptr = Frame;
 }
 
 Process_Manager::~Process_Manager(){
@@ -58,15 +58,35 @@ void Process_Manager::Fork_Process(wxString shell_command){
 
      this->Process_Exit_Status = 0;
 
-     this->Redirect();
+     this->Clear_String_Memory(this->procCmd);
 
-     this->Process_Exit_Status = wxExecute(shell_command,wxEXEC_ASYNC
+     std::string std_cmd = shell_command.ToStdString();
 
-       | wxEXEC_MAKE_GROUP_LEADER ,this);
+     size_t cmd_size = std_cmd.length();
 
-     if(this->Process_Exit_Status == 0){
+     this->procCmd = new char [2*cmd_size];
 
-        this->Print_Error_Stream();
+     size_t index = 0;
+
+     for(size_t i=0;i<cmd_size;i++){
+
+         this->procCmd[index] = std_cmd.at(i);
+
+         index++;
+     }
+
+     this->procCmd[index] = '\0';
+
+
+     bool success_status =  this->SysInt.Create_Process_With_Redirected_Stdout(this->procCmd);
+
+     if(!success_status){
+
+        this->Print_Error_Stream(wxT("ERROR MESSAGE"));
+     }
+     else{
+
+          this->Process_Exit_Status = this->SysInt.Get_Anonymously_PipedProcess_ExitCode();
      }
 }
 
@@ -90,55 +110,26 @@ void Process_Manager::Print_Text(wxString std_out, wxString title){
      delete Succes_Text;
 }
 
-void Process_Manager::Print_Error_Stream(){
+void Process_Manager::Print_Error_Stream(wxString title){
 
-     this->error_stream_status = true;
+     this->SysInt.ReadFromPipe();
 
-     wxInputStream * Error_Stream =  this->GetErrorStream();
+     std::string error_st = this->SysInt.GetAnonymousPipe_String();
 
-     wxTextInputStream tStream(*Error_Stream);
+     wxString std_err(error_st);
 
-     wxString log_string = wxT("");
-
-     while(!Error_Stream->Eof())
-     {
-        log_string = log_string + tStream.ReadLine() + wxT("\n");
-     }
-
-     if(log_string != wxT("")){
-
-        wxRichMessageDialog * dial = new wxRichMessageDialog(this->Frame_Ptr,
-
-        log_string, wxT("Error in construction"), wxOK|wxCENTRE);
-
-        dial->ShowModal();
-
-        return;
-     }
+     this->Print_Text(std_err,title);
 }
 
 void Process_Manager::Print_Output_Stream(wxString title){
 
-     wxInputStream * stream = this->GetInputStream();
+     this->SysInt.ReadFromPipe();
 
-     wxChar buffer = '\0';
+     std::string out = this->SysInt.GetAnonymousPipe_String();
+     
+     wxString std_out(out);
 
-     wxString std_out = "";
-
-     if(stream->CanRead()){
-
-        do{
-
-            stream->Read(&buffer,1);
-
-            std_out.Append(buffer,1);
-
-        }while(!stream->Eof());
-
-        this->Print_Text(std_out,title);
-     }
-
-     this->CloseOutput();
+     this->Print_Text(std_out,title);
 }
 
 
