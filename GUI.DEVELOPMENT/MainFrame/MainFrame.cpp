@@ -45,11 +45,14 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
   SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
 
+  this->DataPanel_Processor.Receive_Frame_Pointer(this);
+
+
   this->Des_Reader = new Descriptor_File_Reader('w');
 
   this->Process_Ptr = new Process_Manager(this);
 
-  char Builder_Path [] = "D:\\Pcynlitx_Build_Platform\\CBuild.exe";
+  wxString Builder_Path(wxT("D:\\Pcynlitx_Build_Platform\\CBuild.exe"));
 
   this->Process_Ptr->Receive_Builder_Path(Builder_Path);
 
@@ -513,11 +516,12 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
   {
     event.Skip(true);
 
+   
+
     if(this->is_descriptor_file_open){
 
-       this->Process_Ptr->Determine_Build_System_Initialization_Command();
 
-       this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
+       this->Process_Ptr->Determine_Build_System_Initialization_Command();
 
        this->Des_Reader->Read_Descriptor_File();
 
@@ -746,6 +750,8 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
 
         this->Process_Ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
 
+        this->DataPanel_Processor.Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
         this->is_descriptor_file_open = true;
      }
    }
@@ -766,6 +772,8 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
        this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
        this->Process_Ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+       this->DataPanel_Processor.Receive_Descriptor_File_Path(this->Descriptor_File_Path);
    }
 }
 
@@ -1447,25 +1455,9 @@ void MainFrame::Determine_Executable_File_Script_Construction_Point(){
 
 
 
-void MainFrame::Custom_DataPanel_Constructor(wxString DataType, wxString Title, wxString Column_Text,
+void MainFrame::Custom_DataPanel_Constructor(wxString DataType, wxString Title, wxString Text,
 
      bool file_selection, bool text_enter_status){
 
-     this->data_panel_ptr = new Custom_DataPanel(this,wxSize(700,400));
-
-     this->data_panel_ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
-     this->data_panel_ptr->File_Slection_Status(file_selection);
-
-     this->data_panel_ptr->Receive_Text_Enter_Status(text_enter_status);
-
-     this->data_panel_ptr->Receive_Data_Type(DataType);
-
-     this->data_panel_ptr->SetTitle(Title);
-
-     this->data_panel_ptr->AppendTextColumn(Column_Text);
-
-     this->data_panel_ptr->Show();
-
-     this->data_panel_ptr->GetDataViewListCtrl()->Show();
+     this->DataPanel_Processor.Construct_Custom_Data_Panel(DataType,Title,Text,file_selection,text_enter_status);
 }

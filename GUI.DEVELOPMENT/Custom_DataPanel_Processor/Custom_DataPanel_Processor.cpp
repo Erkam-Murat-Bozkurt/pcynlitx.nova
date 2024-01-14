@@ -1,14 +1,35 @@
 
 #include "Custom_DataPanel_Processor.hpp"
 
-Custom_DataPanel_Processor::Custom_DataPanel_Processor(wxFrame * frame, wxString DataType, 
+Custom_DataPanel_Processor::Custom_DataPanel_Processor(){
 
-     wxString Title, wxString Column_Text,
-
-     bool file_selection, bool text_enter_status){
+}
 
 
-     this->DataPanel_Pointer = new Custom_DataPanel(frame,wxSize(700,400));
+Custom_DataPanel_Processor::~Custom_DataPanel_Processor(){
+
+
+}
+
+
+void Custom_DataPanel_Processor::Receive_Frame_Pointer(wxFrame * frame){
+
+     this->frame_ptr = frame;
+}
+
+void Custom_DataPanel_Processor::Receive_Descriptor_File_Path(wxString DesPATH){
+
+     this->Descriptor_File_Path = DesPATH;
+}
+
+
+void Custom_DataPanel_Processor::Construct_Custom_Data_Panel(wxString DataType, wxString Title, 
+
+     wxString Column_Text, bool file_selection, bool text_enter_status){
+
+     this->DataPanel_Pointer = new Custom_DataPanel(this->frame_ptr ,wxSize(700,400));
+
+     this->DataPanel_Pointer->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
 
      this->DataPanel_Pointer->File_Slection_Status(file_selection);
 
@@ -23,16 +44,5 @@ Custom_DataPanel_Processor::Custom_DataPanel_Processor(wxFrame * frame, wxString
      this->DataPanel_Pointer->Show();
 
      this->DataPanel_Pointer->GetDataViewListCtrl()->Show();
-}
 
-
-Custom_DataPanel_Processor::~Custom_DataPanel_Processor(){
-
-
-}
-
-
-void Custom_DataPanel_Processor::Receive_Descriptor_File_Path(wxString DesPATH){
-
-     this->DataPanel_Pointer->Receive_Descriptor_File_Path(DesPATH);
 }

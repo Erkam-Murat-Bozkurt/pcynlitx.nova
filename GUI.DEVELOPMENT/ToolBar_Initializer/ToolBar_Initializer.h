@@ -34,7 +34,7 @@ public:
 
       rect.height++;
 
-      dc.SetBrush(wxColour(185,185,185));
+      dc.SetBrush(wxColour(100,100,100));
 
       dc.DrawRectangle(rect.GetX() - 1, rect.GetY() - 1, rect.GetWidth() + 2, rect.GetHeight() + 1);
     }
@@ -56,6 +56,7 @@ public:
   wxBitmap * Empty_Project_File;
   wxBitmap * Show_Help_Document;
   wxBitmap * open_terminal;
+  wxBitmap * build_executable;
   wxBitmap * file_save;
   wxBitmap * open_tree_view;
   wxBitmap * print_descriptions;

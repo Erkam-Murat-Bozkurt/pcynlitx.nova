@@ -52,6 +52,7 @@
 #include "Custom_ProcessOutput.hpp"
 #include "ToolBar_Initializer.h"
 #include "Project_File_Selection_Dialog.h"
+#include "Custom_DataPanel_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Custom_System_Interface.h"
 #include "Cpp_FileOperations.h"
@@ -69,7 +70,6 @@ public:
   void Show_Author(wxCommandEvent & event);
   void Select_Project_File(wxCommandEvent&);
   void Show_Project_File(wxCommandEvent&);
-  //void Show_Progress(wxString Process_Label);
   void DirectoryOpen(wxCommandEvent & event);
   void FileSelect(wxTreeEvent& event);
   wxAuiPaneInfo Central_Pane_Info;
@@ -147,7 +147,7 @@ private:
   Menu_Bar_Options * MB_Options;
   Intro_Page_Loader * Intro_Page_Pointer;
   Custom_ProcessOutput * Process_Output;
-  Custom_DataPanel_Processor * DataPanel_Processor;
+  Custom_DataPanel_Processor DataPanel_Processor;
   bool is_descriptor_file_open;
   wxFont * Default_Font;
   int Process_Event_Counter;

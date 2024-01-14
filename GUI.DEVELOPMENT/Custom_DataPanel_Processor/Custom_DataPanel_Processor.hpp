@@ -22,17 +22,27 @@
 class Custom_DataPanel_Processor
 {
 public:
-    Custom_DataPanel_Processor(wxFrame * frame, wxString DataType, wxString Title, 
-
-     wxString Column_Text, bool file_selection, bool text_enter_status);
+    Custom_DataPanel_Processor();
 
     virtual ~Custom_DataPanel_Processor();
 
     void Receive_Descriptor_File_Path(wxString DesPATH);
 
+    void Receive_Frame_Pointer(wxFrame * frame);
+
+    void Construct_Custom_Data_Panel(wxString DataType, wxString Title, 
+
+         wxString Column_Text, bool file_selection, bool text_enter_status);
+
 protected:
+
     Custom_DataPanel * DataPanel_Pointer;
+
+    wxString Descriptor_File_Path;
+
     wxString DataType;
+
+    wxFrame * frame_ptr;
 };
 
 
