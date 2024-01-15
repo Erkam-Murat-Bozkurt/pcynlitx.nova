@@ -22,13 +22,20 @@ Descriptor_File_Data_Collector::~Descriptor_File_Data_Collector()
 
 void Descriptor_File_Data_Collector::Receive_Descriptor_File_Path(char * DesPATH){
 
-     this->FileManager.SetFilePath(DesPATH);
+     size_t path_size = strlen(DesPATH);
+
+     for(size_t i=0;i<path_size;i++){
+
+          this->Descriptor_File_Path.push_back(DesPATH[i]);
+     }
+
+     this->Descriptor_File_Path.shrink_to_fit();
 }
 
 
 void Descriptor_File_Data_Collector::Receive_Descriptor_File_Path(std::string DesPATH){
 
-     this->FileManager.SetFilePath(DesPATH);
+     this->Descriptor_File_Path = DesPATH;
 }
 
 
@@ -70,6 +77,8 @@ void Descriptor_File_Data_Collector::Clear_Dynamic_Memory()
 
 
 void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(){
+
+     this->FileManager.SetFilePath(this->Descriptor_File_Path);
 
      this->Receive_Descriptor_File_Index();
 

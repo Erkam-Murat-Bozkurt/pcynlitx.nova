@@ -34,17 +34,27 @@ void Descriptor_File_Syntax_Controller::Clear_Dynamic_Memory(){
 
 void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Path(char * DesPATH){
 
-     this->FileManager.SetFilePath(DesPATH);
+     size_t des_path_size = strlen(DesPATH);
+
+     for(size_t i=0;i<des_path_size;i++){
+
+         this->Descriptor_File_Path.push_back(DesPATH[i]);
+     }
+
+     this->Descriptor_File_Path.shrink_to_fit();
+
      
 }
 
 
 void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Path(std::string DesPATH){
 
-     this->FileManager.SetFilePath(DesPATH);
+     this->Descriptor_File_Path = DesPATH;
 }
 
 void Descriptor_File_Syntax_Controller::Control_Descriptor_File_Syntax(){
+
+     this->FileManager.SetFilePath(this->Descriptor_File_Path);
 
      this->Receive_Descriptor_File_Index();
 

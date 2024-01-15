@@ -26,6 +26,7 @@ public:
  void Receive_Descriptor_File_Path(char * DesPATH);
  void Receive_Descriptor_File_Path(std::string DesPATH);
  void Receive_Data_Record_Condition(bool cond);
+ void Set_Gui_Read_Status(bool status);
  std::string Get_Library_Directory(int i);
  std::string Get_Library_File(int i);
  std::string Get_Source_File_Directory(int i);
@@ -40,10 +41,13 @@ public:
  std::string Get_Warehouse_Location();
  std::string Get_Repo_Directory_Location();
  std::string Get_Descriptor_File_Path();
+ std::string Get_Error_Message();
  int Get_Library_Directory_Number();
  int Get_Library_Files_Number();
  int Get_Source_File_Directory_Number();
  int Get_Include_Directory_Number();
+ bool Get_Gui_Read_Success_Status();
+ bool Get_Gui_Read_Status();
 protected:
  void Initialize_Members();
  void Read_Root_Directory_Location();
@@ -71,10 +75,13 @@ protected:
  std::string options;
  std::string root_dir;
  std::string warehouse_location;
+ std::string error_message;
  std::vector<std::string> Include_Directories;
  std::vector<std::string> Source_File_Directories;
  std::vector<std::string> Library_Directories;
  std::vector<std::string> Library_Files;
+ bool gui_read_status;
+ bool gui_read_success;
  bool Memory_Delete_Condition;
  bool Data_Record_Cond;
 };

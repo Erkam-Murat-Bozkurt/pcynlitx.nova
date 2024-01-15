@@ -8,6 +8,10 @@ Descriptor_File_Reader::Descriptor_File_Reader(char opr_sis) :
    this->Initialize_Members();
 
    this->Data_Record_Cond = false;
+
+   this->gui_read_status  = false;
+
+   this->gui_read_success = true;
 }
 
 
@@ -19,6 +23,10 @@ Descriptor_File_Reader::~Descriptor_File_Reader(){
     }
 }
 
+void Descriptor_File_Reader::Set_Gui_Read_Status(bool status){
+
+     this->gui_read_status = status;
+}
 
 void Descriptor_File_Reader::Receive_Descriptor_File_Path(char * DesPATH){
 
@@ -111,21 +119,74 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
 
      this->Data_Collector.Collect_Descriptor_File_Data();
 
-     this->Read_Root_Directory_Location();
 
-     this->Read_Warehouse_Location();
+     if(!this->gui_read_status){
 
-     this->Read_Standard();
+         this->Read_Root_Directory_Location();
 
-     this->Read_Include_Directories();
+         this->Read_Warehouse_Location();
 
-     this->Read_Source_File_Directories();
+         this->Read_Standard();
 
-     this->Read_Library_Directories();
+         this->Read_Include_Directories();
 
-     this->Read_Library_Files();
+         this->Read_Source_File_Directories();
 
-     this->Read_Options();
+         this->Read_Library_Directories();
+
+         this->Read_Library_Files();
+
+         this->Read_Options();
+     }
+     else{
+
+          this->gui_read_success = true;
+
+          if(this->gui_read_success){
+
+            this->Read_Root_Directory_Location();
+          }
+
+          if(this->gui_read_success){
+
+            this->Read_Warehouse_Location();
+          }
+
+
+          if(this->gui_read_success){
+
+             this->Read_Standard();
+          }
+
+
+          if(this->gui_read_success){
+
+             this->Read_Include_Directories();
+          }
+
+
+          if(this->gui_read_success){
+
+             this->Read_Source_File_Directories();
+          }
+
+
+          if(this->gui_read_success){
+
+             this->Read_Library_Directories();
+          }
+
+          if(this->gui_read_success){
+
+            this->Read_Library_Files();
+          }
+
+          if(this->gui_read_success){
+
+             this->Read_Options();
+          }
+     }
+
 
      this->Data_Collector.Clear_Dynamic_Memory();
 }
@@ -154,11 +215,21 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
 
             std::cout << "\n Error:";
 
-            std::cout << "\n There are multiple project root directory declerations";
+            this->error_message =  "\n There are multiple project root directory declerations";
+
+            std::cout << this->error_message;
 
             std::cout << "\n\n";
 
-            exit(0);
+            if(!this->gui_read_status){
+
+               exit(0);
+            }
+            else{
+
+                this->gui_read_success = false;
+            }
+
          }
      }
 
@@ -169,26 +240,60 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
 
         std::cout << "\n Error:";
 
-        std::cout << "\n There is no any decleration about project root directory";
+        this->error_message = "\n There is no any decleration about project root directory";
+
+        std::cout << this->error_message;
 
         std::cout << "\n\n";
 
-        exit(0);
+        if(!this->gui_read_status){
+
+            exit(0);
+        }
+        else{
+
+            this->gui_read_success = false;
+        }
+
      }
 
-     if(record_num >0){
 
-       for(int i=start_line+1;i<end_line-1;i++){
+     if(this->gui_read_status){
 
-           std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+        if(this->gui_read_success){
 
-           if(this->StringManager.CheckStringLine(line)){
+           if(record_num >0){
 
-              this->root_dir = line;
+              for(int i=start_line+1;i<end_line-1;i++){
 
-              break;
+                  std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+
+                  if(this->StringManager.CheckStringLine(line)){
+
+                     this->root_dir = line;
+
+                     break;
+                  }
+              }
+            }
+        }
+     }
+     else{
+
+         if(record_num >0){
+
+           for(int i=start_line+1;i<end_line-1;i++){
+
+               std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+
+               if(this->StringManager.CheckStringLine(line)){
+
+                  this->root_dir = line;
+
+                  break;
+               }
            }
-       }
+         }
      }
 }
 
@@ -216,11 +321,21 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
 
             std::cout << "\n Error:";
 
-            std::cout << "\n There are multiple project warehouse declerations";
+            this->error_message = "\n There are multiple project warehouse declerations";
+
+            std::cout << this->error_message;
 
             std::cout << "\n\n";
 
-            exit(0);
+
+            if(!this->gui_read_status){
+
+               exit(0);
+            }
+            else{
+
+                this->gui_read_success = false;
+            }
          }
      }
 
@@ -230,24 +345,54 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
 
         std::cout << "\n Error:";
 
-        std::cout << "\n There is no any decleration about project warehouse location";
+        this->error_message = "\n There is no any decleration about project warehouse location";
+
+        std::cout << this->error_message;
 
         std::cout << "\n\n";
 
-        exit(0);
+        if(!this->gui_read_status){
+
+            exit(0);
+        }
+        else{
+
+            this->gui_read_success = false;
+        }
      }
 
-     for(int i=start_line+1;i<end_line-1;i++){
+     if(this->gui_read_status){
 
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+        if(this->gui_read_success){
 
-         if(this->StringManager.CheckStringLine(line)){
+            for(int i=start_line+1;i<end_line-1;i++){
 
-            this->warehouse_location = line;
+                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
-            break;
-         }
+                if(this->StringManager.CheckStringLine(line)){
+
+                   this->warehouse_location = line;
+
+                   break;
+                }
+            }
+        }
      }
+     else{
+           
+            for(int i=start_line+1;i<end_line-1;i++){
+
+                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+
+                if(this->StringManager.CheckStringLine(line)){
+
+                   this->warehouse_location = line;
+
+                   break;
+                }
+            }
+     }
+
 }
 
 
@@ -275,24 +420,53 @@ void Descriptor_File_Reader::Read_Standard(){
 
             std::cout << "\n Error:";
 
-            std::cout << "\n There are multiple C++ standart declerations";
+            this->error_message =  "\n There are multiple C++ standart declerations";
+
+            std::cout << this->error_message;
 
             std::cout << "\n\n";
 
-            exit(0);
+            if(!this->gui_read_status){
+
+               exit(0);
+            }
+            else{
+
+                  this->gui_read_success = false;
+            }
          }
      }
 
-     for(int i=start_line+1;i<end_line-1;i++){
+     if(this->gui_read_status){
 
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+        if(this->gui_read_success){
+          
+          for(int i=start_line+1;i<end_line-1;i++){
 
-         if(this->StringManager.CheckStringLine(line)){
+              std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
-            this->standard = line;
+              if(this->StringManager.CheckStringLine(line)){
 
-            break;
-         }
+                 this->standard = line;
+
+                 break;
+              }
+           }
+        }
+     }
+     else{
+
+            for(int i=start_line+1;i<end_line-1;i++){
+
+                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+
+                if(this->StringManager.CheckStringLine(line)){
+
+                   this->standard = line;
+
+                   break;
+                }
+            }      
      }
 }
 
@@ -689,4 +863,21 @@ int Descriptor_File_Reader::Get_Source_File_Directory_Number(){
 int Descriptor_File_Reader::Get_Include_Directory_Number(){
 
     return this->include_dir_num;
+}
+
+
+bool Descriptor_File_Reader::Get_Gui_Read_Success_Status(){
+
+     return this->gui_read_success;
+}
+
+std::string Descriptor_File_Reader::Get_Error_Message(){
+
+     return this->error_message;
+}
+
+
+bool Descriptor_File_Reader::Get_Gui_Read_Status(){
+
+     return this->gui_read_status;
 }

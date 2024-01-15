@@ -25,9 +25,14 @@ int main(int argc, char ** argv){
 
     Des_File_Reader.Receive_Descriptor_File_Path(argv[1]);
 
+    Des_File_Reader.Set_Gui_Read_Status(true);
+
+    Des_File_Reader.Read_Descriptor_File();
+
     Des_File_Reader.Read_Descriptor_File();
 
 
+    /*
 
     std::cout << "\n ROOT DIRECTORY LOCATION:";
 
@@ -181,6 +186,8 @@ int main(int argc, char ** argv){
     }
 
     std::cout << "\n\n";
+
+    */
 
     return 0;
 }

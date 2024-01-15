@@ -23,7 +23,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
-        wxDefaultPosition, wxSize(1200,950),wxDEFAULT_FRAME_STYLE )
+        wxDefaultPosition, wxSize(1350,950),wxDEFAULT_FRAME_STYLE )
 {
 
   this->is_custom_panel_constructed = false;
@@ -49,6 +49,9 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
 
   this->Des_Reader = new Descriptor_File_Reader('w');
+
+  this->Des_Reader->Set_Gui_Read_Status(true);
+
 
   this->Process_Ptr = new Process_Manager(this);
 
@@ -79,9 +82,9 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
   this->Interface_Manager.SetFlags(wxAUI_MGR_LIVE_RESIZE);
 
 
-  this->SetSize(wxSize(1200,950));
+  this->SetSize(wxSize(1350,950));
 
-  this->SetMinSize(wxSize(1200,950));
+  this->SetMinSize(wxSize(1350,950));
 
   this->Refresh();
 
@@ -133,7 +136,7 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
   this->Central_Pane_Info.Resizable(true);
 
-  this->Central_Pane_Info.MinSize(910,650);
+  this->Central_Pane_Info.MinSize(1200,900);
 
 
 
@@ -196,7 +199,7 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
   this->Dir_List_Manager = new Custom_Tree_View_Panel(this,wxID_ANY,wxDefaultPosition,
 
-                            wxSize(270,this->GetClientSize().y),&this->Interface_Manager,
+                            wxSize(350,this->GetClientSize().y),&this->Interface_Manager,
 
                             *(this->Default_Font),this->Book_Manager->GetTabCtrlHeight());
 
@@ -483,27 +486,39 @@ void MainFrame::Single_File_Script_Construction(wxCommandEvent & event){
 
             this->Des_Reader->Read_Descriptor_File();
 
-            this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location();
+            if(this->Des_Reader->Get_Gui_Read_Success_Status()){
 
 
-            this->Determine_Executable_File_Script_Construction_Point();
+               this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location();
 
-            wxString Construction_Point(this->Executable_File_Script_Construction_Point);
+               this->Determine_Executable_File_Script_Construction_Point();
+
+               wxString Construction_Point(this->Executable_File_Script_Construction_Point);
  
+               std::string src_path = FilePath.ToStdString();
 
-         
-            std::string src_path = FilePath.ToStdString();
+               std::string exe_name = this->Exe_File_Name.ToStdString();
 
-            std::string exe_name = this->Exe_File_Name.ToStdString();
+               char strategy = 's';
 
-            char strategy = 's';
+               this->Process_Ptr->Exec_Cmd_For_Single_Src_File(src_path,exe_name,strategy);
 
-            this->Process_Ptr->Exec_Cmd_For_Single_Src_File(src_path,exe_name,strategy);
+               wxString label = wxT("BUILD SYSTEM CONSTRUCTION FOR SOURCE FILE");
 
-            wxString label = wxT("BUILD SYSTEM CONSTRUCTION FOR SOURCE FILE");
+               this->Start_Construction_Process(label,this->Executable_File_Script_Construction_Point);
+            }
+            else{
 
+                   std::string error_message = this->Des_Reader->Get_Error_Message();
 
-            this->Start_Construction_Process(label,this->Executable_File_Script_Construction_Point);
+                   wxString message(error_message);
+
+                   wxMessageDialog * dial = new wxMessageDialog(NULL,message,
+
+                   wxT("Error Message"), wxOK);
+
+                   dial->ShowModal();
+            }
         }
      }
 }
@@ -516,23 +531,34 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
   {
     event.Skip(true);
 
-   
-
     if(this->is_descriptor_file_open){
-
 
        this->Process_Ptr->Determine_Build_System_Initialization_Command();
 
        this->Des_Reader->Read_Descriptor_File();
 
+       if(this->Des_Reader->Get_Gui_Read_Success_Status()){
 
-       std::string warehose_word = "\\WAREHOUSE";
+          std::string warehose_word = "\\WAREHOUSE";
 
-       this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location() + warehose_word;
+          this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location() + warehose_word;
 
-       wxString label = wxT("BUILD SYSTEM CONSTRUCTION PROCESS");
+          wxString label = wxT("BUILD SYSTEM CONSTRUCTION PROCESS");
 
-       this->Start_Construction_Process(label,this->Warehouse_Location);
+         this->Start_Construction_Process(label,this->Warehouse_Location);
+      }
+      else{
+
+            std::string error_message = this->Des_Reader->Get_Error_Message();
+
+            wxString message(error_message);
+
+            wxMessageDialog * dial = new wxMessageDialog(NULL,message,
+
+            wxT("Error Message"), wxOK);
+
+            dial->ShowModal();
+      }
     }
     else{
 
@@ -651,7 +677,7 @@ void MainFrame::ReadProcessOutput(){
 
 
 
-     this->Process_Output->GetTextControl()->SetDefaultStyle(wxTextAttr(wxColor(200,100,100)));
+     this->Process_Output->GetTextControl()->SetDefaultStyle(wxTextAttr(wxColor(134,104,112)));
 
      
      wxString start_text = wxT("\n\n   BUILD SYSTEM CONSTRUCTION STARTED");

@@ -165,9 +165,9 @@ void Style_Loader::Set_Lexer_Style(wxFont Default_Font, wxStyledTextCtrl * text_
 
      text_ctrl->SetModEventMask(wxSTC_MOD_INSERTTEXT | wxSTC_MOD_DELETETEXT | wxSTC_MOD_CHANGESTYLE);
 
-     text_ctrl->SetKeyWords(0, wxT("return int char this new if else for while void class float double Description virtual delete long bool sem_t"));
+     text_ctrl->SetKeyWords(0, wxT("return int char this new if else for while void class float double Description virtual delete long bool size_t"));
 
-     text_ctrl->SetKeyWords(1, wxT("public private protected break PROCESS DESCRIPTOR FILE"));
+     text_ctrl->SetKeyWords(1, wxT("public private protected break PROCESS true false"));
 
      text_ctrl->SetUseTabs(false);
 

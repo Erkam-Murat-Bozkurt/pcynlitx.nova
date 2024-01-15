@@ -42,6 +42,7 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Help_Menu->Append(wxID_ABOUT,"&Version 1.0","",wxITEM_NORMAL);
 
+  this->Help_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
 
   this->File_Menu->Append(ID_FILE_SAVE,"&Save","",wxITEM_NORMAL);
@@ -50,6 +51,7 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->File_Menu->Append(ID_NEW_FILE,"&Open New file as","",wxITEM_NORMAL);
 
+  this->File_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
 
   this->Edit_Menu->Append(ID_INCREASE_FONT_SIZE,"&Increase Font Size","",wxITEM_NORMAL);
@@ -83,6 +85,8 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Edit_Menu->Append(ID_FONT_CHANGE,"&Change Font","",wxITEM_NORMAL);
 
+  this->Edit_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
+
 
 
   this->Project_Management->Append(ID_OPEN_TREE_WIEW,"&Open Directory List","",wxITEM_NORMAL);
@@ -93,56 +97,60 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Project_Management->Append(ID_SHOW_PROJECT_FILE,"Show Project File","",wxITEM_NORMAL);
 
-  this->Project_Management->Append(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,      "&Run Build System Initializer"," ",wxITEM_NORMAL);
+  this->Project_Management->Append(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,       "&Run Build System Initializer"," ",wxITEM_NORMAL);
 
   this->Project_Management->Append(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Run Single File Script Constructor"," ",wxITEM_NORMAL);
+  
+  this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
 
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&# MAIN DESCRIPTIONS"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&   MAIN DESCRIPTIONS"," ",wxITEM_NORMAL);
 
-  this->Library_Description_Menu->Append(ID_INPUT_GIT_REPO_LOCATION,       "&   Enter Git Repo Directory"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(ID_INPUT_GIT_REPO_LOCATION,    "&   Enter Git Repo Directory"," ",wxITEM_NORMAL);
 
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&# SOURCE FILE LOCATIONS "," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&   SOURCE FILE LOCATIONS "," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(ID_INPUT_SOURCE_FILE_LOCATION, "&   Enter External Source File Locations"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
 
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&# HEADER FILE LOCATIONS "," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&   HEADER FILE LOCATIONS "," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(ID_INPUT_HEADER_FILE_LOCATION, "&   Enter External Header File Locations"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
 
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&# LIBRARIY INFORMATION"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&   LIBRARIY INFORMATION"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(ID_INPUT_LIBRARY_NAME,         "&   Enter Libraries File For Linking"," ",wxITEM_NORMAL);
 
-  this->Library_Description_Menu->Append(ID_INPUT_LIBRARY_LOCATION,"&   Enter Library File Location"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(ID_INPUT_LIBRARY_LOCATION,     "&   Enter Library File Location"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
 
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&# EXECUTABLE FILE NAME"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&   EXECUTABLE FILE NAME"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(ID_INPUT_EXE_FILE_NAME,        "&   Enter Executable File Name"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
 
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&# MAIN FILE NAMES"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&   MAIN FILE NAMES"," ",wxITEM_NORMAL);
 
-  this->Library_Description_Menu->Append(ID_INPUT_MAIN_FILE_NAME,       "&    Enter Main File Names"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(ID_INPUT_MAIN_FILE_NAME,       "&   Enter Main File Names"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
 
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&# C++ STANDART"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&   C++ STANDART"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(ID_INPUT_C_STANDART,           "&   Enter C++ Standart "," ",wxITEM_NORMAL);
 
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&# OPTIONS"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
+
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&   OPTIONS"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(ID_INPUT_OPTIONS,              "&   Enter Options "," ",wxITEM_NORMAL);
 
-
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&                 "," ",wxITEM_NORMAL);
 
 
 
