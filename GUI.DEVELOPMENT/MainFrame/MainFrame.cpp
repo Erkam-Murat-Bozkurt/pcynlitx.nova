@@ -475,50 +475,56 @@ void MainFrame::Single_File_Script_Construction(wxCommandEvent & event){
 
             this->Select_File(FilePath,title);
 
+            if(!FilePath.empty()){
 
-            this->Exe_File_Name = wxGetTextFromUser(wxT("What will the name of the executable file be?"),
+                this->Exe_File_Name = wxGetTextFromUser(wxT("What will the name of the executable file be?"),
 
-            wxT("   ENTER EXECUTABLE FILE NAME  "));
+                        wxT("   ENTER EXECUTABLE FILE NAME  "));
 
+                if(!this->Exe_File_Name.empty()){
 
+                    this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
-            this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
+                    this->Des_Reader->Read_Descriptor_File();
 
-            this->Des_Reader->Read_Descriptor_File();
+                    if(this->Des_Reader->Get_Gui_Read_Success_Status()){
 
-            if(this->Des_Reader->Get_Gui_Read_Success_Status()){
+                       this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location();
 
+                       this->Determine_Executable_File_Script_Construction_Point();
 
-               this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location();
-
-               this->Determine_Executable_File_Script_Construction_Point();
-
-               wxString Construction_Point(this->Executable_File_Script_Construction_Point);
+                       wxString Construction_Point(this->Executable_File_Script_Construction_Point);
  
-               std::string src_path = FilePath.ToStdString();
+                       std::string src_path = FilePath.ToStdString();
 
-               std::string exe_name = this->Exe_File_Name.ToStdString();
+                       std::string exe_name = this->Exe_File_Name.ToStdString();
 
-               char strategy = 's';
+                       char strategy = 's';
 
-               this->Process_Ptr->Exec_Cmd_For_Single_Src_File(src_path,exe_name,strategy);
+                       this->Process_Ptr->Exec_Cmd_For_Single_Src_File(src_path,exe_name,strategy);
 
-               wxString label = wxT("BUILD SYSTEM CONSTRUCTION FOR SOURCE FILE");
+                       wxString label = wxT("BUILD SYSTEM CONSTRUCTION FOR SOURCE FILE");
 
-               this->Start_Construction_Process(label,this->Executable_File_Script_Construction_Point);
+                       this->Start_Construction_Process(label,this->Executable_File_Script_Construction_Point);
+                    }
+                    else{
+
+                           std::string error_message = this->Des_Reader->Get_Error_Message();
+
+                           wxString message(error_message);
+
+                           wxMessageDialog * dial = new wxMessageDialog(NULL,message,
+
+                                 wxT("Error Message"), wxOK);
+
+                           dial->ShowModal();
+                   }
+                }
             }
-            else{
+        }
+        else{
 
-                   std::string error_message = this->Des_Reader->Get_Error_Message();
-
-                   wxString message(error_message);
-
-                   wxMessageDialog * dial = new wxMessageDialog(NULL,message,
-
-                   wxT("Error Message"), wxOK);
-
-                   dial->ShowModal();
-            }
+             this->Descriptor_File_Selection_Check();
         }
      }
 }
@@ -835,6 +841,12 @@ void MainFrame::Select_File(wxString & FilePATH, wxString Title){
          }
 
          delete openFileDialog;
+     }
+     else{
+
+          FilePATH.clear();
+
+          FilePATH.shrink_to_fit();
      }
 }
 
