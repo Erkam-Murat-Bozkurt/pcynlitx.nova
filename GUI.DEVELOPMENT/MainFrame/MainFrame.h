@@ -38,7 +38,6 @@
 #include <chrono>
 #include <condition_variable>
 #include <thread>
-#include "Custom_DataPanel_Processor.hpp"
 #include "Custom_DataPanel.hpp"
 #include "Menu_Bar_Options.h"
 #include "Custom_Notebook.h"
@@ -52,7 +51,7 @@
 #include "Custom_ProcessOutput.hpp"
 #include "ToolBar_Initializer.h"
 #include "Project_File_Selection_Dialog.h"
-#include "Custom_DataPanel_Processor.hpp"
+#include "Custom_Multi_DataPanel.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Custom_System_Interface.h"
 #include "Cpp_FileOperations.h"
@@ -113,15 +112,17 @@ private:
   void Decrease_Font_Size(wxCommandEvent & event);
   void Change_Font(wxCommandEvent & event);
   void Select_File(wxString & file_path, wxString Title);
-  void Determine_Executable_File_Script_Construction_Point();
+  void Determine_Executable_File_Script_Construction_Point(wxString FileName);
   void Custom_DataPanel_Constructor(wxString Dtyp, wxString Title, wxString text, bool sel, bool status);
   void Process_End(wxProcessEvent & event);
+  void Single_File_Script_Construction_Executer(wxString FilePath, wxString FileName);
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;
   std::thread * fork_process;
   std::thread * read_process_output;
   Custom_DataPanel * data_panel_ptr;
+  Custom_Multi_DataPanel * Multi_DataPanel;
   bool is_custom_panel_constructed;
   bool Memory_Delete_Condition;
   bool is_project_file_selected;
@@ -147,7 +148,7 @@ private:
   Menu_Bar_Options * MB_Options;
   Intro_Page_Loader * Intro_Page_Pointer;
   Custom_ProcessOutput * Process_Output;
-  Custom_DataPanel_Processor DataPanel_Processor;
+  Custom_DataPanel * DataPanel_Pointer;
   bool is_descriptor_file_open;
   wxFont * Default_Font;
   int Process_Event_Counter;

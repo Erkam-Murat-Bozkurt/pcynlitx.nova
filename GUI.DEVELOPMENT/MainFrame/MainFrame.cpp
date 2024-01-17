@@ -45,8 +45,6 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
   SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
 
-  this->DataPanel_Processor.Receive_Frame_Pointer(this);
-
 
   this->Des_Reader = new Descriptor_File_Reader('w');
 
@@ -435,7 +433,6 @@ void MainFrame::DirectoryOpen(wxCommandEvent & event)
 
                     wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
 
-
         if(dir_dialog.ShowModal() == wxID_OK){
 
            wxString DirectoryPath = dir_dialog.GetPath();
@@ -447,7 +444,6 @@ void MainFrame::DirectoryOpen(wxCommandEvent & event)
 
            this->Interface_Manager.Update();
         }
-
 
         this->Centre();
 
@@ -469,66 +465,66 @@ void MainFrame::Single_File_Script_Construction(wxCommandEvent & event){
 
         if(this->is_descriptor_file_open){
 
-            wxString FilePath;
+           this->Multi_DataPanel = new Custom_Multi_DataPanel(this);
 
-            wxString title(wxT("Select source file"));
+           this->Multi_DataPanel->Create_Exe_Script_Panel();
 
-            this->Select_File(FilePath,title);
-
-            if(!FilePath.empty()){
-
-                this->Exe_File_Name = wxGetTextFromUser(wxT("What will the name of the executable file be?"),
-
-                        wxT("   ENTER EXECUTABLE FILE NAME  "));
-
-                if(!this->Exe_File_Name.empty()){
-
-                    this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
-
-                    this->Des_Reader->Read_Descriptor_File();
-
-                    if(this->Des_Reader->Get_Gui_Read_Success_Status()){
-
-                       this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location();
-
-                       this->Determine_Executable_File_Script_Construction_Point();
-
-                       wxString Construction_Point(this->Executable_File_Script_Construction_Point);
- 
-                       std::string src_path = FilePath.ToStdString();
-
-                       std::string exe_name = this->Exe_File_Name.ToStdString();
-
-                       char strategy = 's';
-
-                       this->Process_Ptr->Exec_Cmd_For_Single_Src_File(src_path,exe_name,strategy);
-
-                       wxString label = wxT("BUILD SYSTEM CONSTRUCTION FOR SOURCE FILE");
-
-                       this->Start_Construction_Process(label,this->Executable_File_Script_Construction_Point);
-                    }
-                    else{
-
-                           std::string error_message = this->Des_Reader->Get_Error_Message();
-
-                           wxString message(error_message);
-
-                           wxMessageDialog * dial = new wxMessageDialog(NULL,message,
-
-                                 wxT("Error Message"), wxOK);
-
-                           dial->ShowModal();
-                   }
-                }
+            if ( this->Multi_DataPanel->ShowModal() == wxID_OK ){
+               
             }
+
+           this->Single_File_Script_Construction_Executer(this->Multi_DataPanel->FilePath,
+           
+               this->Multi_DataPanel->ExeFileName);
         }
         else{
 
-             this->Descriptor_File_Selection_Check();
-        }
+           this->Descriptor_File_Selection_Check();
+        }        
      }
 }
 
+
+void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath, wxString FileName){
+
+     if(!FilePath.empty() && !FileName.empty()){
+        
+         this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
+
+         this->Des_Reader->Read_Descriptor_File();
+
+         if(this->Des_Reader->Get_Gui_Read_Success_Status()){
+
+            this->Determine_Executable_File_Script_Construction_Point(FileName);
+
+            wxString Construction_Point(this->Executable_File_Script_Construction_Point);
+ 
+            std::string src_path = FilePath.ToStdString();
+
+            std::string exe_name = FileName.ToStdString();
+
+            char strategy = 's';
+
+            this->Process_Ptr->Exec_Cmd_For_Single_Src_File(src_path,exe_name,strategy);
+
+            wxString label = wxT("BUILD SYSTEM CONSTRUCTION FOR SOURCE FILE");
+
+            this->Start_Construction_Process(label,this->Executable_File_Script_Construction_Point);
+         }
+         else{
+
+            std::string error_message = this->Des_Reader->Get_Error_Message();
+
+            wxString message(error_message);
+
+            wxMessageDialog * dial = new wxMessageDialog(NULL,message,
+
+                  wxT("Error Message"), wxOK);
+
+            dial->ShowModal();
+         }
+      }
+}
 
 
 void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
@@ -676,7 +672,7 @@ void MainFrame::ReadProcessOutput(){
         }
         else{
 
-            sleep(0.1);
+            sleep(0.05);
         }
 
      }while(!this->SysInt.IsPipeReadytoRead());
@@ -751,7 +747,7 @@ void MainFrame::ReadProcessOutput(){
 
          this->cv_fork.notify_all();
 
-         sleep(0.1);
+         sleep(0.05);
 
      }while(this->fork_wait);
 }
@@ -782,7 +778,6 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
 
         this->Process_Ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
 
-        this->DataPanel_Processor.Receive_Descriptor_File_Path(this->Descriptor_File_Path);
 
         this->is_descriptor_file_open = true;
      }
@@ -804,8 +799,6 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
        this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
        this->Process_Ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
-       this->DataPanel_Processor.Receive_Descriptor_File_Path(this->Descriptor_File_Path);
    }
 }
 
@@ -1421,7 +1414,10 @@ void MainFrame::Change_Font(wxCommandEvent & event){
 
 
 
-void MainFrame::Determine_Executable_File_Script_Construction_Point(){
+void MainFrame::Determine_Executable_File_Script_Construction_Point(wxString FileName){
+
+     this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location();
+
 
      std::string warehouse_word  ="WAREHOUSE";
 
@@ -1469,11 +1465,11 @@ void MainFrame::Determine_Executable_File_Script_Construction_Point(){
 
 
 
-     size_t name_size = this->Exe_File_Name.length();
+     size_t name_size = FileName.length();
 
      for(size_t i=0;i<name_size;i++){
  
-         char upper_case = toupper(this->Exe_File_Name[i]);
+         char upper_case = toupper(FileName[i]);
 
          if(upper_case == '.'){
 
@@ -1496,6 +1492,24 @@ void MainFrame::Determine_Executable_File_Script_Construction_Point(){
 void MainFrame::Custom_DataPanel_Constructor(wxString DataType, wxString Title, wxString Text,
 
      bool file_selection, bool text_enter_status){
+      
+     this->DataPanel_Pointer = new Custom_DataPanel(this,wxSize(700,400));
 
-     this->DataPanel_Processor.Construct_Custom_Data_Panel(DataType,Title,Text,file_selection,text_enter_status);
+     this->DataPanel_Pointer->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+     this->DataPanel_Pointer->File_Slection_Status(file_selection);
+
+     this->DataPanel_Pointer->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+     this->DataPanel_Pointer->Receive_Text_Enter_Status(text_enter_status);
+
+     this->DataPanel_Pointer->Receive_Data_Type(DataType);
+
+     this->DataPanel_Pointer->SetTitle(Title);
+
+     this->DataPanel_Pointer->AppendTextColumn(Text);
+
+     this->DataPanel_Pointer->Show();
+
+     this->DataPanel_Pointer->GetDataViewListCtrl()->Show();
 }

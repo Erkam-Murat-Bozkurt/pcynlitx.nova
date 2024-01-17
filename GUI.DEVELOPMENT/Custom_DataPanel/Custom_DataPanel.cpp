@@ -166,7 +166,7 @@ void Custom_DataPanel::Insert_Data(wxCommandEvent & event){
 
         event.Skip(true);
 
-        wxString input = "";
+        this->DataInput = "";
 
         if(this->File_Slection){
 
@@ -176,17 +176,16 @@ void Custom_DataPanel::Insert_Data(wxCommandEvent & event){
 
            if (openFileDialog->ShowModal() == wxID_OK){
 
-               input = openFileDialog->GetPath();
+               this->DataInput = openFileDialog->GetPath();
            }
 
            delete openFileDialog;
-
         }
         else{
 
               if(this->Text_Enter_Status){
 
-                 input  = wxGetTextFromUser(wxT(""),
+                 this->DataInput  = wxGetTextFromUser(wxT(""),
 
                   wxT("   ENTER YOUR SELECTION   "));
               }
@@ -197,12 +196,12 @@ void Custom_DataPanel::Insert_Data(wxCommandEvent & event){
 
                       if(dlg.ShowModal() == wxID_OK){
 
-                         input =dlg.GetPath();
+                         this->DataInput =dlg.GetPath();
                      }
               }
         }
 
-        this->AppendDataItem(input);
+        this->AppendDataItem(this->DataInput);
     }
 }
 

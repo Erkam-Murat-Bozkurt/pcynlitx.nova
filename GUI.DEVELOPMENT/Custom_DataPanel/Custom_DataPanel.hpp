@@ -40,7 +40,8 @@ public:
     void Receive_Text_Enter_Status(bool status);
     wxDataViewListCtrl * GetDataViewListCtrl();
     void DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect& rect);
-    void OnPaint(wxPaintEvent & event);   
+    void OnPaint(wxPaintEvent & event);
+    wxString GetDataInput();   
 protected:
     wxDialog * dlg_ptr;
     wxFrame  * frame_ptr;
@@ -52,6 +53,7 @@ protected:
     wxString Record_Data;
     wxString DataType;
     wxString Data;
+    wxString DataInput;
     wxButton * InsertButton;
     wxButton * RemoveButton;
     wxButton * SaveButton;

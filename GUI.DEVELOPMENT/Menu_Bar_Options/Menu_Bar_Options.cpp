@@ -108,6 +108,8 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Library_Description_Menu->Append(ID_INPUT_GIT_REPO_LOCATION,    "&   Enter Git Repo Directory"," ",wxITEM_NORMAL);
 
+  this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
+
   this->Library_Description_Menu->Append(wxID_NONE,                     "&   SOURCE FILE LOCATIONS "," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(ID_INPUT_SOURCE_FILE_LOCATION, "&   Enter External Source File Locations"," ",wxITEM_NORMAL);
