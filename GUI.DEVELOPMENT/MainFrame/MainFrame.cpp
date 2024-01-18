@@ -661,7 +661,7 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
 
         if(this->is_descriptor_file_open){
 
-           this->Descriptions_Printer = new Project_Descriptions_Printer(this);
+           this->Descriptions_Printer = new Project_Descriptions_Printer(this,wxID_ANY,wxT("THE PROJECT DESCRIPTION LIST"));
 
            this->Descriptions_Printer->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
 

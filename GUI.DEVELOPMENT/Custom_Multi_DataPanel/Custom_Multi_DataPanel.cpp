@@ -154,7 +154,7 @@ void Custom_Multi_DataPanel::Construct_NewData_Panels(){
 
      this->listctrl_for_path->AppendTextColumn(wxT("THE SOURCE FILE PATH"));
 
-     this->InsertButton_for_path   = new wxButton(this,ID_INSERT_ITEM_FOR_PATH,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+     this->InsertButton_for_path   = new wxButton(this,ID_INSERT_ITEM_FOR_PATH,wxT("INSERT"),wxDefaultPosition, wxSize(80, 50));
 
 
      this->Start_Button     = new wxButton(this,ID_SAVE_MAKE_FILE_DATA,wxT("START"),wxDefaultPosition, wxSize(150, 60));
@@ -183,7 +183,7 @@ void Custom_Multi_DataPanel::Construct_NewData_Panels(){
      this->listctrl_for_name->AppendTextColumn(wxT("THE NAME OF THE EXECUTABLE FILE TO BE COMPILED"));
 
 
-     this->InsertButton_for_name   = new wxButton(this,ID_INSERT_ITEM_FOR_NAME,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+     this->InsertButton_for_name   = new wxButton(this,ID_INSERT_ITEM_FOR_NAME,wxT("INSERT"),wxDefaultPosition, wxSize(80, 50));
 
 
      this->vbox_name  = new wxBoxSizer(wxVERTICAL);
