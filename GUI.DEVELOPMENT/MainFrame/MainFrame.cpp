@@ -469,9 +469,9 @@ void MainFrame::Single_File_Script_Construction(wxCommandEvent & event){
 
            this->Multi_DataPanel->Create_Exe_Script_Panel();
 
-            if ( this->Multi_DataPanel->ShowModal() == wxID_OK ){
+           if (this->Multi_DataPanel->ShowModal() == wxID_OK ){
                
-            }
+           }
 
            this->Single_File_Script_Construction_Executer(this->Multi_DataPanel->FilePath,
            
@@ -570,7 +570,6 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 }
 
 
-
 void MainFrame::Start_Construction_Process(wxString label, wxString dir_open){
       
      this->Progress_Bar_Start_status = false;
@@ -653,6 +652,20 @@ void MainFrame::ForkProcess(char * cmd){
 
 
 
+
+void MainFrame::PrintDescriptions(wxCommandEvent & event){
+
+     if(event.GetId() == ID_PRINT_DESCRIPTIONS)
+     {
+        event.Skip(true);
+
+        this->Descriptions_Printer = new Project_Descriptions_Printer(this);
+
+        this->Descriptions_Printer->Receive_Descriptor_File_Reader(this->Des_Reader);
+
+        this->Descriptions_Printer->Print_Descriptions();
+     }      
+}
 
 
 void MainFrame::ReadProcessOutput(){

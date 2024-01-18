@@ -54,6 +54,8 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->Select_Project_File = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\file_icon.png"),wxBITMAP_TYPE_PNG);
 
+     this->print_descriptions = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\zoom.png"),wxBITMAP_TYPE_PNG);
+
      this->toolBar = new wxAuiToolBar(Frame_Pointer,wxID_ANY,wxDefaultPosition,wxDefaultSize,wxAUI_TB_PLAIN_BACKGROUND);
 
      this->Art_Pointer = new MyAuiTBArt();
@@ -102,6 +104,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->toolBar->AddTool(ID_SELECT_PROJECT_FILE,wxT(""),*this->Select_Project_File,wxT(""));
 
+     this->toolBar->AddTool(ID_PRINT_DESCRIPTIONS,wxT(""),*this->print_descriptions,wxT(""));
 
      this->toolBar->SetMargins(2,2,3,3);
 

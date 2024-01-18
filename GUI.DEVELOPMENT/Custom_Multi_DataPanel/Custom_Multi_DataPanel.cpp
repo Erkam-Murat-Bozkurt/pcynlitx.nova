@@ -54,6 +54,66 @@ void Custom_Multi_DataPanel::OnPaint(wxPaintEvent & event)
 }
 
 
+void Custom_Multi_DataPanel::Construct_MultiData_Panel(int num){
+
+     this->Panel_Number = num;
+
+     this->listctrls = new wxDataViewListCtrl * [2*this->Panel_Number];
+
+     this->Insert_Buttons   = new wxButton    * [2*this->Panel_Number];
+
+     this->DataPanel_Sizers = new wxBoxSizer  * [2*this->Panel_Number];
+
+
+     for(int i=0;i<this->Panel_Number;i++){
+
+          this->listctrls[i] = nullptr;
+
+          this->DataPanel_Sizers[i] = nullptr;
+     }
+
+
+     for(int i=0;i<this->Panel_Number;i++){
+
+         this->listctrls[i] = new wxDataViewListCtrl(this, wxID_ANY,wxDefaultPosition,wxSize(700,120));
+
+         this->Insert_Buttons[i] = new wxButton(this,wxID_ANY,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+
+         this->DataPanel_Sizers[i] = new wxBoxSizer(wxVERTICAL);
+
+         this->DataPanel_Sizers[i]->Add(this->listctrls[i],1, wxEXPAND | wxTOP | wxALL,10);
+
+         this->DataPanel_Sizers[i]->Add(this->Insert_Buttons[i],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+     }
+
+
+
+     this->Frame_Sizer = new wxBoxSizer(wxVERTICAL);
+
+     for(int i=0;i<this->Panel_Number;i++){
+
+          this->Frame_Sizer->Add(this->DataPanel_Sizers[i],1,wxEXPAND | wxALL,10);
+     }
+
+
+     this->SetSizer(this->Frame_Sizer);
+
+     this->Frame_Sizer->SetSizeHints(this);
+
+
+     for(int i=0;i<this->Panel_Number;i++){
+
+         this->listctrls[i]->Show();
+     }
+
+     this->Show();
+
+     this->Centre(wxBOTH);
+
+}
+
+
+
 void Custom_Multi_DataPanel::Create_Exe_Script_Panel(){
 
      this->Data_Save_Status = false;
@@ -97,7 +157,7 @@ void Custom_Multi_DataPanel::Construct_NewData_Panels(){
      this->InsertButton_for_path   = new wxButton(this,ID_INSERT_ITEM_FOR_PATH,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
 
 
-     this->Start_Button     = new wxButton(this,ID_SAVE_MAKE_FILE_DATA,wxT("START"),wxDefaultPosition, wxSize(150, 40));
+     this->Start_Button     = new wxButton(this,ID_SAVE_MAKE_FILE_DATA,wxT("START"),wxDefaultPosition, wxSize(150, 60));
 
 
      this->vbox_path = new wxBoxSizer(wxVERTICAL);
@@ -118,7 +178,7 @@ void Custom_Multi_DataPanel::Construct_NewData_Panels(){
 
 
 
-     this->listctrl_for_name       = new wxDataViewListCtrl(this, wxID_ANY,wxDefaultPosition,wxSize(700,200));
+     this->listctrl_for_name = new wxDataViewListCtrl(this, wxID_ANY,wxDefaultPosition,wxSize(700,200));
 
      this->listctrl_for_name->AppendTextColumn(wxT("THE NAME OF THE EXECUTABLE FILE TO BE COMPILED"));
 

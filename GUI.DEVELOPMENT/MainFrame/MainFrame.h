@@ -53,6 +53,7 @@
 #include "Project_File_Selection_Dialog.h"
 #include "Custom_Multi_DataPanel.hpp"
 #include "Descriptor_File_Reader.hpp"
+#include "Project_Descriptions_Printer.hpp"
 #include "Custom_System_Interface.h"
 #include "Cpp_FileOperations.h"
 
@@ -111,6 +112,7 @@ private:
   void Increase_Font_Size(wxCommandEvent & event);
   void Decrease_Font_Size(wxCommandEvent & event);
   void Change_Font(wxCommandEvent & event);
+  void PrintDescriptions(wxCommandEvent & event);
   void Select_File(wxString & file_path, wxString Title);
   void Determine_Executable_File_Script_Construction_Point(wxString FileName);
   void Custom_DataPanel_Constructor(wxString Dtyp, wxString Title, wxString text, bool sel, bool status);
@@ -138,6 +140,7 @@ private:
   wxString Directory_Open_Point;
   wxAuiDockArt * Dock_Art_Pointer;
   wxAuiManager Interface_Manager;
+  Project_Descriptions_Printer * Descriptions_Printer;
   Project_File_Selection_Dialog * Selection_Dialog;
   Descriptor_File_Reader * Des_Reader;
   Custom_Tree_View_Panel * Dir_List_Manager;

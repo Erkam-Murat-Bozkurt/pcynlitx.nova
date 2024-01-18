@@ -66,6 +66,9 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/ToolBar_Initializer/ToolBar_Initializer.cpp
 
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Project_Descriptions_Printer/Project_Descriptions_Printer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Project_Descriptions_Printer/Project_Descriptions_Printer.cpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Multi_DataPanel/Custom_Multi_DataPanel.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Multi_DataPanel/Custom_Multi_DataPanel.cpp
 
@@ -115,6 +118,8 @@ target_include_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/ToolBar_Initializer
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Multi_DataPanel
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Project_Descriptions_Printer
 
 
     ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector
@@ -185,6 +190,9 @@ target_link_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/ToolBar_Initializer
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Multi_DataPanel
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Project_Descriptions_Printer
+
 
 
     ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector

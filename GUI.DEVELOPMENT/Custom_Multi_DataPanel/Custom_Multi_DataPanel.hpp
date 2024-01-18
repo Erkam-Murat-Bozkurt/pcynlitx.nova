@@ -33,7 +33,9 @@ enum
 class Custom_Multi_DataPanel : public wxDialog 
 {
 public:
-    Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id=wxID_ANY, const wxString & title=wxT(""), 
+    Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id=wxID_ANY, 
+    
+        const wxString & title=wxT(""), 
 
         const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(900,770), 
    
@@ -49,6 +51,7 @@ public:
 
     wxString FilePath;
 
+    void Construct_MultiData_Panel(int num);
 
 protected:
 
@@ -72,6 +75,15 @@ protected:
 
     wxBoxSizer * Frame_Sizer;
 
+    int Panel_Number;
+
+    wxDataViewListCtrl ** listctrls;
+
+    wxButton ** Insert_Buttons;
+
+
+    wxBoxSizer ** DataPanel_Sizers;
+    wxBoxSizer * DataPanel_Top_Sizer;
 
     wxDataViewListCtrl * listctrl_for_path;
 
