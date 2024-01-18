@@ -659,11 +659,20 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
      {
         event.Skip(true);
 
-        this->Descriptions_Printer = new Project_Descriptions_Printer(this);
+        if(this->is_descriptor_file_open){
 
-        this->Descriptions_Printer->Receive_Descriptor_File_Reader(this->Des_Reader);
+           this->Descriptions_Printer = new Project_Descriptions_Printer(this);
 
-        this->Descriptions_Printer->Print_Descriptions();
+           this->Descriptions_Printer->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+           this->Descriptions_Printer->Receive_Descriptor_File_Reader(this->Des_Reader);
+
+           this->Descriptions_Printer->Print_Descriptions();
+        }
+        else{
+
+             this->Descriptor_File_Selection_Check();
+        }
      }      
 }
 

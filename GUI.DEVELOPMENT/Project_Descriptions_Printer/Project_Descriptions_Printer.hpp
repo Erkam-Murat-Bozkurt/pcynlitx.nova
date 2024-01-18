@@ -45,6 +45,8 @@ Project_Descriptions_Printer(wxFrame *parent, wxWindowID id=wxID_ANY, const wxSt
 
   wxTextCtrl * GetTextControl() const;
 
+  void Receive_Descriptor_File_Path(wxString DesPATH);
+
   void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
 
   void Print_Descriptions();
@@ -66,6 +68,8 @@ private:
   void CloseWindow(wxCommandEvent & event);
 
   Descriptor_File_Reader * Des_Reader;
+
+  wxString Descriptor_File_Path;
 
   wxPanel * text_ctrl_panel;
 

@@ -62,7 +62,7 @@ Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWi
 
      this->PaintNow(this);
 
-     this->Show(true);
+     //this->Show(true);
 
      this->window_open_status = true;
 
@@ -73,6 +73,12 @@ Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWi
 Project_Descriptions_Printer::~Project_Descriptions_Printer(){
 
 
+}
+
+
+void Project_Descriptions_Printer::Receive_Descriptor_File_Path(wxString DesPATH){
+
+     this->Descriptor_File_Path = DesPATH; 
 }
 
 
@@ -94,7 +100,7 @@ void Project_Descriptions_Printer::Construct_Text_Panel(){
 
      this->textctrl = new wxTextCtrl(this->text_ctrl_panel,wxID_ANY, wxT(""), 
      
-                      wxDefaultPosition, wxSize(900,600), wxTE_MULTILINE | wxTE_RICH);
+                      wxDefaultPosition, wxSize(900,600), wxTE_MULTILINE | wxTE_RICH | wxTE_READONLY);
 
 
 
@@ -160,51 +166,122 @@ void Project_Descriptions_Printer::Construct_Text_Panel(){
 
 void Project_Descriptions_Printer::Print_Descriptions(){
 
+     this->textctrl->Clear();
+     
+
+     this->Des_Reader->Clear_Dynamic_Memory();
+
+     std::string des_path = this->Descriptor_File_Path.ToStdString();
+
+     this->Des_Reader->Receive_Descriptor_File_Path(des_path.c_str());
+
      this->Des_Reader->Read_Descriptor_File();
+
+
+     wxTextAttr AttrBold(wxColor(134,104,112));
+
+     AttrBold.SetFontWeight(wxFONTWEIGHT_LIGHT);
+
+     AttrBold.SetFontSize(10);
+
+     AttrBold.SetFontFaceName(wxT("Segoue UI"));
+
+
+
+
+     wxTextAttr AttrLigth(wxColor(50,50,50));
+
+     AttrLigth.SetFontWeight(wxFONTWEIGHT_LIGHT);
+
+     AttrLigth.SetFontSize(10);
+
+     AttrLigth.SetFontFaceName(wxT("Segoue UI"));
+
+     this->textctrl->SetDefaultStyle(AttrBold);
+
+     this->textctrl->AppendText(wxT("\n\n GIT REPO LOCATION:"));
+
+     this->textctrl->SetDefaultStyle(AttrLigth);
+
+     this->textctrl->AppendText(wxT("\n\n "));
+
 
      std::string git_repo_location;
 
-    if(this->Des_Reader->Get_Repo_Directory_Location() != ""){
+     if(this->Des_Reader->Get_Repo_Directory_Location() != ""){
 
-       git_repo_location =  this->Des_Reader->Get_Repo_Directory_Location();
+        git_repo_location =  this->Des_Reader->Get_Repo_Directory_Location();
 
-       git_repo_location.push_back('\n');
-    }
+        git_repo_location.push_back('\n');
+
+        this->textctrl->AppendText(wxString(git_repo_location));
+     }
+
+     this->textctrl->AppendText(wxT("\n\n "));
 
 
-    std::cout << "\n WAREHOUSE LOCATION:";
+     this->textctrl->SetDefaultStyle(AttrBold);
 
-    std::string warehouse_location;
+     this->textctrl->AppendText(wxT("\n\n PROJECT WAREHOUSE LOCATION:"));
 
-    if(this->Des_Reader->Get_Warehouse_Location() != ""){
+     this->textctrl->SetDefaultStyle(AttrLigth);
 
-       warehouse_location =  this->Des_Reader->Get_Warehouse_Location();
+     this->textctrl->AppendText(wxT("\n\n "));
 
-       warehouse_location.push_back('\n');
 
-       this->textctrl->AppendText(wxString(warehouse_location));
-    }
+     std::string warehouse_location;
 
-    std::cout << "\n STANDART RECORD:";
+     if(this->Des_Reader->Get_Warehouse_Location() != ""){
 
-    std::string standard;
+        warehouse_location =  this->Des_Reader->Get_Warehouse_Location();
 
-    if(this->Des_Reader->Get_Standard() != ""){
+        warehouse_location.push_back('\n');
 
-       standard =  this->Des_Reader->Get_Standard();
+        this->textctrl->AppendText(wxString(warehouse_location));
+     }
+ 
+     this->textctrl->AppendText(wxT("\n\n "));
 
-       standard.push_back('\n');
 
-       this->textctrl->AppendText(wxString(standard));
-    }
 
-    std::cout << "\n INCLUDE DIRECTORY RECORD:";
+     this->textctrl->SetDefaultStyle(AttrBold);
 
-    int include_dir_num = this->Des_Reader->Get_Include_Directory_Number();
+     this->textctrl->AppendText(wxT("\n\n C++ STANDARD:"));
+
+     this->textctrl->SetDefaultStyle(AttrLigth);
+
+     this->textctrl->AppendText(wxT("\n\n "));
+
+
+
+     std::string standard;
+
+     if(this->Des_Reader->Get_Standard() != ""){
+
+        standard =  this->Des_Reader->Get_Standard();
+
+        standard.push_back('\n');
+
+        this->textctrl->AppendText(wxString(standard));
+     }
+
+     this->textctrl->AppendText(wxT("\n\n "));
+
+
+     this->textctrl->SetDefaultStyle(AttrBold);
+
+     this->textctrl->AppendText(wxT("\n\n INCLUDE DIRECTORY RECORD:"));
+
+     this->textctrl->SetDefaultStyle(AttrLigth);
+
+     this->textctrl->AppendText(wxT("\n\n "));
+
+
+     int include_dir_num = this->Des_Reader->Get_Include_Directory_Number();
 
      std::vector<std::string> include_dirs;
 
-    if(include_dir_num > 0){
+     if(include_dir_num > 0){
 
        for(int i=0;i<include_dir_num;i++){
 
@@ -212,27 +289,34 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
           inc_dir.push_back('\n');
 
+          inc_dir.push_back(' ');
+
           include_dirs.push_back(inc_dir);
        }
-    }
+     }
 
-    for(int i=0;i<include_dir_num;i++){
+     for(int i=0;i<include_dir_num;i++){
 
-        this->textctrl->AppendText(wxString(include_dirs.at(i)));
-    }
+         this->textctrl->AppendText(wxString(include_dirs.at(i)));
+     }
 
-    std::cout << "\n\n";
-
-
+     this->textctrl->AppendText(wxT("\n\n "));
 
 
-    std::cout << "\n SOURCE FILE DIRECTORIES RECORD:";
+     this->textctrl->SetDefaultStyle(AttrBold);
 
-    int source_dir_num = this->Des_Reader->Get_Source_File_Directory_Number();
+     this->textctrl->AppendText(wxT("\n\n SOURCE FILE DIRECTORIES RECORD:"));
 
-    std::vector<std::string> source_dirs;
+     this->textctrl->SetDefaultStyle(AttrLigth);
 
-    if(source_dir_num > 0){
+     this->textctrl->AppendText(wxT("\n\n "));
+
+
+     int source_dir_num = this->Des_Reader->Get_Source_File_Directory_Number();
+
+     std::vector<std::string> source_dirs;
+
+     if(source_dir_num > 0){
 
        for(int i=0;i<source_dir_num;i++){
 
@@ -240,20 +324,29 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
           source_directory.push_back('\n');
 
+          source_directory.push_back(' ');
+
           source_dirs.push_back(source_directory);
        }
-    }
+     }
 
-    for(int i=0;i<source_dir_num;i++){
+     for(int i=0;i<source_dir_num;i++){
 
-        this->textctrl->AppendText(wxString(source_dirs.at(i)));
-    }
+         this->textctrl->AppendText(wxString(source_dirs.at(i)));
+     }
+
+    this->textctrl->AppendText(wxT("\n\n "));
 
 
-    std::cout << "\n\n";
 
+    this->textctrl->SetDefaultStyle(AttrBold);
 
-    std::cout << "\n LIBRARY DIRECTORIES RECORD:";
+    this->textctrl->AppendText(wxT("\n\n LIBRARY DIRECTORIES RECORD:"));
+
+    this->textctrl->SetDefaultStyle(AttrLigth);
+
+    this->textctrl->AppendText(wxT("\n\n "));
+
 
     int lib_dir_num = this->Des_Reader->Get_Library_Directory_Number();
 
@@ -267,6 +360,8 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
            library_directory.push_back('\n');
 
+           library_directory.push_back(' ');
+
            library_dirs.push_back(library_directory);           
        }
     }
@@ -276,10 +371,20 @@ void Project_Descriptions_Printer::Print_Descriptions(){
         this->textctrl->AppendText(wxString(library_dirs.at(i)));
     }
 
+    this->textctrl->AppendText(wxT("\n\n "));
 
-    std::cout << "\n\n";
 
-    std::cout << "\n LIBRARY-FILES RECORD:";
+
+    this->textctrl->SetDefaultStyle(AttrBold);
+
+    this->textctrl->AppendText(wxT("\n\n LIBRARY-FILES RECORD:"));
+
+    this->textctrl->SetDefaultStyle(AttrLigth);
+
+    this->textctrl->AppendText(wxT("\n\n "));
+
+
+
 
     int lib_files_num = this->Des_Reader->Get_Library_Files_Number();
 
@@ -294,6 +399,8 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
            library_file.push_back('\n');
 
+           library_file.push_back(' ');
+
            library_files.push_back(library_file);
        }
     }
@@ -303,11 +410,19 @@ void Project_Descriptions_Printer::Print_Descriptions(){
         this->textctrl->AppendText(wxString(library_files.at(i)));
     }
 
+    this->textctrl->AppendText(wxT("\n\n "));
 
 
-    std::cout << "\n\n";
 
-    std::cout << "\n OPTIONS RECORD: ";
+    this->textctrl->SetDefaultStyle(AttrBold);
+
+    this->textctrl->AppendText(wxT("\n\n OPTIONS RECORD:"));
+
+    this->textctrl->SetDefaultStyle(AttrLigth);
+
+    this->textctrl->AppendText(wxT("\n\n "));
+
+
 
     std::string options;
 
@@ -317,6 +432,17 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
        this->textctrl->AppendText(wxString(options));
     }
+
+    this->textctrl->AppendText(wxT("\n\n "));
+
+    this->textctrl->ShowPosition(0);
+
+    this->textctrl->SetInsertionPoint(0);
+
+    this->textctrl->SetScrollPos(wxVERTICAL,0,true);
+
+    this->Show(true);
+
 }
 
 void Project_Descriptions_Printer::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
