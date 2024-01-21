@@ -11,6 +11,7 @@
 #include <wx/dialog.h>
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
+#include <wx/utils.h> 
 
 
 
@@ -23,14 +24,19 @@ enum
 class Custom_Message_Dialog : public wxDialog
 {
 public:
-    Custom_Message_Dialog(wxWindow * parent, const wxString & message=wxT(""), wxWindowID id=wxID_ANY, const wxString & title=wxT(""), 
+    Custom_Message_Dialog(wxWindow * parent, const wxString & message=wxT(""), 
     
-    const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(650,350),
+    const wxString & message_title=wxT(""), wxWindowID id=wxID_ANY, 
+    
+    const wxString & title=wxT("NWINIX REPORT"), 
+    
+    const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(650,450),
     
     long style=wxDEFAULT_DIALOG_STYLE, const wxString &name=wxDialogNameStr);
     
     virtual ~Custom_Message_Dialog();
-
+    
+private:
     void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect);
 
     void OnSize(wxSizeEvent & event);
@@ -43,9 +49,11 @@ public:
 
     wxStaticText * text;
 
+    wxStaticText * text_title;
+
     wxStaticBitmap * figure;
 
-    wxPanel *  main_panel;
+    wxPanel *  text_title_panel;
 
     wxPanel *  text_panel;
 
@@ -54,8 +62,6 @@ public:
     wxPanel *  button_panel;
 
     wxFont * Default_Font;
-
-    wxBitmap * page_close_icon;
 
     wxButton * CloseButton;
 

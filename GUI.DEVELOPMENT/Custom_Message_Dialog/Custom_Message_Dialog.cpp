@@ -26,11 +26,13 @@ BEGIN_EVENT_TABLE(Custom_Message_Dialog,wxDialog)
     EVT_BUTTON(ID_CLOSE_MESSAGE_WINDOW,Custom_Message_Dialog::CloseWindow)
 END_EVENT_TABLE()
 
-Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString & message, wxWindowID id, const wxString & title,
+Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString & message, 
+
+    const wxString & message_title, wxWindowID id, const wxString & title,
 
     const wxPoint & pos, const wxSize & size, long style, const wxString & name) : 
 
-     wxDialog(parent, id, title, pos, size, style, name)
+    wxDialog(parent, id, title, pos, size, style, name)
 {
     this->Memory_Delete_Condition = false;
 
@@ -39,19 +41,18 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
     this->GetEventHandler()->Bind(wxEVT_SIZE,&Custom_Message_Dialog::OnSize,this,wxID_ANY);
 
 
-    //std::string face_name = "Calibri"; 
-
     std::string face_name = "Segoe UI"; 
-
 
     this->Default_Font = new wxFont(12,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
 
-                     wxFONTWEIGHT_NORMAL,false,wxString(face_name));
+                         wxFONTWEIGHT_NORMAL,false,wxString(face_name));
 
     this->SetFont(*this->Default_Font);
 
 
     this->figure_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxDefaultSize);
+
+    this->text_title_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxDefaultSize);
 
     this->text_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxDefaultSize);
 
@@ -64,15 +65,32 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     this->text   = new wxStaticText(this->text_panel ,wxID_ANY,message);
 
-    this->CloseButton  = new wxButton(this->button_panel,ID_CLOSE_MESSAGE_WINDOW,wxT("Close"),wxDefaultPosition, wxSize(100,60));
+    this->text_title = new wxStaticText(this->text_title_panel ,wxID_ANY,message_title);
+
+
+    this->text_title->SetForegroundColour(wxColour(134,104,112));
+
+     wxFont textFont = this->text_title->GetFont();
+
+    this->text_title->SetFont(textFont.Bold());
+
+    this->CloseButton  = new wxButton(this->button_panel,ID_CLOSE_MESSAGE_WINDOW,
+    
+                         wxT("Close"),wxDefaultPosition, wxSize(100,60));
+
+    wxBoxSizer * text_sizer = new wxBoxSizer(wxVERTICAL);
+
+    text_sizer->Add(this->text_title_panel,0);
+
+    text_sizer->Add(this->text_panel,1);
 
 
 
-    wxBoxSizer * text_sizer = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer * panel_sizer = new wxBoxSizer(wxHORIZONTAL);
 
-    text_sizer->Add(this->text_panel,1,  wxALIGN_LEFT | wxALL, 50);
+    panel_sizer->Add(text_sizer,1,  wxALIGN_LEFT | wxALL, 50);
 
-    text_sizer->Add(this->figure_panel,0, wxALL,60);
+    panel_sizer->Add(this->figure_panel,0, wxALL,60);
 
 
     wxBoxSizer * button_sizer = new wxBoxSizer(wxVERTICAL);
@@ -84,7 +102,7 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     wxBoxSizer * topsizer = new wxBoxSizer(wxVERTICAL);
 
-    topsizer->Add(text_sizer,2, wxEXPAND | wxALL,0);
+    topsizer->Add(panel_sizer,2, wxEXPAND | wxALL,0);
 
     topsizer->Add(button_sizer,0, wxEXPAND | wxALL,0);
 
@@ -121,6 +139,8 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     this->PaintNow(this);
 
+    wxBell();
+
 }
 
 Custom_Message_Dialog::~Custom_Message_Dialog()
@@ -131,6 +151,7 @@ Custom_Message_Dialog::~Custom_Message_Dialog()
 
      }
 }
+
 
 
 void Custom_Message_Dialog::CloseWindow(wxCommandEvent & event)

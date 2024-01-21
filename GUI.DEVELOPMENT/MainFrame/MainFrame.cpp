@@ -665,7 +665,9 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
 
         if(this->is_descriptor_file_open){
 
-           this->Descriptions_Printer = new Project_Descriptions_Printer(this,wxID_ANY,wxT("THE PROJECT DESCRIPTION LIST"));
+           this->Descriptions_Printer = new Project_Descriptions_Printer(this,wxID_ANY,
+           
+           wxT("THE PROJECT DESCRIPTION LIST"));
 
            this->Descriptions_Printer->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
 
@@ -675,14 +677,15 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
         }
         else{
 
+            wxString Message = "Descriptor file was not selected";
 
-            wxString Error_Message = "Descriptor file was not selected";
+            Message = Message + "\nPlease select a descriptor file or";
 
-            Error_Message = Error_Message + "\nPlease select a descriptor file";
-
-            Error_Message = Error_Message + "\nor construct an empty descriptor file";
+            Message = Message + "\nconstruct an empty descriptor file";
             
-            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Error_Message,wxID_ANY,wxT("Sample"),wxDefaultPosition);
+            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
+            
+               wxT("Error message:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),wxDefaultPosition);
 
             dial->ShowModal();
         }
