@@ -28,7 +28,7 @@ END_EVENT_TABLE()
 
 Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString & message, 
 
-    const wxString & message_title, wxWindowID id, const wxString & title,
+    const wxString & message_title, wxWindowID id, const wxString & title, const wxBitmap & bmp, 
 
     const wxPoint & pos, const wxSize & size, long style, const wxString & name) : 
 
@@ -59,9 +59,9 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
     this->button_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxDefaultSize);
 
 
-    wxBitmap bmp(wxT("D:\\Pcynlitx_Build_Platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
-
     this->figure = new wxStaticBitmap(this->figure_panel,wxID_ANY,bmp);
+
+    this->figure->SetBackgroundColour(wxColour(235,235,235));
 
     this->text   = new wxStaticText(this->text_panel ,wxID_ANY,message);
 
@@ -76,7 +76,9 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     this->CloseButton  = new wxButton(this->button_panel,ID_CLOSE_MESSAGE_WINDOW,
     
-                         wxT("Close"),wxDefaultPosition, wxSize(100,60));
+                         wxT("CLOSE"),wxDefaultPosition, wxSize(100,60));
+
+
 
     wxBoxSizer * text_sizer = new wxBoxSizer(wxVERTICAL);
 
@@ -90,7 +92,7 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     panel_sizer->Add(text_sizer,1,  wxALIGN_LEFT | wxALL, 50);
 
-    panel_sizer->Add(this->figure_panel,0, wxALL,60);
+    panel_sizer->Add(this->figure_panel,0, wxRIGHT | wxTOP | wxBOTTOM,60);
 
 
     wxBoxSizer * button_sizer = new wxBoxSizer(wxVERTICAL);

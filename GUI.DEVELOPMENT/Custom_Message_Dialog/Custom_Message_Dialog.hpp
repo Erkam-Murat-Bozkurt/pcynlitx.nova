@@ -28,9 +28,9 @@ public:
     
     const wxString & message_title=wxT(""), wxWindowID id=wxID_ANY, 
     
-    const wxString & title=wxT("NWINIX REPORT"), 
+    const wxString & title=wxT("NWINIX REPORT"), const wxBitmap & bmp=NULL,
     
-    const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(650,450),
+    const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(620,400),
     
     long style=wxDEFAULT_DIALOG_STYLE, const wxString &name=wxDialogNameStr);
     

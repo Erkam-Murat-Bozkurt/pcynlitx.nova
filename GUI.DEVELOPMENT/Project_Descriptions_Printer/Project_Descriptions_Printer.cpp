@@ -179,11 +179,11 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
      wxTextAttr AttrBold(wxColor(134,104,112));
 
-     AttrBold.SetFontWeight(wxFONTWEIGHT_LIGHT);
+     AttrBold.SetFontWeight(wxFONTWEIGHT_BOLD);
 
-     AttrBold.SetFontSize(10);
+     AttrBold.SetFontSize(12);
 
-     AttrBold.SetFontFaceName(wxT("Segoue UI"));
+     AttrBold.SetFontFaceName(wxT("Calibri"));
 
 
 
@@ -192,17 +192,17 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
      AttrLigth.SetFontWeight(wxFONTWEIGHT_LIGHT);
 
-     AttrLigth.SetFontSize(10);
+     AttrLigth.SetFontSize(12);
 
-     AttrLigth.SetFontFaceName(wxT("Segoue UI"));
+     AttrLigth.SetFontFaceName(wxT("Calibri"));
 
      this->textctrl->SetDefaultStyle(AttrBold);
 
-     this->textctrl->AppendText(wxT("\n\n   GIT REPO LOCATION:"));
+     this->textctrl->AppendText(wxT("\n\n    GIT REPO LOCATION:"));
 
      this->textctrl->SetDefaultStyle(AttrLigth);
 
-     this->textctrl->AppendText(wxT("\n\n  "));
+     this->textctrl->AppendText(wxT("\n\n   "));
 
 
      std::string git_repo_location;
@@ -223,11 +223,11 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
      this->textctrl->SetDefaultStyle(AttrBold);
 
-     this->textctrl->AppendText(wxT("\n\n   PROJECT WAREHOUSE LOCATION:"));
+     this->textctrl->AppendText(wxT("\n\n    PROJECT WAREHOUSE LOCATION:"));
 
      this->textctrl->SetDefaultStyle(AttrLigth);
 
-     this->textctrl->AppendText(wxT("\n\n "));
+     this->textctrl->AppendText(wxT("\n\n  "));
 
 
      std::string warehouse_location;
@@ -251,7 +251,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
      this->textctrl->SetDefaultStyle(AttrBold);
 
-     this->textctrl->AppendText(wxT("\n\n   C++ STANDARD:"));
+     this->textctrl->AppendText(wxT("\n\n    C++ STANDARD:"));
 
      this->textctrl->SetDefaultStyle(AttrLigth);
 
@@ -275,6 +275,8 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
         this->textctrl->AppendText(" ");
 
+        this->textctrl->AppendText(" ");
+
         this->textctrl->AppendText(wxString(standard));
      }
 
@@ -283,7 +285,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
      this->textctrl->SetDefaultStyle(AttrBold);
 
-     this->textctrl->AppendText(wxT("\n\n   INCLUDE DIRECTORY RECORD:"));
+     this->textctrl->AppendText(wxT("\n\n    INCLUDE DIRECTORY RECORD:"));
 
      this->textctrl->SetDefaultStyle(AttrLigth);
  
@@ -337,7 +339,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
      this->textctrl->SetDefaultStyle(AttrBold);
 
-     this->textctrl->AppendText(wxT("\n\n   SOURCE FILE DIRECTORIES RECORD:"));
+     this->textctrl->AppendText(wxT("\n\n    SOURCE FILE DIRECTORIES RECORD:"));
 
      this->textctrl->SetDefaultStyle(AttrLigth);
 
@@ -394,7 +396,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
     this->textctrl->SetDefaultStyle(AttrBold);
 
-    this->textctrl->AppendText(wxT("\n\n   LIBRARY DIRECTORIES RECORD:"));
+    this->textctrl->AppendText(wxT("\n\n    LIBRARY DIRECTORIES RECORD:"));
 
     this->textctrl->SetDefaultStyle(AttrLigth);
 
@@ -449,7 +451,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
     this->textctrl->SetDefaultStyle(AttrBold);
 
-    this->textctrl->AppendText(wxT("\n\n   LIBRARY-FILES RECORD:"));
+    this->textctrl->AppendText(wxT("\n\n    LIBRARY-FILES RECORD:"));
 
     this->textctrl->SetDefaultStyle(AttrLigth);
 
@@ -508,7 +510,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
     this->textctrl->SetDefaultStyle(AttrBold);
 
-    this->textctrl->AppendText(wxT("\n\n   OPTIONS RECORD:"));
+    this->textctrl->AppendText(wxT("\n\n    OPTIONS RECORD:"));
 
     this->textctrl->SetDefaultStyle(AttrLigth);
 

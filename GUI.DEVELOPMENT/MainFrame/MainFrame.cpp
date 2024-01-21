@@ -45,6 +45,14 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
   SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
 
+  this->exclamation_mark_bmp 
+  
+      = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+
+  this->logo_bmp 
+  
+      = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\logo.png"),wxBITMAP_TYPE_ANY);
+
 
   this->Des_Reader = new Descriptor_File_Reader('w');
 
@@ -382,24 +390,27 @@ void MainFrame::Show_Author(wxCommandEvent & event)
 {
      if(event.GetId() == ID_SHOW_AUTOR_INFO){
 
-        wxString message = wxT("\n");
 
-        message = message + wxT("   ERKAM MURAT BOZKURT\n\n");
+        wxString message = wxT("ERKAM MURAT BOZKURT\n\n");
 
-        message = message + wxT("   PCYNLITX Software, Istanbul / TURKEY\n\n");
+        message = message + wxT("PCYNLITX Software, Istanbul / TURKEY\n\n");
 
-        message = message + wxT("   M.Sc. Control Sysytem Engineering\n\n");
+        message = message + wxT("M.Sc. Control Sysytem Engineering\n\n");
 
-        message = message + wxT("   ORCID ID: 0000-0003-3690-2770\n\n");
+        message = message + wxT("ORCID ID: 0000-0003-3690-2770\n\n");
 
-        message = message + wxT("   http://www.pcynlitx.com/developer/\n\n");
+        message = message + wxT("http://www.pcynlitx.com/developer/\n\n");
 
-        message = message + wxT("   pcynlitx.help@gmail.com\n\n");
+        message = message + wxT("pcynlitx.help@gmail.com\n\n");
 
 
-        wxRichMessageDialog * dial = new wxRichMessageDialog(this,
+            
+        Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
+            
+               wxT("THE DEVELOPER OF THE PLATFORM:\n"),wxID_ANY,wxT("THE DEVELOPER OF NWINIX PLATFORM"),
+               
+               *this->logo_bmp, wxDefaultPosition,wxSize(750,650));
 
-                     message, wxT("    THE DEVELOPER OF THE PLATFORM"), wxOK|wxCENTRE);
 
         if(dial->ShowModal() == ID_SHOW_AUTOR_INFO){
 
@@ -685,7 +696,9 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
             
             Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
             
-               wxT("Error message:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),wxDefaultPosition);
+               wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+               
+               *this->exclamation_mark_bmp, wxDefaultPosition);
 
             dial->ShowModal();
         }

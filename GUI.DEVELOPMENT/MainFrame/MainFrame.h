@@ -158,6 +158,8 @@ private:
   int Process_Event_Counter;
   bool Progress_Bar_Start_status;
   wxDir    * dir_control;
+  wxBitmap * exclamation_mark_bmp;
+  wxBitmap * logo_bmp;
   std::condition_variable cv_fork;
   std::condition_variable cv_read;
   std::condition_variable cv_prog;
