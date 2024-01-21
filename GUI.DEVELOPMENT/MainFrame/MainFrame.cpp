@@ -60,7 +60,7 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
   std::string tabart_font = "Segoe UI";
 
-  std::string face_name = "JetBrains Mono NL"; 
+  std::string face_name = "Segoe UI"; 
 
 
 

@@ -25,7 +25,7 @@ class Custom_Message_Dialog : public wxDialog
 public:
     Custom_Message_Dialog(wxWindow * parent, const wxString & message=wxT(""), wxWindowID id=wxID_ANY, const wxString & title=wxT(""), 
     
-    const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(550,350),
+    const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(650,350),
     
     long style=wxDEFAULT_DIALOG_STYLE, const wxString &name=wxDialogNameStr);
     
@@ -53,7 +53,7 @@ public:
 
     wxPanel *  button_panel;
 
-
+    wxFont * Default_Font;
 
     wxBitmap * page_close_icon;
 

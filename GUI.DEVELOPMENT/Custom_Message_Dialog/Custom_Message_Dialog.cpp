@@ -39,6 +39,17 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
     this->GetEventHandler()->Bind(wxEVT_SIZE,&Custom_Message_Dialog::OnSize,this,wxID_ANY);
 
 
+    //std::string face_name = "Calibri"; 
+
+    std::string face_name = "Segoe UI"; 
+
+
+    this->Default_Font = new wxFont(12,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
+
+                     wxFONTWEIGHT_NORMAL,false,wxString(face_name));
+
+    this->SetFont(*this->Default_Font);
+
 
     this->figure_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxDefaultSize);
 
@@ -53,31 +64,27 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     this->text   = new wxStaticText(this->text_panel ,wxID_ANY,message);
 
-    this->CloseButton  = new wxButton(this->button_panel,ID_CLOSE_MESSAGE_WINDOW,wxT("CLOSE"),wxDefaultPosition, wxSize(90, 50));
+    this->CloseButton  = new wxButton(this->button_panel,ID_CLOSE_MESSAGE_WINDOW,wxT("Close"),wxDefaultPosition, wxSize(100,60));
 
 
-    wxBoxSizer * figure_sizer = new wxBoxSizer(wxVERTICAL);
 
-    figure_sizer->Add(this->figure_panel,0,wxALIGN_CENTER_HORIZONTAL | wxALL,20);
+    wxBoxSizer * text_sizer = new wxBoxSizer(wxHORIZONTAL);
 
+    text_sizer->Add(this->text_panel,1,  wxALIGN_LEFT | wxALL, 50);
 
-    wxBoxSizer * text_sizer = new wxBoxSizer(wxVERTICAL);
-
-    text_sizer->Add(this->text_panel,1, wxALIGN_CENTER_HORIZONTAL | wxALL, 20);
+    text_sizer->Add(this->figure_panel,0, wxALL,60);
 
 
     wxBoxSizer * button_sizer = new wxBoxSizer(wxVERTICAL);
 
-    button_sizer->Add(this->button_panel,0,wxALIGN_CENTER_HORIZONTAL |  wxALL,20);
+    button_sizer->Add(this->button_panel,0,wxALIGN_CENTER_HORIZONTAL |  wxALL,30);
 
 
 
 
     wxBoxSizer * topsizer = new wxBoxSizer(wxVERTICAL);
 
-    topsizer->Add(figure_sizer,0, wxEXPAND | wxALL,0);
-
-    topsizer->Add(text_sizer  ,1, wxEXPAND | wxALL,0);
+    topsizer->Add(text_sizer,2, wxEXPAND | wxALL,0);
 
     topsizer->Add(button_sizer,0, wxEXPAND | wxALL,0);
 
@@ -97,7 +104,7 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
     this->SetExtraStyle(wxNO_FULL_REPAINT_ON_RESIZE);
 
 
-    this->SetBackgroundColour(wxColour(225,225,225));
+    this->SetBackgroundColour(wxColour(235,235,235));
 
     this->SetSize(size);
 
@@ -134,7 +141,7 @@ void Custom_Message_Dialog::CloseWindow(wxCommandEvent & event)
 
 void Custom_Message_Dialog::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(225,225,225));
+     dc.SetBrush(wxColour(235,235,235));
 
      dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+5,rect.GetHeight()+5);
 }
@@ -169,5 +176,9 @@ void Custom_Message_Dialog::OnSize(wxSizeEvent & event){
       wxRect rect(this->GetSize());
 
       this->DrawBackground(dc,this,rect);
+
+      wxRect rect_text(this->GetSize());
+
+      this->DrawBackground(dc,this,rect_text);
 }
 
