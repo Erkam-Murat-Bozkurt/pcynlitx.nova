@@ -554,11 +554,15 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
             std::string error_message = this->Des_Reader->Get_Error_Message();
 
             wxString message(error_message);
+            
+            //Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,wxID_ANY);
 
+            
             wxMessageDialog * dial = new wxMessageDialog(NULL,message,
 
             wxT("Error Message"), wxOK);
 
+            
             dial->ShowModal();
       }
     }
@@ -671,7 +675,16 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
         }
         else{
 
-             this->Descriptor_File_Selection_Check();
+
+            wxString Error_Message = "Descriptor file was not selected";
+
+            Error_Message = Error_Message + "\nPlease select a descriptor file";
+
+            Error_Message = Error_Message + "\nor construct an empty descriptor file";
+            
+            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Error_Message,wxID_ANY,wxT("Sample"),wxDefaultPosition);
+
+            dial->ShowModal();
         }
      }      
 }

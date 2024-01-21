@@ -72,6 +72,9 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Multi_DataPanel/Custom_Multi_DataPanel.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Multi_DataPanel/Custom_Multi_DataPanel.cpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Message_Dialog/Custom_Message_Dialog.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Message_Dialog/Custom_Message_Dialog.cpp
+
 )
 
 
@@ -120,6 +123,9 @@ target_include_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Multi_DataPanel
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_Descriptions_Printer
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Message_Dialog
+
 
 
     ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector
@@ -192,6 +198,9 @@ target_link_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Multi_DataPanel
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_Descriptions_Printer
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Message_Dialog
+
 
 
 

@@ -100,7 +100,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->File_List_Widget_Shape.Dock();
 
-     this->File_List_Widget_Shape.dock_proportion = 0.25;
+     this->File_List_Widget_Shape.dock_proportion = 0.3;
 
 
      this->Tree_Control_Size = this->GetClientSize();
@@ -108,8 +108,19 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->tree_control = new Custom_wxTreeCtrl(this, wxID_ANY,wxDefaultPosition,
 
-                             this->Tree_Control_Size, wxTR_DEFAULT_STYLE | wxTR_ROW_LINES);
+                             this->Tree_Control_Size, wxTR_DEFAULT_STYLE | wxTR_ROW_LINES );
 
+
+     this->tree_control->AlwaysShowScrollbars (true,true);
+
+     std::string face_name = "Calibri"; 
+
+
+     this->Directory_List_Font = new wxFont(10,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
+
+                     wxFONTWEIGHT_NORMAL,false,wxString(face_name));
+
+     this->tree_control->SetFont(*this->Directory_List_Font);
 
 
      wxPoint tree_control_current_position = this->tree_control->GetPosition();
@@ -122,6 +133,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->tree_control->Receive_Position(this->Tree_Control_Position);
 
      this->tree_control->SetPosition(this->Tree_Control_Position);
+
 
 
 
@@ -160,11 +172,6 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->tree_control->SetAutoLayout(true);
 
      this->tree_control->Show(false);
-
-
-     this->Directory_List_Font = Default_Font;
-
-     this->Directory_List_Font.SetPointSize(this->Directory_List_Font.GetPointSize()-1);
 
      this->Folder_Lister = new Project_Folder_Lister(this->tree_control);
 }
@@ -206,7 +213,7 @@ void Custom_Tree_View_Panel::Initialize_Sizer()
 
      this->panel_sizer->Add(this->Top_Bar_Window,0, wxEXPAND | wxALL,0);
 
-     this->panel_sizer->Add(this->tree_control,0, wxEXPAND | wxALL,0);
+     this->panel_sizer->Add(this->tree_control,1, wxEXPAND | wxRIGHT | wxBOTTOM,10);
 
      this->windows_detach_condition = false;
 
@@ -235,9 +242,9 @@ void Custom_Tree_View_Panel::Receive_Topbar_MinSize(wxSize size)
 
 void Custom_Tree_View_Panel::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(255,255,255));
+     dc.SetBrush(wxColour(200,200,200));
 
-     dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth(),rect.GetHeight());
+     dc.DrawRectangle(rect.GetX(), rect.GetY(), rect.GetWidth(),rect.GetHeight());
 }
 
 void Custom_Tree_View_Panel::PaintNow()

@@ -117,7 +117,7 @@ protected:
 
   wxAuiManager * Interface_Manager_Pointer;
 
-  wxFont Directory_List_Font;
+  wxFont * Directory_List_Font;
 };
 
 #endif /* CUSTOM_PANEL */

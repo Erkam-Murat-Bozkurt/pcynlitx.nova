@@ -54,6 +54,7 @@
 #include "Custom_Multi_DataPanel.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Descriptions_Printer.hpp"
+#include "Custom_Message_Dialog.hpp"
 #include "Custom_System_Interface.h"
 #include "Cpp_FileOperations.h"
 

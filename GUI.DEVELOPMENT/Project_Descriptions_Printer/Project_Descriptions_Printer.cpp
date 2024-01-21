@@ -62,7 +62,6 @@ Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWi
 
      this->PaintNow(this);
 
-     //this->Show(true);
 
      this->window_open_status = true;
 

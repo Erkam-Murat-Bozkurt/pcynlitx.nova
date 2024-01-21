@@ -40,7 +40,7 @@ Custom_wxTreeCtrl::Custom_wxTreeCtrl(wxWindow *parent, wxWindowID id,
 
      wxFont tree_font(9,wxFONTFAMILY_MODERN,wxFONTSTYLE_NORMAL,
 
-                          wxFONTWEIGHT_NORMAL,false,"Noto Sans");
+                          wxFONTWEIGHT_NORMAL,false,wxT("Segoue UI"));
 
      this->SetFont(tree_font);
 
@@ -90,14 +90,14 @@ Custom_wxTreeCtrl::Custom_wxTreeCtrl(wxWindow *parent, wxWindowID id,
       wxRect rect(this->GetSize());
 
       this->DrawBackground(dc,this,rect);
- }
+}
 
 
 void Custom_wxTreeCtrl::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
 {
      dc.SetBrush(wxColour(255,255,255));
 
-     dc.DrawRectangle(rect.GetX()-2, rect.GetY()-2, rect.GetWidth()+5,rect.GetHeight()+5);
+     dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth(),rect.GetHeight());
 }
 
 void Custom_wxTreeCtrl::Receive_Position(wxPoint control_position){
