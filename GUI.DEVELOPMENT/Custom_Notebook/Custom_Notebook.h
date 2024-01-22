@@ -69,6 +69,7 @@ public:
   void Open_File(wxString File_Path);
   void Set_Font(wxFont Default_Font);
   void Set_Lexer_Style(wxFont Default_Font);
+  void Clear_Text_Control_Style(Custom_TextCtrl * text_ctrl);
   void Set_Style_Font(wxFont Font);
   void OnClose();
   void Clear_Style();

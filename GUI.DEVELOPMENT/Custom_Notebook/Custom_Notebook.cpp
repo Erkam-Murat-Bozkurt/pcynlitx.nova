@@ -717,6 +717,15 @@ void Custom_Notebook::Clear_Style()
      this->Style_Change_Operation = false;
 }
 
+
+void Custom_Notebook::Clear_Text_Control_Style(Custom_TextCtrl * text_ctrl){
+
+     this->Text_Style_Loader.Clear_Text_Control_Style(text_ctrl,
+
+     *this->Default_Font);
+
+}
+
 void Custom_Notebook::Reload_Style()
 {
      this->Style_Change_Operation = true;

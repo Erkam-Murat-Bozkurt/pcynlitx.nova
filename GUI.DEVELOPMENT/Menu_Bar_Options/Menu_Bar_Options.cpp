@@ -103,6 +103,8 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Project_Management->Append(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Run Single File Script Constructor"," ",wxITEM_NORMAL);
 
+  this->Project_Management->Append(ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Run Advance Single File Script Constructor"," ",wxITEM_NORMAL);
+
   this->Project_Management->Append(ID_PRINT_DESCRIPTIONS, "&Print Project Descriptions"," ",wxITEM_NORMAL);
 
   

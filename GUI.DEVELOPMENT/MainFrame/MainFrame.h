@@ -118,7 +118,8 @@ private:
   void Determine_Executable_File_Script_Construction_Point(wxString FileName);
   void Custom_DataPanel_Constructor(wxString Dtyp, wxString Title, wxString text, bool sel, bool status);
   void Process_End(wxProcessEvent & event);
-  void Single_File_Script_Construction_Executer(wxString FilePath, wxString FileName);
+  void Single_File_Script_Construction_Executer(wxString FilePath, wxString FileName, char strategy);
+  void Advance_Single_File_Script_Construction(wxCommandEvent & event);
   void OpenFile(wxCommandEvent & event);
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;

@@ -375,10 +375,14 @@ void MainFrame::Show_Project_File(wxCommandEvent & event){
             if(is_descriptor_file_open){
 
                 this->Book_Manager->Select_File(this->Descriptor_File_Path);
+
+                this->Book_Manager->Clear_Text_Control_Style(this->Book_Manager->Get_Selected_Text_Ctrl());
             }
             else{
 
                   this->Book_Manager->Open_File(this->Descriptor_File_Path);
+
+                  this->Book_Manager->Clear_Text_Control_Style(this->Book_Manager->Get_Selected_Text_Ctrl());
             }
         }
         else{
@@ -491,9 +495,11 @@ void MainFrame::Single_File_Script_Construction(wxCommandEvent & event){
                
            }
 
+           char strategy = 's';
+
            this->Single_File_Script_Construction_Executer(this->Multi_DataPanel->FilePath,
            
-               this->Multi_DataPanel->ExeFileName);
+               this->Multi_DataPanel->ExeFileName,strategy);
         }
         else{
 
@@ -503,7 +509,37 @@ void MainFrame::Single_File_Script_Construction(wxCommandEvent & event){
 }
 
 
-void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath, wxString FileName){
+void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
+
+     if(event.GetId() == ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR){
+
+        event.Skip(true);
+
+        if(this->is_descriptor_file_open){
+
+           this->Multi_DataPanel = new Custom_Multi_DataPanel(this);
+
+           this->Multi_DataPanel->Create_Exe_Script_Panel();
+
+           if (this->Multi_DataPanel->ShowModal() == wxID_OK ){
+               
+           }
+
+           char strategy = 'a';
+
+           this->Single_File_Script_Construction_Executer(this->Multi_DataPanel->FilePath,
+           
+               this->Multi_DataPanel->ExeFileName,strategy);
+        }
+        else{
+
+           this->Descriptor_File_Selection_Check();
+        }        
+     }
+}
+
+
+void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath, wxString FileName, char strategy){
 
      if(!FilePath.empty() && !FileName.empty()){
         
@@ -520,8 +556,6 @@ void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath, wxSt
             std::string src_path = FilePath.ToStdString();
 
             std::string exe_name = FileName.ToStdString();
-
-            char strategy = 's';
 
             this->Process_Ptr->Exec_Cmd_For_Single_Src_File(src_path,exe_name,strategy);
 
