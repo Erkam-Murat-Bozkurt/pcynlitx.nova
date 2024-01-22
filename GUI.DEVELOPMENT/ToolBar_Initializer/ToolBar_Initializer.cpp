@@ -68,19 +68,19 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      ToolBar_Widget_Shape.CloseButton(false);
 
-     ToolBar_Widget_Shape.LeftDockable(false);
+     ToolBar_Widget_Shape.LeftDockable(true);
 
      ToolBar_Widget_Shape.RightDockable(false);
 
      ToolBar_Widget_Shape.BottomDockable(false);
 
-     ToolBar_Widget_Shape.TopDockable(true);
+     ToolBar_Widget_Shape.TopDockable(false);
 
      ToolBar_Widget_Shape.Movable(false);
 
      ToolBar_Widget_Shape.Floatable(false);
 
-     ToolBar_Widget_Shape.Top();
+     ToolBar_Widget_Shape.Left();
 
      ToolBar_Widget_Shape.Dock();
 

@@ -2,12 +2,12 @@
 <svg
    data-name="Layer 1"
    id="Layer_1"
-   viewBox="0 0 67.546431 67.533799"
+   viewBox="0 0 58.403575 58.020287"
    version="1.1"
    sodipodi:docname="file_open_icon.svg"
    inkscape:version="1.3.1 (91b66b0783, 2023-11-16)"
-   width="67.546432"
-   height="67.533798"
+   width="58.403576"
+   height="58.020287"
    inkscape:export-filename="file_icon.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
@@ -25,9 +25,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="true"
-     inkscape:zoom="5.7231455"
-     inkscape:cx="35.906828"
-     inkscape:cy="49.186239"
+     inkscape:zoom="8.09375"
+     inkscape:cx="36.015444"
+     inkscape:cy="39.104247"
      inkscape:window-width="1920"
      inkscape:window-height="991"
      inkscape:window-x="-9"
@@ -37,8 +37,8 @@
     <inkscape:grid
        id="grid5"
        units="px"
-       originx="49.615743"
-       originy="49.586957"
+       originx="49.677521"
+       originy="49.463406"
        spacingx="1"
        spacingy="1"
        empcolor="#0099e5"
@@ -61,21 +61,21 @@
   <rect
      style="fill:#878787;fill-opacity:1;stroke:#c8c8c8;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect819"
-     width="67.546432"
-     height="67.533798"
-     x="-0.061778586"
-     y="0.12355205"
-     ry="4.4244523"
+     width="58.403576"
+     height="58.020287"
+     x="0"
+     y="0"
+     ry="3.8011785"
      inkscape:export-xdpi="500"
      inkscape:export-ydpi="500" />
   <path
-     d="M 19.142505,28.583883 H 52.004797 V 17.770122 H 33.435034 L 27.245112,10.560947 H 11.77031 v 35.195189 z"
+     d="M 16.462894,24.877319 H 44.815611 V 15.175527 H 28.79411 L 23.453609,8.7076653 H 10.102359 V 40.283765 Z"
      stroke="none"
      id="path1"
-     style="fill:#ebebeb;fill-opacity:1;stroke-width:0.668013" />
+     style="fill:#ebebeb;fill-opacity:1;stroke-width:0.587721" />
   <path
-     d="M 21.055191,32.18847 11.77031,53.815992 H 52.004797 L 61.28968,32.18847 Z"
+     d="m 18.113109,28.11125 -8.01075,19.403584 H 44.815611 L 52.826362,28.11125 Z"
      stroke="none"
      id="path2"
-     style="fill:#ebebeb;fill-opacity:1;stroke-width:0.668013" />
+     style="fill:#ebebeb;fill-opacity:1;stroke-width:0.587721" />
 </svg>

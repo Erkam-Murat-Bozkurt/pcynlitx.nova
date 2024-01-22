@@ -49,7 +49,9 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->File_Menu->Append(ID_SAVE_AS,"Save As","",wxITEM_NORMAL);
 
-  this->File_Menu->Append(ID_NEW_FILE,"&Open New file as","",wxITEM_NORMAL);
+  this->File_Menu->Append(ID_OPEN_FILE,"&Open file","",wxITEM_NORMAL);
+
+  this->File_Menu->Append(ID_NEW_FILE,"&Create new file as","",wxITEM_NORMAL);
 
   this->File_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 

@@ -873,6 +873,8 @@ void MainFrame::Select_File(wxString & FilePATH, wxString Title){
 
               = new wxFileDialog(this,Title);
 
+     openFileDialog->CenterOnScreen(wxBOTH);
+
      if (openFileDialog->ShowModal() == wxID_OK){
 
          FilePATH = openFileDialog->GetPath();
@@ -1438,6 +1440,9 @@ void MainFrame::New_File(wxCommandEvent & event)
 
                wxFD_OVERWRITE_PROMPT | wxFD_SAVE, wxDefaultPosition);
 
+        File_Dialog->CenterOnScreen(wxBOTH);
+
+
         if(File_Dialog->ShowModal() == wxID_OK) // If the user clicked "OK"
         {
            File_Path = File_Dialog->GetPath();
@@ -1455,6 +1460,42 @@ void MainFrame::New_File(wxCommandEvent & event)
         File_Dialog->Destroy();
      }
 }
+
+
+void MainFrame::OpenFile(wxCommandEvent & event)
+{
+     if(event.GetId() == ID_OPEN_FILE){
+
+        wxString File_Path;
+
+        wxFileDialog * File_Dialog = new wxFileDialog(this,wxT("New File"),
+
+               wxEmptyString, wxEmptyString,wxT(""),
+
+               wxFD_OVERWRITE_PROMPT | wxFD_SAVE, wxDefaultPosition);
+
+        File_Dialog->CenterOnScreen(wxBOTH);
+
+        if(File_Dialog->ShowModal() == wxID_OK) // If the user clicked "OK"
+        {
+           File_Path = File_Dialog->GetPath();
+
+           wxTextFile File_Manager(File_Path);
+
+           if(!File_Manager.Exists()){
+
+              File_Manager.Create();
+           }
+
+           this->Book_Manager->Add_New_File(File_Path);
+        }
+
+        File_Dialog->Destroy();
+     }
+}
+
+
+
 
 void MainFrame::Change_Font(wxCommandEvent & event){
 

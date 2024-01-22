@@ -43,7 +43,7 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     std::string face_name = "Segoe UI"; 
 
-    this->Default_Font = new wxFont(12,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
+    this->Default_Font = new wxFont(11,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
 
                          wxFONTWEIGHT_NORMAL,false,wxString(face_name));
 
