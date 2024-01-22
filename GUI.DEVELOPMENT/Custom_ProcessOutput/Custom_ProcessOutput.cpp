@@ -17,9 +17,9 @@ Custom_ProcessOutput::Custom_ProcessOutput(wxFrame *parent, wxWindowID id, const
 
      this->log_num =0;
 
-     this->Default_Font = new wxFont(10,wxFONTFAMILY_MODERN ,wxFONTSTYLE_NORMAL,
+     this->Default_Font = new wxFont(12,wxFONTFAMILY_MODERN ,wxFONTSTYLE_NORMAL,
 
-                     wxFONTWEIGHT_NORMAL,false,"Segoe UI");
+                     wxFONTWEIGHT_NORMAL,false,"Calibri");
 
      this->SetFont(*(this->Default_Font));
 
@@ -77,19 +77,19 @@ Custom_ProcessOutput::~Custom_ProcessOutput(){
 void Custom_ProcessOutput::Construct_Output(int size){
 
 
-     this->text_ctrl_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,600));
+     this->text_ctrl_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,-1));
 
      this->dialog_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,30));
 
      this->close_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,70));
 
-     this->CloseButton  = new wxButton(this,ID_CLOSE_WINDOW,wxT("CLOSE"),wxDefaultPosition, wxSize(80, 40));
+     this->CloseButton  = new wxButton(this,ID_CLOSE_WINDOW,wxT("CLOSE"),wxDefaultPosition, wxSize(100, 50));
 
 
 
      this->textctrl = new wxTextCtrl(this->text_ctrl_panel,wxID_ANY, wxT(""), 
      
-                      wxDefaultPosition, wxSize(900,600), wxTE_MULTILINE | wxTE_RICH);
+                      wxDefaultPosition, wxSize(900,550), wxTE_MULTILINE | wxTE_RICH);
 
 
 
@@ -120,7 +120,7 @@ void Custom_ProcessOutput::Construct_Output(int size){
 
      this->close_button_sizer->AddStretchSpacer();
 
-     this->close_button_sizer->Add(this->CloseButton,0, wxALIGN_CENTER_HORIZONTAL | wxFIXED_MINSIZE  | wxALL,5);
+     this->close_button_sizer->Add(this->CloseButton,0, wxALIGN_CENTER_HORIZONTAL | wxFIXED_MINSIZE  | wxALL,15);
 
      this->close_button_sizer->AddStretchSpacer();
 

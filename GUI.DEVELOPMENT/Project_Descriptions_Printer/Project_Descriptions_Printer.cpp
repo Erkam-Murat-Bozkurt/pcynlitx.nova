@@ -93,7 +93,7 @@ void Project_Descriptions_Printer::Construct_Text_Panel(){
 
      this->close_panel     = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,70));
 
-     this->CloseButton     = new wxButton(this,ID_CLOSE_DESCRIPTION_WINDOW,wxT("CLOSE"),wxDefaultPosition, wxSize(80, 40));
+     this->CloseButton     = new wxButton(this,ID_CLOSE_DESCRIPTION_WINDOW,wxT("CLOSE"),wxDefaultPosition, wxSize(100,50));
 
 
 
@@ -114,7 +114,7 @@ void Project_Descriptions_Printer::Construct_Text_Panel(){
 
      this->close_button_sizer->AddStretchSpacer();
 
-     this->close_button_sizer->Add(this->CloseButton,0, wxALIGN_CENTER_HORIZONTAL | wxFIXED_MINSIZE  | wxALL,5);
+     this->close_button_sizer->Add(this->CloseButton,0, wxALIGN_CENTER_HORIZONTAL | wxFIXED_MINSIZE  | wxALL,10);
 
      this->close_button_sizer->AddStretchSpacer();
 
@@ -266,8 +266,6 @@ void Project_Descriptions_Printer::Print_Descriptions(){
         standard =  this->Des_Reader->Get_Standard();
 
         standard.push_back('\n');
-
-        this->textctrl->AppendText(" ");
 
         this->textctrl->AppendText(" ");
 

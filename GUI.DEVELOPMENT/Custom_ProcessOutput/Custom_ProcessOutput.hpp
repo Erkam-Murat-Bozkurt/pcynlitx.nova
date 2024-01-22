@@ -35,7 +35,7 @@ public:
 
 Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & title=wxT(""), 
 
-   const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(900,770), 
+   const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(900,700), 
    
    long style=wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP);
 

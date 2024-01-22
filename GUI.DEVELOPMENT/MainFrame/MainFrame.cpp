@@ -289,14 +289,19 @@ void MainFrame::File_Save(wxCommandEvent & event){
         }
         else{
 
-         wxMessageDialog * dial = new wxMessageDialog(NULL,
-
-         wxT(" This is no any file currently open!\n A file must be open ."),
-
-         wxT("Error Message"), wxOK);
-
-         dial->ShowModal();
+            wxString message =  wxT(" This is no any file currently open!");
             
+            message += "\n A file must be openned.";
+            
+            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
+            
+            wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+               
+            *this->exclamation_mark_bmp, wxDefaultPosition);
+
+            dial->ShowModal();
+
+            delete dial;            
         }      
      }
 }
@@ -407,9 +412,11 @@ void MainFrame::Show_Author(wxCommandEvent & event)
             
         Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
             
-               wxT("THE DEVELOPER OF THE PLATFORM:\n"),wxID_ANY,wxT("THE DEVELOPER OF NWINIX PLATFORM"),
+            wxT("THE DEVELOPER OF THE PLATFORM:\n"),wxID_ANY,
                
-               *this->logo_bmp, wxDefaultPosition,wxSize(750,650));
+            wxT("THE DEVELOPER OF NWINIX PLATFORM"),
+               
+            *this->logo_bmp, wxDefaultPosition,wxSize(750,650));
 
 
         if(dial->ShowModal() == ID_SHOW_AUTOR_INFO){
@@ -524,15 +531,20 @@ void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath, wxSt
          }
          else{
 
+
             std::string error_message = this->Des_Reader->Get_Error_Message();
 
             wxString message(error_message);
-
-            wxMessageDialog * dial = new wxMessageDialog(NULL,message,
-
-                  wxT("Error Message"), wxOK);
+            
+            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
+            
+            wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX BUILD SYSTEM COSTRUCTION REPORT"),
+               
+            *this->exclamation_mark_bmp, wxDefaultPosition);
 
             dial->ShowModal();
+
+            delete dial;
          }
       }
 }
@@ -566,15 +578,16 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
             wxString message(error_message);
             
-            //Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,wxID_ANY);
 
+            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
             
-            wxMessageDialog * dial = new wxMessageDialog(NULL,message,
+            wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX BUILD SYSTEM COSTRUCTION REPORT"),
+               
+            *this->exclamation_mark_bmp, wxDefaultPosition);
 
-            wxT("Error Message"), wxOK);
-
-            
             dial->ShowModal();
+
+            delete dial;
       }
     }
     else{
@@ -872,11 +885,16 @@ void MainFrame::Select_File(wxString & FilePATH, wxString Title){
 
             if(Dir_Ctrl.IsOpened()){
 
-               wxMessageDialog * dial = new wxMessageDialog(NULL,
 
-               wxT(" This is a directory!\n A file must be selected ."),
+               wxString Message = "This is a directory!";
 
-                   wxT("Error Message"), wxOK);
+               Message = Message + "\nA file must be selected .";
+            
+               Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
+            
+               wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+               
+               *this->exclamation_mark_bmp, wxDefaultPosition);
 
                dial->ShowModal();
 
@@ -1166,21 +1184,22 @@ void MainFrame::Enter_Options(wxCommandEvent & event)
 }
 
 void MainFrame::Descriptor_File_Selection_Check(){
+      
+     wxString Message = "Descriptor file was not selected";
 
-     wxString Error_Message = "Descriptor file was not selected";
+     Message = Message + "\nPlease select a descriptor file or";
 
-     Error_Message = Error_Message + "\nPlease select a descriptor file";
+     Message = Message + "\nconstruct an empty descriptor file";
+            
+     Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
+            
+         wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+               
+         *this->exclamation_mark_bmp, wxDefaultPosition);
 
-     Error_Message = Error_Message + "\nor construct an empty descriptor file";
+         dial->ShowModal();
 
-     wxMessageDialog * dial = new wxMessageDialog(NULL,
-
-      Error_Message, wxT("Info"), wxOK);
-
-     if(dial->ShowModal()== wxOK){
-
-        delete dial;
-      }
+     delete dial;
 }
 
 

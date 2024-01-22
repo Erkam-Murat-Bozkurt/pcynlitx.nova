@@ -44,11 +44,11 @@ Custom_DataPanel::Custom_DataPanel(wxFrame * frm, wxSize frame_size)
 
     this->listctrl = new wxDataViewListCtrl(this, wxID_ANY,wxDefaultPosition,frame_size);
 
-    this->InsertButton  = new wxButton(this,ID_INSERT_ITEM,wxT("INSERT"),wxDefaultPosition, wxSize(75, 30));
+    this->InsertButton  = new wxButton(this,ID_INSERT_ITEM,wxT("INSERT"),wxDefaultPosition, wxSize(80, 50));
 
-    this->RemoveButton  = new wxButton(this,ID_REMOVE_ITEM,wxT("REMOVE"),wxDefaultPosition,wxSize(75, 30));
+    this->RemoveButton  = new wxButton(this,ID_REMOVE_ITEM,wxT("REMOVE"),wxDefaultPosition,wxSize(80, 50));
 
-    this->SaveButton    = new wxButton(this,ID_SAVE_RECORDS,wxT("SAVE"),wxDefaultPosition, wxSize(75, 30));
+    this->SaveButton    = new wxButton(this,ID_SAVE_RECORDS,wxT("SAVE"),wxDefaultPosition, wxSize(80, 50));
 
 
     this->vbox = new wxBoxSizer(wxVERTICAL);
