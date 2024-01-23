@@ -356,9 +356,9 @@ void MainFrame::Show_Project_File(wxCommandEvent & event){
 
         event.Skip(true);
 
-        if(this->is_descriptor_file_open){
+        if(this->is_project_file_selected){
 
-           bool is_descriptor_file_open = false;
+           bool is_project_file_currently_open = false;
 
            for(int i=0;i<20;i++){
 
@@ -366,13 +366,13 @@ void MainFrame::Show_Project_File(wxCommandEvent & event){
 
                if(Path_Data == this->Descriptor_File_Path){
 
-                  is_descriptor_file_open = true;
+                  is_project_file_currently_open = true;
 
                   break;
                }
             }
 
-            if(is_descriptor_file_open){
+            if(is_project_file_currently_open){
 
                 this->Book_Manager->Select_File(this->Descriptor_File_Path);
 
@@ -406,11 +406,9 @@ void MainFrame::Show_Author(wxCommandEvent & event)
 
         message = message + wxT("M.Sc. Control Sysytem Engineering\n\n");
 
-        message = message + wxT("ORCID ID: 0000-0003-3690-2770\n\n");
+        message = message + wxT("http://www.nwinix.com\n\n");
 
-        message = message + wxT("http://www.pcynlitx.com/developer/\n\n");
-
-        message = message + wxT("pcynlitx.help@gmail.com\n\n");
+        message = message + wxT("help@nwinix.com\n\n");
 
 
             
@@ -420,7 +418,7 @@ void MainFrame::Show_Author(wxCommandEvent & event)
                
             wxT("THE DEVELOPER OF NWINIX PLATFORM"),
                
-            *this->logo_bmp, wxDefaultPosition,wxSize(750,650));
+            *this->logo_bmp, wxDefaultPosition,wxSize(700,600));
 
 
         if(dial->ShowModal() == ID_SHOW_AUTOR_INFO){
@@ -455,6 +453,8 @@ void MainFrame::DirectoryOpen(wxCommandEvent & event)
 
                     wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
 
+        dir_dialog.CenterOnScreen(wxBOTH);
+
         if(dir_dialog.ShowModal() == wxID_OK){
 
            wxString DirectoryPath = dir_dialog.GetPath();
@@ -485,7 +485,7 @@ void MainFrame::Single_File_Script_Construction(wxCommandEvent & event){
 
         event.Skip(true);
 
-        if(this->is_descriptor_file_open){
+        if(this->is_project_file_selected){
 
            this->Multi_DataPanel = new Custom_Multi_DataPanel(this);
 
@@ -515,7 +515,7 @@ void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
 
         event.Skip(true);
 
-        if(this->is_descriptor_file_open){
+        if(this->is_project_file_selected){
 
            this->Multi_DataPanel = new Custom_Multi_DataPanel(this);
 
@@ -590,7 +590,7 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
   {
     event.Skip(true);
 
-    if(this->is_descriptor_file_open){
+    if(this->is_project_file_selected){
 
        this->Process_Ptr->Determine_Build_System_Initialization_Command();
 
@@ -721,7 +721,7 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
      {
         event.Skip(true);
 
-        if(this->is_descriptor_file_open){
+        if(this->is_project_file_selected){
 
            this->Descriptions_Printer = new Project_Descriptions_Printer(this,wxID_ANY,
            
@@ -876,8 +876,10 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
 
         this->Process_Ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
 
+       if(!this->Descriptor_File_Path.empty()){
 
-        this->is_descriptor_file_open = true;
+           this->is_project_file_selected = true;
+        }
      }
    }
 }
@@ -892,7 +894,10 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
 
        this->Select_File(this->Descriptor_File_Path,title);
 
-       this->is_descriptor_file_open = true;
+       if(!this->Descriptor_File_Path.empty()){
+
+          this->is_project_file_selected = true;
+       }
 
        this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
@@ -980,12 +985,31 @@ void MainFrame::FileSelect(wxTreeEvent& event)
      }
 }
 
+void MainFrame::Open_File(wxCommandEvent & event){
+
+     if(event.GetId() == ID_OPEN_FILE){
+
+        wxString FilePATH;
+
+        FilePATH.clear();
+
+        wxString title(wxT("Select the file"));
+
+        this->Select_File(FilePATH,title);
+
+        if(!FilePATH.empty()){
+
+           this->Book_Manager->Open_File(FilePATH);
+        }
+     }
+}
+
+
 void MainFrame::FileNameEdit(wxTreeEvent& event)
 {
      event.Veto();
 
 }
-
 
 
 
@@ -1001,7 +1025,7 @@ void MainFrame::Enter_Git_Repo_Location(wxCommandEvent & event)
 {
      if(event.GetId() == ID_INPUT_GIT_REPO_LOCATION){
 
-       if(!this->is_descriptor_file_open){
+       if(!this->is_project_file_selected){
 
           this->Descriptor_File_Selection_Check();
        }
@@ -1023,7 +1047,7 @@ void MainFrame::Enter_Header_File_Location(wxCommandEvent & event)
 {
      if(event.GetId() == ID_INPUT_HEADER_FILE_LOCATION){
 
-        if(!this->is_descriptor_file_open){
+        if(!this->is_project_file_selected){
 
             this->Descriptor_File_Selection_Check();
         }
@@ -1046,7 +1070,7 @@ void MainFrame::Enter_Source_File_Location(wxCommandEvent & event)
 {
      if(event.GetId() == ID_INPUT_SOURCE_FILE_LOCATION){
 
-        if(!this->is_descriptor_file_open){
+        if(!this->is_project_file_selected){
 
             this->Descriptor_File_Selection_Check();
         }
@@ -1067,7 +1091,7 @@ void MainFrame::Enter_Library_Location(wxCommandEvent & event)
 {
      if(event.GetId() == ID_INPUT_LIBRARY_LOCATION){
 
-       if(!this->is_descriptor_file_open){
+       if(!this->is_project_file_selected){
 
            this->Descriptor_File_Selection_Check();
        }
@@ -1097,7 +1121,7 @@ void MainFrame::Enter_Library_Name(wxCommandEvent & event)
 {
      if(event.GetId() == ID_INPUT_LIBRARY_NAME){
 
-       if(!this->is_descriptor_file_open){
+       if(!this->is_project_file_selected){
 
           this->Descriptor_File_Selection_Check();
        }
@@ -1118,7 +1142,7 @@ void MainFrame::Enter_Warehouse_Location(wxCommandEvent & event)
 {
      if(event.GetId() == ID_INPUT_CONSTRUCTION_POINT){
 
-       if(!this->is_descriptor_file_open){
+       if(!this->is_project_file_selected){
 
          this->Descriptor_File_Selection_Check();
        }
@@ -1139,7 +1163,7 @@ void MainFrame::Enter_Exe_File_Name(wxCommandEvent & event)
 {
      if(event.GetId() == ID_INPUT_EXE_FILE_NAME){
 
-        if(!this->is_descriptor_file_open){
+        if(!this->is_project_file_selected){
 
            this->Descriptor_File_Selection_Check();
         }
@@ -1160,7 +1184,7 @@ void MainFrame::Enter_Main_File_Name(wxCommandEvent & event)
 {
      if(event.GetId() == ID_INPUT_MAIN_FILE_NAME){
 
-       if(!this->is_descriptor_file_open){
+       if(!this->is_project_file_selected){
 
            this->Descriptor_File_Selection_Check();
        }
@@ -1181,7 +1205,7 @@ void MainFrame::Enter_Standard(wxCommandEvent & event)
 {
      if(event.GetId() == ID_INPUT_C_STANDART){
 
-       if(!this->is_descriptor_file_open){
+       if(!this->is_project_file_selected){
 
            this->Descriptor_File_Selection_Check();
        }
@@ -1202,7 +1226,7 @@ void MainFrame::Enter_Options(wxCommandEvent & event)
 {
      if(event.GetId() == ID_INPUT_OPTIONS){
 
-       if(!this->is_descriptor_file_open){
+       if(!this->is_project_file_selected){
 
            this->Descriptor_File_Selection_Check();
        }
@@ -1302,7 +1326,11 @@ void MainFrame::Undo_Changes(wxCommandEvent & event)
 
         if(is_this_text_file){
 
+           this->Book_Manager->Get_Selected_Text_Ctrl()->EndUndoAction();
+
            this->Book_Manager->Get_Selected_Text_Ctrl()->Undo();
+
+           this->Book_Manager->Get_Selected_Text_Ctrl()->BeginUndoAction();
         }
      }
 }

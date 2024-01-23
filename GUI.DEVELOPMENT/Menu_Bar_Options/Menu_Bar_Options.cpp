@@ -40,6 +40,8 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Help_Menu->Append(ID_SHOW_AUTOR_INFO,"&Developer","",wxITEM_NORMAL);
 
+  this->Help_Menu->Append(ID_SHOW_DOCUMENTS,"&Documents","",wxITEM_NORMAL);
+
   this->Help_Menu->Append(wxID_ABOUT,"&Version 1.0","",wxITEM_NORMAL);
 
   this->Help_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
@@ -52,6 +54,9 @@ Menu_Bar_Options::Menu_Bar_Options(){
   this->File_Menu->Append(ID_OPEN_FILE,"&Open file","",wxITEM_NORMAL);
 
   this->File_Menu->Append(ID_NEW_FILE,"&Create new file as","",wxITEM_NORMAL);
+
+  this->File_Menu->Append(ID_OPEN_TREE_WIEW,"&Open Folder","",wxITEM_NORMAL);
+
 
   this->File_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
@@ -91,7 +96,6 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
 
 
-  this->Project_Management->Append(ID_OPEN_TREE_WIEW,"&Open Directory List","",wxITEM_NORMAL);
 
   this->Project_Management->Append(ID_OPEN_EMPTY_PROJECT_FILE,"Construct Empty Project File","",wxITEM_NORMAL);
 
@@ -99,21 +103,24 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Project_Management->Append(ID_SHOW_PROJECT_FILE,"Show Project File","",wxITEM_NORMAL);
 
-  this->Project_Management->Append(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,       "&Run Build System Initializer"," ",wxITEM_NORMAL);
+  this->Project_Management->Append(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,       "&Build System Initializer"," ",wxITEM_NORMAL);
 
-  this->Project_Management->Append(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Run Single File Script Constructor"," ",wxITEM_NORMAL);
+  this->Project_Management->Append(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Single File Script Constructor"," ",wxITEM_NORMAL);
 
-  this->Project_Management->Append(ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Run Advance Single File Script Constructor"," ",wxITEM_NORMAL);
+  this->Project_Management->Append(ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Advance Single File Script Constructor"," ",wxITEM_NORMAL);
 
   this->Project_Management->Append(ID_PRINT_DESCRIPTIONS, "&Print Project Descriptions"," ",wxITEM_NORMAL);
 
-  
   this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
 
   this->Library_Description_Menu->Append(wxID_NONE,                     "&   MAIN DESCRIPTIONS"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(ID_INPUT_GIT_REPO_LOCATION,    "&   Enter Git Repo Directory"," ",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(ID_INPUT_WAREHOUSE_LOCATION,   "&   Select Project Warehouse Directory"," ",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(ID_CONSTRUCT_WAREHOUSE_LOCATION,   "&   Construct Project Warehouse Directory"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
 
@@ -137,18 +144,6 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
 
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&   EXECUTABLE FILE NAME"," ",wxITEM_NORMAL);
-
-  this->Library_Description_Menu->Append(ID_INPUT_EXE_FILE_NAME,        "&   Enter Executable File Name"," ",wxITEM_NORMAL);
-
-  this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
-
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&   MAIN FILE NAMES"," ",wxITEM_NORMAL);
-
-  this->Library_Description_Menu->Append(ID_INPUT_MAIN_FILE_NAME,       "&   Enter Main File Names"," ",wxITEM_NORMAL);
-
-  this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
-
   this->Library_Description_Menu->Append(wxID_NONE,                     "&   C++ STANDART"," ",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(ID_INPUT_C_STANDART,           "&   Enter C++ Standart "," ",wxITEM_NORMAL);
@@ -165,15 +160,15 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Menu_Bar = new wxMenuBar();
 
-  this->Menu_Bar->Append(this->Help_Menu,wxT("&Help"));
-
   this->Menu_Bar->Append(this->File_Menu,wxT("&File"));
 
   this->Menu_Bar->Append(this->Library_Description_Menu,wxT("Project Descriptions"));
 
   this->Menu_Bar->Append(this->Project_Management,wxT("Project Management"));
 
-  this->Menu_Bar->Append(this->Edit_Menu,wxT("&Edit"));
+  this->Menu_Bar->Append(this->Edit_Menu,wxT("&Editor Options"));
+
+  this->Menu_Bar->Append(this->Help_Menu,wxT("&About Platform"));
 
 }
 

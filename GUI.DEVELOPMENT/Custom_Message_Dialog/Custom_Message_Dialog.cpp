@@ -41,9 +41,9 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
     this->GetEventHandler()->Bind(wxEVT_SIZE,&Custom_Message_Dialog::OnSize,this,wxID_ANY);
 
 
-    std::string face_name = "Segoe UI"; 
+    std::string face_name = "Calibri"; 
 
-    this->Default_Font = new wxFont(11,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
+    this->Default_Font = new wxFont(13,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
 
                          wxFONTWEIGHT_NORMAL,false,wxString(face_name));
 

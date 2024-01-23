@@ -113,6 +113,7 @@ private:
   void Increase_Font_Size(wxCommandEvent & event);
   void Decrease_Font_Size(wxCommandEvent & event);
   void Change_Font(wxCommandEvent & event);
+  void Open_File(wxCommandEvent & event);
   void PrintDescriptions(wxCommandEvent & event);
   void Select_File(wxString & file_path, wxString Title);
   void Determine_Executable_File_Script_Construction_Point(wxString FileName);

@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="149.86066mm"
-   height="70.531982mm"
-   viewBox="0 0 149.86067 70.531982"
+   width="136.57472mm"
+   height="79.646317mm"
+   viewBox="0 0 136.57473 79.646316"
    version="1.1"
    id="svg8"
    inkscape:version="1.3.1 (91b66b0783, 2023-11-16)"
@@ -29,8 +29,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="369.21075"
-     inkscape:cy="142.17897"
+     inkscape:cx="278.04449"
+     inkscape:cy="141.67389"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -47,8 +47,8 @@
     <inkscape:grid
        type="xygrid"
        id="grid10"
-       originx="-9.0447194"
-       originy="27.01403"
+       originx="-8.911085"
+       originy="26.88039"
        spacingy="1"
        spacingx="1"
        units="mm"
@@ -70,7 +70,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-9.0447217,-235.59013)">
+     transform="translate(-8.911087,-235.72377)">
     <rect
        id="rect12"
        width="150.8125"
@@ -80,37 +80,31 @@
        style="fill:none;fill-opacity:1;stroke-width:0.20259" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:16.9333px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808b96;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="8.4488783"
-       y="248.70215"
+       style="font-style:normal;font-weight:normal;font-size:25.4px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808b96;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="7.1125307"
+       y="256.05206"
        id="text824"><tspan
          sodipodi:role="line"
          id="tspan822"
-         x="8.4488783"
-         y="248.70215"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.9333px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans Bold';opacity:0.85;fill:#866870;fill-opacity:1;stroke-width:0.264583">PCYNLITX - NOVA</tspan></text>
+         x="7.1125307"
+         y="256.05206"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:25.4px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans Bold';opacity:0.85;fill:#866870;fill-opacity:1;stroke-width:0.264583">Nwinix</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:9.87778px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#969696;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="9.5477047"
-       y="263.87405"
+       x="9.4140701"
+       y="269.48669"
        id="text825"><tspan
          sodipodi:role="line"
          id="tspan823"
-         x="9.5477047"
-         y="263.87405"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.87778px;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;fill:#7d7d7d;fill-opacity:1;stroke-width:0.264583">A NEW C++ BUILD SYSTEM</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:7px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#c06c84;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="9.683569"
-       y="277.84744"
-       id="text825-3"><tspan
+         x="9.4140701"
+         y="269.48669"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.87778px;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;fill:#7d7d7d;fill-opacity:1;stroke-width:0.264583">A NEW C++ PROJECT </tspan><tspan
          sodipodi:role="line"
-         x="9.683569"
-         y="277.84744"
-         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:semi-condensed;font-size:7.05556px;line-height:7px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Semi-Bold Semi-Condensed';fill:#646464;fill-opacity:1;stroke-width:0.264583"
-         id="tspan4538">www.pcynlitxbuild.com</tspan></text>
+         x="9.4140701"
+         y="281.92352"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9.87778px;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;fill:#7d7d7d;fill-opacity:1;stroke-width:0.264583"
+         id="tspan2">MANAGEMENT TECHNOLOGY</tspan></text>
     <rect
        style="fill:none;fill-opacity:1;stroke-width:0.264583"
        id="rect849"
@@ -120,34 +114,44 @@
        y="234.02919" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:3.30699px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#c06c84;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:4.20687px;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#c06c84;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="9.4178162"
-       y="289.96136"
+       y="291.69861"
        id="text825-3-0"><tspan
          sodipodi:role="line"
          x="9.4178162"
-         y="289.96136"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:3.30699px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#646464;fill-opacity:1;stroke-width:0.264583"
-         id="tspan4">Pcynlitx build system produces makefiles for C++ source </tspan><tspan
+         y="291.69861"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:4.20687px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#646464;fill-opacity:1;stroke-width:0.264583"
+         id="tspan4">Nwinix project management system produces makefiles </tspan><tspan
          sodipodi:role="line"
          x="9.4178162"
-         y="293.31314"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:3.30699px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#646464;fill-opacity:1;stroke-width:0.264583"
-         id="tspan8508" /><tspan
+         y="295.95029"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:4.20687px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#646464;fill-opacity:1;stroke-width:0.264583"
+         id="tspan5" /><tspan
          sodipodi:role="line"
          x="9.4178162"
-         y="296.66495"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:3.30699px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#646464;fill-opacity:1;stroke-width:0.264583"
-         id="tspan1">using a new meta-programming approach. The platform works </tspan><tspan
+         y="300.20193"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:4.20687px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#646464;fill-opacity:1;stroke-width:0.264583"
+         id="tspan1">and and interated build system for C++ source code using </tspan><tspan
          sodipodi:role="line"
          x="9.4178162"
-         y="300.01672"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:3.30699px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#646464;fill-opacity:1;stroke-width:0.264583"
-         id="tspan25" /><tspan
+         y="304.45361"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:4.20687px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#646464;fill-opacity:1;stroke-width:0.264583"
+         id="tspan9" /><tspan
          sodipodi:role="line"
          x="9.4178162"
-         y="303.3685"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:3.30699px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#646464;fill-opacity:1;stroke-width:0.264583"
-         id="tspan3">in a colloberation with Git version control system.   </tspan></text>
+         y="308.70526"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:4.20687px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#646464;fill-opacity:1;stroke-width:0.264583"
+         id="tspan8">a new meta-programming approach. </tspan><tspan
+         sodipodi:role="line"
+         x="9.4178162"
+         y="312.95694"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:4.20687px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#646464;fill-opacity:1;stroke-width:0.264583"
+         id="tspan7" /><tspan
+         sodipodi:role="line"
+         x="9.4178162"
+         y="317.16382"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:4.20687px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#646464;fill-opacity:1;stroke-width:0.264583"
+         id="tspan3" /></text>
   </g>
 </svg>
