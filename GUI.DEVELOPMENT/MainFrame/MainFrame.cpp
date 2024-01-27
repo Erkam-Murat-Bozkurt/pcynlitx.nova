@@ -59,7 +59,7 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
   this->Des_Reader->Set_Gui_Read_Status(true);
 
 
-  this->Process_Ptr = new Process_Manager(this);
+  this->Process_Ptr = new Process_Manager(this,wxID_ANY);
 
   wxString Builder_Path(wxT("D:\\Pcynlitx_Build_Platform\\CBuild.exe"));
 
@@ -509,6 +509,47 @@ void MainFrame::Single_File_Script_Construction(wxCommandEvent & event){
 }
 
 
+void MainFrame::Determine_Source_File_Dependencies(wxCommandEvent & event){
+
+     if(event.GetId() == ID_DETERMINE_SOURCE_FILE_DEPENDENCIES){
+     
+        if(this->is_project_file_selected){
+
+          wxString FilePATH;
+
+          this->Select_File(FilePATH,wxT("Select source file path"));
+
+          this->fork_process 
+          
+          = new std::thread(MainFrame::Run_Source_File_Dependency_Determination_Process,this,FilePATH);
+
+          this->fork_process->detach();
+
+          this->Process_Ptr->Construct_Text_Panel(wxT("Source File Dependencies"));
+
+          this->Process_Ptr->AppendText_To_TextCtrl(wxT("\n PROCESS STARTED:\n\n"));
+
+        }
+        else{
+
+            this->Descriptor_File_Selection_Check();
+        }
+     }
+
+}
+
+
+void MainFrame::Run_Source_File_Dependency_Determination_Process(wxString FilePATH){
+     
+     this->Process_Ptr->Find_Source_File_Dependency_Determination_Command(FilePATH);
+
+     this->Process_Ptr->Fork_Process_With_Named_Pipe_Connection(this->Process_Ptr->Get_Process_Command());
+     
+     std::string pipe_string = this->Process_Ptr->GetNamedPipeString();
+
+     this->Process_Ptr->AppendText_To_TextCtrl(wxString(pipe_string));
+}
+
 void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
 
      if(event.GetId() == ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR){
@@ -559,9 +600,11 @@ void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath, wxSt
 
             this->Process_Ptr->Exec_Cmd_For_Single_Src_File(src_path,exe_name,strategy);
 
-            wxString label = wxT("BUILD SYSTEM CONSTRUCTION FOR SOURCE FILE");
+            wxString label = wxT("BUILD SYSTEM CONSTRUCTION FOR A SOURCE FILE");
 
-            this->Start_Construction_Process(label,this->Executable_File_Script_Construction_Point);
+            wxString start_text = wxT("\n\n   EXECUTABLE MAKEFILE CONSTRUCTION STARTED");
+
+            this->Start_Construction_Process(label,this->Executable_File_Script_Construction_Point,start_text);
          }
          else{
 
@@ -604,7 +647,9 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
           wxString label = wxT("BUILD SYSTEM CONSTRUCTION PROCESS");
 
-         this->Start_Construction_Process(label,this->Warehouse_Location);
+          wxString start_text = wxT("\n\n   BUILD SYSTEM CONSTRUCTION STARTED");
+
+         this->Start_Construction_Process(label,this->Warehouse_Location,start_text);
       }
       else{
 
@@ -632,7 +677,7 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 }
 
 
-void MainFrame::Start_Construction_Process(wxString label, wxString dir_open){
+void MainFrame::Start_Construction_Process(wxString label, wxString dir_open, wxString start_text){
       
      this->Progress_Bar_Start_status = false;
 
@@ -651,7 +696,9 @@ void MainFrame::Start_Construction_Process(wxString label, wxString dir_open){
      this->Process_Output = new Custom_ProcessOutput(this,wxID_ANY,label);
 
      this->Process_Output->Receive_System_Interface(&this->SysInt);
- 
+
+     this->Process_Output->Directory_List_Show_Cond(true);
+
      this->Process_Output->Receive_Process_End_Status(&this->Child_Process_End_Status);
 
      this->Process_Output->Receive_Directory_Open_Location(dir_open);
@@ -665,13 +712,13 @@ void MainFrame::Start_Construction_Process(wxString label, wxString dir_open){
 
      char * cmd = this->Process_Ptr->Get_Process_Command();
 
-     this->fork_process = new std::thread(MainFrame::ForkProcess,this,cmd);
+     this->fork_process = new std::thread(MainFrame::ForkProcess,this,cmd,start_text);
 
      this->fork_process->detach();
 
 }
 
-void MainFrame::ForkProcess(char * cmd){
+void MainFrame::ForkProcess(char * cmd, wxString start_text){
 
      std::unique_lock<std::mutex> lck(this->mtx);
 
@@ -683,7 +730,7 @@ void MainFrame::ForkProcess(char * cmd){
 
      this->progress_point = 0;
 
-     this->read_process_output = new std::thread(MainFrame::ReadProcessOutput,this);
+     this->read_process_output = new std::thread(MainFrame::ReadProcessOutput,this,start_text);
 
      this->read_process_output->detach();
 
@@ -753,7 +800,7 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
 }
 
 
-void MainFrame::ReadProcessOutput(){
+void MainFrame::ReadProcessOutput(wxString start_text){
 
      std::unique_lock<std::mutex> lck(this->mtx);
 
@@ -780,7 +827,7 @@ void MainFrame::ReadProcessOutput(){
      this->Process_Output->GetTextControl()->SetDefaultStyle(wxTextAttr(wxColor(134,104,112)));
 
      
-     wxString start_text = wxT("\n\n   BUILD SYSTEM CONSTRUCTION STARTED");
+     //wxString start_text = wxT("\n\n   BUILD SYSTEM CONSTRUCTION STARTED");
 
 
 

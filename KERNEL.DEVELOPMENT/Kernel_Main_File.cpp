@@ -4,8 +4,11 @@
 #include <iostream>
 #include <cstring>
 #include "Kernel.hpp"
+#include "Source_File_Dependency_Determiner.hpp"
 #include "Custom_System_Interface.h"
 
+
+void Print_Src_Dependency_Data(std::vector<Compiler_Data> * ptr);
 
 std::string Convert_Std_String(char * str);
 
@@ -43,6 +46,54 @@ int main(int argc, char ** argv){
         System_Interface.Connect_NamedPipe_From_Child_Process();
     }
 
+
+    if(str == "-ex_dep_for_gui"){
+
+       argument_pass_cond = true;
+
+       System_Interface.Connect_NamedPipe_From_Child_Process();
+
+       Kernel Build_System(argv[1],'w');
+
+       Build_System.Determine_Source_File_Dependency_List(argv[3]);
+
+       std::vector<Compiler_Data> * ptr = Build_System.Get_Src_Dependency_List();
+
+       for(size_t i=0;i<ptr->size();i++){
+
+         size_t src_name_size = ptr->at(i).source_file_name_witout_ext.size();
+
+         char * str = new char[2*src_name_size];
+
+         for(size_t k=0;k<2*src_name_size;k++){
+
+             str[k] = '\0';
+         }
+
+         size_t index=0;
+
+         str[index] = ' ';
+
+         index++;
+
+         for(size_t k=0;k<src_name_size;k++){
+
+             str[index] = ptr->at(i).source_file_name_witout_ext.at(k);
+
+             index++;
+         }
+
+         str[index] = '\n';
+
+         index++;
+
+         str[index] = '\0';
+
+         System_Interface.WriteTo_NamedPipe_FromChild(str);
+
+         delete [] str;
+       }
+    }
 
     if(str == "-ed"){
 
@@ -242,3 +293,35 @@ std::string Convert_Std_String(char * str){
 
      return st_string;
 }
+
+
+void Print_Src_Dependency_Data(std::vector<Compiler_Data> * ptr){
+
+     for(size_t i=0;i<ptr->size();i++){
+
+        std::cout << "\n";
+        std::cout << "\n source file name:" << ptr->at(i).source_file_name;
+
+        /*
+        std::cout << "\n object file name:" << ptr->at(i).object_file_name;
+        std::cout << "\n source file path:" << ptr->at(i).source_file_path;
+
+        size_t header_number = ptr->at(i).dependent_headers.size();
+
+        std::cout << "\n priority:" << ptr->at(i).priority;
+
+        std::cout << "\n header_number:" << header_number;        
+
+        std::cout << "\n dependent headers:";
+
+        for(size_t j=0;j<header_number;j++){
+
+            std::cout << "\n Header: " << j << "-:" << ptr->at(i).dependent_headers.at(j);
+        }
+
+        */
+    }
+
+    std::cout << "\n\n";
+}
+

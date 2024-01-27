@@ -111,6 +111,8 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Project_Management->Append(ID_PRINT_DESCRIPTIONS, "&Print Project Descriptions"," ",wxITEM_NORMAL);
 
+  this->Project_Management->Append(ID_DETERMINE_SOURCE_FILE_DEPENDENCIES, "&Determine Source File Dependencies"," ",wxITEM_NORMAL);
+
   this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
 

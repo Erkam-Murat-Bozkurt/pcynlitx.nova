@@ -25,6 +25,8 @@ Custom_ProcessOutput::Custom_ProcessOutput(wxFrame *parent, wxWindowID id, const
 
      this->Memory_Delete_Condition = false;
 
+     this->dir_list_show_cnd = false;
+
      wxIcon Frame_Icon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
      this->SetIcon(Frame_Icon);
@@ -73,6 +75,12 @@ Custom_ProcessOutput::~Custom_ProcessOutput(){
 
 }
 
+
+
+void Custom_ProcessOutput::Directory_List_Show_Cond(bool cond){
+
+     this->dir_list_show_cnd = cond;
+}
 
 void Custom_ProcessOutput::Construct_Output(int size){
 
@@ -232,15 +240,45 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
 
      if(event.GetId() == ID_CLOSE_WINDOW){
 
+        if(*this->process_end_status == false){
+
+           wxString message_1 = "The construction process continuos!";
+
+           wxString message_2 = "\nDo you want to cancel construction process?";
+        
+           wxString close_message = message_1 + message_2;
+
+           int answer = wxMessageBox(close_message, 
+         
+              "Please Confirm",wxICON_QUESTION | wxYES_NO);
+
+           if(answer == wxYES){
+
+              if(this->SysPtr->IsChildProcessStillAlive()){
+
+                 this->SysPtr->TerminateChildProcess();
+              }
+
+              this->window_open_status = false;
+
+              this->Destroy();
+           }
+     }
+     else{
+
           this->Destroy();
 
-          wxMilliSleep(100);
+          if(this->dir_list_show_cnd){
 
-          if(!this->dir_list_ptr->Get_Panel_Open_Status()){
+             wxMilliSleep(100);
 
-              this->dir_list_ptr->Load_Project_Directory(wxString(this->directory_open_location));
-          }   
+             if(!this->dir_list_ptr->Get_Panel_Open_Status()){
+
+                this->dir_list_ptr->Load_Project_Directory(wxString(this->directory_open_location));
+             }   
+          }
      }
+   }
 }
 
 
@@ -275,14 +313,6 @@ void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
           event.Veto();
 
           this->Destroy();
-
-          wxMilliSleep(100);
-
-          
-          if(!this->dir_list_ptr->Get_Panel_Open_Status()){
-
-              this->dir_list_ptr->Load_Project_Directory(wxString(this->directory_open_location));
-          }     
      }
 }
 

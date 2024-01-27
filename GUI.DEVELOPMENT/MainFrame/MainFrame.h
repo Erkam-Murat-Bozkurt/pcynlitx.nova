@@ -103,12 +103,12 @@ private:
   void File_Save(wxCommandEvent & event);
   void Start_Build_System_Construction(wxCommandEvent & event);
   void Single_File_Script_Construction(wxCommandEvent & event);
-  void Start_Construction_Process(wxString label, wxString dir_open);
+  void Start_Construction_Process(wxString label, wxString dir_open, wxString start_text);
   void Descriptor_File_Selection_Check();
   void Close_Directory_Pane(wxAuiManagerEvent & event);
   void FileNameEdit(wxTreeEvent& event);
-  void ForkProcess(char * cmd);
-  void ReadProcessOutput();
+  void ForkProcess(char * cmd, wxString start_text);
+  void ReadProcessOutput(wxString start_text);
   void OpenTerminal(wxCommandEvent & event);
   void Increase_Font_Size(wxCommandEvent & event);
   void Decrease_Font_Size(wxCommandEvent & event);
@@ -122,6 +122,8 @@ private:
   void Single_File_Script_Construction_Executer(wxString FilePath, wxString FileName, char strategy);
   void Advance_Single_File_Script_Construction(wxCommandEvent & event);
   void OpenFile(wxCommandEvent & event);
+  void Determine_Source_File_Dependencies(wxCommandEvent & event);
+  void Run_Source_File_Dependency_Determination_Process(wxString FilePATH);
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;

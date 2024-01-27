@@ -48,11 +48,11 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->open_terminal = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\open_terminal.png"),wxBITMAP_TYPE_PNG);
 
-     this->open_tree_view = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\OpenDirectory.png"),wxBITMAP_TYPE_PNG);
+     this->open_tree_view = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\open_folder_icon.png"),wxBITMAP_TYPE_PNG);
 
      this->build_executable = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\build_executable.png"),wxBITMAP_TYPE_PNG);
 
-     this->Select_Project_File = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\file_icon.png"),wxBITMAP_TYPE_PNG);
+     this->Select_Project_File = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\file_selection_icon.png"),wxBITMAP_TYPE_PNG);
 
      this->print_descriptions = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\zoom.png"),wxBITMAP_TYPE_PNG);
 

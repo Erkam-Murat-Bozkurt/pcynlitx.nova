@@ -3,6 +3,7 @@
 #include <thread>
 #include <mutex>
 #include <condition_variable>
+#include "Source_File_Dependency_Determiner.hpp"
 #include "Custom_System_Interface.h"
 
 std::condition_variable cv;
@@ -42,6 +43,10 @@ int main(int argc, char ** argv){
     }
 
     cmd[index] = '\0';
+
+    std::cout << "\ncmd:" << cmd;
+
+    std::cin.get();
 
     SysInt.CreateProcessWith_NamedPipe_From_Parent(cmd);
     

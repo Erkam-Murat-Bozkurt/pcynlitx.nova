@@ -45,6 +45,8 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
 
   wxGauge * GetDialogAddress();
 
+  void Directory_List_Show_Cond(bool cond);
+
   void Receive_Directory_Open_Location(wxString loc);
 
   void Receive_Tree_View_Panel(Custom_Tree_View_Panel * ptr);
@@ -74,6 +76,8 @@ private:
   void CloseWindow(wxCommandEvent & event);
 
   bool * process_end_status;
+
+  bool dir_list_show_cnd;
 
   Custom_System_Interface * SysPtr;
 
@@ -105,6 +109,7 @@ private:
   wxButton * CloseButton;
 
   wxFont   * Default_Font;
+
 
   bool * Progress_Bar_Start_status;
 

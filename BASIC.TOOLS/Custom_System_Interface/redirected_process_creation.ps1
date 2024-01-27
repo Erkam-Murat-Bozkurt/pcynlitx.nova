@@ -14,7 +14,7 @@ Write-Output "# Executable file for child process created!"
 Write-Output ""
 
 
-mingw32-make.exe -f .\Redirected_Process.mk 
+mingw32-make.exe -f .\Redirector_Tester.mk 
 
 Write-Output ""
 

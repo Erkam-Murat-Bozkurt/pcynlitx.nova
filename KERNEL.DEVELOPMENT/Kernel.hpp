@@ -35,10 +35,15 @@ public:
  void Receive_System_Interface(Custom_System_Interface * SysInt);
  void Setup_Build_Tools();
  void Build_MakeFile(char * mn_src_path, char * Exe_Name, char strategy);
+ void Determine_Source_File_Dependency_List(char * src_path);
+ std::vector<Compiler_Data> * Get_Src_Dependency_List();
  void Clear_Dynamic_Memory();
 protected:
  Build_Tools_Initializer Bld_Init;
  Executable_MakeFile_Builder Exe_Bld;
+ Descriptor_File_Reader Des_Reader;
+ Git_Data_Processor Git_Prog;
+ Source_File_Dependency_Determiner Dep_Determiner;
  Custom_System_Interface * SysInt;
  std::string DesPATH;
  char strategy;

@@ -4,15 +4,42 @@
 
 Kernel::Kernel(char * DesPATH, char opr_sis) : Bld_Init(DesPATH,opr_sis),  
 
-     Exe_Bld(DesPATH,opr_sis)
+     Exe_Bld(DesPATH,opr_sis), Des_Reader(opr_sis), Git_Prog(opr_sis), 
+     
+     Dep_Determiner(DesPATH,opr_sis)
 {     
-   
+     this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
+
+     this->Des_Reader.Read_Descriptor_File();
+
+
+     
+     this->Git_Prog.Receive_Descriptor_File_Path(DesPATH);
+
+     this->Git_Prog.Write_Git_Repo_List_File();
+
+     this->Git_Prog.Determine_Git_Repo_Info();
+
+
+     
+     this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
+
+     this->Dep_Determiner.Receive_Git_Data_Processor(&this->Git_Prog);
 }
 
 Kernel::~Kernel(){
 
 }
 
+void Kernel::Determine_Source_File_Dependency_List(char * src_path){
+
+     this->Dep_Determiner.Collect_Dependency_Information(src_path);
+}
+
+std::vector<Compiler_Data> * Kernel::Get_Src_Dependency_List(){
+
+      return this->Dep_Determiner.Get_Compiler_Data_Address();
+}
 
 void Kernel::Receive_Build_Type(char BuildType){
 
