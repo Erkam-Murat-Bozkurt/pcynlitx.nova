@@ -55,6 +55,10 @@ int main(int argc, char ** argv){
 
        Kernel Build_System(argv[1],'w');
 
+       Build_System.Receive_Build_Type('g');
+
+       Build_System.Receive_System_Interface(&System_Interface);
+
        Build_System.Determine_Source_File_Dependency_List(argv[3]);
 
        std::vector<Compiler_Data> * ptr = Build_System.Get_Src_Dependency_List();

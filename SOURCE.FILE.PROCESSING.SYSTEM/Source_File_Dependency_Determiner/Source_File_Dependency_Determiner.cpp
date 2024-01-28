@@ -30,7 +30,9 @@ Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_
     
     DepSelector_For_Single_File(opr_sis), Simple_Dep_Extractor(opr_sis)
 {
+    this->SysInt = nullptr;
 
+    this->run_type = 'n';
 }
 
 
@@ -64,6 +66,18 @@ void Source_File_Dependency_Determiner::Clear_Dynamic_Memory(){
      this->Dependency_Map.clear();  
 }
 
+
+
+void Source_File_Dependency_Determiner::Receive_Run_Type(char RunType){
+
+     this->run_type = RunType;
+}
+
+
+void Source_File_Dependency_Determiner::Receive_System_Interface(Custom_System_Interface * sysInt){
+
+     this->SysInt = sysInt;
+}
 
 
 void Source_File_Dependency_Determiner::Receive_Descriptor_File_Reader(Descriptor_File_Reader *ptr){
@@ -106,25 +120,58 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Clear_Dynamic_Memory();
 
-     std::cout << "\n The source file data construction started";
+     char start_operation [] = "\n The source file data construction started ";
+
+     std::cout << start_operation;
+
+
+     if(this->run_type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(start_operation);
+     }
+
 
      this->DepSelector_For_Single_File.Determine_Source_File_Dependencies(path);
 
-     std::cout << "\n The source file data construction complated";
+     char data_construction [] = "\n The source file data construction complated";
+     
+
+     std::cout << data_construction;
+
+     
+     if(this->run_type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(data_construction);
+     }
+
+     
 
      this->Warehouse_Objetcs_Dir = this->DepSelector_For_Single_File.Get_Warehouse_Objetcs_Dir();
 
      this->Warehouse_Path = this->DepSelector_For_Single_File.Get_Warehouse_Path();
 
-     std::cout << "\n The interpretation of dependency data started";
+     char dependency_serach_start [] = "\n The interpretation of dependency data started";
 
+     std::cout << dependency_serach_start;
+
+     
+     if(this->run_type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(dependency_serach_start);
+     }
 
      this->Com_Data_Extractor.Receive_Single_File_Dependency_Data(&this->DepSelector_For_Single_File);
 
      this->Com_Data_Extractor.Extract_Compiler_Data();
 
-     std::cout << "\n The interpretation of dependency data complated";
+     char dependency_search_end [] = "\n The interpretation of dependency data complated";
 
+     std::cout << dependency_search_end;
+
+     if(this->run_type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(dependency_search_end);
+     }
 
      this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 

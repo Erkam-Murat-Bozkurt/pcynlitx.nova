@@ -46,9 +46,9 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->construct_build_system = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\build_system_generator.png"),wxBITMAP_TYPE_PNG);
 
-     this->open_terminal = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\open_terminal.png"),wxBITMAP_TYPE_PNG);
+     //this->open_terminal = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\open_terminal.png"),wxBITMAP_TYPE_PNG);
 
-     this->open_tree_view = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\open_folder_icon.png"),wxBITMAP_TYPE_PNG);
+     //this->open_tree_view = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\open_folder_icon.png"),wxBITMAP_TYPE_PNG);
 
      this->build_executable = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\build_executable.png"),wxBITMAP_TYPE_PNG);
 
@@ -60,7 +60,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->Art_Pointer = new MyAuiTBArt();
 
-     this->toolBar->SetBackgroundColour(wxColour(160,160,160,0xff));
+     this->toolBar->SetBackgroundColour(wxColour(140,140,160,0xff));
 
      this->toolBar->SetArtProvider(this->Art_Pointer);
 
@@ -98,9 +98,9 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->toolBar->AddTool(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR,wxT(""),*this->build_executable,wxT(""));
 
-     this->toolBar->AddTool(ID_OPEN_TERMINAL,wxT(""),*this->open_terminal,wxT(""));
+     //this->toolBar->AddTool(ID_OPEN_TERMINAL,wxT(""),*this->open_terminal,wxT(""));
 
-     this->toolBar->AddTool(ID_OPEN_TREE_WIEW,wxT(""),*this->open_tree_view,wxT(""));
+     //this->toolBar->AddTool(ID_OPEN_TREE_WIEW,wxT(""),*this->open_tree_view,wxT(""));
 
      this->toolBar->AddTool(ID_SELECT_PROJECT_FILE,wxT(""),*this->Select_Project_File,wxT(""));
 

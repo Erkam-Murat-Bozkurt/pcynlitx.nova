@@ -56,11 +56,13 @@ class Source_File_Dependency_Determiner
 public:
  Source_File_Dependency_Determiner(char * des_file_path, char opr_sis);
  virtual ~Source_File_Dependency_Determiner();
+ void Receive_System_Interface(Custom_System_Interface * sysInt);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Collect_Dependency_Information();
  void Collect_Dependency_Information(std::string path);
  void Simple_Dependency_Determination_For_Single_Source_File(std::string path);
+ void Receive_Run_Type(char RunType);
  bool Is_Source_File(std::string spath);
  bool Is_Header_File(std::string hpath);
  int  Get_Compiler_Data_Size();
@@ -86,6 +88,7 @@ protected:
  void Clear_Compiler_Data_Vector(std::vector<Compiler_Data> * Data);
  Git_Data_Processor * Git_Data_Proc;
  Descriptor_File_Reader * Des_Reader;
+ Custom_System_Interface * SysInt;
  Project_Src_Code_Rdr Code_Rd;
  Source_File_Dependency_Selector DepSelector;
  Source_File_Dependency_Selector_For_Single_File DepSelector_For_Single_File;
@@ -98,7 +101,8 @@ protected:
  std::unordered_map<std::string, int> Dependency_Map;
  std::vector<std::thread> threadPool;
  std::mutex mtx;
- size_t  data_size;
+ size_t data_size;
+ char run_type;
  bool Memory_Delete_Condition;
 };
 

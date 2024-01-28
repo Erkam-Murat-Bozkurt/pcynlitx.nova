@@ -48,11 +48,15 @@ void Kernel::Receive_Build_Type(char BuildType){
      this->Exe_Bld.Receive_Build_Type(BuildType);
 
      this->Bld_Init.Receive_Build_Type(BuildType);
+
+     this->Dep_Determiner.Receive_Run_Type(BuildType);
 }
 
 void Kernel::Receive_System_Interface(Custom_System_Interface * Int){
 
      this->SysInt = Int;
+
+     this->Dep_Determiner.Receive_System_Interface(Int);
 }
 
 void Kernel::Setup_Build_Tools(){

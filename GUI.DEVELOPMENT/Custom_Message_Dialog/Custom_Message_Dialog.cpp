@@ -70,7 +70,7 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     this->text_title->SetForegroundColour(wxColour(134,104,112));
 
-    this->text->SetForegroundColour(wxColour(50,50,50));
+    this->text->SetForegroundColour(wxColour(70,70,70));
 
 
     wxFont textFont = this->text_title->GetFont();
