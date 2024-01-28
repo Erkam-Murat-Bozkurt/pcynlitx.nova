@@ -96,6 +96,7 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
 
 
+  this->Project_Management->Append(wxID_NONE,                "&PROJECT FILE OPERATIONS "," ",wxITEM_NORMAL);
 
   this->Project_Management->Append(ID_OPEN_EMPTY_PROJECT_FILE,"Construct Empty Project File","",wxITEM_NORMAL);
 
@@ -103,13 +104,17 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Project_Management->Append(ID_SHOW_PROJECT_FILE,"Show Project File","",wxITEM_NORMAL);
 
+  this->Project_Management->Append(ID_PRINT_DESCRIPTIONS, "&Print Project Descriptions"," ",wxITEM_NORMAL);
+
+  this->Project_Management->Append(wxID_NONE,"&              "," ",wxITEM_SEPARATOR);
+
+  this->Project_Management->Append(wxID_NONE,                "&BUILD SYSTEM OPERATIONS "," ",wxITEM_NORMAL);
+
   this->Project_Management->Append(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,       "&Build System Initializer"," ",wxITEM_NORMAL);
 
   this->Project_Management->Append(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Single File Script Constructor"," ",wxITEM_NORMAL);
 
   this->Project_Management->Append(ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Advance Single File Script Constructor"," ",wxITEM_NORMAL);
-
-  this->Project_Management->Append(ID_PRINT_DESCRIPTIONS, "&Print Project Descriptions"," ",wxITEM_NORMAL);
 
   this->Project_Management->Append(ID_DETERMINE_SOURCE_FILE_DEPENDENCIES, "&Determine Source File Dependencies"," ",wxITEM_NORMAL);
 

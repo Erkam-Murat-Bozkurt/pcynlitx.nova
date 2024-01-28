@@ -229,11 +229,15 @@ void Process_Manager::ReadFromNamedPipe(){
 }
 
 
-void Process_Manager::Construct_Text_Panel(wxString title){
+void Process_Manager::Construct_Text_Panel(wxString title, int dialog_size){
 
      this->text_ctrl_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,-1));
 
      this->close_panel     = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,70));
+
+     this->dialog_panel    = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,30));
+
+
 
      this->CloseButton     = new wxButton(this,ID_CLOSE_PROCESS_OUTPUT_WINDOW,wxT("CLOSE"),
      
@@ -248,6 +252,22 @@ void Process_Manager::Construct_Text_Panel(wxString title){
      this->textctrl->SetVirtualSize(wxSize(1000,10000));
 
      this->textctrl->FitInside();
+
+
+     this->dialog = new wxGauge(this->dialog_panel,wxID_ANY,dialog_size,
+     
+                    wxDefaultPosition,wxSize(900,30),wxGA_HORIZONTAL | wxGA_SMOOTH );
+
+
+
+     this->dialog_box = new wxBoxSizer(wxHORIZONTAL);
+
+     this->dialog_box->Add(this->dialog_panel,1,wxEXPAND | wxALL,2);
+       
+     this->dialog_box->Layout();
+
+
+
 
 
      this->ctrl_box = new wxBoxSizer(wxHORIZONTAL);
@@ -273,7 +293,9 @@ void Process_Manager::Construct_Text_Panel(wxString title){
      this->frame_box = new wxBoxSizer(wxVERTICAL);
 
      this->frame_box->Add(this->ctrl_box,1,    wxEXPAND | wxTOP    |  wxALL,5);
- 
+
+     this->frame_box->Add(this->dialog_box,0,    wxEXPAND | wxTOP    |  wxALL,5);
+
      this->frame_box->Add(this->close_button_sizer,0,   wxEXPAND | wxBOTTOM  | wxALL,5);
 
      this->frame_box->Layout();
@@ -291,6 +313,7 @@ void Process_Manager::Construct_Text_Panel(wxString title){
 
      this->close_panel->SetSize(this->close_panel->GetClientSize());
 
+     this->dialog_panel->SetSize(this->dialog_panel->GetClientSize());
 
 
 
@@ -355,7 +378,7 @@ void Process_Manager::Print_Error_Stream(wxString title){
 
      wxString std_err(error_st);
 
-     this->Construct_Text_Panel(title);
+     this->Construct_Text_Panel(title,20);
 }
 
 void Process_Manager::Print_Output_Stream(wxString title){
@@ -366,7 +389,7 @@ void Process_Manager::Print_Output_Stream(wxString title){
      
      wxString std_out(out);
 
-     this->Construct_Text_Panel(title);
+     this->Construct_Text_Panel(title,20);
 }
 
 
@@ -651,4 +674,16 @@ std::string Process_Manager::Get_Std_Out(){
 std::string Process_Manager::GetNamedPipeString(){
 
     return this->named_pipe_str;
+}
+
+
+wxGauge * Process_Manager::GetDialogAddress(){
+
+      return this->dialog;
+}
+
+
+wxTextCtrl * Process_Manager::GetTextControl(){
+
+      return this->textctrl;
 }

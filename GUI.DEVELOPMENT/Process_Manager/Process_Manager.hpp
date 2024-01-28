@@ -50,7 +50,7 @@ public:
   void Receive_Builder_Path(wxString bldr_path);
   void Receive_Descriptor_File_Path(wxString Path);
   void Fork_Process(wxString shell_command);
-  void Construct_Text_Panel(wxString title);
+  void Construct_Text_Panel(wxString title, int dialog_size);
   void Print_Error_Stream(wxString title);
   void Print_Output_Stream(wxString title);
   void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect);
@@ -59,6 +59,8 @@ public:
   void ReadStdOut();
   void ReadFromNamedPipe();
   void Clear_String_Memory(char * ptr);
+  wxGauge * GetDialogAddress();
+  wxTextCtrl * GetTextControl();
   std::string Get_Std_Out();
   std::string GetNamedPipeString();
   char * Get_Process_Command();
@@ -79,11 +81,17 @@ private:
 
   wxPanel * close_panel;
 
+  wxPanel * dialog_panel;
+
+  wxGauge * dialog;
+
   wxTextCtrl * textctrl;
 
   wxBoxSizer * ctrl_box;
 
   wxBoxSizer * close_box;
+
+  wxBoxSizer * dialog_box;
 
 
   wxBoxSizer * close_panel_sizer;

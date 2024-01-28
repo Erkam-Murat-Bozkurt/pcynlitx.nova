@@ -141,7 +141,7 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
     }
     else{
 
-           button_sizer->Add(this->close_button_panel,0,wxALIGN_CENTER_HORIZONTAL |  wxALL,30);
+           button_sizer->Add(this->close_button_panel,0,wxEXPAND |  wxALL,30);
     }
 
 
@@ -152,8 +152,14 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     topsizer->Add(panel_sizer,2, wxEXPAND | wxALL,0);
 
-    topsizer->Add(button_sizer,0,wxALIGN_RIGHT | wxALL,0);
+    if(dial_style == wxT("YES_NO")){
 
+        topsizer->Add(button_sizer,0,wxALIGN_RIGHT | wxALL,0);
+    }
+    else{
+
+        topsizer->Add(button_sizer,0,wxALIGN_CENTER_HORIZONTAL | wxALL,0);
+    }
 
     topsizer->Layout();
 

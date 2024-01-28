@@ -525,9 +525,38 @@ void MainFrame::Determine_Source_File_Dependencies(wxCommandEvent & event){
 
           this->fork_process->detach();
 
-          this->Process_Ptr->Construct_Text_Panel(wxT("Source File Dependencies"));
 
-          this->Process_Ptr->AppendText_To_TextCtrl(wxT("\n PROCESS STARTED:\n\n"));
+
+          wxTextAttr AttrBold(wxColor(134,104,112));
+
+          AttrBold.SetFontWeight(wxFONTWEIGHT_BOLD);
+
+          AttrBold.SetFontSize(12);
+
+          AttrBold.SetFontFaceName(wxT("Calibri"));
+
+
+
+
+          wxTextAttr AttrLigth(wxColor(50,50,50));
+
+          AttrLigth.SetFontWeight(wxFONTWEIGHT_LIGHT);
+
+          AttrLigth.SetFontSize(12);
+
+          AttrLigth.SetFontFaceName(wxT("Calibri"));
+
+
+
+
+          this->Process_Ptr->Construct_Text_Panel(wxT("Source File Dependencies"),20);
+
+          this->Process_Ptr->GetTextControl()->SetDefaultStyle(AttrBold);
+
+
+          this->Process_Ptr->AppendText_To_TextCtrl(wxT("\n\n    SOURCE FILE DEPENDENCY DETERMINATION STARTED:"));
+
+          this->Process_Ptr->GetTextControl()->SetDefaultStyle(AttrLigth);
 
         }
         else{
@@ -547,8 +576,43 @@ void MainFrame::Run_Source_File_Dependency_Determination_Process(wxString FilePA
      
      std::string pipe_string = this->Process_Ptr->GetNamedPipeString();
 
-     this->Process_Ptr->AppendText_To_TextCtrl(wxString(pipe_string));
+     int new_line_number = 0, start_point = 0, progress = 0;
+
+     for(size_t i=0;i<pipe_string.size();i++){
+
+         if(pipe_string[i] == '\n'){
+
+             new_line_number++;
+
+             for(size_t k=start_point;k<i;k++){
+
+                 this->Process_Ptr->AppendText_To_TextCtrl(wxString(pipe_string[k]));
+             }
+
+             progress +=4;
+
+             this->Process_Ptr->GetDialogAddress()->SetValue(progress);
+
+             start_point = i;
+         }
+         else{
+
+             if(new_line_number>0){
+
+                new_line_number--;
+             }
+         }
+
+         if(new_line_number==3){
+
+            this->Process_Ptr->GetDialogAddress()->SetValue(20);
+
+            break;
+         }
+     }
 }
+
+
 
 void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
 

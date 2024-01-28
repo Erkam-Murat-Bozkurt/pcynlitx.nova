@@ -61,6 +61,12 @@ int main(int argc, char ** argv){
 
        Build_System.Determine_Source_File_Dependency_List(argv[3]);
 
+
+       char read_seperator [] = "\n\n\n\n";
+
+       System_Interface.WriteTo_NamedPipe_FromChild(read_seperator);
+
+
        std::vector<Compiler_Data> * ptr = Build_System.Get_Src_Dependency_List();
 
        for(size_t i=0;i<ptr->size();i++){

@@ -171,7 +171,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
              wxRect rect(tab_x + tab_width - bmp.GetScaledWidth() - 10,
                          tab_y + (tab_height/2) - (bmp.GetScaledHeight()/2) + 15,
-                         bmp.GetScaledWidth()-7,
+                         bmp.GetScaledWidth()-3,
                          tab_height - 1);
 
              DrawButtons(dc,wxSize(1, 1), rect, bmp, *wxWHITE, close_button_state);
