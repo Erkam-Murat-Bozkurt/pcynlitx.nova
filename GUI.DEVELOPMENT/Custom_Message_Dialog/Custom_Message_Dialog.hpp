@@ -18,7 +18,9 @@
 
 enum
 {
-  ID_CLOSE_MESSAGE_WINDOW = 90
+  ID_CLOSE_MESSAGE_WINDOW = 90,
+  ID_SELECTION_YES = 91,
+  ID_SELECTION_NO = 92
 };
 
 class Custom_Message_Dialog : public wxDialog
@@ -30,11 +32,15 @@ public:
     
     const wxString & title=wxT("NWINIX REPORT"), const wxBitmap & bmp=NULL,
     
-    const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(620,400),
+    const wxPoint &pos=wxDefaultPosition, const wxString & dial_style=wxT("Close"), 
+    
+    const wxSize &size=wxSize(620,400),
     
     long style=wxDEFAULT_DIALOG_STYLE, const wxString &name=wxDialogNameStr);
     
     virtual ~Custom_Message_Dialog();
+
+    bool GetYesNoCond() const;
     
 private:
     void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect);
@@ -46,6 +52,12 @@ private:
     void CloseWindow(wxCommandEvent & event);
 
     void PaintNow(wxWindow * wnd);
+
+    void SetYes(wxCommandEvent & event);
+
+    void SetNo(wxCommandEvent & event);
+
+    bool yes_no_condition;
 
     wxStaticText * text;
 
@@ -59,11 +71,19 @@ private:
 
     wxPanel *  figure_panel;
 
-    wxPanel *  button_panel;
+    wxPanel *  close_button_panel;
+
+    wxPanel *  yes_button_panel;
+
+    wxPanel *  no_button_panel;
 
     wxFont * Default_Font;
 
     wxButton * CloseButton;
+
+    wxButton * Yes_Button;
+
+    wxButton * No_Button;
 
     bool Memory_Delete_Condition;
 

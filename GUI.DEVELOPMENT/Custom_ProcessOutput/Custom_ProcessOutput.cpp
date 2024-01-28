@@ -248,11 +248,25 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
         
            wxString close_message = message_1 + message_2;
 
-           int answer = wxMessageBox(close_message, 
-         
-              "Please Confirm",wxICON_QUESTION | wxYES_NO);
 
-           if(answer == wxYES){
+           wxBitmap * exclamation_mark_bmp
+  
+           = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+
+    
+           Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,close_message,
+            
+           wxT("INTERRUPT CONFIRMATION"),wxID_ANY,
+               
+           wxT("THE PROCESS STOP CONFIRMATION"),
+               
+           *exclamation_mark_bmp, wxDefaultPosition,wxT("YES_NO"),wxSize(700,600));
+
+           dial->ShowModal();
+
+
+
+           if(dial->GetYesNoCond()){
 
               if(this->SysPtr->IsChildProcessStillAlive()){
 

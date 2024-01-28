@@ -418,7 +418,7 @@ void MainFrame::Show_Author(wxCommandEvent & event)
                
             wxT("THE DEVELOPER OF NWINIX PLATFORM"),
                
-            *this->logo_bmp, wxDefaultPosition,wxSize(700,600));
+            *this->logo_bmp, wxDefaultPosition,wxT("Close"),wxSize(700,600));
 
 
         if(dial->ShowModal() == ID_SHOW_AUTOR_INFO){

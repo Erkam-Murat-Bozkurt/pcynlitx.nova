@@ -22,6 +22,7 @@
 #include "Custom_DockArt.h"
 #include "Custom_System_Interface.h"
 #include "Custom_Tree_View_Panel.h"
+#include "Custom_Message_Dialog.hpp"
 
 
 enum

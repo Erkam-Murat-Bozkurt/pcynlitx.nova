@@ -24,17 +24,26 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 BEGIN_EVENT_TABLE(Custom_Message_Dialog,wxDialog)
     EVT_BUTTON(ID_CLOSE_MESSAGE_WINDOW,Custom_Message_Dialog::CloseWindow)
+    EVT_BUTTON(ID_SELECTION_YES,Custom_Message_Dialog::SetYes)
+    EVT_BUTTON(ID_SELECTION_NO,Custom_Message_Dialog::SetNo)
+
 END_EVENT_TABLE()
 
 Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString & message, 
 
-    const wxString & message_title, wxWindowID id, const wxString & title, const wxBitmap & bmp, 
+    const wxString & message_title, wxWindowID id, const wxString & title, 
+    
+    const wxBitmap & bmp, 
 
-    const wxPoint & pos, const wxSize & size, long style, const wxString & name) : 
+    const wxPoint & pos, const wxString & dial_style, 
+    
+    const wxSize & size, long style, const wxString & name) : 
 
     wxDialog(parent, id, title, pos, size, style, name)
 {
     this->Memory_Delete_Condition = false;
+
+    this->yes_no_condition = false;
 
     this->GetEventHandler()->Bind(wxEVT_PAINT,&Custom_Message_Dialog::OnPaint,this,wxID_ANY);
 
@@ -56,8 +65,17 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     this->text_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxDefaultSize);
 
-    this->button_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxDefaultSize);
 
+    if(dial_style == wxT("YES_NO")){
+
+         this->yes_button_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxDefaultSize);
+
+         this->no_button_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxDefaultSize);
+    }
+    else{
+
+         this->close_button_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxDefaultSize); 
+    }
 
     this->figure = new wxStaticBitmap(this->figure_panel,wxID_ANY,bmp);
 
@@ -77,9 +95,24 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     this->text_title->SetFont(textFont.Bold());
 
-    this->CloseButton  = new wxButton(this->button_panel,ID_CLOSE_MESSAGE_WINDOW,
+    if(dial_style == wxT("YES_NO")){
+       
+       this->Yes_Button  = new wxButton(this->yes_button_panel,ID_SELECTION_YES,
     
+                         wxT("YES"),wxDefaultPosition, wxSize(100,60));
+
+       this->No_Button  = new wxButton(this->no_button_panel,ID_SELECTION_NO,
+    
+                         wxT("NO"),wxDefaultPosition, wxSize(100,60));
+    }
+    else{
+
+
+         this->CloseButton  = new wxButton(this->close_button_panel,ID_CLOSE_MESSAGE_WINDOW,
+     
                          wxT("CLOSE"),wxDefaultPosition, wxSize(100,60));
+    }
+
 
 
 
@@ -98,9 +131,19 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
     panel_sizer->Add(this->figure_panel,0, wxRIGHT | wxTOP | wxBOTTOM,60);
 
 
-    wxBoxSizer * button_sizer = new wxBoxSizer(wxVERTICAL);
+    wxBoxSizer * button_sizer = new wxBoxSizer(wxHORIZONTAL);
 
-    button_sizer->Add(this->button_panel,0,wxALIGN_CENTER_HORIZONTAL |  wxALL,30);
+    if(dial_style == wxT("YES_NO")){
+
+           button_sizer->Add(this->yes_button_panel,0,wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM,20);
+
+           button_sizer->Add(this->no_button_panel,0,wxEXPAND | wxRIGHT | wxTOP | wxBOTTOM,20);
+    }
+    else{
+
+           button_sizer->Add(this->close_button_panel,0,wxALIGN_CENTER_HORIZONTAL |  wxALL,30);
+    }
+
 
 
 
@@ -109,7 +152,7 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     topsizer->Add(panel_sizer,2, wxEXPAND | wxALL,0);
 
-    topsizer->Add(button_sizer,0, wxEXPAND | wxALL,0);
+    topsizer->Add(button_sizer,0,wxALIGN_RIGHT | wxALL,0);
 
 
     topsizer->Layout();
@@ -208,3 +251,24 @@ void Custom_Message_Dialog::OnSize(wxSizeEvent & event){
       this->DrawBackground(dc,this,rect_text);
 }
 
+
+
+void Custom_Message_Dialog::SetYes(wxCommandEvent & event){
+
+     this->yes_no_condition = true;
+
+     this->Destroy();
+}
+
+
+void Custom_Message_Dialog::SetNo(wxCommandEvent & event){
+
+     this->yes_no_condition = false;
+
+     this->Destroy();
+}
+
+bool Custom_Message_Dialog::GetYesNoCond() const {
+
+     return this->yes_no_condition;
+}
