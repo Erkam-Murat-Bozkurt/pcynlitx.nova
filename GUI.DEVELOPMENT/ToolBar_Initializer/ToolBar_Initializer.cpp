@@ -48,7 +48,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      //this->open_terminal = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\open_terminal.png"),wxBITMAP_TYPE_PNG);
 
-     //this->open_tree_view = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\open_folder_icon.png"),wxBITMAP_TYPE_PNG);
+     this->open_tree_view = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\open_folder_icon.png"),wxBITMAP_TYPE_PNG);
 
      this->build_executable = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\build_executable.png"),wxBITMAP_TYPE_PNG);
 
@@ -98,13 +98,17 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->toolBar->AddTool(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR,wxT(""),*this->build_executable,wxT(""));
 
+     this->toolBar->AddTool(ID_OPEN_TREE_WIEW,wxT(""),*this->open_tree_view,wxT(""));
+
+
      //this->toolBar->AddTool(ID_OPEN_TERMINAL,wxT(""),*this->open_terminal,wxT(""));
 
-     //this->toolBar->AddTool(ID_OPEN_TREE_WIEW,wxT(""),*this->open_tree_view,wxT(""));
 
      this->toolBar->AddTool(ID_SELECT_PROJECT_FILE,wxT(""),*this->Select_Project_File,wxT(""));
 
      this->toolBar->AddTool(ID_PRINT_DESCRIPTIONS,wxT(""),*this->print_descriptions,wxT(""));
+
+
 
      this->toolBar->SetMargins(2,2,3,3);
 

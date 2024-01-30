@@ -351,6 +351,11 @@ void Custom_Tree_View_Panel::Close_Directory_Pane()
 }
 
 
+void Custom_Tree_View_Panel::Expand_Selected_Item(){
+
+     this->Folder_Lister->Expand_Selected_Item();
+}
+
 int Custom_Tree_View_Panel::GetTotalItemNum(wxString Folder){
 
     return this->Folder_Lister->GetTotalItemNum(Folder);

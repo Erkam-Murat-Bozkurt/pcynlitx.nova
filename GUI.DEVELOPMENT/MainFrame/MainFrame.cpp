@@ -558,6 +558,9 @@ void MainFrame::Determine_Source_File_Dependencies(wxCommandEvent & event){
 
           this->Process_Ptr->GetTextControl()->SetDefaultStyle(AttrLigth);
 
+          Dependency_Tree_Printer * printer = new Dependency_Tree_Printer(this);
+
+
         }
         else{
 
@@ -584,10 +587,15 @@ void MainFrame::Run_Source_File_Dependency_Determination_Process(wxString FilePA
 
              new_line_number++;
 
+             std::string str_line;
+
              for(size_t k=start_point;k<i;k++){
 
-                 this->Process_Ptr->AppendText_To_TextCtrl(wxString(pipe_string[k]));
+                 str_line.push_back(pipe_string[k]);
              }
+
+             this->Process_Ptr->AppendText_To_TextCtrl(wxString(str_line));
+
 
              progress +=4;
 
@@ -610,6 +618,7 @@ void MainFrame::Run_Source_File_Dependency_Determination_Process(wxString FilePA
             break;
          }
      }
+
 }
 
 
@@ -782,6 +791,8 @@ void MainFrame::Start_Construction_Process(wxString label, wxString dir_open, wx
 
 }
 
+
+
 void MainFrame::ForkProcess(char * cmd, wxString start_text){
 
      std::unique_lock<std::mutex> lck(this->mtx);
@@ -797,8 +808,6 @@ void MainFrame::ForkProcess(char * cmd, wxString start_text){
      this->read_process_output = new std::thread(MainFrame::ReadProcessOutput,this,start_text);
 
      this->read_process_output->detach();
-
-
 
 
      lck.lock();
@@ -889,11 +898,6 @@ void MainFrame::ReadProcessOutput(wxString start_text){
 
 
      this->Process_Output->GetTextControl()->SetDefaultStyle(wxTextAttr(wxColor(134,104,112)));
-
-     
-     //wxString start_text = wxT("\n\n   BUILD SYSTEM CONSTRUCTION STARTED");
-
-
 
      this->Process_Output->GetTextControl()->AppendText(start_text);
 

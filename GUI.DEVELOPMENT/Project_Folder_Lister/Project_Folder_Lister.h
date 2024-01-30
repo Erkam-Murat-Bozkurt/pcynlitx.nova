@@ -43,10 +43,15 @@ public:
 
   void Expand_Root();
 
+  void Expand_Selected_Item();
+
+
 private:
   void Initialize_Properties(wxString Folder);
 
   void count_sub_directories(wxString Folder);
+
+  bool Is_Item_Already_Exist(wxString Path);
 
   void Append_Items(wxString Folder, wxTreeItemId Id);
 

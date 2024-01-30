@@ -90,6 +90,8 @@ public:
 
   void Size_Event(wxSizeEvent & event);
 
+  void Expand_Selected_Item();
+
   wxBoxSizer * panel_sizer;
 
   wxBoxSizer * tree_control_sizer;

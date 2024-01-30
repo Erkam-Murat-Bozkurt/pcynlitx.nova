@@ -52,7 +52,7 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     std::string face_name = "Calibri"; 
 
-    this->Default_Font = new wxFont(13,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
+    this->Default_Font = new wxFont(12,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
 
                          wxFONTWEIGHT_NORMAL,false,wxString(face_name));
 
@@ -88,7 +88,7 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     this->text_title->SetForegroundColour(wxColour(134,104,112));
 
-    this->text->SetForegroundColour(wxColour(70,70,70));
+    this->text->SetForegroundColour(wxColour(30,30,30));
 
 
     wxFont textFont = this->text_title->GetFont();

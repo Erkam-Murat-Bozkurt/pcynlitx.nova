@@ -134,33 +134,40 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
 
  wxTreeItemId Project_Folder_Lister::Append_Directory_To_Tree(wxTreeItemId Id, wxString Directory, wxString Path){
 
-      this->tree_item_list[this->item_counter].item_id =
+      if(!this->Is_Item_Already_Exist(Path)){
+
+         this->tree_item_list[this->item_counter].item_id =
 
               this->treeCtrl->AppendItem(Id,Directory,0,0,NULL);
 
-      this->appended_item_id = this->tree_item_list[this->item_counter].item_id;
+         this->appended_item_id = this->tree_item_list[this->item_counter].item_id;
 
-      this->tree_item_list[this->item_counter].Item_Path = Path;
+         this->tree_item_list[this->item_counter].Item_Path = Path;
 
-      this->item_counter++;
+         this->item_counter++;
 
-      return this->appended_item_id;
+         return this->appended_item_id;
+      }
  }
 
 
  wxTreeItemId Project_Folder_Lister::Append_File_To_Tree(wxTreeItemId Id, wxString File, wxString Path){
 
-      this->tree_item_list[this->item_counter].item_id =
+      if(!this->Is_Item_Already_Exist(Path)){
+
+          this->tree_item_list[this->item_counter].item_id =
 
               this->treeCtrl->AppendItem(Id,File,1,1,NULL);
 
-      this->appended_item_id = this->tree_item_list[this->item_counter].item_id;
+          this->appended_item_id = this->tree_item_list[this->item_counter].item_id;
 
-      this->tree_item_list[this->item_counter].Item_Path = Path;
+          this->tree_item_list[this->item_counter].Item_Path = Path;
 
-      this->item_counter++;
+          this->item_counter++;
 
-      return this->appended_item_id;
+          return this->appended_item_id;
+
+      }
  }
 
  void Project_Folder_Lister::count_sub_directories(wxString Folder){
@@ -303,6 +310,8 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
 
  void Project_Folder_Lister::Append_Files(wxString Folder, wxTreeItemId Id){
 
+      
+
       wxString filename  = wxT("");
 
       wxString file_path = wxT("");
@@ -424,7 +433,25 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
           }
 
           return this->Item_Path;
- }
+}
+
+
+bool Project_Folder_Lister::Is_Item_Already_Exist(wxString Path){
+
+     bool is_exist = false;
+
+     for(int i=0;i<this->item_counter;i++){
+
+         if(this->tree_item_list[i].Item_Path == Path){
+
+            is_exist = true;
+
+            return is_exist;
+         }
+     }
+
+     return is_exist;
+}
 
 void Project_Folder_Lister::RemoveProjectDirectory(){
 
@@ -442,6 +469,12 @@ bool Project_Folder_Lister::GetProjectDirectoryOpenStatus(){
 void Project_Folder_Lister::Expand_Root(){
 
      this->treeCtrl->Expand(this->tree_item_list[0].item_id);
+}
+
+
+void Project_Folder_Lister::Expand_Selected_Item(){
+
+     this->treeCtrl->Expand(this->treeCtrl->GetSelection());
 }
 
 int Project_Folder_Lister::GetTotalItemNum(wxString Folder){

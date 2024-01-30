@@ -262,7 +262,7 @@ void Process_Manager::Construct_Text_Panel(wxString title, int dialog_size){
 
      this->dialog_box = new wxBoxSizer(wxHORIZONTAL);
 
-     this->dialog_box->Add(this->dialog_panel,1,wxEXPAND | wxALL,2);
+     this->dialog_box->Add(this->dialog_panel,1,wxEXPAND | wxALL,5);
        
      this->dialog_box->Layout();
 
@@ -272,7 +272,7 @@ void Process_Manager::Construct_Text_Panel(wxString title, int dialog_size){
 
      this->ctrl_box = new wxBoxSizer(wxHORIZONTAL);
 
-     this->ctrl_box->Add(this->text_ctrl_panel,1,wxEXPAND,2);
+     this->ctrl_box->Add(this->text_ctrl_panel,1,wxEXPAND  | wxALL,5);
 
      this->ctrl_box->Layout();
 
@@ -306,14 +306,6 @@ void Process_Manager::Construct_Text_Panel(wxString title, int dialog_size){
      this->frame_box->SetSizeHints(this);
 
      this->frame_box->Fit(this);
-
-
-
-     this->text_ctrl_panel->SetSize(this->text_ctrl_panel->GetClientSize());
-
-     this->close_panel->SetSize(this->close_panel->GetClientSize());
-
-     this->dialog_panel->SetSize(this->dialog_panel->GetClientSize());
 
 
 
