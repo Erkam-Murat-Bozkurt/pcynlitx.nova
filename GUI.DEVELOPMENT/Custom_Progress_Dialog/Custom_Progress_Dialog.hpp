@@ -1,8 +1,10 @@
 
 
 
-#ifndef DEPENDENCY_TREE_PRINTER_HPP
-#define DEPENDENCY_TREE_PRINTER_HPP
+
+
+#ifndef CUSTOM_PROGRESS_DIALOG_HPP
+#define CUSTOM_PROGRESS_DIALOG_HPP
 
 #include <wx/wx.h>
 #include <wx/panel.h>
@@ -16,6 +18,7 @@
 #include <wx/font.h>
 #include <wx/sizer.h>
 #include <wx/msgdlg.h>
+#include <wx/gauge.h>
 #include "Custom_wxTreeCtrl.h"
 #include "Project_Folder_Lister.h"
 #include "Custom_DockArt.h"
@@ -24,22 +27,25 @@
 
 enum
 {
-  ID_CLOSE_DEPENDENCY_WINDOW = 81,
-  ID_CLOSE_DEPENDECY_TEXT_WINDOW = 82
+  ID_CLOSE_PROGRESS_DIALOG = 91
 };
 
 
-class Dependency_Tree_Printer : public wxFrame
+class Custom_Progress_Dialog : public wxDialog
 {
 public:
-  Dependency_Tree_Printer(wxFrame * parent, wxWindowID id=wxID_ANY, const wxString & title=wxT(""), 
+  Custom_Progress_Dialog(wxWindow * parent, wxWindowID id=wxID_ANY, 
+    
+    const wxString & title=wxT("PROCESS REPORT"), 
+    
+    const wxPoint &pos=wxDefaultPosition,
+    
+    const wxSize &size=wxSize(800,600),
+    
+    long style=wxDEFAULT_DIALOG_STYLE, const wxString &name=wxDialogNameStr);
 
-   const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(900,700), 
-   
-   long style=wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP);
 
-
-  virtual ~Dependency_Tree_Printer();
+  virtual ~Custom_Progress_Dialog();
 
   void Clear_Dynamic_Memory();
 
@@ -47,17 +53,11 @@ public:
 
   void Construct_Text_Panel(wxString title, int dialog_size);
 
-  void Construct_Tree_Panel(wxString title);
+  void SetBoldFont();
+
+  void SetLightFont();
 
   void Set_Font(wxFont Default_Font);
-
-  void Load_Project_Directory(wxString Folder);
-
-  Custom_wxTreeCtrl * GetTreeCtrl();
-
-  int GetTotalItemNum(wxString Folder);
-
-  wxString GetItemPath(wxTreeItemId item_number);
 
   wxFrame * Parent_Frame_Pointer;
 
@@ -66,8 +66,6 @@ public:
   void OnPaint(wxPaintEvent& event);
 
   void PaintNow();
-
-  void PrintDependencyTree();
 
   void Size_Event(wxSizeEvent & event);
   
@@ -81,36 +79,10 @@ public:
 
 protected:
 
-  void Close_Tree_Window(wxCommandEvent & event);
 
   void Close_Process_Window(wxCommandEvent & event);
 
   bool Memory_Delete_Condition;
-
-  Project_Folder_Lister * Folder_Lister;
-
-  wxPanel * tree_panel;
-
-  wxPanel * close_panel;
-
-  wxBoxSizer * frame_box;
-
-  wxBoxSizer * close_button_sizer;
-
-  wxBoxSizer * ctrl_box;
-
-  wxBoxSizer * close_box;
-
-  wxButton * CloseButton;
-
-  Custom_wxTreeCtrl * tree_control;
-
-  wxFont * Directory_List_Font;
-
-
-
-
-
 
   
   wxPanel * text_ctrl_panel;
@@ -142,4 +114,4 @@ protected:
   DECLARE_EVENT_TABLE()
 };
 
-#endif /* DEPENDENCY_TREE_PRINTER_HPP */
+#endif /* CUSTOM_PROGRESS_DIALOG_HPP */

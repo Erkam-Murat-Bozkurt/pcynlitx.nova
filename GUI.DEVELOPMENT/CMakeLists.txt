@@ -78,6 +78,9 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Tree_Printer/Dependency_Tree_Printer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Tree_Printer/Dependency_Tree_Printer.cpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Progress_Dialog/Custom_Progress_Dialog.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Progress_Dialog/Custom_Progress_Dialog.cpp
+
 )
 
 
@@ -130,6 +133,9 @@ target_include_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Message_Dialog
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Tree_Printer
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Progress_Dialog
+
 
 
     ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector
@@ -206,6 +212,8 @@ target_link_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Message_Dialog
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Tree_Printer
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Progress_Dialog
 
 
     ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector

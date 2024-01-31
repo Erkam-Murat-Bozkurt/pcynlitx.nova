@@ -55,6 +55,7 @@
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Descriptions_Printer.hpp"
 #include "Custom_Message_Dialog.hpp"
+#include "Custom_Progress_Dialog.hpp"
 #include "Dependency_Tree_Printer.hpp"
 #include "Custom_System_Interface.h"
 #include "Cpp_FileOperations.h"
@@ -125,11 +126,13 @@ private:
   void OpenFile(wxCommandEvent & event);
   void Determine_Source_File_Dependencies(wxCommandEvent & event);
   void Run_Source_File_Dependency_Determination_Process(wxString FilePATH);
+  void Print_File_Dependency_Output();
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;
   std::thread * fork_process;
   std::thread * read_process_output;
+  std::thread * print_file_dependency;
   Custom_DataPanel * data_panel_ptr;
   Custom_Multi_DataPanel * Multi_DataPanel;
   bool is_custom_panel_constructed;
@@ -159,6 +162,10 @@ private:
   Intro_Page_Loader * Intro_Page_Pointer;
   Custom_ProcessOutput * Process_Output;
   Custom_DataPanel * DataPanel_Pointer;
+  Dependency_Tree_Printer * depPrinter;
+  Dependency_Tree_Printer * dep_process_printer;
+  Custom_Progress_Dialog * Progress_Dialog;
+
   bool is_descriptor_file_open;
   wxFont * Default_Font;
   int Process_Event_Counter;

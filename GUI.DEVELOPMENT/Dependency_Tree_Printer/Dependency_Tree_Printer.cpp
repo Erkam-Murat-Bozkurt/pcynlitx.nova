@@ -26,7 +26,8 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 BEGIN_EVENT_TABLE(Dependency_Tree_Printer,wxFrame)
-    EVT_BUTTON(ID_CLOSE_DEPENDENCY_WINDOW,Dependency_Tree_Printer::CloseWindow)
+    EVT_BUTTON(ID_CLOSE_DEPENDENCY_WINDOW,Dependency_Tree_Printer::Close_Tree_Window)
+    EVT_BUTTON(ID_CLOSE_DEPENDECY_TEXT_WINDOW,Dependency_Tree_Printer::Close_Process_Window)
 END_EVENT_TABLE()
 
 Dependency_Tree_Printer::Dependency_Tree_Printer(wxFrame * parent, wxWindowID id, const wxString & title, 
@@ -52,7 +53,7 @@ Dependency_Tree_Printer::Dependency_Tree_Printer(wxFrame * parent, wxWindowID id
 
      this->GetEventHandler()->Bind(wxEVT_SIZE,&Dependency_Tree_Printer::Size_Event,this,wxID_ANY);
 
-     this->SetSize(parent->GetClientSize());
+     this->SetSize(this->GetClientSize());
 
      this->Centre(wxBOTH);
 
@@ -69,11 +70,34 @@ Dependency_Tree_Printer::Dependency_Tree_Printer(wxFrame * parent, wxWindowID id
 
      this->SetIcon(Frame_Icon);
 
-
-
      this->Memory_Delete_Condition = false;
+}
 
 
+
+
+
+
+Dependency_Tree_Printer::~Dependency_Tree_Printer()
+{
+    if(!this->Memory_Delete_Condition)
+    {
+       this->Memory_Delete_Condition = true;
+
+    }
+}
+
+void Dependency_Tree_Printer::Size_Event(wxSizeEvent & event)
+{
+     event.Skip(true);
+
+     this->PaintNow();
+}
+
+
+void Dependency_Tree_Printer::Construct_Tree_Panel(wxString title){
+
+     
      this->tree_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,620));
 
 
@@ -81,20 +105,9 @@ Dependency_Tree_Printer::Dependency_Tree_Printer(wxFrame * parent, wxWindowID id
 
                              wxDefaultSize, wxTR_DEFAULT_STYLE | wxTR_ROW_LINES );
 
-     //this->close_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,70));
-
-
-
      this->CloseButton = new wxButton(this,ID_CLOSE_DEPENDENCY_WINDOW,wxT("CLOSE"),
      
                              wxDefaultPosition, wxSize(100, 50));
-
-
-     //this->tree_control->AlwaysShowScrollbars (true,true);
-
-     //std::string face_name = "Calibri"; 
-
-
 
 
      this->ctrl_box = new wxBoxSizer(wxHORIZONTAL);
@@ -137,13 +150,138 @@ Dependency_Tree_Printer::Dependency_Tree_Printer(wxFrame * parent, wxWindowID id
 
      this->tree_panel->SetSize(this->tree_panel->GetClientSize());
 
-     //this->close_panel->SetSize(this->close_panel->GetClientSize());
+     this->tree_control->Show(false);
 
 
 
-     //this->tree_panel->Show(true);
+     this->SetSize(this->GetClientSize());
 
-     this->tree_control->Show(true);
+     this->PostSizeEvent();
+
+     this->Centre(wxBOTH);
+
+     this->SetTitle(title);
+
+     this->Show(false);
+
+     this->Update();
+
+
+     std::string face_name = "Calibri"; 
+
+     
+     wxFont * tree_font = new wxFont(11,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
+
+                     wxFONTWEIGHT_NORMAL,false,wxString(face_name));
+
+     this->tree_control->SetFont(*tree_font);
+
+
+
+
+
+     wxTreeItemId rootId = this->tree_control->AddRoot("Root");
+
+
+
+     this->tree_control->AppendItem(rootId, "Node 1");
+
+     wxTreeItemId child2Id = this->tree_control->AppendItem(rootId, "Node 2");
+    
+     this->tree_control->AppendItem(child2Id, "Child of node 2");
+    
+     this->tree_control->AppendItem(rootId, "Node 3");
+
+     this->tree_control->AppendItem(rootId, "Node 4");
+
+
+     // Expand all the nodes
+     this->tree_control->ExpandAll();
+
+}
+
+
+
+void Dependency_Tree_Printer::Construct_Text_Panel(wxString title, int dialog_size){
+
+     this->text_ctrl_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,-1));
+
+     this->text_ctrl_close_panel     = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,70));
+
+     this->text_ctrl_dialog_panel    = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,30));
+
+
+
+     this->text_ctrl_close_button     = new wxButton(this,ID_CLOSE_DEPENDECY_TEXT_WINDOW,wxT("CLOSE"),
+     
+                             wxDefaultPosition, wxSize(100, 50));
+
+
+     this->textctrl = new wxTextCtrl(this->text_ctrl_panel,wxID_ANY, wxT(""), 
+     
+                      wxDefaultPosition, wxSize(900,550), wxTE_MULTILINE | wxTE_RICH);
+
+
+     this->textctrl->SetVirtualSize(wxSize(1000,10000));
+
+     this->textctrl->FitInside();
+
+
+     this->dialog = new wxGauge(this->text_ctrl_dialog_panel,wxID_ANY,dialog_size,
+     
+                    wxDefaultPosition,wxSize(900,30),wxGA_HORIZONTAL | wxGA_SMOOTH );
+
+
+
+     this->dialog_box = new wxBoxSizer(wxHORIZONTAL);
+
+     this->dialog_box->Add(this->text_ctrl_dialog_panel,1,wxEXPAND | wxALL,5);
+       
+     this->dialog_box->Layout();
+
+
+
+
+
+     this->text_ctrl_sizer = new wxBoxSizer(wxHORIZONTAL);
+
+     this->text_ctrl_sizer->Add(this->text_ctrl_panel,1,wxEXPAND  | wxALL,5);
+
+     this->text_ctrl_sizer->Layout();
+
+
+
+     this->text_ctrl_close_button_sizer = new wxBoxSizer(wxVERTICAL);
+
+     this->text_ctrl_close_button_sizer->AddStretchSpacer();
+
+     this->text_ctrl_close_button_sizer->Add(this->text_ctrl_close_button,0, 
+     
+               wxALIGN_CENTER_HORIZONTAL | wxFIXED_MINSIZE  | wxALL,15);
+
+     this->text_ctrl_close_button_sizer->AddStretchSpacer();
+
+     this->text_ctrl_close_button_sizer->Layout();
+
+     
+
+     this->text_ctrl_frame_box = new wxBoxSizer(wxVERTICAL);
+
+     this->text_ctrl_frame_box->Add(this->text_ctrl_sizer,1,    wxEXPAND | wxTOP    |  wxALL,5);
+
+     this->text_ctrl_frame_box->Add(this->dialog_box,0,    wxEXPAND | wxTOP    |  wxALL,5);
+
+     this->text_ctrl_frame_box->Add(this->text_ctrl_close_button_sizer,0,   wxEXPAND | wxBOTTOM  | wxALL,5);
+
+     this->text_ctrl_frame_box->Layout();
+
+
+     this->SetSizer(this->text_ctrl_frame_box);
+
+     this->text_ctrl_frame_box->SetSizeHints(this);
+
+     this->text_ctrl_frame_box->Fit(this);
+
 
 
      this->SetSize(this->GetClientSize());
@@ -158,52 +296,49 @@ Dependency_Tree_Printer::Dependency_Tree_Printer(wxFrame * parent, wxWindowID id
 
      this->Update();
 
-
-     //this->Folder_Lister = new Project_Folder_Lister(this->tree_control);
-}
-
-Dependency_Tree_Printer::~Dependency_Tree_Printer()
-{
-    if(!this->Memory_Delete_Condition)
-    {
-       this->Memory_Delete_Condition = true;
-
-       delete this->Folder_Lister;
-    }
-}
-
-void Dependency_Tree_Printer::Size_Event(wxSizeEvent & event)
-{
-     event.Skip(true);
-
-     this->PaintNow();
 }
 
 
-/*
-void Dependency_Tree_Printer::Initialize_Sizer()
-{
-     this->tree_control_sizer = new wxBoxSizer(wxVERTICAL);
 
-     this->tree_control_sizer->Add(this->tree_panel,1, wxALL,10);
+void Dependency_Tree_Printer::PrintDependencyTree(){
 
-     this->tree_panel->SetSizer(this->tree_control_sizer);
+     this->tree_control->Show(true);
 
-     this->tree_control_sizer->SetSizeHints(this->tree_panel);
+     this->Show(true);
 
-     this->tree_panel->Fit();
+     this->Update();
 
-     this->tree_panel->SetAutoLayout(true);
 }
 
-*/
+
+void Dependency_Tree_Printer::AppendText_To_TextCtrl(wxString text){
+
+     this->textctrl->AppendText(text);
+
+     this->textctrl->Update();
+}
 
 
-void Dependency_Tree_Printer::CloseWindow(wxCommandEvent & event){
+
+void Dependency_Tree_Printer::Close_Tree_Window(wxCommandEvent & event){
 
      if(event.GetId() == ID_CLOSE_DEPENDENCY_WINDOW){
 
         this->Destroy();
+     }
+}
+
+void Dependency_Tree_Printer::Close_Process_Window(wxCommandEvent & event){
+
+     if(event.GetId() == ID_CLOSE_DEPENDECY_TEXT_WINDOW){
+
+        Dependency_Tree_Printer * printer = new Dependency_Tree_Printer(this);
+
+        printer->Construct_Tree_Panel(wxT("Sample"));
+
+        printer->PrintDependencyTree();
+
+        //this->Destroy();
      }
 }
 
@@ -281,4 +416,14 @@ Custom_wxTreeCtrl * Dependency_Tree_Printer::GetTreeCtrl(){
 wxString Dependency_Tree_Printer::GetItemPath(wxTreeItemId item_number){
 
      return this->Folder_Lister->GetItemPath(item_number);
+}
+
+wxGauge * Dependency_Tree_Printer::GetDialogAddress(){
+
+      return this->dialog;
+}
+
+wxTextCtrl * Dependency_Tree_Printer::GetTextControl(){
+
+      return this->textctrl;
 }

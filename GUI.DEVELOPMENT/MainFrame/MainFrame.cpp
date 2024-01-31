@@ -526,40 +526,23 @@ void MainFrame::Determine_Source_File_Dependencies(wxCommandEvent & event){
           this->fork_process->detach();
 
 
+          this->Progress_Dialog = new Custom_Progress_Dialog(this,wxID_ANY,wxT("PROCESS REPORT"),wxDefaultPosition);
 
-          wxTextAttr AttrBold(wxColor(134,104,112));
+          this->Progress_Dialog->Construct_Text_Panel(wxT("Process Output"),20);
 
-          AttrBold.SetFontWeight(wxFONTWEIGHT_BOLD);
+          this->Progress_Dialog->SetBoldFont();
 
-          AttrBold.SetFontSize(12);
+          this->Progress_Dialog->AppendText_To_TextCtrl(wxT("\n\n    SOURCE FILE DEPENDENCY DETERMINATION STARTED:"));
 
-          AttrBold.SetFontFaceName(wxT("Calibri"));
+          this->Progress_Dialog->SetLightFont();
 
+          this->Progress_Dialog->ShowModal();
+           
+          this->depPrinter = new Dependency_Tree_Printer(this);
 
+          this->depPrinter->Construct_Tree_Panel(wxT("Sample"));
 
-
-          wxTextAttr AttrLigth(wxColor(50,50,50));
-
-          AttrLigth.SetFontWeight(wxFONTWEIGHT_LIGHT);
-
-          AttrLigth.SetFontSize(12);
-
-          AttrLigth.SetFontFaceName(wxT("Calibri"));
-
-
-
-
-          this->Process_Ptr->Construct_Text_Panel(wxT("Source File Dependencies"),20);
-
-          this->Process_Ptr->GetTextControl()->SetDefaultStyle(AttrBold);
-
-
-          this->Process_Ptr->AppendText_To_TextCtrl(wxT("\n\n    SOURCE FILE DEPENDENCY DETERMINATION STARTED:"));
-
-          this->Process_Ptr->GetTextControl()->SetDefaultStyle(AttrLigth);
-
-          Dependency_Tree_Printer * printer = new Dependency_Tree_Printer(this);
-
+          this->depPrinter->PrintDependencyTree();
 
         }
         else{
@@ -577,6 +560,15 @@ void MainFrame::Run_Source_File_Dependency_Determination_Process(wxString FilePA
 
      this->Process_Ptr->Fork_Process_With_Named_Pipe_Connection(this->Process_Ptr->Get_Process_Command());
      
+     this->print_file_dependency = new std::thread(MainFrame::Print_File_Dependency_Output,this);
+
+     this->print_file_dependency->join();
+
+}
+
+void MainFrame::Print_File_Dependency_Output(){
+
+
      std::string pipe_string = this->Process_Ptr->GetNamedPipeString();
 
      int new_line_number = 0, start_point = 0, progress = 0;
@@ -594,12 +586,12 @@ void MainFrame::Run_Source_File_Dependency_Determination_Process(wxString FilePA
                  str_line.push_back(pipe_string[k]);
              }
 
-             this->Process_Ptr->AppendText_To_TextCtrl(wxString(str_line));
+             this->Progress_Dialog->AppendText_To_TextCtrl(wxString(str_line));
 
 
              progress +=4;
 
-             this->Process_Ptr->GetDialogAddress()->SetValue(progress);
+             this->Progress_Dialog->GetDialogAddress()->SetValue(progress);
 
              start_point = i;
          }
@@ -613,15 +605,12 @@ void MainFrame::Run_Source_File_Dependency_Determination_Process(wxString FilePA
 
          if(new_line_number==3){
 
-            this->Process_Ptr->GetDialogAddress()->SetValue(20);
+            this->Progress_Dialog->GetDialogAddress()->SetValue(20);
 
             break;
          }
      }
-
 }
-
-
 
 void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
 
