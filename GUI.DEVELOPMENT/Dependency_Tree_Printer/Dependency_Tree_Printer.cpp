@@ -175,29 +175,6 @@ void Dependency_Tree_Printer::Construct_Tree_Panel(wxString title){
                      wxFONTWEIGHT_NORMAL,false,wxString(face_name));
 
      this->tree_control->SetFont(*tree_font);
-
-
-
-
-
-     wxTreeItemId rootId = this->tree_control->AddRoot("Root");
-
-
-
-     this->tree_control->AppendItem(rootId, "Node 1");
-
-     wxTreeItemId child2Id = this->tree_control->AppendItem(rootId, "Node 2");
-    
-     this->tree_control->AppendItem(child2Id, "Child of node 2");
-    
-     this->tree_control->AppendItem(rootId, "Node 3");
-
-     this->tree_control->AppendItem(rootId, "Node 4");
-
-
-     // Expand all the nodes
-     this->tree_control->ExpandAll();
-
 }
 
 

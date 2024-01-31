@@ -127,12 +127,14 @@ private:
   void Determine_Source_File_Dependencies(wxCommandEvent & event);
   void Run_Source_File_Dependency_Determination_Process(wxString FilePATH);
   void Print_File_Dependency_Output();
+  void Print_File_Dependency_to_tree_control();
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;
   std::thread * fork_process;
   std::thread * read_process_output;
   std::thread * print_file_dependency;
+  std::thread * print_to_tree_ctrl;
   Custom_DataPanel * data_panel_ptr;
   Custom_Multi_DataPanel * Multi_DataPanel;
   bool is_custom_panel_constructed;

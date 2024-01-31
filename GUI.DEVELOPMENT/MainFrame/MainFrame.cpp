@@ -540,7 +540,9 @@ void MainFrame::Determine_Source_File_Dependencies(wxCommandEvent & event){
            
           this->depPrinter = new Dependency_Tree_Printer(this);
 
-          this->depPrinter->Construct_Tree_Panel(wxT("Sample"));
+          this->depPrinter->Construct_Tree_Panel(wxT("DEPENDENCY TREE"));
+
+          this->print_to_tree_ctrl = new std::thread(MainFrame::Print_File_Dependency_to_tree_control,this);
 
           this->depPrinter->PrintDependencyTree();
 
@@ -567,7 +569,6 @@ void MainFrame::Run_Source_File_Dependency_Determination_Process(wxString FilePA
 }
 
 void MainFrame::Print_File_Dependency_Output(){
-
 
      std::string pipe_string = this->Process_Ptr->GetNamedPipeString();
 
@@ -610,6 +611,77 @@ void MainFrame::Print_File_Dependency_Output(){
             break;
          }
      }
+}
+
+void MainFrame::Print_File_Dependency_to_tree_control(){
+
+      std::string pipe_string = this->Process_Ptr->GetNamedPipeString();
+
+      size_t data_start_point = 0;
+
+      int new_line_number = 0;
+
+      for(size_t i=0;i<pipe_string.size();i++){
+
+         if(pipe_string[i] == '\n'){
+
+             new_line_number++;
+         }
+         else{
+
+             if(new_line_number>0){
+
+                new_line_number--;
+             }
+         }
+
+         if(new_line_number==3){
+
+           data_start_point = i;
+
+           break;
+         }
+      }
+
+         
+
+      while(((pipe_string[data_start_point] == '\n') || (pipe_string[data_start_point] == ' '))){
+
+            data_start_point++;
+      }
+
+
+      int item_number = 0;
+
+      wxTreeItemId rootId;
+
+      for(size_t i=data_start_point;i<pipe_string.size();i++){
+
+          std::string src_name;
+
+          do {
+
+               src_name.push_back(pipe_string[i]);
+
+               i++;
+
+          }while(pipe_string[i]!= '\n');
+
+          if(item_number == 0){
+
+             rootId = this->depPrinter->GetTreeCtrl()->AddRoot(src_name);
+
+             item_number++;
+          }
+          else{
+
+              this->depPrinter->GetTreeCtrl()->AppendItem(rootId,src_name);
+
+              item_number++;
+          }
+      }
+
+      this->depPrinter->GetTreeCtrl()->ExpandAll();
 }
 
 void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
