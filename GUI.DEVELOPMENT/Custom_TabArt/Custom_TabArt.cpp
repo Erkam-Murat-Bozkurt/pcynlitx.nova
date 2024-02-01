@@ -54,7 +54,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
  void Custom_TabArt::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect & rect) {
 
-      dc.SetBrush(wxColour(200,200,200));
+      dc.SetBrush(wxColour(240,240,240));
 
       dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1,rect.GetWidth()+2,rect.GetHeight()+2);
  }
@@ -99,6 +99,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
        wxCoord tab_y = in_rect.y;
 
 
+
        if (page.active)
        {
            dc.SetFont(*this->Default_Font);
@@ -123,9 +124,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
            wxRect r(tab_x, tab_y+16, tab_width-2, tab_height+15);
 
 
-           dc.SetPen(wxPen(wxColour(245,245,245)));
+           dc.SetPen(wxPen(wxColour(180, 180, 180)));
 
-           dc.SetBrush(wxBrush(wxColour(245,245,245)));
+           dc.SetBrush(wxBrush(wxColour(180, 180, 180)));
 
 
 
@@ -141,9 +142,11 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
                 wxRect r(tab_x, tab_y+16,tab_width-2, tab_height+15);
 
-                dc.SetPen(wxPen(wxColour(225, 225, 225)));
 
-                dc.SetBrush(wxBrush(wxColour(225, 225, 225)));
+
+                dc.SetPen(wxPen(wxColour(200,190,190)));
+
+                dc.SetBrush(wxBrush(wxColour(200,190,190)));
 
                 // DrawRectangle member function: The first two parameters indicate the coordinates
                 // of the top left corner of the rectangle
@@ -191,11 +194,11 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
          if(page.active){
 
-            dc.SetTextForeground(wxColour(80,80,80));
+            dc.SetTextForeground(wxColour(20,20,20));
          }
          else{
 
-            dc.SetTextForeground(wxColour(80,80,80));
+            dc.SetTextForeground(wxColour(20,20,20));
          }
 
 

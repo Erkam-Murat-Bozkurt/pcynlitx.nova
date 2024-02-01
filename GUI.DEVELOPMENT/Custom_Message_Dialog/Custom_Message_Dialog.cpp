@@ -79,7 +79,7 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     this->figure = new wxStaticBitmap(this->figure_panel,wxID_ANY,bmp);
 
-    this->figure->SetBackgroundColour(wxColour(235,235,235));
+    this->figure->SetBackgroundColour(wxColour(240,240,240));
 
     this->text   = new wxStaticText(this->text_panel ,wxID_ANY,message);
 

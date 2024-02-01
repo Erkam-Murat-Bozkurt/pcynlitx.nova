@@ -54,7 +54,7 @@ Custom_Notebook::Custom_Notebook( wxPanel * parent, wxAuiManager * Interface_Man
 
    this->SetBackgroundStyle(wxBG_STYLE_PAINT);
 
-   this->SetBackgroundColour(wxColour(200,200,200));
+   this->SetBackgroundColour(wxColour(240,240,240));
 
    this->SetDoubleBuffered(true);
 
@@ -92,8 +92,6 @@ Custom_Notebook::Custom_Notebook( wxPanel * parent, wxAuiManager * Interface_Man
 
    this->Initialization();
 
-   this->OpenIntroPage();
-
    this->Refresh();
 
    this->SetTabCtrlHeight(55);
@@ -114,6 +112,11 @@ Custom_Notebook::Custom_Notebook( wxPanel * parent, wxAuiManager * Interface_Man
 
    this->PaintNow(this);
 };
+
+void Custom_Notebook::Receive_Intro_Image(wxStaticBitmap * figure){
+
+     this->intro_image = figure;
+}
 
 void Custom_Notebook::Size_Event(wxSizeEvent & event)
 {
@@ -171,6 +174,10 @@ void Custom_Notebook::OpenIntroPage()
      if(!this->Is_Intro_Page_Open)
      {
          this->Is_Intro_Page_Open = true;
+
+         this->OpenFileNumber++;
+
+         this->intro_image->Show(false);
 
          int Index_Number = this->Get_Empty_Pointer_Index_Number();
 
@@ -255,9 +262,9 @@ void Custom_Notebook::OnPaint(wxPaintEvent & event)
 
 void Custom_Notebook::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(200,200,200));
+     dc.SetBrush(wxColour(240,240,240));
 
-     dc.DrawRectangle(rect.GetX()-1,rect.GetY()-1,rect.GetWidth()+5,rect.GetHeight()+5);
+     dc.DrawRectangle(rect.GetX()-2,rect.GetY()-2,rect.GetWidth()+5,rect.GetHeight()+5);
 };
 
 void Custom_Notebook::Change_Cursor_Type()
@@ -437,6 +444,8 @@ void Custom_Notebook::Add_New_File(wxString File_Path)
 
          this->OpenFileNumber++;
 
+         this->intro_image->Show(false);
+
          int Index_Number = this->Get_Empty_Pointer_Index_Number();
 
          this->NoteBook_Page_Data[Index_Number].Text_Ctrl = new Custom_TextCtrl(this,wxID_ANY,wxDefaultPosition,
@@ -508,6 +517,8 @@ void Custom_Notebook::Open_File(wxString File_Path)
      bool Is_File_Open = this->Is_File_Open(File_Path);
 
      if(!Is_File_Open){
+
+         this->intro_image->Show(false);
 
          this->OpenFileNumber++;
 
@@ -872,6 +883,11 @@ void Custom_Notebook::NoteBook_Page_Closed(wxAuiNotebookEvent & event)
      this->NoteBook_Page_Data[index_number].Text_Ctrl = nullptr;
 
      this->NoteBook_Page_Data[index_number].Is_This_Text_File = false;
+
+     if(this->OpenFileNumber <= 0){
+
+         this->intro_image->Show(true);
+     }
 }
 
 Custom_Notebook * Custom_Notebook::Get_NoteBook_Pointer()

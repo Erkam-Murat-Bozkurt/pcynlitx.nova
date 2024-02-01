@@ -145,7 +145,7 @@ void Custom_Close_Button::render(wxDC&  dc)
 {
     wxRect rect(this->GetSize());
 
-    dc.SetBrush(wxColour(200,200,200));
+    dc.SetBrush(wxColour(240,240,240));
 
     dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth()+3,rect.GetHeight()+3);
 

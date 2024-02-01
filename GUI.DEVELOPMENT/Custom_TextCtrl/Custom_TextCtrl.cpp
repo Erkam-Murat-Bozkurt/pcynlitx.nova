@@ -50,7 +50,7 @@ Custom_TextCtrl::~Custom_TextCtrl(){
 
 void Custom_TextCtrl::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(200,200,200));
+     dc.SetBrush(wxColour(240,240,240));
 
      dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+5, rect.GetHeight()+5);
 };

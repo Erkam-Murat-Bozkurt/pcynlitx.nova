@@ -37,7 +37,9 @@ Intro_Page_Loader::Intro_Page_Loader(wxWindow * parent,wxSize page_size, int tab
 
      this->Memory_Delete_Condition = false;
 
-     this->intro_page_bitmap  = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\Intro_File.png"), wxBITMAP_TYPE_PNG);
+     this->intro_page_bitmap  
+     
+          = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\Intro_File.png"), wxBITMAP_TYPE_PNG);
 
      this->intro_page_image = this->intro_page_bitmap->ConvertToImage();
 
@@ -124,9 +126,9 @@ void Intro_Page_Loader::OnPaint(wxPaintEvent& event)
 
 void Intro_Page_Loader::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect & rect)
 {
-     dc.SetPen(wxPen(wxColour(245,245,245)));
+     dc.SetPen(wxPen(wxColour(255,255,255)));
 
-     dc.SetBrush(wxColour(245,245,245));
+     dc.SetBrush(wxColour(255,255,255));
 
      dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth()+5,rect.GetHeight()+5);
 

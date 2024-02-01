@@ -242,9 +242,9 @@ void Custom_Tree_View_Panel::Receive_Topbar_MinSize(wxSize size)
 
 void Custom_Tree_View_Panel::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(200,200,200));
+     dc.SetBrush(wxColour(240,240,240));
 
-     dc.DrawRectangle(rect.GetX(), rect.GetY(), rect.GetWidth(),rect.GetHeight());
+     dc.DrawRectangle(rect.GetX(), rect.GetY(), rect.GetWidth()+10,rect.GetHeight()+10);
 }
 
 void Custom_Tree_View_Panel::PaintNow()

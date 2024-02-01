@@ -45,7 +45,7 @@
      id="namedview8"
      showgrid="true"
      inkscape:zoom="14.75"
-     inkscape:cx="-1.9661017"
+     inkscape:cx="-2"
      inkscape:cy="10.20339"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
@@ -65,7 +65,7 @@
        visible="true" />
   </sodipodi:namedview>
   <rect
-     style="fill:#f5f5f5;fill-opacity:1;stroke-width:1.81818"
+     style="fill:#b4b4b4;fill-opacity:1;stroke-width:1.81818"
      id="rect816"
      width="20"
      height="20"
@@ -73,7 +73,7 @@
      y="0"
      ry="2.2222223" />
   <path
-     style="fill:#e1e1e1;fill-opacity:1;stroke:#414141;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#828282;fill-opacity:1;stroke:#414141;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      d="M 3.7579653,3.75 V 5.9594718 L 7.8070734,10 3.7579653,14.040528 V 16.25 H 5.9721282 L 10.021237,12.209469 14.070345,16.25 h 2.214163 V 14.040528 L 12.235399,10 16.284508,5.9594718 V 3.75 H 14.070345 L 10.021237,7.7905278 5.9721282,3.75 Z"
      id="path4"
      inkscape:connector-curvature="0"

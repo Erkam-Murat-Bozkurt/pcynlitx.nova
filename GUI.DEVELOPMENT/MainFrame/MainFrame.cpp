@@ -83,7 +83,7 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
   this->is_bold_style_selected = false;
 
 
-  this->SetBackgroundColour(wxColour(200,200,200));
+  this->SetBackgroundColour(wxColour(240,240,240));
 
   this->Interface_Manager.SetFlags(wxAUI_MGR_LIVE_RESIZE);
 
@@ -243,7 +243,32 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
   this->Book_Manager->Refresh(true,&Book_Manager_Rect);
 
+  
+
   this->Book_Manager->Update();
+
+
+
+  this->intro_page_bmp 
+  
+      = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\Intro_File_Black.png"),wxBITMAP_TYPE_ANY);
+
+
+  wxStaticBitmap * figure = new wxStaticBitmap(this->Book_Manager,wxID_ANY,*this->intro_page_bmp);
+
+  figure->SetBackgroundColour(wxColour(240,240,240));
+
+  figure->CentreOnParent(wxBOTH);
+
+  figure->Show(false);
+
+  this->Book_Manager->Receive_Intro_Image(figure);
+
+  this->Book_Manager->OpenIntroPage();
+
+  this->Update();
+
+
 
   this->Raise();
 
@@ -325,9 +350,9 @@ void MainFrame::PaintNow(wxWindow * wnd)
 
 void MainFrame::DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(200,200,200));
+     dc.SetBrush(wxColour(240,240,240));
 
-     dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+10,rect.GetHeight()+5);
+     dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+10,rect.GetHeight()+10);
 }
 
 void MainFrame::OnPaint(wxPaintEvent & event)
