@@ -37,7 +37,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
                      wxFONTWEIGHT_NORMAL,false,wxString(tabart_font));
 
-    this->m_tabCtrlHeight = 55;
+    this->m_tabCtrlHeight = 40;
  }
 
  wxAuiTabArt * Custom_TabArt::Clone() {
@@ -121,7 +121,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
            // draw base background color
 
-           wxRect r(tab_x, tab_y+16, tab_width-2, tab_height+15);
+           wxRect r(tab_x, tab_y, tab_width-2, tab_height+15);
 
 
            dc.SetPen(wxPen(wxColour(180, 180, 180)));
@@ -140,7 +140,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
                 // draw inactive tab
 
-                wxRect r(tab_x, tab_y+16,tab_width-2, tab_height+15);
+                wxRect r(tab_x, tab_y,tab_width-2, tab_height+15);
 
 
 
@@ -173,7 +173,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
             }
 
              wxRect rect(tab_x + tab_width - bmp.GetScaledWidth() - 10,
-                         tab_y + (tab_height/2) - (bmp.GetScaledHeight()/2) + 15,
+                         tab_y + (tab_height/2) - (bmp.GetScaledHeight()/2),
                          bmp.GetScaledWidth()-3,
                          tab_height - 1);
 
@@ -217,7 +217,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
          dc.DrawText(draw_text,text_offset,
 
-                 (tab_y + tab_height)/2 - (texty/2) + 20);
+                 (tab_y + tab_height)/2 - (texty/2) + 5);
 
 
          *out_tab_rect = wxRect(tab_x, tab_y, tab_width, tab_height+14);
