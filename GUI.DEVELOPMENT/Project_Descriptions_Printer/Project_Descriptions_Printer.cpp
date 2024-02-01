@@ -521,15 +521,29 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
        options = this->Des_Reader->Get_Options();
 
-       this->textctrl->AppendText(" ");
+       size_t start_point = 0, end_point = options.size();
 
-       this->textctrl->AppendText(" ");
+       for(size_t i=0;i<options.size();i++){
 
-       this->textctrl->AppendText(" ");
+           std::string line;
 
-       this->textctrl->AppendText(" ");
+           while(options[i] != '\n'){
 
-       this->textctrl->AppendText(wxString(options));
+               line.push_back(options[i]);
+
+               i++;
+           }
+
+           this->textctrl->AppendText(" ");
+
+           this->textctrl->AppendText(" ");
+
+           this->textctrl->AppendText(" ");
+
+           this->textctrl->AppendText(wxString(line));
+
+           this->textctrl->AppendText(wxT("\n"));
+       }
     }
 
     this->textctrl->AppendText(wxT("\n\n "));

@@ -686,7 +686,9 @@ void Descriptor_File_Reader::Divide_Options(){
 
         std::string temp_opts = this->options;
 
-        
+        temp_opts.shrink_to_fit();
+
+
         if(!this->options.empty()){
         
            this->options.clear();
@@ -707,12 +709,18 @@ void Descriptor_File_Reader::Divide_Options(){
             }
         }
 
-
-        if(space_counter>2){
+        if(space_counter>3){
 
            space_counter = 0;
 
-           for(size_t i=0;i<options_size;i++){
+           int start_point = 0;
+
+           while(temp_opts[start_point] == ' '){
+
+                 start_point++;
+           }
+
+           for(size_t i=start_point;i<options_size;i++){
 
                this->options.push_back(temp_opts[i]);
 
@@ -721,13 +729,13 @@ void Descriptor_File_Reader::Divide_Options(){
                   space_counter++;
                 }
 
-                if(space_counter>2){
+                if(space_counter>3){
 
                    this->options.push_back('\\');
 
                    this->options.push_back('\n');
 
-                   this->options.push_back('\t');
+                   this->options.push_back(' ');
 
                    space_counter = 0;
                 }
