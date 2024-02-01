@@ -79,7 +79,7 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     this->figure = new wxStaticBitmap(this->figure_panel,wxID_ANY,bmp);
 
-    this->figure->SetBackgroundColour(wxColour(240,240,240));
+    this->figure->SetBackgroundColour(wxColour(250,250,250));
 
     this->text   = new wxStaticText(this->text_panel ,wxID_ANY,message);
 
@@ -88,7 +88,7 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     this->text_title->SetForegroundColour(wxColour(134,104,112));
 
-    this->text->SetForegroundColour(wxColour(30,30,30));
+    this->text->SetForegroundColour(wxColour(50,40,40));
 
 
     wxFont textFont = this->text_title->GetFont();
@@ -176,7 +176,7 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
     this->SetExtraStyle(wxNO_FULL_REPAINT_ON_RESIZE);
 
 
-    this->SetBackgroundColour(wxColour(235,235,235));
+    this->SetBackgroundColour(wxColour(250,250,250));
 
     this->SetSize(size);
 
@@ -216,7 +216,7 @@ void Custom_Message_Dialog::CloseWindow(wxCommandEvent & event)
 
 void Custom_Message_Dialog::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(235,235,235));
+     dc.SetBrush(wxColour(250,250,250));
 
      dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+5,rect.GetHeight()+5);
 }

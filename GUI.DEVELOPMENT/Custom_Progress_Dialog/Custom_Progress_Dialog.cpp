@@ -241,9 +241,9 @@ void Custom_Progress_Dialog::Close_Process_Window(wxCommandEvent & event){
 
 void Custom_Progress_Dialog::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(220,220,220));
+     dc.SetBrush(wxColour(240,240,240));
 
-     dc.DrawRectangle(rect.GetX(), rect.GetY(), rect.GetWidth(),rect.GetHeight());
+     dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+5,rect.GetHeight()+5);
 }
 
 void Custom_Progress_Dialog::PaintNow()

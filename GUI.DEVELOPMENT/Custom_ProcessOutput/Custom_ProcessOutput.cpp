@@ -203,7 +203,7 @@ void Custom_ProcessOutput::Receive_Tree_View_Panel(Custom_Tree_View_Panel * ptr)
 
 void Custom_ProcessOutput::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(220,220,220));
+     dc.SetBrush(wxColour(240,240,240));
 
      dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+5,rect.GetHeight()+5);
 }
