@@ -40,7 +40,7 @@ Custom_Notebook::Custom_Notebook( wxPanel * parent, wxAuiManager * Interface_Man
    std::string face_name = "Consolas"; 
 
 
-   this->Default_Font = new wxFont(11,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
+   this->Default_Font = new wxFont(10,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
 
                      wxFONTWEIGHT_NORMAL,false,wxString(face_name));
 

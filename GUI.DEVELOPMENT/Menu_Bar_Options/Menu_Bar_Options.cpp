@@ -100,19 +100,62 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Project_Management->Append(ID_OPEN_EMPTY_PROJECT_FILE,"Construct Empty Project File","",wxITEM_NORMAL);
 
-  this->Project_Management->Append(ID_SELECT_PROJECT_FILE,"Select Project File","",wxITEM_NORMAL);
 
   this->Project_Management->Append(ID_SHOW_PROJECT_FILE,"Show Project File","",wxITEM_NORMAL);
 
-  this->Project_Management->Append(ID_PRINT_DESCRIPTIONS, "&Print Project Descriptions"," ",wxITEM_NORMAL);
+
+   wxIcon * project_file_selection_icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\file_selection_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+
+   wxMenuItem * project_file_seletion_item = new wxMenuItem(this->Project_Management,ID_SELECT_PROJECT_FILE,"&Select Project File"," ",wxITEM_NORMAL);
+
+   project_file_seletion_item->SetBitmap(*project_file_selection_icon);
+
+   this->Project_Management->Append(project_file_seletion_item);
+
+
+  //this->Project_Management->Append(ID_SELECT_PROJECT_FILE,"Select Project File","",wxITEM_NORMAL);
+
+
+   wxIcon * print_descriptions_icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\print_descriptions_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+
+   wxMenuItem * print_descriptions_item = new wxMenuItem(this->Project_Management,ID_PRINT_DESCRIPTIONS,"&Print Project Descriptions"," ",wxITEM_NORMAL);
+
+   print_descriptions_item->SetBitmap(*print_descriptions_icon);
+
+   this->Project_Management->Append(print_descriptions_item);
+
+
+  //this->Project_Management->Append(ID_PRINT_DESCRIPTIONS, "&Print Project Descriptions"," ",wxITEM_NORMAL);
 
   this->Project_Management->Append(wxID_NONE,"&              "," ",wxITEM_SEPARATOR);
 
+
+
+
   this->Project_Management->Append(wxID_NONE,                "&BUILD SYSTEM OPERATIONS "," ",wxITEM_NORMAL);
 
-  this->Project_Management->Append(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,       "&Build System Initializer"," ",wxITEM_NORMAL);
+   wxIcon * frame_icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\build_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
-  this->Project_Management->Append(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Single File Script Constructor"," ",wxITEM_NORMAL);
+   wxMenuItem * build_item = new wxMenuItem(this->Project_Management,ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,"&Build System Initializer"," ",wxITEM_NORMAL);
+
+   build_item->SetBitmap(*frame_icon);
+
+   this->Project_Management->Append(build_item);
+
+
+
+   wxIcon * build_exe_icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\build_executable_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+
+   wxMenuItem * build_exe_item = new wxMenuItem(this->Project_Management,ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR,"&Single File Script Constructor"," ",wxITEM_NORMAL);
+
+   build_exe_item->SetBitmap(*build_exe_icon);
+
+   this->Project_Management->Append(build_exe_item);
+
+
+  //this->Project_Management->Append(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,       "&Build System Initializer"," ",wxITEM_NORMAL);
+
+  //this->Project_Management->Append(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Single File Script Constructor"," ",wxITEM_NORMAL);
 
   this->Project_Management->Append(ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Advance Single File Script Constructor"," ",wxITEM_NORMAL);
 

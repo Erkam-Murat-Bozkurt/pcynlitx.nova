@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.4"
-     inkscape:cx="346.07143"
-     inkscape:cy="53.928571"
+     inkscape:zoom="1.979899"
+     inkscape:cx="204.30335"
+     inkscape:cy="79.549513"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -88,43 +88,18 @@
          id="tspan822"
          x="7.8684831"
          y="254.16219"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:25.4px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Light';opacity:0.85;fill:#876870;fill-opacity:1;stroke-width:0.264583">Nwinix</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.4px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';opacity:0.85;fill:#876870;fill-opacity:1;stroke-width:0.264583">Nwinix</tspan></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:8.46667px;line-height:1.45;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#969696;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       style="font-style:normal;font-weight:normal;font-size:6.35px;line-height:1.45;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#969696;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="-17.422239"
        y="270.62067"
        id="text825"><tspan
          sodipodi:role="line"
-         id="tspan823"
          x="-17.422239"
          y="270.62067"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;line-height:1.45;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#7d7d7d;fill-opacity:1;stroke-width:0.264583">A NEW SOFTWARE PROJECT </tspan><tspan
-         sodipodi:role="line"
-         x="-17.422239"
-         y="282.97412"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:8.46667px;line-height:1.45;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#7d7d7d;fill-opacity:1;stroke-width:0.264583"
-         id="tspan2">MANAGEMENT TECHNOLOGY</tspan></text>
-    <g
-       style="fill:#e1e1e1;fill-opacity:1;fill-rule:nonzero;stroke:#8d8e8d;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
-       transform="matrix(0.22893195,0,0,0.23895473,-18.18967,234.91288)"
-       id="g3">
-	<polygon
-   points="45,36.83 7.1,18.42 45,0 82.9,18.42 "
-   style="opacity:1;fill:#e1e1e1;fill-opacity:1;fill-rule:nonzero;stroke:#8d8e8d;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
-   id="polygon1" />
-
-	<polygon
-   points="41.44,90 2.52,71.08 2.52,24.1 41.44,43.02 "
-   style="opacity:1;fill:#e1e1e1;fill-opacity:1;fill-rule:nonzero;stroke:#8d8e8d;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
-   id="polygon2" />
-
-	<polygon
-   points="87.48,24.1 87.48,71.08 48.56,90 48.56,43.02 "
-   style="opacity:1;fill:#e1e1e1;fill-opacity:1;fill-rule:nonzero;stroke:#8d8e8d;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
-   id="polygon3" />
-
-</g>
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:6.35px;line-height:1.45;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#876870;fill-opacity:1;stroke-width:0.264583"
+         id="tspan2">THE NEW SOFTWARE TECHNOLOGY</tspan></text>
     <rect
        style="fill:none;fill-opacity:1;stroke-width:0.264583"
        id="rect849"
@@ -132,5 +107,9 @@
        height="58.208332"
        x="5.2916698"
        y="234.02919" />
+    <path
+       d="m 3.8921986,238.68985 v 0 a 0.01185201,0.01204694 0 0 1 -0.011808,-0.0121 1.9200231,1.9516044 0 0 0 -0.7111206,-0.71077 l -10.4297521,-5.9632 a 1.8963192,1.9275107 0 0 0 -1.8489116,0 l -10.4297553,5.96323 a 1.9200231,1.9516044 0 0 0 -0.711118,0.71077 0.01185201,0.01204694 0 0 1 -0.01186,0.0121 v 0.0242 a 1.7777991,1.807041 0 0 0 -0.248892,0.92762 v 11.87829 a 1.9081711,1.9395576 0 0 0 0.971863,1.68655 l 10.4297555,5.96324 a 1.9555791,1.9877453 0 0 0 0.8533437,0.24095 h 0.1659281 a 1.9081711,1.9395576 0 0 0 0.8296396,-0.24095 l 10.4297574,-5.9633 a 1.9081711,1.9395576 0 0 0 0.9718609,-1.68656 v -11.87833 a 1.848911,1.8793227 0 0 0 -0.2488912,-0.9517 z m -11.9705124,5.78252 -9.5408552,-5.39703 9.434187,-5.39702 9.4460385,5.39702 z m 10.3230871,7.04747 -9.4697437,5.42111 0.094817,-10.79407 9.3749283,-5.42111 z"
+       id="path1"
+       style="fill:#876870;fill-opacity:1;stroke:none;stroke-width:0.119491;stroke-opacity:1" />
   </g>
 </svg>
