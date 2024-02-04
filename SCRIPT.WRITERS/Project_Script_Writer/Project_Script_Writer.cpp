@@ -554,11 +554,13 @@ void Project_Script_Writer::Write_Project_Build_Script(){
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("\nLibrary_Updater.exe ");
+     this->FileManager.WriteToFile("\nCBuild.exe ");
 
      std::string des_path = this->Des_Reader->Get_Descriptor_File_Path();
 
      this->FileManager.WriteToFile(des_path);
+
+     this->FileManager.WriteToFile(" -up_lib");
 
      this->FileManager.WriteToFile("\n");
 
@@ -578,6 +580,19 @@ void Project_Script_Writer::Write_Project_Build_Script(){
 
      this->FileManager.WriteToFile("Write-Output \"\"");
 
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
 
      this->FileManager.FileClose();
 }

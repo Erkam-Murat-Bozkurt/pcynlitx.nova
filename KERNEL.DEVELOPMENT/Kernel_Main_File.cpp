@@ -259,6 +259,17 @@ int main(int argc, char ** argv){
        System_Interface.WriteChildProcess_StdError();
     }
 
+    if(str == "-up_lib"){
+
+        argument_pass_cond = true;
+
+        Kernel Build_System(argv[1],'w');
+
+        Build_System.Update_Library();
+    }
+
+
+
     if(!argument_pass_cond){
 
         std::cout << "\n You did not entered an acceptable option";
@@ -283,6 +294,8 @@ int main(int argc, char ** argv){
        System_Interface.Close_Child_Handles_For_Named_Pipe_Connection();
 
     }
+
+
 
     return 0;
 }

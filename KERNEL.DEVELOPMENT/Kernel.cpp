@@ -6,21 +6,19 @@ Kernel::Kernel(char * DesPATH, char opr_sis) : Bld_Init(DesPATH,opr_sis),
 
      Exe_Bld(DesPATH,opr_sis), Des_Reader(opr_sis), Git_Prog(opr_sis), 
      
-     Dep_Determiner(DesPATH,opr_sis)
+     Dep_Determiner(DesPATH,opr_sis), Lib_Up(opr_sis)
 {     
      this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
 
      this->Des_Reader.Read_Descriptor_File();
 
-
+     this->Lib_Up.Receive_Descriptor_File_Path(DesPATH);
      
      this->Git_Prog.Receive_Descriptor_File_Path(DesPATH);
 
      this->Git_Prog.Write_Git_Repo_List_File();
 
      this->Git_Prog.Determine_Git_Repo_Info();
-
-
      
      this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
@@ -76,6 +74,10 @@ void Kernel::Build_MakeFile(char * src_path,
      this->Exe_Bld.Build_MakeFile(src_path,Exe_Name,strategy);
 }
 
+void Kernel::Update_Library(){
+
+     this->Lib_Up.Build_Library();
+}
 
 void Kernel::Clear_Dynamic_Memory(){
 

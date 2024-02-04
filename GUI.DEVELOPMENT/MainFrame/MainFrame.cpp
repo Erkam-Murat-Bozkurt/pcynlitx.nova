@@ -417,7 +417,46 @@ void MainFrame::Show_Project_File(wxCommandEvent & event){
      }
 }
 
+void MainFrame::Run_Project_Script_On_Terminal(wxCommandEvent & event){
 
+     if(event.GetId() == ID_RUN_PROJECT_SCRIPT){
+
+       std::string project_construction_dir = this->Des_Reader->Get_Warehouse_Location();
+
+       std::string project_script_path = project_construction_dir + "\\Project_Build_Script.ps1";
+
+       wxString run_cmd = wxT("powershell.exe ") + wxString(project_script_path);
+
+       wxExecute(run_cmd,wxEXEC_SYNC | wxEXEC_SHOW_CONSOLE);
+
+       wxString Warehouse_Dir_Path = project_construction_dir + wxT("\\WAREHOUSE");
+
+       wxString Library_Directory_Path = project_construction_dir + wxT("\\WAREHOUSE\\LIBRARY.FILES");
+
+       wxString Object_Directory_Path = project_construction_dir + wxT("\\WAREHOUSE\\OBJECT.FILES");
+
+       if(this->Dir_List_Manager->Get_Panel_Open_Status()){
+
+          this->Dir_List_Manager->Close_Directory_Pane();
+
+          this->Dir_List_Manager->Load_Project_Directory(wxString(project_construction_dir));
+
+          this->Dir_List_Manager->Expand_Path(Warehouse_Dir_Path);
+
+          this->Dir_List_Manager->Expand_Path(Library_Directory_Path);
+       }
+       else{
+
+          this->Dir_List_Manager->Load_Project_Directory(wxString(project_construction_dir));
+
+          this->Dir_List_Manager->Expand_Path(Warehouse_Dir_Path);
+
+          this->Dir_List_Manager->Expand_Path(Library_Directory_Path);
+       }
+
+       this->Interface_Manager.Update();
+     }
+}
 
 
 void MainFrame::Show_Author(wxCommandEvent & event)
@@ -1313,7 +1352,19 @@ void MainFrame::OpenTerminal(wxCommandEvent & event)
 {
      if(event.GetId() == ID_OPEN_TERMINAL){
 
-        wxExecute(wxT("powershell.exe"),wxEXEC_SYNC | wxEXEC_SHOW_CONSOLE);
+        wxProcess * proc = new wxProcess(this,wxID_ANY);
+
+        wxExecute(wxT("powershell.exe"),wxEXEC_SYNC | wxEXEC_SHOW_CONSOLE,proc);
+
+
+        proc->Redirect();
+
+        long int pid = proc->GetPid();
+
+        int process_exit_status = 0;
+
+        proc->OnTerminate(pid,process_exit_status);
+
      }
 }
 

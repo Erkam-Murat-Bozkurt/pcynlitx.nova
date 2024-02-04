@@ -32,7 +32,7 @@
      showgrid="true"
      inkscape:zoom="41.860721"
      inkscape:cx="7.2860666"
-     inkscape:cy="6.1513513"
+     inkscape:cy="6.17524"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
@@ -65,12 +65,12 @@
   <defs
      id="defs6" />
   <rect
-     style="fill:#866870;fill-opacity:1;stroke:#866870;stroke-width:0.295976;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#876870;fill-opacity:0.847059;stroke:#876870;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.847059"
      id="rect819"
-     width="4.6917095"
-     height="4.7633753"
-     x="0.14798801"
-     y="0.14798801"
+     width="4.9544859"
+     height="5.0978179"
+     x="0.0046555493"
+     y="0.0046555493"
      ry="0"
      inkscape:export-filename="/home/erkam/PCYNLITX.SETUP.FILES/ICON_DESIGNS/PNG_ICONS/build_executable.png"
      inkscape:export-xdpi="500"
@@ -78,16 +78,16 @@
      rx="0" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:3.76091px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:#866870;stroke-width:0.0210985;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     x="0.71503943"
-     y="3.6875525"
+     style="font-style:normal;font-weight:normal;font-size:3.80567px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0122053;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     x="0.65326267"
+     y="3.7494171"
      id="text833"
-     transform="scale(0.97005233,1.0308722)"><tspan
+     transform="scale(1.0052786,0.99474914)"><tspan
        sodipodi:role="line"
        id="tspan831"
-       x="0.71503943"
-       y="3.6875525"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.76091px;font-family:Rubik;-inkscape-font-specification:'Rubik Bold';fill:#ffffff;fill-opacity:1;stroke:#866870;stroke-width:0.0210985;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">EI</tspan></text>
+       x="0.65326267"
+       y="3.7494171"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:3.80567px;font-family:Rubik;-inkscape-font-specification:'Rubik Bold';fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0122053;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1">EI</tspan></text>
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:8px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:#191919;stroke-width:0.05;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"

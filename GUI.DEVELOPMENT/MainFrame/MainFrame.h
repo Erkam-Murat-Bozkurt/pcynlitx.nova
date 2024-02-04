@@ -128,6 +128,7 @@ private:
   void Run_Source_File_Dependency_Determination_Process(wxString FilePATH);
   void Print_File_Dependency_Output();
   void Print_File_Dependency_to_tree_control();
+  void Run_Project_Script_On_Terminal(wxCommandEvent & event);
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;
@@ -150,6 +151,7 @@ private:
   std::string Executable_File_Script_Construction_Point;
   wxString Exe_File_Name;
   wxString Directory_Open_Point;
+  wxString Build_Script_Path;
   wxAuiDockArt * Dock_Art_Pointer;
   wxAuiManager Interface_Manager;
   Project_Descriptions_Printer * Descriptions_Printer;

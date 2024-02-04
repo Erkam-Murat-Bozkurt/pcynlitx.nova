@@ -308,9 +308,10 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
         }
  }
 
- void Project_Folder_Lister::Append_Files(wxString Folder, wxTreeItemId Id){
 
-      
+
+
+ void Project_Folder_Lister::Append_Files(wxString Folder, wxTreeItemId Id){      
 
       wxString filename  = wxT("");
 
@@ -420,6 +421,26 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
       return this->treeCtrl;
  }
 
+ wxTreeItemId Project_Folder_Lister::GetItemId_FromPath(wxString path){
+
+       wxTreeItemId IDNUM = this->tree_item_list[0].item_id;
+
+       for(int i=0;i<this->total_item_number;i++){
+
+           if(path == this->tree_item_list[i].Item_Path){
+
+              IDNUM = this->tree_item_list[i].item_id;
+
+              break;
+           }
+       }
+
+       return IDNUM;
+}
+
+
+
+
  wxString Project_Folder_Lister::GetItemPath(wxTreeItemId item_number){
 
           this->Item_Path = wxT("");
@@ -471,6 +492,28 @@ void Project_Folder_Lister::Expand_Root(){
      this->treeCtrl->Expand(this->tree_item_list[0].item_id);
 }
 
+
+void Project_Folder_Lister::Expand_Path(wxString path){
+
+     wxTreeItemId Item_Id = this->GetItemId_FromPath(path);
+
+     /*
+
+     wxString item_path = this->GetItemPath(Item_Id);
+
+     wxMessageDialog  *  dial = new wxMessageDialog(NULL,
+
+         item_path, wxT("Info"), wxOK);
+
+       if(dial->ShowModal()== wxOK){
+
+           delete dial;
+        }
+
+     */
+
+     this->treeCtrl->Expand(Item_Id);
+}
 
 void Project_Folder_Lister::Expand_Selected_Item(){
 

@@ -323,6 +323,14 @@ void Custom_Tree_View_Panel::Load_Project_Directory(wxString Folder){
      this->Interface_Manager_Pointer->Update();
 }
 
+
+void Custom_Tree_View_Panel::Expand_Path(wxString path){
+
+     this->Folder_Lister->Expand_Path(path);
+}
+
+
+
 void Custom_Tree_View_Panel::Close_Directory_Pane()
 {
      this->Folder_Lister->RemoveProjectDirectory();

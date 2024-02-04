@@ -45,7 +45,10 @@ public:
 
   void Expand_Selected_Item();
 
+  void Expand_Path(wxString path);
 
+  wxTreeItemId GetItemId_FromPath(wxString path);
+  
 private:
   void Initialize_Properties(wxString Folder);
 

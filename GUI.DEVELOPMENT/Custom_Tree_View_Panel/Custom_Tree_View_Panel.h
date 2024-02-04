@@ -92,6 +92,8 @@ public:
 
   void Expand_Selected_Item();
 
+  void Expand_Path(wxString path);
+
   wxBoxSizer * panel_sizer;
 
   wxBoxSizer * tree_control_sizer;

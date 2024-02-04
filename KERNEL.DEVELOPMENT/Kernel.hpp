@@ -25,6 +25,7 @@
 #include "Descriptor_File_Reader.hpp"
 #include "Empty_Descriptor_File_Builder.hpp"
 #include "DataRecorder.h"
+#include "Library_Updater.h"
 
 class Kernel
 {
@@ -36,6 +37,7 @@ public:
  void Setup_Build_Tools();
  void Build_MakeFile(char * mn_src_path, char * Exe_Name, char strategy);
  void Determine_Source_File_Dependency_List(char * src_path);
+ void Update_Library();
  std::vector<Compiler_Data> * Get_Src_Dependency_List();
  void Clear_Dynamic_Memory();
 protected:
@@ -44,6 +46,7 @@ protected:
  Descriptor_File_Reader Des_Reader;
  Git_Data_Processor Git_Prog;
  Source_File_Dependency_Determiner Dep_Determiner;
+ Library_Updater Lib_Up;
  Custom_System_Interface * SysInt;
  std::string DesPATH;
  char strategy;
