@@ -421,40 +421,71 @@ void MainFrame::Run_Project_Script_On_Terminal(wxCommandEvent & event){
 
      if(event.GetId() == ID_RUN_PROJECT_SCRIPT){
 
-       std::string project_construction_dir = this->Des_Reader->Get_Warehouse_Location();
+        if(this->is_project_file_selected){
 
-       std::string project_script_path = project_construction_dir + "\\Project_Build_Script.ps1";
+           if(this->Control_Build_Script_Existance()){
 
-       wxString run_cmd = wxT("powershell.exe ") + wxString(project_script_path);
+              std::string project_construction_dir = this->Des_Reader->Get_Warehouse_Location();
 
-       wxExecute(run_cmd,wxEXEC_SYNC | wxEXEC_SHOW_CONSOLE);
+              std::string project_script_path = project_construction_dir + "\\Project_Build_Script.ps1";
 
-       wxString Warehouse_Dir_Path = project_construction_dir + wxT("\\WAREHOUSE");
+              wxString run_cmd = wxT("powershell.exe ") + wxString(project_script_path);
 
-       wxString Library_Directory_Path = project_construction_dir + wxT("\\WAREHOUSE\\LIBRARY.FILES");
+              wxExecute(run_cmd,wxEXEC_SYNC | wxEXEC_SHOW_CONSOLE);
 
-       wxString Object_Directory_Path = project_construction_dir + wxT("\\WAREHOUSE\\OBJECT.FILES");
+              wxString Warehouse_Dir_Path = project_construction_dir + wxT("\\WAREHOUSE");
 
-       if(this->Dir_List_Manager->Get_Panel_Open_Status()){
+              wxString Library_Directory_Path = project_construction_dir + wxT("\\WAREHOUSE\\LIBRARY.FILES");
 
-          this->Dir_List_Manager->Close_Directory_Pane();
+              wxString Object_Directory_Path = project_construction_dir + wxT("\\WAREHOUSE\\OBJECT.FILES");
 
-          this->Dir_List_Manager->Load_Project_Directory(wxString(project_construction_dir));
+              if(this->Dir_List_Manager->Get_Panel_Open_Status()){
 
-          this->Dir_List_Manager->Expand_Path(Warehouse_Dir_Path);
+                 this->Dir_List_Manager->Close_Directory_Pane();
 
-          this->Dir_List_Manager->Expand_Path(Library_Directory_Path);
-       }
-       else{
+                 this->Dir_List_Manager->Load_Project_Directory(wxString(project_construction_dir));
 
-          this->Dir_List_Manager->Load_Project_Directory(wxString(project_construction_dir));
+                 this->Dir_List_Manager->Expand_Path(Warehouse_Dir_Path);
 
-          this->Dir_List_Manager->Expand_Path(Warehouse_Dir_Path);
+                 this->Dir_List_Manager->Expand_Path(Library_Directory_Path);
+              }
+              else{
 
-          this->Dir_List_Manager->Expand_Path(Library_Directory_Path);
-       }
+                 this->Dir_List_Manager->Load_Project_Directory(wxString(project_construction_dir));
 
-       this->Interface_Manager.Update();
+                 this->Dir_List_Manager->Expand_Path(Warehouse_Dir_Path);
+
+                 this->Dir_List_Manager->Expand_Path(Library_Directory_Path);
+              }
+
+              this->Interface_Manager.Update();
+           }
+           else{
+
+                  wxString Message = "Build system script is not exist!";
+
+                  Message = Message + "\nThe build system construction";
+
+                  Message = Message + "\nmust be performed before this";
+
+                  Message = Message + "\noperation";
+
+            
+                  Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
+            
+                  wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+               
+                  *this->exclamation_mark_bmp, wxDefaultPosition);
+
+                  dial->ShowModal();
+
+                  delete dial;
+           }
+        }
+        else{
+
+              this->Descriptor_File_Selection_Check();
+        }
      }
 }
 
@@ -676,6 +707,8 @@ void MainFrame::Print_File_Dependency_Output(){
          }
      }
 }
+
+
 
 void MainFrame::Print_File_Dependency_to_tree_control(){
 
@@ -1870,8 +1903,6 @@ void MainFrame::Determine_Executable_File_Script_Construction_Point(wxString Fil
          this->Executable_File_Script_Construction_Point.push_back(warehouse_word[i]);
      }
 
-
-
      if(this->opr_sis == 'w'){
 
         if(this->Executable_File_Script_Construction_Point.back()!='\\'){
@@ -1887,8 +1918,6 @@ void MainFrame::Determine_Executable_File_Script_Construction_Point(wxString Fil
             this->Executable_File_Script_Construction_Point.push_back('/');
         }
      }
-
-
 
      size_t name_size = FileName.length();
 
@@ -1912,6 +1941,28 @@ void MainFrame::Determine_Executable_File_Script_Construction_Point(wxString Fil
      }
 }
 
+
+bool MainFrame::Control_Build_Script_Existance(){
+
+     bool is_exist = false;
+
+     this->Des_Reader->Read_Descriptor_File();
+
+     std::string warehouse_Location = this->Des_Reader->Get_Warehouse_Location();
+
+     std::string script_path = warehouse_Location + "\\Project_Build_Script.ps1";
+
+     Cpp_FileOperations FileManager;
+
+     if(FileManager.Is_Path_Exist(script_path)){
+
+        is_exist = true;
+
+        return is_exist;          
+     }
+
+     return is_exist;
+}
 
 
 void MainFrame::Custom_DataPanel_Constructor(wxString DataType, wxString Title, wxString Text,

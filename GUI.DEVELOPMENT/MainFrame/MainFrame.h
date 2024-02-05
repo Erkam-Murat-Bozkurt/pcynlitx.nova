@@ -129,6 +129,7 @@ private:
   void Print_File_Dependency_Output();
   void Print_File_Dependency_to_tree_control();
   void Run_Project_Script_On_Terminal(wxCommandEvent & event);
+  bool Control_Build_Script_Existance();
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;
@@ -169,7 +170,7 @@ private:
   Dependency_Tree_Printer * depPrinter;
   Dependency_Tree_Printer * dep_process_printer;
   Custom_Progress_Dialog * Progress_Dialog;
-
+  bool is_build_system_constructed;
   bool is_descriptor_file_open;
   wxFont * Default_Font;
   int Process_Event_Counter;
