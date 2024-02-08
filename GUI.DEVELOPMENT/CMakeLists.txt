@@ -23,6 +23,10 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Window/Custom_Window.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Window/Custom_Window.h
 
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Gui_Shell_Script_Executer/Gui_Shell_Script_Executer.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Gui_Shell_Script_Executer/Gui_Shell_Script_Executer.cpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_ProcessOutput/Custom_ProcessOutput.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_ProcessOutput/Custom_ProcessOutput.hpp
 
@@ -65,7 +69,6 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/ToolBar_Initializer/ToolBar_Initializer.h
     ${CMAKE_CURRENT_SOURCE_DIR}/ToolBar_Initializer/ToolBar_Initializer.cpp
 
-
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_Descriptions_Printer/Project_Descriptions_Printer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_Descriptions_Printer/Project_Descriptions_Printer.cpp
 
@@ -80,6 +83,8 @@ add_library(BuildSystem_GUI
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Progress_Dialog/Custom_Progress_Dialog.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Progress_Dialog/Custom_Progress_Dialog.cpp
+
+
 
 )
 
@@ -136,6 +141,8 @@ target_include_directories(BuildSystem_GUI PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Progress_Dialog
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Gui_Shell_Script_Executer
+
 
 
     ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector
@@ -156,6 +163,8 @@ target_include_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+
+    
 
     D:/wxWidgets-3.2.4/include
 
@@ -214,6 +223,9 @@ target_link_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Tree_Printer
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Progress_Dialog
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Gui_Shell_Script_Executer
+
 
 
     ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector

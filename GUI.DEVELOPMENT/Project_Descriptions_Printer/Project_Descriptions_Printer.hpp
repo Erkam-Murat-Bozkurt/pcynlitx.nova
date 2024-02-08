@@ -3,7 +3,8 @@
 
 
 
-#ifndef CUSTOM_PROCESSOUTPUT_HPP
+#ifndef PROJECT_DESCRIPTIONS_PRINTER_HPP
+#define PROJECT_DESCRIPTIONS_PRINTER_HPP
 
 #include <wx/wx.h>
 #include <wx/frame.h>
@@ -101,4 +102,4 @@ private:
   DECLARE_EVENT_TABLE()
 };
 
-#endif /* CUSTOM_PROCESSOUTPUT_HPP */
+#endif /* PROJECT_DESCRIPTIONS_PRINTER_HPP */

@@ -489,24 +489,39 @@ bool Cpp_FileOperations::Is_This_File_Empty(std::string path){
 
      this->Clear_Dynamic_Memory();
 
+     bool is_empty = true;
+
+
      this->File_line_Number = 0;
 
      this->SetFilePath(path);
      this->FileOpen(Rf);
 
-     std::string string_instance = this->ReadLine();
+     int valid_string_line =0;
 
-     bool is_empty = false;
+     do{
+          std::string string_line = this->ReadLine();
 
-     if(string_instance.empty()){
+          if(!string_line.empty()){
 
-          is_empty = true;
-     }
+             valid_string_line++;
+          }
+
+
+     }while(this->DataFile.good());
 
      this->FileClose();
 
-     return is_empty;
 
+     if(valid_string_line>0){
+
+         is_empty = false;
+
+         return is_empty;
+     }
+ 
+
+     return is_empty;
 }
 
 

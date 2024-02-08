@@ -2,6 +2,7 @@
 
 
 #ifndef CUSTOM_PROCESSOUTPUT_HPP
+#define CUSTOM_PROCESSOUTPUT_HPP
 
 #include <wx/wx.h>
 #include <wx/frame.h>
