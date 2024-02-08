@@ -375,6 +375,14 @@ void MainFrame::OnPaint(wxPaintEvent & event)
 
 
 
+void MainFrame::Exit(wxCommandEvent & event){
+
+     if(event.GetId() == ID_EXIT){
+
+        this->Destroy();
+     }
+}
+
 void MainFrame::Show_Project_File(wxCommandEvent & event){
 
      if(event.GetId() == ID_SHOW_PROJECT_FILE){

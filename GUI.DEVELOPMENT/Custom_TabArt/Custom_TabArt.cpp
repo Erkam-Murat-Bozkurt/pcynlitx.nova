@@ -126,9 +126,12 @@ this program. If not, see <http://www.gnu.org/licenses/>.
            wxRect r(tab_x, tab_y, tab_width-2, tab_height+15);
 
 
-           dc.SetPen(wxPen(wxColour(200,190,190)));
+           //200,190,190
+           //190, 190, 190
 
-           dc.SetBrush(wxBrush(wxColour(200,190,190)));
+           dc.SetPen(wxPen(wxColour(135,104,112)));
+
+           dc.SetBrush(wxBrush(wxColour(135,104,112)));
 
 
 
@@ -145,8 +148,10 @@ this program. If not, see <http://www.gnu.org/licenses/>.
                 wxRect r(tab_x, tab_y,tab_width-2, tab_height+15);
 
 
+                //200,190,190
+                //190, 190, 190
 
-                dc.SetPen(wxPen(wxColour(190, 190, 190)));
+                dc.SetPen(wxPen(wxColour(200,190,190)));
 
                 dc.SetBrush(wxBrush(wxColour(190, 190, 190)));
 
@@ -196,9 +201,15 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
          if(page.active){
 
-            dc.SetTextForeground(wxColour(135,104,112));
+            //135,104,112
+            //100,100,100
+
+            dc.SetTextForeground(wxColour(250,250,250));
          }
          else{
+
+            //135,104,112
+            //100,100,100
 
             dc.SetTextForeground(wxColour(100,100,100));
          }
