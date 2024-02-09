@@ -166,7 +166,6 @@ void Process_Manager::Fork_Process_With_Named_Pipe_Connection(char * cmd){
 
      this->read_named_pipe = new std::thread(Process_Manager::ReadFromNamedPipe,this);
 
-     this->read_named_pipe->detach();
 
      std::string process_cmd;
 
@@ -185,6 +184,10 @@ void Process_Manager::Fork_Process_With_Named_Pipe_Connection(char * cmd){
      this->cv.wait(lck);
 
      lck.unlock();
+
+     this->read_named_pipe->join();
+
+     this->SysInt.Close_Parent_Handles_For_Named_Pipe_Connection();
 }
 
 void Process_Manager::ReadStdOut(){

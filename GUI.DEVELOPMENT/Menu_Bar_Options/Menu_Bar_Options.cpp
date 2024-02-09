@@ -186,11 +186,25 @@ Menu_Bar_Options::Menu_Bar_Options(){
    this->Project_Management->Append(run_build_script_item);
 
 
+   wxIcon * dependency_icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\dependecy_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+
+   wxMenuItem * dependency_item = new wxMenuItem(this->Project_Management,ID_DETERMINE_SOURCE_FILE_DEPENDENCIES,"&Determine dependencies"," ",wxITEM_NORMAL);
+
+   dependency_item->SetBitmap(*dependency_icon);
+
+   this->Project_Management->Append(dependency_item);
+
+
   this->Project_Management->Append(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Make file constructor"," ",wxITEM_NORMAL);
 
   this->Project_Management->Append(ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Advance make file constructor"," ",wxITEM_NORMAL);
 
-  this->Project_Management->Append(ID_DETERMINE_SOURCE_FILE_DEPENDENCIES, "&Determine dependencies"," ",wxITEM_NORMAL);
+
+
+
+
+
+  //this->Project_Management->Append(ID_DETERMINE_SOURCE_FILE_DEPENDENCIES, "&Determine dependencies"," ",wxITEM_NORMAL);
 
 
   this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);

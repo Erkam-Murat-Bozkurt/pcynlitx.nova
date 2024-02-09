@@ -626,8 +626,6 @@ void MainFrame::Determine_Source_File_Dependencies(wxCommandEvent & event){
           
           = new std::thread(MainFrame::Run_Source_File_Dependency_Determination_Process,this,FilePATH);
 
-          this->fork_process->detach();
-
 
           this->Progress_Dialog = new Custom_Progress_Dialog(this,wxID_ANY,wxT("PROCESS REPORT"),wxDefaultPosition);
 
@@ -647,7 +645,12 @@ void MainFrame::Determine_Source_File_Dependencies(wxCommandEvent & event){
 
           this->print_to_tree_ctrl = new std::thread(MainFrame::Print_File_Dependency_to_tree_control,this);
 
+          this->print_to_tree_ctrl->detach();
+
           this->depPrinter->PrintDependencyTree();
+
+          this->fork_process->join();
+
 
         }
         else{
