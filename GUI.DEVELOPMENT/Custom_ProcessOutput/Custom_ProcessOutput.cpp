@@ -97,7 +97,7 @@ void Custom_ProcessOutput::Construct_Output(int size){
 
      this->textctrl = new wxTextCtrl(this->text_ctrl_panel,wxID_ANY, wxT(""), 
      
-                      wxDefaultPosition, wxSize(900,550), wxTE_MULTILINE | wxTE_RICH);
+                      wxDefaultPosition, wxSize(900,550), wxTE_MULTILINE | wxTE_RICH | wxTE_READONLY);
 
 
 

@@ -207,7 +207,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
      std::string git_repo_location;
 
-     if(this->Des_Reader->Get_Repo_Directory_Location() != ""){
+     if(!this->Des_Reader->Get_Repo_Directory_Location().empty()){
 
         git_repo_location =  this->Des_Reader->Get_Repo_Directory_Location();
 
@@ -232,7 +232,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
      std::string warehouse_location;
 
-     if(this->Des_Reader->Get_Warehouse_Location() != ""){
+     if(!this->Des_Reader->Get_Warehouse_Location().empty()){
 
         warehouse_location =  this->Des_Reader->Get_Warehouse_Location();
 
@@ -261,7 +261,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
      std::string standard;
 
-     if(this->Des_Reader->Get_Standard() != ""){
+     if(!this->Des_Reader->Get_Standard().empty()){
 
         standard =  this->Des_Reader->Get_Standard();
 
