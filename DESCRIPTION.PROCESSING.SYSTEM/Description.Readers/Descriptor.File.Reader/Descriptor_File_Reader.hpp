@@ -48,6 +48,8 @@ public:
  int Get_Include_Directory_Number();
  bool Get_Gui_Read_Success_Status();
  bool Get_Gui_Read_Status();
+ bool Get_Syntax_Error_Status();
+ bool Get_Invalid_Descriptor_File_Status();
 protected:
  void Initialize_Members();
  void Read_Root_Directory_Location();
@@ -82,6 +84,8 @@ protected:
  std::vector<std::string> Library_Files;
  bool gui_read_status;
  bool gui_read_success;
+ bool gui_syntax_error;
+ bool is_project_file_invalid;
  bool Memory_Delete_Condition;
  bool Data_Record_Cond;
 };

@@ -7,6 +7,12 @@ Descriptor_File_Syntax_Controller::Descriptor_File_Syntax_Controller(char opr_si
   StringManager(opr_sis), FileManager(opr_sis)
 {
    this->Memory_Delete_Condition = false;
+
+   this->syntax_error_status = false;
+
+   this->invalid_descriptor_file_status = false;
+
+   this->syntax_error_number = 0;
 }
 
 Descriptor_File_Syntax_Controller::~Descriptor_File_Syntax_Controller(){
@@ -28,6 +34,12 @@ void Descriptor_File_Syntax_Controller::Clear_Dynamic_Memory(){
          this->StringManager.Clear_Dynamic_Memory();
 
          this->FileManager.Clear_Dynamic_Memory();
+
+         this->syntax_error_status = false;
+
+         this->invalid_descriptor_file_status = false;
+
+         this->syntax_error_number = 0;
      }
 }
 
@@ -47,12 +59,25 @@ void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Path(char * DesP
 }
 
 
+void Descriptor_File_Syntax_Controller::Set_Gui_Read_Status(bool status){
+
+     this->gui_read_status = status;
+}
+
 void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Path(std::string DesPATH){
 
      this->Descriptor_File_Path = DesPATH;
 }
 
 void Descriptor_File_Syntax_Controller::Control_Descriptor_File_Syntax(){
+
+     this->syntax_error_status = false;
+
+     this->invalid_descriptor_file_status = false;
+
+     this->syntax_error_number = 0;
+
+     this->Memory_Delete_Condition = false;
 
      this->FileManager.SetFilePath(this->Descriptor_File_Path);
 
@@ -61,10 +86,26 @@ void Descriptor_File_Syntax_Controller::Control_Descriptor_File_Syntax(){
      this->Control_Keywords();
 
      this->Control_Braces();
+
+     
+     if(this->gui_read_status){
+
+        if(this->syntax_error_status){
+
+           if(this->syntax_error_number>1){
+
+              this->invalid_descriptor_file_status = true;
+           }
+        }
+     }
 }
 
 
 void Descriptor_File_Syntax_Controller::Receive_Descriptor_File_Index(){
+
+     this->Memory_Delete_Condition = false;
+
+     this->Clear_Vector_Memory(&this->File_Index);
 
      this->FileManager.FileOpen(Rf);
 
@@ -102,67 +143,156 @@ void Descriptor_File_Syntax_Controller::Control_Keywords(){
      char options [] = "[OPTIONS]";
 
 
+     this->syntax_error_status = false;
+
+     this->invalid_descriptor_file_status = false;
+
+     this->syntax_error_number = 0;
+
+
      if(!this->Control_String_Inclusion(root_dir)){
 
-         std::cout << "\n There is a syntax error on descriptor file";
+         std::cout << "\nERROR REPORT: There is a syntax error on descriptor file";
+         std::cout << "\n\n";
 
-         exit(0);
+         if(this->gui_read_status){
+
+            this->syntax_error_status = true;
+
+            this->syntax_error_number++;
+         }
+         else{
+
+            exit(0);
+         }
      };
 
 
      if(!this->Control_String_Inclusion(warehouse_location)){
 
-         std::cout << "\n There is a syntax error on descriptor file";
+         std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
+         std::cout << "\n\n";
 
-         exit(0);
+         if(this->gui_read_status){
+
+            this->syntax_error_status = true;
+
+            this->syntax_error_number++;
+         }
+         else{
+
+            exit(0);
+         }
      };
 
 
      if(!this->Control_String_Inclusion(standard)){
 
-        std::cout << "\n There is a syntax error on descriptor file";
+        std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
+        std::cout << "\n\n";
 
-        exit(0);
+         if(this->gui_read_status){
+
+            this->syntax_error_status = true;
+
+            this->syntax_error_number++;
+         }
+         else{
+
+            exit(0);
+         }
      };
 
 
      if(!this->Control_String_Inclusion(include_dir)){
 
-        std::cout << "\n There is a syntax error on descriptor file";
+        std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
+        std::cout << "\n\n";
 
-        exit(0);
+        if(this->gui_read_status){
+
+           this->syntax_error_status = true;
+
+           this->syntax_error_number++;
+        }
+        else{
+
+            exit(0);
+        }
      };
 
 
      if(!this->Control_String_Inclusion(src_dir)){
 
-        std::cout << "\n There is a syntax error on descriptor file";
+        std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
+        std::cout << "\n\n";
 
-        exit(0);
+        if(this->gui_read_status){
+
+           this->syntax_error_status = true;
+
+           this->syntax_error_number++;
+        }
+        else{
+
+            exit(0);
+        }
      };
 
 
      if(!this->Control_String_Inclusion(lib_files)){
 
-         std::cout << "\n There is a syntax error on descriptor file";
+         std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
+         std::cout << "\n\n";
 
-         exit(0);
+         if(this->gui_read_status){
+
+            this->syntax_error_status = true;
+
+            this->syntax_error_number++;
+         }
+         else{
+
+            exit(0);
+         }
      };
 
 
      if(!this->Control_String_Inclusion(lib_dir)){
 
-        std::cout << "\n There is a syntax error on descriptor file";
+        std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
+        std::cout << "\n\n";
 
-        exit(0);
+        if(this->gui_read_status){
+
+           this->syntax_error_status = true;
+
+           this->syntax_error_number++;
+        }
+        else{
+
+            exit(0);
+        }
      };
 
      if(!this->Control_String_Inclusion(options)){
 
-        std::cout << "\n There is a syntax error on descriptor file";
+         std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
+         std::cout << "\n\n";
 
-        exit(0);
+
+         if(this->gui_read_status){
+
+            this->syntax_error_status = true;
+
+            this->syntax_error_number++;
+         }
+         else{
+
+            exit(0);
+         }
      };
+
 }
 
 void Descriptor_File_Syntax_Controller::Control_Braces(){
@@ -177,11 +307,22 @@ void Descriptor_File_Syntax_Controller::Control_Braces(){
 
      if(start_brace_number!=end_brace_number){
 
+        std::cout << "\n ERROR REPORT:";
+
         std::cout << "\n Missing braces";
 
         std::cout << "\n There is a syntax error on descriptor file";
 
-        exit(0);
+        if(this->gui_read_status){
+
+           this->syntax_error_status = true;
+
+           this->syntax_error_number++;
+        }
+        else{
+
+            exit(0);
+        }
      }
 }
 
@@ -237,28 +378,18 @@ int Descriptor_File_Syntax_Controller::Determine_Repitation(std::string search_w
 
 void Descriptor_File_Syntax_Controller::Clear_Vector_Memory(std::vector<std::string> * pointer){
 
-     std::vector<std::string>::iterator it;
+     size_t vec_size = pointer->size();
 
-     auto begin = pointer->begin();
+     for(size_t i=0;i<vec_size;i++){
 
-     auto end   = pointer->end();
+         pointer->at(i).clear();
 
-     for(auto it=begin;it<end;it++){
-
-        if(!it->empty()){
-
-            it->clear();
-
-            it->shrink_to_fit();
-        }
+         pointer->at(i).shrink_to_fit();
      }
 
-     if(!pointer->empty()){
+     pointer->clear();
 
-         pointer->clear();
-
-         pointer->shrink_to_fit();
-     }
+     pointer->shrink_to_fit();
 }
 
 void Descriptor_File_Syntax_Controller::Clear_String_Memory(std::string * pointer){
@@ -291,4 +422,16 @@ void Descriptor_File_Syntax_Controller::Delete_Spaces_on_String(std::string * st
         }
 
      }while(search_cond);
+}
+
+
+bool Descriptor_File_Syntax_Controller::GetSyntaxErrorStatus() const {
+
+       return this->syntax_error_status;
+}
+
+
+bool Descriptor_File_Syntax_Controller::Get_Invalid_Descriptor_File_Status() const {
+
+     return this->invalid_descriptor_file_status;
 }

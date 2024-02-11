@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="213.55653mm"
-   height="65.767853mm"
-   viewBox="0 0 213.55654 65.767854"
+   width="145.33185mm"
+   height="133.2366mm"
+   viewBox="0 0 145.33186 133.23659"
    version="1.1"
    id="svg8"
    inkscape:version="1.3.1 (91b66b0783, 2023-11-16)"
@@ -29,8 +29,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="204.30335"
-     inkscape:cy="79.549513"
+     inkscape:cx="259.6092"
+     inkscape:cy="211.37442"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -47,8 +47,8 @@
     <inkscape:grid
        type="xygrid"
        id="grid10"
-       originx="57.651385"
-       originy="39.457126"
+       originx="79.887505"
+       originy="98.753614"
        spacingy="1"
        spacingx="1"
        units="mm"
@@ -70,7 +70,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(57.651382,-223.14705)">
+     transform="translate(79.887497,-163.85056)">
     <rect
        id="rect12"
        width="150.8125"
@@ -80,25 +80,25 @@
        style="fill:none;fill-opacity:1;stroke-width:0.20259" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:25.4px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808b96;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="7.8684831"
-       y="254.16219"
+       style="font-style:normal;font-weight:normal;font-size:22.5778px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#876870;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-49.210247"
+       y="217.77878"
        id="text824"><tspan
          sodipodi:role="line"
          id="tspan822"
-         x="7.8684831"
-         y="254.16219"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.4px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';opacity:0.85;fill:#876870;fill-opacity:1;stroke-width:0.264583">Nwinix</tspan></text>
+         x="-49.210247"
+         y="217.77878"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:22.5778px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';opacity:0.85;fill:#876870;fill-opacity:1;stroke-width:0.264583">Nwinix</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:6.35px;line-height:1.45;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#969696;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="-17.422239"
-       y="270.62067"
+       x="-65.777199"
+       y="237.01071"
        id="text825"><tspan
          sodipodi:role="line"
-         x="-17.422239"
-         y="270.62067"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:6.35px;line-height:1.45;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#876870;fill-opacity:1;stroke-width:0.264583"
+         x="-65.777199"
+         y="237.01071"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.35px;line-height:1.45;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;fill:#737272;fill-opacity:1;stroke-width:0.264583"
          id="tspan2">THE NEW SOFTWARE TECHNOLOGY</tspan></text>
     <rect
        style="fill:none;fill-opacity:1;stroke-width:0.264583"
@@ -108,8 +108,66 @@
        x="5.2916698"
        y="234.02919" />
     <path
-       d="m 3.8921986,238.68985 v 0 a 0.01185201,0.01204694 0 0 1 -0.011808,-0.0121 1.9200231,1.9516044 0 0 0 -0.7111206,-0.71077 l -10.4297521,-5.9632 a 1.8963192,1.9275107 0 0 0 -1.8489116,0 l -10.4297553,5.96323 a 1.9200231,1.9516044 0 0 0 -0.711118,0.71077 0.01185201,0.01204694 0 0 1 -0.01186,0.0121 v 0.0242 a 1.7777991,1.807041 0 0 0 -0.248892,0.92762 v 11.87829 a 1.9081711,1.9395576 0 0 0 0.971863,1.68655 l 10.4297555,5.96324 a 1.9555791,1.9877453 0 0 0 0.8533437,0.24095 h 0.1659281 a 1.9081711,1.9395576 0 0 0 0.8296396,-0.24095 l 10.4297574,-5.9633 a 1.9081711,1.9395576 0 0 0 0.9718609,-1.68656 v -11.87833 a 1.848911,1.8793227 0 0 0 -0.2488912,-0.9517 z m -11.9705124,5.78252 -9.5408552,-5.39703 9.434187,-5.39702 9.4460385,5.39702 z m 10.3230871,7.04747 -9.4697437,5.42111 0.094817,-10.79407 9.3749283,-5.42111 z"
+       d="m -54.925107,205.52853 v 0 a 0.00973184,0.00989277 0 0 1 -0.0097,-0.01 1.5765565,1.6026295 0 0 0 -0.583911,-0.58368 l -8.564008,-4.89689 a 1.557093,1.5828441 0 0 0 -1.518165,0 l -8.564012,4.89692 a 1.5765565,1.6026295 0 0 0 -0.583909,0.58367 0.00973184,0.00989277 0 0 1 -0.0097,0.01 v 0.0199 a 1.4597745,1.4839161 0 0 0 -0.204368,0.76175 v 9.75428 a 1.5668247,1.5927369 0 0 0 0.798009,1.38497 l 8.564012,4.89693 a 1.605752,1.6323079 0 0 0 0.700692,0.19786 h 0.136246 a 1.5668247,1.5927369 0 0 0 0.681227,-0.19786 l 8.564013,-4.89698 a 1.5668247,1.5927369 0 0 0 0.798008,-1.38498 v -9.75431 a 1.5181654,1.5432728 0 0 0 -0.204368,-0.78152 z m -9.829147,4.74853 -7.834124,-4.43197 7.746536,-4.43195 7.756269,4.43195 z m 8.476424,5.78728 -7.775733,4.45174 0.07786,-8.86394 7.697878,-4.45174 z"
        id="path1"
-       style="fill:#876870;fill-opacity:1;stroke:none;stroke-width:0.119491;stroke-opacity:1" />
+       style="fill:#876870;fill-opacity:1;stroke:none;stroke-width:0.09812;stroke-opacity:1" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.45;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#969696;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-65.3218"
+       y="246.43961"
+       id="text825-5"><tspan
+         sodipodi:role="line"
+         x="-65.3218"
+         y="246.43961"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#666868;fill-opacity:1;stroke-width:0.264583"
+         id="tspan5">The nwinix platform works based on a new programming </tspan><tspan
+         sodipodi:role="line"
+         x="-65.3218"
+         y="252.61655"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#666868;fill-opacity:1;stroke-width:0.264583"
+         id="tspan6">technology. For more information, please look the project </tspan><tspan
+         sodipodi:role="line"
+         x="-65.3218"
+         y="258.79346"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#666868;fill-opacity:1;stroke-width:0.264583"
+         id="tspan10">web site.</tspan><tspan
+         sodipodi:role="line"
+         x="-65.3218"
+         y="264.9704"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#666868;fill-opacity:1;stroke-width:0.264583"
+         id="tspan7" /><tspan
+         sodipodi:role="line"
+         x="-65.3218"
+         y="271.14734"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#666868;fill-opacity:1;stroke-width:0.264583"
+         id="tspan3" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.9389px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Bold';fill:#666868;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-miterlimit:1"
+       x="-65.573944"
+       y="266.69827"
+       id="text8"><tspan
+         sodipodi:role="line"
+         id="tspan8"
+         style="stroke-width:0"
+         x="-65.573944"
+         y="266.69827">www.nwinix.com</tspan></text>
+    <rect
+       style="fill:#e6e6e6;fill-opacity:1;stroke:none;stroke-width:0.166597;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+       id="rect13"
+       width="3.0451081"
+       height="35.271851"
+       x="-74.614815"
+       y="232.13522"
+       ry="0" />
+    <rect
+       style="fill:#cccbce;fill-opacity:1;stroke:none;stroke-width:0.212733;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+       id="rect13-1"
+       width="5.8799295"
+       height="29.784931"
+       x="55.616966"
+       y="124.61665"
+       ry="0" />
   </g>
 </svg>

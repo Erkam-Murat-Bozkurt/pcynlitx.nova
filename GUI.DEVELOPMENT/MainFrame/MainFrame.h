@@ -131,6 +131,8 @@ private:
   void Print_File_Dependency_to_tree_control();
   void Run_Project_Script_On_Terminal(wxCommandEvent & event);
   bool Control_Build_Script_Existance();
+  bool Control_Project_File_Syntax();
+  void Print_Project_File_Syntax_Error();
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;

@@ -513,7 +513,6 @@ void MainFrame::Show_Author(wxCommandEvent & event)
 
         message = message + wxT("help@nwinix.com\n\n");
 
-
             
         Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
             
@@ -590,19 +589,26 @@ void MainFrame::Single_File_Script_Construction(wxCommandEvent & event){
 
         if(this->is_project_file_selected){
 
-           this->Multi_DataPanel = new Custom_Multi_DataPanel(this);
+           if(!this->Control_Project_File_Syntax()){
 
-           this->Multi_DataPanel->Create_Exe_Script_Panel();
+               this->Multi_DataPanel = new Custom_Multi_DataPanel(this);
 
-           if (this->Multi_DataPanel->ShowModal() == wxID_OK ){
+               this->Multi_DataPanel->Create_Exe_Script_Panel();
+
+               if(this->Multi_DataPanel->ShowModal() == wxID_OK ){
                
-           }
+               }
 
-           char strategy = 's';
+               char strategy = 's';
 
-           this->Single_File_Script_Construction_Executer(this->Multi_DataPanel->FilePath,
+               this->Single_File_Script_Construction_Executer(this->Multi_DataPanel->FilePath,
            
                this->Multi_DataPanel->ExeFileName,strategy);
+           }
+           else{
+
+               this->Print_Project_File_Syntax_Error();
+           }
         }
         else{
 
@@ -618,40 +624,45 @@ void MainFrame::Determine_Source_File_Dependencies(wxCommandEvent & event){
      
         if(this->is_project_file_selected){
 
-          wxString FilePATH;
+           if(!this->Control_Project_File_Syntax()){
 
-          this->Select_File(FilePATH,wxT("Select source file path"));
+               wxString FilePATH;
 
-          this->fork_process 
+               this->Select_File(FilePATH,wxT("Select source file path"));
+
+               this->fork_process 
           
-          = new std::thread(MainFrame::Run_Source_File_Dependency_Determination_Process,this,FilePATH);
+                   = new std::thread(MainFrame::Run_Source_File_Dependency_Determination_Process,this,FilePATH);
 
 
-          this->Progress_Dialog = new Custom_Progress_Dialog(this,wxID_ANY,wxT("PROCESS REPORT"),wxDefaultPosition);
+               this->Progress_Dialog = new Custom_Progress_Dialog(this,wxID_ANY,wxT("PROCESS REPORT"),wxDefaultPosition);
 
-          this->Progress_Dialog->Construct_Text_Panel(wxT("Process Output"),20);
+               this->Progress_Dialog->Construct_Text_Panel(wxT("Process Output"),20);
 
-          this->Progress_Dialog->SetBoldFont();
+               this->Progress_Dialog->SetBoldFont();
 
-          this->Progress_Dialog->AppendText_To_TextCtrl(wxT("\n\n    SOURCE FILE DEPENDENCY DETERMINATION STARTED:"));
+               this->Progress_Dialog->AppendText_To_TextCtrl(wxT("\n\n    SOURCE FILE DEPENDENCY DETERMINATION STARTED:"));
 
-          this->Progress_Dialog->SetLightFont();
+               this->Progress_Dialog->SetLightFont();
 
-          this->Progress_Dialog->ShowModal();
+               this->Progress_Dialog->ShowModal();
            
-          this->depPrinter = new Dependency_Tree_Printer(this);
+               this->depPrinter = new Dependency_Tree_Printer(this);
 
-          this->depPrinter->Construct_Tree_Panel(wxT("DEPENDENCY TREE"));
+               this->depPrinter->Construct_Tree_Panel(wxT("DEPENDENCY TREE"));
 
-          this->print_to_tree_ctrl = new std::thread(MainFrame::Print_File_Dependency_to_tree_control,this);
+               this->print_to_tree_ctrl = new std::thread(MainFrame::Print_File_Dependency_to_tree_control,this);
 
-          this->print_to_tree_ctrl->detach();
+               this->print_to_tree_ctrl->detach();
 
-          this->depPrinter->PrintDependencyTree();
+               this->depPrinter->PrintDependencyTree();
 
-          this->fork_process->join();
+               this->fork_process->join();
+           }
+           else{
 
-
+               this->Print_Project_File_Syntax_Error();
+           }
         }
         else{
 
@@ -800,19 +811,26 @@ void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
 
         if(this->is_project_file_selected){
 
-           this->Multi_DataPanel = new Custom_Multi_DataPanel(this);
+           if(!this->Control_Project_File_Syntax()){
 
-           this->Multi_DataPanel->Create_Exe_Script_Panel();
+              this->Multi_DataPanel = new Custom_Multi_DataPanel(this);
 
-           if (this->Multi_DataPanel->ShowModal() == wxID_OK ){
+              this->Multi_DataPanel->Create_Exe_Script_Panel();
+
+              if (this->Multi_DataPanel->ShowModal() == wxID_OK ){
                
-           }
+              }
 
-           char strategy = 'a';
+              char strategy = 'a';
 
-           this->Single_File_Script_Construction_Executer(this->Multi_DataPanel->FilePath,
+              this->Single_File_Script_Construction_Executer(this->Multi_DataPanel->FilePath,
            
-               this->Multi_DataPanel->ExeFileName,strategy);
+              this->Multi_DataPanel->ExeFileName,strategy);
+           }
+           else{
+
+               this->Print_Project_File_Syntax_Error();
+           }
         }
         else{
 
@@ -822,7 +840,9 @@ void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
 }
 
 
-void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath, wxString FileName, char strategy){
+void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath, 
+
+     wxString FileName, char strategy){
 
      if(!FilePath.empty() && !FileName.empty()){
         
@@ -877,39 +897,46 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
     if(this->is_project_file_selected){
 
-       this->Process_Ptr->Determine_Build_System_Initialization_Command();
+       if(!this->Control_Project_File_Syntax()){
 
-       this->Des_Reader->Read_Descriptor_File();
+           this->Process_Ptr->Determine_Build_System_Initialization_Command();
 
-       if(this->Des_Reader->Get_Gui_Read_Success_Status()){
+           this->Des_Reader->Read_Descriptor_File();
 
-          std::string warehose_word = "\\WAREHOUSE";
+           if(this->Des_Reader->Get_Gui_Read_Success_Status()){
 
-          this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location() + warehose_word;
+              std::string warehose_word = "\\WAREHOUSE";
 
-          wxString label = wxT("BUILD SYSTEM CONSTRUCTION PROCESS");
+              this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location() + warehose_word;
 
-          wxString start_text = wxT("\n\n   BUILD SYSTEM CONSTRUCTION STARTED");
+              wxString label = wxT("BUILD SYSTEM CONSTRUCTION PROCESS");
 
-         this->Start_Construction_Process(label,this->Warehouse_Location,start_text);
-      }
-      else{
+              wxString start_text = wxT("\n\n   BUILD SYSTEM CONSTRUCTION STARTED");
 
-            std::string error_message = this->Des_Reader->Get_Error_Message();
+              this->Start_Construction_Process(label,this->Warehouse_Location,start_text);
+            }
+            else{
 
-            wxString message(error_message);
+              std::string error_message = this->Des_Reader->Get_Error_Message();
+
+              wxString message(error_message);
             
 
-            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
+              Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
             
-            wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX BUILD SYSTEM COSTRUCTION REPORT"),
+              wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX BUILD SYSTEM COSTRUCTION REPORT"),
                
-            *this->exclamation_mark_bmp, wxDefaultPosition);
+              *this->exclamation_mark_bmp, wxDefaultPosition);
 
-            dial->ShowModal();
+              dial->ShowModal();
 
-            delete dial;
-      }
+              delete dial;
+            }
+       }
+       else{
+
+           this->Print_Project_File_Syntax_Error();
+       }
     }
     else{
 
@@ -1014,13 +1041,38 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
 
            this->Descriptions_Printer = new Project_Descriptions_Printer(this,wxID_ANY,
            
-           wxT("THE PROJECT DESCRIPTION LIST"));
+                                         wxT("THE PROJECT DESCRIPTION LIST"));
 
            this->Descriptions_Printer->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
 
            this->Descriptions_Printer->Receive_Descriptor_File_Reader(this->Des_Reader);
 
-           this->Descriptions_Printer->Print_Descriptions();
+           this->Descriptions_Printer->Read_Descriptions();
+
+
+           if(this->Descriptions_Printer->Get_Invalid_Descriptor_File_Status()){
+            
+               this->Print_Project_File_Syntax_Error();
+
+               this->Descriptions_Printer->Destroy();
+           }
+           else{
+
+               if(this->Descriptions_Printer->Get_Syntax_Error_Status()){
+
+                  this->Print_Project_File_Syntax_Error();
+
+                  this->Descriptions_Printer->Destroy();
+
+               }
+               else{
+
+                     if(this->Descriptions_Printer->Get_Gui_Read_Success_Status()){
+
+                        this->Descriptions_Printer->Print_Descriptions();
+                     }
+               }
+           }
         }
         else{
 
@@ -1144,6 +1196,9 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
 
            wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
 
+     dlg.CenterOnScreen(wxBOTH);
+
+
      if(dlg.ShowModal() == wxID_OK){
 
         wxString construction_dir =dlg.GetPath();
@@ -1175,6 +1230,10 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
        event.Skip(true);
 
        wxString title(wxT("Select Project File"));
+
+       this->Descriptor_File_Path.clear();
+
+       this->Descriptor_File_Path.shrink_to_fit();
 
        this->Select_File(this->Descriptor_File_Path,title);
 
@@ -1999,4 +2058,42 @@ void MainFrame::Custom_DataPanel_Constructor(wxString DataType, wxString Title, 
      this->DataPanel_Pointer->Show();
 
      this->DataPanel_Pointer->GetDataViewListCtrl()->Show();
+}
+
+
+bool MainFrame::Control_Project_File_Syntax(){
+
+     bool syntax_error_status = false;
+
+     this->Des_Reader->Clear_Dynamic_Memory();
+
+     std::string des_path = this->Descriptor_File_Path.ToStdString();
+
+     this->Des_Reader->Receive_Descriptor_File_Path(des_path.c_str());
+
+     this->Des_Reader->Read_Descriptor_File();
+
+     if(this->Des_Reader->Get_Syntax_Error_Status()){
+
+         syntax_error_status = true;
+     }
+}
+
+void MainFrame::Print_Project_File_Syntax_Error(){
+
+     wxString Message = "The project file is invalid or ";
+
+     Message = Message + "\nthere is an error on declerations!";
+
+     Message = Message + "\nPlease check your project file and ";
+
+     Message = Message + "\ndeclerations ";
+            
+     Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
+            
+     wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+               
+         *this->exclamation_mark_bmp, wxDefaultPosition);
+
+         dial->ShowModal();
 }

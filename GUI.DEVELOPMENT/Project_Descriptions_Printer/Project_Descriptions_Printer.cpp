@@ -8,7 +8,9 @@ BEGIN_EVENT_TABLE(Project_Descriptions_Printer,wxFrame)
     EVT_BUTTON(ID_CLOSE_DESCRIPTION_WINDOW,Project_Descriptions_Printer::CloseWindow)
 END_EVENT_TABLE()
 
-Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWindowID id, const wxString & title, 
+Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWindowID id, 
+
+   const wxString & title, 
 
    const wxPoint &pos, const wxSize &size, 
    
@@ -62,6 +64,9 @@ Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWi
 
      this->PaintNow(this);
 
+     this->invalid_descriptor_file_status = false;
+
+     this->syntax_error_status = false;
 
      this->window_open_status = true;
 
@@ -93,7 +98,9 @@ void Project_Descriptions_Printer::Construct_Text_Panel(){
 
      this->close_panel     = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,70));
 
-     this->CloseButton     = new wxButton(this,ID_CLOSE_DESCRIPTION_WINDOW,wxT("CLOSE"),wxDefaultPosition, wxSize(100,50));
+     this->CloseButton     = new wxButton(this,ID_CLOSE_DESCRIPTION_WINDOW,wxT("CLOSE"),
+     
+                             wxDefaultPosition, wxSize(100,50));
 
 
 
@@ -163,10 +170,11 @@ void Project_Descriptions_Printer::Construct_Text_Panel(){
 }
 
 
-void Project_Descriptions_Printer::Print_Descriptions(){
+void Project_Descriptions_Printer::Read_Descriptions(){
 
-     this->textctrl->Clear();
-     
+     this->invalid_descriptor_file_status = false;
+
+     this->syntax_error_status = false;
 
      this->Des_Reader->Clear_Dynamic_Memory();
 
@@ -176,6 +184,31 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
      this->Des_Reader->Read_Descriptor_File();
 
+     if(this->Des_Reader->Get_Syntax_Error_Status()){
+
+         this->syntax_error_status = true;
+
+         if(this->Des_Reader->Get_Invalid_Descriptor_File_Status()){
+
+           this->invalid_descriptor_file_status = true;
+        }
+     }
+
+     if(this->Des_Reader->Get_Gui_Read_Success_Status()){
+
+          this->descriptor_file_read_success = true;
+     }
+     else{
+
+          this->descriptor_file_read_success = false;
+     }
+}
+
+
+void Project_Descriptions_Printer::Print_Descriptions(){
+
+     this->textctrl->Clear();
+     
 
      wxTextAttr AttrBold(wxColor(134,104,112));
 
@@ -184,8 +217,6 @@ void Project_Descriptions_Printer::Print_Descriptions(){
      AttrBold.SetFontSize(12);
 
      AttrBold.SetFontFaceName(wxT("Calibri"));
-
-
 
 
      wxTextAttr AttrLigth(wxColor(50,50,50));
@@ -607,4 +638,20 @@ int Project_Descriptions_Printer::GetLogNumber(){
 bool Project_Descriptions_Printer::GetWindowsOpenStatus(){
 
      return this->window_open_status;
+}
+
+
+bool Project_Descriptions_Printer::Get_Syntax_Error_Status(){
+
+     return this->syntax_error_status;
+}
+
+bool Project_Descriptions_Printer::Get_Invalid_Descriptor_File_Status(){
+
+     return this->invalid_descriptor_file_status;
+}
+
+bool Project_Descriptions_Printer::Get_Gui_Read_Success_Status(){
+
+     return this->descriptor_file_read_success;
 }

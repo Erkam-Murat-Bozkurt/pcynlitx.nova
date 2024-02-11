@@ -26,7 +26,10 @@ public:
  virtual ~Descriptor_File_Syntax_Controller();
  void Receive_Descriptor_File_Path(char * opr_sis);
  void Receive_Descriptor_File_Path(std::string opr_sis);
+ void Set_Gui_Read_Status(bool status);
  void Control_Descriptor_File_Syntax();
+ bool Get_Invalid_Descriptor_File_Status() const;
+ bool GetSyntaxErrorStatus() const;
  void Clear_Dynamic_Memory();
 protected:
  void Control_Keywords();
@@ -43,6 +46,10 @@ protected:
  std::string Descriptor_File_Path;
  bool include_condition;
  bool Memory_Delete_Condition;
+ bool gui_read_status;
+ int  syntax_error_number;
+ bool syntax_error_status;
+ bool invalid_descriptor_file_status;
  int repitation;
 };
 

@@ -7,11 +7,18 @@ Descriptor_File_Reader::Descriptor_File_Reader(char opr_sis) :
 {
    this->Initialize_Members();
 
+   this->Memory_Delete_Condition = false;
+
    this->Data_Record_Cond = false;
 
    this->gui_read_status  = false;
 
    this->gui_read_success = true;
+
+   this->gui_syntax_error = false;
+
+   this->is_project_file_invalid = false;
+
 }
 
 
@@ -26,9 +33,13 @@ Descriptor_File_Reader::~Descriptor_File_Reader(){
 void Descriptor_File_Reader::Set_Gui_Read_Status(bool status){
 
      this->gui_read_status = status;
+
+     this->Syntax_Controller.Set_Gui_Read_Status(status);
 }
 
 void Descriptor_File_Reader::Receive_Descriptor_File_Path(char * DesPATH){
+
+     this->Memory_Delete_Condition = false;
 
      this->Data_Collector.Receive_Descriptor_File_Path(DesPATH);
 
@@ -46,6 +57,8 @@ void Descriptor_File_Reader::Receive_Descriptor_File_Path(char * DesPATH){
 
 
 void Descriptor_File_Reader::Receive_Descriptor_File_Path(std::string DesPATH){
+
+     this->Memory_Delete_Condition = false;
 
      this->Data_Collector.Receive_Descriptor_File_Path(DesPATH);
 
@@ -106,6 +119,10 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
          this->Syntax_Controller.Clear_Dynamic_Memory();
 
          this->StringManager.Clear_Dynamic_Memory();
+
+         this->is_project_file_invalid = false;
+
+         this->gui_syntax_error = false;
      }
 }
 
@@ -113,7 +130,20 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
 void Descriptor_File_Reader::Read_Descriptor_File(){
      
+     this->Memory_Delete_Condition = false;
+
      this->Syntax_Controller.Control_Descriptor_File_Syntax();
+
+     if(this->Syntax_Controller.GetSyntaxErrorStatus()){
+
+        this->gui_syntax_error = true;
+
+        if(this->Syntax_Controller.Get_Invalid_Descriptor_File_Status()){
+
+           this->is_project_file_invalid = true;
+        }
+     }
+
 
      this->Syntax_Controller.Clear_Dynamic_Memory();
 
@@ -140,53 +170,54 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
      }
      else{
 
-          this->gui_read_success = true;
+      if(!this->is_project_file_invalid){
 
-          if(this->gui_read_success){
+         if(!this->gui_syntax_error){
 
-            this->Read_Root_Directory_Location();
-          }
+             this->gui_read_success = true;
 
-          if(this->gui_read_success){
+             if(this->gui_read_success){
 
-            this->Read_Warehouse_Location();
-          }
+                this->Read_Root_Directory_Location();
+             }
 
+             if(this->gui_read_success){
 
-          if(this->gui_read_success){
+                this->Read_Warehouse_Location();
+             }
 
-             this->Read_Standard();
-          }
+             if(this->gui_read_success){
 
+                this->Read_Standard();
+             }
 
-          if(this->gui_read_success){
+             if(this->gui_read_success){
 
-             this->Read_Include_Directories();
-          }
+                this->Read_Include_Directories();
+             }
 
+             if(this->gui_read_success){
 
-          if(this->gui_read_success){
+                this->Read_Source_File_Directories();
+             }
 
-             this->Read_Source_File_Directories();
-          }
+             if(this->gui_read_success){
 
+                this->Read_Library_Directories();
+             }
 
-          if(this->gui_read_success){
+             if(this->gui_read_success){
 
-             this->Read_Library_Directories();
-          }
+                this->Read_Library_Files();
+             }
 
-          if(this->gui_read_success){
+             if(this->gui_read_success){
 
-            this->Read_Library_Files();
-          }
-
-          if(this->gui_read_success){
-
-             this->Read_Options();
-          }
+                this->Read_Options();
+             }
+         }
+       }
      }
-
 
      this->Data_Collector.Clear_Dynamic_Memory();
 }
@@ -888,4 +919,14 @@ std::string Descriptor_File_Reader::Get_Error_Message(){
 bool Descriptor_File_Reader::Get_Gui_Read_Status(){
 
      return this->gui_read_status;
+}
+
+bool Descriptor_File_Reader::Get_Syntax_Error_Status(){
+
+    return this->gui_syntax_error;
+}
+
+bool Descriptor_File_Reader::Get_Invalid_Descriptor_File_Status(){
+
+     return this->is_project_file_invalid;
 }

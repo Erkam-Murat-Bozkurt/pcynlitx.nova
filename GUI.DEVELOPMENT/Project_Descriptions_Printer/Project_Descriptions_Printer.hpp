@@ -50,6 +50,8 @@ Project_Descriptions_Printer(wxFrame *parent, wxWindowID id=wxID_ANY, const wxSt
 
   void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
 
+  void Read_Descriptions();
+
   void Print_Descriptions();
 
   void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect);
@@ -63,6 +65,12 @@ Project_Descriptions_Printer(wxFrame *parent, wxWindowID id=wxID_ANY, const wxSt
   int GetLogNumber();
 
   bool GetWindowsOpenStatus();
+
+  bool Get_Syntax_Error_Status();
+
+  bool Get_Invalid_Descriptor_File_Status();
+
+  bool Get_Gui_Read_Success_Status();
 
 private:
 
@@ -96,6 +104,14 @@ private:
   bool Memory_Delete_Condition;
 
   bool window_open_status;
+
+  bool read_success;
+
+  bool invalid_descriptor_file_status;
+
+  bool descriptor_file_read_success;
+
+  bool syntax_error_status;
 
   int log_num;
 
