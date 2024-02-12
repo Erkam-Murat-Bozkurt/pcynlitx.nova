@@ -268,7 +268,7 @@ target_link_libraries(BuildSystem_GUI PUBLIC des_reader pthread wxmsw32u_core wx
 
                      shell32 comctl32 ole32 oleaut32 uuid rpcrt4 advapi32 wsock32 wininet uxtheme 
 
-                     oleacc gcc stdc++ )
+                     oleacc gcc stdc++ User32)
 
 
 link_libraries( pthread libwxmsw32ud_core.a libwxbase32u.a libwxtiff.a 
@@ -281,7 +281,7 @@ link_libraries( pthread libwxmsw32ud_core.a libwxbase32u.a libwxtiff.a
         
                 libwxmsw32u_gl.a libwxmsw32u_media.a libwxmsw32u_core.a kernel32 user32 gdi32 comdlg32 winspool winmm
 
-                shell32 comctl32 ole32 oleaut32 uuid rpcrt4 advapi32 wsock32 wininet uxtheme oleacc 
+                shell32 comctl32 ole32 oleaut32 uuid rpcrt4 advapi32 wsock32 wininet uxtheme oleacc User32
 )
 
 target_compile_options(BuildSystem_GUI PUBLIC -static-libgcc -static-libstdc++ 

@@ -70,6 +70,7 @@ Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWi
 
      this->window_open_status = true;
 
+     this->descriptor_file_read_success = false;
 }
 
 
@@ -193,6 +194,8 @@ void Project_Descriptions_Printer::Read_Descriptions(){
            this->invalid_descriptor_file_status = true;
         }
      }
+
+     this->descriptor_file_read_success = false;
 
      if(this->Des_Reader->Get_Gui_Read_Success_Status()){
 
@@ -548,7 +551,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
     std::string options;
 
-    if(this->Des_Reader->Get_Options() != ""){
+    if(!this->Des_Reader->Get_Options().empty()){
 
        options = this->Des_Reader->Get_Options();
 

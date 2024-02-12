@@ -132,6 +132,10 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
      
      this->Memory_Delete_Condition = false;
 
+     this->gui_syntax_error = false;
+
+     this->is_project_file_invalid = false;
+
      this->Syntax_Controller.Control_Descriptor_File_Syntax();
 
      if(this->Syntax_Controller.GetSyntaxErrorStatus()){

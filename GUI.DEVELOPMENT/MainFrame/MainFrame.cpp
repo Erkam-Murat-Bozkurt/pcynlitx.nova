@@ -1038,40 +1038,25 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
         event.Skip(true);
 
         if(this->is_project_file_selected){
+      
+           if(!this->Control_Project_File_Syntax())
+           {
 
-           this->Descriptions_Printer = new Project_Descriptions_Printer(this,wxID_ANY,
+               this->Descriptions_Printer = new Project_Descriptions_Printer(this,wxID_ANY,
            
                                          wxT("THE PROJECT DESCRIPTION LIST"));
 
-           this->Descriptions_Printer->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+               this->Descriptions_Printer->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
 
-           this->Descriptions_Printer->Receive_Descriptor_File_Reader(this->Des_Reader);
+               this->Descriptions_Printer->Receive_Descriptor_File_Reader(this->Des_Reader);
 
-           this->Descriptions_Printer->Read_Descriptions();
+               this->Descriptions_Printer->Read_Descriptions();
 
-
-           if(this->Descriptions_Printer->Get_Invalid_Descriptor_File_Status()){
-            
-               this->Print_Project_File_Syntax_Error();
-
-               this->Descriptions_Printer->Destroy();
+               this->Descriptions_Printer->Print_Descriptions();
            }
            else{
 
-               if(this->Descriptions_Printer->Get_Syntax_Error_Status()){
-
-                  this->Print_Project_File_Syntax_Error();
-
-                  this->Descriptions_Printer->Destroy();
-
-               }
-               else{
-
-                     if(this->Descriptions_Printer->Get_Gui_Read_Success_Status()){
-
-                        this->Descriptions_Printer->Print_Descriptions();
-                     }
-               }
+                this->Print_Project_File_Syntax_Error();
            }
         }
         else{
@@ -2067,6 +2052,8 @@ bool MainFrame::Control_Project_File_Syntax(){
 
      this->Des_Reader->Clear_Dynamic_Memory();
 
+     this->Des_Reader->Set_Gui_Read_Status(true);
+
      std::string des_path = this->Descriptor_File_Path.ToStdString();
 
      this->Des_Reader->Receive_Descriptor_File_Path(des_path.c_str());
@@ -2077,6 +2064,8 @@ bool MainFrame::Control_Project_File_Syntax(){
 
          syntax_error_status = true;
      }
+
+     return syntax_error_status;
 }
 
 void MainFrame::Print_Project_File_Syntax_Error(){
