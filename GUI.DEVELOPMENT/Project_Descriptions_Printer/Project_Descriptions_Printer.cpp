@@ -16,8 +16,11 @@ Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWi
    
    long style) : wxFrame(parent,id,title,pos,size,
    
-   wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN | wxSTAY_ON_TOP)
+   wxDEFAULT_FRAME_STYLE | wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN | wxSTAY_ON_TOP)
 {
+
+     DestroyCaret(); 
+
 
      this->log_num =0;
 
@@ -44,20 +47,6 @@ Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWi
 
      this->SetDoubleBuffered(true);
 
-     this->SetExtraStyle(wxCLIP_CHILDREN);
-
-
-     this->SetBackgroundStyle(wxBG_STYLE_PAINT);
-
-     this->Centre(wxBOTH);
-
-     this->CentreOnParent(wxBOTH);
-
-     this->Fit();
-
-
-     this->SetAutoLayout(true);
-
      this->ClearBackground();
 
      this->Construct_Text_Panel();
@@ -71,6 +60,11 @@ Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWi
      this->window_open_status = true;
 
      this->descriptor_file_read_success = false;
+
+     this->SetCanFocus(false);
+
+     DestroyCaret(); 
+
 }
 
 
@@ -95,9 +89,9 @@ void Project_Descriptions_Printer::Receive_Descriptor_File_Reader(Descriptor_Fil
 void Project_Descriptions_Printer::Construct_Text_Panel(){
 
 
-     this->text_ctrl_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,600));
+     this->text_ctrl_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(1000,-1));
 
-     this->close_panel     = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,70));
+     this->close_panel     = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(1000,70));
 
      this->CloseButton     = new wxButton(this,ID_CLOSE_DESCRIPTION_WINDOW,wxT("CLOSE"),
      
@@ -107,8 +101,7 @@ void Project_Descriptions_Printer::Construct_Text_Panel(){
 
      this->textctrl = new wxTextCtrl(this->text_ctrl_panel,wxID_ANY, wxT(""), 
      
-                      wxDefaultPosition, wxSize(900,600), wxTE_MULTILINE | wxTE_RICH | wxTE_READONLY);
-
+                      wxDefaultPosition, wxSize(1000,600), wxTE_MULTILINE | wxTE_RICH | wxTE_READONLY);
 
 
      this->ctrl_box = new wxBoxSizer(wxHORIZONTAL);
@@ -167,7 +160,28 @@ void Project_Descriptions_Printer::Construct_Text_Panel(){
 
      this->Centre(wxBOTH);
 
+
+
+     this->SetExtraStyle(wxCLIP_CHILDREN);
+
+     this->SetBackgroundStyle(wxBG_STYLE_PAINT);
+
+     this->Centre(wxBOTH);
+
+     this->CentreOnParent(wxBOTH);
+
+     this->Fit();
+
+     this->SetAutoLayout(true);
+
+     this->SetCanFocus(false);
+
      this->Update();
+
+     this->textctrl->ShowNativeCaret(false);
+
+
+     DestroyCaret();
 }
 
 
@@ -582,6 +596,8 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
     this->textctrl->AppendText(wxT("\n\n "));
 
+    this->textctrl->SetCanFocus(false);
+
     this->textctrl->ShowPosition(0);
 
     this->textctrl->SetInsertionPoint(0);
@@ -590,13 +606,23 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
     this->Show(true);
 
+    this->Update();
+
+    this->SetCanFocus(false);
+
+    this->Update();
+
+    DestroyCaret(); 
 }
+
 
 void Project_Descriptions_Printer::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
 {
      dc.SetBrush(wxColour(240,240,240));
 
      dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+5,rect.GetHeight()+5);
+
+     DestroyCaret(); 
 }
 
 void Project_Descriptions_Printer::PaintNow(wxWindow * wnd)
@@ -608,6 +634,8 @@ void Project_Descriptions_Printer::PaintNow(wxWindow * wnd)
      wxRect rect(Rect_Size);
 
      this->DrawBackground(dc,wnd,rect);
+
+     DestroyCaret(); 
 }
 
 
@@ -622,9 +650,15 @@ void Project_Descriptions_Printer::CloseWindow(wxCommandEvent & event){
 
 void Project_Descriptions_Printer::OnSize(wxSizeEvent & event){
 
+     this->text_ctrl_panel->SetSize(this->GetClientSize());
+
+     this->textctrl->SetSize(this->GetClientSize());
+
      event.Skip(true);
 
      this->PaintNow(this);
+
+     DestroyCaret(); 
 }
 
 

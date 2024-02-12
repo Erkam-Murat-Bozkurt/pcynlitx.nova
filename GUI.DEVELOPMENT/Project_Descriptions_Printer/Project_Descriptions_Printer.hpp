@@ -18,6 +18,8 @@
 #include <wx/gauge.h>
 #include <wx/textctrl.h>
 #include <wx/stattext.h>
+#include <wx/caret.h>
+#include <winuser.h>
 #include <thread>
 #include <mutex>
 #include <condition_variable>
@@ -38,7 +40,7 @@ public:
 
 Project_Descriptions_Printer(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & title=wxT(""), 
 
-   const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(900,800), 
+   const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(1000,800), 
    
    long style=wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP);
 
