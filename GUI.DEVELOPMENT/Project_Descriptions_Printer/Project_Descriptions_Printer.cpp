@@ -91,60 +91,30 @@ void Project_Descriptions_Printer::Construct_Text_Panel(){
 
      this->text_ctrl_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(1000,-1));
 
-     this->close_panel     = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(1000,70));
-
-     this->CloseButton     = new wxButton(this,ID_CLOSE_DESCRIPTION_WINDOW,wxT("CLOSE"),
-     
-                             wxDefaultPosition, wxSize(100,50));
-
-
 
      this->textctrl = new wxTextCtrl(this->text_ctrl_panel,wxID_ANY, wxT(""), 
      
                       wxDefaultPosition, wxSize(1000,600), wxTE_MULTILINE | wxTE_RICH | wxTE_READONLY);
 
 
-     this->ctrl_box = new wxBoxSizer(wxHORIZONTAL);
+     this->ctrl_box = new wxBoxSizer(wxVERTICAL);
 
-     this->ctrl_box->Add(this->text_ctrl_panel,1,wxEXPAND,2);
+     this->ctrl_box->Add(this->text_ctrl_panel,1,wxEXPAND);
 
      this->ctrl_box->Layout();
 
 
-     this->close_button_sizer = new wxBoxSizer(wxVERTICAL);
+     this->SetSizer(this->ctrl_box);
 
-     this->close_button_sizer->AddStretchSpacer();
+     this->ctrl_box->SetSizeHints(this);
 
-     this->close_button_sizer->Add(this->CloseButton,0, wxALIGN_CENTER_HORIZONTAL | wxFIXED_MINSIZE  | wxALL,10);
-
-     this->close_button_sizer->AddStretchSpacer();
-
-     this->close_button_sizer->Layout();
-
-     
-
-     this->frame_box = new wxBoxSizer(wxVERTICAL);
-
-     this->frame_box->Add(this->ctrl_box,1,    wxEXPAND | wxTOP    |  wxALL,5);
- 
-     this->frame_box->Add(this->close_button_sizer,0,   wxEXPAND | wxBOTTOM  | wxALL,5);
-
-
-
-     this->frame_box->Layout();
-
-
-     this->SetSizer(this->frame_box);
-
-     this->frame_box->SetSizeHints(this);
-
-     this->frame_box->Fit(this);
+     this->ctrl_box->Fit(this);
 
 
 
      this->text_ctrl_panel->SetSize(this->text_ctrl_panel->GetClientSize());
 
-     this->close_panel->SetSize(this->close_panel->GetClientSize());
+     this->textctrl->SetSize(this->textctrl->GetClientSize());
 
 
      this->text_ctrl_panel->Update();
@@ -352,7 +322,10 @@ void Project_Descriptions_Printer::Print_Descriptions(){
           
           inc_dir.push_back('[');
 
-          inc_dir.push_back(number[0]);
+          for(size_t i=0;i<number.length();i++){
+
+              inc_dir.push_back(number[i]);
+          }
 
           inc_dir.push_back(']');
 
@@ -407,7 +380,10 @@ void Project_Descriptions_Printer::Print_Descriptions(){
           
           source_directory.push_back('[');
 
-          source_directory.push_back(number[0]);
+          for(size_t i=0;i<number.length();i++){
+
+              source_directory.push_back(number[i]);
+          }
 
           source_directory.push_back(']');
 
@@ -462,6 +438,11 @@ void Project_Descriptions_Printer::Print_Descriptions(){
            std::string library_directory;
            
            library_directory.push_back('[');
+
+           for(size_t i=0;i<number.length();i++){
+
+               library_directory.push_back(number[i]);
+           }
 
            library_directory.push_back(number[0]);
 
@@ -522,7 +503,10 @@ void Project_Descriptions_Printer::Print_Descriptions(){
            
            library_file.push_back('[');
 
-           library_file.push_back(number[0]);
+          for(size_t i=0;i<number.length();i++){
+
+              library_file.push_back(number[i]);
+          }
 
            library_file.push_back(']');
 
@@ -620,7 +604,7 @@ void Project_Descriptions_Printer::DrawBackground(wxDC& dc, wxWindow *  wnd, con
 {
      dc.SetBrush(wxColour(240,240,240));
 
-     dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+5,rect.GetHeight()+5);
+     dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth()+1,rect.GetHeight()+1);
 
      DestroyCaret(); 
 }
@@ -629,7 +613,7 @@ void Project_Descriptions_Printer::PaintNow(wxWindow * wnd)
 {
      wxClientDC dc(wnd);
 
-     wxSize Rect_Size = wxSize(wnd->GetSize().x+5,wnd->GetSize().y+5);
+     wxSize Rect_Size = wxSize(wnd->GetSize().x,wnd->GetSize().y);
 
      wxRect rect(Rect_Size);
 
@@ -650,9 +634,18 @@ void Project_Descriptions_Printer::CloseWindow(wxCommandEvent & event){
 
 void Project_Descriptions_Printer::OnSize(wxSizeEvent & event){
 
-     this->text_ctrl_panel->SetSize(this->GetClientSize());
+     //this->text_ctrl_panel->SetSize(this->GetClientSize());
 
      this->textctrl->SetSize(this->GetClientSize());
+
+     //this->close_panel->SetSize(this->GetClientSize());
+
+     //this->CloseButton->Show(true);
+
+     //this->close_panel->Update();
+
+     //this->close_button_sizer->Layout();
+
 
      event.Skip(true);
 
