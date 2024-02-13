@@ -1226,6 +1226,11 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
 
           this->is_project_file_selected = true;
        }
+       else{
+
+          this->is_project_file_selected = false;
+
+       }
 
        this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
@@ -1254,7 +1259,6 @@ void MainFrame::Select_File(wxString & FilePATH, wxString Title){
 
             if(Dir_Ctrl.IsOpened()){
 
-
                wxString Message = "This is a directory!";
 
                Message = Message + "\nA file must be selected .";
@@ -1266,12 +1270,8 @@ void MainFrame::Select_File(wxString & FilePATH, wxString Title){
                *this->exclamation_mark_bmp, wxDefaultPosition);
 
                dial->ShowModal();
-
-               return;
             }
          }
-
-         delete openFileDialog;
      }
      else{
 
@@ -1279,6 +1279,8 @@ void MainFrame::Select_File(wxString & FilePATH, wxString Title){
 
           FilePATH.shrink_to_fit();
      }
+
+     delete openFileDialog;
 }
 
 
