@@ -199,7 +199,7 @@ void Custom_Notebook::OpenIntroPage()
 
          // Load Intro Page
 
-         this->AddPage(this->NoteBook_Page_Data[Index_Number].Intro_Page_Pointer,wxT(" Introduction  "),true);
+         this->AddPage(this->NoteBook_Page_Data[Index_Number].Intro_Page_Pointer,wxT(" Welcome  "),true);
 
          this->NoteBook_Page_Data[Index_Number].Intro_Page_Pointer->Show(true);
 
@@ -219,6 +219,25 @@ void Custom_Notebook::OpenIntroPage()
 
      this->Refresh();
 }
+
+
+void Custom_Notebook::SelectIntroPage(){
+
+     int Page_Number = 0;
+
+     for(int i=0;i<20;i++){
+
+         if(this->NoteBook_Page_Data[i].Window_ID == this->Introduction_Page_Id){
+
+            Page_Number = i;
+
+            break;
+         }
+     }
+
+     this->SetSelection(Page_Number);
+}
+
 
 
 void Custom_Notebook::OnClose()
@@ -992,6 +1011,26 @@ void Custom_Notebook::Select_File(wxString File_Path)
      }
 
      this->SetSelection(Page_Number);
+}
+
+
+size_t Custom_Notebook::GetIndex_FromPath(wxString path){
+
+    size_t indexNumber = 0;
+
+    size_t page_count = this->GetPageCount();
+
+    for(size_t i=0;i<page_count;i++){
+
+         if(this->NoteBook_Page_Data[i].File_Path == path){
+
+            indexNumber = i;
+
+            break;
+         }
+    }
+
+    return indexNumber;
 }
 
 void Custom_Notebook::Selection_Changing(wxAuiNotebookEvent & event)

@@ -266,6 +266,16 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
   this->Book_Manager->OpenIntroPage();
 
+  wxString Help_Page_Path = wxT("D:\\Pcynlitx_Build_Platform\\Introduction.txt");
+
+  this->Book_Manager->Open_File(Help_Page_Path);
+
+  size_t notebook_index = this->Book_Manager->GetIndex_FromPath(Help_Page_Path);
+
+  this->Book_Manager->Get_NoteBook_Pointer()->SetPageText(notebook_index,wxT("Introduction"));
+
+  this->Book_Manager->SelectIntroPage();
+
   this->Update();
 
 

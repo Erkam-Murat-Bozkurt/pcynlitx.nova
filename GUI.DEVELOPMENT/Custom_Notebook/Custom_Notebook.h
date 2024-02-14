@@ -76,6 +76,7 @@ public:
   void Clear_Style();
   void Reload_Style();
   void Use_Bold_Styling();
+  void SelectIntroPage();
   void Select_File(wxString File_Path);
   void File_Save();
   bool Is_File_Open(wxString File_Path);
@@ -84,6 +85,7 @@ public:
   wxString Get_Selected_Text_Ctrl_File_Path();
   Custom_TextCtrl * Get_Selected_Text_Ctrl();
   Custom_Notebook * Get_NoteBook_Pointer();
+  size_t GetIndex_FromPath(wxString path);
   bool Get_Style_Change_Condition() const;
   int  Get_Current_Page_Index() const;
   int  Get_Open_File_Number() const;
