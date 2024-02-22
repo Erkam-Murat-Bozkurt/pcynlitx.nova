@@ -139,31 +139,32 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
 
 
+  this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
   this->Project_Management->Append(wxID_NONE,                "&PROJECT FILE OPERATIONS "," ",wxITEM_NORMAL);
 
   this->Project_Management->Append(ID_OPEN_EMPTY_PROJECT_FILE,"Construct empty project file","",wxITEM_NORMAL);
 
-
   this->Project_Management->Append(ID_SHOW_PROJECT_FILE,"Show Project File","",wxITEM_NORMAL);
 
+  wxIcon * project_file_selection_icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\file_selection_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
-   wxIcon * project_file_selection_icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\file_selection_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+  wxMenuItem * project_file_seletion_item = new wxMenuItem(this->Project_Management,ID_SELECT_PROJECT_FILE,"&Select project file"," ",wxITEM_NORMAL);
 
-   wxMenuItem * project_file_seletion_item = new wxMenuItem(this->Project_Management,ID_SELECT_PROJECT_FILE,"&Select project file"," ",wxITEM_NORMAL);
+  project_file_seletion_item->SetBitmap(*project_file_selection_icon);
 
-   project_file_seletion_item->SetBitmap(*project_file_selection_icon);
-
-   this->Project_Management->Append(project_file_seletion_item);
+  this->Project_Management->Append(project_file_seletion_item);
 
 
 
   this->Project_Management->Append(ID_PRINT_DESCRIPTIONS, "&Print project descriptions"," ",wxITEM_NORMAL);
 
+  this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
+
   this->Project_Management->Append(wxID_NONE,"&              "," ",wxITEM_SEPARATOR);
 
 
-
+  this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
   this->Project_Management->Append(wxID_NONE,                "&BUILD SYSTEM OPERATIONS "," ",wxITEM_NORMAL);
 
@@ -199,7 +200,7 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Project_Management->Append(ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Advance make file constructor"," ",wxITEM_NORMAL);
 
-
+  this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
 
 
@@ -207,49 +208,66 @@ Menu_Bar_Options::Menu_Bar_Options(){
   //this->Project_Management->Append(ID_DETERMINE_SOURCE_FILE_DEPENDENCIES, "&Determine dependencies"," ",wxITEM_NORMAL);
 
 
-  this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&                 ","",wxITEM_NORMAL);
 
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&   MAIN DESCRIPTIONS"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&MAIN DESCRIPTIONS","",wxITEM_NORMAL);
 
-  this->Library_Description_Menu->Append(ID_INPUT_GIT_REPO_LOCATION,    "&   Enter Git Repo Directory"," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(ID_INPUT_GIT_REPO_LOCATION,    "&Enter Git Repo Directory","",wxITEM_NORMAL);
 
-  this->Library_Description_Menu->Append(ID_INPUT_CONSTRUCTION_POINT,   "&   Select Project Warehouse Directory"," ",wxITEM_NORMAL);
-
-
-  this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
-
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&   SOURCE FILE LOCATIONS "," ",wxITEM_NORMAL);
-
-  this->Library_Description_Menu->Append(ID_INPUT_SOURCE_FILE_LOCATION, "&   Enter External Source File Locations"," ",wxITEM_NORMAL);
-
-  this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
-
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&   HEADER FILE LOCATIONS "," ",wxITEM_NORMAL);
-
-  this->Library_Description_Menu->Append(ID_INPUT_HEADER_FILE_LOCATION, "&   Enter External Header File Locations"," ",wxITEM_NORMAL);
-
-  this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
-
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&   LIBRARIY INFORMATION"," ",wxITEM_NORMAL);
-
-  this->Library_Description_Menu->Append(ID_INPUT_LIBRARY_NAME,         "&   Enter Libraries File For Linking"," ",wxITEM_NORMAL);
-
-  this->Library_Description_Menu->Append(ID_INPUT_LIBRARY_LOCATION,     "&   Enter Library File Location"," ",wxITEM_NORMAL);
-
-  this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
-
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&   C++ STANDART"," ",wxITEM_NORMAL);
-
-  this->Library_Description_Menu->Append(ID_INPUT_C_STANDART,           "&   Enter C++ Standart "," ",wxITEM_NORMAL);
-
-  this->Library_Description_Menu->Append(wxID_NONE,"&                        "," ",wxITEM_SEPARATOR);
-
-  this->Library_Description_Menu->Append(wxID_NONE,                     "&   OPTIONS"," ",wxITEM_NORMAL);
-
-  this->Library_Description_Menu->Append(ID_INPUT_OPTIONS,              "&   Enter Options "," ",wxITEM_NORMAL);
+  this->Library_Description_Menu->Append(ID_INPUT_CONSTRUCTION_POINT,   "&Select Project Warehouse Directory","",wxITEM_NORMAL);
 
   this->Library_Description_Menu->Append(wxID_NONE,                     "&                 "," ",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(wxID_NONE,"&                   "," ",wxITEM_SEPARATOR);
+
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&                 "," ",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&SOURCE FILE LOCATIONS ","",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(ID_INPUT_SOURCE_FILE_LOCATION, "&Enter External Source File Locations","",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&                 ","",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(wxID_NONE,"&                    "," ",wxITEM_SEPARATOR);
+
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&                 ","",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&HEADER FILE LOCATIONS ","",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(ID_INPUT_HEADER_FILE_LOCATION, "&Enter External Header File Locations","",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&                 ","",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(wxID_NONE,"&                   "," ",wxITEM_SEPARATOR);
+
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&                 "," ",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&LIBRARIY INFORMATION","",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(ID_INPUT_LIBRARY_NAME,         "&Enter Libraries File For Linking","",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(ID_INPUT_LIBRARY_LOCATION,     "&Enter Library File Location","",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&                 ","",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(wxID_NONE,"&                   "," ",wxITEM_SEPARATOR);
+
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&                 ","",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&C++ STANDART"," ",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(ID_INPUT_C_STANDART,           "&Enter C++ Standart ","",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(wxID_NONE,"&                     "," ",wxITEM_SEPARATOR);
+
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&                 ","",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&OPTIONS"," ",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(ID_INPUT_OPTIONS,              "&Enter Options ","",wxITEM_NORMAL);
+
+  this->Library_Description_Menu->Append(wxID_NONE,                     "&                 ","",wxITEM_NORMAL);
 
 
 

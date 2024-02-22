@@ -269,8 +269,10 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
 
                      this->Append_Items(setpoint_path,setpoint_id);
                   }
+                  else{
 
-                  this->Append_Files(setpoint_path,setpoint_id);
+                       this->Append_Files(setpoint_path,setpoint_id);
+                  }
 
                   while(dirCtrl.GetNext(&dirname)){
 
@@ -280,10 +282,12 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
 
                     if(this->Does_it_have_SubDir(setpoint_path)){
 
-                      this->Append_Items(setpoint_path,setpoint_id);
+                       this->Append_Items(setpoint_path,setpoint_id);
                     }
+                    else{
 
-                    this->Append_Files(setpoint_path,setpoint_id);
+                        this->Append_Files(setpoint_path,setpoint_id);
+                    }
                   }
                 }
 

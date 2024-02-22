@@ -640,34 +640,37 @@ void MainFrame::Determine_Source_File_Dependencies(wxCommandEvent & event){
 
                this->Select_File(FilePATH,wxT("Select source file path"));
 
-               this->fork_process 
+               if(!FilePATH.empty()){
+
+                  this->fork_process 
           
                    = new std::thread(MainFrame::Run_Source_File_Dependency_Determination_Process,this,FilePATH);
 
 
-               this->Progress_Dialog = new Custom_Progress_Dialog(this,wxID_ANY,wxT("PROCESS REPORT"),wxDefaultPosition);
+                  this->Progress_Dialog = new Custom_Progress_Dialog(this,wxID_ANY,wxT("PROCESS REPORT"),wxDefaultPosition);
 
-               this->Progress_Dialog->Construct_Text_Panel(wxT("Process Output"),20);
+                  this->Progress_Dialog->Construct_Text_Panel(wxT("Process Output"),20);
 
-               this->Progress_Dialog->SetBoldFont();
+                  this->Progress_Dialog->SetBoldFont();
 
-               this->Progress_Dialog->AppendText_To_TextCtrl(wxT("\n\n    SOURCE FILE DEPENDENCY DETERMINATION STARTED:"));
+                  this->Progress_Dialog->AppendText_To_TextCtrl(wxT("\n\n    SOURCE FILE DEPENDENCY DETERMINATION STARTED:"));
 
-               this->Progress_Dialog->SetLightFont();
+                  this->Progress_Dialog->SetLightFont();
 
-               this->Progress_Dialog->ShowModal();
+                  this->Progress_Dialog->ShowModal();
            
-               this->depPrinter = new Dependency_Tree_Printer(this);
+                  this->depPrinter = new Dependency_Tree_Printer(this);
 
-               this->depPrinter->Construct_Tree_Panel(wxT("DEPENDENCY TREE"));
+                  this->depPrinter->Construct_Tree_Panel(wxT("DEPENDENCY TREE"));
 
-               this->print_to_tree_ctrl = new std::thread(MainFrame::Print_File_Dependency_to_tree_control,this);
+                  this->print_to_tree_ctrl = new std::thread(MainFrame::Print_File_Dependency_to_tree_control,this);
 
-               this->print_to_tree_ctrl->detach();
+                  this->print_to_tree_ctrl->detach();
 
-               this->depPrinter->PrintDependencyTree();
+                  this->depPrinter->PrintDependencyTree();
 
-               this->fork_process->join();
+                  this->fork_process->join();
+               }
            }
            else{
 
