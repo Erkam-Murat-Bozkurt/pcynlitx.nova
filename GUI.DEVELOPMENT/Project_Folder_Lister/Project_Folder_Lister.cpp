@@ -21,7 +21,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Project_Folder_Lister.h"
 
-Project_Folder_Lister::Project_Folder_Lister(Custom_wxDataViewTreeCtrl * TreeCtrl){
+Project_Folder_Lister::Project_Folder_Lister(wxDataViewTreeCtrl * TreeCtrl){
 
      this->treeCtrl = TreeCtrl;
 
@@ -29,7 +29,7 @@ Project_Folder_Lister::Project_Folder_Lister(Custom_wxDataViewTreeCtrl * TreeCtr
 
      this->tree_item_list = nullptr;
 
-     this->imglist = nullptr;
+     //this->imglist = nullptr;
 
      this->Item_Path = wxT("");
 
@@ -49,6 +49,8 @@ Project_Folder_Lister::~Project_Folder_Lister(){
         if(this->tree_item_list != nullptr){
 
            delete [] this->tree_item_list;
+
+           this->tree_item_list = nullptr;
         }
      }
 }
@@ -58,7 +60,7 @@ void Project_Folder_Lister::Initialize_Properties(wxString Folder){
 
      wxSize size = this->treeCtrl->FromDIP(wxSize(16, 16));
 
-     this->imglist = new wxImageList(size.x, size.y, true, 2);
+     //this->imglist = new wxImageList(size.x, size.y, true, 2);
 
 
      //this->Folder_Icon.LoadFile(wxT("D:\\Pcynlitx_Build_Platform\\icons\\folder.png"),wxICON_DEFAULT_TYPE,-1,-1);
@@ -447,7 +449,7 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
      return this->Short_Path;
  }
 
- Custom_wxDataViewTreeCtrl * Project_Folder_Lister::GetTreeCtrl(){
+ wxDataViewTreeCtrl * Project_Folder_Lister::GetTreeCtrl(){
 
       return this->treeCtrl;
  }
@@ -527,21 +529,6 @@ void Project_Folder_Lister::Expand_Root(){
 void Project_Folder_Lister::Expand_Path(wxString path){
 
      wxDataViewItem Item_Number = this->GetItemId_FromPath(path);
-
-     /*
-
-     wxString item_path = this->GetItemPath(Item_Id);
-
-     wxMessageDialog  *  dial = new wxMessageDialog(NULL,
-
-         item_path, wxT("Info"), wxOK);
-
-       if(dial->ShowModal()== wxOK){
-
-           delete dial;
-        }
-
-     */
 
      this->treeCtrl->Expand(Item_Number);
 }

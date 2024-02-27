@@ -23,7 +23,6 @@
 #include <wx/stattext.h>
 #include "Intro_Page_Loader.h"
 #include "Style_Loader.h"
-#include "Custom_wxPanel.h"
 #include "Custom_TextCtrl.h"
 #include "Custom_TabArt.h"
 #include "Event_ID_Numbers.h"
@@ -51,7 +50,7 @@ public:
   virtual ~Custom_Notebook();
   void Size_Event(wxSizeEvent & event);
   void OnPaint(wxPaintEvent & event);
-  void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect);
+  void DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect& rect);
   void Initialization();
   void Selection_Changing(wxAuiNotebookEvent & event);
   void NoteBook_Page_Closed(wxAuiNotebookEvent & event);

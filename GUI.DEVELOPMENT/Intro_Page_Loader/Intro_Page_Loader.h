@@ -23,8 +23,6 @@ class Intro_Page_Loader : public wxWindow
 public:
   Intro_Page_Loader(wxWindow * parent, wxSize page_size, int tab_ctrl_height);
 
-  Intro_Page_Loader(const Intro_Page_Loader & orig);
-
   virtual ~Intro_Page_Loader();
 
   void OnPaint(wxPaintEvent& event);

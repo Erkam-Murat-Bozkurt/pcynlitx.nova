@@ -14,6 +14,7 @@
 #include <wx/font.h>
 #include <wx/sizer.h>
 #include <wx/msgdlg.h>
+#include "Custom_Notebook.h"
 #include "Custom_wxDataViewTreeCtrl.hpp"
 #include "Project_Folder_Lister.h"
 #include "Custom_DockArt.h"
@@ -40,11 +41,13 @@ public:
 
   void RemoveProjectDirectory();
 
-  Custom_wxDataViewTreeCtrl * GetTreeCtrl();
+  wxDataViewTreeCtrl * GetTreeCtrl();
 
   int GetTotalItemNum(wxString Folder);
 
   wxString GetItemPath(wxDataViewItem item_number);
+
+  void FileNameEdit(wxDataViewEvent & event);
 
   bool Get_Panel_Open_Status();
 
@@ -66,6 +69,9 @@ public:
 
   wxBoxSizer * Tree_Control_Sizer;
 
+  wxDir * dir_ctrl;
+
+
   bool panel_open_status;
 
   int tab_ctrl_hight;
@@ -74,9 +80,11 @@ public:
 
   void mouseReleased(wxMouseEvent& event);
 
-  void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect);
+  void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect & rect);
 
   void OnPaint(wxPaintEvent& event);
+
+  void FileSelect(wxDataViewEvent & event);
 
   void Close_Directory_Pane();
 
@@ -91,6 +99,8 @@ public:
   void Expand_Selected_Item();
 
   void Expand_Path(wxString path);
+
+  Custom_Notebook * Notebook_Ptr;
 
   wxBoxSizer * panel_sizer;
 
@@ -115,11 +125,14 @@ protected:
 
   Project_Folder_Lister * Folder_Lister;
 
-  Custom_wxDataViewTreeCtrl * tree_control;
+  wxDataViewTreeCtrl * tree_control;
 
   wxAuiManager * Interface_Manager_Pointer;
 
   wxFont * Directory_List_Font;
+
+  DECLARE_EVENT_TABLE()
+
 };
 
 #endif /* CUSTOM_PANEL */

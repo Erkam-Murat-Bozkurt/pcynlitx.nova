@@ -22,23 +22,15 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Custom_Close_Button.h"
 
-BEGIN_EVENT_TABLE(Custom_Close_Button,wxPanel)
 
-    EVT_MOTION(Custom_Close_Button::mouseMoved)
+
+BEGIN_EVENT_TABLE(Custom_Close_Button,wxPanel)
 
     EVT_LEFT_DOWN(Custom_Close_Button::mouseDown)
 
     EVT_LEFT_UP(Custom_Close_Button::mouseReleased)
 
-    EVT_RIGHT_DOWN(Custom_Close_Button::rightClick)
-
     EVT_LEAVE_WINDOW(Custom_Close_Button::mouseLeftWindow)
-
-    EVT_KEY_DOWN(Custom_Close_Button::keyPressed)
-
-    EVT_KEY_UP(Custom_Close_Button::keyReleased)
-
-    EVT_MOUSEWHEEL(Custom_Close_Button::mouseWheelMoved)
 
     EVT_PAINT(Custom_Close_Button::paintEvent)
 
@@ -186,10 +178,3 @@ void Custom_Close_Button::mouseLeftWindow(wxMouseEvent& event)
         this->paintNow();
     }
 }
-
-// currently unused events
-void Custom_Close_Button::mouseMoved(wxMouseEvent& event) {}
-void Custom_Close_Button::mouseWheelMoved(wxMouseEvent& event) {}
-void Custom_Close_Button::rightClick(wxMouseEvent& event) {}
-void Custom_Close_Button::keyPressed(wxKeyEvent& event) {}
-void Custom_Close_Button::keyReleased(wxKeyEvent& event) {}

@@ -96,6 +96,8 @@ target_include_directories(BuildSystem_GUI PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_DataPanel
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxPanel
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Notebook
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_TabArt
@@ -105,8 +107,6 @@ target_include_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Tree_View_Panel
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Window
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxPanel
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_ProcessOutput
 

@@ -39,14 +39,15 @@
 #include <condition_variable>
 #include <thread>
 #include <wx/dataview.h>
+#include "Custom_wxPanel.h"
+#include "Custom_Tree_View_Panel.h"
 #include "Custom_wxDataViewTreeCtrl.hpp"
-#include "Custom_DataPanel.hpp"
 #include "Menu_Bar_Options.h"
 #include "Custom_Notebook.h"
 #include "Event_ID_Numbers.h"
 #include "Custom_DockArt.h"
 #include "Intro_Page_Loader.h"
-#include "Custom_wxPanel.h"
+#include "Custom_DataPanel.hpp"
 #include "Custom_TabArt.h"
 #include "Process_Manager.hpp"
 #include "Custom_wxThread.hpp"
@@ -76,7 +77,7 @@ public:
   void Select_Project_File(wxCommandEvent&);
   void Show_Project_File(wxCommandEvent&);
   void DirectoryOpen(wxCommandEvent & event);
-  void FileSelect(wxDataViewEvent & event);
+  //void FileSelect(wxDataViewEvent & event);
   wxAuiPaneInfo Central_Pane_Info;
 private:
   void Open_Empty_Project_File(wxCommandEvent & event);
@@ -110,7 +111,6 @@ private:
   void Start_Construction_Process(wxString label, wxString dir_open, wxString start_text);
   void Descriptor_File_Selection_Check();
   void Close_Directory_Pane(wxAuiManagerEvent & event);
-  void FileNameEdit(wxDataViewEvent & event);
   void ForkProcess(char * cmd, wxString start_text);
   void ReadProcessOutput(wxString start_text);
   void OpenTerminal(wxCommandEvent & event);
@@ -122,7 +122,6 @@ private:
   void Select_File(wxString & file_path, wxString Title);
   void Determine_Executable_File_Script_Construction_Point(wxString FileName);
   void Custom_DataPanel_Constructor(wxString Dtyp, wxString Title, wxString text, bool sel, bool status);
-  void Process_End(wxProcessEvent & event);
   void Exit(wxCommandEvent & event);
   void Single_File_Script_Construction_Executer(wxString FilePath, wxString FileName, char strategy);
   void Advance_Single_File_Script_Construction(wxCommandEvent & event);
@@ -164,7 +163,7 @@ private:
   Project_File_Selection_Dialog * Selection_Dialog;
   Descriptor_File_Reader * Des_Reader;
   Custom_Tree_View_Panel * Dir_List_Manager;
-  Custom_wxDataViewTreeCtrl * tree_control;
+  wxDataViewTreeCtrl * tree_control;
   ToolBar_Initializer * ToolBar_Widget;
   Custom_wxPanel * Custom_Main_Panel;
   Custom_Notebook * Book_Manager;

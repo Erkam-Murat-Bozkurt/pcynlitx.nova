@@ -23,6 +23,11 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 #include "Custom_Tree_View_Panel.h"
 
 
+BEGIN_EVENT_TABLE(Custom_Tree_View_Panel,wxPanel)
+   EVT_DATAVIEW_ITEM_ACTIVATED(wxID_ANY,Custom_Tree_View_Panel::FileSelect)
+   EVT_DATAVIEW_ITEM_START_EDITING(wxID_ANY,Custom_Tree_View_Panel::FileNameEdit)
+END_EVENT_TABLE()
+
 Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      wxWindowID id, const wxPoint &pos, const wxSize &size,
@@ -73,6 +78,9 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->Show(false);
 
 
+     this->dir_ctrl = new wxDir;
+
+
      this->tab_ctrl_hight = tabctrl_hight;
 
      this->Frame_Pointer = frame;
@@ -106,20 +114,10 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->Tree_Control_Size = this->GetClientSize();
 
 
-     /*
+     this->tree_control = new wxDataViewTreeCtrl(this, wxID_ANY,wxDefaultPosition,
 
-     this->tree_control = new Custom_wxTreeCtrl(this, wxID_ANY,wxDefaultPosition,
+                             this->Tree_Control_Size,wxDV_NO_HEADER | wxDV_VARIABLE_LINE_HEIGHT | wxDV_VERT_RULES  );
 
-                             this->Tree_Control_Size, wxTR_DEFAULT_STYLE | wxTR_ROW_LINES );
-
-
-     */
-
-     this->tree_control = new Custom_wxDataViewTreeCtrl(this, wxID_ANY,wxDefaultPosition,
-
-                             this->Tree_Control_Size,wxDV_NO_HEADER);
-
-     //this->tree_control->AlwaysShowScrollbars (true,true);
 
      std::string face_name = "Calibri"; 
 
@@ -137,8 +135,6 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
                                    tree_control_current_position.y + this->tab_ctrl_hight );
 
-
-     this->tree_control->Receive_Position(this->Tree_Control_Position);
 
      this->tree_control->SetPosition(this->Tree_Control_Position);
 
@@ -206,7 +202,7 @@ void Custom_Tree_View_Panel::Size_Event(wxSizeEvent & event)
      this->PaintNow();
 }
 
-void Custom_Tree_View_Panel::mouseReleased(wxMouseEvent& event)
+void Custom_Tree_View_Panel::mouseReleased(wxMouseEvent & event)
 {
      event.Skip(false);
 
@@ -256,6 +252,45 @@ void Custom_Tree_View_Panel::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxR
 
      dc.DrawRectangle(rect.GetX(), rect.GetY(), rect.GetWidth()+10,rect.GetHeight()+10);
 }
+
+
+void Custom_Tree_View_Panel::FileSelect(wxDataViewEvent & event)
+{
+     event.Skip(true);
+
+     event.StopPropagation();
+
+     wxDataViewItem Item = this->tree_control->GetSelection();
+
+     wxString Path = this->GetItemPath(Item);
+
+     if(this->dir_ctrl->Exists(Path)){
+
+        if(this->GetTreeCtrl()->IsExpanded(Item)){
+
+           this->GetTreeCtrl()->Collapse(Item);
+        }
+        else{
+
+             this->GetTreeCtrl()->Expand(Item);
+        }
+     }
+     else{
+
+            this->Notebook_Ptr->Open_File(Path);
+     }
+}
+
+
+
+void Custom_Tree_View_Panel::FileNameEdit(wxDataViewEvent & event)
+{
+     event.Veto();
+
+}
+
+
+
 
 void Custom_Tree_View_Panel::PaintNow()
 {
@@ -385,7 +420,7 @@ void Custom_Tree_View_Panel::Set_Font(wxFont Font){
       this->tree_control->SetFont(Font);
 }
 
-Custom_wxDataViewTreeCtrl * Custom_Tree_View_Panel::GetTreeCtrl(){
+wxDataViewTreeCtrl * Custom_Tree_View_Panel::GetTreeCtrl(){
 
      return this->tree_control;
 }

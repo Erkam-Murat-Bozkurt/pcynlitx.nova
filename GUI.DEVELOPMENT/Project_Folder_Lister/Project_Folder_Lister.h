@@ -15,7 +15,6 @@
 #include <wx/artprov.h>
 #include <wx/msgout.h>
 #include <wx/dataview.h>
-#include "Custom_wxDataViewTreeCtrl.hpp"
 
 
 struct Tree_Item
@@ -27,7 +26,7 @@ struct Tree_Item
 class Project_Folder_Lister
 {
 public:
-  Project_Folder_Lister(Custom_wxDataViewTreeCtrl * TreeCtrl);
+  Project_Folder_Lister(wxDataViewTreeCtrl * TreeCtrl);
 
   virtual ~Project_Folder_Lister();
 
@@ -35,7 +34,7 @@ public:
 
   void RemoveProjectDirectory();
 
-  Custom_wxDataViewTreeCtrl * GetTreeCtrl();
+  wxDataViewTreeCtrl * GetTreeCtrl();
 
   wxString GetItemPath(wxDataViewItem item_number);
 
@@ -79,8 +78,7 @@ private:
   int sub_directory_number;
   int total_item_number;
   int item_counter;
-  Custom_wxDataViewTreeCtrl * treeCtrl;
-  wxImageList * imglist;
+  wxDataViewTreeCtrl * treeCtrl;
   Tree_Item * tree_item_list;
   wxString Short_Path;
   wxString Item_Path;

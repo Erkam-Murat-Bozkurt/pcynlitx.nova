@@ -3,7 +3,11 @@
 
 #include "Custom_wxDataViewTreeCtrl.hpp"
 
-Custom_wxDataViewTreeCtrl::Custom_wxDataViewTreeCtrl(wxPanel *parent, wxWindowID id,
+BEGIN_EVENT_TABLE(Custom_wxDataViewTreeCtrl,wxDataViewTreeCtrl)
+   EVT_SCROLL(Custom_wxDataViewTreeCtrl::SetScrollPosition)
+END_EVENT_TABLE()
+
+Custom_wxDataViewTreeCtrl::Custom_wxDataViewTreeCtrl(wxWindow *parent, wxWindowID id,
 
   const wxPoint & pos,
 
@@ -16,6 +20,8 @@ Custom_wxDataViewTreeCtrl::Custom_wxDataViewTreeCtrl(wxPanel *parent, wxWindowID
      this->GetEventHandler()->Bind(wxEVT_PAINT,&Custom_wxDataViewTreeCtrl::OnPaint,this,wxID_ANY);
 
      this->GetEventHandler()->Bind(wxEVT_SIZE,&Custom_wxDataViewTreeCtrl::Size_Event,this,wxID_ANY);
+
+     //this->GetEventHandler()->Bind()
 
 
      this->SetThemeEnabled(false);
@@ -51,6 +57,17 @@ Custom_wxDataViewTreeCtrl::Custom_wxDataViewTreeCtrl(wxPanel *parent, wxWindowID
  }
 
  
+void Custom_wxDataViewTreeCtrl::SetScrollPosition(wxScrollEvent& event){
+
+     event.Skip(true);
+
+     wxMessageDialog * dial = new wxMessageDialog(this,wxT("scroll event"),wxT(""),wxOK);
+
+     if(dial->ShowModal () == wxOK);
+
+     //this->ScrollLines(this->GetScrollPos(wxVERTICAL));
+}
+
  void Custom_wxDataViewTreeCtrl::OnPaint(wxPaintEvent & event){
 
       event.Skip(true);

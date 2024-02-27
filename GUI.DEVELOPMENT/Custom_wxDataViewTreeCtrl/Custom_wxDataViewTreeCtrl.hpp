@@ -14,7 +14,6 @@
 #include <wx\panel.h>
 #include <wx\event.h>
 #include <wx\sizer.h>
-#include <wx\event.h>
 #include <wx\gdicmn.h>
 #include <wx\dc.h>
 #include <iostream>
@@ -23,7 +22,7 @@
 class Custom_wxDataViewTreeCtrl : public wxDataViewTreeCtrl
 {
 public:
-  Custom_wxDataViewTreeCtrl(wxPanel * parent, wxWindowID id,
+  Custom_wxDataViewTreeCtrl(wxWindow * parent, wxWindowID id,
 
         const wxPoint & pos,
 
@@ -35,12 +34,7 @@ public:
 
   void OnPaint(wxPaintEvent & event);
 
-  wxBackgroundStyle GetBackgroundStyle( )	const
-  {
-     return wxBG_STYLE_CUSTOM;
-  }
-
-  void Update(){};
+  void SetScrollPosition(wxScrollEvent& event);
 
   void DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect & rect);
 
@@ -51,6 +45,9 @@ public:
   wxWindow * Parent_Window_Pointer;
 
   wxPoint Position;
+
+  DECLARE_EVENT_TABLE()
+
 };
 
 #endif /* CUSTOM_WXDATAVIEWTREECTRL_HPP */

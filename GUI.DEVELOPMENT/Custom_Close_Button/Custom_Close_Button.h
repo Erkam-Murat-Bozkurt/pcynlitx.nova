@@ -8,7 +8,6 @@
 #include <wx\aui\aui.h>
 #include <wx\aui\framemanager.h>
 #include <wx\sizer.h>
-#include "Custom_wxTreeCtrl.h"
 #include "Custom_Window.h"
 #include "Project_Folder_Lister.h"
 

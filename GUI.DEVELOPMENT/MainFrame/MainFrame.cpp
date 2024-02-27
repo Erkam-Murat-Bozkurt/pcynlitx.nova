@@ -214,6 +214,8 @@ MainFrame::MainFrame() : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
   this->dir_control = new wxDir;
 
 
+  this->Dir_List_Manager->Notebook_Ptr = this->Book_Manager;
+
   wxRect Main_Rect(this->GetSize());
 
   this->Refresh(true,&Main_Rect);
@@ -298,21 +300,6 @@ MainFrame::~MainFrame()
    this->Close(true);
 }
 
-
-
-void MainFrame::Process_End(wxProcessEvent & event)
-{
-     event.Skip(false);
-     
-        wxMessageDialog  *  dial = new wxMessageDialog(NULL,
-
-         wxT("The end of the process"), wxT("Info"), wxOK);
-
-       if(dial->ShowModal()== wxOK){
-
-           delete dial;
-        }
-}
 
 void MainFrame::File_Save(wxCommandEvent & event){
 
@@ -1299,47 +1286,6 @@ void MainFrame::Select_File(wxString & FilePATH, wxString Title){
 
      delete openFileDialog;
 }
-
-
-void MainFrame::FileSelect(wxDataViewEvent & event)
-{
-     event.Skip(true);
-
-     event.StopPropagation();
-
-     wxDataViewItem Item = this->tree_control->GetSelection();
-
-     wxString Path = this->Dir_List_Manager->GetItemPath(Item);
-
-     if(this->dir_control->Exists(Path)){
-
-        if(this->Dir_List_Manager->GetTreeCtrl()->IsExpanded(Item)){
-
-           this->Dir_List_Manager->GetTreeCtrl()->Collapse(Item);
-
-           this->Dir_List_Manager->GetTreeCtrl()->PaintNow();
-        }
-        else{
-
-             this->Dir_List_Manager->GetTreeCtrl()->Expand(Item);
-
-             this->Dir_List_Manager->GetTreeCtrl()->PaintNow();
-        }
-     }
-     else{
-
-            this->Book_Manager->Open_File(Path);
-     }
-}
-
-
-
-void MainFrame::FileNameEdit(wxDataViewEvent & event)
-{
-     event.Veto();
-
-}
-
 
 
 

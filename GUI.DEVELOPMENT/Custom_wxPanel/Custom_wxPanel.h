@@ -10,7 +10,6 @@
 #include <wx/aui/aui.h>
 #include <wx/aui/framemanager.h>
 #include <wx/sizer.h>
-#include "Custom_Tree_View_Panel.h"
 
 class Custom_wxPanel : public wxPanel
 {
@@ -20,8 +19,6 @@ public:
                  const wxSize &size, wxColour background,
 
                  wxAuiPaneInfo * Pane);
-
-  //Custom_wxPanel(const Custom_wxPanel & orig);
 
   virtual ~Custom_wxPanel();
 
