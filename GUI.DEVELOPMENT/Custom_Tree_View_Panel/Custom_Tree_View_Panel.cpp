@@ -106,12 +106,20 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->Tree_Control_Size = this->GetClientSize();
 
 
+     /*
+
      this->tree_control = new Custom_wxTreeCtrl(this, wxID_ANY,wxDefaultPosition,
 
                              this->Tree_Control_Size, wxTR_DEFAULT_STYLE | wxTR_ROW_LINES );
 
 
-     this->tree_control->AlwaysShowScrollbars (true,true);
+     */
+
+     this->tree_control = new Custom_wxDataViewTreeCtrl(this, wxID_ANY,wxDefaultPosition,
+
+                             this->Tree_Control_Size,wxDV_NO_HEADER);
+
+     //this->tree_control->AlwaysShowScrollbars (true,true);
 
      std::string face_name = "Calibri"; 
 
@@ -213,7 +221,9 @@ void Custom_Tree_View_Panel::Initialize_Sizer()
 
      this->panel_sizer->Add(this->Top_Bar_Window,0, wxEXPAND | wxALL,0);
 
-     this->panel_sizer->Add(this->tree_control,1, wxEXPAND | wxRIGHT | wxBOTTOM,10);
+     this->panel_sizer->Add(this->tree_control,1, wxEXPAND | wxRIGHT | wxBOTTOM,0);
+
+     this->panel_sizer->Layout();
 
      this->windows_detach_condition = false;
 
@@ -256,7 +266,7 @@ void Custom_Tree_View_Panel::PaintNow()
      this->DrawBackground(dc,this,rect);
 }
 
-void Custom_Tree_View_Panel::OnPaint(wxPaintEvent& event)
+void Custom_Tree_View_Panel::OnPaint(wxPaintEvent & event)
 {
      event.Skip(true);
 
@@ -375,12 +385,12 @@ void Custom_Tree_View_Panel::Set_Font(wxFont Font){
       this->tree_control->SetFont(Font);
 }
 
-Custom_wxTreeCtrl * Custom_Tree_View_Panel::GetTreeCtrl(){
+Custom_wxDataViewTreeCtrl * Custom_Tree_View_Panel::GetTreeCtrl(){
 
      return this->tree_control;
 }
 
-wxString Custom_Tree_View_Panel::GetItemPath(wxTreeItemId item_number){
+wxString Custom_Tree_View_Panel::GetItemPath(wxDataViewItem item_number){
 
          return this->Folder_Lister->GetItemPath(item_number);
 }

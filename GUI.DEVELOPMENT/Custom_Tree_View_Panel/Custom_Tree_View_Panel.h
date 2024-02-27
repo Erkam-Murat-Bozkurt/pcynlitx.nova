@@ -14,7 +14,7 @@
 #include <wx/font.h>
 #include <wx/sizer.h>
 #include <wx/msgdlg.h>
-#include "Custom_wxTreeCtrl.h"
+#include "Custom_wxDataViewTreeCtrl.hpp"
 #include "Project_Folder_Lister.h"
 #include "Custom_DockArt.h"
 #include "Custom_Window.h"
@@ -30,8 +30,6 @@ public:
 
        wxFont Default_Font, int tabctrl_hight);
 
-  Custom_Tree_View_Panel(const Custom_Tree_View_Panel & orig);
-
   virtual ~Custom_Tree_View_Panel();
 
   void Clear_Dynamic_Memory();
@@ -42,11 +40,11 @@ public:
 
   void RemoveProjectDirectory();
 
-  Custom_wxTreeCtrl * GetTreeCtrl();
+  Custom_wxDataViewTreeCtrl * GetTreeCtrl();
 
   int GetTotalItemNum(wxString Folder);
 
-  wxString GetItemPath(wxTreeItemId item_number);
+  wxString GetItemPath(wxDataViewItem item_number);
 
   bool Get_Panel_Open_Status();
 
@@ -117,7 +115,7 @@ protected:
 
   Project_Folder_Lister * Folder_Lister;
 
-  Custom_wxTreeCtrl * tree_control;
+  Custom_wxDataViewTreeCtrl * tree_control;
 
   wxAuiManager * Interface_Manager_Pointer;
 

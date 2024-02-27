@@ -16,7 +16,7 @@
 #include <wx/font.h>
 #include <wx/sizer.h>
 #include <wx/msgdlg.h>
-#include "Custom_wxTreeCtrl.h"
+#include "Custom_wxDataViewTreeCtrl.hpp"
 #include "Project_Folder_Lister.h"
 #include "Custom_DockArt.h"
 #include "Custom_Window.h"
@@ -53,11 +53,11 @@ public:
 
   void Load_Project_Directory(wxString Folder);
 
-  Custom_wxTreeCtrl * GetTreeCtrl();
+  Custom_wxDataViewTreeCtrl * GetTreeCtrl();
 
   int GetTotalItemNum(wxString Folder);
 
-  wxString GetItemPath(wxTreeItemId item_number);
+  wxString GetItemPath(wxDataViewItem item_number);
 
   wxFrame * Parent_Frame_Pointer;
 
@@ -103,7 +103,7 @@ protected:
 
   wxButton * CloseButton;
 
-  Custom_wxTreeCtrl * tree_control;
+  Custom_wxDataViewTreeCtrl * tree_control;
 
   wxFont * Directory_List_Font;
 

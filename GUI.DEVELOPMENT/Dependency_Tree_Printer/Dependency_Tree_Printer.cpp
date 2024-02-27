@@ -101,7 +101,7 @@ void Dependency_Tree_Printer::Construct_Tree_Panel(wxString title){
      this->tree_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,620));
 
 
-     this->tree_control = new Custom_wxTreeCtrl(this->tree_panel, wxID_ANY,wxDefaultPosition,
+     this->tree_control = new Custom_wxDataViewTreeCtrl(this->tree_panel, wxID_ANY,wxDefaultPosition,
 
                              wxDefaultSize, wxTR_DEFAULT_STYLE | wxTR_ROW_LINES );
 
@@ -385,12 +385,12 @@ void Dependency_Tree_Printer::Set_Font(wxFont Font){
       this->tree_control->SetFont(Font);
 }
 
-Custom_wxTreeCtrl * Dependency_Tree_Printer::GetTreeCtrl(){
+Custom_wxDataViewTreeCtrl * Dependency_Tree_Printer::GetTreeCtrl(){
 
      return this->tree_control;
 }
 
-wxString Dependency_Tree_Printer::GetItemPath(wxTreeItemId item_number){
+wxString Dependency_Tree_Printer::GetItemPath(wxDataViewItem item_number){
 
      return this->Folder_Lister->GetItemPath(item_number);
 }

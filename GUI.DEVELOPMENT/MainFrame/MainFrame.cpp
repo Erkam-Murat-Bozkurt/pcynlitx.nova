@@ -777,7 +777,9 @@ void MainFrame::Print_File_Dependency_to_tree_control(){
 
          
 
-      while(((pipe_string[data_start_point] == '\n') || (pipe_string[data_start_point] == ' '))){
+      while(((pipe_string[data_start_point] == '\n') 
+      
+            || (pipe_string[data_start_point] == ' '))){
 
             data_start_point++;
       }
@@ -785,7 +787,7 @@ void MainFrame::Print_File_Dependency_to_tree_control(){
 
       int item_number = 0;
 
-      wxTreeItemId rootId;
+      wxDataViewItem rootId;
 
       for(size_t i=data_start_point;i<pipe_string.size();i++){
 
@@ -801,19 +803,19 @@ void MainFrame::Print_File_Dependency_to_tree_control(){
 
           if(item_number == 0){
 
-             rootId = this->depPrinter->GetTreeCtrl()->AddRoot(src_name);
+             this->depPrinter->GetTreeCtrl()->AppendContainer(rootId,src_name,-1,-1,NULL);
 
              item_number++;
           }
           else{
 
-              this->depPrinter->GetTreeCtrl()->AppendItem(rootId,src_name);
+              this->depPrinter->GetTreeCtrl()->AppendItem(rootId,src_name,-1,NULL);
 
               item_number++;
           }
       }
 
-      this->depPrinter->GetTreeCtrl()->ExpandAll();
+      this->depPrinter->GetTreeCtrl()->Expand(rootId);
 }
 
 void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
@@ -959,7 +961,9 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 }
 
 
-void MainFrame::Start_Construction_Process(wxString label, wxString dir_open, wxString start_text){
+void MainFrame::Start_Construction_Process(wxString label, 
+
+     wxString dir_open, wxString start_text){
       
      this->Progress_Bar_Start_status = false;
 
@@ -1297,13 +1301,13 @@ void MainFrame::Select_File(wxString & FilePATH, wxString Title){
 }
 
 
-void MainFrame::FileSelect(wxTreeEvent& event)
+void MainFrame::FileSelect(wxDataViewEvent & event)
 {
      event.Skip(true);
 
      event.StopPropagation();
 
-     wxTreeItemId Item = this->tree_control->GetSelection();
+     wxDataViewItem Item = this->tree_control->GetSelection();
 
      wxString Path = this->Dir_List_Manager->GetItemPath(Item);
 
@@ -1328,6 +1332,17 @@ void MainFrame::FileSelect(wxTreeEvent& event)
      }
 }
 
+
+
+void MainFrame::FileNameEdit(wxDataViewEvent & event)
+{
+     event.Veto();
+
+}
+
+
+
+
 void MainFrame::Open_File(wxCommandEvent & event){
 
      if(event.GetId() == ID_OPEN_FILE){
@@ -1346,15 +1361,6 @@ void MainFrame::Open_File(wxCommandEvent & event){
         }
      }
 }
-
-
-void MainFrame::FileNameEdit(wxTreeEvent& event)
-{
-     event.Veto();
-
-}
-
-
 
 void MainFrame::Open_Intro_Page(wxCommandEvent & event)
 {

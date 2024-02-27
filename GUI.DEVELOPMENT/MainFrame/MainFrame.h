@@ -38,6 +38,8 @@
 #include <chrono>
 #include <condition_variable>
 #include <thread>
+#include <wx/dataview.h>
+#include "Custom_wxDataViewTreeCtrl.hpp"
 #include "Custom_DataPanel.hpp"
 #include "Menu_Bar_Options.h"
 #include "Custom_Notebook.h"
@@ -74,7 +76,7 @@ public:
   void Select_Project_File(wxCommandEvent&);
   void Show_Project_File(wxCommandEvent&);
   void DirectoryOpen(wxCommandEvent & event);
-  void FileSelect(wxTreeEvent& event);
+  void FileSelect(wxDataViewEvent & event);
   wxAuiPaneInfo Central_Pane_Info;
 private:
   void Open_Empty_Project_File(wxCommandEvent & event);
@@ -108,7 +110,7 @@ private:
   void Start_Construction_Process(wxString label, wxString dir_open, wxString start_text);
   void Descriptor_File_Selection_Check();
   void Close_Directory_Pane(wxAuiManagerEvent & event);
-  void FileNameEdit(wxTreeEvent& event);
+  void FileNameEdit(wxDataViewEvent & event);
   void ForkProcess(char * cmd, wxString start_text);
   void ReadProcessOutput(wxString start_text);
   void OpenTerminal(wxCommandEvent & event);
@@ -162,7 +164,7 @@ private:
   Project_File_Selection_Dialog * Selection_Dialog;
   Descriptor_File_Reader * Des_Reader;
   Custom_Tree_View_Panel * Dir_List_Manager;
-  Custom_wxTreeCtrl * tree_control;
+  Custom_wxDataViewTreeCtrl * tree_control;
   ToolBar_Initializer * ToolBar_Widget;
   Custom_wxPanel * Custom_Main_Panel;
   Custom_Notebook * Book_Manager;

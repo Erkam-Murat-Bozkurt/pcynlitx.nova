@@ -84,7 +84,8 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Progress_Dialog/Custom_Progress_Dialog.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Progress_Dialog/Custom_Progress_Dialog.cpp
 
-
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxDataViewTreeCtrl/Custom_wxDataViewTreeCtrl.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxDataViewTreeCtrl/Custom_wxDataViewTreeCtrl.cpp
 
 )
 
@@ -142,6 +143,9 @@ target_include_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Progress_Dialog
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Gui_Shell_Script_Executer
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxDataViewTreeCtrl
+
 
 
 
@@ -226,6 +230,7 @@ target_link_directories(BuildSystem_GUI PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Gui_Shell_Script_Executer
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxDataViewTreeCtrl
 
 
     ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector
