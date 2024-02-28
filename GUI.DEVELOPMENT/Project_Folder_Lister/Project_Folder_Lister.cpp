@@ -60,23 +60,9 @@ void Project_Folder_Lister::Initialize_Properties(wxString Folder){
 
      wxSize size = this->treeCtrl->FromDIP(wxSize(16, 16));
 
-     //this->imglist = new wxImageList(size.x, size.y, true, 2);
-
-
-     //this->Folder_Icon.LoadFile(wxT("D:\\Pcynlitx_Build_Platform\\icons\\folder.png"),wxICON_DEFAULT_TYPE,-1,-1);
-
-     this->Folder_Icon =  wxArtProvider::GetBitmap(wxART_FOLDER, wxART_OTHER, size);
-
+     this->Folder_Icon.LoadFile(wxT("D:\\Pcynlitx_Build_Platform\\icons\\Folder.png"),wxBITMAP_TYPE_PNG);
 
      this->File_Icon = wxArtProvider::GetBitmap(wxART_NORMAL_FILE, wxART_OTHER, size);
-
-
-     //this->imglist->Add(wxArtProvider::GetBitmap(wxART_FOLDER, wxART_OTHER, size));
-
-     //this->imglist->Add(wxArtProvider::GetBitmap(wxART_NORMAL_FILE, wxART_OTHER, size));
-
-     //this->treeCtrl->SetImageList(this->imglist);
-
 }
 
 
@@ -115,7 +101,7 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
 
      // and it is set.
 
-    this->total_item_number = this->item_counter;
+    this->total_item_number = 2*this->item_counter;
 
     this->treeCtrl->Expand(this->tree_item_list[1].item_number);
 
@@ -231,7 +217,7 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
  wxDataViewItem Project_Folder_Lister::Append_File_To_Tree(wxDataViewItem Item, wxString File, wxString Path){
 
       if(!this->Is_Item_Already_Exist(Path)){
-
+          
           this->tree_item_list[this->item_counter+1].item_number =
 
               this->treeCtrl->AppendItem(Item,File,-1,NULL);

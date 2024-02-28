@@ -15,6 +15,7 @@
 #include <wx/artprov.h>
 #include <wx/msgout.h>
 #include <wx/dataview.h>
+#include <string>
 
 
 struct Tree_Item
