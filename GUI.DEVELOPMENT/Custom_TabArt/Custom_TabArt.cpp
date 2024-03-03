@@ -82,7 +82,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
        dc.GetTextExtent(caption, &normal_textx, &normal_texty);
  
-       caption = caption + "    "; // more area for the string must be allocted
+       caption = caption + " "; // more area for the string must be allocted
        
 
        // figure out the size of the tab

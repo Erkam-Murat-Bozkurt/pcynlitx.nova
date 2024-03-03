@@ -71,6 +71,8 @@ Custom_Close_Button::Custom_Close_Button(Custom_Window * parent, wxPoint positio
 
     this->pressedDown = false;
 
+    this->pressedCloseButton = false;
+
     this->SetPosition(this->Position);
 }
 
@@ -165,6 +167,8 @@ void Custom_Close_Button::mouseReleased(wxMouseEvent& event)
     event.ResumePropagation(5);
 
     this->pressedDown = false;
+
+    this->pressedCloseButton = true;
 
     this->paintNow();
 }

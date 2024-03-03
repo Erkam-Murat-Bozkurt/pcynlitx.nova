@@ -208,7 +208,12 @@ void Custom_Tree_View_Panel::mouseReleased(wxMouseEvent & event)
 
      event.StopPropagation();
 
-     this->Close_Directory_Pane();
+     if(this->close_button->pressedCloseButton){
+
+        this->Close_Directory_Pane();
+
+        this->close_button->pressedCloseButton = false;
+     }
 }
 
 void Custom_Tree_View_Panel::Initialize_Sizer()
@@ -217,7 +222,7 @@ void Custom_Tree_View_Panel::Initialize_Sizer()
 
      this->panel_sizer->Add(this->Top_Bar_Window,0, wxEXPAND | wxALL,0);
 
-     this->panel_sizer->Add(this->tree_control,1, wxEXPAND | wxRIGHT | wxBOTTOM,0);
+     this->panel_sizer->Add(this->tree_control,1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM,10);
 
      this->panel_sizer->Layout();
 
@@ -250,7 +255,7 @@ void Custom_Tree_View_Panel::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxR
 {
      dc.SetBrush(wxColour(240,240,240));
 
-     dc.DrawRectangle(rect.GetX(), rect.GetY(), rect.GetWidth()+10,rect.GetHeight()+10);
+     dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth()+10,rect.GetHeight()+10);
 }
 
 
@@ -339,6 +344,8 @@ void Custom_Tree_View_Panel::Clear_Dynamic_Memory()
 void Custom_Tree_View_Panel::Load_Project_Directory(wxString Folder){
 
      this->Folder_Lister->RemoveProjectDirectory();
+
+     this->close_button->pressedCloseButton = false;
 
      if(!this->panel_open_status)
      {

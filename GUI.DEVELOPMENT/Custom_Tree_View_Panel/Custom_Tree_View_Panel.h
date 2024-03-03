@@ -71,7 +71,6 @@ public:
 
   wxDir * dir_ctrl;
 
-
   bool panel_open_status;
 
   int tab_ctrl_hight;

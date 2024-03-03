@@ -33,6 +33,7 @@ public:
     void keyPressed(wxKeyEvent& event);
     void keyReleased(wxKeyEvent& event);
     bool pressedDown;
+    bool pressedCloseButton;
     wxString text;
     wxPoint Position;
     wxPoint Parent_Position;
