@@ -37,10 +37,11 @@ Custom_Notebook::Custom_Notebook( wxPanel * parent, wxAuiManager * Interface_Man
 
    this->SetThemeEnabled(false);
 
-   std::string face_name = "Consolas"; 
+    std::string face_name = "Fira Code"; 
 
 
-   this->Default_Font = new wxFont(11,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
+
+   this->Default_Font = new wxFont(10,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
 
                      wxFONTWEIGHT_NORMAL,false,wxString(face_name));
 
