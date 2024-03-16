@@ -79,16 +79,16 @@
        style="fill:none;fill-opacity:1;stroke-width:0.20259" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:25.4px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#9c9caa;fill-opacity:1;stroke:none;stroke-width:0.327185"
-       x="-41.990463"
-       y="227.86121"
+       style="font-style:normal;font-weight:normal;font-size:19.7556px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#9c9caa;fill-opacity:1;stroke:none;stroke-width:0.327185"
+       x="-41.48188"
+       y="221.68117"
        id="text824"
        transform="scale(1.0510395,0.95143902)"><tspan
          sodipodi:role="line"
          id="tspan822"
-         x="-41.990463"
-         y="227.86121"
-         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:semi-condensed;font-size:25.4px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Semi-Bold Semi-Condensed';opacity:0.85;fill:#7f7f99;fill-opacity:1;stroke-width:0.327185">Nwinix</tspan></text>
+         x="-41.48188"
+         y="221.68117"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.7556px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Bold';opacity:0.85;fill:#7f7f99;fill-opacity:1;stroke-width:0.327185">Nwinix</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.76111px;line-height:1.45;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#969696;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -98,7 +98,7 @@
          sodipodi:role="line"
          x="-65.777199"
          y="237.01071"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111px;line-height:1.45;font-family:Bahnschrift;-inkscape-font-specification:Bahnschrift;fill:#6cc644;fill-opacity:1;stroke-width:0.264583"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.76111px;line-height:1.45;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#3eb489;fill-opacity:1;stroke-width:0.264583"
          id="tspan2">THE NEW SOFTWARE TECHNOLOGY</tspan></text>
     <rect
        style="fill:none;fill-opacity:1;stroke-width:0.264583"
@@ -108,9 +108,9 @@
        x="5.2916698"
        y="234.02919" />
     <path
-       d="m -52.218901,200.65344 v 0 a 0.01111108,0.01163938 0 0 1 -0.01108,-0.0118 1.7999929,1.885581 0 0 0 -0.666665,-0.68673 l -9.777737,-5.76146 a 1.777771,1.8623024 0 0 0 -1.733325,0 l -9.777741,5.76149 a 1.7999929,1.885581 0 0 0 -0.666663,0.68672 0.01111108,0.01163938 0 0 1 -0.01107,0.0118 v 0.0234 a 1.6666601,1.7459082 0 0 0 -0.233332,0.89624 v 11.47644 a 1.7888819,1.8739418 0 0 0 0.911106,1.62949 l 9.777741,5.76151 a 1.8333261,1.9204993 0 0 0 0.799997,0.23279 h 0.155556 a 1.7888819,1.8739418 0 0 0 0.777773,-0.23279 l 9.777742,-5.76156 a 1.7888819,1.8739418 0 0 0 0.911105,-1.62951 v -11.47648 a 1.7333264,1.8157446 0 0 0 -0.233332,-0.9195 z m -11.222176,5.58691 -8.94441,-5.21446 8.844408,-5.21443 8.855521,5.21443 z m 9.677739,6.80905 -8.877743,5.23771 0.08889,-10.42891 8.788855,-5.23771 z"
+       d="m -48.911776,198.25008 v 0 a 0.01271727,0.01303667 0 0 1 -0.01268,-0.0132 2.0601948,2.1119421 0 0 0 -0.763036,-0.76917 l -11.191179,-6.45312 a 2.0347606,2.0858689 0 0 0 -1.98389,0 l -11.191184,6.45315 a 2.0601948,2.1119421 0 0 0 -0.763034,0.76916 0.01271727,0.01303667 0 0 1 -0.01267,0.0132 v 0.0262 a 1.9075878,1.9555018 0 0 0 -0.267062,1.00384 v 12.85417 a 2.0474777,2.0989056 0 0 0 1.042813,1.8251 l 11.191184,6.45317 a 2.0983466,2.1510523 0 0 0 0.915642,0.26074 h 0.178043 a 2.0474777,2.0989056 0 0 0 0.890206,-0.26074 l 11.191185,-6.45322 a 2.0474777,2.0989056 0 0 0 1.042812,-1.82513 v -12.85422 a 1.9838912,2.0337219 0 0 0 -0.267062,-1.02988 z m -12.844422,6.25761 -10.237389,-5.84044 10.122931,-5.84042 10.13565,5.84042 z m 11.076725,7.62647 -10.161084,5.86649 0.101739,-11.68089 10.059348,-5.86649 z"
        id="path1"
-       style="fill:#6cc644;fill-opacity:1;stroke:none;stroke-width:0.113722;stroke-opacity:1" />
+       style="fill:#3eb489;fill-opacity:1;stroke:none;stroke-width:0.12876;stroke-opacity:1" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.45;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#969696;fill-opacity:1;stroke:none;stroke-width:0.264583"
