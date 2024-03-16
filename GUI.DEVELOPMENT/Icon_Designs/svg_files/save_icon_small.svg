@@ -99,25 +99,25 @@
        y="72.104164"
        id="text16" />
     <polygon
-       style="fill:#876870;fill-opacity:0.84705883;stroke:#ffffff;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#6cc644;fill-opacity:0.84705883;stroke:#ffffff;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
        points="11.506,500.494 500.494,500.494 500.494,109.795 402.205,11.506 11.506,11.506 "
        id="polygon1"
        transform="matrix(0.00268917,0,0,0.00265852,72.749182,85.049875)" />
     <g
        id="g2"
        transform="matrix(0.0021981,0,0,0.00216341,72.826901,85.227057)"
-       style="fill:#faece2;fill-opacity:0.8958838">
+       style="fill:#ffffff;fill-opacity:0.8958838">
       <rect
          x="120.49185"
          y="-57.015274"
-         style="fill:#faece2;fill-opacity:0.8958838;stroke:#d1d7d1;stroke-width:1.18143;stroke-opacity:1"
+         style="fill:#ffffff;fill-opacity:0.8958838;stroke:#d1d7d1;stroke-width:1.18143;stroke-opacity:1"
          width="312.7587"
          height="217.40865"
          id="rect1-5" />
       <rect
          x="72.898888"
          y="296.2735"
-         style="fill:#faece2;fill-opacity:0.8958838;stroke-width:1.18143"
+         style="fill:#ffffff;fill-opacity:0.8958838;stroke-width:1.18143"
          width="407.94702"
          height="224.2029"
          id="rect2" />
@@ -125,9 +125,9 @@
     <g
        id="g5"
        transform="matrix(0.00259789,0,0,0.00255497,72.770436,85.074312)"
-       style="fill:#876870;fill-opacity:1;stroke-width:0;stroke-dasharray:none;stroke:#876870;stroke-opacity:0.84705901">
+       style="fill:#6c9944;fill-opacity:1;stroke-width:0;stroke-dasharray:none;stroke:#6cc644;stroke-opacity:0.84705883">
       <path
-         style="fill:#876870;fill-opacity:1;stroke-width:0;stroke-dasharray:none;stroke:#876870;stroke-opacity:0.84705901"
+         style="fill:#6c9944;fill-opacity:1;stroke-width:0;stroke-dasharray:none;stroke:#6cc644;stroke-opacity:0.84705883"
          d="M 508.63,101.659 410.342,3.37 C 408.184,1.213 405.258,0 402.205,0 H 11.505 C 5.152,0 0,5.152 0,11.506 V 500.495 C 0,506.848 5.152,512 11.506,512 h 488.989 c 6.353,0 11.506,-5.152 11.506,-11.506 V 109.796 c -10e-4,-3.053 -1.214,-5.979 -3.371,-8.137 z M 376.809,23.011 V 184.09 H 135.191 V 23.011 Z M 94.921,488.989 V 373.933 h 322.157 l 0.001,115.057 H 94.921 Z M 417.079,350.921 H 94.921 v -28.764 h 322.157 v 28.764 z m 71.91,138.068 H 440.09 V 310.652 c 0,-6.353 -5.152,-11.506 -11.506,-11.506 H 83.416 c -6.353,0 -11.506,5.152 -11.506,11.506 V 488.989 H 23.011 V 23.011 h 89.169 v 172.584 c 0,6.353 5.152,11.506 11.506,11.506 h 264.629 c 6.353,0 11.506,-5.152 11.506,-11.506 V 25.392 l 89.169,89.169 v 374.428 z"
          id="path4"
          sodipodi:nodetypes="ccssssssscccccccccccccccccccccssssccccsssscccc" />

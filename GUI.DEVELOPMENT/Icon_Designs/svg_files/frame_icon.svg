@@ -9,7 +9,7 @@
    id="svg8"
    inkscape:version="1.3.1 (91b66b0783, 2023-11-16)"
    sodipodi:docname="frame_icon.svg"
-   inkscape:export-filename="frame_icon.png"
+   inkscape:export-filename="..\..\..\..\Pcynlitx_Build_Platform\icons\frame_icon.png"
    inkscape:export-xdpi="500"
    inkscape:export-ydpi="500"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -53,7 +53,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="104.87213"
      inkscape:cx="2.2122179"
-     inkscape:cy="2.8463234"
+     inkscape:cy="2.8272526"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -100,21 +100,21 @@
        y="72.104164"
        id="text16" />
     <rect
-       style="fill:#f0dcc9;fill-opacity:1;stroke:#f0dcc8;stroke-width:0.243093;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.243093;stroke-dasharray:none;stroke-opacity:1"
        id="rect2"
        width="0.39750051"
        height="0.78855211"
        x="73.821854"
        y="85.249733" />
     <rect
-       style="fill:#f0dcc8;fill-opacity:1;stroke:#f0dcc8;stroke-width:0.229462;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.229462;stroke-dasharray:none;stroke-opacity:1"
        id="rect3"
        width="0.49186471"
        height="0.4893418"
        x="72.985016"
        y="85.278229" />
     <rect
-       style="fill:#f0dcc9;fill-opacity:1;stroke:#f0dcc8;stroke-width:0.256527;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#f0ffff;fill-opacity:1;stroke:#fffff7;stroke-width:0.256527;stroke-dasharray:none;stroke-opacity:1"
        id="rect2-7"
        width="0.38406631"
        height="0.90883231"
@@ -122,7 +122,7 @@
        y="-73.874138"
        transform="rotate(90)" />
     <rect
-       style="fill:none;fill-opacity:1;stroke:#866870;stroke-width:0.274577;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#6cc644;stroke-width:0.274577;stroke-dasharray:none;stroke-opacity:1"
        id="rect5-0"
        width="0.67564964"
        height="0.65294337"
@@ -130,7 +130,7 @@
        y="85.246712"
        transform="translate(-2.0833326e-8)" />
     <rect
-       style="fill:none;fill-opacity:1;stroke:#866870;stroke-width:0.330536;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#6cc644;stroke-width:0.330536;stroke-dasharray:none;stroke-opacity:1"
        id="rect5"
        width="1.2446449"
        height="1.237076"

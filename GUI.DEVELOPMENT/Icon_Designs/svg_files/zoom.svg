@@ -31,7 +31,7 @@
    showgrid="true"
    inkscape:zoom="8.5847183"
    inkscape:cx="27.141252"
-   inkscape:cy="24.753288"
+   inkscape:cy="24.753287"
    inkscape:window-width="1902"
    inkscape:window-height="991"
    inkscape:window-x="0"
@@ -56,31 +56,31 @@
      visible="true" /></sodipodi:namedview>
 
 <rect
-   style="fill:#5a5a5a;fill-opacity:1;stroke-width:0.671815;stroke-linejoin:round;stroke-miterlimit:1"
+   style="fill:#737382;fill-opacity:1;stroke-width:0.671815;stroke-linejoin:round;stroke-miterlimit:1"
    id="rect1"
    width="63.34148"
    height="64.586273"
    x="0"
    y="0"
    ry="3.0350215" /><rect
-   style="fill:#ebebeb;stroke-width:6.18386;stroke-miterlimit:1"
+   style="fill:#ffffff;stroke-width:6.18386;stroke-miterlimit:1;fill-opacity:1"
    id="rect2"
    width="48.240356"
    height="50.847717"
    x="7.5997448"
    y="6.7375941"
    ry="0" /><path
-   style="fill:none;fill-rule:evenodd;stroke:#5a5a59;stroke-width:5.52288;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+   style="fill:#737382;fill-opacity:1;fill-rule:evenodd;stroke:#737382;stroke-width:5.52288;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
    d="M 15.872629,32.944038 H 48.712735"
    id="path3-3"
    inkscape:connector-type="polyline"
    inkscape:connector-curvature="0" /><path
-   style="fill:none;fill-rule:evenodd;stroke:#5a5a59;stroke-width:5.52288;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+   style="fill:#737382;fill-opacity:1;fill-rule:evenodd;stroke:#737382;stroke-width:5.52288;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
    d="M 15.862907,19.106642 48.703013,18.977586"
    id="path2"
    inkscape:connector-type="polyline"
    inkscape:connector-curvature="0" /><path
-   style="fill:none;fill-rule:evenodd;stroke:#5a5a59;stroke-width:5.52288;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+   style="fill:#737382;fill-opacity:1;fill-rule:evenodd;stroke:#737382;stroke-width:5.52288;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
    d="M 15.772198,45.772314 H 48.612305"
    id="path3"
    inkscape:connector-type="polyline"

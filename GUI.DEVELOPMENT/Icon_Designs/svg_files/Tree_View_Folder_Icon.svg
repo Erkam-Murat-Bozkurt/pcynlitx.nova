@@ -3,9 +3,9 @@
 
 <svg
    style="isolation:isolate"
-   viewBox="0 0 19.177326 15.613178"
-   width="19.177326"
-   height="15.613177"
+   viewBox="0 0 20.163706 16.778086"
+   width="20.163706"
+   height="16.778086"
    version="1.1"
    id="svg2"
    sodipodi:docname="Tree_View_Folder_Icon.svg"
@@ -28,8 +28,8 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="true"
      inkscape:zoom="7.0326012"
-     inkscape:cx="47.493095"
-     inkscape:cy="20.404968"
+     inkscape:cx="47.91968"
+     inkscape:cy="20.831552"
      inkscape:window-width="1920"
      inkscape:window-height="991"
      inkscape:window-x="-9"
@@ -39,8 +39,8 @@
     <inkscape:grid
        id="grid2"
        units="px"
-       originx="-98"
-       originy="-313.20001"
+       originx="-97.502668"
+       originy="-312.54646"
        spacingx="1"
        spacingy="1"
        empcolor="#0099e5"
@@ -68,21 +68,21 @@
   <g
      clip-path="url(#_clipPath_GNh0RdoNQ6qTEq5U1h9SgHSlllkPXMnq)"
      id="g2"
-     transform="matrix(0.00818844,0,0,0.00833325,-0.80246712,-2.6099739)"
-     style="fill:#876870;fill-opacity:1">
+     transform="matrix(0.0081866,0,0,0.00840743,-0.30279777,-2.1202445)"
+     style="fill:#8e8da2;fill-opacity:1;stroke:#000000;stroke-width:61.71440488;stroke-dasharray:none;stroke-opacity:1">
     <g
        id="Group"
-       style="fill:#876870;fill-opacity:1">
+       style="fill:#8e8da2;fill-opacity:1;stroke:#000000;stroke-width:61.71440488;stroke-dasharray:none;stroke-opacity:1">
       <path
          d="M 2205.8,547.4 H 1151.9 L 917.7,313.2 H 332.2 C 203.39,313.2 98,418.59 98,547.4 v 468.4 H 2440 V 781.6 c 0,-128.81 -105.39,-234.2 -234.2,-234.2 z"
          fill="#2b2b2b"
          id="path1"
-         style="fill:#876870;fill-opacity:1" />
+         style="fill:#8e8da2;fill-opacity:1;stroke:#000000;stroke-width:61.71440488;stroke-dasharray:none;stroke-opacity:1" />
       <path
          d="M 2205.8,547.4 H 332.2 C 203.39,547.4 98,652.79 98,781.6 v 1171 c 0,128.81 105.39,234.2 234.2,234.2 h 1873.6 c 128.81,0 234.2,-105.39 234.2,-234.2 v -1171 c 0,-128.81 -105.39,-234.2 -234.2,-234.2 z"
          fill="#3f3f3f"
          id="path2"
-         style="fill:#876870;fill-opacity:1" />
+         style="fill:#8e8da2;fill-opacity:1;stroke:#000000;stroke-width:61.71440488;stroke-dasharray:none;stroke-opacity:1" />
     </g>
   </g>
 </svg>

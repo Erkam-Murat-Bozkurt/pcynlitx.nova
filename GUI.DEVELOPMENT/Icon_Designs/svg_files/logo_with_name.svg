@@ -5,7 +5,7 @@
    width="21.164499"
    id="svg2"
    version="1.1"
-   sodipodi:docname="logo.svg"
+   sodipodi:docname="logo_with_name.svg"
    inkscape:version="1.3.1 (91b66b0783, 2023-11-16)"
    inkscape:export-filename="..\..\..\..\Pcynlitx_Build_Platform\icons\logo.png"
    inkscape:export-xdpi="500"
@@ -32,7 +32,7 @@
      showgrid="true"
      inkscape:zoom="17.718349"
      inkscape:cx="11.174856"
-     inkscape:cy="18.145031"
+     inkscape:cy="18.088593"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
@@ -64,7 +64,7 @@
   <defs
      id="defs6" />
   <rect
-     style="fill:#866870;fill-opacity:1;stroke:none;stroke-width:0.0711598;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#6cc644;fill-opacity:0.84705883;stroke:none;stroke-width:0.0711598;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect819-3"
      width="17.088291"
      height="17.068336"
@@ -106,5 +106,5 @@
        id="tspan1"
        x="1.1104805"
        y="25.018892"
-       style="font-size:5.33333px;line-height:1.13571px">Nwinix</tspan></text>
+       style="font-size:5.33333px;line-height:1.13571px;fill:#868586;fill-opacity:1">Nwinix</tspan></text>
 </svg>

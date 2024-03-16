@@ -101,6 +101,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
        wxFont bld = this->Default_Font->Bold();
 
+       //wxFont normal = *this->Default_Font;
+
+
        if (page.active)
        {
 
@@ -116,7 +119,6 @@ this program. If not, see <http://www.gnu.org/licenses/>.
        }
 
 
-
        if (page.active)
        {
            // draw active tab
@@ -129,10 +131,16 @@ this program. If not, see <http://www.gnu.org/licenses/>.
            //200,190,190
            //190, 190, 190
 
-           dc.SetPen(wxPen(wxColour(135,104,112)));
+           //dc.SetPen(wxPen(wxColour(206,108,125)));
 
-           dc.SetBrush(wxBrush(wxColour(135,104,112)));
+           //dc.SetBrush(wxBrush(wxColour(206,108,125)));
 
+           dc.SetPen(wxPen(wxColour(108, 199, 68)));
+
+           dc.SetBrush(wxBrush(wxColour(108, 199, 68)));
+            
+
+           
 
 
            // DrawRectangle member function: The first two parameters indicate the coordinates
@@ -204,14 +212,14 @@ this program. If not, see <http://www.gnu.org/licenses/>.
             //135,104,112
             //100,100,100
 
-            dc.SetTextForeground(wxColour(250,250,250));
+            dc.SetTextForeground(wxColour(255,255,255));
          }
          else{
 
             //135,104,112
             //100,100,100
 
-            dc.SetTextForeground(wxColour(100,100,100));
+            dc.SetTextForeground(wxColour(110,110,130));
          }
 
 
