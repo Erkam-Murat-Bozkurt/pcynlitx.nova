@@ -22,7 +22,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Custom_Window.h"
 
-Custom_Window::Custom_Window(wxPanel * parent, wxPoint position, wxSize window_size) :
+Custom_Window::Custom_Window(wxPanel * parent, wxPoint position, wxSize window_size, wxColour win_colour) :
 
      wxWindow(parent, wxID_ANY,position,window_size)
 {
@@ -44,7 +44,9 @@ Custom_Window::Custom_Window(wxPanel * parent, wxPoint position, wxSize window_s
 
     this->tab_ctrl_hight = 0;
 
-    this->SetBackgroundColour(wxColour(240,240,240));
+    this->colour = win_colour;
+
+    this->SetBackgroundColour(this->colour);
 
     this->SetPosition(this->Position);
 
@@ -97,9 +99,9 @@ void Custom_Window::render(wxDC & dc)
 {
     wxRect rect(this->GetSize());
 
-    dc.SetBrush(wxColour(240,240,240));
+    dc.SetBrush(this->colour);
 
-    dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth()+5,rect.GetHeight()+15);
+    dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth()+10,rect.GetHeight()+15);
 }
 
 void Custom_Window::Receive_Button_ID(int button_id){

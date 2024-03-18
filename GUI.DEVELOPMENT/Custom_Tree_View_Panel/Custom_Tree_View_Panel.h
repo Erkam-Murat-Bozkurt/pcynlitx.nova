@@ -55,6 +55,8 @@ public:
 
   Custom_Window * Top_Bar_Window;
 
+  Custom_Window * Title_Window;
+
   wxFrame * Frame_Pointer;
 
   wxAuiPaneInfo File_List_Widget_Shape;
