@@ -331,6 +331,36 @@ void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
 }
 
 
+
+
+void Custom_ProcessOutput::SetBoldFont(){
+
+     wxTextAttr AttrBold(wxColor(100, 100, 120));
+
+     AttrBold.SetFontWeight(wxFONTWEIGHT_BOLD);
+
+     AttrBold.SetFontSize(12);
+
+     AttrBold.SetFontFaceName(wxT("Calibri"));
+
+     this->GetTextControl()->SetDefaultStyle(AttrBold);
+
+}
+
+void Custom_ProcessOutput::SetLightFont(){
+
+     wxTextAttr AttrLigth(wxColor(50,50,50));
+
+     AttrLigth.SetFontWeight(wxFONTWEIGHT_LIGHT);
+
+     AttrLigth.SetFontSize(12);
+
+     AttrLigth.SetFontFaceName(wxT("Calibri")); 
+
+     this->GetTextControl()->SetDefaultStyle(AttrLigth);
+}
+
+
 void Custom_ProcessOutput::Receive_Directory_Open_Location(wxString loc){
 
      this->directory_open_location = loc;

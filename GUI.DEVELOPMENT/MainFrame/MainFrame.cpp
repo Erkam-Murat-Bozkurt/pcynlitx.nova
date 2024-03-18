@@ -1107,11 +1107,11 @@ void MainFrame::ReadProcessOutput(wxString start_text){
 
 
 
-     this->Process_Output->GetTextControl()->SetDefaultStyle(wxTextAttr(wxColor(134,104,112)));
+     this->Process_Output->SetBoldFont();
 
      this->Process_Output->GetTextControl()->AppendText(start_text);
 
-     this->Process_Output->GetTextControl()->SetDefaultStyle(wxTextAttr(wxColor(50,50,50)));
+     this->Process_Output->SetLightFont();
 
 
      std::string total_text;

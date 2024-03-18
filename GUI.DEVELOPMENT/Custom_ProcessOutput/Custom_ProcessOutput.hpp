@@ -59,6 +59,10 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
 
   void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect);
 
+  void SetBoldFont();
+
+  void SetLightFont();
+
   void PaintNow(wxWindow * wnd);
 
   void Construct_Output(int size);

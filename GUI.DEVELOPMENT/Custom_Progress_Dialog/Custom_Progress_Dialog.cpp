@@ -195,7 +195,7 @@ void Custom_Progress_Dialog::Construct_Text_Panel(wxString title, int dialog_siz
 
 void Custom_Progress_Dialog::SetBoldFont(){
 
-     wxTextAttr AttrBold(wxColor(134,104,112));
+     wxTextAttr AttrBold(wxColor(100, 100, 120));
 
      AttrBold.SetFontWeight(wxFONTWEIGHT_BOLD);
 

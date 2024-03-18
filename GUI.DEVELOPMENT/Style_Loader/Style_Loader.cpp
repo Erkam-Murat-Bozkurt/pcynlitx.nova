@@ -45,19 +45,19 @@ void Style_Loader::Set_Lexer_Style(wxFont Default_Font, wxStyledTextCtrl * text_
 
      text_ctrl->StyleSetForeground(wxSTC_C_STRING,wxColour(201, 81, 12));
 
-     text_ctrl->StyleSetForeground(wxSTC_C_PREPROCESSOR,wxColour( 110, 84, 148));
+     text_ctrl->StyleSetForeground(wxSTC_C_PREPROCESSOR,wxColour( 189, 44, 0));
 
-     text_ctrl->StyleSetForeground(wxSTC_C_IDENTIFIER,wxColour(50,50,50));
+     text_ctrl->StyleSetForeground(wxSTC_C_IDENTIFIER,wxColour(25,25,25));
 
      text_ctrl->StyleSetForeground(wxSTC_C_NUMBER,wxColour(64, 120, 192));
 
-     text_ctrl->StyleSetForeground(wxSTC_C_CHARACTER,wxColour(189, 44, 0));
+     text_ctrl->StyleSetForeground(wxSTC_C_CHARACTER,wxColour( 110, 84, 148));
 
-     text_ctrl->StyleSetForeground(wxSTC_C_OPERATOR,wxColour(189, 44, 0));
+     text_ctrl->StyleSetForeground(wxSTC_C_OPERATOR,wxColour( 110, 84, 148));
 
      text_ctrl->StyleSetForeground(wxSTC_C_WORD,wxColour(110, 84, 148));
 
-     text_ctrl->StyleSetForeground(wxSTC_C_WORD2,wxColour(110, 84, 148));
+     text_ctrl->StyleSetForeground(wxSTC_C_WORD2,wxColour(189, 44, 0));
 
      text_ctrl->StyleSetForeground(wxSTC_C_COMMENT,wxColour(150,150,150));
 
@@ -165,9 +165,9 @@ void Style_Loader::Set_Lexer_Style(wxFont Default_Font, wxStyledTextCtrl * text_
 
      text_ctrl->SetModEventMask(wxSTC_MOD_INSERTTEXT | wxSTC_MOD_DELETETEXT | wxSTC_MOD_CHANGESTYLE);
 
-     text_ctrl->SetKeyWords(0, wxT("return int char this new if else for while void class float double Description virtual delete long bool size_t"));
+     text_ctrl->SetKeyWords(0, wxT("int char this if else for while void class float double Description virtual  long bool size_t"));
 
-     text_ctrl->SetKeyWords(1, wxT("public private protected break PROCESS true false"));
+     text_ctrl->SetKeyWords(1, wxT("public private protected break PROCESS true false delete new return"));
 
      text_ctrl->SetUseTabs(false);
 
