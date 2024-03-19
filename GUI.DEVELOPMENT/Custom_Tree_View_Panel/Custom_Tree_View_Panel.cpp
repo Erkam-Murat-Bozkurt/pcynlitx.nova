@@ -153,7 +153,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      // TITLE WINDOW SETTINGS START
 
-     this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),Tab_Bar_size,wxColour(200,200,200));
+     this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),Tab_Bar_size,wxColour(62, 180, 137));
 
      this->Title_Window->Receive_Tab_ctrl_Hight(this->tab_ctrl_hight);
 
@@ -176,7 +176,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      text->SetFont(textFont.Bold());
 
-     text->SetForegroundColour(wxColour(100,100,100));
+     text->SetForegroundColour(wxColour(250,250,250));
 
      // TITLE WINDOW SETTINGS END
 

@@ -85,11 +85,11 @@ void Custom_ProcessOutput::Directory_List_Show_Cond(bool cond){
 void Custom_ProcessOutput::Construct_Output(int size){
 
 
-     this->text_ctrl_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,-1));
+     this->text_ctrl_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(750,-1));
 
-     this->dialog_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,30));
+     this->dialog_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(750,30));
 
-     this->close_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,70));
+     this->close_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(750,70));
 
      this->CloseButton  = new wxButton(this,ID_CLOSE_WINDOW,wxT("CLOSE"),wxDefaultPosition, wxSize(100, 50));
 
@@ -97,13 +97,13 @@ void Custom_ProcessOutput::Construct_Output(int size){
 
      this->textctrl = new wxTextCtrl(this->text_ctrl_panel,wxID_ANY, wxT(""), 
      
-                      wxDefaultPosition, wxSize(900,550), wxTE_MULTILINE | wxTE_RICH | wxTE_READONLY);
+                      wxDefaultPosition, wxSize(750,500), wxTE_MULTILINE | wxTE_RICH | wxTE_READONLY);
 
 
 
      this->dialog = new wxGauge(this->dialog_panel,wxID_ANY,size,
      
-                    wxDefaultPosition,wxSize(900,30),wxGA_HORIZONTAL | wxGA_SMOOTH );
+                    wxDefaultPosition,wxSize(750,30),wxGA_HORIZONTAL | wxGA_SMOOTH );
 
      
 
