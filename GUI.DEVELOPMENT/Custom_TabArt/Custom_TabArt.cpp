@@ -37,7 +37,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
                      wxFONTWEIGHT_NORMAL,false,wxString(tabart_font));
 
-    this->m_tabCtrlHeight = 40;
+    this->m_tabCtrlHeight = 36;
  }
 
  wxAuiTabArt * Custom_TabArt::Clone() {
@@ -82,7 +82,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
        dc.GetTextExtent(caption, &normal_textx, &normal_texty);
  
-       caption = caption + " "; // more area for the string must be allocted
+       //caption = caption + " "; // more area for the string must be allocted
        
 
        // figure out the size of the tab
@@ -170,9 +170,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
         }
 
 
-
-
-        // draw close button if necessary
+        // draw close button 
         if (close_button_state != wxAUI_BUTTON_STATE_HIDDEN)
          {
              wxBitmap bmp;
@@ -188,7 +186,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
             }
 
              wxRect rect(tab_x + tab_width - bmp.GetScaledWidth() - 10,
-                         tab_y + (tab_height/2) - (bmp.GetScaledHeight()/2),
+                         tab_y + (tab_height/2) - (bmp.GetScaledHeight()/2)-2,
                          bmp.GetScaledWidth()-3,
                          tab_height - 1);
 
@@ -238,7 +236,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
          dc.DrawText(draw_text,text_offset,
 
-                 (tab_y + tab_height)/2 - (texty/2) + 5);
+                 (tab_y + tab_height)/2 - (texty/2) + 2);
 
 
          *out_tab_rect = wxRect(tab_x, tab_y, tab_width, tab_height+14);

@@ -94,7 +94,7 @@ void Project_Descriptions_Printer::Construct_Text_Panel(){
 
      this->textctrl = new wxTextCtrl(this->text_ctrl_panel,wxID_ANY, wxT(""), 
      
-                      wxDefaultPosition, wxSize(1000,600), wxTE_MULTILINE | wxTE_RICH | wxTE_READONLY);
+                      wxDefaultPosition, wxSize(1000,700), wxTE_MULTILINE | wxTE_RICH | wxTE_READONLY);
 
 
      this->ctrl_box = new wxBoxSizer(wxVERTICAL);
