@@ -104,38 +104,42 @@
        id="rect2"
        width="0.39750051"
        height="0.78855211"
-       x="73.821854"
-       y="85.249733" />
-    <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.229462;stroke-dasharray:none;stroke-opacity:1"
-       id="rect3"
-       width="0.49186471"
-       height="0.4893418"
-       x="72.985016"
-       y="85.278229" />
-    <rect
-       style="fill:#f0ffff;fill-opacity:1;stroke:#fffff7;stroke-width:0.256527;stroke-dasharray:none;stroke-opacity:1"
-       id="rect2-7"
-       width="0.38406631"
-       height="0.90883231"
-       x="86.07058"
-       y="-73.874138"
+       x="86.12896"
+       y="-74.167618"
        transform="rotate(90)" />
     <rect
-       style="fill:none;fill-opacity:1;stroke:#d7a987;stroke-width:0.274577;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.271171;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3"
+       width="0.56116408"
+       height="0.59900779"
+       x="85.312973"
+       y="-74.118271"
+       transform="rotate(90)" />
+    <rect
+       style="fill:#f0ffff;fill-opacity:1;stroke:#fffff7;stroke-width:0.301581;stroke-dasharray:none;stroke-opacity:1"
+       id="rect2-7"
+       width="0.55850625"
+       height="0.86377871"
+       x="-73.543739"
+       y="-86.158714"
+       transform="scale(-1)" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#3eb489;stroke-width:0.274577;stroke-dasharray:none;stroke-opacity:1"
        id="rect5-0"
        width="0.67564964"
        height="0.65294337"
-       x="72.920685"
-       y="85.246712"
-       transform="translate(-2.0833326e-8)" />
+       x="85.227791"
+       y="-74.170639"
+       ry="0.035320792"
+       transform="rotate(90)" />
     <rect
-       style="fill:none;fill-opacity:1;stroke:#d7a987;stroke-width:0.330536;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#3eb489;stroke-width:0.330536;stroke-dasharray:none;stroke-opacity:1"
        id="rect5"
        width="1.2446449"
        height="1.237076"
-       x="72.9328"
-       y="85.24369"
-       transform="translate(-2.0833326e-8)" />
+       x="85.239906"
+       y="-74.17366"
+       ry="0.030274965"
+       transform="rotate(90)" />
   </g>
 </svg>

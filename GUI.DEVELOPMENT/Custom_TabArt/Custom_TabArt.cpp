@@ -135,9 +135,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
            //dc.SetBrush(wxBrush(wxColour(206,108,125)));
 
-           dc.SetPen(wxPen(wxColour(185,70,107)));
+           dc.SetPen(wxPen(wxColour(32,150,107)));
 
-           dc.SetBrush(wxBrush(wxColour(215, 169, 135)));
+           dc.SetBrush(wxBrush(wxColour(62, 180, 137)));
             
 
            
@@ -210,9 +210,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
             //135,104,112
             //100,100,100
 
-            //dc.SetTextForeground(wxColour(250,250,250));
+            dc.SetTextForeground(wxColour(250,250,250));
 
-            dc.SetTextForeground(wxColour(135,93,67));
+            //dc.SetTextForeground(wxColour(125, 137, 176));
 
          }
          else{

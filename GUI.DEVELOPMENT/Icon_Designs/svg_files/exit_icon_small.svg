@@ -99,12 +99,13 @@
        y="72.104164"
        id="text16" />
     <rect
-       style="fill:#d7a987;fill-opacity:1;stroke:#876870;stroke-width:0;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:0.847059"
+       style="fill:#3eb489;fill-opacity:1;stroke:#876870;stroke-width:0;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:0.847059"
        id="rect1"
        width="1.3237053"
        height="1.2987298"
        x="72.771194"
-       y="85.074776" />
+       y="85.074776"
+       ry="0.092766412" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.19733;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
        d="m 73.101408,85.412129 0.620288,0.63205"
