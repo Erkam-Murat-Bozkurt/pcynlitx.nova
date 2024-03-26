@@ -157,7 +157,6 @@ int main(int argc, char ** argv){
 
         Build_System.Clear_Dynamic_Memory();
 
-
         std::cout << "\n THE CONSTRUCTION COMPLATED ";
     }
 

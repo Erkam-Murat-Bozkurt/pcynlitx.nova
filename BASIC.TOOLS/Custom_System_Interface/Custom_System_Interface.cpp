@@ -597,6 +597,10 @@ bool Custom_System_Interface::TerminateChildProcess(){
 
 bool Custom_System_Interface::Create_Process_With_Redirected_Stdout(char * cmd){   // For Anonymous pipe connection
 
+     this->anonymous_pipe_string.clear();
+
+     this->anonymous_pipe_string.shrink_to_fit();
+
      SECURITY_ATTRIBUTES saAttr; 
       
      saAttr.nLength = sizeof(SECURITY_ATTRIBUTES); 

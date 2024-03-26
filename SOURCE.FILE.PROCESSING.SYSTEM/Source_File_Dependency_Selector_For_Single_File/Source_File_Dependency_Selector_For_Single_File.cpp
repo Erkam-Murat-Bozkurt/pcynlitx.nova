@@ -339,7 +339,7 @@ size_t Source_File_Dependency_Selector_For_Single_File::Split_Range(size_t range
         range = 1;
     }
 
-    remaining_job = range_size%partition;
+    remaining_job = range_size - (partition*range);
 
     return range;    
 }

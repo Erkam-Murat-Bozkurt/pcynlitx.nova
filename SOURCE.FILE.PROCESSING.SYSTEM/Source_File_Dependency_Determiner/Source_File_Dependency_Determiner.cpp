@@ -261,7 +261,7 @@ void Source_File_Dependency_Determiner::Re_Arrange_Priorities(){
 
        int division = comp_data_size/thread_number;
 
-       int remaining_job = comp_data_size%thread_number;
+       int remaining_job = comp_data_size - (division*thread_number);
 
        int str=0, end=0;
 

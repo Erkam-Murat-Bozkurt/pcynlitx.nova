@@ -124,7 +124,7 @@ void Dependency_Data_Processor::Search_For_Large_Data_Set(size_t data_size){
 
      int division = data_size/thread_number;
 
-     int remaining_job = data_size%thread_number;
+     int remaining_job = data_size - (division*thread_number);
 
      int str=0, end=0;
 

@@ -273,7 +273,7 @@ size_t Source_File_Compiler_Data_Extractor::Split_Range(size_t range_size, size_
         range = 1;
     }
 
-    remaining_job = range_size%partition;
+    remaining_job = range_size - (partition*range);
 
     return range;    
 }
