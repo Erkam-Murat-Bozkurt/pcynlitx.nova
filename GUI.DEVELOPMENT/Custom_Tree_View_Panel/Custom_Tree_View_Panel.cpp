@@ -34,7 +34,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      wxAuiManager * Interface_Manager,
 
-     wxFont Default_Font, int tabctrl_hight)
+     wxFont Default_Font, int tabctrl_hight, wxColor theme_clr)
 
   : wxPanel(frame,id,pos,size)
 
@@ -153,7 +153,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      // TITLE WINDOW SETTINGS START
 
-     this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),Tab_Bar_size,wxColour(62, 180, 137));
+     this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),Tab_Bar_size,theme_clr);
 
      this->Title_Window->Receive_Tab_ctrl_Hight(this->tab_ctrl_hight);
 
@@ -161,7 +161,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
 
 
-     wxStaticText * text = new wxStaticText(this->Title_Window ,wxID_ANY,wxT("FILE EXPLORER"));
+     wxStaticText * text = new wxStaticText(this->Title_Window ,wxID_ANY,wxT("EXPLORER   "));
 
      wxPoint title_pos =text->GetPosition();
 
@@ -172,11 +172,17 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      text->SetPosition(wxPoint(title_pos.x+25,text_y_pos));
 
 
+
+
      wxFont textFont = text->GetFont();
+
+     textFont.SetPointSize(9);
+
+     textFont.SetFaceName(wxT("Segoe UI"));
 
      text->SetFont(textFont.Bold());
 
-     text->SetForegroundColour(wxColour(250,250,250));
+     text->SetForegroundColour(wxColour(80,80,80));
 
      // TITLE WINDOW SETTINGS END
 

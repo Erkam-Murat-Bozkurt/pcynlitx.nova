@@ -2,14 +2,14 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="145.33185mm"
-   height="133.2366mm"
-   viewBox="0 0 145.33186 133.23659"
+   width="155.53278mm"
+   height="131.7247mm"
+   viewBox="0 0 155.53279 131.72469"
    version="1.1"
    id="svg8"
    inkscape:version="1.3.1 (91b66b0783, 2023-11-16)"
    sodipodi:docname="Intro_File.svg"
-   inkscape:export-filename="..\..\..\..\Pcynlitx_Build_Platform\Intro_File.png"
+   inkscape:export-filename="..\..\..\..\..\Pcynlitx_Build_Platform\Intro_File.png"
    inkscape:export-xdpi="125"
    inkscape:export-ydpi="125"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -28,17 +28,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="259.6092"
-     inkscape:cy="250.77037"
+     inkscape:zoom="1.4"
+     inkscape:cx="287.85714"
+     inkscape:cy="273.21429"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1902"
-     inkscape:window-height="973"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
      showguides="false"
      inkscape:lockguides="false"
      inkscape:showpageshadow="2"
@@ -47,8 +47,8 @@
     <inkscape:grid
        type="xygrid"
        id="grid10"
-       originx="79.887505"
-       originy="98.753614"
+       originx="79.654231"
+       originy="98.521065"
        spacingy="1"
        spacingx="1"
        units="mm"
@@ -69,7 +69,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(79.887497,-163.85056)">
+     transform="translate(79.654213,-164.0831)">
     <rect
        id="rect12"
        width="150.8125"
@@ -79,7 +79,7 @@
        style="fill:none;fill-opacity:1;stroke-width:0.20259" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:22.5778px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#9c9caa;fill-opacity:1;stroke:none;stroke-width:0.327185"
+       style="font-style:normal;font-weight:normal;font-size:19.7556px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#9c9caa;fill-opacity:1;stroke:#727372;stroke-width:0.327185;stroke-opacity:1"
        x="-41.48188"
        y="224.06891"
        id="text824"
@@ -88,7 +88,7 @@
          id="tspan822"
          x="-41.48188"
          y="224.06891"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:22.5778px;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Bold';opacity:0.85;fill:#7f7f99;fill-opacity:1;stroke-width:0.327185">Nwinix</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:19.7556px;font-family:Lato;-inkscape-font-specification:'Lato Heavy';opacity:0.85;fill:#68687d;fill-opacity:1;stroke:none;stroke-width:0.327185;stroke-opacity:1">Nwinix</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.76111px;line-height:1.45;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#969696;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -98,7 +98,7 @@
          sodipodi:role="line"
          x="-65.777199"
          y="237.01071"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.76111px;line-height:1.45;font-family:Bahnschrift;-inkscape-font-specification:'Bahnschrift Light';fill:#6e6e87;fill-opacity:1;stroke-width:0.264583"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:7.76111px;line-height:1.45;font-family:Lato;-inkscape-font-specification:'Lato Light';fill:#6e6e87;fill-opacity:1;stroke-width:0.264583"
          id="tspan2">THE NEW SOFTWARE TECHNOLOGY</tspan></text>
     <rect
        style="fill:none;fill-opacity:1;stroke-width:0.264583"
@@ -110,7 +110,7 @@
     <path
        d="m -48.911776,198.25008 v 0 a 0.01271727,0.01303667 0 0 1 -0.01268,-0.0132 2.0601948,2.1119421 0 0 0 -0.763036,-0.76917 l -11.191179,-6.45312 a 2.0347606,2.0858689 0 0 0 -1.98389,0 l -11.191184,6.45315 a 2.0601948,2.1119421 0 0 0 -0.763034,0.76916 0.01271727,0.01303667 0 0 1 -0.01267,0.0132 v 0.0262 a 1.9075878,1.9555018 0 0 0 -0.267062,1.00384 v 12.85417 a 2.0474777,2.0989056 0 0 0 1.042813,1.8251 l 11.191184,6.45317 a 2.0983466,2.1510523 0 0 0 0.915642,0.26074 h 0.178043 a 2.0474777,2.0989056 0 0 0 0.890206,-0.26074 l 11.191185,-6.45322 a 2.0474777,2.0989056 0 0 0 1.042812,-1.82513 v -12.85422 a 1.9838912,2.0337219 0 0 0 -0.267062,-1.02988 z m -12.844422,6.25761 -10.237389,-5.84044 10.122931,-5.84042 10.13565,5.84042 z m 11.076725,7.62647 -10.161084,5.86649 0.101739,-11.68089 10.059348,-5.86649 z"
        id="path1"
-       style="fill:#3eb489;fill-opacity:0.85000002;stroke:none;stroke-width:0.12876;stroke-opacity:1" />
+       style="fill:#3eb489;fill-opacity:1;stroke:none;stroke-width:0.12876;stroke-opacity:1" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.45;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#969696;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -120,27 +120,27 @@
          sodipodi:role="line"
          x="-65.3218"
          y="246.43961"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#64646e;fill-opacity:1;stroke-width:0.264583"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:1.45;font-family:Lato;-inkscape-font-specification:'Lato Light';fill:#64646e;fill-opacity:1;stroke-width:0.264583"
          id="tspan5">The nwinix platform works based on a new programming </tspan><tspan
          sodipodi:role="line"
          x="-65.3218"
          y="253.601"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#64646e;fill-opacity:1;stroke-width:0.264583"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:1.45;font-family:Lato;-inkscape-font-specification:'Lato Light';fill:#64646e;fill-opacity:1;stroke-width:0.264583"
          id="tspan6">technology. For more information, please look the project </tspan><tspan
          sodipodi:role="line"
          x="-65.3218"
          y="260.76239"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.93889px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#64646e;fill-opacity:1;stroke-width:0.264583"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:1.45;font-family:Lato;-inkscape-font-specification:'Lato Light';fill:#64646e;fill-opacity:1;stroke-width:0.264583"
          id="tspan10">web site.</tspan><tspan
          sodipodi:role="line"
          x="-65.3218"
-         y="267.25629"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#64646e;fill-opacity:1;stroke-width:0.264583"
+         y="267.19705"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.23333px;line-height:1.45;font-family:Lato;-inkscape-font-specification:'Lato Light';fill:#64646e;fill-opacity:1;stroke-width:0.264583"
          id="tspan7" /><tspan
          sodipodi:role="line"
          x="-65.3218"
-         y="273.43323"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:4.23333px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#64646e;fill-opacity:1;stroke-width:0.264583"
+         y="273.33539"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.23333px;line-height:1.45;font-family:Lato;-inkscape-font-specification:'Lato Light';fill:#64646e;fill-opacity:1;stroke-width:0.264583"
          id="tspan3" /></text>
     <text
        xml:space="preserve"
@@ -150,7 +150,7 @@
        id="text8"><tspan
          sodipodi:role="line"
          id="tspan8"
-         style="fill:#8d8d9e;fill-opacity:1;stroke-width:0"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Lato;-inkscape-font-specification:Lato;fill:#626263;fill-opacity:1;stroke-width:0"
          x="-65.841217"
          y="268.56915">www.nwinix.com</tspan></text>
     <rect
@@ -162,12 +162,11 @@
        y="231.73431"
        ry="0" />
     <rect
-       style="fill:#cccbce;fill-opacity:1;stroke:none;stroke-width:0.212733;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
-       id="rect13-1"
-       width="5.8799295"
-       height="29.784931"
-       x="55.616966"
-       y="124.61665"
-       ry="0" />
+       style="fill:none;stroke-width:0.264583"
+       id="rect3121"
+       width="155.53278"
+       height="131.7247"
+       x="-79.654213"
+       y="164.0831" />
   </g>
 </svg>

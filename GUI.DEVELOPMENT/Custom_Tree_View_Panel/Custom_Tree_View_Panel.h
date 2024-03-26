@@ -29,7 +29,7 @@ public:
 
        const wxPoint &pos, const wxSize &size,wxAuiManager * Interface_Manager,
 
-       wxFont Default_Font, int tabctrl_hight);
+       wxFont Default_Font, int tabctrl_hight, wxColour theme_clr);
 
   virtual ~Custom_Tree_View_Panel();
 

@@ -45,7 +45,7 @@ class Custom_Notebook : public wxAuiNotebook
 public:
   Custom_Notebook(wxPanel * parent, wxAuiManager * Interface_Manager,
 
-         wxFont Default_Font,wxSize size);
+         wxFont Default_Font,wxSize size, wxColour theme_clr);
 
   virtual ~Custom_Notebook();
   void Size_Event(wxSizeEvent & event);

@@ -25,7 +25,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 #include "Custom_TabArt.h"
 
 
- Custom_TabArt::Custom_TabArt() : wxAuiDefaultTabArt()
+ Custom_TabArt::Custom_TabArt(wxColour clr) : wxAuiDefaultTabArt()
  {
     this->page_close_icon = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\close_tab.png"),
 
@@ -38,11 +38,13 @@ this program. If not, see <http://www.gnu.org/licenses/>.
                      wxFONTWEIGHT_NORMAL,false,wxString(tabart_font));
 
     this->m_tabCtrlHeight = 36;
+
+    this->theme_clr = clr;
  }
 
  wxAuiTabArt * Custom_TabArt::Clone() {
 
-       Custom_TabArt * TabArt_Pointer = new Custom_TabArt();
+       Custom_TabArt * TabArt_Pointer = new Custom_TabArt(this->theme_clr);
 
        return TabArt_Pointer;
  }
@@ -101,7 +103,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
        wxFont bld = this->Default_Font->Bold();
 
-       //wxFont normal = *this->Default_Font;
+       wxFont normal = *this->Default_Font;
 
 
        if (page.active)
@@ -135,9 +137,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
            //dc.SetBrush(wxBrush(wxColour(206,108,125)));
 
-           dc.SetPen(wxPen(wxColour(32,150,107)));
+           dc.SetPen(wxPen(wxColour(20,170,100)));
 
-           dc.SetBrush(wxBrush(wxColour(62, 180, 137)));
+           dc.SetBrush(wxBrush(this->theme_clr));
             
 
            
@@ -159,9 +161,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
                 //200,190,190
                 //190, 190, 190
 
-                dc.SetPen(wxPen(wxColour(150,150,150)));
+                dc.SetPen(wxPen(wxColour(150,150,170)));
 
-                dc.SetBrush(wxBrush(wxColour(190, 190, 190)));
+                dc.SetBrush(wxBrush(wxColour(190, 190, 210)));
 
                 // DrawRectangle member function: The first two parameters indicate the coordinates
                 // of the top left corner of the rectangle
@@ -210,7 +212,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
             //135,104,112
             //100,100,100
 
-            dc.SetTextForeground(wxColour(250,250,250));
+            dc.SetTextForeground(wxColour(80,80,80));
 
             //dc.SetTextForeground(wxColour(125, 137, 176));
 
@@ -220,7 +222,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
             //135,104,112
             //100,100,100
 
-            dc.SetTextForeground(wxColour(110,110,120));
+            dc.SetTextForeground(wxColour(80,80,100));
          }
 
 

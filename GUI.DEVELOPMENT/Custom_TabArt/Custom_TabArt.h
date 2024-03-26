@@ -25,7 +25,7 @@ class Custom_TabArt : public wxAuiDefaultTabArt
 {
 public:
 
-  Custom_TabArt();
+  Custom_TabArt(wxColour clr);
 
   wxAuiTabArt * Clone();
 
@@ -55,6 +55,8 @@ public:
   wxBitmap * page_close_icon;
 
   wxFont * Default_Font;
+
+  wxColour theme_clr;
 };
 
 #endif /* CUSTOM_TABART_H */
