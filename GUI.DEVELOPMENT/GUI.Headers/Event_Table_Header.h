@@ -51,6 +51,7 @@ BEGIN_EVENT_TABLE(MainFrame,wxFrame)
   EVT_MENU(ID_DETERMINE_SOURCE_FILE_DEPENDENCIES,MainFrame::Determine_Source_File_Dependencies)
   EVT_MENU(ID_RUN_PROJECT_SCRIPT,MainFrame::Run_Project_Script_On_Terminal)
   EVT_MENU(ID_EXIT,MainFrame::Exit)
+  EVT_MENU(ID_OPEN_SETTINGS,MainFrame::OpenSettings)
   EVT_PAINT(MainFrame::OnPaint)
 END_EVENT_TABLE()
 

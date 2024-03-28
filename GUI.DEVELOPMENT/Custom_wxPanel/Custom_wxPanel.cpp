@@ -96,14 +96,14 @@ void Custom_wxPanel::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rec
 {
      dc.SetBrush(wxColour(240,240,240));
 
-     dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+5,rect.GetHeight()+5);
+     dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth()+1,rect.GetHeight()+1);
 }
 
 void Custom_wxPanel::PaintNow(wxWindow * wnd)
 {
      wxClientDC dc(wnd);
 
-     wxSize Rect_Size = wxSize(wnd->GetSize().x+5,wnd->GetSize().y+5);
+     wxSize Rect_Size = wxSize(wnd->GetSize().x+1,wnd->GetSize().y+1);
 
      wxRect rect(Rect_Size);
 

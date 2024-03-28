@@ -3,20 +3,41 @@
 #include "Custom_Multi_DataPanel.hpp"
 
 
-BEGIN_EVENT_TABLE(Custom_Multi_DataPanel,wxDialog )
+BEGIN_EVENT_TABLE(Custom_Multi_DataPanel,wxFrame )
+
     EVT_BUTTON(ID_INSERT_ITEM_FOR_PATH,Custom_Multi_DataPanel::Insert_Data_For_Path)
+
     EVT_BUTTON(ID_INSERT_ITEM_FOR_NAME,Custom_Multi_DataPanel::Insert_Data_For_Name)
+
     EVT_BUTTON(ID_SAVE_MAKE_FILE_DATA,Custom_Multi_DataPanel::Save_MakeFile_Data)
+
+    EVT_BUTTON(ID_INSERT_GIT_REPO_DIR,Custom_Multi_DataPanel::Inser_Git_Repo_Dir)
+
+    EVT_BUTTON(ID_INSERT_CONSTRUCTION_POINT,Custom_Multi_DataPanel::Insert_Construction_Point)
+
+    EVT_BUTTON(ID_INSERT_SRC_LOCATION,Custom_Multi_DataPanel::Insert_Source_File_Location)
+
+    EVT_BUTTON(ID_INSERT_LIB_DIRECTORIES,Custom_Multi_DataPanel::Insert_Library_Location)
+
+    EVT_BUTTON(ID_INSERT_LIBRARIES,Custom_Multi_DataPanel::Insert_Library)
+
+    EVT_BUTTON(ID_INSERT_STANDART,Custom_Multi_DataPanel::Insert_Standart)
+
+    EVT_BUTTON(ID_INSERT_OPTIONS,Custom_Multi_DataPanel::Insert_Option)
+
     EVT_PAINT(Custom_Multi_DataPanel::OnPaint)
+
 END_EVENT_TABLE()
+
+
 
 Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, const wxString & title, 
 
    const wxPoint &pos, const wxSize &size, 
    
-   long style) : wxDialog(parent,id,title,pos,size,
+   long style) : wxFrame(parent,id,title,pos,size,
    
-   wxDEFAULT_DIALOG_STYLE |wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN | wxSTAY_ON_TOP)
+   wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP)
 {
 
      this->Parent_Frame = parent;
@@ -101,17 +122,312 @@ void Custom_Multi_DataPanel::Construct_MultiData_Panel(int num){
      this->Frame_Sizer->SetSizeHints(this);
 
 
+     this->Centre(wxBOTH);
+
      for(int i=0;i<this->Panel_Number;i++){
 
          this->listctrls[i]->Show();
      }
 
      this->Show();
+}
+
+
+void Custom_Multi_DataPanel::Construct_Description_Panel(){
+
+     this->DataPanel_Sizers = new wxBoxSizer  * [14];
+
+     for(int i=0;i<14;i++){
+
+         this->DataPanel_Sizers[i] = nullptr;
+     }
+
+
+     this->List_Ctrl_Sizers = new wxBoxSizer  * [14];
+
+     for(int i=0;i<14;i++){
+
+         this->List_Ctrl_Sizers[i] = nullptr;
+     }
+
+
+     this->Buton_Sizers = new wxBoxSizer  * [14];
+
+     for(int i=0;i<14;i++){
+
+         this->Buton_Sizers[i] = nullptr;
+     }
+
+
+
+     wxScrolledWindow * scroll_win = new wxScrolledWindow(this,wxID_ANY);
+     
+     
+
+     // SETTINGS FOR GIT REPO DATA PANEL
+
+     this->listctrl_git_repo_path = new wxDataViewListCtrl(scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,150));
+
+     this->InsertButton_for_git_repo_path = new wxButton(scroll_win,wxID_ANY,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+
+     this->Save_Button_for_git_repo_path  = new wxButton(scroll_win,wxID_ANY,wxT("SAVE"),wxDefaultPosition, wxSize(75, 40));
+
+
+     this->Buton_Sizers[0] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->Buton_Sizers[0]->Add(this->InsertButton_for_git_repo_path,0, wxEXPAND | wxALL,10);
+
+     this->Buton_Sizers[0]->Add(this->Save_Button_for_git_repo_path, 0, wxEXPAND | wxALL,10);
+
+
+     this->List_Ctrl_Sizers[0] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->List_Ctrl_Sizers[0]->Add(this->listctrl_git_repo_path,1,wxEXPAND | wxALL,10);
+
+
+     this->DataPanel_Sizers[0] = new wxBoxSizer(wxVERTICAL);
+
+     this->DataPanel_Sizers[0]->Add(this->List_Ctrl_Sizers[0],1, wxEXPAND | wxTOP | wxALL,10);
+
+     this->DataPanel_Sizers[0]->Add(this->Buton_Sizers[0],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+
+
+
+     // SETTINGS FOR WAREHOUSE LOCATION DATA PANEL
+
+     this->listctrl_warehouse_location = new wxDataViewListCtrl(scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,150));
+
+     this->InsertButton_for_warehouse_location = new wxButton(scroll_win,wxID_ANY,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+
+     this->Save_Button_for_warehouse_location = new wxButton(scroll_win,wxID_ANY,wxT("SAVE"),wxDefaultPosition, wxSize(75, 40));
+
+
+     this->Buton_Sizers[1] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->Buton_Sizers[1]->Add(this->InsertButton_for_warehouse_location,0, wxEXPAND | wxALL,10);
+
+     this->Buton_Sizers[1]->Add(this->Save_Button_for_warehouse_location, 0, wxEXPAND | wxALL,10);
+
+
+     this->List_Ctrl_Sizers[1] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->List_Ctrl_Sizers[1]->Add(this->listctrl_warehouse_location,1,wxEXPAND | wxALL,10);
+
+
+     this->DataPanel_Sizers[1] = new wxBoxSizer(wxVERTICAL);
+
+     this->DataPanel_Sizers[1]->Add(this->List_Ctrl_Sizers[1],1, wxEXPAND | wxTOP | wxALL,10);
+
+     this->DataPanel_Sizers[1]->Add(this->Buton_Sizers[1],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+
+
+
+
+
+
+     // SETTINGS FOR SOURCE FILE LOCATIONS DATA PANEL
+
+
+     this->listctrl_src_file_location = new wxDataViewListCtrl(scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,150));
+
+     this->InsertButton_for_src_file_locations = new wxButton(scroll_win,wxID_ANY,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+
+     this->Save_Button_for_src_file_locations  = new wxButton(scroll_win,wxID_ANY,wxT("SAVE"),wxDefaultPosition, wxSize(75, 40));
+
+
+     this->Buton_Sizers[2] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->Buton_Sizers[2]->Add(this->InsertButton_for_src_file_locations,0, wxEXPAND | wxALL,10);
+
+     this->Buton_Sizers[2]->Add(this->Save_Button_for_src_file_locations, 0, wxEXPAND | wxALL,10);
+
+
+     this->List_Ctrl_Sizers[2] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->List_Ctrl_Sizers[2]->Add(this->listctrl_src_file_location,1,wxEXPAND | wxALL,10);
+
+
+     this->DataPanel_Sizers[2] = new wxBoxSizer(wxVERTICAL);
+
+     this->DataPanel_Sizers[2]->Add(this->List_Ctrl_Sizers[2],1, wxEXPAND | wxTOP | wxALL,10);
+
+     this->DataPanel_Sizers[2]->Add(this->Buton_Sizers[2],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+
+
+
+
+     // SETTINGS FOR LIBRARY DIRECTORY DATA PANEL
+
+     this->listctrl_library_dir = new wxDataViewListCtrl(scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,150));
+
+     this->InsertButton_for_library_dir = new wxButton(scroll_win,wxID_ANY,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+
+     this->Save_Button_for_library_dir  = new wxButton(scroll_win,wxID_ANY,wxT("SAVE"),wxDefaultPosition, wxSize(75, 40));
+
+
+     this->Buton_Sizers[3] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->Buton_Sizers[3]->Add(this->InsertButton_for_library_dir,0, wxEXPAND | wxALL,10);
+
+     this->Buton_Sizers[3]->Add(this->Save_Button_for_library_dir, 0, wxEXPAND | wxALL,10);
+
+
+     this->List_Ctrl_Sizers[3] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->List_Ctrl_Sizers[3]->Add(this->listctrl_library_dir,1,wxEXPAND | wxALL,10);
+
+
+     this->DataPanel_Sizers[3] = new wxBoxSizer(wxVERTICAL);
+
+     this->DataPanel_Sizers[3]->Add(this->List_Ctrl_Sizers[3],1, wxEXPAND | wxTOP | wxALL,10);
+
+     this->DataPanel_Sizers[3]->Add(this->Buton_Sizers[3],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+
+
+
+
+
+     // SETTINGS FOR LIBRARY NAMES DATA PANEL
+
+     this->listctrl_library_name = new wxDataViewListCtrl(scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,150));
+
+     this->InsertButton_for_library_name = new wxButton(scroll_win,wxID_ANY,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+
+     this->Save_Button_for_library_name  = new wxButton(scroll_win,wxID_ANY,wxT("SAVE"),wxDefaultPosition, wxSize(75, 40));
+
+
+
+     this->Buton_Sizers[4] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->Buton_Sizers[4]->Add(this->InsertButton_for_library_name,0, wxEXPAND | wxALL,10);
+
+     this->Buton_Sizers[4]->Add(this->Save_Button_for_library_name, 0, wxEXPAND | wxALL,10);
+
+
+     this->List_Ctrl_Sizers[4] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->List_Ctrl_Sizers[4]->Add(this->listctrl_library_name,1,wxEXPAND | wxALL,10);
+
+
+     this->DataPanel_Sizers[4] = new wxBoxSizer(wxVERTICAL);
+
+     this->DataPanel_Sizers[4]->Add(this->List_Ctrl_Sizers[4],1, wxEXPAND | wxTOP | wxALL,10);
+
+     this->DataPanel_Sizers[4]->Add(this->Buton_Sizers[4],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+
+
+
+
+     // SETTINGS FOR STANDARD DATA PANEL
+
+
+     this->listctrl_standard = new wxDataViewListCtrl(scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,150));
+
+     this->InsertButton_for_standard = new wxButton(scroll_win,wxID_ANY,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+
+     this->Save_Button_for_standard  = new wxButton(scroll_win,wxID_ANY,wxT("SAVE"),wxDefaultPosition, wxSize(75, 40));
+
+
+     this->Buton_Sizers[5] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->Buton_Sizers[5]->Add(this->InsertButton_for_standard,0, wxEXPAND | wxALL,10);
+
+     this->Buton_Sizers[5]->Add(this->Save_Button_for_standard, 0, wxEXPAND | wxALL,10);
+
+
+     this->List_Ctrl_Sizers[5] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->List_Ctrl_Sizers[5]->Add(this->listctrl_standard,1,wxEXPAND | wxALL,10);
+
+
+     this->DataPanel_Sizers[5] = new wxBoxSizer(wxVERTICAL);
+
+     this->DataPanel_Sizers[5]->Add(this->List_Ctrl_Sizers[5],1, wxEXPAND | wxTOP | wxALL,10);
+
+     this->DataPanel_Sizers[5]->Add(this->Buton_Sizers[5],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+
+
+
+
+     // SETTINGS FOR OPTIONS DATA PANEL
+
+
+     this->listctrl_options = new wxDataViewListCtrl(scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,150));
+
+     this->InsertButton_for_options = new wxButton(scroll_win,wxID_ANY,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+
+     this->Save_Button_for_options  = new wxButton(scroll_win,wxID_ANY,wxT("SAVE"),wxDefaultPosition, wxSize(75, 40));
+
+
+     this->Buton_Sizers[6] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->Buton_Sizers[6]->Add(this->InsertButton_for_options,0, wxEXPAND | wxALL,10);
+
+     this->Buton_Sizers[6]->Add(this->Save_Button_for_options, 0, wxEXPAND | wxALL,10);
+
+
+     this->List_Ctrl_Sizers[6] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->List_Ctrl_Sizers[6]->Add(this->listctrl_options,1,wxEXPAND | wxALL,10);
+
+
+     this->DataPanel_Sizers[6] = new wxBoxSizer(wxVERTICAL);
+
+     this->DataPanel_Sizers[6]->Add(this->List_Ctrl_Sizers[6],1, wxEXPAND | wxTOP | wxALL,10);
+
+     this->DataPanel_Sizers[6]->Add(this->Buton_Sizers[6],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+
+
+
+
+
+
+     this->Frame_Sizer = new wxBoxSizer(wxVERTICAL);
+
+     for(int i=0;i<7;i++){
+
+          this->Frame_Sizer->Add(this->DataPanel_Sizers[i],1,wxEXPAND | wxALL,10);
+     }
+
+
+     scroll_win->SetSizer(this->Frame_Sizer);
+
+     scroll_win->SetVirtualSize(wxSize(-1,3500));
+
+     scroll_win->FitInside();
+
+     scroll_win->SetScrollRate(1,1);
+
+     this->Frame_Sizer->SetSizeHints(scroll_win);
+
+
+
+
+     this->listctrl_git_repo_path->Show();
+
+     this->listctrl_warehouse_location->Show();
+
+     this->listctrl_src_file_location->Show();
+
+     this->listctrl_library_dir->Show();
+
+     this->listctrl_library_name->Show();
+
+     this->listctrl_standard->Show();
+
+     this->listctrl_options->Show();
 
      this->Centre(wxBOTH);
 
+     this->Show();
 }
-
 
 
 void Custom_Multi_DataPanel::Create_Exe_Script_Panel(){
@@ -279,6 +595,40 @@ void Custom_Multi_DataPanel::Save_MakeFile_Data(wxCommandEvent & event){
         this->Show(false);
      }
 }
+
+
+
+
+void Custom_Multi_DataPanel::Inser_Git_Repo_Dir(wxCommandEvent & event){
+
+}
+
+void Custom_Multi_DataPanel::Insert_Construction_Point(wxCommandEvent & event){
+
+}
+
+void Custom_Multi_DataPanel::Insert_Source_File_Location(wxCommandEvent & event){
+
+}
+
+void Custom_Multi_DataPanel::Insert_Library_Location(wxCommandEvent & event){
+
+}
+
+
+void Custom_Multi_DataPanel::Insert_Library(wxCommandEvent & event){
+
+}
+
+void Custom_Multi_DataPanel::Insert_Standart(wxCommandEvent & event){
+
+}
+
+void Custom_Multi_DataPanel::Insert_Option(wxCommandEvent & event){
+
+
+}
+
 
 
 bool Custom_Multi_DataPanel::Get_Data_Save_Status(){

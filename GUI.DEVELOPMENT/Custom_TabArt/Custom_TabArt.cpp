@@ -109,13 +109,13 @@ this program. If not, see <http://www.gnu.org/licenses/>.
        if (page.active)
        {
 
-           dc.SetFont(bld);
+           dc.SetFont(normal);
 
            texty = selected_texty;
        }
        else
        {
-           dc.SetFont(bld);
+           dc.SetFont(normal);
 
            texty = normal_texty;
        }
@@ -137,9 +137,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
            //dc.SetBrush(wxBrush(wxColour(206,108,125)));
 
-           dc.SetPen(wxPen(wxColour(20,170,100)));
+           dc.SetPen(wxPen(wxColour(150,150,170)));
 
-           dc.SetBrush(wxBrush(this->theme_clr));
+           dc.SetBrush(wxColour(175,175,193));
             
 
            
@@ -161,9 +161,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
                 //200,190,190
                 //190, 190, 190
 
-                dc.SetPen(wxPen(wxColour(150,150,170)));
+                dc.SetPen(wxPen(wxColour(180, 180, 180)));
 
-                dc.SetBrush(wxBrush(wxColour(190, 190, 210)));
+                dc.SetBrush(wxBrush(wxColour(210, 210, 210)));
 
                 // DrawRectangle member function: The first two parameters indicate the coordinates
                 // of the top left corner of the rectangle
@@ -212,7 +212,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
             //135,104,112
             //100,100,100
 
-            dc.SetTextForeground(wxColour(80,80,80));
+            dc.SetTextForeground(wxColour(25,25,25));
 
             //dc.SetTextForeground(wxColour(125, 137, 176));
 
@@ -222,7 +222,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
             //135,104,112
             //100,100,100
 
-            dc.SetTextForeground(wxColour(80,80,100));
+            dc.SetTextForeground(wxColour(25,25,25));
          }
 
 

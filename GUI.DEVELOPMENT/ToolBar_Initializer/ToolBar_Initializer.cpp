@@ -56,6 +56,8 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->print_descriptions = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\zoom.png"),wxBITMAP_TYPE_PNG);
 
+     this->open_settings = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\description_enter.png"),wxBITMAP_TYPE_PNG);
+
      this->toolBar = new wxAuiToolBar(Frame_Pointer,wxID_ANY,wxDefaultPosition,wxDefaultSize,wxAUI_TB_PLAIN_BACKGROUND);
 
      this->Art_Pointer = new MyAuiTBArt();
@@ -96,13 +98,13 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->toolBar->AddTool(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,wxT(""),*this->construct_build_system,wxT(""));
 
-     this->toolBar->AddTool(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR,wxT(""),*this->build_executable,wxT(""));
+     //this->toolBar->AddTool(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR,wxT(""),*this->build_executable,wxT(""));
+
+     this->toolBar->AddTool(ID_OPEN_SETTINGS,wxT(""),*this->open_settings,wxT(""));
 
      this->toolBar->AddTool(ID_OPEN_TREE_WIEW,wxT(""),*this->open_tree_view,wxT(""));
 
-
      //this->toolBar->AddTool(ID_OPEN_TERMINAL,wxT(""),*this->open_terminal,wxT(""));
-
 
      this->toolBar->AddTool(ID_SELECT_PROJECT_FILE,wxT(""),*this->Select_Project_File,wxT(""));
 

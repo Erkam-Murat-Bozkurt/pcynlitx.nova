@@ -116,7 +116,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->tree_control = new wxDataViewTreeCtrl(this, wxID_ANY,wxDefaultPosition,
 
-                             this->Tree_Control_Size,wxDV_NO_HEADER | wxDV_VARIABLE_LINE_HEIGHT | wxDV_VERT_RULES  );
+                             this->Tree_Control_Size,wxDV_NO_HEADER | wxDV_VARIABLE_LINE_HEIGHT  );
 
 
      std::string face_name = "Calibri"; 
@@ -153,7 +153,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      // TITLE WINDOW SETTINGS START
 
-     this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),Tab_Bar_size,theme_clr);
+     this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),wxSize(Tab_Bar_size.x,Tab_Bar_size.y+5),wxColour(175,177,193));
 
      this->Title_Window->Receive_Tab_ctrl_Hight(this->tab_ctrl_hight);
 
@@ -169,20 +169,20 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      int text_y_pos = title_pos.y + (this->tab_ctrl_hight - text_size.GetY())/2;
 
-     text->SetPosition(wxPoint(title_pos.x+25,text_y_pos));
+     text->SetPosition(wxPoint(title_pos.x+25,text_y_pos+2));
 
 
 
 
      wxFont textFont = text->GetFont();
 
-     textFont.SetPointSize(9);
+     textFont.SetPointSize(10);
 
      textFont.SetFaceName(wxT("Segoe UI"));
 
-     text->SetFont(textFont.Bold());
+     text->SetFont(textFont);
 
-     text->SetForegroundColour(wxColour(80,80,80));
+     text->SetForegroundColour(wxColour(0,0,0));
 
      // TITLE WINDOW SETTINGS END
 

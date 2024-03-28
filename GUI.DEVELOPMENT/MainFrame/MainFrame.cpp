@@ -21,7 +21,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Event_Table_Header.h"
 
-MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
+MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
         wxDefaultPosition, wxSize(1350,950),wxDEFAULT_FRAME_STYLE )
 {
@@ -101,11 +101,12 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   // THE CONSTRUCTION OF THE MENU BAR
 
-  this->MB_Options = new Menu_Bar_Options();
+  //this->MB_Options = new Menu_Bar_Options();
 
-  this->SetMenuBar(this->MB_Options->Get_MenuBar());
+  //this->SetMenuBar(this->MB_Options->Get_MenuBar());
 
-
+  //this->MB_Options->Get_MenuBar()->Refresh();
+   
   // THE CONSTRUCTION OF THE DOCKART POINTER
 
   this->Dock_Art_Pointer = new Custom_DockArt();
@@ -298,6 +299,78 @@ MainFrame::~MainFrame()
    this->Interface_Manager.UnInit();
 
    this->Close(true);
+}
+
+
+void MainFrame::OpenSettings(wxCommandEvent & event){
+
+     if(event.GetId() == ID_OPEN_SETTINGS){
+
+        this->Multi_DataPanel = new Custom_Multi_DataPanel(this,wxID_ANY);
+
+        this->Multi_DataPanel->Construct_Description_Panel();
+
+        //this->Multi_DataPanel->Create_Exe_Script_Panel();
+
+        /*
+        this->Multi_DataPanel->Create_Exe_Script_Panel();
+
+        if (this->Multi_DataPanel->ShowModal() == wxID_OK ){
+               
+         }
+
+         */
+
+        /**
+
+        this->Settting_Frame = new wxFrame(this,-1,"NWINIX SETTINGS",wxDefaultPosition, 
+        
+               wxSize(1350,950),wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP);
+
+        wxPanel * setting_panel = new wxPanel(this->Settting_Frame,wxID_ANY,wxDefaultPosition,wxSize(1200,750));
+
+        this->Mt_Panel = new Custom_Multi_DataPanel(this->Settting_Frame,wxID_ANY);
+
+        this->setting_panel_box = new wxBoxSizer(wxHORIZONTAL);
+
+        this->setting_panel_box->Add(setting_panel,1,wxEXPAND | wxALL, 0);
+       
+        this->setting_panel_box->Layout();
+     
+
+        this->setting_frame_box = new wxBoxSizer(wxVERTICAL);
+
+        this->setting_frame_box->Add(this->setting_panel_box,1, wxEXPAND | wxALL, 0);
+
+        this->setting_frame_box->Layout();
+
+        this->Settting_Frame->SetSizer(this->setting_frame_box);
+
+        this->setting_frame_box->SetSizeHints(this->Settting_Frame);
+
+
+
+        setting_panel->Show(true);
+
+        this->Mt_Panel->Construct_MultiData_Panel(3);
+
+
+        this->MB_Options = new Menu_Bar_Options();
+
+        this->Settting_Frame->SetMenuBar(this->MB_Options->Get_MenuBar());
+
+        this->Mt_Panel->Show(true);
+
+        this->Settting_Frame->Show(true);
+
+        this->Settting_Frame->Centre(wxBOTH);
+
+        this->Mt_Panel->Refresh();
+
+        this->Freeze();
+
+        */
+     }
 }
 
 
@@ -588,13 +661,13 @@ void MainFrame::Single_File_Script_Construction(wxCommandEvent & event){
 
            if(!this->Control_Project_File_Syntax()){
 
-               this->Multi_DataPanel = new Custom_Multi_DataPanel(this);
+               this->Multi_DataPanel = new Custom_Multi_DataPanel(this,wxID_ANY);
 
                this->Multi_DataPanel->Create_Exe_Script_Panel();
 
-               if(this->Multi_DataPanel->ShowModal() == wxID_OK ){
+               //if(this->Multi_DataPanel->ShowModal() == wxID_OK ){
                
-               }
+               //}
 
                char strategy = 's';
 
@@ -815,14 +888,11 @@ void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
 
            if(!this->Control_Project_File_Syntax()){
 
-              this->Multi_DataPanel = new Custom_Multi_DataPanel(this);
+              this->Multi_DataPanel = new Custom_Multi_DataPanel(this,wxID_ANY);
 
               this->Multi_DataPanel->Create_Exe_Script_Panel();
 
-              if (this->Multi_DataPanel->ShowModal() == wxID_OK ){
-               
-              }
-
+              
               char strategy = 'a';
 
               this->Single_File_Script_Construction_Executer(this->Multi_DataPanel->FilePath,

@@ -6,7 +6,7 @@
 
 
 
-Git_File_List_Writer::Git_File_List_Writer(char opr_sis)
+Git_File_List_Writer::Git_File_List_Writer(char opr_sis) : FileManager(opr_sis)
 {
     this->opr_sis = opr_sis;
 

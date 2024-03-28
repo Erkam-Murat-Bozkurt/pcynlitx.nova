@@ -283,6 +283,9 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Menu_Bar->Append(this->Help_Menu,wxT("&About Platform"));
 
+  this->Menu_Bar->SetThemeEnabled(false);
+
+  this->Menu_Bar->SetBackgroundColour(wxColour(220,220,220));
 }
 
 Menu_Bar_Options::~Menu_Bar_Options(){

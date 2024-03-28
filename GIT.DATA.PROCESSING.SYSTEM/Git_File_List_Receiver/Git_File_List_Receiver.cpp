@@ -5,11 +5,9 @@
 #include "Git_File_List_Receiver.hpp"
 
 
-Git_File_List_Receiver::Git_File_List_Receiver(char opr_sis)
+Git_File_List_Receiver::Git_File_List_Receiver(char opr_sis) : FileManager(opr_sis)
 {
     this->opr_sis = opr_sis;
-
-    this->FileManager.Receive_Operating_System(opr_sis);
 
     this->Initialize_Mermbers();
 }

@@ -80,6 +80,7 @@ public:
   //void FileSelect(wxDataViewEvent & event);
   wxAuiPaneInfo Central_Pane_Info;
 private:
+  void OpenSettings(wxCommandEvent & event);
   void Open_Empty_Project_File(wxCommandEvent & event);
   void Enter_Header_File_Location(wxCommandEvent & event);
   void Enter_Source_File_Location(wxCommandEvent & event);
@@ -174,6 +175,10 @@ private:
   Dependency_Tree_Printer * depPrinter;
   Dependency_Tree_Printer * dep_process_printer;
   Custom_Progress_Dialog * Progress_Dialog;
+  wxBoxSizer * setting_frame_box;
+  wxBoxSizer * setting_panel_box;
+  wxFrame * Settting_Frame;
+  Custom_Multi_DataPanel * Mt_Panel;
   bool is_build_system_constructed;
   bool is_descriptor_file_open;
   wxFont * Default_Font;

@@ -101,7 +101,7 @@ void Custom_Window::render(wxDC & dc)
 
     dc.SetBrush(this->colour);
 
-    dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth()+10,rect.GetHeight()+15);
+    dc.DrawRectangle(rect.GetX()-2, rect.GetY()-2, rect.GetWidth()+10,rect.GetHeight()+15);
 }
 
 void Custom_Window::Receive_Button_ID(int button_id){
