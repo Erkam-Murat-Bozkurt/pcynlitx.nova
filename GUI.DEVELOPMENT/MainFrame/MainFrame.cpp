@@ -310,66 +310,7 @@ void MainFrame::OpenSettings(wxCommandEvent & event){
 
         this->Multi_DataPanel->Construct_Description_Panel();
 
-        //this->Multi_DataPanel->Create_Exe_Script_Panel();
 
-        /*
-        this->Multi_DataPanel->Create_Exe_Script_Panel();
-
-        if (this->Multi_DataPanel->ShowModal() == wxID_OK ){
-               
-         }
-
-         */
-
-        /**
-
-        this->Settting_Frame = new wxFrame(this,-1,"NWINIX SETTINGS",wxDefaultPosition, 
-        
-               wxSize(1350,950),wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP);
-
-        wxPanel * setting_panel = new wxPanel(this->Settting_Frame,wxID_ANY,wxDefaultPosition,wxSize(1200,750));
-
-        this->Mt_Panel = new Custom_Multi_DataPanel(this->Settting_Frame,wxID_ANY);
-
-        this->setting_panel_box = new wxBoxSizer(wxHORIZONTAL);
-
-        this->setting_panel_box->Add(setting_panel,1,wxEXPAND | wxALL, 0);
-       
-        this->setting_panel_box->Layout();
-     
-
-        this->setting_frame_box = new wxBoxSizer(wxVERTICAL);
-
-        this->setting_frame_box->Add(this->setting_panel_box,1, wxEXPAND | wxALL, 0);
-
-        this->setting_frame_box->Layout();
-
-        this->Settting_Frame->SetSizer(this->setting_frame_box);
-
-        this->setting_frame_box->SetSizeHints(this->Settting_Frame);
-
-
-
-        setting_panel->Show(true);
-
-        this->Mt_Panel->Construct_MultiData_Panel(3);
-
-
-        this->MB_Options = new Menu_Bar_Options();
-
-        this->Settting_Frame->SetMenuBar(this->MB_Options->Get_MenuBar());
-
-        this->Mt_Panel->Show(true);
-
-        this->Settting_Frame->Show(true);
-
-        this->Settting_Frame->Centre(wxBOTH);
-
-        this->Mt_Panel->Refresh();
-
-        this->Freeze();
-
-        */
      }
 }
 

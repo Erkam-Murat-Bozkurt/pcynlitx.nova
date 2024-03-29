@@ -16,9 +16,10 @@
 #include <wx\dataview.h>
 #include <wx\textdlg.h>
 #include <wx\msgdlg.h>
+#include <wx\dir.h>
 #include "Process_Manager.hpp"
 #include "Custom_DataPanel.hpp"
-
+#include "Custom_Message_Dialog.hpp"
 
 
 
@@ -44,7 +45,7 @@ public:
     
         const wxString & title=wxT(""), 
 
-        const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(1100,800), 
+        const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(1000,840), 
    
         long style=wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP);
 
@@ -91,6 +92,8 @@ protected:
     void Insert_Standart(wxCommandEvent & event);
 
     void Insert_Option(wxCommandEvent & event);
+
+    wxBitmap * exclamation_mark_bmp;
 
     bool Data_Save_Status;
 
