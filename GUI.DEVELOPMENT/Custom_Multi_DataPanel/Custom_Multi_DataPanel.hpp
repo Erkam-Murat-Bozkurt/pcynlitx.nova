@@ -28,13 +28,30 @@ enum
   ID_INSERT_ITEM_FOR_PATH  = 100,
   ID_INSERT_ITEM_FOR_NAME  = 101,  
   ID_SAVE_MAKE_FILE_DATA   = 102,
+
   ID_INSERT_GIT_REPO_DIR   = 103,
   ID_INSERT_CONSTRUCTION_POINT = 104,
   ID_INSERT_SRC_LOCATION  = 105,
   ID_INSERT_LIB_DIRECTORIES = 106,
   ID_INSERT_LIBRARIES = 107,
   ID_INSERT_STANDART = 108,
-  ID_INSERT_OPTIONS  = 109
+  ID_INSERT_OPTIONS  = 109,
+
+
+  ID_SAVE_GIT_REPO_DIR   = 103,
+  ID_SAVE_CONSTRUCTION_POINT = 104,
+  ID_SAVE_SRC_LOCATION  = 110,
+  ID_SAVE_LIB_DIRECTORY = 111,
+  ID_SAVE_LIBRARY_NAME = 112,
+  ID_SAVE_STANDART = 108,
+  ID_SAVE_OPTIONS  = 109,
+
+  ID_REMOVE_SRC_LOCATION  = 113,
+  ID_REMOVE_LIB_DIRECTORY = 114,
+  ID_REMOVE_LIBRARY_NAME = 115,
+  ID_CLEAR_SRC_LOCATIONS  = 116,
+  ID_CLEAR_LIB_DIRECTORIES = 117,
+  ID_CLEAR_LIBRARY_NAMES = 118,
 };
 
 
@@ -93,6 +110,38 @@ protected:
 
     void Insert_Option(wxCommandEvent & event);
 
+
+
+    void Save_Git_Repo_Dir(wxCommandEvent & event);
+
+    void Save_Construction_Point(wxCommandEvent & event);
+
+    void Save_Source_File_Location(wxCommandEvent & event);
+
+    void Save_Library_Directory(wxCommandEvent & event);
+    
+    void Save_Library_Name(wxCommandEvent & event);
+    
+    void Save_Standart(wxCommandEvent & event);
+
+    void Save_Option(wxCommandEvent & event);
+
+
+
+    void Remove_Source_File_Location(wxCommandEvent & event);
+
+    void Remove_Library_Directory(wxCommandEvent & event);
+    
+    void Remove_Library_Name(wxCommandEvent & event);
+
+    
+
+    void Clear_Source_File_Locations(wxCommandEvent & event);
+
+    void Clear_Library_Directories(wxCommandEvent & event);
+
+    void Clear_Library_Names(wxCommandEvent & event);
+
     wxBitmap * exclamation_mark_bmp;
 
     bool Data_Save_Status;
@@ -102,6 +151,8 @@ protected:
     wxBoxSizer * Frame_Sizer;
 
     int Panel_Number;
+
+    wxScrolledWindow * scroll_win;
 
     wxDataViewListCtrl ** listctrls;
 
@@ -167,6 +218,26 @@ protected:
     wxButton * Save_Button_for_standard;
 
     wxButton * Save_Button_for_options;
+
+
+
+
+    wxButton * Remove_Button_for_src_file_locations;
+
+    wxButton * Remove_Button_for_library_dir;
+
+    wxButton * Remove_Button_for_library_name;
+
+
+    
+    wxButton * Clear_Button_for_src_file_locations;
+
+    wxButton * Clear_Button_for_library_dir;
+
+    wxButton * Clear_Button_for_library_name;
+
+
+
 
 
     wxButton * InsertButton_for_path;
