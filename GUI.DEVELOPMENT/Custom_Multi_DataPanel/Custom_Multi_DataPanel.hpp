@@ -31,27 +31,32 @@ enum
 
   ID_INSERT_GIT_REPO_DIR   = 103,
   ID_INSERT_CONSTRUCTION_POINT = 104,
-  ID_INSERT_SRC_LOCATION  = 105,
-  ID_INSERT_LIB_DIRECTORIES = 106,
-  ID_INSERT_LIBRARIES = 107,
-  ID_INSERT_STANDART = 108,
-  ID_INSERT_OPTIONS  = 109,
+  ID_INSERT_HEADER_FILE_LOCATION = 105,
+  ID_INSERT_SRC_LOCATION  = 106,
+  ID_INSERT_LIB_DIRECTORIES = 107,
+  ID_INSERT_LIBRARIES = 108,
+  ID_INSERT_STANDART = 109,
+  ID_INSERT_OPTIONS  = 110,
 
 
-  ID_SAVE_GIT_REPO_DIR   = 103,
-  ID_SAVE_CONSTRUCTION_POINT = 104,
-  ID_SAVE_SRC_LOCATION  = 110,
-  ID_SAVE_LIB_DIRECTORY = 111,
-  ID_SAVE_LIBRARY_NAME = 112,
-  ID_SAVE_STANDART = 108,
-  ID_SAVE_OPTIONS  = 109,
+  ID_SAVE_GIT_REPO_DIR   = 111,
+  ID_SAVE_CONSTRUCTION_POINT = 112,
+  ID_SAVE_HEADER_FILE_LOCATION = 113,
+  ID_SAVE_SRC_LOCATION  = 114,
+  ID_SAVE_LIB_DIRECTORY = 115,
+  ID_SAVE_LIBRARY_NAME = 116,
+  ID_SAVE_STANDART = 117,
+  ID_SAVE_OPTIONS  = 118,
 
-  ID_REMOVE_SRC_LOCATION  = 113,
-  ID_REMOVE_LIB_DIRECTORY = 114,
-  ID_REMOVE_LIBRARY_NAME = 115,
-  ID_CLEAR_SRC_LOCATIONS  = 116,
-  ID_CLEAR_LIB_DIRECTORIES = 117,
-  ID_CLEAR_LIBRARY_NAMES = 118,
+  ID_REMOVE_HEADER_FILE_LOCATION = 119,
+  ID_REMOVE_SRC_LOCATION  = 120,
+  ID_REMOVE_LIB_DIRECTORY = 121,
+  ID_REMOVE_LIBRARY_NAME = 122,
+
+  ID_CLEAR_HEADER_FILE_LOCATION = 123,
+  ID_CLEAR_SRC_LOCATIONS  = 124,
+  ID_CLEAR_LIB_DIRECTORIES = 125,
+  ID_CLEAR_LIBRARY_NAMES = 126
 };
 
 
@@ -67,6 +72,8 @@ public:
         long style=wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP);
 
     virtual ~Custom_Multi_DataPanel();
+
+    void Receive_Descriptor_File_Path(wxString path);
 
     void Create_Exe_Script_Panel();
 
@@ -88,6 +95,8 @@ protected:
 
     void AppendDataItem(wxDataViewListCtrl * listctrl, wxString str);
 
+    void Save_Data(wxDataViewListCtrl * listctrl, wxString DataType);
+
     void Construct_NewData_Panels();
 
     void Insert_Data_For_Path(wxCommandEvent & event);
@@ -96,9 +105,13 @@ protected:
 
     void Insert_Data_For_Name(wxCommandEvent & event);
 
+
+
     void Inser_Git_Repo_Dir(wxCommandEvent & event);
 
     void Insert_Construction_Point(wxCommandEvent & event);
+
+    void Insert_Header_File_Location(wxCommandEvent & event);
 
     void Insert_Source_File_Location(wxCommandEvent & event);
 
@@ -116,6 +129,8 @@ protected:
 
     void Save_Construction_Point(wxCommandEvent & event);
 
+    void Save_Header_File_Location(wxCommandEvent & event);
+
     void Save_Source_File_Location(wxCommandEvent & event);
 
     void Save_Library_Directory(wxCommandEvent & event);
@@ -128,6 +143,9 @@ protected:
 
 
 
+
+    void Remove_Header_File_Location(wxCommandEvent & event);
+
     void Remove_Source_File_Location(wxCommandEvent & event);
 
     void Remove_Library_Directory(wxCommandEvent & event);
@@ -135,6 +153,7 @@ protected:
     void Remove_Library_Name(wxCommandEvent & event);
 
     
+    void Clear_Header_File_Locations(wxCommandEvent & event);
 
     void Clear_Source_File_Locations(wxCommandEvent & event);
 
@@ -142,7 +161,14 @@ protected:
 
     void Clear_Library_Names(wxCommandEvent & event);
 
+    wxString Descriptor_File_Path;
+
+    wxString DataType;
+
     wxBitmap * exclamation_mark_bmp;
+
+    Process_Manager * Process_Ptr;
+
 
     bool Data_Save_Status;
 
@@ -178,6 +204,8 @@ protected:
 
     wxDataViewListCtrl * listctrl_warehouse_location;
 
+    wxDataViewListCtrl * listctrl_for_header_dir;
+
     wxDataViewListCtrl * listctrl_src_file_location;
 
     wxDataViewListCtrl * listctrl_library_dir;
@@ -192,6 +220,8 @@ protected:
     wxButton * InsertButton_for_git_repo_path;
 
     wxButton * InsertButton_for_warehouse_location;
+
+    wxButton * InsertButton_for_header_file_location;
 
     wxButton * InsertButton_for_src_file_locations;
 
@@ -209,6 +239,8 @@ protected:
 
     wxButton * Save_Button_for_warehouse_location;
 
+    wxButton * Save_Button_for_header_file_location;
+
     wxButton * Save_Button_for_src_file_locations;
 
     wxButton * Save_Button_for_library_dir;
@@ -224,12 +256,17 @@ protected:
 
     wxButton * Remove_Button_for_src_file_locations;
 
+    wxButton * Remove_Button_for_header_file_locations;
+
     wxButton * Remove_Button_for_library_dir;
 
     wxButton * Remove_Button_for_library_name;
 
 
-    
+
+
+    wxButton * Clear_Button_for_header_file_locations;
+
     wxButton * Clear_Button_for_src_file_locations;
 
     wxButton * Clear_Button_for_library_dir;

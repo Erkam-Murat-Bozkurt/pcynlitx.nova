@@ -289,8 +289,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Interface_Manager.Update();
 
-  this->is_descriptor_file_open = false;
-
   this->opr_sis = 'w';
 }
 
@@ -306,11 +304,18 @@ void MainFrame::OpenSettings(wxCommandEvent & event){
 
      if(event.GetId() == ID_OPEN_SETTINGS){
 
-        this->Multi_DataPanel = new Custom_Multi_DataPanel(this,wxID_ANY);
+       if(this->is_project_file_selected){
 
-        this->Multi_DataPanel->Construct_Description_Panel();
+          this->Multi_DataPanel = new Custom_Multi_DataPanel(this,wxID_ANY);
 
+          this->Multi_DataPanel->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
 
+          this->Multi_DataPanel->Construct_Description_Panel();
+       }
+       else{
+
+            this->Descriptor_File_Selection_Check();
+       }
      }
 }
 

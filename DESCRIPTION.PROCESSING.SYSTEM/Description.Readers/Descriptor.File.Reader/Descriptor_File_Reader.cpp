@@ -776,6 +776,10 @@ void Descriptor_File_Reader::Divide_Options(){
                 }
             }
           }
+          else{
+
+              this->options = temp_opts;
+          }
        }
 }
 
