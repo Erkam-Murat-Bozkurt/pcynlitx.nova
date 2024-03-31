@@ -126,7 +126,7 @@ void Intro_Page_Loader::OnPaint(wxPaintEvent& event)
 
 void Intro_Page_Loader::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect & rect)
 {
-     dc.SetPen(wxPen(wxColour(255,255,255)));
+     dc.SetPen(wxPen(wxColour(225,225,255)));
 
      dc.SetBrush(wxColour(255,255,255));
 

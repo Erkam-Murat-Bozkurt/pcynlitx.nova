@@ -621,8 +621,7 @@ void DataRecorder::Extract_Data_List(std::vector<std::string> & vec, std::string
              }
          }
 
-
-         for(size_t k=start_point;k<end_point;k++){
+         for(size_t k=start_point;k<end_point+1;k++){
 
              if(data.at(k) != '\n'){
 

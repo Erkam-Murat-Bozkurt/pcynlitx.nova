@@ -45,7 +45,8 @@ class ToolBar_Initializer
 public:
   ToolBar_Initializer();
   virtual ~ ToolBar_Initializer();
-  void Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockArt * Dock_Art_Pointer, wxAuiManager * Interface_Manager);
+  void Initialize_ToolBar(wxFrame * Frame_Pointer, 
+       wxAuiDockArt * Dock_Art_Pointer, wxAuiManager * Interface_Manager);
   wxAuiToolBar * Get_ToolBar_Pointer();
   wxAuiToolBar * toolBar;
   wxAuiToolBarArt * Art_Pointer;
@@ -61,6 +62,7 @@ public:
   wxBitmap * file_save;
   wxBitmap * open_tree_view;
   wxBitmap * print_descriptions;
+  wxBitmap * open_help_menu;
 };
 
 #endif /* TOOLBAR_INITIALIZER_H */
