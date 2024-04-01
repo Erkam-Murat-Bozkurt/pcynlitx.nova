@@ -38,7 +38,7 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Help_Menu->Append(ID_OPEN_INTROPAGE,"&Intro Page","",wxITEM_NORMAL);
 
-  this->Help_Menu->Append(ID_SHOW_AUTOR_INFO,"&Developer","",wxITEM_NORMAL);
+  this->Help_Menu->Append(ID_SHOW_HELP_MENU,"&Developer","",wxITEM_NORMAL);
 
   this->Help_Menu->Append(ID_SHOW_DOCUMENTS,"&Documents","",wxITEM_NORMAL);
 

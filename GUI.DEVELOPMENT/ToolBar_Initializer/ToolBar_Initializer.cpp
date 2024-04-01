@@ -115,7 +115,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->toolBar->AddTool(ID_PRINT_DESCRIPTIONS,wxT(""),*this->print_descriptions,wxT(""));
 
-     this->toolBar->AddTool(ID_SHOW_AUTOR_INFO,wxT(""),*this->open_help_menu,wxT(""));
+     this->toolBar->AddTool(ID_SHOW_HELP_MENU,wxT(""),*this->open_help_menu,wxT(""));
 
      this->toolBar->SetMargins(2,2,3,3);
 

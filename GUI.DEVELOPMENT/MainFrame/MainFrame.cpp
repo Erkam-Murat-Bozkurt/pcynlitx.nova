@@ -524,9 +524,9 @@ void MainFrame::Run_Project_Script_On_Terminal(wxCommandEvent & event){
 }
 
 
-void MainFrame::Show_Author(wxCommandEvent & event)
+void MainFrame::Show_Help_Menu(wxCommandEvent & event)
 {
-     if(event.GetId() == ID_SHOW_AUTOR_INFO){
+     if(event.GetId() == ID_SHOW_HELP_MENU){
 
 
         wxString message = wxT("ERKAM MURAT BOZKURT\n\n");
@@ -539,7 +539,17 @@ void MainFrame::Show_Author(wxCommandEvent & event)
 
         message = message + wxT("help@nwinix.com\n\n");
 
+
+        Help_Page_Constructor * dial = new Help_Page_Constructor(this,message,
             
+            wxT("THE DEVELOPER OF THE PLATFORM:\n"),wxID_ANY,
+               
+            wxT("THE DEVELOPER OF NWINIX PLATFORM"),
+               
+            *this->logo_bmp, wxDefaultPosition,wxSize(700,750));
+          
+       /*
+
         Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
             
             wxT("THE DEVELOPER OF THE PLATFORM:\n"),wxID_ANY,
@@ -548,8 +558,9 @@ void MainFrame::Show_Author(wxCommandEvent & event)
                
             *this->logo_bmp, wxDefaultPosition,wxT("Close"),wxSize(700,600));
 
+       */
 
-        if(dial->ShowModal() == ID_SHOW_AUTOR_INFO){
+        if(dial->ShowModal() == ID_SHOW_HELP_MENU){
 
            delete dial;
         };

@@ -153,7 +153,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      // TITLE WINDOW SETTINGS START
 
-     this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),wxSize(Tab_Bar_size.x,Tab_Bar_size.y+5),wxColour(175,177,193));
+     this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),wxSize(Tab_Bar_size.x,Tab_Bar_size.y+5),wxColour(175,175,185));
 
      this->Title_Window->Receive_Tab_ctrl_Hight(this->tab_ctrl_hight);
 

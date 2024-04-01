@@ -58,6 +58,7 @@
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Descriptions_Printer.hpp"
 #include "Custom_Message_Dialog.hpp"
+#include "Help_Page_Constructor.hpp"
 #include "Custom_Progress_Dialog.hpp"
 #include "Dependency_Tree_Printer.hpp"
 #include "Custom_System_Interface.h"
@@ -73,7 +74,7 @@ public:
   void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& _rect);
   void PaintNow(wxWindow * wnd);
   void Open_Intro_Page(wxCommandEvent & event);
-  void Show_Author(wxCommandEvent & event);
+  void Show_Help_Menu(wxCommandEvent & event);
   void Select_Project_File(wxCommandEvent&);
   void Show_Project_File(wxCommandEvent&);
   void DirectoryOpen(wxCommandEvent & event);

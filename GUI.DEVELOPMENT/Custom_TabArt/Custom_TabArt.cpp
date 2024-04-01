@@ -137,9 +137,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
            //dc.SetBrush(wxBrush(wxColour(206,108,125)));
 
-           dc.SetPen(wxPen(wxColour(150,150,170)));
+           dc.SetPen(wxPen(wxColour(150,150,160)));
 
-           dc.SetBrush(wxColour(175,175,193));
+           dc.SetBrush(wxColour(175,175,185));
             
 
            
