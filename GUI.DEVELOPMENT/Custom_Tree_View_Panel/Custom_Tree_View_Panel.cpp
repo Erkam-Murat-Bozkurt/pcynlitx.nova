@@ -138,7 +138,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->tree_control->SetPosition(this->Tree_Control_Position);
 
-
+     this->tree_control->SetBackgroundColour(wxColour(255,255,255));
 
 
      wxSize Tab_Bar_size = wxSize(this->GetSize().x,this->tab_ctrl_hight);

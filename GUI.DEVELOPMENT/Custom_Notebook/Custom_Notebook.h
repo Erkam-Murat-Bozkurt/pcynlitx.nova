@@ -3,6 +3,7 @@
 #define CUSTOM_NOTEBOOK_H
 
 #include <wx/wx.h>
+#include <wx\frame.h>
 #include <wx/panel.h>
 #include <wx/aui/aui.h>
 #include <wx/aui/auibook.h>
@@ -43,7 +44,7 @@ struct Text_Ctrl_Data
 class Custom_Notebook : public wxAuiNotebook
 {
 public:
-  Custom_Notebook(wxPanel * parent, wxAuiManager * Interface_Manager,
+  Custom_Notebook(wxFrame * frame,wxPanel * parent, wxAuiManager * Interface_Manager,
 
          wxFont Default_Font,wxSize size, wxColour theme_clr);
 
@@ -104,6 +105,7 @@ private:
   int Get_Empty_Pointer_Index_Number();
   wxFont * Default_Font;
   wxString File_Short_Name;
+  wxFrame * frame_ptr;
   Style_Loader Text_Style_Loader;
   int Selection;
   int Empty_Pointer_Index_Number;

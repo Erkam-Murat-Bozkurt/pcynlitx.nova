@@ -33,7 +33,7 @@
 #include <wx\dataview.h>
 #include <wx\listctrl.h>
 #include <wx\listbox.h>
-#include <wx/gauge.h>
+#include <wx\gauge.h>
 #include <mutex>
 #include <chrono>
 #include <condition_variable>
@@ -149,6 +149,7 @@ private:
   bool is_project_file_selected;
   Process_Manager * Process_Ptr;
   Custom_wxThread * Thread_Ptr;
+  wxStaticBitmap * background_figure;
   char opr_sis;
   wxString Descriptor_File_Path;
   wxString Warehouse_Location;

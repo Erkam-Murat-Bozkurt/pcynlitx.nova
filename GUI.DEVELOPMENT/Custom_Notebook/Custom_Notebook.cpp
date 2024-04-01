@@ -22,12 +22,15 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Custom_Notebook.h"
 
-Custom_Notebook::Custom_Notebook( wxPanel * parent, wxAuiManager * Interface_Manager,
+Custom_Notebook::Custom_Notebook(wxFrame * frame, wxPanel * parent, wxAuiManager * Interface_Manager,
 
        wxFont Default_Font,wxSize size, wxColour theme_clr)
 
       : wxAuiNotebook(parent,wxID_ANY,wxDefaultPosition,size,wxAUI_NB_DEFAULT_STYLE )
 {
+   this->frame_ptr = frame;
+
+   this->intro_image = nullptr;
 
    this->OpenFileNumber = 0;
 
@@ -124,6 +127,19 @@ void Custom_Notebook::Size_Event(wxSizeEvent & event)
      event.Skip(true);
 
      this->PaintNow(this);
+
+     if(this->intro_image!=nullptr){
+
+        wxSize figure_size = this->intro_image->GetSize();
+
+        wxSize main_frame_size = this->frame_ptr->GetSize();
+
+        int x_pos = (main_frame_size.GetX() - figure_size.GetX())/2 - 70;
+
+        int y_pos = (main_frame_size.GetY() - figure_size.GetY())/2;
+
+        this->intro_image->SetPosition(wxPoint(x_pos,y_pos));
+     }
 }
 
 void Custom_Notebook::Initialization(){

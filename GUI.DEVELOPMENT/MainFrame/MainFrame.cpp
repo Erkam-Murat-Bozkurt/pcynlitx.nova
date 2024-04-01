@@ -43,6 +43,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
   this->ClearBackground();
 
 
+
   SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
 
   this->exclamation_mark_bmp 
@@ -160,7 +161,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   // THE CONSTRUCTION OF THE NOTEBOOK
 
-  this->Book_Manager = new Custom_Notebook(this->Custom_Main_Panel,&this->Interface_Manager,
+  this->Book_Manager = new Custom_Notebook(this,this->Custom_Main_Panel,&this->Interface_Manager,
 
                        *(this->Default_Font),this->GetClientSize(),theme_clr);
 
@@ -254,18 +255,27 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->intro_page_bmp 
   
-      = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\Intro_File_Black.png"),wxBITMAP_TYPE_ANY);
+      = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\Intro_File_Back.png"),wxBITMAP_TYPE_ANY);
 
 
-  wxStaticBitmap * figure = new wxStaticBitmap(this->Book_Manager,wxID_ANY,*this->intro_page_bmp);
+  this->background_figure = new wxStaticBitmap(this->Book_Manager,wxID_ANY,*this->intro_page_bmp);
 
-  figure->SetBackgroundColour(wxColour(240,240,240));
+  this->background_figure->SetBackgroundColour(wxColour(240,240,240));
 
-  figure->CentreOnParent(wxBOTH);
+  wxSize figure_size = this->background_figure->GetSize();
 
-  figure->Show(false);
+  wxSize main_frame_size = this->GetSize();
 
-  this->Book_Manager->Receive_Intro_Image(figure);
+  int x_pos = (main_frame_size.GetX() - figure_size.GetX())/2 - 70;
+
+  int y_pos = (main_frame_size.GetY() - figure_size.GetY())/2;
+
+  this->background_figure->SetPosition(wxPoint(x_pos,y_pos));
+
+
+  this->background_figure->Show(false);
+
+  this->Book_Manager->Receive_Intro_Image(this->background_figure);
 
   this->Book_Manager->OpenIntroPage();
 
