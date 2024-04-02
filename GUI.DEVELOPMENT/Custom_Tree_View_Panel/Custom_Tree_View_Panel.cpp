@@ -176,13 +176,13 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      wxFont textFont = text->GetFont();
 
-     textFont.SetPointSize(10);
+     textFont.SetPointSize(9);
 
-     textFont.SetFaceName(wxT("Segoe UI"));
+     textFont.SetFaceName(wxT("Segoe UI Semibold"));
 
      text->SetFont(textFont);
 
-     text->SetForegroundColour(wxColour(0,0,0));
+     text->SetForegroundColour(wxColour(50,50,70));
 
      // TITLE WINDOW SETTINGS END
 

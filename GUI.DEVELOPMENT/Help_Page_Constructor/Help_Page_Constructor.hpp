@@ -14,7 +14,7 @@
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
 #include <wx/utils.h> 
-
+#include "Custom_Notebook.h"
 
 
 
@@ -36,13 +36,13 @@ public:
     
     const wxPoint &pos=wxDefaultPosition, 
     
-    const wxSize &size=wxSize(720,1000),
+    const wxSize &size=wxSize(600,750),
     
     long style=wxDEFAULT_DIALOG_STYLE, const wxString &name=wxDialogNameStr);
     
     virtual ~Help_Page_Constructor();
 
-    bool GetYesNoCond() const;
+    Custom_Notebook * NoteBook_Ptr;
     
 private:
     void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect);
@@ -55,9 +55,9 @@ private:
 
     void PaintNow(wxWindow * wnd);
 
-    void SetYes(wxCommandEvent & event);
+    void Open_Welcome_Page(wxCommandEvent & event);
 
-    void SetNo(wxCommandEvent & event);
+    void Open_Intro_Page(wxCommandEvent & event);
 
     bool yes_no_condition;
 

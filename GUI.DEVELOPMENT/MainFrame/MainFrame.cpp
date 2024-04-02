@@ -542,23 +542,13 @@ void MainFrame::Show_Help_Menu(wxCommandEvent & event)
 
         Help_Page_Constructor * dial = new Help_Page_Constructor(this,message,
             
-            wxT("THE DEVELOPER OF THE PLATFORM:\n"),wxID_ANY,
+            wxT("DEVELOPER:\n"),wxID_ANY,
                
-            wxT("THE DEVELOPER OF NWINIX PLATFORM"),
+            wxT("THE HELP FOR PLATFORM"),
                
-            *this->logo_bmp, wxDefaultPosition,wxSize(700,750));
+            *this->logo_bmp, wxDefaultPosition,wxSize(600,750));
           
-       /*
-
-        Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
-            
-            wxT("THE DEVELOPER OF THE PLATFORM:\n"),wxID_ANY,
-               
-            wxT("THE DEVELOPER OF NWINIX PLATFORM"),
-               
-            *this->logo_bmp, wxDefaultPosition,wxT("Close"),wxSize(700,600));
-
-       */
+        dial->NoteBook_Ptr = this->Book_Manager;
 
         if(dial->ShowModal() == ID_SHOW_HELP_MENU){
 
@@ -605,8 +595,6 @@ void MainFrame::DirectoryOpen(wxCommandEvent & event)
 
            this->Interface_Manager.Update();
         }
-
-        this->Centre();
 
         this->tree_control->Update();
 

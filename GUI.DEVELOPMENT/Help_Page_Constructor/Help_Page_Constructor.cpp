@@ -25,8 +25,8 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 BEGIN_EVENT_TABLE(Help_Page_Constructor,wxDialog)
     EVT_BUTTON(ID_CLOSE_HELP_PAGE_WINDOW,Help_Page_Constructor::CloseWindow)
-    EVT_BUTTON(ID_SELECTION_INTRO_PAGE,Help_Page_Constructor::SetYes)
-    EVT_BUTTON(ID_SELECTION_WELCOME,Help_Page_Constructor::SetNo)
+    EVT_BUTTON(ID_SELECTION_INTRO_PAGE,Help_Page_Constructor::Open_Intro_Page)
+    EVT_BUTTON(ID_SELECTION_WELCOME,Help_Page_Constructor::Open_Welcome_Page)
 
 END_EVENT_TABLE()
 
@@ -85,14 +85,21 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
     this->text_title = new wxStaticText(this->text_title_panel ,wxID_ANY,message_title);
 
 
-    this->text_title->SetForegroundColour(wxColour(90, 90, 120));
+    this->text_title->SetForegroundColour(wxColour(100,100,100));
 
-    this->text->SetForegroundColour(wxColour(50,40,40));
+    wxFont Title_Font = text->GetFont();
+
+    Title_Font.SetPointSize(13);
+
+    this->text_title->SetFont(Title_Font.Bold());
+
+
+    this->text->SetForegroundColour(wxColour(60,60,70));
 
 
     wxFont textFont = this->text_title->GetFont();
 
-    this->text_title->SetFont(textFont.Bold());
+    this->text_title->SetFont(textFont);
 
 
 
@@ -101,18 +108,34 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
        
     this->WelcomeButton  = new wxButton(this->welcome_page_button_panel,ID_SELECTION_WELCOME,
     
-                         wxT("Welcome Page"),wxDefaultPosition, wxSize(button_size_x,60));
+                         wxT("WELCOME PAGE"),wxDefaultPosition, wxSize(button_size_x,70));
 
     this->IntroButton    = new wxButton(this->intro_page_button_panel,ID_SELECTION_INTRO_PAGE,
     
-                         wxT("Introduction"),wxDefaultPosition, wxSize(button_size_x,60));
+                         wxT("INTRODUCTION"),wxDefaultPosition, wxSize(button_size_x,70));
 
 
     this->CloseButton    = new wxButton(this->close_button_panel,ID_CLOSE_HELP_PAGE_WINDOW,
      
-                         wxT("CLOSE"),wxDefaultPosition, wxSize(button_size_x,60));
+                         wxT("CLOSE PAGE"),wxDefaultPosition, wxSize(button_size_x,70));
    
+    wxFont buttonFont = this->CloseButton->GetFont();
 
+
+
+
+    this->CloseButton->SetForegroundColour(wxColour(50,50,50));
+
+    this->IntroButton->SetForegroundColour(wxColour(50,50,50));
+
+    this->WelcomeButton->SetForegroundColour(wxColour(50,50,50));
+
+
+    //this->CloseButton->SetFont(buttonFont.Bold());
+
+    //this->IntroButton->SetFont(buttonFont.Bold());
+
+    //this->WelcomeButton->SetFont(buttonFont.Bold());
 
 
     wxBoxSizer * text_sizer = new wxBoxSizer(wxVERTICAL);
@@ -146,7 +169,6 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
     button_sizer->AddSpacer(70);
 
 
-    //button_sizer->AddStretchSpacer(1);
 
 
 
@@ -204,10 +226,7 @@ Help_Page_Constructor::~Help_Page_Constructor()
 
 
 
-void Help_Page_Constructor::CloseWindow(wxCommandEvent & event)
-{
-     this->Destroy();
-}
+
 
 
 void Help_Page_Constructor::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
@@ -234,8 +253,6 @@ void Help_Page_Constructor::OnSize(wxSizeEvent & event){
      event.Skip(true);
 
      this->PaintNow(this);
-
-     //this->SetSize(this->GetClientSize());
 }
 
 
@@ -256,23 +273,27 @@ void Help_Page_Constructor::OnSize(wxSizeEvent & event){
 }
 
 
+void Help_Page_Constructor::CloseWindow(wxCommandEvent & event)
+{
+     this->Destroy();
+}
 
-void Help_Page_Constructor::SetYes(wxCommandEvent & event){
+void Help_Page_Constructor::Open_Welcome_Page(wxCommandEvent & event){
 
-     this->yes_no_condition = true;
+     this->NoteBook_Ptr->OpenIntroPage();  
 
      this->Destroy();
 }
 
+void Help_Page_Constructor::Open_Intro_Page(wxCommandEvent & event){
 
-void Help_Page_Constructor::SetNo(wxCommandEvent & event){
+     wxString Help_Page_Path = wxT("D:\\Pcynlitx_Build_Platform\\Introduction.txt");
 
-     this->yes_no_condition = false;
+     this->NoteBook_Ptr->Open_File(Help_Page_Path);
+
+     size_t notebook_index = this->NoteBook_Ptr->GetIndex_FromPath(Help_Page_Path);
+
+     this->NoteBook_Ptr->Get_NoteBook_Pointer()->SetPageText(notebook_index,wxT("Introduction"));
 
      this->Destroy();
-}
-
-bool Help_Page_Constructor::GetYesNoCond() const {
-
-     return this->yes_no_condition;
 }
