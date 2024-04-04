@@ -80,6 +80,8 @@ public:
 
     bool Get_Data_Save_Status();
 
+    void Load_Data_From_Descriptor_File_To_Panel();
+
     wxString ExeFileName;
 
     wxString FilePath;
@@ -162,7 +164,17 @@ protected:
 
     void Clear_Library_Names(wxCommandEvent & event);
 
+    void Load_Data_List_Ctrl(wxDataViewListCtrl * listctrl, 
+
+         const std::vector<std::string> & vec);
+
+    void Load_Data_List_Ctrl(wxDataViewListCtrl * listctrl, 
+
+         std::string data);
+
     GUI_List_Data_Recorder Data_Recorder;
+
+    Descriptor_File_Reader Des_Reader;
 
     wxString Descriptor_File_Path;
 

@@ -75,6 +75,8 @@ void GUI_List_Data_Recorder::Receive_Descriptor_File_Path(std::string DesPATH){
 
 void GUI_List_Data_Recorder::Record_Data(std::string Data_Type, std::string Data_Record){
     
+     this->Clear_Data_Memory();
+
      this->Receive_Decriptor_File();
 
      std::string data_type, data_record;
@@ -117,17 +119,6 @@ void GUI_List_Data_Recorder::Record_Data(std::string Data_Type, std::string Data
         this->Clear_String_Vector(this->Include_Directories);
 
         this->Extract_Data_List(this->Include_Directories,data_record);    
-
-        /*
-
-        for(size_t i=0;i<this->Include_Directories.size();i++){
-
-           wxMessageDialog * dial = new wxMessageDialog(this->parent,wxString(this->Include_Directories[i]),wxT("Include Dir:"));
-
-           dial->ShowModal(); 
-        }
-
-        */
      }
 
      if(data_type == "SOURCE-FILE-DIRECTORIES"){
@@ -139,9 +130,9 @@ void GUI_List_Data_Recorder::Record_Data(std::string Data_Type, std::string Data
 
      if(data_type == "LIBRARY-DIRECTORIES"){
 
-        this->Clear_String_Vector(this->Source_File_Directories);
+        this->Clear_String_Vector(this->Library_Directories);
 
-        this->Extract_Data_List(this->Source_File_Directories,data_record);        
+        this->Extract_Data_List(this->Library_Directories,data_record);        
      }
 
      if(data_type == "LIBRARY-FILES"){
@@ -182,68 +173,6 @@ void GUI_List_Data_Recorder::Record_Data(std::string Data_Type, std::string Data
      this->Update_Descriptor_File();     
 }
 
-
-void GUI_List_Data_Recorder::Clear_Data_Record(std::string Data_Type){
-          
-     this->Receive_Decriptor_File();
-
-     std::string data_type;
-
-     this->Place_String_Data(Data_Type,data_type);
-
-
-     if(data_type == "PROJECT-ROOT-DIR"){
-
-        this->Clear_String_Memory(this->root_dir);        
-     }
-
-     if(data_type == "INCLUDE-DIRECTORIES"){
-
-        this->Clear_String_Vector(this->Include_Directories);
-     }
-
-     if(data_type == "SOURCE-FILE-DIRECTORIES"){
-
-        this->Clear_String_Vector(this->Source_File_Directories);
-     }
-
-     if(data_type == "LIBRARY-DIRECTORIES"){
-
-        this->Clear_String_Vector(this->Library_Directories);
-     }
-
-     if(data_type == "LIBRARY-FILES"){
-
-        this->Clear_String_Vector(this->Library_Files);
-     }
-
-     if(data_type == "PROJECT-WAREHOUSE-LOCATION"){
-
-        this->Clear_String_Memory(this->warehouse_location);
-     }
-
-     if(data_type == "EXECUTABLE-FILE-NAMES"){
-
-        this->Clear_String_Vector(this->Exe_File_Names);
-     }
-
-     if(data_type == "MAIN-FILE-NAMES"){
-
-        this->Clear_String_Vector(this->Main_File_Names);
-     }                    
-
-     if(data_type == "C++-STANDARD"){
-
-        this->Clear_String_Memory(this->standard);
-     }  
-
-     if(data_type == "OPTIONS"){
-
-        this->Clear_String_Memory(this->options);
-     }     
-
-     this->Update_Descriptor_File();
-}
 
 
 void GUI_List_Data_Recorder::Update_Descriptor_File(){
@@ -403,120 +332,9 @@ void GUI_List_Data_Recorder::Update_Descriptor_File(){
 }
 
 
-
-void GUI_List_Data_Recorder::Replace_Data_Record(std::string Data_Type,  std::string Data_Record){
-
-     this->Receive_Decriptor_File();
-
-     std::string data_type, data_record;
-
-     this->Place_String_Data(Data_Type,data_type);
-
-     this->Place_String_Data(Data_Record,data_record);
-
-     if(data_type == "PROJECT-ROOT-DIR"){
-
-        if(this->Is_Data_List(data_record)){
-
-           std::cout << "\n There are more than one decleration for root directory";
-
-           exit(EXIT_FAILURE);
-        }
-
-        this->Clear_String_Memory(this->root_dir);
-        
-        this->Place_String_Data(data_record,this->root_dir);
-     }
-
-     if(data_type == "PROJECT-WAREHOUSE-LOCATION"){
-
-        if(this->Is_Data_List(data_record)){
-
-           std::cout << "\n There are more than one decleration for project warhouse";
-
-           exit(EXIT_FAILURE);
-        }
-
-        this->Clear_String_Memory(this->warehouse_location);
-
-        this->Place_String_Data(data_record,this->warehouse_location);
-     }
-
-     if(data_type == "C++-STANDARD"){
-
-        this->Clear_String_Memory(this->standard);
-
-        this->Place_String_Data(data_record,this->standard);
-
-     }  
-
-     if(data_type == "OPTIONS"){
-
-        this->Clear_String_Memory(this->options);
-
-        this->Place_String_Data(data_record,this->options);
-     }     
-
-     this->Update_Descriptor_File();
-}
-
-
-
-void GUI_List_Data_Recorder::Replace_Data_Record(std::string Data_Type,  std::vector<std::string> & vec){
-
-     this->Receive_Decriptor_File();
-
-     std::string data_type, data_record;
-
-     this->Place_String_Data(Data_Type,data_type);
-
-     if(data_type == "INCLUDE-DIRECTORIES"){
-
-        this->Clear_String_Vector(this->Include_Directories);
-  
-        this->Place_Vector_Data(this->Include_Directories,vec);
-     }
-
-     if(data_type == "SOURCE-FILE-DIRECTORIES"){
-
-        this->Clear_String_Vector(this->Source_File_Directories);
-
-        this->Place_Vector_Data(this->Source_File_Directories,vec);
-     }
-
-     if(data_type == "LIBRARY-DIRECTORIES"){
-
-        this->Clear_String_Vector(this->Library_Directories);
-
-        this->Place_Vector_Data(this->Library_Directories,vec);
-     }
-
-     if(data_type == "LIBRARY-FILES"){
-
-        this->Clear_String_Vector(this->Library_Files);
-
-        this->Place_Vector_Data(this->Library_Files,vec);
-     }
-
-     if(data_type == "EXECUTABLE-FILE-NAMES"){
-
-        this->Clear_String_Vector(this->Exe_File_Names);
-
-        this->Place_Vector_Data(this->Exe_File_Names,vec);
-     }
-
-     if(data_type == "MAIN-FILE-NAMES"){
-
-        this->Clear_String_Vector(this->Main_File_Names);
-
-        this->Place_Vector_Data(this->Main_File_Names,vec);
-     }                    
-
-     this->Update_Descriptor_File();
-}
-
-
 void GUI_List_Data_Recorder::Receive_Decriptor_File(){
+
+     this->Clear_Data_Memory();
 
      this->Des_Reader.Read_Descriptor_File();
 

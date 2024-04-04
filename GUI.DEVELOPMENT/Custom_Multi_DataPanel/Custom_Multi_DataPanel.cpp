@@ -77,9 +77,9 @@ END_EVENT_TABLE()
 
 Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, const wxString & title, 
 
-   const wxPoint &pos, const wxSize &size, long style, char opr_sis) : 
+   const wxPoint & pos, const wxSize & size, long style, char opr_sis) : 
    
-   wxFrame(parent,id,title,pos,size, style), Data_Recorder(opr_sis)
+   wxFrame(parent,id,title,pos,size, style), Data_Recorder(opr_sis), Des_Reader(opr_sis)
 {
      this->Parent_Frame = parent;
 
@@ -129,6 +129,8 @@ void Custom_Multi_DataPanel::Receive_Descriptor_File_Path(wxString path){
      this->Descriptor_File_Path = path;
 
      this->Data_Recorder.Receive_Descriptor_File_Path(path.ToStdString());
+
+     this->Des_Reader.Receive_Descriptor_File_Path(path.ToStdString());
 }
 
 
@@ -693,6 +695,58 @@ void Custom_Multi_DataPanel::AppendDataItem(wxDataViewListCtrl * listctrl, wxStr
      data.clear();
 }
 
+void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
+
+     this->Des_Reader.Read_Descriptor_File();
+
+     const std::vector<std::string> & include_dir = this->Des_Reader.Get_Include_Directories();
+
+     const std::vector<std::string> & lib_dir = this->Des_Reader.Get_Library_Directories();
+
+     const std::vector<std::string> & src_dir = this->Des_Reader.Get_Source_File_Directories();
+
+     const std::vector<std::string> & lib_files =  this->Des_Reader.Get_Library_Files();
+
+     
+     this->Load_Data_List_Ctrl(this->listctrl_for_header_dir,include_dir);
+
+     this->Load_Data_List_Ctrl(this->listctrl_library_dir,lib_dir);
+
+     this->Load_Data_List_Ctrl(this->listctrl_src_file_location,src_dir);
+
+     this->Load_Data_List_Ctrl(this->listctrl_library_name,lib_files);
+
+
+     this->Load_Data_List_Ctrl(this->listctrl_standard,this->Des_Reader.Get_Standard());
+
+     this->Load_Data_List_Ctrl(this->listctrl_options,this->Des_Reader.Get_Options());
+
+     this->Load_Data_List_Ctrl(this->listctrl_warehouse_location,this->Des_Reader.Get_Warehouse_Location());
+
+     this->Load_Data_List_Ctrl(this->listctrl_git_repo_path,this->Des_Reader.Get_Repo_Directory_Location());      
+}
+
+
+
+
+void Custom_Multi_DataPanel::Load_Data_List_Ctrl(wxDataViewListCtrl * listctrl, 
+
+     const std::vector<std::string> & vec){
+
+     size_t vec_size = vec.size();
+
+     for(size_t i=0;i<vec_size;i++){
+
+         this->AppendDataItem(listctrl,vec.at(i));
+     }
+}
+
+void Custom_Multi_DataPanel::Load_Data_List_Ctrl(wxDataViewListCtrl * listctrl, 
+
+     std::string data){
+
+     this->AppendDataItem(listctrl,data);
+}
 
 
 void Custom_Multi_DataPanel::Insert_Data_For_Path(wxCommandEvent & event){
@@ -1057,16 +1111,8 @@ void Custom_Multi_DataPanel::Save_Data(wxDataViewListCtrl * listctrl, wxString D
             listctrl->GetTextValue(i,0) + wxT('\n');
         }
 
-        /*
-        wxMessageDialog * dial = new wxMessageDialog(this,item_data,wxT("Data to be recorded"));
-
-        dial->ShowModal();
-
-        */
 
         this->Data_Recorder.Record_Data(DataType.ToStdString(),item_data.ToStdString());
-
-
 }
 
 

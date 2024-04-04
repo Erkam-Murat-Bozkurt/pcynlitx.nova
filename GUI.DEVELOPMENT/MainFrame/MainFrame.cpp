@@ -321,6 +321,8 @@ void MainFrame::OpenSettings(wxCommandEvent & event){
           this->Multi_DataPanel->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
 
           this->Multi_DataPanel->Construct_Description_Panel();
+
+          this->Multi_DataPanel->Load_Data_From_Descriptor_File_To_Panel();
        }
        else{
 
