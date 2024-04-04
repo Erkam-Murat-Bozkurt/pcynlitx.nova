@@ -17,6 +17,7 @@
 #include <wx\textdlg.h>
 #include <wx\msgdlg.h>
 #include <wx\dir.h>
+#include "GUI_List_Data_Recorder.hpp"
 #include "Process_Manager.hpp"
 #include "Custom_DataPanel.hpp"
 #include "Custom_Message_Dialog.hpp"
@@ -69,7 +70,7 @@ public:
 
         const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(1000,840), 
    
-        long style=wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP);
+        long style=wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP, char opr_sis='w');
 
     virtual ~Custom_Multi_DataPanel();
 
@@ -161,6 +162,8 @@ protected:
 
     void Clear_Library_Names(wxCommandEvent & event);
 
+    GUI_List_Data_Recorder Data_Recorder;
+
     wxString Descriptor_File_Path;
 
     wxString DataType;
@@ -169,6 +172,7 @@ protected:
 
     Process_Manager * Process_Ptr;
 
+    char opr_sis;
 
     bool Data_Save_Status;
 

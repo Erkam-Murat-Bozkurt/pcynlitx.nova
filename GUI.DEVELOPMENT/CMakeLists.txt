@@ -23,7 +23,6 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Window/Custom_Window.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Window/Custom_Window.h
 
-
     ${CMAKE_CURRENT_SOURCE_DIR}/Gui_Shell_Script_Executer/Gui_Shell_Script_Executer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Gui_Shell_Script_Executer/Gui_Shell_Script_Executer.cpp
 
@@ -90,6 +89,8 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxDataViewTreeCtrl/Custom_wxDataViewTreeCtrl.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxDataViewTreeCtrl/Custom_wxDataViewTreeCtrl.cpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/GUI_List_Data_Recorder/GUI_List_Data_Recorder.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/GUI_List_Data_Recorder/GUI_List_Data_Recorder.cpp
 )
 
 
@@ -151,7 +152,7 @@ target_include_directories(BuildSystem_GUI PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxDataViewTreeCtrl
 
-
+    ${CMAKE_CURRENT_SOURCE_DIR}/GUI_List_Data_Recorder
 
 
     ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector
@@ -173,7 +174,7 @@ target_include_directories(BuildSystem_GUI PUBLIC
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
 
-    
+
 
     D:/wxWidgets-3.2.4/include
 
@@ -239,7 +240,9 @@ target_link_directories(BuildSystem_GUI PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxDataViewTreeCtrl
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/GUI_List_Data_Recorder
 
+    
     ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector
 
     ${CMAKE_SOURCE_DIR}/Descriptor.File.Reader
@@ -258,7 +261,6 @@ target_link_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
-
 
 
     D:/wxWidgets-3.2.4/lib/gcc810_x64_dll

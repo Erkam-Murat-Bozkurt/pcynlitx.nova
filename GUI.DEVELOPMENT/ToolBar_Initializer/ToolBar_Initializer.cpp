@@ -117,7 +117,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->toolBar->AddTool(ID_SHOW_HELP_MENU,wxT(""),*this->open_help_menu,wxT(""));
 
-     this->toolBar->SetMargins(2,2,3,3);
+     this->toolBar->SetMargins(3,3,4,4);
 
      this->toolBar->SetOverflowVisible(false);
 

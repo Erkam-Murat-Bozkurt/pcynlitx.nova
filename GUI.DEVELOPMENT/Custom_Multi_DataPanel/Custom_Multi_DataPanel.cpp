@@ -77,9 +77,9 @@ END_EVENT_TABLE()
 
 Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, const wxString & title, 
 
-   const wxPoint &pos, const wxSize &size, 
+   const wxPoint &pos, const wxSize &size, long style, char opr_sis) : 
    
-   long style) : wxFrame(parent,id,title,pos,size, style)
+   wxFrame(parent,id,title,pos,size, style), Data_Recorder(opr_sis)
 {
      this->Parent_Frame = parent;
 
@@ -93,6 +93,10 @@ Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, 
   
       = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
 
+     this->SetBackgroundColour(wxColour(250,250,250));
+
+     this->Data_Recorder.parent = this;
+
      this->Data_Save_Status = false;
 }
 
@@ -103,7 +107,7 @@ Custom_Multi_DataPanel::~Custom_Multi_DataPanel(){
 
 void Custom_Multi_DataPanel::DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(245,245,245));
+     dc.SetBrush(wxColour(250,250,250));
 
      dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+5,rect.GetHeight()+5);
 }
@@ -123,7 +127,10 @@ void Custom_Multi_DataPanel::OnPaint(wxPaintEvent & event)
 void Custom_Multi_DataPanel::Receive_Descriptor_File_Path(wxString path){
 
      this->Descriptor_File_Path = path;
+
+     this->Data_Recorder.Receive_Descriptor_File_Path(path.ToStdString());
 }
+
 
 void Custom_Multi_DataPanel::Construct_MultiData_Panel(int num){
 
@@ -1041,37 +1048,25 @@ void Custom_Multi_DataPanel::Save_Data(wxDataViewListCtrl * listctrl, wxString D
 
         int item_count = listctrl->GetItemCount();
 
-        wxString item_data = "";
+        wxString item_data = wxT("");
 
         for(int i=0;i<item_count;i++){
 
             item_data = item_data +
 
-            listctrl->GetTextValue(i,0) + "\n";
+            listctrl->GetTextValue(i,0) + wxT('\n');
         }
 
-
-        wxString shell_command = "";
-         
-        this->Process_Ptr = new Process_Manager(this);
-
-        shell_command = "D:\\Pcynlitx_Build_Platform\\CBuild.exe " +
-
-        this->Descriptor_File_Path + wxT(" -ar ") + DataType;
-
-        shell_command = shell_command + " ";
-
-        shell_command = shell_command + item_data;
-
-        wxMessageDialog * dial = new wxMessageDialog(this,shell_command,wxT("shell command"));
+        /*
+        wxMessageDialog * dial = new wxMessageDialog(this,item_data,wxT("Data to be recorded"));
 
         dial->ShowModal();
 
-        this->Process_Ptr->Fork_Process(shell_command);
+        */
 
-        int status  = this->Process_Ptr->Get_Process_Exit_Status();
+        this->Data_Recorder.Record_Data(DataType.ToStdString(),item_data.ToStdString());
 
-        delete this->Process_Ptr;
+
 }
 
 
