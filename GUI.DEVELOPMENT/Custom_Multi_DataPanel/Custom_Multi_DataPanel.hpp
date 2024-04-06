@@ -57,7 +57,11 @@ enum
   ID_CLEAR_HEADER_FILE_LOCATION = 123,
   ID_CLEAR_SRC_LOCATIONS  = 124,
   ID_CLEAR_LIB_DIRECTORIES = 125,
-  ID_CLEAR_LIBRARY_NAMES = 126
+  ID_CLEAR_LIBRARY_NAMES = 126,
+  
+  ID_CLOSE_DESCRIPTION_PANEL = 127,
+  ID_SAVE_PANEL_DESCRIPTIONS = 128,
+  ID_CLEAR_PANEL_DESCRIPTIONS = 129
 };
 
 
@@ -68,7 +72,7 @@ public:
     
         const wxString & title=wxT(""), 
 
-        const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(1000,840), 
+        const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(1000,820), 
    
         long style=wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP, char opr_sis='w');
 
@@ -144,7 +148,11 @@ protected:
 
     void Save_Option(wxCommandEvent & event);
 
+    void Close_Description_Panel(wxCommandEvent & event);
 
+    void Save_Panel_Descriptions(wxCommandEvent & event);
+
+    void Clear_Panel_Descriptions(wxCommandEvent & event);
 
 
     void Remove_Header_File_Location(wxCommandEvent & event);
@@ -192,6 +200,8 @@ protected:
 
     wxBoxSizer * Frame_Sizer;
 
+    wxBoxSizer * Scrolled_Win_Sizer;
+
     int Panel_Number;
 
     wxScrolledWindow * scroll_win;
@@ -201,11 +211,16 @@ protected:
     wxButton ** Insert_Buttons;
 
 
+    wxBoxSizer * Data_Panel_Sizer;
+
     wxBoxSizer ** DataPanel_Sizers;
 
     wxBoxSizer ** Buton_Sizers;
 
     wxBoxSizer ** List_Ctrl_Sizers;
+
+    wxPanel ** Data_Panels;
+
 
 
 
