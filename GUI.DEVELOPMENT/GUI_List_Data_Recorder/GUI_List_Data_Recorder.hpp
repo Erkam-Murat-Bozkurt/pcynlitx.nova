@@ -20,16 +20,33 @@
 #include <cstring>
 #include <string>
 
+
+struct Record_Data_For_Gui {
+
+       std::string standard;
+       std::string options;
+       std::string root_dir;
+       std::string warehouse_location;
+       std::vector<std::string> Include_Directories;
+       std::vector<std::string> Source_File_Directories;
+       std::vector<std::string> Library_Directories;
+       std::vector<std::string> Library_Files;
+       std::vector<std::string> Exe_File_Names;
+       std::vector<std::string> Main_File_Names;  
+};
+
+
+
 class GUI_List_Data_Recorder
 {
 public:
   GUI_List_Data_Recorder(char opr_sis);
   virtual ~GUI_List_Data_Recorder();
+  void Receive_Descriptions_Record_Data(Record_Data_For_Gui * Data);
   void Receive_Descriptor_File_Path(std::string DesPATH);
   void Record_Data(std::string Data_Type, std::string Data_Record);
-  void Clear_Data_Record(std::string Data_Type);
-  void Replace_Data_Record(std::string Data_Type,  std::string Data_Record);
-  void Replace_Data_Record(std::string Data_Type,  std::vector<std::string> & vec);
+  void Extract_Data_List(std::vector<std::string> & vec, std::string data);
+  void Update_Descriptor_File();
   wxWindow * parent;
   void Clear_Object_Memory();
   void Clear_Dynamic_Memory();
@@ -40,15 +57,14 @@ private:
   void Receive_Decriptor_File();
   void Clear_String_Memory(std::string & str);
   void Clear_String_Vector(std::vector<std::string> & vec);
-  void Place_Vector_Data(const std::vector<std::string> & base_vec, std::vector<std::string> & target_vec);
+  void Place_Vector_Data(const std::vector<std::string> & base_vec, 
+       std::vector<std::string> & target_vec);
   void Place_String_Data(const std::string & base_str, std::string & target_str);
   void Place_String_Data(char * base_str, std::string & target_str);
-  void Update_Descriptor_File();
   void WriteNewLines(int line_number);
   void Write_Vector_Data(std::vector<std::string> & vec);
   void Write_String_Data(std::string dt);
   bool Is_Data_List(std::string data);
-  void Extract_Data_List(std::vector<std::string> & vec, std::string data);
   void Clear_Data_Memory();
   char opr_sis;
   std::string standard;

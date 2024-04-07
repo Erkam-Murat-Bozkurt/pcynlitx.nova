@@ -180,9 +180,15 @@ protected:
 
          std::string data);
 
+    std::string Collect_List_Ctrl_Data(wxDataViewListCtrl * listctrl);
+
+    void Extract_Description_Vector(std::string str, std::vector<std::string> & vec);
+
     GUI_List_Data_Recorder Data_Recorder;
 
     Descriptor_File_Reader Des_Reader;
+
+    Record_Data_For_Gui Record_Data;
 
     wxString Descriptor_File_Path;
 
@@ -225,6 +231,8 @@ protected:
 
 
     wxBoxSizer * DataPanel_Top_Sizer;
+
+    wxBoxSizer * topSizer;
 
     wxDataViewListCtrl * listctrl_for_path;
 
@@ -305,7 +313,14 @@ protected:
     wxButton * Clear_Button_for_library_name;
 
 
+    wxButton * panel_close_button;
 
+    wxButton * panel_save_button; 
+
+    wxButton * panel_clear_button;  
+
+
+    wxPanel  * close_panel;
 
 
     wxButton * InsertButton_for_path;

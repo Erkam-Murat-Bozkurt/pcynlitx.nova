@@ -73,6 +73,28 @@ void GUI_List_Data_Recorder::Receive_Descriptor_File_Path(std::string DesPATH){
 }
 
 
+void GUI_List_Data_Recorder::Receive_Descriptions_Record_Data(Record_Data_For_Gui * Data){
+
+     this->Clear_Data_Memory();
+
+     this->Place_Vector_Data(Data->Include_Directories,this->Include_Directories);
+
+     this->Place_Vector_Data(Data->Source_File_Directories,this->Source_File_Directories);
+
+     this->Place_Vector_Data(Data->Library_Directories,this->Library_Directories);
+
+     this->Place_Vector_Data(Data->Library_Files,this->Library_Files);
+
+     this->Place_String_Data(Data->warehouse_location,this->warehouse_location);
+
+     this->Place_String_Data(Data->root_dir,this->root_dir);
+
+     this->Place_String_Data(Data->options,this->options);
+
+     this->Place_String_Data(Data->standard,this->standard); 
+}
+
+
 void GUI_List_Data_Recorder::Record_Data(std::string Data_Type, std::string Data_Record){
     
      this->Clear_Data_Memory();
