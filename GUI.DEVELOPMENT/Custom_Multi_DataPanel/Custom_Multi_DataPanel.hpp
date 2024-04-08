@@ -182,7 +182,13 @@ protected:
 
     std::string Collect_List_Ctrl_Data(wxDataViewListCtrl * listctrl);
 
-    void Extract_Description_Vector(std::string str, std::vector<std::string> & vec);
+    void Clear_Record_Data();
+
+    void Clear_String_Memory(std::string & str);
+
+    void Clear_Vector_Memory(std::vector<std::string> & vec);
+
+    void Save_Report();
 
     GUI_List_Data_Recorder Data_Recorder;
 
@@ -195,6 +201,9 @@ protected:
     wxString DataType;
 
     wxBitmap * exclamation_mark_bmp;
+
+    wxBitmap * save_bmp;
+
 
     Process_Manager * Process_Ptr;
 

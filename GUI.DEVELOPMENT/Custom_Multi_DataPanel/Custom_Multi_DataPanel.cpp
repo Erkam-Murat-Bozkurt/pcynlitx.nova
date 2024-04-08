@@ -96,6 +96,11 @@ Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, 
 
      this->SetTitle(wxT("NWINIX BUILD SYSTEM DESCRIPTION PANEL"));
 
+
+     this->save_bmp 
+  
+      = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\save_success_icon.png"),wxBITMAP_TYPE_ANY);
+
      this->exclamation_mark_bmp 
   
       = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
@@ -648,6 +653,19 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->Update();
 }
 
+void Custom_Multi_DataPanel::Save_Report(){
+
+     wxString Message = "Descriptions are recorded";
+            
+     Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
+            
+     wxT("STATUS:\n"),wxID_ANY,wxT("NWINIX DATA RECORD OPERATION REPORT"),*this->save_bmp);
+
+     dial->ShowModal();
+}
+
+
+
 
 void Custom_Multi_DataPanel::Close_Description_Panel(wxCommandEvent & event){
 
@@ -664,12 +682,14 @@ void Custom_Multi_DataPanel::Save_Panel_Descriptions(wxCommandEvent & event){
      if(event.GetId() == ID_SAVE_PANEL_DESCRIPTIONS ){
 
         event.Skip(true);
+
+        this->Clear_Record_Data();
      
         this->Record_Data.root_dir = this->Collect_List_Ctrl_Data(this->listctrl_git_repo_path);
 
         this->Record_Data.warehouse_location = this->Collect_List_Ctrl_Data(this->listctrl_warehouse_location);
 
-        this->Record_Data.options = this->Collect_List_Ctrl_Data(this->listctrl_options);
+        this->Record_Data.options   = this->Collect_List_Ctrl_Data(this->listctrl_options);
 
         this->Record_Data.standard = this->Collect_List_Ctrl_Data(this->listctrl_standard);
 
@@ -698,10 +718,53 @@ void Custom_Multi_DataPanel::Save_Panel_Descriptions(wxCommandEvent & event){
         this->Data_Recorder.Receive_Descriptions_Record_Data(&this->Record_Data);
 
         this->Data_Recorder.Update_Descriptor_File();
+
+        this->Save_Report();
      }
 }
 
 
+void Custom_Multi_DataPanel::Clear_Record_Data(){
+
+     this->Clear_String_Memory(this->Record_Data.root_dir);
+
+     this->Clear_String_Memory(this->Record_Data.warehouse_location);
+
+     this->Clear_String_Memory(this->Record_Data.options);
+
+     this->Clear_String_Memory(this->Record_Data.standard);
+
+     this->Clear_Vector_Memory(this->Record_Data.Include_Directories);
+
+     this->Clear_Vector_Memory(this->Record_Data.Library_Files);
+
+     this->Clear_Vector_Memory(this->Record_Data.Library_Directories);
+
+     this->Clear_Vector_Memory(this->Record_Data.Source_File_Directories);
+}
+
+
+
+void Custom_Multi_DataPanel::Clear_Vector_Memory(std::vector<std::string> & vec){
+
+     vec.shrink_to_fit();
+
+     size_t vector_size = vec.size();
+
+     for(size_t i=0;i<vector_size;i++){
+
+        this->Clear_String_Memory(vec.at(i));
+     }
+
+     vec.shrink_to_fit();
+}
+
+void Custom_Multi_DataPanel::Clear_String_Memory(std::string & str){
+
+     str.clear();
+
+     str.shrink_to_fit();
+}
 
 void Custom_Multi_DataPanel::Clear_Panel_Descriptions(wxCommandEvent & event){
 
@@ -709,9 +772,26 @@ void Custom_Multi_DataPanel::Clear_Panel_Descriptions(wxCommandEvent & event){
 
         event.Skip(true);
 
+        this->listctrl_git_repo_path->DeleteAllItems();
 
+        this->listctrl_warehouse_location->DeleteAllItems();
+     
+        this->listctrl_for_header_dir->DeleteAllItems();
+
+        this->listctrl_src_file_location->DeleteAllItems();
+
+        this->listctrl_library_dir->DeleteAllItems();
+        
+        this->listctrl_library_name->DeleteAllItems();
+
+        this->listctrl_standard->DeleteAllItems();
+
+        this->listctrl_options->DeleteAllItems();
      }
 }
+
+
+
 
 
 
