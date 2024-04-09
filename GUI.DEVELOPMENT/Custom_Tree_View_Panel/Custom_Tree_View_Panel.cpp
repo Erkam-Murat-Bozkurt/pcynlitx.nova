@@ -153,7 +153,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      // TITLE WINDOW SETTINGS START
 
-     this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),wxSize(Tab_Bar_size.x,Tab_Bar_size.y+5),wxColour(175,175,185));
+     this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),wxSize(Tab_Bar_size.x,Tab_Bar_size.y+5),wxColour(195,195,205));
 
      this->Title_Window->Receive_Tab_ctrl_Hight(this->tab_ctrl_hight);
 
@@ -161,7 +161,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
 
 
-     wxStaticText * text = new wxStaticText(this->Title_Window ,wxID_ANY,wxT("EXPLORER   "));
+     wxStaticText * text = new wxStaticText(this->Title_Window ,wxID_ANY,wxT("FILE EXPLORER   "));
 
      wxPoint title_pos =text->GetPosition();
 
@@ -180,9 +180,9 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      textFont.SetFaceName(wxT("Segoe UI Semibold"));
 
-     text->SetFont(textFont);
+     text->SetFont(textFont.Bold());
 
-     text->SetForegroundColour(wxColour(50,50,70));
+     text->SetForegroundColour(wxColour(50,50,60));
 
      // TITLE WINDOW SETTINGS END
 
