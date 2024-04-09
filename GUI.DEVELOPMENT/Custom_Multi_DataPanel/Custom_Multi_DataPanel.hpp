@@ -190,6 +190,8 @@ protected:
 
     void Save_Report();
 
+    void Clear_List_All_Ctrl_Contents();
+
     GUI_List_Data_Recorder Data_Recorder;
 
     Descriptor_File_Reader Des_Reader;

@@ -23,7 +23,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
-        wxDefaultPosition, wxSize(1350,950),wxDEFAULT_FRAME_STYLE )
+        wxDefaultPosition, wxSize(1250,950),wxDEFAULT_FRAME_STYLE )
 {
 
   this->is_custom_panel_constructed = false;
@@ -89,9 +89,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
   this->Interface_Manager.SetFlags(wxAUI_MGR_LIVE_RESIZE);
 
 
-  this->SetSize(wxSize(1350,950));
+  this->SetSize(wxSize(1250,950));
 
-  this->SetMinSize(wxSize(1350,950));
+  this->SetMinSize(wxSize(1250,950));
 
   this->Refresh();
 

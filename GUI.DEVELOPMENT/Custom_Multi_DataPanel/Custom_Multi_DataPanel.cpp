@@ -90,6 +90,8 @@ Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, 
 {
      this->Parent_Frame = parent;
 
+     this->Des_Reader.Set_Gui_Read_Status(true);
+
      wxIcon Frame_Icon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
      this->SetIcon(Frame_Icon);
@@ -772,26 +774,29 @@ void Custom_Multi_DataPanel::Clear_Panel_Descriptions(wxCommandEvent & event){
 
         event.Skip(true);
 
-        this->listctrl_git_repo_path->DeleteAllItems();
-
-        this->listctrl_warehouse_location->DeleteAllItems();
-     
-        this->listctrl_for_header_dir->DeleteAllItems();
-
-        this->listctrl_src_file_location->DeleteAllItems();
-
-        this->listctrl_library_dir->DeleteAllItems();
-        
-        this->listctrl_library_name->DeleteAllItems();
-
-        this->listctrl_standard->DeleteAllItems();
-
-        this->listctrl_options->DeleteAllItems();
+        this->Clear_List_All_Ctrl_Contents();
      }
 }
 
 
+void Custom_Multi_DataPanel::Clear_List_All_Ctrl_Contents(){
 
+     this->listctrl_git_repo_path->DeleteAllItems();
+
+     this->listctrl_warehouse_location->DeleteAllItems();
+     
+     this->listctrl_for_header_dir->DeleteAllItems();
+
+     this->listctrl_src_file_location->DeleteAllItems();
+
+     this->listctrl_library_dir->DeleteAllItems();
+        
+     this->listctrl_library_name->DeleteAllItems();
+
+     this->listctrl_standard->DeleteAllItems();
+
+     this->listctrl_options->DeleteAllItems();
+}
 
 
 
@@ -901,33 +906,83 @@ void Custom_Multi_DataPanel::AppendDataItem(wxDataViewListCtrl * listctrl, wxStr
 
 void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
 
+     this->Clear_List_All_Ctrl_Contents();
+
      this->Des_Reader.Read_Descriptor_File();
 
      const std::vector<std::string> & include_dir = this->Des_Reader.Get_Include_Directories();
 
-     const std::vector<std::string> & lib_dir = this->Des_Reader.Get_Library_Directories();
+     const std::vector<std::string> & lib_dir     = this->Des_Reader.Get_Library_Directories();
 
-     const std::vector<std::string> & src_dir = this->Des_Reader.Get_Source_File_Directories();
+     const std::vector<std::string> & src_dir     = this->Des_Reader.Get_Source_File_Directories();
 
-     const std::vector<std::string> & lib_files =  this->Des_Reader.Get_Library_Files();
-
-     
-     this->Load_Data_List_Ctrl(this->listctrl_for_header_dir,include_dir);
-
-     this->Load_Data_List_Ctrl(this->listctrl_library_dir,lib_dir);
-
-     this->Load_Data_List_Ctrl(this->listctrl_src_file_location,src_dir);
-
-     this->Load_Data_List_Ctrl(this->listctrl_library_name,lib_files);
+     const std::vector<std::string> & lib_files   = this->Des_Reader.Get_Library_Files();
 
 
-     this->Load_Data_List_Ctrl(this->listctrl_standard,this->Des_Reader.Get_Standard());
 
-     this->Load_Data_List_Ctrl(this->listctrl_options,this->Des_Reader.Get_Options());
+     if(include_dir.size()>0){
 
-     this->Load_Data_List_Ctrl(this->listctrl_warehouse_location,this->Des_Reader.Get_Warehouse_Location());
+        this->Load_Data_List_Ctrl(this->listctrl_for_header_dir,include_dir);
+     }
 
-     this->Load_Data_List_Ctrl(this->listctrl_git_repo_path,this->Des_Reader.Get_Repo_Directory_Location());      
+     if(lib_dir.size()>0){
+
+        this->Load_Data_List_Ctrl(this->listctrl_library_dir,lib_dir);
+     }
+
+
+     if(src_dir.size()>0){
+
+        this->Load_Data_List_Ctrl(this->listctrl_src_file_location,src_dir);
+     }
+
+
+     if(lib_files.size()>0){
+
+        this->Load_Data_List_Ctrl(this->listctrl_library_name,lib_files);
+     }
+
+
+
+     std::string c_standard = this->Des_Reader.Get_Standard();
+
+     c_standard.shrink_to_fit();
+
+     if(c_standard.size()>0){
+
+        this->Load_Data_List_Ctrl(this->listctrl_standard,c_standard);
+     }
+
+
+     std::string options = this->Des_Reader.Get_Options();
+
+     options.shrink_to_fit();
+
+     if(options.size()>0){
+
+        this->Load_Data_List_Ctrl(this->listctrl_options,options);
+     }
+
+
+     std::string warehouse_loc = this->Des_Reader.Get_Warehouse_Location();
+
+     warehouse_loc.shrink_to_fit();
+
+     if(warehouse_loc.size()>0){
+
+        this->Load_Data_List_Ctrl(this->listctrl_warehouse_location,warehouse_loc);
+     }
+
+
+     std::string repo_dir = this->Des_Reader.Get_Repo_Directory_Location();
+
+     repo_dir.shrink_to_fit();
+
+     if(repo_dir.size()>0){
+
+        this->Load_Data_List_Ctrl(this->listctrl_git_repo_path,repo_dir);      
+     }
+
 }
 
 

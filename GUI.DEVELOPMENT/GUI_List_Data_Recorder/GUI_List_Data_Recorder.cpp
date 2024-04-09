@@ -27,6 +27,8 @@ GUI_List_Data_Recorder::GUI_List_Data_Recorder(char opr_sis) : Des_Reader (opr_s
 {
     this->opr_sis = opr_sis;
 
+    this->Des_Reader.Set_Gui_Read_Status(true);
+
     bool Data_Receive_Cond = true;
 
     this->Des_Reader.Receive_Data_Record_Condition(Data_Receive_Cond);
