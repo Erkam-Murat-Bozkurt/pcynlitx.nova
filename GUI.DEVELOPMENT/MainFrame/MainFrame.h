@@ -59,6 +59,7 @@
 #include "Project_Descriptions_Printer.hpp"
 #include "Custom_Message_Dialog.hpp"
 #include "Help_Page_Constructor.hpp"
+#include "Project_File_Selection_Window.hpp"
 #include "Custom_Progress_Dialog.hpp"
 #include "Dependency_Tree_Printer.hpp"
 #include "Custom_System_Interface.h"

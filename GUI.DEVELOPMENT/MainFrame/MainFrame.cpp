@@ -1245,6 +1245,11 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
 
        event.Skip(true);
 
+       Project_File_Selection_Window * window = new Project_File_Selection_Window(this,wxID_ANY);
+
+
+       /*
+
        wxString title(wxT("Select Project File"));
 
        this->Descriptor_File_Path.clear();
@@ -1266,6 +1271,9 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
        this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
        this->Process_Ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+       */
+
    }
 }
 

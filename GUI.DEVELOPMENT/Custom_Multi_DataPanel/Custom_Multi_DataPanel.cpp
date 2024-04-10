@@ -236,17 +236,19 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->scroll_win->SetBackgroundColour(wxColour(245, 245, 245));
 
 
-     wxString title = wxT("BUILD SYSTEM DATA AND DEPENDENCIES");
+     wxString title = wxT("NWINIX DEPENDENCY MANAGEMENT PANEL");
      
      wxStaticText * text   = new wxStaticText(this->scroll_win ,wxID_ANY,title);
 
      wxFont Title_Font = text->GetFont();
 
-     Title_Font.SetPointSize(11);
+     Title_Font.SetPointSize(10);
 
-     text->SetFont(Title_Font.Bold());
+     Title_Font.SetFaceName(wxT("Segoe UI Semibold"));
 
-     text->SetForegroundColour(wxColour(100,100,100));
+     text->SetFont(Title_Font);
+
+     text->SetForegroundColour(wxColour(80,80,80));
      
 
 

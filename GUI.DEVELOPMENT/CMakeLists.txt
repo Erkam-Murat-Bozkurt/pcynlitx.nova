@@ -91,6 +91,9 @@ add_library(BuildSystem_GUI
 
     ${CMAKE_CURRENT_SOURCE_DIR}/GUI_List_Data_Recorder/GUI_List_Data_Recorder.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/GUI_List_Data_Recorder/GUI_List_Data_Recorder.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window/Project_File_Selection_Window.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window/Project_File_Selection_Window.cpp
 )
 
 
@@ -153,6 +156,9 @@ target_include_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxDataViewTreeCtrl
 
     ${CMAKE_CURRENT_SOURCE_DIR}/GUI_List_Data_Recorder
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window
+
 
 
     ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector
@@ -241,6 +247,9 @@ target_link_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxDataViewTreeCtrl
 
     ${CMAKE_CURRENT_SOURCE_DIR}/GUI_List_Data_Recorder
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window
+
 
     
     ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector
