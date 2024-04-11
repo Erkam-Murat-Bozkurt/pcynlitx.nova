@@ -41,7 +41,7 @@ public:
     
     const wxString & title=wxT("PROJECT FILE SELECTION PANEL"), 
     
-    const wxPoint & pos=wxDefaultPosition, const wxSize & size=wxSize(700,400));
+    const wxPoint & pos=wxDefaultPosition, const wxSize & size=wxSize(700,500));
 
     virtual ~Project_File_Selection_Window();
 
@@ -98,7 +98,7 @@ protected:
 
     wxBoxSizer * PRFS_Panel_Sizer;
 
-    wxBoxSizer * EMPF_Cons_Buttom_Panel_Sizer;
+    wxBoxSizer * EMPF_Cons_Button_Panel_Sizer;
 
     wxBoxSizer * PRFS_Button_Panel_Sizer;
 

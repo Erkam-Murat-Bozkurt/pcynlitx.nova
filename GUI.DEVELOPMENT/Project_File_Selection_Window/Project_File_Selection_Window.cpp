@@ -99,9 +99,18 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
 
 
-     this->Empty_Project_File_Button_Panel     = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(-1,-1));
+     this->Empty_Project_File_Button_Panel     = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(350,100));
 
-     this->Project_File_Selection_Button_Panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(-1,-1));
+     this->Project_File_Selection_Button_Panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(350,100));
+
+     this->Empty_Project_File_Button_Panel->SetMinSize(wxSize(350,100));
+
+     this->Project_File_Selection_Button_Panel->SetMinSize(wxSize(350,100));
+
+     this->Empty_Project_File_Button_Panel->SetBackgroundColour(wxColour(250,250,250));
+
+     this->Project_File_Selection_Button_Panel->SetBackgroundColour(wxColour(250,250,250));
+
 
 
      this->Empty_Project_File_Button     = new wxButton(this->Empty_Project_File_Button_Panel,ID_CONSTRUCT_EMPTY_PROJECT_FILE,
@@ -111,6 +120,11 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
      this->Project_File_Selection_Button = new wxButton(this->Project_File_Selection_Button_Panel,ID_SELECT_AN_EXISTING_PROJECT_FILE,
      
                                          wxT("SELECT PROJECT FILE"),wxDefaultPosition, wxSize(200, 60));
+
+     this->Empty_Project_File_Button->SetMinSize(wxSize(200,60));
+
+     this->Project_File_Selection_Button->SetMinSize(wxSize(200,60));
+
 
 
      //this->Empty_Project_File_Button->SetForegroundColour(wxColour(60,60,70));
@@ -185,18 +199,20 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
 
 
-     this->EMPF_Cons_Buttom_Panel_Sizer = new wxBoxSizer(wxHORIZONTAL);
+     this->EMPF_Cons_Button_Panel_Sizer = new wxBoxSizer(wxHORIZONTAL);
 
      this->PRFS_Button_Panel_Sizer      = new wxBoxSizer(wxHORIZONTAL);
 
 
 
-     this->EMPF_Cons_Buttom_Panel_Sizer->Add(this->Empty_Project_File_Button_Panel,0,  wxEXPAND  |  wxTOP,40);
+     this->EMPF_Cons_Button_Panel_Sizer->Add(this->Empty_Project_File_Button_Panel,0,  wxEXPAND  | wxLEFT | wxRIGHT | wxBOTTOM,10);
 
-     this->PRFS_Button_Panel_Sizer->Add(this->Project_File_Selection_Button_Panel, 0,  wxEXPAND  |  wxTOP,40);
+     this->PRFS_Button_Panel_Sizer->Add(this->Project_File_Selection_Button_Panel, 0,  wxEXPAND  | wxLEFT | wxRIGHT | wxBOTTOM,10);
 
 
+     this->Empty_Project_File_Button->CentreOnParent(wxBOTH);
 
+     this->Project_File_Selection_Button->CentreOnParent(wxBOTH);
 
 
 
@@ -209,7 +225,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Left_Panel_Sizer->Add(this->EMPF_Cons_Text_Panel_Sizer,0, wxALIGN_CENTER_HORIZONTAL  | wxALL ,0);
 
-     this->Left_Panel_Sizer->Add(this->EMPF_Cons_Buttom_Panel_Sizer,0, wxALIGN_CENTER_HORIZONTAL | wxFIXED_MINSIZE  | wxBOTTOM  | wxALL ,0);
+     this->Left_Panel_Sizer->Add(this->EMPF_Cons_Button_Panel_Sizer,0, wxALIGN_CENTER_HORIZONTAL | wxALL ,0);
 
 
      this->Right_Panel_Sizer = new wxBoxSizer(wxVERTICAL);
@@ -218,7 +234,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Right_Panel_Sizer->Add(this->PRFS_Text_Panel_Sizer,0, wxALIGN_CENTER_HORIZONTAL | wxALL ,0);
 
-     this->Right_Panel_Sizer->Add(this->PRFS_Button_Panel_Sizer,0,  wxALIGN_CENTER_HORIZONTAL | wxFIXED_MINSIZE  | wxBOTTOM  | wxALL ,0);
+     this->Right_Panel_Sizer->Add(this->PRFS_Button_Panel_Sizer,0,  wxALIGN_CENTER_HORIZONTAL | wxALL ,0);
 
      
 
@@ -227,9 +243,9 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Frame_Sizer = new wxBoxSizer(wxHORIZONTAL);
 
-     this->Frame_Sizer->Add(this->Left_Panel_Sizer, 1,wxEXPAND | wxALL,50);
+     this->Frame_Sizer->Add(this->Left_Panel_Sizer, 1,wxEXPAND | wxALL,20);
 
-     this->Frame_Sizer->Add(this->Right_Panel_Sizer,1,wxEXPAND | wxALL,50);
+     this->Frame_Sizer->Add(this->Right_Panel_Sizer,1,wxEXPAND | wxALL,20);
 
      this->SetSizer(this->Frame_Sizer);
 
