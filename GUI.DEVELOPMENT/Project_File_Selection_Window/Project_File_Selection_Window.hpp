@@ -38,7 +38,7 @@ public:
     
         const wxString & title=wxT(""), 
 
-        const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(800,420), 
+        const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(700,400), 
    
         long style=wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP, char opr_sis='w');
 
@@ -74,9 +74,9 @@ protected:
 
     wxString DataType;
 
-    wxBitmap * exclamation_mark_bmp;
+    wxBitmap * new_empty_file;
 
-    wxBitmap * save_bmp;
+    wxBitmap * open_existing_file;
 
     char opr_sis;
 
@@ -93,6 +93,10 @@ protected:
 
     wxBoxSizer * PRFS_Button_Panel_Sizer;
 
+
+    wxBoxSizer * EMPF_Cons_Text_Panel_Sizer;
+
+    wxBoxSizer * PRFS_Text_Panel_Sizer;
 
 
     wxBoxSizer * Left_Panel_Sizer;
@@ -113,6 +117,9 @@ protected:
 
     wxPanel  * Project_File_Selection_Button_Panel;
 
+    wxPanel  * Empty_Project_File_Text_Panel;
+
+    wxPanel  * Project_File_Selection_Text_Panel;
 
     DECLARE_EVENT_TABLE()
 };

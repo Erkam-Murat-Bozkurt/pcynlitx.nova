@@ -18,7 +18,9 @@ Project_File_Selection_Window::Project_File_Selection_Window(wxFrame * parent, w
 
    const wxPoint & pos, const wxSize & size, long style, char opr_sis) : 
    
-   wxFrame(parent,id,title,pos,size, style),  Des_Reader(opr_sis)
+   wxFrame(parent,id,title,pos,size, wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN | wxSTAY_ON_TOP), 
+
+   Des_Reader(opr_sis)
 {
      this->Parent_Frame = parent;
 
@@ -31,41 +33,64 @@ Project_File_Selection_Window::Project_File_Selection_Window(wxFrame * parent, w
      this->SetTitle(wxT("NWINIX BUILD SYSTEM DESCRIPTION PANEL"));
 
 
-     this->save_bmp 
+     this->new_empty_file 
   
-      = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\save_success_icon.png"),wxBITMAP_TYPE_ANY);
+      = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\open_new_project_file.png"),wxBITMAP_TYPE_ANY);
 
-     this->exclamation_mark_bmp 
+
+     this->open_existing_file 
   
-      = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+      = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\select_project_file_icon.png"),wxBITMAP_TYPE_ANY);
 
      this->SetBackgroundColour(wxColour(250,250,250));
 
      
-     this->Project_File_Selection_Panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(400,320));
+     this->Project_File_Selection_Panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(350,175));
 
-     this->Project_File_Selection_Panel->SetMinSize(wxSize(400,320));
+     this->Project_File_Selection_Panel->SetMinSize(wxSize(350,175));
 
-     this->Project_File_Selection_Panel->SetBackgroundColour(wxColour(200,200,220));
+     this->Project_File_Selection_Panel->SetBackgroundColour(wxColour(250,250,250));
 
 
-     this->Empty_Project_File_Panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(400,320));
 
-     this->Empty_Project_File_Panel->SetMinSize(wxSize(400,320));
 
-     this->Empty_Project_File_Panel->SetBackgroundColour(wxColour(175,175,185));
+
+
+     this->Empty_Project_File_Panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(350,175));
+
+     this->Empty_Project_File_Panel->SetMinSize(wxSize(350,175));
+
+     this->Empty_Project_File_Panel->SetBackgroundColour(wxColour(250,250,250));
+
+
+     wxStaticBitmap * select_project_file_figure 
+     
+     = new wxStaticBitmap(this->Project_File_Selection_Panel,wxID_ANY,*this->open_existing_file);
+
+     select_project_file_figure->CentreOnParent(wxBOTH);
+
+     
+     wxStaticBitmap * new_project_file_figure 
+     
+     = new wxStaticBitmap(this->Empty_Project_File_Panel,wxID_ANY,*this->new_empty_file);
+
+     new_project_file_figure->CentreOnParent(wxBOTH);
 
 
 
      this->EMPF_Cons_Panel_Sizer = new wxBoxSizer(wxHORIZONTAL);
 
-     this->EMPF_Cons_Panel_Sizer->Add(this->Empty_Project_File_Panel,1,wxEXPAND | wxALL,0);
+     this->EMPF_Cons_Panel_Sizer->Add(this->Empty_Project_File_Panel,1,wxEXPAND | wxTOP | wxLEFT | wxRIGHT ,0);
 
 
 
      this->PRFS_Panel_Sizer = new wxBoxSizer(wxHORIZONTAL);
 
-     this->PRFS_Panel_Sizer->Add(this->Project_File_Selection_Panel,1,wxEXPAND | wxALL,0);
+     this->PRFS_Panel_Sizer->Add(this->Project_File_Selection_Panel,1,wxEXPAND | wxTOP | wxLEFT | wxRIGHT ,0);
+
+
+
+
 
 
 
@@ -84,28 +109,110 @@ Project_File_Selection_Window::Project_File_Selection_Window(wxFrame * parent, w
                                          wxT("SELECT PROJECT FILE"),wxDefaultPosition, wxSize(200, 60));
 
 
+
+
+
+
+
+
+     this->Empty_Project_File_Text_Panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(350,100));
+
+     this->Empty_Project_File_Text_Panel->SetMinSize(wxSize(350,100));
+
+     this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(250,250,250));
+
+
+     this->Project_File_Selection_Text_Panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(350,100));
+
+     this->Project_File_Selection_Text_Panel->SetMinSize(wxSize(350,100));
+
+     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(250,250,250));
+
+
+
+
+
+
+     wxString new_file_text_string = wxT("USE A NEW EMPTY PROJECT FILE");
+     
+     wxStaticText * new_file_text  
+     
+      = new wxStaticText(this->Empty_Project_File_Text_Panel,wxID_ANY,new_file_text_string);
+
+     wxFont Text_Font = new_file_text->GetFont();
+
+     Text_Font.SetPointSize(10);
+
+     Text_Font.SetFaceName(wxT("Segoe UI Semibold"));
+
+     new_file_text->SetFont(Text_Font);
+
+     new_file_text->SetForegroundColour(wxColour(175,80,80));
+     
+     new_file_text->CentreOnParent(wxBOTH);
+
+
+
+     wxString existing_file_text_string = wxT("USE A READY PROJECT FILE");
+     
+     wxStaticText * project_file_text  
+     
+       = new wxStaticText(this->Project_File_Selection_Text_Panel,wxID_ANY,existing_file_text_string);
+
+     project_file_text->SetFont(Text_Font);
+
+     project_file_text->SetForegroundColour(wxColour(175,80,80));
+
+     project_file_text->CentreOnParent(wxBOTH);
+
+
+
+     this->EMPF_Cons_Text_Panel_Sizer = new wxBoxSizer(wxHORIZONTAL);
+
+     this->PRFS_Text_Panel_Sizer = new wxBoxSizer(wxHORIZONTAL);
+
+
+     this->EMPF_Cons_Text_Panel_Sizer->Add(this->Empty_Project_File_Text_Panel,0,  wxEXPAND  |  wxALL,0);
+
+     this->PRFS_Text_Panel_Sizer->Add(this->Project_File_Selection_Text_Panel, 0,  wxEXPAND  | wxALL,0);
+
+
+
+
+
+
      this->EMPF_Cons_Buttom_Panel_Sizer = new wxBoxSizer(wxHORIZONTAL);
 
      this->PRFS_Button_Panel_Sizer      = new wxBoxSizer(wxHORIZONTAL);
 
 
 
-     this->EMPF_Cons_Buttom_Panel_Sizer->Add(this->Empty_Project_File_Button_Panel,0,  wxEXPAND  |  wxALL,0);
+     this->EMPF_Cons_Buttom_Panel_Sizer->Add(this->Empty_Project_File_Button_Panel,0,  wxEXPAND  |  wxALL,20);
 
-     this->PRFS_Button_Panel_Sizer->Add(this->Project_File_Selection_Button_Panel, 0,  wxEXPAND  | wxALL,0);
+     this->PRFS_Button_Panel_Sizer->Add(this->Project_File_Selection_Button_Panel, 0,  wxEXPAND  | wxALL,20);
+
+
+
+
+
+
 
 
 
      this->Left_Panel_Sizer = new wxBoxSizer(wxVERTICAL);
 
-     this->Left_Panel_Sizer->Add(this->EMPF_Cons_Panel_Sizer,1,wxEXPAND | wxTOP | wxALL ,0);
+     this->Left_Panel_Sizer->Add(this->EMPF_Cons_Panel_Sizer,1, wxALIGN_CENTER_HORIZONTAL  | wxALL ,0);
+
+     this->Left_Panel_Sizer->Add(this->EMPF_Cons_Text_Panel_Sizer,0, wxALIGN_CENTER_HORIZONTAL  | wxALL ,0);
 
      this->Left_Panel_Sizer->Add(this->EMPF_Cons_Buttom_Panel_Sizer,0, wxALIGN_CENTER_HORIZONTAL | wxFIXED_MINSIZE  | wxBOTTOM  | wxALL ,0);
 
 
      this->Right_Panel_Sizer = new wxBoxSizer(wxVERTICAL);
 
-     this->Right_Panel_Sizer->Add(this->PRFS_Panel_Sizer,1,wxEXPAND | wxALL ,0);
+     this->Right_Panel_Sizer->Add(this->PRFS_Panel_Sizer,1, wxALIGN_CENTER_HORIZONTAL | wxALL ,0);
+
+     this->Right_Panel_Sizer->Add(this->PRFS_Text_Panel_Sizer,0, wxALIGN_CENTER_HORIZONTAL | wxALL ,0);
 
      this->Right_Panel_Sizer->Add(this->PRFS_Button_Panel_Sizer,0,  wxALIGN_CENTER_HORIZONTAL | wxFIXED_MINSIZE  | wxBOTTOM  | wxALL ,0);
 
@@ -154,7 +261,7 @@ Project_File_Selection_Window::~Project_File_Selection_Window(){
 
 void Project_File_Selection_Window::DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(220,220,220));
+     dc.SetBrush(wxColour(240,240,240));
 
      dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+5,rect.GetHeight()+5);
 }
