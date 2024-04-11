@@ -1245,8 +1245,20 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
 
        event.Skip(true);
 
+       this->Freeze();
+
+
        Project_File_Selection_Window * window = new Project_File_Selection_Window(this,wxID_ANY);
 
+       window->Receive_Descriptor_File_Path(&this->Descriptor_File_Path);
+
+       window->Receive_Process_Manager(this->Process_Ptr);
+
+       window->ShowModal();
+
+       this->is_project_file_selected = window->get_Descriptor_File_Selection_Status();
+
+       this->Thaw();
 
        /*
 

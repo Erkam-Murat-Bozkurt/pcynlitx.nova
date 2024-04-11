@@ -4,9 +4,13 @@
 #include "Project_File_Selection_Window.hpp"
 
 
-BEGIN_EVENT_TABLE(Project_File_Selection_Window,wxFrame )
+BEGIN_EVENT_TABLE(Project_File_Selection_Window,wxDialog )
 
     EVT_BUTTON(ID_CLOSE_PROJECT_FILE_SELECTION_PANEL,Project_File_Selection_Window::Close_Window)
+
+    EVT_BUTTON(ID_CONSTRUCT_EMPTY_PROJECT_FILE,Project_File_Selection_Window::Construct_Empty_Project_File)
+
+    EVT_BUTTON(ID_SELECT_AN_EXISTING_PROJECT_FILE,Project_File_Selection_Window::Select_Project_File)
 
     EVT_PAINT(Project_File_Selection_Window::OnPaint)
 
@@ -14,23 +18,23 @@ END_EVENT_TABLE()
 
 
 
-Project_File_Selection_Window::Project_File_Selection_Window(wxFrame * parent, wxWindowID id, const wxString & title, 
+Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent, wxWindowID id, 
 
-   const wxPoint & pos, const wxSize & size, long style, char opr_sis) : 
+    const wxString & title, 
+    
+    const wxPoint & pos, const wxSize & size) : 
    
-   wxFrame(parent,id,title,pos,size, wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN | wxSTAY_ON_TOP), 
-
-   Des_Reader(opr_sis)
+    wxDialog(parent,id,title,pos,size, wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN | wxSTAY_ON_TOP)
 {
-     this->Parent_Frame = parent;
+     this->Parent_Window = parent;
 
-     this->Des_Reader.Set_Gui_Read_Status(true);
+     this->Descriptor_File_Selection_Status = false;
 
      wxIcon Frame_Icon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
      this->SetIcon(Frame_Icon);
 
-     this->SetTitle(wxT("NWINIX BUILD SYSTEM DESCRIPTION PANEL"));
+     this->SetTitle(wxT("NWINIX BUILD SYSTEM PROJECT FILE SELECTION PANEL"));
 
 
      this->new_empty_file 
@@ -109,22 +113,22 @@ Project_File_Selection_Window::Project_File_Selection_Window(wxFrame * parent, w
                                          wxT("SELECT PROJECT FILE"),wxDefaultPosition, wxSize(200, 60));
 
 
+     //this->Empty_Project_File_Button->SetForegroundColour(wxColour(60,60,70));
+
+     //this->Project_File_Selection_Button->SetForegroundColour(wxColour(60,60,70));
 
 
 
+     this->Empty_Project_File_Text_Panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(350,80));
 
-
-
-     this->Empty_Project_File_Text_Panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(350,100));
-
-     this->Empty_Project_File_Text_Panel->SetMinSize(wxSize(350,100));
+     this->Empty_Project_File_Text_Panel->SetMinSize(wxSize(350,80));
 
      this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(250,250,250));
 
 
-     this->Project_File_Selection_Text_Panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(350,100));
+     this->Project_File_Selection_Text_Panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(350,80));
 
-     this->Project_File_Selection_Text_Panel->SetMinSize(wxSize(350,100));
+     this->Project_File_Selection_Text_Panel->SetMinSize(wxSize(350,80));
 
      this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(250,250,250));
 
@@ -187,9 +191,9 @@ Project_File_Selection_Window::Project_File_Selection_Window(wxFrame * parent, w
 
 
 
-     this->EMPF_Cons_Buttom_Panel_Sizer->Add(this->Empty_Project_File_Button_Panel,0,  wxEXPAND  |  wxALL,20);
+     this->EMPF_Cons_Buttom_Panel_Sizer->Add(this->Empty_Project_File_Button_Panel,0,  wxEXPAND  |  wxTOP,40);
 
-     this->PRFS_Button_Panel_Sizer->Add(this->Project_File_Selection_Button_Panel, 0,  wxEXPAND  | wxALL,20);
+     this->PRFS_Button_Panel_Sizer->Add(this->Project_File_Selection_Button_Panel, 0,  wxEXPAND  |  wxTOP,40);
 
 
 
@@ -223,9 +227,9 @@ Project_File_Selection_Window::Project_File_Selection_Window(wxFrame * parent, w
 
      this->Frame_Sizer = new wxBoxSizer(wxHORIZONTAL);
 
-     this->Frame_Sizer->Add(this->Left_Panel_Sizer, 1,wxEXPAND | wxALL,20);
+     this->Frame_Sizer->Add(this->Left_Panel_Sizer, 1,wxEXPAND | wxALL,50);
 
-     this->Frame_Sizer->Add(this->Right_Panel_Sizer,1,wxEXPAND | wxALL,20);
+     this->Frame_Sizer->Add(this->Right_Panel_Sizer,1,wxEXPAND | wxALL,50);
 
      this->SetSizer(this->Frame_Sizer);
 
@@ -259,6 +263,17 @@ Project_File_Selection_Window::~Project_File_Selection_Window(){
 
 }
 
+void Project_File_Selection_Window::Receive_Descriptor_File_Path(wxString * DesPATH){
+
+     this->Descriptor_File_Path_Pointer = DesPATH;
+}
+
+
+void Project_File_Selection_Window::Receive_Process_Manager(Process_Manager * ptr){
+
+     Process_Ptr = ptr;
+}
+
 void Project_File_Selection_Window::DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect& rect)
 {
      dc.SetBrush(wxColour(240,240,240));
@@ -278,14 +293,6 @@ void Project_File_Selection_Window::OnPaint(wxPaintEvent & event)
 }
 
 
-void Project_File_Selection_Window::Receive_Descriptor_File_Path(wxString path){
-
-     this->Descriptor_File_Path = path;
-
-     this->Des_Reader.Receive_Descriptor_File_Path(path.ToStdString());
-}
-
-
 void Project_File_Selection_Window::Close_Window(wxCommandEvent & event){
 
      if(event.GetId() == ID_CLOSE_PROJECT_FILE_SELECTION_PANEL ){
@@ -296,6 +303,95 @@ void Project_File_Selection_Window::Close_Window(wxCommandEvent & event){
      }
 }
 
+
+void Project_File_Selection_Window::Construct_Empty_Project_File(wxCommandEvent & event){
+
+     if(event.GetId() == ID_CONSTRUCT_EMPTY_PROJECT_FILE ){
+
+        event.Skip(true);
+
+        wxDirDialog dlg(NULL, "Select Descriptor File Location", "",
+
+           wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
+
+        dlg.CenterOnScreen(wxBOTH);
+
+
+        if(dlg.ShowModal() == wxID_OK){
+
+           wxString construction_dir =dlg.GetPath();
+
+           wxString DesPATH = construction_dir + wxT("\\Pcb_Descriptor.txt");
+
+           wxString shell_command = "D:\\Pcynlitx_Build_Platform\\CBuild.exe " 
+        
+           + construction_dir + " -ed";
+
+           this->Process_Ptr->Fork_Process(shell_command);
+           
+           if(this->FileManager.Is_Path_Exist(DesPATH.ToStdString())){
+
+               *this->Descriptor_File_Path_Pointer = DesPATH;
+
+               this->Descriptor_File_Selection_Status = true;
+
+               this->Destroy();
+           }
+        }
+        else{
+
+             this->Descriptor_File_Path_Pointer->clear();
+
+             this->Descriptor_File_Path_Pointer->shrink_to_fit();
+
+             this->Descriptor_File_Selection_Status = false;
+        }
+     }
+}
+
+void Project_File_Selection_Window::Select_Project_File(wxCommandEvent & event){
+
+     if(event.GetId() == ID_SELECT_AN_EXISTING_PROJECT_FILE ){
+
+        event.Skip(true);
+
+        this->Select_File();
+     }
+}
+
+
+
+void Project_File_Selection_Window::Select_File(){
+
+     wxFileDialog * openFileDialog
+
+              = new wxFileDialog(this,wxT("Select Project File"));
+
+     openFileDialog->Centre(wxBOTH);
+
+     openFileDialog->CenterOnScreen(wxBOTH);
+
+     if (openFileDialog->ShowModal() == wxID_OK){
+
+         *this->Descriptor_File_Path_Pointer = openFileDialog->GetPath();
+
+         this->Descriptor_File_Selection_Status = true;
+
+         this->Destroy();
+     }
+     else{
+
+          this->Descriptor_File_Selection_Status = false;
+     }
+
+     delete openFileDialog;
+}
+
+
+bool Project_File_Selection_Window::get_Descriptor_File_Selection_Status() const 
+{
+     return this->Descriptor_File_Selection_Status;
+}
 
 void Project_File_Selection_Window::Clear_Vector_Memory(std::vector<std::string> & vec){
 

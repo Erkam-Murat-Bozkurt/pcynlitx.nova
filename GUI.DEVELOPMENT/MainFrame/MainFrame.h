@@ -79,7 +79,6 @@ public:
   void Select_Project_File(wxCommandEvent&);
   void Show_Project_File(wxCommandEvent&);
   void DirectoryOpen(wxCommandEvent & event);
-  //void FileSelect(wxDataViewEvent & event);
   wxAuiPaneInfo Central_Pane_Info;
 private:
   void OpenSettings(wxCommandEvent & event);
@@ -144,6 +143,7 @@ private:
   std::thread * read_process_output;
   std::thread * print_file_dependency;
   std::thread * print_to_tree_ctrl;
+  std::thread * project_file_selector;
   Custom_DataPanel * data_panel_ptr;
   Custom_Multi_DataPanel * Multi_DataPanel;
   bool is_custom_panel_constructed;

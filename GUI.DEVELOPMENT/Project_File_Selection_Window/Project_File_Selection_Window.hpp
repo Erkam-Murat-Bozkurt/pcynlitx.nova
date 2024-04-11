@@ -18,8 +18,11 @@
 #include <wx\textdlg.h>
 #include <wx\msgdlg.h>
 #include <wx\dir.h>
+#include <wx/dialog.h>
 #include "Descriptor_File_Reader.hpp"
+#include "Process_Manager.hpp"
 #include "Custom_Message_Dialog.hpp"
+#include "Cpp_FileOperations.h"
 
 
 
@@ -31,28 +34,26 @@ enum
 };
 
 
-class Project_File_Selection_Window : public wxFrame 
+class Project_File_Selection_Window : public wxDialog 
 {
 public:
-    Project_File_Selection_Window(wxFrame * parent, wxWindowID id=wxID_ANY, 
+    Project_File_Selection_Window(wxWindow * parent, wxWindowID id, 
     
-        const wxString & title=wxT(""), 
-
-        const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(700,400), 
-   
-        long style=wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP, char opr_sis='w');
+    const wxString & title=wxT("PROJECT FILE SELECTION PANEL"), 
+    
+    const wxPoint & pos=wxDefaultPosition, const wxSize & size=wxSize(700,400));
 
     virtual ~Project_File_Selection_Window();
 
-    void Receive_Descriptor_File_Path(wxString path);
+    void Receive_Process_Manager(Process_Manager * Process_Ptr);
 
-    bool Get_Data_Save_Status();
+    void Receive_Descriptor_File_Path(wxString * DesPATH);
+
+    bool get_Descriptor_File_Selection_Status() const;
 
     wxString ExeFileName;
 
     wxString FilePath;
-
-
 
 protected:
 
@@ -62,15 +63,21 @@ protected:
 
     void Close_Window(wxCommandEvent & event);
 
+    void Construct_Empty_Project_File(wxCommandEvent & event);
 
+    void Select_Project_File(wxCommandEvent & event);
 
     void Clear_String_Memory(std::string & str);
 
     void Clear_Vector_Memory(std::vector<std::string> & vec);
 
-    Descriptor_File_Reader Des_Reader;
+    void Select_File();
 
-    wxString Descriptor_File_Path;
+    Cpp_FileOperations FileManager;
+
+    Process_Manager * Process_Ptr;
+
+    wxString * Descriptor_File_Path_Pointer;
 
     wxString DataType;
 
@@ -80,8 +87,10 @@ protected:
 
     char opr_sis;
 
+    bool Descriptor_File_Selection_Status;
 
-    wxFrame * Parent_Frame;
+
+    wxWindow * Parent_Window;
 
     wxBoxSizer * Frame_Sizer;
 
