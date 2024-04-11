@@ -1078,7 +1078,7 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
                                          wxT("THE PROJECT DESCRIPTION LIST"));
 
                this->Descriptions_Printer->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
+               
                this->Descriptions_Printer->Receive_Descriptor_File_Reader(this->Des_Reader);
 
                this->Descriptions_Printer->Read_Descriptions();
@@ -1247,45 +1247,19 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
 
        this->Freeze();
 
-
        Project_File_Selection_Window * window = new Project_File_Selection_Window(this,wxID_ANY);
 
        window->Receive_Descriptor_File_Path(&this->Descriptor_File_Path);
 
        window->Receive_Process_Manager(this->Process_Ptr);
 
-       window->ShowModal();
+       window->Receive_Project_File_Selection_Status(&this->is_project_file_selected);
 
-       this->is_project_file_selected = window->get_Descriptor_File_Selection_Status();
+       window->ShowModal();
 
        this->Thaw();
 
-       /*
-
-       wxString title(wxT("Select Project File"));
-
-       this->Descriptor_File_Path.clear();
-
-       this->Descriptor_File_Path.shrink_to_fit();
-
-       this->Select_File(this->Descriptor_File_Path,title);
-
-       if(!this->Descriptor_File_Path.empty()){
-
-          this->is_project_file_selected = true;
-       }
-       else{
-
-          this->is_project_file_selected = false;
-
-       }
-
        this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
-
-       this->Process_Ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
-
-       */
-
    }
 }
 

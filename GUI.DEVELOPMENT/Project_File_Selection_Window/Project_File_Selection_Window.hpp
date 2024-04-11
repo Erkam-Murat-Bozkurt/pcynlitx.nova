@@ -28,9 +28,8 @@
 
 enum
 {
-  ID_CLOSE_PROJECT_FILE_SELECTION_PANEL = 200,
-  ID_CONSTRUCT_EMPTY_PROJECT_FILE = 201,
-  ID_SELECT_AN_EXISTING_PROJECT_FILE = 202
+  ID_CONSTRUCT_EMPTY_PROJECT_FILE = 200,
+  ID_SELECT_AN_EXISTING_PROJECT_FILE = 201
 };
 
 
@@ -49,6 +48,8 @@ public:
 
     void Receive_Descriptor_File_Path(wxString * DesPATH);
 
+    void Receive_Project_File_Selection_Status(bool * status);
+
     bool get_Descriptor_File_Selection_Status() const;
 
     wxString ExeFileName;
@@ -61,15 +62,9 @@ protected:
 
     void OnPaint(wxPaintEvent & event);
 
-    void Close_Window(wxCommandEvent & event);
-
     void Construct_Empty_Project_File(wxCommandEvent & event);
 
     void Select_Project_File(wxCommandEvent & event);
-
-    void Clear_String_Memory(std::string & str);
-
-    void Clear_Vector_Memory(std::vector<std::string> & vec);
 
     void Select_File();
 
@@ -87,7 +82,7 @@ protected:
 
     char opr_sis;
 
-    bool Descriptor_File_Selection_Status;
+    bool * Descriptor_File_Selection_Status;
 
 
     wxWindow * Parent_Window;

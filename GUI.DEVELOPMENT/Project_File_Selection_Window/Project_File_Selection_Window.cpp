@@ -6,8 +6,6 @@
 
 BEGIN_EVENT_TABLE(Project_File_Selection_Window,wxDialog )
 
-    EVT_BUTTON(ID_CLOSE_PROJECT_FILE_SELECTION_PANEL,Project_File_Selection_Window::Close_Window)
-
     EVT_BUTTON(ID_CONSTRUCT_EMPTY_PROJECT_FILE,Project_File_Selection_Window::Construct_Empty_Project_File)
 
     EVT_BUTTON(ID_SELECT_AN_EXISTING_PROJECT_FILE,Project_File_Selection_Window::Select_Project_File)
@@ -28,7 +26,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 {
      this->Parent_Window = parent;
 
-     this->Descriptor_File_Selection_Status = false;
+     this->Descriptor_File_Selection_Status = nullptr;
 
      wxIcon Frame_Icon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
@@ -127,9 +125,9 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
 
 
-     //this->Empty_Project_File_Button->SetForegroundColour(wxColour(60,60,70));
+     this->Empty_Project_File_Button->SetForegroundColour(wxColour(60,60,70));
 
-     //this->Project_File_Selection_Button->SetForegroundColour(wxColour(60,60,70));
+     this->Project_File_Selection_Button->SetForegroundColour(wxColour(60,60,70));
 
 
 
@@ -290,6 +288,11 @@ void Project_File_Selection_Window::Receive_Process_Manager(Process_Manager * pt
      Process_Ptr = ptr;
 }
 
+void Project_File_Selection_Window::Receive_Project_File_Selection_Status(bool * status){
+
+     this->Descriptor_File_Selection_Status = status;
+}
+
 void Project_File_Selection_Window::DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect& rect)
 {
      dc.SetBrush(wxColour(240,240,240));
@@ -308,16 +311,6 @@ void Project_File_Selection_Window::OnPaint(wxPaintEvent & event)
      this->DrawBackground(dc,this,rect);
 }
 
-
-void Project_File_Selection_Window::Close_Window(wxCommandEvent & event){
-
-     if(event.GetId() == ID_CLOSE_PROJECT_FILE_SELECTION_PANEL ){
-
-        event.Skip(true);
-
-        this->Destroy();
-     }
-}
 
 
 void Project_File_Selection_Window::Construct_Empty_Project_File(wxCommandEvent & event){
@@ -349,7 +342,7 @@ void Project_File_Selection_Window::Construct_Empty_Project_File(wxCommandEvent 
 
                *this->Descriptor_File_Path_Pointer = DesPATH;
 
-               this->Descriptor_File_Selection_Status = true;
+               *this->Descriptor_File_Selection_Status = true;
 
                this->Destroy();
            }
@@ -360,7 +353,7 @@ void Project_File_Selection_Window::Construct_Empty_Project_File(wxCommandEvent 
 
              this->Descriptor_File_Path_Pointer->shrink_to_fit();
 
-             this->Descriptor_File_Selection_Status = false;
+             *this->Descriptor_File_Selection_Status = false;
         }
      }
 }
@@ -391,13 +384,13 @@ void Project_File_Selection_Window::Select_File(){
 
          *this->Descriptor_File_Path_Pointer = openFileDialog->GetPath();
 
-         this->Descriptor_File_Selection_Status = true;
+         *this->Descriptor_File_Selection_Status = true;
 
          this->Destroy();
      }
      else{
 
-          this->Descriptor_File_Selection_Status = false;
+        *this->Descriptor_File_Selection_Status = false;
      }
 
      delete openFileDialog;
@@ -408,25 +401,3 @@ bool Project_File_Selection_Window::get_Descriptor_File_Selection_Status() const
 {
      return this->Descriptor_File_Selection_Status;
 }
-
-void Project_File_Selection_Window::Clear_Vector_Memory(std::vector<std::string> & vec){
-
-     vec.shrink_to_fit();
-
-     size_t vector_size = vec.size();
-
-     for(size_t i=0;i<vector_size;i++){
-
-        this->Clear_String_Memory(vec.at(i));
-     }
-
-     vec.shrink_to_fit();
-}
-
-void Project_File_Selection_Window::Clear_String_Memory(std::string & str){
-
-     str.clear();
-
-     str.shrink_to_fit();
-}
-
