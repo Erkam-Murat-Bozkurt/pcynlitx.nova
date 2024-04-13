@@ -938,6 +938,7 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
               this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location() + warehose_word;
 
+
               wxString label = wxT("BUILD SYSTEM CONSTRUCTION PROCESS");
 
               wxString start_text = wxT("\n\n   BUILD SYSTEM CONSTRUCTION STARTED");
@@ -1260,6 +1261,8 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
        this->Thaw();
 
        this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
+
+       this->Process_Ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
    }
 }
 
