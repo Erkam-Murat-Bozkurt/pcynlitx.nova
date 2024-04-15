@@ -103,6 +103,12 @@ public:
 
   Custom_Notebook * Notebook_Ptr;
 
+  wxBoxSizer * topBar_Sizer;
+
+  wxBoxSizer * title_win_Sizer; 
+
+  wxBoxSizer * tree_Sizer;
+
   wxBoxSizer * panel_sizer;
 
   wxBoxSizer * tree_control_sizer;

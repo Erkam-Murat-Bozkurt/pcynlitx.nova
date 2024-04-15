@@ -90,7 +90,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->panel_open_status = false;
 
 
-     this->Interface_Manager_Pointer->SetDockSizeConstraint(0.3,1);
+     this->Interface_Manager_Pointer->SetDockSizeConstraint(0.4,1);
 
      this->File_List_Widget_Shape.TopDockable(false);
 
@@ -100,7 +100,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->File_List_Widget_Shape.Resizable(true);
 
-     this->File_List_Widget_Shape.MinSize(270,-1);
+     this->File_List_Widget_Shape.MinSize(400,-1);
 
      this->File_List_Widget_Shape.Show(true);
 
@@ -108,7 +108,9 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->File_List_Widget_Shape.Dock();
 
-     this->File_List_Widget_Shape.dock_proportion = 0.35;
+     this->File_List_Widget_Shape.dock_proportion = 0.4;
+
+     this->SetMinSize(wxSize(390,-1));
 
 
      this->Tree_Control_Size = this->GetClientSize();
@@ -153,7 +155,9 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      // TITLE WINDOW SETTINGS START
 
-     this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),wxSize(Tab_Bar_size.x,Tab_Bar_size.y+5),wxColour(195,195,205));
+     this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),
+     
+                           wxSize(Tab_Bar_size.x,Tab_Bar_size.y+5),wxColour(190, 190, 200));
 
      this->Title_Window->Receive_Tab_ctrl_Hight(this->tab_ctrl_hight);
 
@@ -180,9 +184,9 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      textFont.SetFaceName(wxT("Segoe UI Semibold"));
 
-     text->SetFont(textFont.Bold());
+     text->SetFont(textFont);
 
-     text->SetForegroundColour(wxColour(50,50,60));
+     text->SetForegroundColour(wxColour(50,50,50));
 
      // TITLE WINDOW SETTINGS END
 
@@ -217,12 +221,26 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->tree_control->Show(false);
 
      this->Folder_Lister = new Project_Folder_Lister(this->tree_control);
+
+     this->Initialize_Sizer();
+
+     this->windows_detach_condition = false;
+
+     this->Top_Bar_Window->Show(false);
+
+     this->Title_Window->Show(false);
+
+     this->close_button->Show(false);
+
+     this->tree_control->Show(false);
 }
 
 Custom_Tree_View_Panel::~Custom_Tree_View_Panel()
 {
     if(!this->windows_detach_condition)
     {
+        this->windows_detach_condition = true;
+
         this->Detach_Windows_From_Sizer();
     }
 
@@ -276,15 +294,16 @@ void Custom_Tree_View_Panel::Initialize_Sizer()
      this->Fit();
 
      this->SetAutoLayout(true);
+
 }
 
 void Custom_Tree_View_Panel::Detach_Windows_From_Sizer()
 {
-     this->panel_sizer->Detach(this->tree_control);
-
      this->panel_sizer->Detach(this->Top_Bar_Window);
 
      this->panel_sizer->Detach(this->Title_Window);
+
+     this->panel_sizer->Detach(this->tree_control);
 
      this->windows_detach_condition = true;
 }
@@ -390,30 +409,37 @@ void Custom_Tree_View_Panel::Load_Project_Directory(wxString Folder){
 
      this->Folder_Lister->RemoveProjectDirectory();
 
+     this->Folder_Lister->Load_Project_Directory(Folder);
+
      this->close_button->pressedCloseButton = false;
+
+
+
+
 
      if(!this->panel_open_status)
      {
-        this->Interface_Manager_Pointer->AddPane(this,this->File_List_Widget_Shape);
-
-        this->Show(true);
-
         this->panel_open_status = true;
      }
 
-     this->Initialize_Sizer();
 
-     this->Folder_Lister->Load_Project_Directory(Folder);
+     this->Interface_Manager_Pointer->AddPane(this,this->File_List_Widget_Shape);
 
-     this->Top_Bar_Window->paintNow();
+     this->tree_control->Update();
+
+     this->Top_Bar_Window->Update();
+
+     this->Title_Window->Update();
+
+     this->close_button->Update();
+
+     this->Update();
+
+
 
      this->Top_Bar_Window->Show(true);
 
-     
-     this->Title_Window->paintNow();
-
      this->Title_Window->Show(true);
-
 
      this->close_button->Show(true);
 
@@ -421,7 +447,7 @@ void Custom_Tree_View_Panel::Load_Project_Directory(wxString Folder){
 
      this->Show(true);
 
-     this->Refresh();
+
 
      this->Interface_Manager_Pointer->Update();
 }
@@ -450,11 +476,6 @@ void Custom_Tree_View_Panel::Close_Directory_Pane()
 
 
         this->Show(false);  // Directory_List_Panel
-
-        if(!this->windows_detach_condition)
-        {
-            this->Detach_Windows_From_Sizer();
-        }
 
         this->Interface_Manager_Pointer->DetachPane(this);
 

@@ -233,7 +233,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->scroll_win = new wxScrolledWindow(this,wxID_ANY,wxDefaultPosition,wxSize(1000,-1));
 
-     this->scroll_win->SetBackgroundColour(wxColour(245, 245, 245));
+     this->scroll_win->SetBackgroundColour(wxColour(240, 240, 240));
 
 
      wxString title = wxT("NWINIX DEPENDENCY MANAGEMENT PANEL");
@@ -529,9 +529,11 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->close_panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(1000,220));
 
+     this->close_panel->SetBackgroundColour(wxColour(200,200,200,0xff));
+
      this->close_panel->SetMinSize(wxSize(1000,220));
 
-     this->close_panel->SetBackgroundColour(wxColour(220,220,220));
+     this->close_panel->SetSize(wxSize(1000,220));
 
 
 
@@ -553,11 +555,11 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->Buton_Sizers[8] = new wxBoxSizer(wxVERTICAL);
 
-     this->Buton_Sizers[8]->Add(panel_close_button,1, wxEXPAND | wxALL,10);
+     this->Buton_Sizers[8]->Add(panel_close_button,0, wxFIXED_MINSIZE | wxALL,10);
 
-     this->Buton_Sizers[8]->Add(panel_save_button, 1, wxEXPAND | wxALL,10);
+     this->Buton_Sizers[8]->Add(panel_save_button, 0, wxFIXED_MINSIZE | wxALL,10);
 
-     this->Buton_Sizers[8]->Add(panel_clear_button,1, wxEXPAND | wxALL,10);
+     this->Buton_Sizers[8]->Add(panel_clear_button,0, wxFIXED_MINSIZE | wxALL,10);
 
      this->close_panel->SetSizer(this->Buton_Sizers[8]);
 
@@ -605,7 +607,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->topSizer = new wxBoxSizer(wxHORIZONTAL);
 
-     this->topSizer->Add(this->close_panel,0, wxFIXED_MINSIZE  | wxALL, 10);
+     this->topSizer->Add(this->close_panel,0, wxEXPAND  | wxALL, 0);
 
      this->topSizer->Add(this->scroll_win,1, wxEXPAND  | wxALL,0);
 

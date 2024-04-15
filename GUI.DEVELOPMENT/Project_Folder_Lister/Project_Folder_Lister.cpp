@@ -38,6 +38,9 @@ Project_Folder_Lister::Project_Folder_Lister(wxDataViewTreeCtrl * TreeCtrl){
      this->total_item_number = 0;
 
      this->item_counter = 0;
+
+    this->Initialize_Properties();
+
 }
 
 Project_Folder_Lister::~Project_Folder_Lister(){
@@ -56,7 +59,7 @@ Project_Folder_Lister::~Project_Folder_Lister(){
 }
 
 
-void Project_Folder_Lister::Initialize_Properties(wxString Folder){
+void Project_Folder_Lister::Initialize_Properties(){
 
      wxSize size = this->treeCtrl->FromDIP(wxSize(16, 16));
 
@@ -68,9 +71,6 @@ void Project_Folder_Lister::Initialize_Properties(wxString Folder){
 
 void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
 
-     this->Initialize_Properties(Folder);
-
-
      this->total_item_number = 0;
 
 
@@ -78,7 +78,7 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
 
      // The sub directory number is determined
 
-     this->tree_item_list = new Tree_Item [10*this->total_item_number];
+     this->tree_item_list = new Tree_Item [5*this->total_item_number];
 
      wxString Root_Folder = this->Determine_Short_Path(Folder);
 

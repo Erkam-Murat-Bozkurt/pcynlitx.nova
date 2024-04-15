@@ -23,7 +23,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
-        wxDefaultPosition, wxSize(1250,950),wxDEFAULT_FRAME_STYLE )
+        wxDefaultPosition, wxSize(1350,1000),wxDEFAULT_FRAME_STYLE )
 {
 
   this->is_custom_panel_constructed = false;
@@ -89,9 +89,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
   this->Interface_Manager.SetFlags(wxAUI_MGR_LIVE_RESIZE);
 
 
-  this->SetSize(wxSize(1250,950));
+  this->SetSize(wxSize(1350,1000));
 
-  this->SetMinSize(wxSize(1250,950));
+  this->SetMinSize(wxSize(1350,1000));
 
   this->Refresh();
 
@@ -144,15 +144,18 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Central_Pane_Info.Resizable(true);
 
-  this->Central_Pane_Info.MinSize(1200,900);
+  this->Central_Pane_Info.MinSize(800,900);
 
 
 
   this->Custom_Main_Panel = new Custom_wxPanel(this,wxID_ANY,wxDefaultPosition,
 
                             wxDefaultSize,wxColour(200,200,200),&this->Central_Pane_Info);
+  
 
   this->Custom_Main_Panel->SetSize(this->GetClientSize());
+
+  this->Custom_Main_Panel->SetMinSize(wxSize(750,850));
 
   this->Custom_Main_Panel->Fit();
 
@@ -164,6 +167,8 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
   this->Book_Manager = new Custom_Notebook(this,this->Custom_Main_Panel,&this->Interface_Manager,
 
                        *(this->Default_Font),this->GetClientSize(),theme_clr);
+
+  this->Book_Manager->SetMinSize(wxSize(740,840));
 
 
   this->Book_Manager->SetAutoLayout(true);

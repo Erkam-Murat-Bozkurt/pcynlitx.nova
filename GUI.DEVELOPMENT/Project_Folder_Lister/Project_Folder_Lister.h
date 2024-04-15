@@ -53,7 +53,7 @@ public:
   
 private:
 
-  void Initialize_Properties(wxString Folder);
+  void Initialize_Properties();
 
   void count_sub_directories(wxString Folder);
 
