@@ -14,6 +14,10 @@
 #include <wx/font.h>
 #include <wx/sizer.h>
 #include <wx/msgdlg.h>
+#include <Windows.h>
+#include <cstdlib>
+#include <chrono>
+#include <thread>
 #include "Custom_Notebook.h"
 #include "Custom_wxDataViewTreeCtrl.hpp"
 #include "Project_Folder_Lister.h"

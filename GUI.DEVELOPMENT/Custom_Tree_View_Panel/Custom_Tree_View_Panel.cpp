@@ -226,13 +226,18 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->windows_detach_condition = false;
 
-     this->Top_Bar_Window->Show(false);
 
-     this->Title_Window->Show(false);
+     this->Top_Bar_Window->Show(true);
 
-     this->close_button->Show(false);
+     this->Title_Window->Show(true);
 
-     this->tree_control->Show(false);
+     this->close_button->Show(true);
+
+     this->tree_control->Show(true);
+
+     this->Show(false);
+
+     this->PostSizeEvent();
 }
 
 Custom_Tree_View_Panel::~Custom_Tree_View_Panel()
@@ -411,21 +416,6 @@ void Custom_Tree_View_Panel::Load_Project_Directory(wxString Folder){
 
      this->Folder_Lister->Load_Project_Directory(Folder);
 
-     this->close_button->pressedCloseButton = false;
-
-
-
-
-
-     if(!this->panel_open_status)
-     {
-        this->panel_open_status = true;
-     }
-
-
-     this->Interface_Manager_Pointer->AddPane(this,this->File_List_Widget_Shape);
-
-     this->tree_control->Update();
 
      this->Top_Bar_Window->Update();
 
@@ -433,23 +423,35 @@ void Custom_Tree_View_Panel::Load_Project_Directory(wxString Folder){
 
      this->close_button->Update();
 
-     this->Update();
+     this->Interface_Manager_Pointer->AddPane(this,this->File_List_Widget_Shape);
 
 
+     for(int i=0;i<2;i++){
 
-     this->Top_Bar_Window->Show(true);
+         wxYield();
 
-     this->Title_Window->Show(true);
+         this->Top_Bar_Window->Update();
 
-     this->close_button->Show(true);
+         this->Title_Window->Update();
 
-     this->tree_control->Show(true);
+         this->close_button->Update();
+     }
+
+     this->Folder_Lister->Expand_Root();
+
 
      this->Show(true);
 
 
+     this->close_button->pressedCloseButton = false;
+
+     if(!this->panel_open_status)
+     {
+        this->panel_open_status = true;
+     }
 
      this->Interface_Manager_Pointer->Update();
+
 }
 
 
@@ -468,11 +470,11 @@ void Custom_Tree_View_Panel::Close_Directory_Pane()
      {
         this->tree_control->DeleteAllItems();
 
-        this->tree_control->Show(false);
+        //this->tree_control->Show(false);
 
-        this->Top_Bar_Window->Show(false); // Top bar window
+        //this->Top_Bar_Window->Show(false); // Top bar window
 
-        this->Title_Window->Show(false); // Top bar window
+        //this->Title_Window->Show(false); // Top bar window
 
 
         this->Show(false);  // Directory_List_Panel

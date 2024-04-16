@@ -29,8 +29,6 @@ Project_Folder_Lister::Project_Folder_Lister(wxDataViewTreeCtrl * TreeCtrl){
 
      this->tree_item_list = nullptr;
 
-     //this->imglist = nullptr;
-
      this->Item_Path = wxT("");
 
      this->Short_Path = wxT("");
@@ -73,6 +71,14 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
 
      this->total_item_number = 0;
 
+     this->treeCtrl->DeleteAllItems();
+
+     if(this->tree_item_list != nullptr){
+
+        delete [] this->tree_item_list;
+
+        this->tree_item_list = nullptr;
+     }
 
      this->count_sub_directories(Folder);
 
@@ -102,8 +108,6 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
      // and it is set.
 
     this->total_item_number = 2*this->item_counter;
-
-    this->treeCtrl->Expand(this->tree_item_list[1].item_number);
 
     this->is_project_directory_open = true;
  }
@@ -508,7 +512,7 @@ bool Project_Folder_Lister::GetProjectDirectoryOpenStatus(){
 
 void Project_Folder_Lister::Expand_Root(){
 
-     this->treeCtrl->Expand(this->tree_item_list[0].item_number);
+     this->treeCtrl->Expand(this->tree_item_list[1].item_number);
 }
 
 
