@@ -863,6 +863,7 @@ void Custom_Notebook::NoteBook_Page_Closed(wxAuiNotebookEvent & event)
 
      event.ResumePropagation(2);
 
+
      wxWindow * window_pointer = this->GetCurrentPage();
 
      this->OpenFileNumber--;
@@ -879,6 +880,14 @@ void Custom_Notebook::NoteBook_Page_Closed(wxAuiNotebookEvent & event)
 
             break;
          }
+     }
+
+
+     bool is_intro_page = false;
+
+     if(this->NoteBook_Page_Data[index_number].Intro_Page_Pointer != nullptr){
+
+        is_intro_page = true;
      }
 
      bool is_this_text_file = this->NoteBook_Page_Data[index_number].Is_This_Text_File;
@@ -920,10 +929,18 @@ void Custom_Notebook::NoteBook_Page_Closed(wxAuiNotebookEvent & event)
 
      this->NoteBook_Page_Data[index_number].Is_This_Text_File = false;
 
+     if(is_intro_page){
+
+         this->Is_Intro_Page_Open = false;
+
+         this->OpenIntroPage();
+     }
+
+
      if(this->OpenFileNumber <= 0){
 
          this->intro_image->Show(true);
-     }
+     }  
 }
 
 Custom_Notebook * Custom_Notebook::Get_NoteBook_Pointer()
