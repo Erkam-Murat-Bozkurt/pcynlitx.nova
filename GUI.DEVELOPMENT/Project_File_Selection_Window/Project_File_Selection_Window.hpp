@@ -22,6 +22,7 @@
 #include "Descriptor_File_Reader.hpp"
 #include "Process_Manager.hpp"
 #include "Custom_Message_Dialog.hpp"
+#include "Custom_System_Interface.h"
 #include "Cpp_FileOperations.h"
 
 
@@ -71,6 +72,8 @@ protected:
     Cpp_FileOperations FileManager;
 
     Process_Manager * Process_Ptr;
+
+    Custom_System_Interface SysInt;
 
     wxString * Descriptor_File_Path_Pointer;
 

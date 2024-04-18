@@ -338,7 +338,9 @@ void Project_File_Selection_Window::Construct_Empty_Project_File(wxCommandEvent 
         
            + construction_dir + " -ed";
 
-           this->Process_Ptr->Fork_Process(shell_command);
+           this->SysInt.Create_Process(shell_command.ToStdString());
+
+           //this->Process_Ptr->Fork_Process(shell_command);
            
            if(this->FileManager.Is_Path_Exist(DesPATH.ToStdString())){
 
