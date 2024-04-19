@@ -23,6 +23,21 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Custom_wxPanel.h"
 
+
+BEGIN_EVENT_TABLE(Custom_wxPanel,wxPanel )
+
+    EVT_BUTTON(ID_OPEN_POPUP_MENU,Custom_wxPanel::Open_PopUp_Menu)
+    EVT_MENU(ID_OPEN_FILE_MENU_CONTENT,Custom_wxPanel::Open_File_Menu)
+    EVT_MENU(ID_OPEN_PROJECT_MANAGEMENT_MENU_CONTENT,Custom_wxPanel::Open_Project_Management_Menu)
+    EVT_MENU(ID_OPEN_EDIT_MENU_CONTENT,Custom_wxPanel::Open_Edit_Menu)
+    EVT_MENU(ID_OPEN_HELP_MENU_CONTENT,Custom_wxPanel::Open_Help_Menu)
+    EVT_MENU(ID_OPEN_CMAKE_MENU_CONTENT,Custom_wxPanel::Open_CMAKE_Menu)
+
+END_EVENT_TABLE()
+
+
+
+
 Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
               const wxPoint &pos, const wxSize &size,
@@ -50,7 +65,142 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
      this->SetExtraStyle(wxNO_FULL_REPAINT_ON_RESIZE);
 
 
-     this->panel_sizer = new wxBoxSizer(wxHORIZONTAL);
+     this->panel_sizer = new wxBoxSizer(wxVERTICAL);
+
+
+     this->bottom_window = new wxWindow(this, wxID_ANY,wxDefaultPosition,wxSize(this->GetSize().GetX(),50));
+
+     this->Start_Button  = new wxButton(this->bottom_window,ID_OPEN_POPUP_MENU,wxT("START"),wxDefaultPosition, wxSize(100,40));
+     
+     this->bottom_window->SetBackgroundColour(wxColour(240,240,240));
+
+     this->bottom_window->Show(true);
+
+     this->Start_Button->Show(true);
+
+
+
+
+     this->Main_Menu = new wxMenu();
+
+     this->File_Menu = new wxMenu();
+
+     this->Project_Management = new wxMenu();
+
+     this->Edit_Menu  = new wxMenu();
+
+     this->Help_Menu  = new wxMenu();
+
+     this->CMAKE_Menu = new wxMenu();
+
+
+
+
+
+     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
+
+     this->Main_Menu->AppendSubMenu(this->File_Menu ,"&File Menu                   ","");
+
+     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
+
+     this->Main_Menu->AppendSubMenu(this->Project_Management,"&Project Management          ","");
+
+     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
+
+     this->Main_Menu->AppendSubMenu(this->Edit_Menu,"&Editor Menu (Editor Options)"," ");
+
+     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
+
+     this->Main_Menu->AppendSubMenu(this->Help_Menu,"&Help Menu                   ","");
+
+     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
+
+     this->Main_Menu->AppendSubMenu(this->CMAKE_Menu ,"&CMAKE Build System          ","");
+
+     this->Main_Menu->Append(wxID_NONE,"&                           ","");
+
+
+
+
+     this->File_Menu->Append(wxID_ANY,"&Open File                   ","",wxITEM_NORMAL);
+
+     this->File_Menu->Append(wxID_ANY,"&Save                       ","");
+
+     this->File_Menu->Append(wxID_ANY,"&Save as                     ","");
+
+     this->File_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
+
+
+
+
+
+     this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
+
+     this->Project_Management->Append(wxID_ANY,"&PROJECT FILE OPERATIONS "," ",wxITEM_NORMAL);
+
+     this->Project_Management->Append(wxID_ANY,"Construct empty project file","",wxITEM_NORMAL);
+
+     this->Project_Management->Append(wxID_ANY,"Show Project File","",wxITEM_NORMAL);
+
+     wxIcon * project_file_selection_icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\file_selection_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+
+     wxMenuItem * project_file_seletion_item = new wxMenuItem(this->Project_Management,wxID_ANY,"&Select project file"," ",wxITEM_NORMAL);
+
+     project_file_seletion_item->SetBitmap(*project_file_selection_icon);
+
+     this->Project_Management->Append(project_file_seletion_item);
+
+
+
+     this->Project_Management->Append(wxID_ANY, "&Print project descriptions"," ",wxITEM_NORMAL);
+
+     this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
+
+     this->Project_Management->Append(wxID_NONE,"&              "," ",wxITEM_SEPARATOR);
+
+
+     this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
+
+     this->Project_Management->Append(wxID_NONE,                "&BUILD SYSTEM OPERATIONS "," ",wxITEM_NORMAL);
+
+     wxIcon * frame_icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\build_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+
+     wxMenuItem * build_item = new wxMenuItem(this->Project_Management,wxID_ANY,"&Build system initializer"," ",wxITEM_NORMAL);
+
+     build_item->SetBitmap(*frame_icon);
+
+     this->Project_Management->Append(build_item);
+
+
+
+     wxIcon * run_build_script_icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\open_terminal_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+
+     wxMenuItem * run_build_script_item = new wxMenuItem(this->Project_Management,wxID_ANY,"&Run project build script"," ",wxITEM_NORMAL);
+
+     run_build_script_item->SetBitmap(*run_build_script_icon);
+
+     this->Project_Management->Append(run_build_script_item);
+
+
+     wxIcon * dependency_icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\dependecy_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+
+     wxMenuItem * dependency_item = new wxMenuItem(this->Project_Management,wxID_ANY,"&Determine dependencies"," ",wxITEM_NORMAL);
+
+     dependency_item->SetBitmap(*dependency_icon);
+
+     this->Project_Management->Append(dependency_item);
+
+
+     this->Project_Management->Append(wxID_ANY, "&Make file constructor"," ",wxITEM_NORMAL);
+
+     this->Project_Management->Append(wxID_ANY, "&Advance make file constructor"," ",wxITEM_NORMAL);
+
+     this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
+
+
+
+
+
 
      this->Centre(wxBOTH);
 
@@ -79,7 +229,9 @@ Custom_wxPanel::~Custom_wxPanel()
 
 void Custom_wxPanel::Initialize_Sizer()
 {
-     this->panel_sizer->Add(this->book_manager,1, wxALL|wxEXPAND,0);
+     this->panel_sizer->Add(this->book_manager, 1,  wxALL|wxEXPAND,0);
+
+     this->panel_sizer->Add(this->bottom_window,0, wxALIGN_LEFT | wxFIXED_MINSIZE |wxEXPAND | wxLEFT,5);
 
      this->SetSizer(this->panel_sizer);
 
@@ -108,4 +260,83 @@ void Custom_wxPanel::PaintNow(wxWindow * wnd)
      wxRect rect(Rect_Size);
 
      this->DrawBackground(dc,wnd,rect);
+}
+
+
+void Custom_wxPanel::Open_PopUp_Menu(wxCommandEvent & event){
+
+     if(event.GetId() == ID_OPEN_POPUP_MENU ){
+
+        event.Skip(true);
+
+        int x,y;
+
+        this->Start_Button->GetPosition(&x,&y);
+
+        this->bottom_window->PopupMenu(this->Main_Menu,x,y);
+
+     }
+}
+
+
+
+void Custom_wxPanel::Open_File_Menu(wxCommandEvent & event){
+
+     if(event.GetId() == ID_OPEN_FILE_MENU_CONTENT ){
+
+        event.Skip(true);
+
+        int x,y;
+
+        this->bottom_window->GetPosition(&x,&y);
+
+        this->bottom_window->PopupMenu(this->File_Menu,x,y);
+
+     }
+}
+
+void Custom_wxPanel::Open_Project_Management_Menu(wxCommandEvent & event){
+
+     if(event.GetId() == ID_OPEN_PROJECT_MANAGEMENT_MENU_CONTENT ){
+
+        event.Skip(true);
+
+
+
+     }
+
+}
+
+void Custom_wxPanel::Open_Edit_Menu(wxCommandEvent & event){
+
+     if(event.GetId() == ID_OPEN_EDIT_MENU_CONTENT ){
+
+        event.Skip(true);
+
+
+
+     }
+}
+
+void Custom_wxPanel::Open_Help_Menu(wxCommandEvent & event){
+
+     if(event.GetId() == ID_OPEN_HELP_MENU_CONTENT ){
+
+        event.Skip(true);
+
+
+
+     }
+}
+
+void Custom_wxPanel::Open_CMAKE_Menu(wxCommandEvent & event){
+
+     if(event.GetId() == ID_OPEN_CMAKE_MENU_CONTENT ){
+
+        event.Skip(true);
+
+
+
+     }
+
 }
