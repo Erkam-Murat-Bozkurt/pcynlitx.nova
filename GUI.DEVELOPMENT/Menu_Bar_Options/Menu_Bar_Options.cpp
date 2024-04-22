@@ -58,15 +58,6 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
    this->File_Menu->Append(save_item);
 
-
-
-
-
-  //this->File_Menu->Append(ID_SAVE_AS,"Save As","",wxITEM_NORMAL);
-
-
-
-
    wxIcon * save_as_icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\save_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
    wxMenuItem * save_as_item = new wxMenuItem(this->File_Menu,ID_SAVE_AS,"&Save as"," ",wxITEM_NORMAL);
@@ -75,18 +66,11 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
    this->File_Menu->Append(save_as_item);
 
-
-
   this->File_Menu->Append(ID_OPEN_FILE,"&Open file","",wxITEM_NORMAL);
 
   this->File_Menu->Append(ID_NEW_FILE,"&Create new file as","",wxITEM_NORMAL);
 
   this->File_Menu->Append(ID_OPEN_TREE_WIEW,"&Open Folder","",wxITEM_NORMAL);
-
-
-
-
-
 
    wxIcon * exit_icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\exit_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
@@ -96,17 +80,13 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
    this->File_Menu->Append(exit_item);
 
-
-
-
-
   this->File_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
+
 
 
   this->Edit_Menu->Append(ID_INCREASE_FONT_SIZE,"&Increase Font Size","",wxITEM_NORMAL);
 
   this->Edit_Menu->Append(ID_DECREASE_FONT_SIZE,"Decrease Font Size",wxT(""),wxITEM_NORMAL);
-
 
   this->Edit_Menu->Append(ID_UNDO_CHANGES,"&Undo   Ctrl+Z","",wxITEM_NORMAL);
 
