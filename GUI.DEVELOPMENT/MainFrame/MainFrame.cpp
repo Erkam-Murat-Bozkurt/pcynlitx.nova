@@ -248,6 +248,47 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
   this->Custom_Main_Panel->Update();
 
 
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_BUTTON,&MainFrame::Open_PopUp_Menu,this,wxID_ANY);
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Select_Project_File,this,ID_SELECT_PROJECT_FILE);
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Show_Project_File,this,ID_SHOW_PROJECT_FILE);
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::PrintDescriptions,this,ID_PRINT_DESCRIPTIONS);
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Open_Empty_Project_File,this,ID_OPEN_EMPTY_PROJECT_FILE);
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Start_Build_System_Construction,this,ID_RUN_BUILD_SYSTEM_CONSTRUCTOR);
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Run_Project_Script_On_Terminal,this,ID_RUN_PROJECT_SCRIPT);
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Determine_Source_File_Dependencies,this,ID_DETERMINE_SOURCE_FILE_DEPENDENCIES);
+
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Single_File_Script_Construction,this,ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR);
+
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Advance_Single_File_Script_Construction,this,ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR);
+
+  /*
+
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Select_Project_File,this,ID_SELECT_PROJECT_FILE);
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Select_Project_File,this,ID_SELECT_PROJECT_FILE);
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Select_Project_File,this,ID_SELECT_PROJECT_FILE);
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Select_Project_File,this,ID_SELECT_PROJECT_FILE);
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Select_Project_File,this,ID_SELECT_PROJECT_FILE);
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Select_Project_File,this,ID_SELECT_PROJECT_FILE);
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Select_Project_File,this,ID_SELECT_PROJECT_FILE);
+
+  */
+
   wxRect Book_Manager_Rect(this->Custom_Main_Panel->GetSize());
 
   this->Book_Manager->Refresh(true,&Book_Manager_Rect);
@@ -312,6 +353,22 @@ MainFrame::~MainFrame()
    this->Interface_Manager.UnInit();
 
    this->Close(true);
+}
+
+
+
+void MainFrame::Open_PopUp_Menu(wxCommandEvent & event){
+
+     if(event.GetId() == ID_OPEN_POPUP_MENU ){
+
+        event.Skip(true);
+
+        int x,y;
+
+        this->Custom_Main_Panel->Start_Button->GetPosition(&x,&y);
+
+        this->Custom_Main_Panel->bottom_window->PopupMenu(this->Custom_Main_Panel->Main_Menu,x,y);
+     }
 }
 
 
@@ -617,7 +674,7 @@ void MainFrame::Single_File_Script_Construction(wxCommandEvent & event){
     
      if(event.GetId() == ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR){
 
-        event.Skip(true);
+        event.Skip(false);
 
         if(this->is_project_file_selected){
 
@@ -844,7 +901,7 @@ void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
 
      if(event.GetId() == ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR){
 
-        event.Skip(true);
+        event.Skip(false);
 
         if(this->is_project_file_selected){
 
@@ -927,7 +984,7 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
   if(event.GetId() == ID_RUN_BUILD_SYSTEM_CONSTRUCTOR)
   {
-    event.Skip(true);
+    event.Skip(false);
 
     if(this->is_project_file_selected){
 
@@ -1072,7 +1129,7 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
 
      if(event.GetId() == ID_PRINT_DESCRIPTIONS)
      {
-        event.Skip(true);
+        event.Skip(false);
 
         if(this->is_project_file_selected){
       
@@ -1214,6 +1271,9 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
 {
   if(event.GetId() == ID_OPEN_EMPTY_PROJECT_FILE)
   {
+
+     event.Skip(false);
+
      wxDirDialog dlg(NULL, "Select Descriptor File Location", "",
 
            wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
@@ -1249,7 +1309,7 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
 {
      if(event.GetId() == ID_SELECT_PROJECT_FILE ){
 
-       event.Skip(true);
+       event.Skip(false);
 
        this->Freeze();
 

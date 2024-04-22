@@ -50,8 +50,6 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/MainFrame/MainFrame.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MainFrame/MainFrame.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Menu_Bar_Options/Menu_Bar_Options.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Menu_Bar_Options/Menu_Bar_Options.h
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Process_Manager/Process_Manager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Process_Manager/Process_Manager.hpp
@@ -94,6 +92,7 @@ add_library(BuildSystem_GUI
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window/Project_File_Selection_Window.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window/Project_File_Selection_Window.cpp
+
 )
 
 
@@ -126,8 +125,6 @@ target_include_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Intro_Page_Loader
 
     ${CMAKE_CURRENT_SOURCE_DIR}/MainFrame
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Menu_Bar_Options
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Process_Manager
 
@@ -179,7 +176,6 @@ target_include_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
-
 
 
     D:/wxWidgets-3.2.4/include
@@ -218,8 +214,6 @@ target_link_directories(BuildSystem_GUI PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/MainFrame
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Menu_Bar_Options
-
     ${CMAKE_CURRENT_SOURCE_DIR}/Process_Manager
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Dialog
@@ -270,6 +264,8 @@ target_link_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+
+
 
 
     D:/wxWidgets-3.2.4/lib/gcc810_x64_dll

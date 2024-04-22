@@ -11,18 +11,14 @@
 #include <wx/aui/framemanager.h>
 #include <wx/sizer.h>
 #include <wx/msgdlg.h>
+#include "Event_ID_Numbers.h"
+
 
 
 enum
 {
-  ID_OPEN_POPUP_MENU = 300,
-  ID_OPEN_FILE_MENU_CONTENT = 301,
-  ID_OPEN_PROJECT_MANAGEMENT_MENU_CONTENT = 302,
-  ID_OPEN_EDIT_MENU_CONTENT = 303,
-  ID_OPEN_HELP_MENU_CONTENT = 304,
-  ID_OPEN_CMAKE_MENU_CONTENT = 305,
+  ID_OPEN_POPUP_MENU = 100,
 };
-
 
 class Custom_wxPanel : public wxPanel
 {
@@ -40,6 +36,13 @@ public:
        this->book_manager = wnd;
   }
 
+  void Receive_Main_Menu_Address(wxMenu * menu){
+
+       this->Menu_Ptr = menu;
+  }
+
+  wxMenu * Menu_Ptr;
+
   //void Update(){};
 
   void Initialize_Sizer();
@@ -48,16 +51,9 @@ public:
 
   void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect);
 
-  void Catch_PopUp_Menu(wxCommandEvent & event);
-
   void PaintNow(wxWindow * wnd);
 
 
-  void Open_File_Menu(wxCommandEvent & event);
-  void Open_Project_Management_Menu(wxCommandEvent & event);
-  void Open_Edit_Menu(wxCommandEvent & event);
-  void Open_Help_Menu(wxCommandEvent & event);
-  void Open_CMAKE_Menu(wxCommandEvent & event);
 
   int ToolBar_ID = 0;
 
@@ -95,7 +91,7 @@ public:
 
 
 
-  DECLARE_EVENT_TABLE()
+  //DECLARE_EVENT_TABLE()
 
 };
 

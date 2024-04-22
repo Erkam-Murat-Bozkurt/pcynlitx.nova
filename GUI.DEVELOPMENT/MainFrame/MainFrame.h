@@ -42,7 +42,6 @@
 #include "Custom_wxPanel.h"
 #include "Custom_Tree_View_Panel.h"
 #include "Custom_wxDataViewTreeCtrl.hpp"
-#include "Menu_Bar_Options.h"
 #include "Custom_Notebook.h"
 #include "Event_ID_Numbers.h"
 #include "Custom_DockArt.h"
@@ -79,6 +78,7 @@ public:
   void Select_Project_File(wxCommandEvent&);
   void Show_Project_File(wxCommandEvent&);
   void DirectoryOpen(wxCommandEvent & event);
+  void Open_PopUp_Menu(wxCommandEvent & event);
   wxAuiPaneInfo Central_Pane_Info;
 private:
   void OpenSettings(wxCommandEvent & event);
@@ -171,7 +171,6 @@ private:
   ToolBar_Initializer * ToolBar_Widget;
   Custom_wxPanel * Custom_Main_Panel;
   Custom_Notebook * Book_Manager;
-  Menu_Bar_Options * MB_Options;
   Intro_Page_Loader * Intro_Page_Pointer;
   Custom_ProcessOutput * Process_Output;
   Custom_DataPanel * DataPanel_Pointer;
