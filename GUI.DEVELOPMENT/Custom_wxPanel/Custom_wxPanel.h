@@ -54,6 +54,9 @@ public:
   void PaintNow(wxWindow * wnd);
 
 
+  wxStaticText * start_text;
+
+
 
   int ToolBar_ID = 0;
 
@@ -70,7 +73,15 @@ public:
 
   wxWindow * bottom_window;
 
+  wxWindow * button_window;
+
+  wxWindow * text_window;
+
+
   wxBoxSizer * panel_sizer;
+
+  wxBoxSizer * bottom_win_sizer;
+
 
   wxEvtHandler Event_Handler;
 
@@ -89,6 +100,7 @@ public:
 
   wxMenu  * Edit_Menu;
 
+  wxMenu  * Info_Menu;
 
 
   //DECLARE_EVENT_TABLE()

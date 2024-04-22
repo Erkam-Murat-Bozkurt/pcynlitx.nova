@@ -55,11 +55,28 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
      this->panel_sizer = new wxBoxSizer(wxVERTICAL);
 
 
-     this->bottom_window = new wxWindow(this, wxID_ANY,wxDefaultPosition,wxSize(this->GetSize().GetX(),50));
+     this->bottom_window = new wxWindow(this, wxID_ANY,wxDefaultPosition,wxSize(this->GetSize().GetX(),60));
 
-     this->Start_Button  = new wxButton(this->bottom_window,ID_OPEN_POPUP_MENU,wxT("START"),wxDefaultPosition, wxSize(100,40));
+     this->Start_Button  = new wxButton(this->bottom_window,ID_OPEN_POPUP_MENU,wxT("START"),wxDefaultPosition, wxSize(100,50));
      
+     this->Start_Button->SetForegroundColour(wxColour(50,50,50));
+
+
      this->bottom_window->SetBackgroundColour(wxColour(240,240,240));
+
+
+     wxPoint position = this->Start_Button->GetPosition() ;
+
+     int text_x = position.x + 110;
+
+     int text_y = position.y + 14;
+
+     this->start_text   = new wxStaticText(this->bottom_window ,
+     
+                    wxID_ANY,wxT("NWINIX START MENU"),wxPoint(text_x,text_y),wxSize(200,50));
+
+     this->start_text->Show(true);
+
 
      this->bottom_window->Show(true);
 
@@ -80,27 +97,37 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->CMAKE_Menu = new wxMenu();
 
+     this->Info_Menu = new wxMenu();
 
 
 
+
+
+     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
+
+
+     wxIcon * Info_icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\build_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+
+     wxMenuItem * info_item = new wxMenuItem(this->Info_Menu,ID_SELECT_PROJECT_FILE,"&INTRODUCTION TO NWINIX "," ",wxITEM_NORMAL);
+
+     info_item->SetBitmap(*Info_icon);
+
+     this->Main_Menu->Append(info_item);
+
+
+     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
+
+     this->Main_Menu->Append(wxID_NONE,"&                           "," ",wxITEM_SEPARATOR);
 
      this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
 
      this->Main_Menu->AppendSubMenu(this->File_Menu ,"&File Menu                   ","");
 
-     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
-
      this->Main_Menu->AppendSubMenu(this->Project_Management,"&Project Management          ","");
-
-     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
 
      this->Main_Menu->AppendSubMenu(this->Edit_Menu,"&Editor Menu (Editor Options)"," ");
 
-     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
-
      this->Main_Menu->AppendSubMenu(this->Help_Menu,"&Help Menu                   ","");
-
-     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
 
      this->Main_Menu->AppendSubMenu(this->CMAKE_Menu ,"&CMAKE Build System          ","");
 
