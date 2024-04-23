@@ -57,17 +57,14 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->bottom_window = new wxWindow(this, wxID_ANY,wxDefaultPosition,wxSize(this->GetSize().GetX(),60));
 
-     this->Start_Button  = new wxButton(this->bottom_window,ID_OPEN_POPUP_MENU,wxT("START"),wxDefaultPosition, wxSize(100,50));
+     this->Start_Button  = new wxButton(this->bottom_window,ID_OPEN_POPUP_MENU,wxT("START"),wxDefaultPosition, wxSize(120,50));
      
-     this->Start_Button->SetForegroundColour(wxColour(50,50,50));
-
-
      this->bottom_window->SetBackgroundColour(wxColour(240,240,240));
 
 
      wxPoint position = this->Start_Button->GetPosition() ;
 
-     int text_x = position.x + 110;
+     int text_x = position.x + 130;
 
      int text_y = position.y + 14;
 
@@ -108,7 +105,7 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      wxIcon * Info_icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\build_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
-     wxMenuItem * info_item = new wxMenuItem(this->Info_Menu,ID_SELECT_PROJECT_FILE,"&INTRODUCTION TO NWINIX "," ",wxITEM_NORMAL);
+     wxMenuItem * info_item = new wxMenuItem(this->Info_Menu,ID_SELECT_PROJECT_FILE,"&NWINIX PLATFORM"," ",wxITEM_NORMAL);
 
      info_item->SetBitmap(*Info_icon);
 
