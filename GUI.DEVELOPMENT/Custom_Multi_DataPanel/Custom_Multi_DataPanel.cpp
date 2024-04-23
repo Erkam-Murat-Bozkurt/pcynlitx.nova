@@ -3,7 +3,7 @@
 #include "Custom_Multi_DataPanel.hpp"
 
 
-BEGIN_EVENT_TABLE(Custom_Multi_DataPanel,wxFrame )
+BEGIN_EVENT_TABLE(Custom_Multi_DataPanel,wxDialog )
 
     EVT_BUTTON(ID_INSERT_ITEM_FOR_PATH,Custom_Multi_DataPanel::Insert_Data_For_Path)
 
@@ -86,7 +86,7 @@ Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, 
 
    const wxPoint & pos, const wxSize & size, long style, char opr_sis) : 
    
-   wxFrame(parent,id,title,pos,size, style), Data_Recorder(opr_sis), Des_Reader(opr_sis)
+   wxDialog(parent,id,title,pos,size, style), Data_Recorder(opr_sis), Des_Reader(opr_sis)
 {
      this->Parent_Frame = parent;
 
@@ -121,7 +121,7 @@ Custom_Multi_DataPanel::~Custom_Multi_DataPanel(){
 
 void Custom_Multi_DataPanel::DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(220,220,220));
+     dc.SetBrush(wxColour(240,240,240));
 
      dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+5,rect.GetHeight()+5);
 }

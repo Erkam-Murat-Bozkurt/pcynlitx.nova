@@ -810,9 +810,7 @@ void MainFrame::Single_File_Script_Construction(wxCommandEvent & event){
 
                this->Multi_DataPanel->Create_Exe_Script_Panel();
 
-               //if(this->Multi_DataPanel->ShowModal() == wxID_OK ){
-               
-               //}
+               this->Multi_DataPanel->ShowModal();
 
                char strategy = 's';
 
@@ -1037,7 +1035,8 @@ void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
 
               this->Multi_DataPanel->Create_Exe_Script_Panel();
 
-              
+              this->Multi_DataPanel->ShowModal();
+
               char strategy = 'a';
 
               this->Single_File_Script_Construction_Executer(this->Multi_DataPanel->FilePath,
@@ -1066,7 +1065,7 @@ void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath,
          this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
          this->Des_Reader->Read_Descriptor_File();
-
+   
          if(this->Des_Reader->Get_Gui_Read_Success_Status()){
 
             this->Determine_Executable_File_Script_Construction_Point(FileName);
@@ -1182,6 +1181,10 @@ void MainFrame::Start_Construction_Process(wxString label,
 
      this->read_wait = false;
 
+     
+     char * cmd = this->Process_Ptr->Get_Process_Command();
+     
+
      this->Process_Output = new Custom_ProcessOutput(this,wxID_ANY,label);
 
      this->Process_Output->Receive_System_Interface(&this->SysInt);
@@ -1199,7 +1202,6 @@ void MainFrame::Start_Construction_Process(wxString label,
      this->Process_Output->Construct_Output(max);
 
 
-     char * cmd = this->Process_Ptr->Get_Process_Command();
 
      this->fork_process = new std::thread(MainFrame::ForkProcess,this,cmd,start_text);
 
