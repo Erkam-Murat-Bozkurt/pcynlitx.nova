@@ -53,7 +53,7 @@ public:
 
   void Load_Project_Directory(wxString Folder);
 
-  Custom_wxDataViewTreeCtrl * GetTreeCtrl();
+  wxDataViewTreeCtrl * GetTreeCtrl();
 
   int GetTotalItemNum(wxString Folder);
 
@@ -103,7 +103,7 @@ protected:
 
   wxButton * CloseButton;
 
-  Custom_wxDataViewTreeCtrl * tree_control;
+  wxDataViewTreeCtrl * tree_control;
 
   wxFont * Directory_List_Font;
 

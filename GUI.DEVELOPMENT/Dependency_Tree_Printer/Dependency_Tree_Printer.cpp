@@ -101,9 +101,9 @@ void Dependency_Tree_Printer::Construct_Tree_Panel(wxString title){
      this->tree_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,620));
 
 
-     this->tree_control = new Custom_wxDataViewTreeCtrl(this->tree_panel, wxID_ANY,wxDefaultPosition,
+     this->tree_control = new wxDataViewTreeCtrl(this->tree_panel, wxID_ANY,wxDefaultPosition,
 
-                             wxDefaultSize, wxTR_DEFAULT_STYLE | wxTR_ROW_LINES );
+                             wxSize(900,590), wxTR_DEFAULT_STYLE | wxTR_ROW_LINES );
 
      this->CloseButton = new wxButton(this,ID_CLOSE_DEPENDENCY_WINDOW,wxT("CLOSE"),
      
@@ -118,11 +118,11 @@ void Dependency_Tree_Printer::Construct_Tree_Panel(wxString title){
 
 
 
-     this->close_button_sizer = new wxBoxSizer(wxVERTICAL);
+     this->close_button_sizer = new wxBoxSizer(wxHORIZONTAL);
 
      this->close_button_sizer->AddStretchSpacer();
 
-     this->close_button_sizer->Add(this->CloseButton,0, wxALIGN_CENTER_HORIZONTAL | wxFIXED_MINSIZE  | wxALL,15);
+     this->close_button_sizer->Add(this->CloseButton,0, wxEXPAND  | wxALL,15);
 
      this->close_button_sizer->AddStretchSpacer();
 
@@ -134,7 +134,7 @@ void Dependency_Tree_Printer::Construct_Tree_Panel(wxString title){
 
      this->frame_box->Add(this->ctrl_box,1,    wxEXPAND | wxTOP    |  wxALL,5);
 
-     this->frame_box->Add(this->close_button_sizer,0,wxEXPAND | wxBOTTOM  | wxALL,5);
+     this->frame_box->Add(this->close_button_sizer,0,wxALIGN_CENTER_HORIZONTAL | wxFIXED_MINSIZE  | wxBOTTOM  | wxALL,5);
 
      this->frame_box->Layout();
 
@@ -385,7 +385,7 @@ void Dependency_Tree_Printer::Set_Font(wxFont Font){
       this->tree_control->SetFont(Font);
 }
 
-Custom_wxDataViewTreeCtrl * Dependency_Tree_Printer::GetTreeCtrl(){
+wxDataViewTreeCtrl * Dependency_Tree_Printer::GetTreeCtrl(){
 
      return this->tree_control;
 }
