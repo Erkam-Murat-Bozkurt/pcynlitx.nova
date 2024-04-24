@@ -65,7 +65,7 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
     this->text_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxDefaultSize);
 
 
-    int button_panel_size_x = this->GetSize().GetX()-100;
+    int button_panel_size_x = this->GetSize().GetX()-150;
     
     wxSize button_panel_size = wxSize(button_panel_size_x,80);
 
@@ -124,11 +124,11 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
 
 
 
-    this->CloseButton->SetForegroundColour(wxColour(50,50,50));
+    //this->CloseButton->SetForegroundColour(wxColour(50,50,50));
 
-    this->IntroButton->SetForegroundColour(wxColour(50,50,50));
+    //this->IntroButton->SetForegroundColour(wxColour(50,50,50));
 
-    this->WelcomeButton->SetForegroundColour(wxColour(50,50,50));
+    //this->WelcomeButton->SetForegroundColour(wxColour(50,50,50));
 
 
     //this->CloseButton->SetFont(buttonFont.Bold());

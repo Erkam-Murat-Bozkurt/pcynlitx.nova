@@ -276,7 +276,7 @@ void Custom_Notebook::PaintNow(wxWindow * wnd)
 {
      wxClientDC dc(wnd);
 
-     wxSize Rect_Size = wxSize(wnd->GetSize().x+5,wnd->GetSize().y+5);
+     wxSize Rect_Size = wxSize(wnd->GetSize().x+1,wnd->GetSize().y+1);
 
      wxRect rect(Rect_Size);
 

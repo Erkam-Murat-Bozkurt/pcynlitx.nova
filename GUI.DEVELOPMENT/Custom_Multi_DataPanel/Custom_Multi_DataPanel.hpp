@@ -75,7 +75,7 @@ public:
 
         const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(1000,820), 
    
-        long style= wxCAPTION | wxMAXIMIZE_BOX | wxMINIMIZE_BOX | wxCLOSE_BOX | wxRESIZE_BORDER | wxSTAY_ON_TOP, char opr_sis='w');
+        long style= wxCAPTION | wxMAXIMIZE_BOX | wxCLOSE_BOX | wxRESIZE_BORDER | wxSTAY_ON_TOP, char opr_sis='w');
 
     virtual ~Custom_Multi_DataPanel();
 

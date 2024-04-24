@@ -64,7 +64,7 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      wxPoint position = this->Start_Button->GetPosition() ;
 
-     int text_x = position.x + 130;
+     int text_x = position.x + 137;
 
      int text_y = position.y + 14;
 
@@ -164,11 +164,6 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
      this->File_Menu->Append(exit_item);
 
      this->File_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_INCREASE_FONT_SIZE,"&Increase Font Size","",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_DECREASE_FONT_SIZE,"Decrease Font Size",wxT(""),wxITEM_NORMAL);
-
 
 
 
@@ -316,9 +311,9 @@ Custom_wxPanel::~Custom_wxPanel()
 
 void Custom_wxPanel::Initialize_Sizer()
 {
-     this->panel_sizer->Add(this->book_manager, 1,  wxALL|wxEXPAND,0);
+     this->panel_sizer->Add(this->book_manager, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM,5);
 
-     this->panel_sizer->Add(this->bottom_window,0, wxALIGN_LEFT | wxFIXED_MINSIZE |wxEXPAND | wxLEFT,5);
+     this->panel_sizer->Add(this->bottom_window,0, wxALIGN_LEFT | wxFIXED_MINSIZE |wxEXPAND | wxLEFT,10);
 
      this->SetSizer(this->panel_sizer);
 
@@ -335,7 +330,7 @@ void Custom_wxPanel::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rec
 {
      dc.SetBrush(wxColour(240,240,240));
 
-     dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth()+1,rect.GetHeight()+1);
+     dc.DrawRectangle(rect.GetX()-2, rect.GetY()-2, rect.GetWidth()+2,rect.GetHeight()+2);
 }
 
 void Custom_wxPanel::PaintNow(wxWindow * wnd)
