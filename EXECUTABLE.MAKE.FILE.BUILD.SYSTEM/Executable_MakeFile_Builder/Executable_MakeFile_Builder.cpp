@@ -69,6 +69,14 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path,
 
      char * Exe_Name, char strategy){
 
+
+     if(this->build_type  == 'g'){
+
+         this->Des_Reader.Set_Gui_Read_Status(true);
+
+         this->Git_Data_Proc.Receive_Gui_Read_Status(true);
+     }
+
      this->Des_Reader.Read_Descriptor_File();
 
      this->Git_Data_Proc.Write_Git_Repo_List_File();

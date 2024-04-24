@@ -65,18 +65,30 @@ void Build_Tools_Initializer::Receive_Build_Type(char BuildType){
 
 void Build_Tools_Initializer::Setup_Build_Tools(){
 
-     char read_opr [] = "\n\n   The project descriptor file read ";
+
+     if(this->build_type == 'g'){
+
+        this->Git_Data_Proc.Receive_Gui_Read_Status(true);
+
+        this->Des_Reader.Set_Gui_Read_Status(true);
+     }
 
      this->Des_Reader.Read_Descriptor_File();
+
+
+    char read_opr [] = "\n\n   The project descriptor file read ";
 
      std::cout << read_opr;
 
      if(this->build_type == 'g'){
 
         this->SysInt->WriteTo_NamedPipe_FromChild(read_opr);
+
+        this->Git_Data_Proc.Receive_Gui_Read_Status(true);
+
+        this->Des_Reader.Set_Gui_Read_Status(true);
      }
-
-
+ 
 
 
      this->Git_Data_Proc.Write_Git_Repo_List_File();

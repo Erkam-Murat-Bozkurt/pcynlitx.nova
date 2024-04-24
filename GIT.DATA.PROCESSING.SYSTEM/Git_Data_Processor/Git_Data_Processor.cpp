@@ -44,6 +44,11 @@ Git_Data_Processor::~Git_Data_Processor(){
    }
 }
 
+void Git_Data_Processor::Receive_Gui_Read_Status(bool status){
+
+     this->Des_Reader.Set_Gui_Read_Status(status);
+
+}
 
 void Git_Data_Processor::Receive_Descriptor_File_Path(char * DesPath){
 

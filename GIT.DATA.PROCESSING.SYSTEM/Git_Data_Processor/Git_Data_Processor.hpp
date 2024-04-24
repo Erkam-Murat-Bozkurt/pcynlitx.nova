@@ -29,6 +29,7 @@ public:
  void Write_Git_Modification_File();
  void Receive_Git_Modifications();
  void Set_Git_Ignoring_Files();
+ void Receive_Gui_Read_Status(bool status);
  size_t  Get_Git_File_Index_Size();
  std::string Get_Git_File_Index(int num);
  std::string Get_File_System_Path(int num);
