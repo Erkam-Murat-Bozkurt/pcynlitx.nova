@@ -29,9 +29,9 @@
    inkscape:pagecheckerboard="0"
    inkscape:deskcolor="#d1d1d1"
    showgrid="true"
-   inkscape:zoom="8.5847183"
-   inkscape:cx="27.141252"
-   inkscape:cy="28.713813"
+   inkscape:zoom="6.0703125"
+   inkscape:cx="27.181467"
+   inkscape:cy="35.335907"
    inkscape:window-width="1902"
    inkscape:window-height="991"
    inkscape:window-x="0"
@@ -56,22 +56,22 @@
      visible="true" /></sodipodi:namedview>
 
 <rect
-   style="fill:#5a5a64;fill-opacity:1;stroke-width:0.671815;stroke-linejoin:round;stroke-miterlimit:1"
+   style="fill:#f0f0f0;fill-opacity:1;stroke-width:0.671815;stroke-linejoin:round;stroke-miterlimit:1"
    id="rect1"
    width="63.34148"
    height="64.586273"
    x="0"
    y="0"
    ry="3.0350215" /><rect
-   style="fill:#ffffff;stroke-width:6.18386;stroke-miterlimit:1;fill-opacity:1"
+   style="fill:#aaaab4;fill-opacity:1;stroke-width:6.37619;stroke-miterlimit:1"
    id="rect2"
-   width="48.240356"
+   width="51.287975"
    height="50.847717"
-   x="7.5997448"
+   x="6.3642235"
    y="6.7375941"
-   ry="0" /><text
+   ry="3.2123554" /><text
    xml:space="preserve"
-   style="font-weight:600;font-size:48px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold';fill:#5a5a64;fill-opacity:1;stroke-width:0.567;stroke-miterlimit:5.5"
+   style="font-weight:600;font-size:48px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold';fill:#6e6e8c;fill-opacity:1;stroke-width:0.567;stroke-miterlimit:5.5"
    x="17.123451"
    y="48.69117"
    id="text1"><tspan
@@ -79,4 +79,4 @@
      id="tspan1"
      x="17.123451"
      y="48.69117"
-     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:48px;font-family:Rubik;-inkscape-font-specification:'Rubik Bold';fill:#5a5a64;fill-opacity:1">?</tspan></text></svg>
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:48px;font-family:Rubik;-inkscape-font-specification:'Rubik Bold';fill:#6e6e8c;fill-opacity:1">?</tspan></text></svg>

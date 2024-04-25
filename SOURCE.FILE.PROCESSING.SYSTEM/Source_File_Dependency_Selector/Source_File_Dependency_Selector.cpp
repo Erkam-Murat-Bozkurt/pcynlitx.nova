@@ -104,7 +104,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
      size_t data_size =  this->Search_Data_Ptr->size();
     
 
-     std::cout << "\n The source file data construction started";
+     std::cout << "\nThe source file data construction started";
 
 
      if(data_size>100){
@@ -138,7 +138,7 @@ void Source_File_Dependency_Selector::Determine_Source_File_Dependencies(){
 
      this->Dep_Data_Proccessor.Clear_Dynamic_Memory();
 
-     std::cout << "\n The source file data construction complated";
+     std::cout << "\nThe source file data construction complated";
 }
 
 
@@ -185,7 +185,7 @@ void Source_File_Dependency_Selector::Search_For_Large_Data_Set(size_t data_size
             end = data_size;
          }
 
-         this->threadPool.push_back(std::thread(Source_File_Dependency_Selector::Arrange_Dependency_Data,this,str,end));
+         this->threadPool.push_back(std::thread(&Source_File_Dependency_Selector::Arrange_Dependency_Data,this,str,end));
      }
     
      for(size_t i=0;i<thread_num;i++){
@@ -210,7 +210,7 @@ void Source_File_Dependency_Selector::Search_For_Middle_Data_Set(size_t data_siz
             end = data_size;
          }
 
-         this->threadPool.push_back(std::thread(Source_File_Dependency_Selector::Arrange_Dependency_Data,this,str,end));
+         this->threadPool.push_back(std::thread(&Source_File_Dependency_Selector::Arrange_Dependency_Data,this,str,end));
      }
     
      for(int i=0;i<16;i++){

@@ -24,7 +24,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Source_File_Dependency_Determiner.hpp"
 
-Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_file_path, char opr_sis) :
+Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_file_path, 
+
+    char opr_sis) :
 
     Code_Rd(opr_sis), Com_Data_Extractor(opr_sis), DepSelector(opr_sis), 
     
@@ -49,8 +51,6 @@ void Source_File_Dependency_Determiner::Clear_Object_Memory(){
      this->Code_Rd.Clear_Object_Memory();
 
      this->DepSelector.Clear_Object_Memory();
-
-     this->Clear_Compiler_Data_Vector(this->Compiler_Data_Ptr);
 
      this->Clear_Dynamic_Memory();
 }
@@ -109,7 +109,6 @@ void Source_File_Dependency_Determiner::Receive_Git_Data_Processor(Git_Data_Proc
 
      this->DepSelector_For_Single_File.Receive_Git_Data_Processor(ptr);
 
-
      this->Simple_Dep_Extractor.Receive_Git_Data_Processor(ptr);
 
      this->Simple_Dep_Extractor.Receive_Source_Code_Reader(&this->Code_Rd);
@@ -120,7 +119,7 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Clear_Dynamic_Memory();
 
-     char start_operation [] = "\n\n    The source file data construction started ";
+     char start_operation [] = "\n\nThe source file data construction started ";
 
      std::cout << start_operation;
 
@@ -133,7 +132,7 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->DepSelector_For_Single_File.Determine_Source_File_Dependencies(path);
 
-     char data_construction [] = "\n\n    The source file data construction complated";
+     char data_construction [] = "\n\nThe source file data construction complated";
      
 
      std::cout << data_construction;
@@ -150,7 +149,7 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Warehouse_Path = this->DepSelector_For_Single_File.Get_Warehouse_Path();
 
-     char dependency_serach_start [] = "\n\n    The interpretation of dependency data started";
+     char dependency_serach_start [] = "\n\nThe interpretation of dependency data started";
 
      std::cout << dependency_serach_start;
 
@@ -164,7 +163,7 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Com_Data_Extractor.Extract_Compiler_Data();
 
-     char dependency_search_end [] = "\n\n    The interpretation of dependency data complated";
+     char dependency_search_end [] = "\n\nThe interpretation of dependency data complated";
 
      std::cout << dependency_search_end;
 
@@ -196,27 +195,27 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
       this->Warehouse_Path = this->DepSelector.Get_Warehouse_Path();
 
-      std::cout << "\n The interpretation of dependency data started";
+      std::cout << "\nThe interpretation of dependency data started";
 
       this->Com_Data_Extractor.Receive_Dependency_Data(&this->DepSelector);
 
       this->Com_Data_Extractor.Extract_Compiler_Data();
 
-      std::cout << "\n The interpretation of dependency data complated";
+      std::cout << "\nThe interpretation of dependency data complated";
 
       this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
       this->Construct_Dependency_Map();
 
-      std::cout << "\n The dependency map constructed";
+      std::cout << "\nThe dependency map constructed";
 
       this->Re_Arrange_Priorities();
 
-      std::cout << "\n The compiler data re-arranged";
+      std::cout << "\nThe compiler data re-arranged";
 
       this->Order_Priorities();
 
-      std::cout << "\n The priorities re-ordered.";
+      std::cout << "\nThe priorities re-ordered.";
       std::cout << "\n";
 
       this->Clear_Dynamic_Memory();
@@ -261,7 +260,7 @@ void Source_File_Dependency_Determiner::Re_Arrange_Priorities(){
 
        int division = comp_data_size/thread_number;
 
-       int remaining_job = comp_data_size - (division*thread_number);
+       int remaining_job = comp_data_size- (thread_number*division);
 
        int str=0, end=0;
 
@@ -293,7 +292,7 @@ void Source_File_Dependency_Determiner::Re_Arrange_Priorities(){
                end = comp_data_size;
            }
 
-           this->threadPool.push_back(std::thread(Source_File_Dependency_Determiner::Control_Priorities,this,str,end));   
+           this->threadPool.push_back(std::thread(&Source_File_Dependency_Determiner::Control_Priorities,this,str,end));   
        }
     
        for(int i=0;i<this->threadPool.size();i++){
@@ -382,6 +381,7 @@ int Source_File_Dependency_Determiner::Find_File_Priority(std::string name){
 
 void Source_File_Dependency_Determiner::Order_Priorities(){
 
+
      for(size_t i=0;i < this->Compiler_Data_Ptr->size();i++){
 
          for(size_t j=i; j < this->Compiler_Data_Ptr->size();j++){
@@ -395,32 +395,32 @@ void Source_File_Dependency_Determiner::Order_Priorities(){
                 std::swap(this->Compiler_Data_Ptr->at(i),this->Compiler_Data_Ptr->at(j));
              }                          
           }
-      }
+     }
+
+     this->Compiler_Data_Ptr->shrink_to_fit();
 }
 
 
 
 void Source_File_Dependency_Determiner::Clear_Compiler_Data_Vector(std::vector<Compiler_Data> * Data){
 
-     std::vector<Compiler_Data>::iterator it;
-
      if(!Data->empty()){
 
-        for(auto it=Data->begin();it!=Data->end();it++){
+        for(size_t i=0;i<Data->size();i++){
 
-            this->Clear_Vector_Memory(it->dependent_headers);
+            this->Clear_Vector_Memory(Data->at(i).dependent_headers);
 
-            this->Clear_Vector_Memory(it->dependent_headers_dir);
+            this->Clear_Vector_Memory(Data->at(i).dependent_headers_dir);
 
-            this->Clear_Vector_Memory(it->upper_directories);
+            this->Clear_Vector_Memory(Data->at(i).upper_directories);
 
-            this->Clear_String_Memory(it->source_file_path);
+            this->Clear_String_Memory(Data->at(i).source_file_path);
 
-            this->Clear_String_Memory(it->source_file_name);
+            this->Clear_String_Memory(Data->at(i).source_file_name);
 
-            this->Clear_String_Memory(it->object_file_name);
+            this->Clear_String_Memory(Data->at(i).object_file_name);
 
-            this->Clear_String_Memory(it->source_file_name_witout_ext);
+            this->Clear_String_Memory(Data->at(i).source_file_name_witout_ext);
         }
 
         Data->clear();
@@ -494,7 +494,7 @@ void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
 
          <<  this->Compiler_Data_Ptr->at(i).priority;
 
-         std::vector<std::string> * Dep_Headers = &this->Compiler_Data_Ptr->at(i).dependent_headers;
+         const std::vector<std::string> * Dep_Headers = &(this->Compiler_Data_Ptr->at(i).dependent_headers);
 
 
          size_t dep_size = Dep_Headers->size();
@@ -504,7 +504,7 @@ void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
              std::cout << "\n Dependent header:" << Dep_Headers->at(k);         
          }
 
-         std::vector<std::string> * Dep_Headers_Dirs = &this->Compiler_Data_Ptr->at(i).dependent_headers_dir;
+         const std::vector<std::string> * Dep_Headers_Dirs = &(this->Compiler_Data_Ptr->at(i).dependent_headers_dir);
 
 
          for(size_t k=0;k<dep_size;k++){

@@ -215,7 +215,7 @@ void Source_File_Compiler_Data_Extractor::Search_For_Large_Data_Set(size_t data_
            end = data_size;
         }
 
-        this->threadPool.push_back(std::thread(Source_File_Compiler_Data_Extractor::Process_Compiler_Data,this,str,end));
+        this->threadPool.push_back(std::thread(&Source_File_Compiler_Data_Extractor::Process_Compiler_Data,this,str,end));
      }
     
      for(size_t i=0;i<thread_num;i++){
@@ -241,7 +241,7 @@ void Source_File_Compiler_Data_Extractor::Search_For_Middle_Data_Set(size_t data
             end = data_size;
          }
 
-         this->threadPool.push_back(std::thread(Source_File_Compiler_Data_Extractor::Process_Compiler_Data,this,str,end));
+         this->threadPool.push_back(std::thread(&Source_File_Compiler_Data_Extractor::Process_Compiler_Data,this,str,end));
      }
     
      for(int i=0;i<16;i++){
@@ -273,7 +273,7 @@ size_t Source_File_Compiler_Data_Extractor::Split_Range(size_t range_size, size_
         range = 1;
     }
 
-    remaining_job = range_size - (partition*range);
+    remaining_job = range_size - (range*partition);
 
     return range;    
 }
@@ -485,7 +485,8 @@ Compiler_Data Source_File_Compiler_Data_Extractor::Get_Compiler_Data(int num){
 }
 
 
-std::vector<Compiler_Data> * Source_File_Compiler_Data_Extractor::Get_Compiler_Data_Address(){
+std::vector<Compiler_Data> * Source_File_Compiler_Data_Extractor::Get_Compiler_Data_Address()
+{
 
      return &this->compiler_data;
 }

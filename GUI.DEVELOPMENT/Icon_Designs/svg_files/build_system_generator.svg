@@ -31,8 +31,8 @@
      id="namedview8"
      showgrid="true"
      inkscape:zoom="50.11506"
-     inkscape:cx="7.0238367"
-     inkscape:cy="7.073722"
+     inkscape:cx="5.4275102"
+     inkscape:cy="5.7567526"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
@@ -75,25 +75,32 @@
      inkscape:export-xdpi="500"
      inkscape:export-ydpi="500" />
   <rect
-     style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.289871;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#d78789;fill-opacity:1;stroke:none;stroke-width:0.322837;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect9-5-91-1-0"
-     width="4.9705415"
-     height="4.2529855"
-     x="4.9582057"
-     y="1.9054822" />
+     width="5.6246834"
+     height="4.6618333"
+     x="4.8206987"
+     y="1.7069025" />
   <rect
-     style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.237469;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#a0a0b4;fill-opacity:1;stroke:none;stroke-width:0.226;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect5-8"
-     width="1.7819767"
-     height="7.9669666"
-     x="1.9415766"
-     y="1.8829471" />
+     width="2.2093024"
+     height="5.8202157"
+     x="1.7378907"
+     y="1.6992153" />
   <rect
-     style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.262262;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#a0a0b4;fill-opacity:1;stroke:none;stroke-width:0.338964;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect5-8-4"
-     width="2.1174986"
-     height="6.502018"
-     x="7.7197156"
-     y="-10.072001"
+     width="2.6333001"
+     height="8.7338705"
+     x="7.3919754"
+     y="-10.479555"
      transform="rotate(90)" />
+  <rect
+     style="fill:none;stroke-width:0;stroke-miterlimit:5.5;stroke:#000000;stroke-opacity:1;stroke-dasharray:none"
+     id="rect1"
+     width="9.0866251"
+     height="8.5786772"
+     x="1.5943923"
+     y="1.6226116" />
 </svg>

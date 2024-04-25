@@ -184,7 +184,7 @@ void Source_File_Dependency_Selector_For_Single_File::Search_For_Large_Data_Set(
            end = data_size;
         }
 
-        this->threadPool.push_back(std::thread(Source_File_Dependency_Selector_For_Single_File::Arrange_Dependency_Data,this,i,str,end));
+        this->threadPool.push_back(std::thread(&Source_File_Dependency_Selector_For_Single_File::Arrange_Dependency_Data,this,i,str,end));
      }
     
      for(size_t i=0;i<thread_num;i++){
@@ -210,7 +210,7 @@ void Source_File_Dependency_Selector_For_Single_File::Search_For_Middle_Data_Set
             end = data_size;
          }
 
-         this->threadPool.push_back(std::thread(Source_File_Dependency_Selector_For_Single_File::Arrange_Dependency_Data,this,i,str,end));
+         this->threadPool.push_back(std::thread(&Source_File_Dependency_Selector_For_Single_File::Arrange_Dependency_Data,this,i,str,end));
      }
     
      for(int i=0;i<16;i++){
@@ -339,7 +339,7 @@ size_t Source_File_Dependency_Selector_For_Single_File::Split_Range(size_t range
         range = 1;
     }
 
-    remaining_job = range_size - (partition*range);
+    remaining_job = range_size- (partition*range);
 
     return range;    
 }

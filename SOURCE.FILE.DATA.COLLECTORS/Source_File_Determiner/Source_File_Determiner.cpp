@@ -8,6 +8,8 @@ Source_File_Determiner::Source_File_Determiner()
     this->Is_This_Source_File = false;
 
     this->Is_This_Main_File = false;
+
+    this->FileManager.Receive_Operating_System('w');
 }
 
 

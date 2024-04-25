@@ -208,7 +208,7 @@ void Header_Dependency_Data_Extractor::Search_For_Large_Data_Set(size_t data_siz
            end = data_size;
         }
 
-        this->threadPool.push_back(std::thread(Header_Dependency_Data_Extractor::Extract_Dependency_Search_Data,this,str,end));
+        this->threadPool.push_back(std::thread(&Header_Dependency_Data_Extractor::Extract_Dependency_Search_Data,this,str,end));
      }
     
      for(int i=0;i<thread_number;i++){
@@ -240,7 +240,7 @@ void Header_Dependency_Data_Extractor::Search_For_Middle_Data_Set(size_t data_si
             end = data_size;
          }
 
-         this->threadPool.push_back(std::thread(Header_Dependency_Data_Extractor::Extract_Dependency_Search_Data,this,str,end));
+         this->threadPool.push_back(std::thread(&Header_Dependency_Data_Extractor::Extract_Dependency_Search_Data,this,str,end));
      }
     
      for(int i=0;i<16;i++){
@@ -288,7 +288,7 @@ int Header_Dependency_Data_Extractor::Split_Range(int range_size, int partition,
         range = 1;
     }
 
-    remaining_job = range_size%partition;
+    remaining_job = range_size - (range*partition);
 
     return range;
 }
