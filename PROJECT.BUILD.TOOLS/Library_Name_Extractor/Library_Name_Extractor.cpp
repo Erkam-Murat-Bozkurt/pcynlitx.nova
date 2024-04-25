@@ -77,11 +77,11 @@ void Library_Name_Extractor::Determine_Dll_Files_Number(){
 
      int file_num = this->Enum.Get_File_Number();
 
-     char **  file_list =this->Enum.Get_File_List();
+     std::vector<std::string> * file_list = this->Enum.Get_File_List();
 
      for(int i=0;i<file_num;i++){
 
-         bool is_dll =  this->StringManager.CheckStringInclusion(file_list[i],dll_ext);
+         bool is_dll =  this->StringManager.CheckStringInclusion(file_list->at(i),dll_ext);
 
          if(is_dll){
 
@@ -99,11 +99,11 @@ void Library_Name_Extractor::Determine_Archive_Files_Number(){
 
      int file_num = this->Enum.Get_File_Number();
 
-     char **  file_list =this->Enum.Get_File_List();
+     std::vector<std::string> * file_list =this->Enum.Get_File_List();
 
      for(int i=0;i<file_num;i++){
 
-         bool is_archive =  this->StringManager.CheckStringInclusion(file_list[i],archive_ext);
+         bool is_archive =  this->StringManager.CheckStringInclusion(file_list->at(i),archive_ext);
 
          if(is_archive){
 
@@ -122,17 +122,17 @@ void Library_Name_Extractor::Extract_Dll_Files(){
 
         int file_num = this->Enum.Get_File_Number();
 
-        char **  file_list =this->Enum.Get_File_List();
+        std::vector<std::string> * file_list = this->Enum.Get_File_List();
 
         int index = 0;
 
         for(int i=0;i<file_num;i++){
 
-            bool is_dll =  this->StringManager.CheckStringInclusion(file_list[i],dll_ext);
+            bool is_dll =  this->StringManager.CheckStringInclusion(file_list->at(i),dll_ext);
 
             if(is_dll){
 
-               this->Place_String(&(this->dll_files[index]),file_list[i]);
+               this->Place_String(&(this->dll_files[index]),file_list->at(i).c_str());
 
                index++;
             }
@@ -150,17 +150,17 @@ void Library_Name_Extractor::Extract_Archive_Files(){
 
         int file_num = this->Enum.Get_File_Number();
 
-        char **  file_list =this->Enum.Get_File_List();
+        std::vector<std::string> * file_list =this->Enum.Get_File_List();
 
         int index = 0;
 
         for(int i=0;i<file_num;i++){
 
-            bool is_archive =  this->StringManager.CheckStringInclusion(file_list[i],archive_ext);
+            bool is_archive =  this->StringManager.CheckStringInclusion(file_list->at(i),archive_ext);
 
             if(is_archive){
 
-               this->Place_String(&(this->archive_files[index]),file_list[i]);
+               this->Place_String(&(this->archive_files[index]),file_list->at(i));
 
                index++;
             }
@@ -230,6 +230,21 @@ void Library_Name_Extractor::Place_String(char ** pointer, char * string){
 
      (*pointer)[string_size] = '\0';
 }
+
+void Library_Name_Extractor::Place_String(char ** pointer, std::string string){
+
+     size_t string_size = string.length();
+
+     (*pointer) = new char [5*string_size];
+
+     for(size_t i =0; i<string_size;i++){
+
+        (*pointer)[i] = string[i];
+     }
+
+     (*pointer)[string_size] = '\0';
+}
+
 
 char * Library_Name_Extractor::Get_Archive_File(int index){
 

@@ -131,7 +131,7 @@ void Auto_MakeFile_Builder::Construct_For_Large_Data_Set(size_t data_size){
                end = data_size;
          }
 
-         this->threadPool.push_back(std::thread(Auto_MakeFile_Builder::Write_MakeFiles,this,str,end));
+         this->threadPool.push_back(std::thread(&Auto_MakeFile_Builder::Write_MakeFiles,this,str,end));
      }
     
      for(size_t i=0;i<thread_num;i++){
@@ -155,7 +155,7 @@ void Auto_MakeFile_Builder::Construct_For_Middle_Data_Set(size_t data_size){
             end = data_size;
          }
 
-         this->threadPool.push_back(std::thread(Auto_MakeFile_Builder::Write_MakeFiles,this,str,end));
+         this->threadPool.push_back(std::thread(&Auto_MakeFile_Builder::Write_MakeFiles,this,str,end));
      }
     
      for(int i=0;i<16;i++){

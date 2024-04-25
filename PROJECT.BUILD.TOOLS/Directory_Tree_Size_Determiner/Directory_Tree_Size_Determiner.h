@@ -13,14 +13,12 @@
 #include <cstdio>
 #include <iostream>
 #include <fcntl.h>
-#include <windows.h>
 #include "Directory_Enumerator.h"
 
 class Directory_Tree_Size_Determiner
 {
 public:
  Directory_Tree_Size_Determiner();
- Directory_Tree_Size_Determiner(const Directory_Tree_Size_Determiner & orig);
  virtual ~Directory_Tree_Size_Determiner();
  void Determine_Directory_Tree_Size(char * dir_path);
  int  Get_Directory_Tree_Size();

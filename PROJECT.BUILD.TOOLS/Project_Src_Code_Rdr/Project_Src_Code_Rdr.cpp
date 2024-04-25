@@ -133,7 +133,7 @@ void Project_Src_Code_Rdr::Read_For_Large_Data_Set(size_t repo_size){
             end = repo_size;
          }
 
-         this->threadPool.push_back(std::thread(Project_Src_Code_Rdr::Read_Source_Code,this,str,end));
+         this->threadPool.push_back(std::thread(&Project_Src_Code_Rdr::Read_Source_Code,this,str,end));
      }
     
      for(size_t i=0;i<thread_num;i++){
@@ -162,7 +162,7 @@ void Project_Src_Code_Rdr::Read_For_Middle_Data_Set(size_t repo_size){
             end = repo_size;
          }
 
-         this->threadPool.push_back(std::thread(Project_Src_Code_Rdr::Read_Source_Code,this,str,end));
+         this->threadPool.push_back(std::thread(&Project_Src_Code_Rdr::Read_Source_Code,this,str,end));
      }
     
      for(int i=0;i<thread_number;i++){

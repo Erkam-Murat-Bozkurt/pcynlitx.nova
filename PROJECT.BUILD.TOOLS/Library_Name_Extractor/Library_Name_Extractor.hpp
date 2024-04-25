@@ -13,7 +13,6 @@
 #include <fstream>
 #include <string>
 #include <fcntl.h>
-#include <windows.h>
 #include "Directory_Enumerator.h"
 #include "Descriptor_File_Reader.hpp"
 #include "StringOperator.h"
@@ -41,6 +40,7 @@ private:
  void Determine_Dll_Files_Number();
  void Determine_Archive_Files_Number();
  void Place_String(char ** pointer, char * string);
+ void Place_String(char ** pointer, std::string string);
  Directory_Enumerator Enum;
  Descriptor_File_Reader * Des_Reader_Pointer;
  Cpp_FileOperations FileManager;

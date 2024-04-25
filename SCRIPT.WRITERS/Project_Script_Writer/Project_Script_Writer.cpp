@@ -8,6 +8,8 @@ Project_Script_Writer::Project_Script_Writer(char opr_sis) :
 {
      this->Memory_Delete_Condition = true;
 
+     this->FileManager.Receive_Operating_System(opr_sis);
+
      this->is_script_path_setted = true;
 
      this->source_file_num = 0;
@@ -133,7 +135,7 @@ void Project_Script_Writer::Construct_For_Large_Data_Set(int data_size){
                end = this->source_file_num;
          }
 
-         this->threadPool.push_back(std::thread(Project_Script_Writer::Write_Source_File_Scripts,this,str,end));
+         this->threadPool.push_back(std::thread(&Project_Script_Writer::Write_Source_File_Scripts,this,str,end));
      }
     
      for(int i=0;i<thread_num;i++){
@@ -158,7 +160,7 @@ void Project_Script_Writer::Construct_For_Middle_Data_Set(int data_size){
             end = data_size;
          }
 
-         this->threadPool.push_back(std::thread(Project_Script_Writer::Write_Source_File_Scripts,this,str,end));
+         this->threadPool.push_back(std::thread(&Project_Script_Writer::Write_Source_File_Scripts,this,str,end));
      }
     
      for(int i=0;i<16;i++){

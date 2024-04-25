@@ -68,7 +68,7 @@ void Make_File_Cleaner::Clear_Make_Files_Exist_On_Repo(){
 
          int file_num = this->Enumerator.Get_File_Number();
 
-         std::vector<std::string> *  file_list = this->Enumerator.Get_File_List_As_StdStr();
+         std::vector<std::string> *  file_list = this->Enumerator.Get_File_List();
 
          for(int k=0;k<file_num;k++){
 
