@@ -125,9 +125,9 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
 
 
-     //this->Empty_Project_File_Button->SetForegroundColour(wxColour(0,0,10));
+     this->Empty_Project_File_Button->SetForegroundColour(wxColour(60,60,70));
 
-     //this->Project_File_Selection_Button->SetForegroundColour(wxColour(0,0,10));
+     this->Project_File_Selection_Button->SetForegroundColour(wxColour(60,60,70));
 
 
 
@@ -161,11 +161,11 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      Text_Font.SetPointSize(10);
 
-     Text_Font.SetFaceName(wxT("Segoe UI Semibold"));
+     Text_Font.SetFaceName(wxT("Segoe UI"));
 
      new_file_text->SetFont(Text_Font);
 
-     new_file_text->SetForegroundColour(wxColour(80,80,80));
+     new_file_text->SetForegroundColour(wxColour(80,80,90));
      
      new_file_text->CentreOnParent(wxBOTH);
 
@@ -179,7 +179,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      project_file_text->SetFont(Text_Font);
 
-     project_file_text->SetForegroundColour(wxColour(80,80,80));
+     project_file_text->SetForegroundColour(wxColour(80,80,90));
 
      project_file_text->CentreOnParent(wxBOTH);
 
