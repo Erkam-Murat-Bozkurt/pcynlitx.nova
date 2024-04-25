@@ -21,7 +21,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "DataRecorder.h"
 
-DataRecorder::DataRecorder(char * Path, char opr_sis) : Des_Reader(opr_sis)
+DataRecorder::DataRecorder(char * Path, char opr_sis, char build_type) : Des_Reader(opr_sis,build_type)
 
 {
     if(!this->File_Manager.Is_Path_Exist(Path)){

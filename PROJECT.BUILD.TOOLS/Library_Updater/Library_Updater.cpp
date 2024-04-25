@@ -22,9 +22,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Library_Updater.h"
 
-Library_Updater::Library_Updater(char opr_sis):
+Library_Updater::Library_Updater(char opr_sis, char build_type):
 
-    Des_Reader(opr_sis)
+    Des_Reader(opr_sis,build_type)
 {
 
     this->opr_sis = opr_sis;

@@ -36,9 +36,10 @@
 class Executable_MakeFile_Builder
 {
 public:
- Executable_MakeFile_Builder(char * des_path, char opr_sis);
+ Executable_MakeFile_Builder(char * des_path, char opr_sis, char build_type);
  virtual ~Executable_MakeFile_Builder();
  void Receive_Build_Type(char build_type);
+ void Set_Gui_Read_Status(bool status);
  void Receive_System_Interface(Custom_System_Interface * sysInt);
  void Build_MakeFile(char * path, char * Exe_Name, char c);
  void Clear_Dynamic_Memory();
@@ -79,6 +80,7 @@ protected:
  char build_type;
  char opr_sis;
  bool Memory_Delete_Condition;
+ bool gui_read_status;
 };
 
 #endif /* EXECUTABLE_MAKEFILE_BUILDER_HPP */

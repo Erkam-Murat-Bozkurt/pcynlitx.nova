@@ -53,10 +53,8 @@ int main(int argc, char ** argv){
 
        System_Interface.Connect_NamedPipe_From_Child_Process();
 
-       Kernel Build_System(argv[1],'w');
-
-       Build_System.Receive_Build_Type('g');
-
+       Kernel Build_System(argv[1],'w','g');
+       
        Build_System.Receive_System_Interface(&System_Interface);
 
        Build_System.Determine_Source_File_Dependency_List(argv[3]);
@@ -126,7 +124,7 @@ int main(int argc, char ** argv){
 
         argument_pass_cond = true;
 
-        Kernel Build_System(argv[1],'w');
+        Kernel Build_System(argv[1],'w','g');
 
         std::cout << "\n\n C++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED \n";
 
@@ -147,7 +145,7 @@ int main(int argc, char ** argv){
 
         argument_pass_cond = true;
 
-        Kernel Build_System(argv[1],'w');
+        Kernel Build_System(argv[1],'w','n');
 
         std::cout << "\n\n C++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED \n";
 
@@ -176,11 +174,9 @@ int main(int argc, char ** argv){
 
         argument_pass_cond = true;
 
-        Kernel Build_System(argv[1],'w');
+        Kernel Build_System(argv[1],'w','n');
 
         std::cout << "\n\e[0;32mTHE MAKEFILE CONSTRUCTION STARTED\e[0m\n";
-
-        Build_System.Receive_Build_Type('n');
 
         Build_System.Build_MakeFile(argv[3],argv[4],*argv[5]);
 
@@ -209,13 +205,11 @@ int main(int argc, char ** argv){
 
         argument_pass_cond = true;
 
-        Kernel Build_System(argv[1],'w');
+        Kernel Build_System(argv[1],'w','g');
 
         std::cout << "\n\e[0;32mTHE MAKEFILE CONSTRUCTION STARTED\e[0m\n";
 
         Build_System.Receive_System_Interface(&System_Interface);
-
-        Build_System.Receive_Build_Type('g');
 
         Build_System.Build_MakeFile(argv[3],argv[4],*argv[5]);
 
@@ -233,7 +227,7 @@ int main(int argc, char ** argv){
 
        argument_pass_cond = true;
 
-       DataRecorder Dt_Recorder(argv[1],'w');
+       DataRecorder Dt_Recorder(argv[1],'w','n');
 
        Dt_Recorder.Add_Data_Record(argv[3],argv[4]);
 
@@ -249,7 +243,7 @@ int main(int argc, char ** argv){
 
        argument_pass_cond = true;
 
-       DataRecorder Dt_Recorder(argv[1],'w');
+       DataRecorder Dt_Recorder(argv[1],'w','n');
 
        Dt_Recorder.Clear_Data_Record(argv[3]);
 
@@ -262,7 +256,7 @@ int main(int argc, char ** argv){
 
         argument_pass_cond = true;
 
-        Kernel Build_System(argv[1],'w');
+        Kernel Build_System(argv[1],'w','n');
 
         Build_System.Update_Library();
     }

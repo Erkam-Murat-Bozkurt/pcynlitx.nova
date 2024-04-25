@@ -55,7 +55,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
       = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\logo.png"),wxBITMAP_TYPE_ANY);
 
 
-  this->Des_Reader = new Descriptor_File_Reader('w');
+  this->Des_Reader = new Descriptor_File_Reader('w','g');
 
   this->Des_Reader->Set_Gui_Read_Status(true);
 

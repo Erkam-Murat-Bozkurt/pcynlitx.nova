@@ -10,7 +10,6 @@
 #include <cstdlib>
 #include <cstdio>
 #include <iostream>
-#include <windows.h>
 #include "Descriptor_File_Data_Collector.hpp"
 #include "Descriptor_File_Syntax_Controller.hpp"
 #include "StringOperator.h"
@@ -19,7 +18,7 @@
 class Descriptor_File_Reader
 {
 public:
- Descriptor_File_Reader(char opr_sis);
+ Descriptor_File_Reader(char opr_sis, char build_type);
  virtual ~Descriptor_File_Reader();
  void Read_Descriptor_File();
  void Clear_Dynamic_Memory();

@@ -20,7 +20,7 @@
 class Library_Updater
 {
 public:
- Library_Updater(char opr_sis);
+ Library_Updater(char opr_sis, char build_type);
  virtual ~Library_Updater();
  void Receive_Descriptor_File_Path(char * DesPATH);
  void Receive_Descriptor_File_Path(std::string DesPATH);

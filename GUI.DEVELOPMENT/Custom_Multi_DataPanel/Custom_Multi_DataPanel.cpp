@@ -86,7 +86,7 @@ Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, 
 
    const wxPoint & pos, const wxSize & size, long style, char opr_sis) : 
    
-   wxDialog(parent,id,title,pos,size, style), Data_Recorder(opr_sis), Des_Reader(opr_sis)
+   wxDialog(parent,id,title,pos,size, style), Data_Recorder(opr_sis), Des_Reader(opr_sis,'g')
 {
      this->Parent_Frame = parent;
 

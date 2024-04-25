@@ -13,8 +13,8 @@
 #include <cstdio>
 #include <iostream>
 #include <fcntl.h>
-#include <windows.h>
 #include <string>
+#include <windows.h>
 #include "Build_Tools_Initializer.h"
 #include "Executable_MakeFile_Builder.hpp"
 #include "Repo_Warehouse_Initializer.h"
@@ -30,7 +30,7 @@
 class Kernel
 {
 public:
- Kernel(char * DesPATH, char opr_sis);
+ Kernel(char * DesPATH, char opr_sis, char build_type);
  virtual ~Kernel();
  void Receive_Build_Type(char BuildType);
  void Receive_System_Interface(Custom_System_Interface * SysInt);

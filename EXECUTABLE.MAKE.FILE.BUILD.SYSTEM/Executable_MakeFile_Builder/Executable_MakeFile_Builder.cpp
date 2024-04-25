@@ -23,13 +23,15 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Executable_MakeFile_Builder.hpp"
 
-Executable_MakeFile_Builder::Executable_MakeFile_Builder(char * des_path, char opr_sis):
+Executable_MakeFile_Builder::Executable_MakeFile_Builder(char * des_path, char opr_sis, char build_type):
 
-   Des_Reader(opr_sis), Git_Data_Proc(opr_sis), Dep_Determiner(des_path,opr_sis), 
+   Des_Reader(opr_sis,build_type), Git_Data_Proc(opr_sis,build_type), Dep_Determiner(des_path,opr_sis), 
    
    ComConstructor(opr_sis), Script_Builder(opr_sis), Project_Rebuild_Script_Writer(opr_sis)   
 {
      this->opr_sis = opr_sis;
+
+     this->build_type = build_type;
 
      this->Des_Reader.Receive_Descriptor_File_Path(des_path);
 
@@ -60,10 +62,27 @@ void Executable_MakeFile_Builder::Receive_System_Interface(Custom_System_Interfa
 }
 
 
+void Executable_MakeFile_Builder::Set_Gui_Read_Status(bool status){
+
+     this->gui_read_status = status;
+}
+
+
 void Executable_MakeFile_Builder::Receive_Build_Type(char BuildType){
 
      this->build_type = BuildType;
+
+     if(this->build_type == 'g'){
+
+        this->Set_Gui_Read_Status(true);
+     }
+     else{
+
+        this->Set_Gui_Read_Status(false);
+     }
 }
+
+
 
 void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path, 
 
@@ -74,7 +93,7 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path,
 
          this->Des_Reader.Set_Gui_Read_Status(true);
 
-         this->Git_Data_Proc.Receive_Gui_Read_Status(true);
+         this->Git_Data_Proc.Set_Gui_Read_Status(true);
      }
 
      this->Des_Reader.Read_Descriptor_File();

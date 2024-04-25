@@ -1,7 +1,7 @@
 
 #include "Descriptor_File_Reader.hpp"
 
-Descriptor_File_Reader::Descriptor_File_Reader(char opr_sis) :
+Descriptor_File_Reader::Descriptor_File_Reader(char opr_sis, char build_type) :
 
    Data_Collector(opr_sis), Syntax_Controller(opr_sis)
 {
@@ -9,11 +9,16 @@ Descriptor_File_Reader::Descriptor_File_Reader(char opr_sis) :
 
    this->Memory_Delete_Condition = false;
 
+   if(build_type == 'g'){
+
+      this->Set_Gui_Read_Status(true);
+   }
+   else{
+
+      this->Set_Gui_Read_Status(false);
+   }
+
    this->Data_Record_Cond = false;
-
-   this->gui_read_status  = false;
-
-   this->gui_read_success = true;
 
    this->gui_syntax_error = false;
 
@@ -776,10 +781,6 @@ void Descriptor_File_Reader::Divide_Options(){
                 }
             }
           }
-          else{
-
-              this->options = temp_opts;
-          }
        }
 }
 
@@ -840,7 +841,7 @@ const std::vector<std::string> & Descriptor_File_Reader::Get_Source_File_Directo
 
 const std::vector<std::string> & Descriptor_File_Reader::Get_Library_Files(){
 
-     return this->Library_Files;
+     return this->Library_Directories;
 }
 
 

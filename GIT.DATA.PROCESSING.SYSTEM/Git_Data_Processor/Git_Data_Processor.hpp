@@ -20,7 +20,7 @@
 class Git_Data_Processor
 {
 public:
- Git_Data_Processor(char opr_sis);
+ Git_Data_Processor(char opr_sis, char build_type);
  virtual ~Git_Data_Processor();
  void Receive_Descriptor_File_Path(char * DesPath);
  void Receive_Descriptor_File_Path(std::string DesPath);
@@ -28,8 +28,8 @@ public:
  void Determine_Git_Repo_Info();
  void Write_Git_Modification_File();
  void Receive_Git_Modifications();
+ void Set_Gui_Read_Status(bool status);
  void Set_Git_Ignoring_Files();
- void Receive_Gui_Read_Status(bool status);
  size_t  Get_Git_File_Index_Size();
  std::string Get_Git_File_Index(int num);
  std::string Get_File_System_Path(int num);
@@ -54,6 +54,7 @@ protected:
  Git_File_List_Writer      List_Writer;
  Git_File_List_Receiver    List_Receiver;
  Descriptor_File_Reader    Des_Reader;
+ bool gui_read_status;
  char opr_sis;
  char * CString;
  int  File_Line_Number;

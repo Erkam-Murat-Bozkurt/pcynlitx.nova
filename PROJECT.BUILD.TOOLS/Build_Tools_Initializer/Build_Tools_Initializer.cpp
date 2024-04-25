@@ -3,15 +3,17 @@
 
 #include "Build_Tools_Initializer.h"
 
-Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis) : 
+Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis, char build_type) : 
 
  Rep_Init(DesPATH,opr_sis),   Dep_Determiner(DesPATH,opr_sis) , 
 
  Mk_Builder(DesPATH,opr_sis), Script_Writer(opr_sis), 
  
- Git_Data_Proc(opr_sis), Des_Reader(opr_sis)
+ Git_Data_Proc(opr_sis,build_type), Des_Reader(opr_sis,build_type)
 {    
     this->Memory_Delete_Condition = false;
+
+    this->build_type = build_type;
 
     this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
 
@@ -68,7 +70,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      if(this->build_type == 'g'){
 
-        this->Git_Data_Proc.Receive_Gui_Read_Status(true);
+        this->Git_Data_Proc.Set_Gui_Read_Status(true);
 
         this->Des_Reader.Set_Gui_Read_Status(true);
      }
@@ -84,7 +86,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
         this->SysInt->WriteTo_NamedPipe_FromChild(read_opr);
 
-        this->Git_Data_Proc.Receive_Gui_Read_Status(true);
+        this->Git_Data_Proc.Set_Gui_Read_Status(true);
 
         this->Des_Reader.Set_Gui_Read_Status(true);
      }

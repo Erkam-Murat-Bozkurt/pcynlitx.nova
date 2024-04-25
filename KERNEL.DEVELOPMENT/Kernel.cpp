@@ -2,12 +2,22 @@
 
 #include "Kernel.hpp"
 
-Kernel::Kernel(char * DesPATH, char opr_sis) : Bld_Init(DesPATH,opr_sis),  
+Kernel::Kernel(char * DesPATH, char opr_sis, char build_type) : Bld_Init(DesPATH,opr_sis,build_type),  
 
-     Exe_Bld(DesPATH,opr_sis), Des_Reader(opr_sis), Git_Prog(opr_sis), 
+     Exe_Bld(DesPATH,opr_sis,build_type), Des_Reader(opr_sis,build_type), Git_Prog(opr_sis,build_type), 
      
-     Dep_Determiner(DesPATH,opr_sis), Lib_Up(opr_sis)
+     Dep_Determiner(DesPATH,opr_sis), Lib_Up(opr_sis,build_type)
 {     
+
+     this->Receive_Build_Type(build_type);
+
+     if(build_type == 'g'){
+
+        this->Des_Reader.Set_Gui_Read_Status(true);
+
+        this->Git_Prog.Set_Gui_Read_Status(true);
+     }
+
      this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
 
      this->Des_Reader.Read_Descriptor_File();
@@ -42,10 +52,6 @@ std::vector<Compiler_Data> * Kernel::Get_Src_Dependency_List(){
 void Kernel::Receive_Build_Type(char BuildType){
 
      this->build_type = BuildType;
-
-     this->Exe_Bld.Receive_Build_Type(BuildType);
-
-     this->Bld_Init.Receive_Build_Type(BuildType);
 
      this->Dep_Determiner.Receive_Run_Type(BuildType);
 }

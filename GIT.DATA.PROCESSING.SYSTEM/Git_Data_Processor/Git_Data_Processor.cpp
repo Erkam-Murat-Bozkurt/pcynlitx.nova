@@ -25,12 +25,21 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-Git_Data_Processor::Git_Data_Processor(char opr_sis) :
+Git_Data_Processor::Git_Data_Processor(char opr_sis, char build_type) :
 
     Modf_Receiver(opr_sis), Modf_Lister(opr_sis), List_Writer(opr_sis), 
-    List_Receiver(opr_sis), Des_Reader(opr_sis) 
+    List_Receiver(opr_sis), Des_Reader(opr_sis,build_type) 
 {
     this->opr_sis = opr_sis;
+
+    if(build_type == 'g'){
+
+       this->Set_Gui_Read_Status(true);
+    }
+    else{
+
+       this->Set_Gui_Read_Status(false);
+    }
 
     this->Memory_Delete_Condition = false;
 }
@@ -44,10 +53,10 @@ Git_Data_Processor::~Git_Data_Processor(){
    }
 }
 
-void Git_Data_Processor::Receive_Gui_Read_Status(bool status){
 
-     this->Des_Reader.Set_Gui_Read_Status(status);
+void Git_Data_Processor::Set_Gui_Read_Status(bool status){
 
+     this->gui_read_status = status;
 }
 
 void Git_Data_Processor::Receive_Descriptor_File_Path(char * DesPath){

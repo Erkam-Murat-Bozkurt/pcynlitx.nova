@@ -23,7 +23,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 #include "GUI_List_Data_Recorder.hpp"
 
 
-GUI_List_Data_Recorder::GUI_List_Data_Recorder(char opr_sis) : Des_Reader (opr_sis) , File_Manager(opr_sis)
+GUI_List_Data_Recorder::GUI_List_Data_Recorder(char opr_sis) : Des_Reader (opr_sis,'g') , File_Manager(opr_sis)
 {
     this->opr_sis = opr_sis;
 

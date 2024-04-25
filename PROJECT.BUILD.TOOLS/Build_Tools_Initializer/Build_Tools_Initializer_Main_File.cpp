@@ -20,7 +20,7 @@ int main(int argc, char ** argv){
 
     std::cout << "\n\n\e[1;32mC++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED\e[0m\n";
 
-    Build_Tools_Initializer Initializer(argv[1],'w');
+    Build_Tools_Initializer Initializer(argv[1],'w','g');
 
     if(argc > 2){
 

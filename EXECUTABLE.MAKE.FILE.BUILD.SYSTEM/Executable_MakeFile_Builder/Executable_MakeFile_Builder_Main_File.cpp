@@ -35,7 +35,7 @@ int main(int argc, char ** argv){
     }
 
 
-    Executable_MakeFile_Builder File_Builder(argv[1],'w');
+    Executable_MakeFile_Builder File_Builder(argv[1],'w','g');
 
     File_Builder.Build_MakeFile(argv[2],argv[3],*argv[4]);
     

@@ -23,7 +23,7 @@
 class Build_Tools_Initializer
 {
 public:
- Build_Tools_Initializer(char * DesPATH, char opr_sis);
+ Build_Tools_Initializer(char * DesPATH, char opr_sis, char build_type);
  void Receive_Build_Type(char BuildType);
  void Receive_System_Interface(Custom_System_Interface * sysInt);
  virtual ~Build_Tools_Initializer();

@@ -11,12 +11,12 @@
 class DataRecorder
 {
 public:
-  DataRecorder(char * Path, char opr_sis);
+  DataRecorder(char * Path, char opr_sis, char build_type);
   virtual ~DataRecorder();
   void Add_Data_Record(char * Data_Type, char * Data_Record);
   void Clear_Data_Record(char * Data_Type);
-  void Replace_Data_Record(char * Data_Type,  char * Data_Record);
-  void Replace_Data_Record(char * Data_Type,  std::vector<std::string> & vec);
+  void Replace_Data_Record(char * Data_Type, char * Data_Record);
+  void Replace_Data_Record(char * Data_Type, std::vector<std::string> & vec);
   void Clear_Object_Memory();
   void Clear_Dynamic_Memory();
 private:
