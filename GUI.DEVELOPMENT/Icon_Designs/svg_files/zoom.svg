@@ -29,9 +29,9 @@
    inkscape:pagecheckerboard="0"
    inkscape:deskcolor="#d1d1d1"
    showgrid="true"
-   inkscape:zoom="17.169437"
-   inkscape:cx="27.199494"
-   inkscape:cy="34.04305"
+   inkscape:zoom="8.5847185"
+   inkscape:cx="27.257737"
+   inkscape:cy="38.731614"
    inkscape:window-width="1902"
    inkscape:window-height="981"
    inkscape:window-x="0"
@@ -56,7 +56,7 @@
      visible="true" /></sodipodi:namedview>
 
 <rect
-   style="fill:#5a5a64;fill-opacity:1;stroke-width:0.671815;stroke-linejoin:round;stroke-miterlimit:1"
+   style="fill:#50505a;fill-opacity:1;stroke-width:0.671815;stroke-linejoin:round;stroke-miterlimit:1"
    id="rect1"
    width="63.34148"
    height="64.586273"
@@ -70,13 +70,13 @@
    x="6.4348841"
    y="6.3881359"
    ry="2.2132351" /><ellipse
-   style="fill:#b5b4c8;fill-opacity:1;stroke:#5a5a64;stroke-width:4.695;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
+   style="fill:#b5b4c8;fill-opacity:1;stroke:#50505a;stroke-width:4.695;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
    id="path1"
    cx="30.344618"
    cy="30.073139"
    rx="12.99949"
    ry="12.59179" /><path
-   style="fill:#f0f0f0;fill-opacity:1;fill-rule:evenodd;stroke:#5a5a64;stroke-width:7.6505;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+   style="fill:#f0f0f0;fill-opacity:1;fill-rule:evenodd;stroke:#50505a;stroke-width:7.6505;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
    d="M 46.76779,49.021727 38.20879,38.78999"
    id="path2"
    inkscape:connector-type="polyline"
