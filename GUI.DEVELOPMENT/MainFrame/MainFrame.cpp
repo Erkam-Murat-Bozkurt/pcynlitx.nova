@@ -216,6 +216,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
                             *(this->Default_Font),this->Book_Manager->GetTabCtrlHeight(),theme_clr);
 
+  this->Dir_List_Manager->start_menu_window_size = this->Custom_Main_Panel->bottom_window->GetSize();
+
+
   this->tree_control = this->Dir_List_Manager->GetTreeCtrl();
 
   this->dir_control = new wxDir;

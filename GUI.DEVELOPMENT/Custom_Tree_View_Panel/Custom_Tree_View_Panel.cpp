@@ -196,6 +196,19 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
 
 
+     int bottom_win_y = this->Tree_Control_Position.y + this->tree_control->GetSize().GetY();
+
+
+     this->Bottom_Window =  new Custom_Window(this,wxPoint(0,bottom_win_y),
+     
+                           wxSize(Tab_Bar_size.x,60),wxColour(240,240,240,0xff));
+
+
+
+
+
+
+
      // Default wxPanel position is TopLeft corner of the panel
 
      wxPoint Panel_Top_Right_Position = this->GetRect().GetTopRight();
@@ -229,6 +242,10 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->windows_detach_condition = false;
 
 
+
+
+
+
      this->Top_Bar_Window->Show(true);
 
      this->Title_Window->Show(true);
@@ -236,6 +253,8 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->close_button->Show(true);
 
      this->tree_control->Show(true);
+
+     this->Bottom_Window->Show(true);
 
      this->Show(false);
 
@@ -286,9 +305,12 @@ void Custom_Tree_View_Panel::Initialize_Sizer()
 
      this->panel_sizer->Add(this->Top_Bar_Window,0, wxEXPAND | wxALL,0);
 
-     this->panel_sizer->Add(this->Title_Window,0, wxEXPAND |  wxLEFT | wxRIGHT,10);
+     this->panel_sizer->Add(this->Title_Window,0,  wxEXPAND |  wxLEFT | wxRIGHT,10);
 
-     this->panel_sizer->Add(this->tree_control,1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM,10);
+     this->panel_sizer->Add(this->tree_control,1,   wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM,10);
+
+     this->panel_sizer->Add(this->Bottom_Window,0, wxEXPAND | wxALL,0);
+
 
      this->panel_sizer->Layout();
 
@@ -395,6 +417,8 @@ void Custom_Tree_View_Panel::OnPaint(wxPaintEvent & event)
         this->Top_Bar_Window->paintNow();
 
         this->Title_Window->paintNow();
+
+        this->Bottom_Window->paintNow();
      }
 };
 

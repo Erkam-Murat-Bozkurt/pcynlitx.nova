@@ -61,6 +61,9 @@ public:
 
   Custom_Window * Title_Window;
 
+  Custom_Window * Bottom_Window;
+
+
   wxFrame * Frame_Pointer;
 
   wxAuiPaneInfo File_List_Widget_Shape;
@@ -128,6 +131,8 @@ public:
   bool close_button_construction_status;
 
   bool windows_detach_condition;
+
+  wxSize start_menu_window_size;
 
 protected:
   bool Memory_Delete_Condition;

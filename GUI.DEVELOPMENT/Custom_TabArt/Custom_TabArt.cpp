@@ -101,7 +101,18 @@ this program. If not, see <http://www.gnu.org/licenses/>.
        wxCoord tab_y = in_rect.y+14;
 
 
-       wxFont bld = this->Default_Font->Bold();
+
+
+
+       wxFont bld = *this->Default_Font;
+       
+       bld.SetFaceName(wxT("Noto Sans"));
+
+
+       
+
+       //bld.SetPixelSize(wxSize(0,14));
+
 
        wxFont normal = *this->Default_Font;
 
@@ -109,7 +120,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
        if (page.active)
        {
 
-           dc.SetFont(normal);
+           dc.SetFont(bld);
 
            texty = selected_texty;
        }
@@ -137,9 +148,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
            //dc.SetBrush(wxBrush(wxColour(206,108,125)));
 
-           dc.SetPen(wxPen(wxColour(195,145,110)));
+           dc.SetPen(wxPen(wxColour(32,150,120)));
 
-           dc.SetBrush(wxColour(225,185,150));
+           dc.SetBrush(wxColour(62,180,150));
             
            //dc.SetBrush(wxColour(115,115,125));
 
