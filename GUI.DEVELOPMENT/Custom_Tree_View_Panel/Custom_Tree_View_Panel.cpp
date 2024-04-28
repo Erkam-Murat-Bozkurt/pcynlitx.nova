@@ -140,7 +140,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->tree_control->SetPosition(this->Tree_Control_Position);
 
-     this->tree_control->SetBackgroundColour(wxColour(255,255,255));
+     this->tree_control->SetBackgroundColour(wxColour(250,250,250));
 
 
      wxSize Tab_Bar_size = wxSize(this->GetSize().x,this->tab_ctrl_hight);
@@ -155,9 +155,11 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      // TITLE WINDOW SETTINGS START
 
+     // wxColour(115,115,125)
+
      this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),
      
-                           wxSize(Tab_Bar_size.x,Tab_Bar_size.y+5),wxColour(190, 190, 200));
+                           wxSize(Tab_Bar_size.x,Tab_Bar_size.y-5),wxColour(115,115,125,0xff));
 
      this->Title_Window->Receive_Tab_ctrl_Hight(this->tab_ctrl_hight);
 
@@ -173,7 +175,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      int text_y_pos = title_pos.y + (this->tab_ctrl_hight - text_size.GetY())/2;
 
-     text->SetPosition(wxPoint(title_pos.x+25,text_y_pos+2));
+     text->SetPosition(wxPoint(title_pos.x+25,text_y_pos));
 
 
 
@@ -186,7 +188,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      text->SetFont(textFont);
 
-     text->SetForegroundColour(wxColour(50,50,50));
+     text->SetForegroundColour(wxColour(250,250,250));
 
      // TITLE WINDOW SETTINGS END
 

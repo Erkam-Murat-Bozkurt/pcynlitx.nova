@@ -144,7 +144,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Central_Pane_Info.Resizable(true);
 
-  this->Central_Pane_Info.MinSize(800,900);
+  this->Central_Pane_Info.MinSize(800,850);
 
 
 
@@ -155,7 +155,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Custom_Main_Panel->SetSize(this->GetClientSize());
 
-  this->Custom_Main_Panel->SetMinSize(wxSize(750,850));
+  this->Custom_Main_Panel->SetMinSize(wxSize(750,820));
 
   this->Custom_Main_Panel->Fit();
 
@@ -168,7 +168,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
                        *(this->Default_Font),this->GetClientSize(),theme_clr);
 
-  this->Book_Manager->SetMinSize(wxSize(740,840));
+  this->Book_Manager->SetMinSize(wxSize(740,820));
 
 
   this->Book_Manager->SetAutoLayout(true);

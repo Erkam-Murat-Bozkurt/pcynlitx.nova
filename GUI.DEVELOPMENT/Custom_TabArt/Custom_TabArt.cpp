@@ -37,7 +37,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
                      wxFONTWEIGHT_NORMAL,false,wxString(tabart_font));
 
-    this->m_tabCtrlHeight = 36;
+    this->m_tabCtrlHeight = 48;
 
     this->theme_clr = clr;
  }
@@ -92,13 +92,13 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
                                     page.active,close_button_state,x_extent);
 
-       wxCoord tab_height = tab_size.y;
+       wxCoord tab_height = tab_size.y+14;
 
        wxCoord tab_width  = tab_size.x;
 
        wxCoord tab_x = in_rect.x+1;
 
-       wxCoord tab_y = in_rect.y;
+       wxCoord tab_y = in_rect.y+14;
 
 
        wxFont bld = this->Default_Font->Bold();
@@ -127,7 +127,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
            // draw base background color
 
-           wxRect r(tab_x, tab_y, tab_width-2, tab_height+15);
+           wxRect r(tab_x, tab_y, tab_width-2, tab_height-3);
 
 
            //200,190,190
@@ -137,10 +137,11 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
            //dc.SetBrush(wxBrush(wxColour(206,108,125)));
 
-           dc.SetPen(wxPen(wxColour(150, 150, 160)));
+           dc.SetPen(wxPen(wxColour(195,145,110)));
 
-           dc.SetBrush(wxColour(175,175,185));
+           dc.SetBrush(wxColour(225,185,150));
             
+           //dc.SetBrush(wxColour(115,115,125));
 
            
 
@@ -155,7 +156,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
                 // draw inactive tab
 
-                wxRect r(tab_x, tab_y,tab_width-2, tab_height+15);
+                wxRect r(tab_x, tab_y,tab_width-2, tab_height-3);
 
 
                 //200,190,190
@@ -188,7 +189,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
             }
 
              wxRect rect(tab_x + tab_width - bmp.GetScaledWidth() - 10,
-                         tab_y + (tab_height/2) - (bmp.GetScaledHeight()/2)-2,
+                         tab_y + (tab_height/2) - (bmp.GetScaledHeight()/2)-10,
                          bmp.GetScaledWidth()-3,
                          tab_height - 1);
 
@@ -212,7 +213,10 @@ this program. If not, see <http://www.gnu.org/licenses/>.
             //135,104,112
             //100,100,100
 
+            //dc.SetTextForeground(wxColour(240,240,240));
+
             dc.SetTextForeground(wxColour(25,25,25));
+
 
             //dc.SetTextForeground(wxColour(125, 137, 176));
 

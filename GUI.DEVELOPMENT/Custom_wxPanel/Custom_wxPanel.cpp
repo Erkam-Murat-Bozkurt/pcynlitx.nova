@@ -61,9 +61,14 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
      
      this->bottom_window->SetBackgroundColour(wxColour(240,240,240));
 
-     this->Start_Button->SetForegroundColour(wxColour(50,50,50));
+     this->Start_Button->SetForegroundColour(wxColour(70,70, 85));
 
 
+     wxFont button_font = this->Start_Button->GetFont();
+
+     button_font.SetFaceName(wxT("Segoe UI Semibold"));
+
+     this->Start_Button->SetFont(button_font);
 
      wxPoint position = this->Start_Button->GetPosition() ;
 
@@ -79,7 +84,7 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->start_text->SetForegroundColour(wxColour(50,50,50));
 
-     this->Start_Button->SetForegroundColour(wxColour(50,50,50));
+     //this->Start_Button->SetForegroundColour(wxColour(50,50,50));
 
 
      this->bottom_window->Show(true);

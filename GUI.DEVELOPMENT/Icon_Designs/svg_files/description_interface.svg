@@ -32,7 +32,7 @@
      showgrid="true"
      inkscape:zoom="41.860721"
      inkscape:cx="8.1221726"
-     inkscape:cy="6.17524"
+     inkscape:cy="6.3185725"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
@@ -64,18 +64,6 @@
   </metadata>
   <defs
      id="defs6" />
-  <rect
-     style="fill:#50505a;fill-opacity:1;stroke:none;stroke-width:0.747514;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect819"
-     width="12.004273"
-     height="11.817263"
-     x="-0.003408724"
-     y="0.013483169"
-     ry="0.22416973"
-     inkscape:export-filename="/home/erkam/PCYNLITX.SETUP.FILES/ICON_DESIGNS/PNG_ICONS/build_executable.png"
-     inkscape:export-xdpi="500"
-     inkscape:export-ydpi="500"
-     rx="0" />
   <text
      xml:space="preserve"
      style="font-style:normal;font-weight:normal;font-size:9.33333px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.060072;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
@@ -100,45 +88,45 @@
        y="8.4302578"
        style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:8px;font-family:Lato;-inkscape-font-specification:'Lato Heavy';fill:#ffffff;fill-opacity:1;stroke:#191919;stroke-width:0.05;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" /></text>
   <rect
-     style="fill:#b5b4c8;fill-opacity:1;stroke:none;stroke-width:228.73066406;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#64646e;fill-opacity:1;stroke:none;stroke-width:228.731;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
      id="rect1"
      width="1.4251273"
      height="1.7781593"
-     x="1.8249421"
-     y="1.8194375" />
+     x="2.0399408"
+     y="1.96277" />
   <rect
-     style="fill:#b5b4c8;fill-opacity:1;stroke:none;stroke-width:228.73066406;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#64646e;fill-opacity:1;stroke:none;stroke-width:228.731;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
      id="rect1-1"
      width="1.4309237"
      height="1.8259368"
-     x="1.8460153"
-     y="4.9788718" />
+     x="2.0610139"
+     y="5.1222043" />
   <rect
-     style="fill:#b5b4c8;fill-opacity:1;stroke:none;stroke-width:228.73066406;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#64646e;fill-opacity:1;stroke:none;stroke-width:228.731;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
      id="rect1-9"
      width="1.4548123"
      height="1.8935044"
-     x="1.7990096"
-     y="8.2279634" />
+     x="2.0140083"
+     y="8.3712959" />
   <rect
-     style="fill:#eb7878;fill-opacity:1;stroke:#be6464;stroke-width:0.104162;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#64646e;fill-opacity:1;stroke:none;stroke-width:0.0977624;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
      id="rect2"
-     width="6.5891299"
-     height="1.7636042"
-     x="4.0273948"
-     y="1.8599389" />
+     width="5.7833123"
+     height="1.7700042"
+     x="4.2391934"
+     y="2.0000713" />
   <rect
-     style="fill:#eb7878;fill-opacity:1;stroke:#be6464;stroke-width:0.10662;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#64646e;fill-opacity:1;stroke:none;stroke-width:0.0998641;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
      id="rect2-2"
-     width="6.5866718"
-     height="1.8485041"
-     x="4.0755749"
-     y="8.2269258" />
+     width="5.7573218"
+     height="1.8552603"
+     x="4.2871957"
+     y="8.3668795" />
   <rect
-     style="fill:#eb7878;fill-opacity:1;stroke:#be6464;stroke-width:0.104162;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#64646e;fill-opacity:1;stroke:none;stroke-width:0.0973711;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
      id="rect2-8"
-     width="6.5891299"
-     height="1.7636042"
-     x="4.0573711"
-     y="5.0401368" />
+     width="5.7359257"
+     height="1.7703947"
+     x="4.2689748"
+     y="5.1800742" />
 </svg>

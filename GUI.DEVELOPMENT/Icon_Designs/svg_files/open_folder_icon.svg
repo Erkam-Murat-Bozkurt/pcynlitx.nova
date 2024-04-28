@@ -27,7 +27,7 @@
      showgrid="true"
      inkscape:zoom="11.446291"
      inkscape:cx="37.129931"
-     inkscape:cy="48.880463"
+     inkscape:cy="34.902136"
      inkscape:window-width="1920"
      inkscape:window-height="991"
      inkscape:window-x="-9"
@@ -58,18 +58,8 @@
   </defs>
   <title
      id="title1" />
-  <rect
-     style="fill:#50505a;fill-opacity:1;stroke:#8c8e8e;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect819"
-     width="64.431732"
-     height="63.611618"
-     x="0"
-     y="0"
-     ry="4.1674924"
-     inkscape:export-xdpi="500"
-     inkscape:export-ydpi="500" />
   <path
-     d="M 55.899175,21.142113 V 53.966664 H 8.7962663 V 10.200599 H 22.412932 c 3.556266,6.976312 4.47674,10.941514 11.775727,10.941514 z m -21.37491,-4.376605 h 21.37491 V 10.200599 H 27.237053 c 2.728043,5.632693 3.199073,6.564909 7.287212,6.564909 z"
+     d="M 54.850801,21.142113 V 53.966664 H 9.8446408 V 10.200599 H 22.855171 c 3.397962,6.976312 4.277462,10.941514 11.25154,10.941514 z M 34.427378,16.765508 H 54.850801 V 10.200599 H 27.46455 c 2.606607,5.632693 3.056669,6.564909 6.962828,6.564909 z"
      id="path1"
-     style="fill:#b5b4c8;fill-opacity:1;stroke-width:1.172;stroke:none;stroke-opacity:1;stroke-dasharray:none" />
+     style="fill:#64646e;fill-opacity:1;stroke:none;stroke-width:1.14561;stroke-dasharray:none;stroke-opacity:1" />
 </svg>
