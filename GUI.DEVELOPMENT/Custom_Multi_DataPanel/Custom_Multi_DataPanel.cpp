@@ -527,39 +527,39 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
 
 
-     this->close_panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(1000,220));
+     this->close_panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(220,1000));
 
      this->close_panel->SetBackgroundColour(wxColour(200,200,200,0xff));
 
-     this->close_panel->SetMinSize(wxSize(1000,220));
+     this->close_panel->SetMinSize(wxSize(220,1000));
 
-     this->close_panel->SetSize(wxSize(1000,220));
-
-
-
-     this->panel_close_button  = new wxButton(close_panel,ID_CLOSE_DESCRIPTION_PANEL,wxT("CLOSE PANEL"),wxDefaultPosition, wxSize(180, 60));
-
-     this->panel_save_button   = new wxButton(close_panel,ID_SAVE_PANEL_DESCRIPTIONS,wxT("SAVE DESCRIPTIONS"),wxDefaultPosition, wxSize(180, 60));
-
-     this->panel_clear_button  = new wxButton(close_panel,ID_CLEAR_PANEL_DESCRIPTIONS,wxT("CLEAR DESCRIPTIONS"),wxDefaultPosition, wxSize(180, 60));
+     this->close_panel->SetSize(wxSize(220,1000));
 
 
 
+     this->panel_close_button  = new wxButton(close_panel,ID_CLOSE_DESCRIPTION_PANEL,wxT("CLOSE PANEL"),wxDefaultPosition, wxSize(150, 60));
 
-     this->panel_close_button->SetForegroundColour(wxColour(50,50,50));
+     this->panel_save_button   = new wxButton(close_panel,ID_SAVE_PANEL_DESCRIPTIONS,wxT("SAVE PANEL"),wxDefaultPosition, wxSize(150, 60));
 
-     this->panel_save_button->SetForegroundColour(wxColour(50,50,50));
+     this->panel_clear_button  = new wxButton(close_panel,ID_CLEAR_PANEL_DESCRIPTIONS,wxT("CLEAR PANEL"),wxDefaultPosition, wxSize(150, 60));
 
-     this->panel_clear_button->SetForegroundColour(wxColour(50,50,50));
+
+
+
+     //this->panel_close_button->SetForegroundColour(wxColour(50,50,50));
+
+     //this->panel_save_button->SetForegroundColour(wxColour(50,50,50));
+
+     //this->panel_clear_button->SetForegroundColour(wxColour(50,50,50));
 
 
      this->Buton_Sizers[8] = new wxBoxSizer(wxVERTICAL);
 
-     this->Buton_Sizers[8]->Add(panel_close_button,0, wxFIXED_MINSIZE | wxALL,10);
+     this->Buton_Sizers[8]->Add(panel_close_button,0, wxFIXED_MINSIZE | wxALL,20);
 
-     this->Buton_Sizers[8]->Add(panel_save_button, 0, wxFIXED_MINSIZE | wxALL,10);
+     this->Buton_Sizers[8]->Add(panel_save_button, 0, wxFIXED_MINSIZE | wxALL,20);
 
-     this->Buton_Sizers[8]->Add(panel_clear_button,0, wxFIXED_MINSIZE | wxALL,10);
+     this->Buton_Sizers[8]->Add(panel_clear_button,0, wxFIXED_MINSIZE | wxALL,20);
 
      this->close_panel->SetSizer(this->Buton_Sizers[8]);
 

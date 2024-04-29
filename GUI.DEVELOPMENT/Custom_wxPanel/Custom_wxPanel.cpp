@@ -61,12 +61,12 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
      
      this->bottom_window->SetBackgroundColour(wxColour(240,240,240));
 
-     this->Start_Button->SetForegroundColour(wxColour(70,70, 85));
+     //this->Start_Button->SetForegroundColour(wxColour(70,70, 85));
 
 
      wxFont button_font = this->Start_Button->GetFont();
 
-     button_font.SetFaceName(wxT("Segoe UI Semibold"));
+     button_font.SetFaceName(wxT("Segoe UI"));
 
      this->Start_Button->SetFont(button_font);
 
@@ -82,7 +82,7 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->start_text->Show(true);
 
-     this->start_text->SetForegroundColour(wxColour(80,80,95));
+     this->start_text->SetForegroundColour(wxColour(25,25,35));
 
      this->start_text->SetFont(button_font);
 

@@ -106,7 +106,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
        wxFont bld = *this->Default_Font;
        
-       bld.SetFaceName(wxT("Noto Sans"));
+       bld.SetFaceName(wxT("Segoe UI"));
 
 
        
@@ -115,6 +115,8 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 
        wxFont normal = *this->Default_Font;
+
+       normal.SetFaceName(wxT("Segoe UI"));
 
 
        if (page.active)
@@ -148,9 +150,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
            //dc.SetBrush(wxBrush(wxColour(206,108,125)));
 
-           dc.SetPen(wxPen(wxColour(180,105,105)));
+           dc.SetPen(wxPen(wxColour(190,90,90,0xaa)));
 
-           dc.SetBrush(wxColour(210,135,135));
+           dc.SetBrush(wxColour(220,135,135,0xaa));
             
            //dc.SetBrush(wxColour(115,115,125));
 
@@ -226,7 +228,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
             //dc.SetTextForeground(wxColour(240,240,240));
 
-            dc.SetTextForeground(wxColour(25,25,25));
+            dc.SetTextForeground(wxColour(0,0,10));
 
 
             //dc.SetTextForeground(wxColour(125, 137, 176));
@@ -256,7 +258,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
          dc.DrawText(draw_text,text_offset,
 
-                 (tab_y + tab_height)/2 - (texty/2) + 2);
+                 (tab_y + tab_height)/2 - (texty/2) + 1);
 
 
          *out_tab_rect = wxRect(tab_x, tab_y, tab_width, tab_height+14);

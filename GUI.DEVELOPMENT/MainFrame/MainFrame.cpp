@@ -144,7 +144,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Central_Pane_Info.Resizable(true);
 
-  this->Central_Pane_Info.MinSize(800,850);
+  this->Central_Pane_Info.MinSize(750,825);
 
 
 
@@ -155,7 +155,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Custom_Main_Panel->SetSize(this->GetClientSize());
 
-  this->Custom_Main_Panel->SetMinSize(wxSize(750,820));
+  this->Custom_Main_Panel->SetMinSize(wxSize(725,800));
 
   this->Custom_Main_Panel->Fit();
 
