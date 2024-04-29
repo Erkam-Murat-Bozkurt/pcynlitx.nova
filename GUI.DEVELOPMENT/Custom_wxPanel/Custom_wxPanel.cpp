@@ -82,7 +82,9 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->start_text->Show(true);
 
-     this->start_text->SetForegroundColour(wxColour(50,50,50));
+     this->start_text->SetForegroundColour(wxColour(80,80,95));
+
+     this->start_text->SetFont(button_font);
 
      //this->Start_Button->SetForegroundColour(wxColour(50,50,50));
 
@@ -109,6 +111,11 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
      this->Info_Menu = new wxMenu();
 
 
+     this->Linux_Debian_Package_Generator = new wxMenu();
+
+     this->Linux_RPM_Package_Generator = new wxMenu();
+
+     this->Windows_Package_Generator = new wxMenu();
 
 
 
@@ -138,7 +145,19 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->Main_Menu->AppendSubMenu(this->Help_Menu,"&Help Menu                   ","");
 
-     this->Main_Menu->AppendSubMenu(this->CMAKE_Menu ,"&CMAKE Build System          ","");
+     this->Main_Menu->AppendSubMenu(this->CMAKE_Menu ,"&CMAKE list file generator         ","");
+
+     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
+
+     this->Main_Menu->Append(wxID_NONE,"&PACKAGE GENERATORS","",wxITEM_NORMAL);
+
+     //this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
+
+     this->Main_Menu->AppendSubMenu(this->Linux_Debian_Package_Generator ,"&Linux Debian Package Generator     ","");
+
+     this->Main_Menu->AppendSubMenu(this->Linux_RPM_Package_Generator ,   "&Linux RPM Package Generator        ","");
+
+     this->Main_Menu->AppendSubMenu(this->Windows_Package_Generator ,     "&Windows Package Generator          ","");
 
      this->Main_Menu->Append(wxID_NONE,"&                           ","");
 
@@ -323,9 +342,9 @@ Custom_wxPanel::~Custom_wxPanel()
 
 void Custom_wxPanel::Initialize_Sizer()
 {
-     this->panel_sizer->Add(this->book_manager, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM,5);
+     this->panel_sizer->Add(this->book_manager, 1, wxEXPAND | wxRIGHT,10);
 
-     this->panel_sizer->Add(this->bottom_window,0, wxALIGN_LEFT | wxFIXED_MINSIZE |wxEXPAND | wxLEFT,10);
+     this->panel_sizer->Add(this->bottom_window,0, wxALIGN_LEFT | wxFIXED_MINSIZE | wxEXPAND | wxTOP | wxLEFT,5);
 
      this->SetSizer(this->panel_sizer);
 

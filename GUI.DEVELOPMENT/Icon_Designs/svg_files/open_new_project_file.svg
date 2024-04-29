@@ -65,7 +65,7 @@
        id="g2-0"
        style="fill:#73737d;fill-opacity:1">
       <path
-         style="fill:#737387;fill-opacity:1;stroke:#73737d;stroke-width:4.23034;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:#a0a0aa;fill-opacity:1;stroke:#6e6e73;stroke-width:4.23034;stroke-dasharray:none;stroke-opacity:1"
          d="m 52.714981,292.64738 120.593479,0.86026 0.12265,28.02828 -140.431175,-0.55775 c -2.581716,-0.0102 -4.694058,-0.86429 -6.336978,-2.59113 -1.64292,-1.72856 -2.464381,-3.85791 -2.464381,-6.39145 V 91.230258 74.301547 73.265095 h 0.352055 c 0,-0.460646 0.234703,-0.921291 0.704108,-1.381936 L 91.440966,7.9686336 V 6.9321818 h 2.112323 C 93.787992,6.7018591 94.022697,6.5866979 94.257402,6.5866979 H 111.156 l 0.70412,0.3454839 h 129.55601 c 2.58,0 4.69406,0.8061292 6.33699,2.4183876 1.6429,1.6122586 2.46436,3.6851616 2.46436,6.2187116 l -0.19955,137.939339 -29.24663,-0.0666 0.9298,-118.525604 H 114.3245 v 56.313878 c 0,2.303225 -1.05616,3.454841 -3.1685,3.454841 H 52.714981 Z"
          id="path1-2"
          sodipodi:nodetypes="cccscsccccccccsccsssccccsscc" />
@@ -99,14 +99,14 @@
          y="-0.21780203" />
       <text
          xml:space="preserve"
-         style="font-weight:600;font-size:235.807px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold';text-align:center;text-anchor:middle;fill:#c8967d;fill-opacity:1;stroke:#c8967d;stroke-width:15.7338;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
+         style="font-weight:600;font-size:235.807px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold';text-align:center;text-anchor:middle;fill:#6e6e73;fill-opacity:1;stroke:#6e6e73;stroke-width:15.7338;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
          x="248.01164"
          y="302.49911"
          id="text5"
          transform="scale(0.94296779,1.0604816)"><tspan
            sodipodi:role="line"
            id="tspan5"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:235.807px;font-family:Rubik;-inkscape-font-specification:Rubik;fill:#c8967d;fill-opacity:1;stroke:#c8967d;stroke-width:15.7338;stroke-opacity:1"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:235.807px;font-family:Rubik;-inkscape-font-specification:Rubik;fill:#6e6e73;fill-opacity:1;stroke:#6e6e73;stroke-width:15.7338;stroke-opacity:1"
            x="248.01164"
            y="302.49911">+</tspan></text>
     </g>

@@ -113,11 +113,28 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Empty_Project_File_Button     = new wxButton(this->Empty_Project_File_Button_Panel,ID_CONSTRUCT_EMPTY_PROJECT_FILE,
      
-                                         wxT("NEW PROJECT FILE"), wxDefaultPosition,   wxSize(200, 60));
+                                         wxT("NEW FILE"), wxDefaultPosition,   wxSize(200, 60));
 
      this->Project_File_Selection_Button = new wxButton(this->Project_File_Selection_Button_Panel,ID_SELECT_AN_EXISTING_PROJECT_FILE,
      
-                                         wxT("SELECT PROJECT FILE"),wxDefaultPosition, wxSize(200, 60));
+                                         wxT("SELECT FILE"),wxDefaultPosition, wxSize(200, 60));
+
+
+
+     wxFont bld_font = this->Empty_Project_File_Button->GetFont();
+
+     bld_font.SetFaceName(wxT("Segoe UI"));
+
+     bld_font.	SetPointSize(10);
+
+     //bld_font.SetFaceName(wxT("Noto Sans"));
+
+
+     this->Empty_Project_File_Button->SetFont(bld_font);
+
+     this->Project_File_Selection_Button->SetFont(bld_font);
+
+
 
      this->Empty_Project_File_Button->SetMinSize(wxSize(200,60));
 
@@ -125,12 +142,19 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
 
 
+
+     /*
+
      this->Empty_Project_File_Button->SetForegroundColour(wxColour(60,60,70));
 
      this->Project_File_Selection_Button->SetForegroundColour(wxColour(60,60,70));
 
 
+     this->Empty_Project_File_Button->SetBackgroundColour(wxColour(175,175,185));
 
+     this->Project_File_Selection_Button->SetBackgroundColour(wxColour(175,175,185));
+
+     */
 
 
      this->Empty_Project_File_Text_Panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(350,80));
@@ -161,11 +185,11 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      Text_Font.SetPointSize(10);
 
-     Text_Font.SetFaceName(wxT("Segoe UI"));
+     Text_Font.SetFaceName(wxT("Segoe UI Semibold"));
 
      new_file_text->SetFont(Text_Font);
 
-     new_file_text->SetForegroundColour(wxColour(80,80,90));
+     new_file_text->SetForegroundColour(wxColour(75,75,85));
      
      new_file_text->CentreOnParent(wxBOTH);
 
@@ -179,7 +203,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      project_file_text->SetFont(Text_Font);
 
-     project_file_text->SetForegroundColour(wxColour(80,80,90));
+     project_file_text->SetForegroundColour(wxColour(75,75,85));
 
      project_file_text->CentreOnParent(wxBOTH);
 

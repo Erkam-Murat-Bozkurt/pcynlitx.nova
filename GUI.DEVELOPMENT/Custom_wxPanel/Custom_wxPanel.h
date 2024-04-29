@@ -102,6 +102,14 @@ public:
 
   wxMenu  * Info_Menu;
 
+  wxMenu  * Linux_Debian_Package_Generator;
+
+  wxMenu  * Linux_RPM_Package_Generator;
+
+  wxMenu  * Windows_Package_Generator;
+
+
+
 
   //DECLARE_EVENT_TABLE()
 
