@@ -44,14 +44,14 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
   
       = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\select_project_file_icon.png"),wxBITMAP_TYPE_ANY);
 
-     this->SetBackgroundColour(wxColour(250,250,250));
+     this->SetBackgroundColour(wxColour(225,225,225));
 
      
      this->Project_File_Selection_Panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(350,175));
 
      this->Project_File_Selection_Panel->SetMinSize(wxSize(350,175));
 
-     this->Project_File_Selection_Panel->SetBackgroundColour(wxColour(250,250,250));
+     this->Project_File_Selection_Panel->SetBackgroundColour(wxColour(225,225,225));
 
 
 
@@ -62,7 +62,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Empty_Project_File_Panel->SetMinSize(wxSize(350,175));
 
-     this->Empty_Project_File_Panel->SetBackgroundColour(wxColour(250,250,250));
+     this->Empty_Project_File_Panel->SetBackgroundColour(wxColour(225,225,225));
 
 
      wxStaticBitmap * select_project_file_figure 
@@ -105,9 +105,9 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Project_File_Selection_Button_Panel->SetMinSize(wxSize(350,120));
 
-     this->Empty_Project_File_Button_Panel->SetBackgroundColour(wxColour(250,250,250));
+     this->Empty_Project_File_Button_Panel->SetBackgroundColour(wxColour(225,225,225));
 
-     this->Project_File_Selection_Button_Panel->SetBackgroundColour(wxColour(250,250,250));
+     this->Project_File_Selection_Button_Panel->SetBackgroundColour(wxColour(225,225,225));
 
 
 
@@ -161,14 +161,14 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Empty_Project_File_Text_Panel->SetMinSize(wxSize(350,80));
 
-     this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(250,250,250));
+     this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(195,120,120,0xff));
 
 
      this->Project_File_Selection_Text_Panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(350,80));
 
      this->Project_File_Selection_Text_Panel->SetMinSize(wxSize(350,80));
 
-     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(250,250,250));
+     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(115,115,125,0xff));
 
 
 
@@ -189,7 +189,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      new_file_text->SetFont(Text_Font);
 
-     new_file_text->SetForegroundColour(wxColour(75,75,85));
+     new_file_text->SetForegroundColour(wxColour(250,250,250));
      
      new_file_text->CentreOnParent(wxBOTH);
 
@@ -203,7 +203,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      project_file_text->SetFont(Text_Font);
 
-     project_file_text->SetForegroundColour(wxColour(75,75,85));
+     project_file_text->SetForegroundColour(wxColour(250,250,250));
 
      project_file_text->CentreOnParent(wxBOTH);
 
