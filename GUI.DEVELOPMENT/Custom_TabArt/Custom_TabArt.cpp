@@ -142,19 +142,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
            wxRect r(tab_x, tab_y, tab_width-2, tab_height-3);
 
-
-           //200,190,190
-           //190, 190, 190
-
-           //dc.SetPen(wxPen(wxColour(206,108,125)));
-
-           //dc.SetBrush(wxBrush(wxColour(206,108,125)));
-
-           dc.SetPen(wxPen(wxColour(190,90,90,0xaa)));
-
-           dc.SetBrush(wxColour(220,135,135,0xaa));
+           dc.SetPen(wxPen(wxColour(165,165,175)));
             
-           //dc.SetBrush(wxColour(115,115,125));
+           dc.SetBrush(wxColour(175,175,185));
 
            
 
@@ -170,10 +160,6 @@ this program. If not, see <http://www.gnu.org/licenses/>.
                 // draw inactive tab
 
                 wxRect r(tab_x, tab_y,tab_width-2, tab_height-3);
-
-
-                //200,190,190
-                //190, 190, 190
 
                 dc.SetPen(wxPen(wxColour(180, 180, 180)));
 
@@ -223,16 +209,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
          if(page.active){
 
-            //135,104,112
-            //100,100,100
-
-            //dc.SetTextForeground(wxColour(240,240,240));
-
             dc.SetTextForeground(wxColour(0,0,10));
-
-
-            //dc.SetTextForeground(wxColour(125, 137, 176));
-
          }
          else{
 

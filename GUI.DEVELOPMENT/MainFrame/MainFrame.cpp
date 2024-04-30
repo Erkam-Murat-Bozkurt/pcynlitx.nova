@@ -100,13 +100,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
   this->SetAutoLayout(true);
 
 
-  // THE CONSTRUCTION OF THE MENU BAR
 
-  //this->MB_Options = new Menu_Bar_Options();
-
-  //this->SetMenuBar(this->MB_Options->Get_MenuBar());
-
-  //this->MB_Options->Get_MenuBar()->Refresh();
    
   // THE CONSTRUCTION OF THE DOCKART POINTER
 
@@ -144,7 +138,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Central_Pane_Info.Resizable(true);
 
-  this->Central_Pane_Info.MinSize(750,825);
+  this->Central_Pane_Info.MinSize(800,925);
 
 
 
@@ -155,7 +149,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Custom_Main_Panel->SetSize(this->GetClientSize());
 
-  this->Custom_Main_Panel->SetMinSize(wxSize(725,800));
+  this->Custom_Main_Panel->SetMinSize(wxSize(800,900));
 
   this->Custom_Main_Panel->Fit();
 
@@ -166,9 +160,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Book_Manager = new Custom_Notebook(this,this->Custom_Main_Panel,&this->Interface_Manager,
 
-                       *(this->Default_Font),this->GetClientSize(),theme_clr);
+                       *(this->Default_Font),wxSize(800,900),theme_clr);
 
-  this->Book_Manager->SetMinSize(wxSize(740,820));
+  this->Book_Manager->SetMinSize(wxSize(800,900));
 
 
   this->Book_Manager->SetAutoLayout(true);
@@ -212,7 +206,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Dir_List_Manager = new Custom_Tree_View_Panel(this,wxID_ANY,wxDefaultPosition,
 
-                            wxSize(400,this->GetClientSize().y),&this->Interface_Manager,
+                            wxSize(400,950),&this->Interface_Manager,
 
                             *(this->Default_Font),this->Book_Manager->GetTabCtrlHeight(),theme_clr);
 

@@ -49,7 +49,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->close_button_construction_status = false;
 
-     this->Topbar_MinSize = wxSize(350,-1);
+     this->Topbar_MinSize = wxSize(400,this->tab_ctrl_hight);
 
      this->SetDoubleBuffered(true);
 
@@ -65,7 +65,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->GetEventHandler()->Bind(wxEVT_SIZE,&Custom_Tree_View_Panel::Size_Event,this,wxID_ANY);
 
-     this->SetSize(frame->GetClientSize());
+     this->SetSize(size);
 
      this->Centre(wxBOTH);
 
@@ -90,7 +90,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->panel_open_status = false;
 
 
-     this->Interface_Manager_Pointer->SetDockSizeConstraint(0.4,1);
+     //this->Interface_Manager_Pointer->SetDockSizeConstraint(0.35,1);
 
      this->File_List_Widget_Shape.TopDockable(false);
 
@@ -100,7 +100,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->File_List_Widget_Shape.Resizable(true);
 
-     this->File_List_Widget_Shape.MinSize(400,-1);
+     this->File_List_Widget_Shape.MinSize(size);
 
      this->File_List_Widget_Shape.Show(true);
 
@@ -108,12 +108,14 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->File_List_Widget_Shape.Dock();
 
-     this->File_List_Widget_Shape.dock_proportion = 0.4;
+     this->File_List_Widget_Shape.dock_proportion = 0.3;
 
-     this->SetMinSize(wxSize(390,-1));
+     this->SetMinSize(size);
 
 
-     this->Tree_Control_Size = this->GetClientSize();
+     int tree_size_y = size.y - 2*this->tab_ctrl_hight -60;
+
+     this->Tree_Control_Size = wxSize(size.x,tree_size_y);
 
 
      this->tree_control = new wxDataViewTreeCtrl(this, wxID_ANY,wxDefaultPosition,
@@ -155,7 +157,6 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      // TITLE WINDOW SETTINGS START
 
-     // wxColour(115,115,125)
 
      this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),
      
@@ -243,9 +244,6 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
 
 
-
-
-
      this->Top_Bar_Window->Show(true);
 
      this->Title_Window->Show(true);
@@ -257,6 +255,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->Bottom_Window->Show(true);
 
      this->Show(false);
+
 
      this->PostSizeEvent();
 }
@@ -442,6 +441,8 @@ void Custom_Tree_View_Panel::Load_Project_Directory(wxString Folder){
 
      this->Folder_Lister->Load_Project_Directory(Folder);
 
+     this->Folder_Lister->Expand_Root();
+
 
      this->Top_Bar_Window->Update();
 
@@ -449,10 +450,13 @@ void Custom_Tree_View_Panel::Load_Project_Directory(wxString Folder){
 
      this->close_button->Update();
 
+     this->Bottom_Window->Update();
+
+
      this->Interface_Manager_Pointer->AddPane(this,this->File_List_Widget_Shape);
 
 
-     for(int i=0;i<2;i++){
+     for(int i=0;i<5;i++){
 
          wxYield();
 
@@ -461,13 +465,15 @@ void Custom_Tree_View_Panel::Load_Project_Directory(wxString Folder){
          this->Title_Window->Update();
 
          this->close_button->Update();
-     }
 
-     this->Folder_Lister->Expand_Root();
+         this->Bottom_Window->Update();
+
+         this->PostSizeEvent();
+
+     }
 
 
      this->Show(true);
-
 
      this->close_button->pressedCloseButton = false;
 

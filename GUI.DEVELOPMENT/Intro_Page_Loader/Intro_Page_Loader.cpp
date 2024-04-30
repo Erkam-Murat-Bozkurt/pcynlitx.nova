@@ -130,7 +130,7 @@ void Intro_Page_Loader::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect &
 
      dc.SetBrush(wxColour(250,250,250));
 
-     dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1, rect.GetWidth()+1,rect.GetHeight()+1);
+     dc.DrawRectangle(rect.GetX(), rect.GetY(), rect.GetWidth()+1,rect.GetHeight()+1);
 
 
      wxSize Bitmap_Size = this->intro_page_bitmap->GetSize();
