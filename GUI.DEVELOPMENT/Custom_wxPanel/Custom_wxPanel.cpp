@@ -72,7 +72,11 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      wxPoint position = this->Start_Button->GetPosition() ;
 
-     int text_x = position.x + 137;
+     this->Start_Button->SetPosition(wxPoint(position.x+15,position.y));
+
+
+
+     int text_x = position.x + 155;
 
      int text_y = position.y + 14;
 
@@ -342,7 +346,7 @@ Custom_wxPanel::~Custom_wxPanel()
 
 void Custom_wxPanel::Initialize_Sizer()
 {
-     this->panel_sizer->Add(this->book_manager, 1, wxEXPAND | wxRIGHT,10);
+     this->panel_sizer->Add(this->book_manager, 1, wxEXPAND | wxLEFT | wxRIGHT,15);
 
      this->panel_sizer->Add(this->bottom_window,0, wxALIGN_LEFT | wxFIXED_MINSIZE | wxEXPAND | wxTOP | wxLEFT,5);
 
