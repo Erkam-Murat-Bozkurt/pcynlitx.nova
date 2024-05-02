@@ -30,8 +30,6 @@ Custom_Notebook::Custom_Notebook(wxFrame * frame, wxPanel * parent, wxAuiManager
 {
    this->frame_ptr = frame;
 
-   this->intro_image = nullptr;
-
    this->OpenFileNumber = 0;
 
    this->Is_Intro_Page_Open = false;
@@ -117,29 +115,12 @@ Custom_Notebook::Custom_Notebook(wxFrame * frame, wxPanel * parent, wxAuiManager
    this->PaintNow(this);
 };
 
-void Custom_Notebook::Receive_Intro_Image(wxStaticBitmap * figure){
-
-     this->intro_image = figure;
-}
 
 void Custom_Notebook::Size_Event(wxSizeEvent & event)
 {
      event.Skip(true);
 
      this->PaintNow(this);
-
-     if(this->intro_image!=nullptr){
-
-        wxSize figure_size = this->intro_image->GetSize();
-
-        wxSize main_frame_size = this->frame_ptr->GetSize();
-
-        int x_pos = (main_frame_size.GetX() - figure_size.GetX())/2 - 70;
-
-        int y_pos = (main_frame_size.GetY() - figure_size.GetY())/2;
-
-        this->intro_image->SetPosition(wxPoint(x_pos,y_pos));
-     }
 }
 
 void Custom_Notebook::Initialization(){
@@ -193,8 +174,6 @@ void Custom_Notebook::OpenIntroPage()
          this->Is_Intro_Page_Open = true;
 
          this->OpenFileNumber++;
-
-         this->intro_image->Show(false);
 
          int Index_Number = this->Get_Empty_Pointer_Index_Number();
 
@@ -480,8 +459,6 @@ void Custom_Notebook::Add_New_File(wxString File_Path)
 
          this->OpenFileNumber++;
 
-         this->intro_image->Show(false);
-
          int Index_Number = this->Get_Empty_Pointer_Index_Number();
 
          this->NoteBook_Page_Data[Index_Number].Text_Ctrl = new Custom_TextCtrl(this,wxID_ANY,wxDefaultPosition,
@@ -553,8 +530,6 @@ void Custom_Notebook::Open_File(wxString File_Path)
      bool Is_File_Open = this->Is_File_Open(File_Path);
 
      if(!Is_File_Open){
-
-         this->intro_image->Show(false);
 
          this->OpenFileNumber++;
 
@@ -935,12 +910,6 @@ void Custom_Notebook::NoteBook_Page_Closed(wxAuiNotebookEvent & event)
 
          this->OpenIntroPage();
      }
-
-
-     if(this->OpenFileNumber <= 0){
-
-         this->intro_image->Show(true);
-     }  
 }
 
 Custom_Notebook * Custom_Notebook::Get_NoteBook_Pointer()

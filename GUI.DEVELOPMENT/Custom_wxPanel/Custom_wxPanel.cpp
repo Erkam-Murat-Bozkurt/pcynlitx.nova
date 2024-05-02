@@ -61,7 +61,6 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
      
      this->bottom_window->SetBackgroundColour(wxColour(240,240,240));
 
-     //this->Start_Button->SetForegroundColour(wxColour(70,70, 85));
 
 
      wxFont button_font = this->Start_Button->GetFont();
@@ -90,7 +89,6 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->start_text->SetFont(button_font);
 
-     //this->Start_Button->SetForegroundColour(wxColour(50,50,50));
 
 
      this->bottom_window->Show(true);
@@ -155,7 +153,7 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->Main_Menu->Append(wxID_NONE,"&PACKAGE GENERATORS","",wxITEM_NORMAL);
 
-     //this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
+
 
      this->Main_Menu->AppendSubMenu(this->Linux_Debian_Package_Generator ,"&Linux Debian Package Generator     ","");
 

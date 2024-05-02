@@ -156,6 +156,8 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
   this->Custom_Main_Panel->SetAutoLayout(true);
 
 
+
+
   // THE CONSTRUCTION OF THE NOTEBOOK
 
   this->Book_Manager = new Custom_Notebook(this,this->Custom_Main_Panel,&this->Interface_Manager,
@@ -227,6 +229,8 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
   this->SetAutoLayout(true);
 
   this->Centre(wxBOTH);
+
+  
 
   this->Custom_Main_Panel->Refresh();
 
@@ -340,31 +344,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Book_Manager->Update();
 
-
-
-  this->intro_page_bmp 
-  
-      = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\Intro_File_Back.png"),wxBITMAP_TYPE_ANY);
-
-
-  this->background_figure = new wxStaticBitmap(this->Book_Manager,wxID_ANY,*this->intro_page_bmp);
-
-  this->background_figure->SetBackgroundColour(wxColour(240,240,240));
-
-  wxSize figure_size = this->background_figure->GetSize();
-
-  wxSize main_frame_size = this->GetSize();
-
-  int x_pos = (main_frame_size.GetX() - figure_size.GetX())/2 - 70;
-
-  int y_pos = (main_frame_size.GetY() - figure_size.GetY())/2;
-
-  this->background_figure->SetPosition(wxPoint(x_pos,y_pos));
-
-
-  this->background_figure->Show(false);
-
-  this->Book_Manager->Receive_Intro_Image(this->background_figure);
 
   this->Book_Manager->OpenIntroPage();
 

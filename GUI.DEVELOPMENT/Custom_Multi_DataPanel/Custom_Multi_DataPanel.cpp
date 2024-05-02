@@ -546,11 +546,11 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
 
 
-     //this->panel_close_button->SetForegroundColour(wxColour(50,50,50));
+     this->panel_close_button->SetForegroundColour(wxColour(50,50,50));
 
-     //this->panel_save_button->SetForegroundColour(wxColour(50,50,50));
+     this->panel_save_button->SetForegroundColour(wxColour(50,50,50));
 
-     //this->panel_clear_button->SetForegroundColour(wxColour(50,50,50));
+     this->panel_clear_button->SetForegroundColour(wxColour(50,50,50));
 
 
      this->Buton_Sizers[8] = new wxBoxSizer(wxVERTICAL);

@@ -189,7 +189,6 @@ private:
   wxDir    * dir_control;
   wxBitmap * exclamation_mark_bmp;
   wxBitmap * logo_bmp;
-  wxBitmap * intro_page_bmp;
   std::condition_variable cv_fork;
   std::condition_variable cv_read;
   std::condition_variable cv_prog;

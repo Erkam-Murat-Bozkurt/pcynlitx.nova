@@ -502,13 +502,6 @@ void Custom_Tree_View_Panel::Close_Directory_Pane()
      {
         this->tree_control->DeleteAllItems();
 
-        //this->tree_control->Show(false);
-
-        //this->Top_Bar_Window->Show(false); // Top bar window
-
-        //this->Title_Window->Show(false); // Top bar window
-
-
         this->Show(false);  // Directory_List_Panel
 
         this->Interface_Manager_Pointer->DetachPane(this);

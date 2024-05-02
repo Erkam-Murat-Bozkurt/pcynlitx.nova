@@ -71,7 +71,6 @@ public:
   void Set_Lexer_Style(wxFont Default_Font);
   void Clear_Text_Control_Style(Custom_TextCtrl * text_ctrl);
   void Set_Style_Font(wxFont Font);
-  void Receive_Intro_Image(wxStaticBitmap * figure);
   void OnClose();
   void Clear_Style();
   void Reload_Style();
@@ -98,7 +97,6 @@ public:
   Text_Ctrl_Data NoteBook_Page_Data[20];
   bool Is_Intro_Page_Open;
   bool Is_Help_Page_Open;
-  wxStaticBitmap * intro_image;
 private:
   int OpenFileNumber;
   void Determine_File_Short_Name(wxString File_Long_Name);
