@@ -64,7 +64,7 @@
   <defs
      id="defs6" />
   <rect
-     style="fill:#c36e6e;fill-opacity:1;stroke:none;stroke-width:0.0711598;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#d2967d;fill-opacity:1;stroke:none;stroke-width:0.0711598;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect819-3"
      width="17.088291"
      height="17.068336"
@@ -99,12 +99,12 @@
   <text
      xml:space="preserve"
      style="font-weight:bold;font-size:5.33333px;line-height:1.13571px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans Bold';fill:#866870;stroke-width:0.744;stroke-linejoin:round;stroke-miterlimit:1"
-     x="1.1104805"
-     y="25.018892"
+     x="2.0699379"
+     y="24.510944"
      id="text1"><tspan
        sodipodi:role="line"
        id="tspan1"
-       x="1.1104805"
-       y="25.018892"
-       style="font-size:5.33333px;line-height:1.13571px;fill:#828296;fill-opacity:1">Nwinix</tspan></text>
+       x="2.0699379"
+       y="24.510944"
+       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:5.33333px;line-height:1.13571px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold';fill:#64646e;fill-opacity:1">Nwinix</tspan></text>
 </svg>

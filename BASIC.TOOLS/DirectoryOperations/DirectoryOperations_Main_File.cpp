@@ -97,9 +97,22 @@ int main(){
 
          << DirectoryManager.GetCurrentlyWorkingDirectory() << "\n";
 
-    char Target_Directory [] = "D:\\DirectoryOperations\\NewDirectory";
+    //char Target_Directory [] = "D:\\DirectoryOperations\\NewDirectory";
 
-    DirectoryManager.Determine_File_List_In_Directory(Target_Directory);
+    /*
+
+    std::vector<Directory_Data> Data;
+
+    DirectoryManager.Determine_File_List_In_Directory_WINAPI(Target_Directory,Data);
+
+    */
+
+
+    std::string root_dir = "D:\\PCYNLITX.BUILD.TEST\\WAREHOUSE";
+
+    DirectoryManager.Remove_Directory_Recursively_WINAPI(root_dir);
+
+    /*
 
     int File_Number_In_Directory = DirectoryManager.Get_File_Number_In_Directory();
 
@@ -109,6 +122,8 @@ int main(){
 
         std::cout << "\n File name -" << i << "=" << File_List_In_Directory[i];
     }
+
+    std::cin.get();
 
     char Target_File_Name [] =  "TestFile_1";
 
@@ -131,6 +146,8 @@ int main(){
     }
 
     delete [] File_List;
+
+    */
 
     std::cout << "\n\n The end of the program \n\n";
 

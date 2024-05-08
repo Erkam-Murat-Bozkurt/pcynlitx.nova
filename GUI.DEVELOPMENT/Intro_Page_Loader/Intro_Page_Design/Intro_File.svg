@@ -79,16 +79,16 @@
        style="fill:none;fill-opacity:1;stroke-width:0.20259" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:16.4851px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#9c9caa;fill-opacity:1;stroke:#727372;stroke-width:0.273021;stroke-opacity:1"
-       x="-47.273369"
-       y="224.6785"
+       style="font-style:normal;font-weight:normal;font-size:16.9333px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#9c9caa;fill-opacity:1;stroke:#727372;stroke-width:0.273021;stroke-opacity:1"
+       x="-49.467216"
+       y="229.56259"
        id="text824"
        transform="scale(1.0337349,0.967366)"><tspan
          sodipodi:role="line"
          id="tspan822"
-         x="-47.273369"
-         y="224.6785"
-         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:16.4851px;font-family:Lato;-inkscape-font-specification:'Lato Heavy';opacity:0.85;fill:#646473;fill-opacity:1;stroke:none;stroke-width:0.273021;stroke-opacity:1">Nwinix</tspan></text>
+         x="-49.467216"
+         y="229.56259"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16.9333px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Bold';opacity:0.85;fill:#646473;fill-opacity:1;stroke:none;stroke-width:0.273021;stroke-opacity:1">Nwinix</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:6.35px;line-height:1.45;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#969696;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -108,9 +108,9 @@
        x="5.2916698"
        y="234.02919" />
     <path
-       d="m -53.22833,204.67275 v 0 a 0.01043726,0.0110606 0 0 1 -0.01041,-0.0112 1.6908329,1.791819 0 0 0 -0.626235,-0.65258 l -9.184769,-5.47497 a 1.6699587,1.7696979 0 0 0 -1.628209,0 l -9.184773,5.47499 a 1.6908329,1.791819 0 0 0 -0.626233,0.65257 0.01043726,0.0110606 0 0 1 -0.0104,0.0112 v 0.0222 a 1.565586,1.6590915 0 0 0 -0.219182,0.85168 v 10.90577 a 1.6803958,1.7807585 0 0 0 0.855853,1.54845 l 9.184773,5.47502 a 1.7221447,1.8250009 0 0 0 0.751481,0.22122 h 0.146123 a 1.6803958,1.7807585 0 0 0 0.730605,-0.22122 l 9.184774,-5.47506 a 1.6803958,1.7807585 0 0 0 0.855852,-1.54848 v -10.90581 a 1.6282094,1.7254552 0 0 0 -0.219182,-0.87377 z m -10.541611,5.30909 -8.401979,-4.95516 8.308042,-4.95514 8.31848,4.95514 z m 9.090835,6.47047 -8.339354,4.97726 0.0835,-9.91033 8.255859,-4.97726 z"
+       d="m -55.460942,210.57254 v 0 a 0.00917358,0.0098331 0 0 1 -0.0092,-0.0101 1.4861182,1.5929633 0 0 0 -0.550414,-0.58016 l -8.07274,-4.86736 a 1.4677713,1.5732973 0 0 0 -1.431075,0 l -8.072743,4.86738 a 1.4861182,1.5929633 0 0 0 -0.550413,0.58014 0.00917358,0.0098331 0 0 1 -0.0091,0.0101 v 0.0197 a 1.3760354,1.474966 0 0 0 -0.192644,0.75716 v 9.69545 a 1.4769448,1.5831303 0 0 0 0.752232,1.3766 l 8.072742,4.8674 a 1.513639,1.6224627 0 0 0 0.660496,0.19668 h 0.128432 a 1.4769448,1.5831303 0 0 0 0.642147,-0.19668 l 8.072744,-4.86743 a 1.4769448,1.5831303 0 0 0 0.752231,-1.37663 v -9.69549 a 1.4310767,1.5339645 0 0 0 -0.192644,-0.77679 z m -9.265304,4.71989 -7.384724,-4.40523 7.30216,-4.40523 7.311334,4.40523 z m 7.990178,5.75239 -7.329681,4.42488 0.07339,-8.81048 7.256296,-4.4249 z"
        id="path1"
-       style="fill:#d2967d;fill-opacity:1;stroke:#414141;stroke-width:0.15;stroke-opacity:1;stroke-dasharray:none" />
+       style="fill:#d2967d;fill-opacity:1;stroke:#414141;stroke-width:0.132594;stroke-dasharray:none;stroke-opacity:1" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:4.23333px;line-height:1.45;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#969696;fill-opacity:1;stroke:none;stroke-width:0.264583"

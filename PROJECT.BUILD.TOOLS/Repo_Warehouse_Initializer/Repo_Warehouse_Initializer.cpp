@@ -206,22 +206,17 @@ void Repo_Warehouse_Initializer::Determine_Library_Files_Directory(){
 
 void Repo_Warehouse_Initializer::Construct_Warehouse_Path(){
 
-     int return_condition = this->DirectoryManager.ChangeDirectory(this->warehouse_path.c_str());
+     int const_cond = this->DirectoryManager.MakeDirectory(this->warehouse_path.c_str());
 
-     if(return_condition == 0){
+     if(const_cond == 0){
 
-        int const_cond = this->DirectoryManager.MakeDirectory(this->warehouse_path.c_str());
+        std::cout << "\n The project warehouse can not be constructed on:";
 
-        if(const_cond == 0){
+        std::cout << "\n";
 
-            std::cout << "\n The project warehouse can not be constructed on:";
+        std::cout << this->warehouse_location;
 
-            std::cout << "\n";
-
-            std::cout << this->warehouse_location;
-
-            exit(0);
-        }
+        exit(0);
      }
 }
 

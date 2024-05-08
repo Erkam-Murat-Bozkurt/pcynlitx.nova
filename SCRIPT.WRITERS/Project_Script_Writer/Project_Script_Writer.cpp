@@ -582,19 +582,39 @@ void Project_Script_Writer::Write_Project_Build_Script(){
 
      this->FileManager.WriteToFile("Write-Output \"\"");
 
-     this->FileManager.WriteToFile("Write-Output \"\"");
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("Write-Output \"\"");
 
-     this->FileManager.WriteToFile("Write-Output \"\"");
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("Write-Output \"\"");
 
-     this->FileManager.WriteToFile("Write-Output \"\"");
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("Write-Output \"\"");
 
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
      this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("Write-Output \"\"");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
 
      this->FileManager.FileClose();
 }

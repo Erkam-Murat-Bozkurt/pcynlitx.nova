@@ -139,21 +139,28 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
 
-     this->Main_Menu->AppendSubMenu(this->File_Menu ,"&File Menu                   ","");
+     this->Main_Menu->Append(wxID_NONE,"&EDITOR SETTINGS","",wxITEM_NORMAL);
 
-     this->Main_Menu->AppendSubMenu(this->Project_Management,"&Project Management          ","");
+     this->Main_Menu->AppendSubMenu(this->File_Menu ,"&File Menu                   ","");
 
      this->Main_Menu->AppendSubMenu(this->Edit_Menu,"&Editor Menu (Editor Options)"," ");
 
      this->Main_Menu->AppendSubMenu(this->Help_Menu,"&Help Menu                   ","");
 
+     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
+
+
+     this->Main_Menu->Append(wxID_NONE,"&BUILD SYSTEM GENERATORS","",wxITEM_NORMAL);
+
+     this->Main_Menu->AppendSubMenu(this->Project_Management,"&Project Management          ","");
+
      this->Main_Menu->AppendSubMenu(this->CMAKE_Menu ,"&CMAKE list file generator         ","");
 
      this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
 
+
+
      this->Main_Menu->Append(wxID_NONE,"&PACKAGE GENERATORS","",wxITEM_NORMAL);
-
-
 
      this->Main_Menu->AppendSubMenu(this->Linux_Debian_Package_Generator ,"&Linux Debian Package Generator     ","");
 

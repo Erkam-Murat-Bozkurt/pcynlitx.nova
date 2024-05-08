@@ -356,7 +356,22 @@ int DirectoryOperations::ChangeDirectory(std::string path){
 
 int DirectoryOperations::RemoveDirectory(char * path){
 
-    this->Remove_Directory_Recursively(path);
+    std::string std_path;
+
+    size_t path_size = strlen(path);
+
+    for(size_t i=0;i<path_size;i++){
+
+        std_path.push_back(path[i]);
+    }
+
+    std_path.shrink_to_fit();
+
+    this->Delete_Directory(std_path); // Quick Delete function is used 
+
+    // Remove_Recursively_Directory_WINAPI member function can be also used.
+
+    // But, it leads significant performance degradetion
 
     return this->ReturnCondition;
 };
@@ -427,38 +442,54 @@ void DirectoryOperations::ReturnRecordedDirectoryPATH(){
      }
 }
 
-void DirectoryOperations::Determine_File_List_In_Directory(char * Directory_Name){
+void DirectoryOperations::Determine_File_List_In_Directory_WINAPI(std::string Directory_Path, 
 
-     this->Memory_Delete_Condition = false;
+     std::vector<Directory_Data> & data){
 
-     this->Clear_String_Memory(&this->File_List);
 
-     this->File_Number = 0;
+     Directory_Data Temp_Dir_Data;
 
-     WIN32_FIND_DATA ffdn;
+     std::string dir_path_std;
 
-     ffdn.dwFileAttributes = FILE_ATTRIBUTE_DIRECTORY;
+     size_t dir_path_size = Directory_Path.length();
 
-     HANDLE hFindn = INVALID_HANDLE_VALUE;
+     for(size_t i=0;i<dir_path_size;i++){
 
-     size_t dir_name_length = strlen(Directory_Name);
+         dir_path_std.push_back(Directory_Path[i]);
+     }
 
-     TCHAR dir_name[MAX_PATH];
+     dir_path_std.shrink_to_fit();
+
+
+     Temp_Dir_Data.directory_path = dir_path_std;
+
+
+
+
+
+
+
+
+     // Conversion from char data type to TCHAR
+
+     size_t dir_name_length = Directory_Path.length();
+
+     TCHAR dir_path[MAX_PATH];
 
      int index = 0;
 
      for(size_t k=0;k<dir_name_length;k++){
 
-        dir_name[index] = Directory_Name[k];
+        dir_path[index] = Directory_Path[k];
 
         index++;
      }
 
-     dir_name[index] = '\\';
+     dir_path[index] = '\\';
 
      index++;
 
-     dir_name[index] = '*';
+     dir_path[index] = '*';
 
      index++;
 
@@ -466,95 +497,478 @@ void DirectoryOperations::Determine_File_List_In_Directory(char * Directory_Name
 
      for(size_t k=next_start;k<MAX_PATH;k++){
 
-         dir_name[index] = '\0';
+         dir_path[index] = '\0';
 
          index++;
      }
 
-     // Find the first file in the directory.
 
-     hFindn = FindFirstFile(dir_name,&ffdn);
 
-     if (INVALID_HANDLE_VALUE == hFindn)
+     // Construction of winapi data structures for file search
+
+     WIN32_FIND_DATA ffd;
+
+     ffd.dwFileAttributes = FILE_ATTRIBUTE_DIRECTORY;
+
+     HANDLE hFind = INVALID_HANDLE_VALUE;
+
+
+     hFind = FindFirstFile(dir_path, &ffd);
+
+     if (INVALID_HANDLE_VALUE == hFind)
      {
          std::cout << "\n Error in DirectoryOperations::Determine_File_List_In_Directory";
      }
 
+
      // List all the files in the directory with some info about them.
 
      do{
-          if (ffdn.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+          if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
           {
-            //std::cout << "\n this is a directory..";
+                 
           }
-          else
-          {
-             this->File_Number++;
+          else{
+
+                char * File_Name = ffd.cFileName;
+
+                size_t file_name_size = strlen(File_Name);
+
+                std::string file_name;
+
+                for(size_t i=0;i<file_name_size;i++){
+
+                    file_name.push_back(File_Name[i]) ;
+                }           
+
+
+                std::string filePath;
+
+                this->Extract_Path(Directory_Path,File_Name,filePath);
+
+                Temp_Dir_Data.file_paths.push_back(filePath);
+
           }
+      }
+      while (FindNextFile(hFind, &ffd) != 0);
+
+      FindClose(hFind); 
+
+
+
+      if(Temp_Dir_Data.sub_directory_paths.size()>0){
+
+         Temp_Dir_Data.sub_dir_search_complation_status = false;
+      }
+      else{
+
+         Temp_Dir_Data.sub_dir_search_complation_status = true;
+      }
+
+      data.push_back(Temp_Dir_Data);
+
+      this->Clear_String_Vector(Temp_Dir_Data.file_paths);
+
+      this->Clear_String_Vector(Temp_Dir_Data.sub_directory_paths);
+
+}
+
+
+
+
+
+void DirectoryOperations::Determine_File_List_In_Directory_WINAPI(std::string Directory_Path, 
+
+     std::vector<std::string> & filePaths){
+
+
+     // Conversion from char data type to TCHAR
+
+     size_t dir_name_length = Directory_Path.length();
+
+     TCHAR dir_path[MAX_PATH];
+
+     int index = 0;
+
+     for(size_t k=0;k<dir_name_length;k++){
+
+        dir_path[index] = Directory_Path[k];
+
+        index++;
      }
-     while (FindNextFile(hFindn,&ffdn) != 0);
 
-     FindClose(hFindn);
+     dir_path[index] = '\\';
 
+     index++;
 
-     if( this->File_Number > 0 ){
+     dir_path[index] = '*';
 
-         int alloc_size = 5*this->File_Number;
+     index++;
 
-         this->File_List = new std::string [alloc_size];
+     size_t next_start = index;
 
-         for(int i=0;i<alloc_size;i++){
+     for(size_t k=next_start;k<MAX_PATH;k++){
 
-             this->File_List[i] = "";
-         }
+         dir_path[index] = '\0';
 
-         size_t index_counter = 0;
-
-         WIN32_FIND_DATA ffd;
-
-         ffd.dwFileAttributes = FILE_ATTRIBUTE_DIRECTORY;
-
-         HANDLE hFind = INVALID_HANDLE_VALUE;
+         index++;
+     }
 
 
-         hFind = FindFirstFile(dir_name, &ffd);
 
-         if (INVALID_HANDLE_VALUE == hFind)
-         {
-                std::cout << "\n Error in DirectoryOperations::Determine_File_List_In_Directory";
-         }
+     // Construction of winapi data structures for file search
 
-         // List all the files in the directory with some info about them.
+     WIN32_FIND_DATA ffd;
+
+     ffd.dwFileAttributes = FILE_ATTRIBUTE_DIRECTORY;
+
+     HANDLE hFind = INVALID_HANDLE_VALUE;
+
+
+     hFind = FindFirstFile(dir_path, &ffd);
+
+     if (INVALID_HANDLE_VALUE == hFind)
+     {
+         std::cout << "\n Error in DirectoryOperations::Determine_File_List_In_Directory";
+     }
+
+
+     // List all the files in the directory with some info about them.
+
+     do{
+          if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+          {
+              // Sub-directory determination
+                           
+          }
+          else{
+
+                char * File_Name = ffd.cFileName;
+
+                size_t file_name_size = strlen(File_Name);
+
+                std::string file_name;
+
+                for(size_t i=0;i<file_name_size;i++){
+
+                    file_name.push_back(File_Name[i]) ;
+                }           
+
+
+                std::string filePath;
+
+                this->Extract_Path(Directory_Path,File_Name,filePath);
+
+                filePaths.push_back(filePath);
+          }
+      }
+      while (FindNextFile(hFind, &ffd) != 0);
+
+      FindClose(hFind); 
+
+      filePaths.shrink_to_fit();
+}
+
+
+
+
+
+
+
+
+
+bool DirectoryOperations::Is_There_Subdirectory(std::string Directory_Path, std::string & subDirPath){
+     
+     subDirPath.clear();
+
+     subDirPath.shrink_to_fit();
+
+     bool is_exist = false;
+
+     // Conversion from char data type to TCHAR
+
+     size_t dir_name_length = Directory_Path.length();
+
+     TCHAR dir_path[MAX_PATH];
+
+     int index = 0;
+
+     for(size_t k=0;k<dir_name_length;k++){
+
+        dir_path[index] = Directory_Path[k];
+
+        index++;
+     }
+
+     dir_path[index] = '\\';
+
+     index++;
+
+     dir_path[index] = '*';
+
+     index++;
+
+     size_t next_start = index;
+
+     for(size_t k=next_start;k<MAX_PATH;k++){
+
+         dir_path[index] = '\0';
+
+         index++;
+     }
+
+     //std::cout << "\n Inside DirectoryOperations::Is_There_Subdirectory";
+
+     //std::cout << "\n dir_path:" << dir_path;
+
+     // Construction of winapi data structures for file search
+
+     WIN32_FIND_DATA ffd;
+
+     ffd.dwFileAttributes = FILE_ATTRIBUTE_DIRECTORY;
+
+     HANDLE hFind = INVALID_HANDLE_VALUE;
+
+
+     hFind = FindFirstFile(dir_path, &ffd);
+
+     if (INVALID_HANDLE_VALUE == hFind)
+     {
+         std::cout << "\n Error: Invalid file handle on";
+         std::cout << "\n DirectoryOperations::Is_There_Subdirectory";
+
+         exit(EXIT_FAILURE);
+     }
+     else{
 
          do{
               if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
               {
-                   // _tprintf(TEXT("  %s   <DIR>\n"), ffd.cFileName);
+                  // Sub-directory determination
+           
+                  char * dirName = ffd.cFileName;
+
+                  
+                  bool is_dir = true; 
+
+                  if((strcmp(dirName, ".") == 0) || (strcmp(dirName, "..") == 0)){
+
+                     is_dir = false;
+                  }
+
+                  if(is_dir){
+
+                     this->Extract_Path(Directory_Path,dirName,subDirPath);
+
+                     is_exist = true;
+
+                     return is_exist;
+                  }
               }
-              else{
+         
+         }while(FindNextFile(hFind, &ffd) != 0);
+     }
+     
+     FindClose(hFind); 
 
-                    char * File_Name = ffd.cFileName;
+     return is_exist;
+}
 
-                    size_t file_name_size = strlen(File_Name);
 
-                    this->File_List[index_counter] = "";
+void DirectoryOperations::Determine_File_List_In_Directory(const char * dir_path){
 
-                    for(size_t i=0;i<file_name_size;i++){
+     this->Clear_String_Vector(this->Path_List);
 
-                        this->File_List[index_counter].append(1,File_Name[i]) ;
+     DIR * d;
+
+     struct dirent * dir;
+
+
+     d = opendir(dir_path);
+
+     if (d!=NULL){
+
+          while ((dir = readdir(d)) != NULL)
+          {
+
+              bool is_element = true; 
+
+              if((strcmp(dir->d_name, ".") == 0) || (strcmp(dir->d_name, "..") == 0)){
+
+                  is_element = false;
+              }
+              
+
+              if(is_element){
+
+                 DIR *sub_d;
+
+
+                 std::string path;
+
+                 this->Extract_Path(dir_path,dir->d_name,path);
+
+
+                 bool is_directory = false;
+
+                 sub_d = opendir(path.c_str());
+
+                 if( sub_d != NULL){
+
+                    is_directory = true;
+
+                    closedir(sub_d);
+                 };
+
+                 if(is_directory){
+
+                    this->Determine_File_List_In_Directory(path.c_str());
+                 }
+                 else{
+
+                    std::string str;
+
+                    for(size_t i=0;i<path.length();i++){
+
+                        str.push_back(path[i]);
                     }
 
-                    this->File_List[index_counter].append(1,'\0');
-
-                    index_counter++;
+                    this->Path_List.push_back(str);
+                 }                 
               }
           }
-          while (FindNextFile(hFind, &ffd) != 0);
 
-          FindClose(hFind);
+          closedir(d);
+
+          this->Path_List.shrink_to_fit();
      }
 }
 
+
+int DirectoryOperations::Remove_Directory_Recursively(const char * directory_path){
+
+    int ret = 0;
+
+    DIR *d;
+
+    struct dirent * dir;
+
+    d = opendir(directory_path);
+
+    if (d!=NULL){
+
+        while ((dir = readdir(d)) != NULL)
+        {
+
+          bool is_element = true; 
+
+          if((strcmp(dir->d_name, ".") == 0) || (strcmp(dir->d_name, "..") == 0)){
+
+              is_element = false;
+          }
+
+          if(is_element){
+
+             std::string path;
+
+             this->Extract_Path(directory_path,dir->d_name,path);
+
+             DIR * sub_d;
+
+             bool is_directory = false;
+
+             sub_d = opendir(path.c_str());
+
+             if(sub_d != NULL){
+
+                is_directory = true;
+
+                closedir(sub_d);
+             };
+
+
+             if(is_directory){ 
+                    
+                ret = this->Remove_Directory_Recursively(path.c_str());
+
+                if(ret != 0){
+
+                   return ret;
+                }
+             }     
+             else{
+   
+                  unlink(path.c_str());
+             }
+
+           }
+        }
+
+        closedir(d);
+     }
+
+     ret = rmdir(directory_path);
+
+     if(ret != 0){
+
+        std::cerr << "\n The directory can not be removed";
+
+        ret = -1;
+     }
+
+     return ret;
+}
+
+
+
+void DirectoryOperations::Extract_Path(const char * up_dir, char * name, std::string & path){
+
+     size_t up_dir_size = strlen(up_dir);
+
+     size_t name_size = strlen(name);
+
+     for(size_t i=0;i<up_dir_size;i++){
+
+         path.push_back(up_dir[i]);         
+     }
+
+     if(path.back()!= '\\'){
+
+        path.push_back('\\');
+     }
+
+     for(size_t i=0;i<name_size;i++){
+
+         path.push_back(name[i]);         
+     }
+
+     path.shrink_to_fit();     
+}
+
+
+void DirectoryOperations::Extract_Path(std::string up_dir, char * name, std::string & path){
+
+     size_t up_dir_size = up_dir.length();
+
+     size_t name_size = strlen(name);
+
+     for(size_t i=0;i<up_dir_size;i++){
+
+         path.push_back(up_dir[i]);         
+     }
+
+     if(path.back()!= '\\'){
+
+        path.push_back('\\');
+     }
+
+     for(size_t i=0;i<name_size;i++){
+
+         path.push_back(name[i]);         
+     }
+
+     path.shrink_to_fit();     
+}
 
 bool DirectoryOperations::Search_File_in_Directory(char * Director_Name, char * File_Name){
 
@@ -589,79 +1003,122 @@ bool DirectoryOperations::Search_File_in_Directory(char * Director_Name, char * 
 }
 
 
-void DirectoryOperations::Remove_Directory_Recursively(char * Directory_Name){
+void DirectoryOperations::Remove_Directory_Recursively_WINAPI(std::string Root_Dir_Path){
 
-     this->Determine_File_List_In_Directory(Directory_Name);
+     std::string nextDir  = Root_Dir_Path;
 
-     int File_Number = this->Get_File_Number_In_Directory();
+     std::string firstDir = Root_Dir_Path;
 
-     int Directory_Name_Size = strlen(Directory_Name);
+     std::string subDir;
 
-     char Directory_Character [] = {'\\','\0'};
+     bool root_subdir_status = this->Is_There_Subdirectory(firstDir,subDir);
 
-     char * File_Name = nullptr;
+     nextDir = subDir;
 
-     char * File_Path = nullptr;
+     while(root_subdir_status){
 
-     for(int i=0;i<File_Number;i++){
+           bool next_sub_dir_status = false;
 
-         std::string File_Name_String = this->Get_File_List_In_Directory()[i];
+           do{
+                next_sub_dir_status = this->Is_There_Subdirectory(subDir,nextDir);
 
-         int File_Name_String_Size = File_Name_String.length();
+                if(next_sub_dir_status){
 
-         File_Name = new char [5*File_Name_String_Size];
+                   subDir = nextDir;
+                }
+           }
+           while(next_sub_dir_status);
 
-         for(int k=0;k<File_Name_String_Size;k++){
 
-             File_Name[k] = File_Name_String[k];
-         }
+           std::vector<std::string> file_paths;
 
-         File_Name[File_Name_String_Size] = '\0';
+           this->Determine_File_List_In_Directory_WINAPI(subDir,file_paths);
 
-         int File_Path_Size = File_Name_String_Size + Directory_Name_Size;
+           for(size_t i=0;i<file_paths.size();i++){
 
-         File_Path = new char [5*File_Path_Size];
+               this->Delete_File(file_paths.at(i));
+           }
 
-         int index_counter = 0;
+           this->Delete_Directory(subDir);
 
-         this->Place_Information(&File_Path,Directory_Name,&index_counter);
+           this->Clear_String_Vector(file_paths);
 
-         this->Place_Information(&File_Path,Directory_Character,&index_counter);
+           root_subdir_status = this->Is_There_Subdirectory(firstDir,subDir);
 
-         this->Place_Information(&File_Path,File_Name,&index_counter);
-
-         File_Path[index_counter] = '\0';
-
-         this->Delete_File(File_Path);
-
-         delete [] File_Path;
-
-         delete [] File_Name;
      }
 
-     this->Delete_File(Directory_Name);
+     this->Delete_Directory(Root_Dir_Path);
 }
 
-void DirectoryOperations::Delete_File(char * path){
 
-     int path_length = strlen(path);
+void DirectoryOperations::Delete_Directory(std::string path){
 
-     TCHAR * path_pointer = new TCHAR[5*path_length];
+     size_t path_length = path.length();
 
-     for(int i=0;i<path_length;i++){
+     TCHAR  Tpath[5*path_length];
 
-         path_pointer[i] = path[i];
+
+     for(size_t i=0;i<5*path_length;i++){
+
+         Tpath[i] = '\0';
      }
 
-     path_pointer[path_length] = '\0';
 
-     path_pointer[path_length+1] = '\0';
+     for(size_t i=0;i<path_length;i++){
+
+         Tpath[i] = path[i];
+     }
+
+     Tpath[path_length] = '\0';
+
+     Tpath[path_length+1] = '\0';
 
      SHFILEOPSTRUCT fileop;
 
      fileop.wFunc = FO_DELETE;
 
-     fileop.pFrom = path_pointer;
+     fileop.pFrom = Tpath;
+
+     fileop.pTo = NULL;
+
+     fileop.hwnd = NULL;
+
+     fileop.fFlags =  FOF_NOCONFIRMATION;
+
+     this->ReturnCondition = SHFileOperationA(&fileop);
+
+     if(this->ReturnCondition != 0) {
+
+        std::cout << "\n The file can not be removed ..";
+     }
+}
+
+
+void DirectoryOperations::Delete_File(std::string path){
+
+     size_t path_length = path.length();
+
+     TCHAR Tpath[5*path_length];
+
+     for(size_t i=0;i<5*path_length;i++){
+
+         Tpath[i] = '\0';
+     }
+
+     for(size_t i=0;i<path_length;i++){
+
+         Tpath[i] = path[i];
+     }
+
+     Tpath[path_length] = '\0';
+
+     Tpath[path_length+1] = '\0';
+
+     SHFILEOPSTRUCT fileop;
+
+     fileop.wFunc = FO_DELETE;
+
+     fileop.pFrom = Tpath;
 
      fileop.pTo = NULL;
 
@@ -675,8 +1132,6 @@ void DirectoryOperations::Delete_File(char * path){
 
         std::cout << "\n The file can not be removed ..";
      }
-
-     delete [] path_pointer;
 }
 
 std::string * DirectoryOperations::Get_File_List_In_Directory(){
@@ -691,7 +1146,7 @@ int DirectoryOperations::Get_File_Number_In_Directory(){
 
 void DirectoryOperations::Place_String(char ** Pointer, char * String, size_t String_Size){
 
-     for(int i=0;i<String_Size;i++){
+     for(size_t i=0;i<String_Size;i++){
 
         (*Pointer)[i] = String[i];
      }
@@ -749,6 +1204,38 @@ char * DirectoryOperations::Convert_Std_String_To_CString(std::string st)
 
        return this->c_str;
 }
+
+
+void DirectoryOperations::Clear_String_Vector(std::vector<std::string> & vec){
+
+     vec.shrink_to_fit();
+
+     if(!vec.empty()){
+        
+        for(size_t i=0;i<vec.size();i++){
+
+            this->Clear_String_Memory(vec.at(i));
+        }
+
+        vec.clear();
+
+        vec.shrink_to_fit();
+     }
+}
+
+
+void DirectoryOperations::Clear_String_Memory(std::string & vec){
+
+     vec.shrink_to_fit();
+
+     if(!vec.empty()){
+
+         vec.clear();
+
+         vec.shrink_to_fit();
+     }
+}
+
 
 char * DirectoryOperations::GetCurrentlyWorkingDirectory(){
 
