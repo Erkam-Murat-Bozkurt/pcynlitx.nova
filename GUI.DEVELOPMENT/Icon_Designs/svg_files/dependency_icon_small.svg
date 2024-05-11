@@ -52,8 +52,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="104.87213"
-     inkscape:cx="1.8403364"
-     inkscape:cy="2.0072063"
+     inkscape:cx="1.8355687"
+     inkscape:cy="2.0024386"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -99,7 +99,7 @@
        y="72.104164"
        id="text16" />
     <rect
-       style="fill:#8c8ca0;fill-opacity:1;stroke:#64646e;stroke-width:0;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#afafb9;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
        id="rect1"
        width="1.3237053"
        height="1.3037757"
@@ -113,7 +113,7 @@
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:#50505a;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.223273px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#898792;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.223;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
        d="m 73.096715,85.517299 h 0.706914"
        id="path2-5"
        inkscape:connector-type="polyline"

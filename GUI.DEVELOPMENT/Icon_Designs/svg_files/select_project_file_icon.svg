@@ -77,7 +77,7 @@
          rx="70.791588"
          ry="74.81028" />
       <polyline
-         style="fill:none;stroke:#6e6e73;stroke-width:7.1759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;stroke:#9696a0;stroke-width:7.1759;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
          points="  38,15 22,33 12,25 "
          id="polyline1"
          transform="matrix(3.575456,0,0,4.4485525,152.17977,115.88346)" />
@@ -103,7 +103,7 @@
          x="20.14139"
          y="-0.21780203" />
       <rect
-         style="fill:#d07878;stroke:#6e6e73;stroke-width:15.7338;stroke-miterlimit:5.5;stroke-opacity:1"
+         style="fill:#d07878;stroke:#9696a0;stroke-width:15.7338;stroke-miterlimit:5.5;stroke-opacity:1"
          id="rect2"
          width="84.380905"
          height="13.24138"

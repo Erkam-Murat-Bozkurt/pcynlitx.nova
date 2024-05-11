@@ -107,10 +107,12 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->toolBar->AddTool(ID_SELECT_PROJECT_FILE,wxT(""),*this->Select_Project_File,wxT(""));
 
+     this->toolBar->AddSpacer(10);
+
      this->toolBar->AddTool(ID_PRINT_DESCRIPTIONS,wxT(""),*this->print_descriptions,wxT(""));
 
 
-     this->toolBar->SetMargins(9,0,5,5);
+     this->toolBar->SetMargins(5,0,5,5);
 
      this->toolBar->SetOverflowVisible(false);
 
