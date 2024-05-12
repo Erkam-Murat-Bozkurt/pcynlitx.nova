@@ -31,8 +31,8 @@
      id="namedview8"
      showgrid="true"
      inkscape:zoom="17.718349"
-     inkscape:cx="11.174856"
-     inkscape:cy="18.088593"
+     inkscape:cx="11.203075"
+     inkscape:cy="18.060373"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
@@ -64,7 +64,7 @@
   <defs
      id="defs6" />
   <rect
-     style="fill:#d2967d;fill-opacity:1;stroke:none;stroke-width:0.0711598;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#fffffd;fill-opacity:1;stroke:none;stroke-width:0.0711598;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect819-3"
      width="17.088291"
      height="17.068336"
@@ -75,36 +75,36 @@
      inkscape:export-xdpi="500"
      inkscape:export-ydpi="500" />
   <rect
-     style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.439183;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#ff7d6e;fill-opacity:1;stroke:#ff7d6e;stroke-width:0.471618;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect9-5-91-1-0"
-     width="7.795156"
-     height="6.2251983"
-     x="8.9895058"
-     y="4.4296846" />
+     width="7.7627206"
+     height="7.2086587"
+     x="9.005723"
+     y="4.3894639" />
   <rect
-     style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.359789;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#ff7d6e;fill-opacity:1;stroke:#ff7d6e;stroke-width:0.359789;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect5-8"
      width="2.7946222"
      height="11.661443"
-     x="4.2586136"
-     y="4.3966994" />
+     x="4.8230004"
+     y="4.340261" />
   <rect
-     style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:0.397352;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#ff7d6e;fill-opacity:1;stroke:#ff7d6e;stroke-width:0.382834;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect5-8-4"
-     width="3.0994344"
-     height="10.196925"
-     x="12.94012"
-     y="-17.009321"
+     width="3.1139519"
+     height="9.4213018"
+     x="12.876423"
+     y="-16.790825"
      transform="rotate(90)" />
   <text
      xml:space="preserve"
      style="font-weight:bold;font-size:5.33333px;line-height:1.13571px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans Bold';fill:#866870;stroke-width:0.744;stroke-linejoin:round;stroke-miterlimit:1"
-     x="2.0699379"
-     y="24.510944"
+     x="1.4491127"
+     y="22.874224"
      id="text1"><tspan
        sodipodi:role="line"
        id="tspan1"
-       x="2.0699379"
-       y="24.510944"
-       style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:5.33333px;line-height:1.13571px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold';fill:#64646e;fill-opacity:1">Nwinix</tspan></text>
+       x="1.4491127"
+       y="22.874224"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.33333px;line-height:1.13571px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Bold';fill:#64646e;fill-opacity:1">Nwinix</tspan></text>
 </svg>

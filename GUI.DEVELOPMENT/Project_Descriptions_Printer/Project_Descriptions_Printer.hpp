@@ -64,7 +64,13 @@ Project_Descriptions_Printer(wxFrame *parent, wxWindowID id=wxID_ANY, const wxSt
 
   void OnSize(wxSizeEvent & event);
 
-  int GetLogNumber();
+  void Construct_Close_Panel();
+
+  void closeWindow(wxCommandEvent & event);
+
+  void setSizers();
+
+  int  GetLogNumber();
 
   bool GetWindowsOpenStatus();
 
@@ -78,9 +84,13 @@ private:
 
   void CloseWindow(wxCommandEvent & event);
 
+  void OnPaint(wxPaintEvent & event);
+
   Descriptor_File_Reader * Des_Reader;
 
   wxString Descriptor_File_Path;
+
+  wxScrolledWindow * scroll_win;
 
   wxPanel * text_ctrl_panel;
 
@@ -92,12 +102,11 @@ private:
 
   wxBoxSizer * close_box;
 
-
   wxBoxSizer * close_panel_sizer;
 
-  wxBoxSizer * close_button_sizer;
+  wxBoxSizer * text_panel_sizer;
 
-  wxBoxSizer * frame_box;
+  wxBoxSizer * frame_sizer;
 
   wxButton * CloseButton;
 

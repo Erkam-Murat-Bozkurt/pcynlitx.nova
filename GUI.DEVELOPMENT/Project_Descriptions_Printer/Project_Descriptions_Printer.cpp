@@ -5,7 +5,7 @@
 
 
 BEGIN_EVENT_TABLE(Project_Descriptions_Printer,wxFrame)
-    EVT_BUTTON(ID_CLOSE_DESCRIPTION_WINDOW,Project_Descriptions_Printer::CloseWindow)
+    EVT_BUTTON(ID_CLOSE_DESCRIPTION_WINDOW,Project_Descriptions_Printer::closeWindow)
 END_EVENT_TABLE()
 
 Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWindowID id, 
@@ -16,7 +16,7 @@ Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWi
    
    long style) : wxFrame(parent,id,title,pos,size,
    
-   wxDEFAULT_FRAME_STYLE | wxSYSTEM_MENU | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN | wxSTAY_ON_TOP)
+   wxDEFAULT_FRAME_STYLE | wxSYSTEM_MENU | wxRESIZE_BORDER | wxCAPTION | wxCLOSE_BOX | wxCLIP_CHILDREN | wxSTAY_ON_TOP)
 {
 
      DestroyCaret(); 
@@ -42,6 +42,7 @@ Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWi
 
      this->GetEventHandler()->Bind(wxEVT_SIZE,&Project_Descriptions_Printer::OnSize,this,wxID_ANY);
 
+     this->GetEventHandler()->Bind(wxEVT_PAINT,&Project_Descriptions_Printer::OnPaint,this,wxID_ANY);
 
      this->SetThemeEnabled(true);
 
@@ -49,9 +50,17 @@ Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWi
 
      this->ClearBackground();
 
+
+
      this->Construct_Text_Panel();
 
+     this->Construct_Close_Panel();
+
+     this->setSizers();
+
      this->PaintNow(this);
+
+     this->PostSizeEvent();
 
      this->invalid_descriptor_file_status = false;
 
@@ -89,48 +98,28 @@ void Project_Descriptions_Printer::Receive_Descriptor_File_Reader(Descriptor_Fil
 void Project_Descriptions_Printer::Construct_Text_Panel(){
 
 
-     this->text_ctrl_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(1000,-1));
+     this->scroll_win = new wxScrolledWindow(this,wxID_ANY,wxDefaultPosition,wxSize(950,680));
+
+     this->scroll_win->SetBackgroundColour(wxColour(240, 240, 240));
 
 
-     this->textctrl = new wxTextCtrl(this->text_ctrl_panel,wxID_ANY, wxT(""), 
+
+     this->textctrl = new wxTextCtrl(this->scroll_win,wxID_ANY, wxT(""), 
      
-                      wxDefaultPosition, wxSize(1000,700), wxTE_MULTILINE | wxTE_RICH | wxTE_READONLY);
-
-
-     this->ctrl_box = new wxBoxSizer(wxVERTICAL);
-
-     this->ctrl_box->Add(this->text_ctrl_panel,1,wxEXPAND);
-
-     this->ctrl_box->Layout();
-
-
-     this->SetSizer(this->ctrl_box);
-
-     this->ctrl_box->SetSizeHints(this);
-
-     this->ctrl_box->Fit(this);
+                      wxDefaultPosition, wxSize(950,680), wxTE_MULTILINE | wxTE_RICH | wxTE_READONLY);
 
 
 
-     this->text_ctrl_panel->SetSize(this->text_ctrl_panel->GetClientSize());
+     this->scroll_win->SetAutoLayout(true);
 
-     this->textctrl->SetSize(this->textctrl->GetClientSize());
+     this->textctrl->SetSize(this->scroll_win->GetClientSize());
 
+     this->textctrl->SetAutoLayout(true);
 
-     this->text_ctrl_panel->Update();
-
-     this->textctrl->Update();
-
-
-
-
-     this->SetSize(this->GetClientSize());
 
      this->PostSizeEvent();
 
      this->Centre(wxBOTH);
-
-
 
      this->SetExtraStyle(wxCLIP_CHILDREN);
 
@@ -148,11 +137,106 @@ void Project_Descriptions_Printer::Construct_Text_Panel(){
 
      this->Update();
 
+     this->PostSizeEvent();
+
      this->textctrl->ShowNativeCaret(false);
 
 
      DestroyCaret();
 }
+
+
+void Project_Descriptions_Printer::Construct_Close_Panel(){
+     
+     this->close_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(this->GetClientSize().GetX(),80));
+
+     this->close_panel->SetMinSize(wxSize(this->GetClientSize().GetX(),80));
+
+     this->CloseButton = new wxButton(this->close_panel,ID_CLOSE_DESCRIPTION_WINDOW,
+      
+           wxT("CLOSE"),wxDefaultPosition, wxSize(110, 50));
+
+     this->CloseButton->Centre(wxBOTH);
+
+}
+
+void Project_Descriptions_Printer::OnPaint(wxPaintEvent & event)
+{
+     event.Skip(false);
+
+     wxPaintDC dc(this);
+
+     wxRect rect(this->GetSize());
+
+     this->DrawBackground(dc,this,rect);
+}
+
+
+
+void Project_Descriptions_Printer::closeWindow(wxCommandEvent & event){
+
+     if(event.GetId() == ID_CLOSE_DESCRIPTION_WINDOW){
+
+        this->Destroy();
+     }
+}
+
+void Project_Descriptions_Printer::setSizers(){
+
+     this->frame_sizer = new wxBoxSizer(wxVERTICAL);
+
+     this->close_panel_sizer = new wxBoxSizer(wxVERTICAL);
+
+     this->text_panel_sizer = new wxBoxSizer(wxVERTICAL);
+
+
+
+     this->text_panel_sizer->Add(this->scroll_win,1,wxEXPAND | wxALL,0);
+
+     this->close_panel_sizer->Add(this->close_panel,1,wxEXPAND| wxALL,0);
+
+
+     this->scroll_win->SetVirtualSize(wxSize(-1,3500));
+
+     this->scroll_win->FitInside();
+
+     this->scroll_win->SetScrollRate(1,1);
+
+     this->text_panel_sizer->SetSizeHints(this->scroll_win);
+     
+
+
+     this->frame_sizer->Add(this->text_panel_sizer,1,wxEXPAND | wxTOP | wxALL,10);
+
+     this->frame_sizer->Add(this->close_panel_sizer,0,wxALIGN_CENTER_HORIZONTAL | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+     this->frame_sizer->Layout();
+
+
+     this->FitInside();
+
+     this->SetSizer(this->frame_sizer);
+
+     this->frame_sizer->SetSizeHints(this);
+
+     
+     this->PostSizeEvent();
+
+
+
+     this->scroll_win->SetSize(this->scroll_win->GetClientSize());
+
+
+     this->close_panel->SetSize(this->close_panel->GetClientSize());
+
+
+     this->PostSizeEvent();
+
+     this->Centre(wxBOTH);
+
+     this->Update();
+}
+
 
 
 void Project_Descriptions_Printer::Read_Descriptions(){
@@ -587,7 +671,15 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
     this->textctrl->SetScrollPos(wxVERTICAL,0,true);
 
+    this->textctrl->Show(true);
+
+    this->close_panel->Show(true);
+
+    this->CloseButton->Show(true);
+
     this->Show(true);
+
+    this->PostSizeEvent();
 
     this->Update();
 
@@ -612,7 +704,7 @@ void Project_Descriptions_Printer::PaintNow(wxWindow * wnd)
 {
      wxClientDC dc(wnd);
 
-     wxSize Rect_Size = wxSize(wnd->GetSize().x,wnd->GetSize().y);
+     wxSize Rect_Size = wxSize(wnd->GetSize().x+1,wnd->GetSize().y+1);
 
      wxRect rect(Rect_Size);
 
@@ -633,22 +725,16 @@ void Project_Descriptions_Printer::CloseWindow(wxCommandEvent & event){
 
 void Project_Descriptions_Printer::OnSize(wxSizeEvent & event){
 
-     //this->text_ctrl_panel->SetSize(this->GetClientSize());
-
-     this->textctrl->SetSize(this->GetClientSize());
-
-     //this->close_panel->SetSize(this->GetClientSize());
-
-     //this->CloseButton->Show(true);
-
-     //this->close_panel->Update();
-
-     //this->close_button_sizer->Layout();
-
-
      event.Skip(true);
+     
+     wxSize frame_size = this->GetClientSize();
+
+     this->scroll_win->SetSize(wxSize(frame_size.x-25,frame_size.y-120));
+
+     this->textctrl->SetSize(this->scroll_win->GetClientSize());
 
      this->PaintNow(this);
+     
 
      DestroyCaret(); 
 }

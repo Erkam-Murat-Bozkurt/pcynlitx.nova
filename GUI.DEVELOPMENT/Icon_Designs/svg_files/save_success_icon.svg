@@ -27,8 +27,8 @@
    inkscape:pagecheckerboard="0"
    inkscape:deskcolor="#d1d1d1"
    inkscape:zoom="5.4942197"
-   inkscape:cx="24.935297"
-   inkscape:cy="39.22304"
+   inkscape:cx="24.844292"
+   inkscape:cy="39.314045"
    inkscape:window-width="1920"
    inkscape:window-height="991"
    inkscape:window-x="-9"
@@ -59,7 +59,7 @@
    rx="42.290897"
    ry="42.199898" />
 <polyline
-   style="fill:none;stroke:#d2967d;stroke-width:5.14419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+   style="fill:none;stroke:#ff7d6e;stroke-width:5.14419;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
    points="  38,15 22,33 12,25 "
    id="polyline1"
    transform="matrix(1.9187744,0,0,2.0546346,-8.4541062,-4.7896152)" />
