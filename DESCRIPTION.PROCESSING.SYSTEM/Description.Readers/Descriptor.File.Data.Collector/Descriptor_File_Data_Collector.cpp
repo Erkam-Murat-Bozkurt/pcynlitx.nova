@@ -69,6 +69,8 @@ void Descriptor_File_Data_Collector::Clear_Dynamic_Memory()
 
          this->Clear_Vector_Memory(&this->File_Index_With_Spaces);
 
+         this->Clear_String_Memory(&this->Descriptor_File_Path);
+
          this->StringManager.Clear_Dynamic_Memory();
 
          this->FileManager.Clear_Dynamic_Memory();

@@ -1083,7 +1083,7 @@ void DirectoryOperations::Delete_Directory(std::string path){
 
      fileop.hwnd = NULL;
 
-     fileop.fFlags =  FOF_NOCONFIRMATION;
+     fileop.fFlags =  FOF_NOCONFIRMATION | FOF_NO_UI;
 
      this->ReturnCondition = SHFileOperationA(&fileop);
 
