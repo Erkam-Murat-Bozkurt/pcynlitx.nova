@@ -7,7 +7,8 @@ set( CMAKE_C_COMPILER "D:/mingw64/bin/gcc.exe" )
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-set(GCC_COMPILE_DEBUG_OPTIONS "${GCC_COMPILE_OPTIONS};-ggdb;-O0")
+set( CMAKE_BUILD_TYPE "Debug")
+
 
 
 cmake_minimum_required(VERSION 3.10)
