@@ -7,6 +7,8 @@ set( CMAKE_C_COMPILER "D:/mingw64/bin/gcc.exe" )
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+set(GCC_COMPILE_DEBUG_OPTIONS "${GCC_COMPILE_OPTIONS};-ggdb;-O0")
+
 
 cmake_minimum_required(VERSION 3.10)
 
@@ -89,6 +91,7 @@ add_executable(Auto_MakeFile_Builder
 add_executable(CBuild
 
         ${CMAKE_CURRENT_SOURCE_DIR}/KERNEL.DEVELOPMENT/Kernel_Main_File.cpp)
+
 
 
 add_executable(build_gui

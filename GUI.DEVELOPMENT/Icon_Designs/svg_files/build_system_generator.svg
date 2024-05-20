@@ -5,7 +5,7 @@
    viewBox="0 0 59.305018 59.552125"
    version="1.1"
    sodipodi:docname="build_system_generator.svg"
-   inkscape:version="1.3.1 (91b66b0783, 2023-11-16)"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
    width="59.305019"
    height="59.552124"
    inkscape:export-filename="..\..\..\..\Pcynlitx_Build_Platform\icons\build_system_generator.png"
@@ -26,8 +26,8 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="true"
      inkscape:zoom="11.446291"
-     inkscape:cx="32.455928"
-     inkscape:cy="28.131383"
+     inkscape:cx="32.543293"
+     inkscape:cy="32.150152"
      inkscape:window-width="1920"
      inkscape:window-height="991"
      inkscape:window-x="-9"
@@ -59,27 +59,27 @@
   <title
      id="title1" />
   <rect
-     style="fill:#ff7d6e;fill-opacity:1;stroke:none;stroke-width:1.09365;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#9696cd;fill-opacity:1;stroke:none;stroke-width:1.06186;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
      id="rect9-5-91-1-0"
-     width="27.133675"
-     height="25.534563"
-     x="25.785311"
-     y="6.612536"
-     ry="0.79488242" />
+     width="25.572466"
+     height="25.542057"
+     x="27.870707"
+     y="6.5613594"
+     ry="0.79511583" />
   <rect
-     style="fill:#ff7d6e;fill-opacity:1;stroke:none;stroke-width:1.64073;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#9696cd;fill-opacity:1;stroke:none;stroke-width:1.76748;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect5-8"
-     width="14.4811"
+     width="16.804823"
      height="46.801178"
      x="6.2316599"
      y="6.5533667"
      ry="0.90843701" />
   <rect
-     style="fill:#ff7d6e;fill-opacity:1;stroke:none;stroke-width:1.9268;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#9696cd;fill-opacity:1;stroke:none;stroke-width:1.93186;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect5-8-4"
-     width="16.096331"
+     width="16.181124"
      height="46.169125"
-     x="37.337257"
+     x="37.077736"
      y="-53.279785"
      transform="rotate(90)"
      ry="0.55588669" />

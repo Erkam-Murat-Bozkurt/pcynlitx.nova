@@ -5,7 +5,7 @@
    viewBox="0 0 60.281535 59.669984"
    version="1.1"
    sodipodi:docname="open_folder_icon.svg"
-   inkscape:version="1.3.1 (91b66b0783, 2023-11-16)"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
    width="60.281536"
    height="59.669983"
    inkscape:export-filename="..\..\..\..\Pcynlitx_Build_Platform\icons\open_folder_icon.png"
@@ -26,8 +26,8 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="true"
      inkscape:zoom="11.446291"
-     inkscape:cx="32.499611"
-     inkscape:cy="33.941126"
+     inkscape:cx="32.543293"
+     inkscape:cy="33.810079"
      inkscape:window-width="1920"
      inkscape:window-height="991"
      inkscape:window-x="-9"
@@ -61,5 +61,5 @@
   <path
      d="M 54.061804,17.651666 V 53.686865 H 6.1726143 V 5.6399375 H 20.016579 C 23.63221,13.298617 24.56805,17.651666 31.988877,17.651666 Z M 32.330085,12.846976 H 54.061804 V 5.6399375 H 24.921228 c 2.773582,6.1836395 3.252475,7.2070385 7.408857,7.2070385 z"
      id="path1"
-     style="fill:#d7d7e6;fill-opacity:1;stroke:none;stroke-width:1.23818;stroke-dasharray:none;stroke-opacity:1" />
+     style="fill:#b4b4c8;fill-opacity:1;stroke:none;stroke-width:1.23818;stroke-dasharray:none;stroke-opacity:1" />
 </svg>

@@ -227,9 +227,9 @@ void Style_Loader::Set_Margin_Style(wxStyledTextCtrl * text_ctrl){
 
      text_ctrl->SetMarginWidth(MARGIN_LINE_NUMBERS,40);
 
-     text_ctrl->StyleSetForeground(wxSTC_STYLE_LINENUMBER,wxColour(95,95,95));
+     text_ctrl->StyleSetForeground(wxSTC_STYLE_LINENUMBER,wxColour(75,75,75));
 
-     text_ctrl->StyleSetBackground(wxSTC_STYLE_LINENUMBER,wxColour(220,220,220));
+     text_ctrl->StyleSetBackground(wxSTC_STYLE_LINENUMBER,wxColour(240,240,240));
 
      text_ctrl->SetMarginType(MARGIN_LINE_NUMBERS,wxSTC_MARGIN_NUMBER);
 
