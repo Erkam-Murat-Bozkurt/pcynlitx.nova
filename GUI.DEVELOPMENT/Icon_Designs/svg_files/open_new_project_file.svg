@@ -6,7 +6,7 @@
    version="1.1"
    id="svg2"
    sodipodi:docname="open_new_project_file.svg"
-   inkscape:version="1.3.1 (91b66b0783, 2023-11-16)"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
    inkscape:export-filename="..\..\..\..\Pcynlitx_Build_Platform\icons\open_new_project_file.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
@@ -25,9 +25,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="3.0351562"
-     inkscape:cx="38.548263"
-     inkscape:cy="84.509654"
+     inkscape:zoom="4.2923591"
+     inkscape:cx="38.323914"
+     inkscape:cy="47.992257"
      inkscape:window-width="1920"
      inkscape:window-height="991"
      inkscape:window-x="-9"
@@ -96,19 +96,40 @@
          width="303.46838"
          height="320.56775"
          x="20.14139"
-         y="-0.21780203" />
+         y="-0.99805778" />
       <text
          xml:space="preserve"
-         style="font-weight:600;font-size:216.639px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold';text-align:center;text-anchor:middle;fill:#9696a0;fill-opacity:1;stroke:#9696a0;stroke-width:14.21158114;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
-         x="249.45651"
-         y="303.84717"
+         style="font-weight:600;font-size:195.385px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold';text-align:center;text-anchor:middle;fill:#a0a0aa;fill-opacity:1;stroke:#a0a0aa;stroke-width:12.8173;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
+         x="261.13974"
+         y="293.25015"
          id="text5"
-         transform="scale(0.9394727,1.0644269)"><tspan
+         transform="scale(0.91368157,1.0944732)"><tspan
            sodipodi:role="line"
            id="tspan5"
-           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:216.639px;font-family:Rubik;-inkscape-font-specification:Rubik;fill:#9696a0;fill-opacity:1;stroke:#9696a0;stroke-width:14.21158114;stroke-opacity:1;stroke-dasharray:none"
-           x="249.45651"
-           y="303.84717">+</tspan></text>
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:195.385px;font-family:Rubik;-inkscape-font-specification:Rubik;fill:#a0a0aa;fill-opacity:1;stroke:#a0a0aa;stroke-width:12.8173;stroke-dasharray:none;stroke-opacity:1"
+           x="261.13974"
+           y="293.25015">+</tspan></text>
+      <rect
+         style="fill:#b4b4be;fill-opacity:1;stroke:#878791;stroke-width:2.3785;stroke-miterlimit:1.7;stroke-opacity:1"
+         id="rect2"
+         width="86.639938"
+         height="17.664522"
+         x="76.230133"
+         y="128.92398" />
+      <rect
+         style="fill:#b4b4be;fill-opacity:1;stroke:#878791;stroke-width:2.38439;stroke-miterlimit:1.7;stroke-dasharray:none;stroke-opacity:1"
+         id="rect2-4"
+         width="86.98217"
+         height="17.659842"
+         x="76.163109"
+         y="184.92404" />
+      <rect
+         style="fill:#b4b4be;fill-opacity:1;stroke:#878791;stroke-width:2.36972;stroke-miterlimit:1.7;stroke-opacity:1"
+         id="rect2-8"
+         width="85.95549"
+         height="17.673914"
+         x="76.502991"
+         y="239.97928" />
     </g>
   </g>
 </svg>

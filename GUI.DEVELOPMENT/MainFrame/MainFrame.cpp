@@ -624,6 +624,10 @@ void MainFrame::Run_Project_Script_On_Terminal(wxCommandEvent & event){
 
            if(this->Control_Build_Script_Existance()){
 
+              this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
+
+              this->Des_Reader->Read_Descriptor_File();
+
               std::string project_construction_dir = this->Des_Reader->Get_Warehouse_Location();
 
               std::string project_script_path = project_construction_dir + "\\Project_Build_Script.ps1";
@@ -2162,6 +2166,8 @@ void MainFrame::Determine_Executable_File_Script_Construction_Point(wxString Fil
 bool MainFrame::Control_Build_Script_Existance(){
 
      bool is_exist = false;
+
+     this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
      this->Des_Reader->Read_Descriptor_File();
 
