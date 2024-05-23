@@ -82,7 +82,7 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
      this->Perform_MakeFile_Construction();
 
      std::cout << "\n";
-     std::cout << "\n The new makefiles have been constructed..";
+     std::cout << "\nThe new makefiles have been constructed..";
      std::cout << "\n";
      std::cout << "\n";
 }
@@ -219,7 +219,7 @@ size_t Auto_MakeFile_Builder::Split_Range(size_t range_size, size_t partition, s
         range = 1;
     }
 
-    remaining_job = range_size%partition;
+    remaining_job = range_size - range*partition;
 
     return range;    
 }

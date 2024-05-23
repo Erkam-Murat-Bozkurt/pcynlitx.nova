@@ -630,7 +630,7 @@ void MainFrame::Run_Project_Script_On_Terminal(wxCommandEvent & event){
 
               std::string project_construction_dir = this->Des_Reader->Get_Warehouse_Location();
 
-              std::string project_script_path = project_construction_dir + "\\Project_Build_Script.ps1";
+              std::string project_script_path = project_construction_dir + "\\WAREHOUSE\\Project_Build_Script.ps1";
 
               wxString run_cmd = wxT("powershell.exe ") + wxString(project_script_path);
 
@@ -1110,7 +1110,7 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
               wxString label = wxT("BUILD SYSTEM CONSTRUCTION PROCESS");
 
-              wxString start_text = wxT("\n\n   BUILD SYSTEM CONSTRUCTION STARTED");
+              wxString start_text = wxT("\n\n  BUILD SYSTEM CONSTRUCTION STARTED\n\n");
 
               this->Start_Construction_Process(label,this->Warehouse_Location,start_text);
             }
@@ -1338,6 +1338,12 @@ void MainFrame::ReadProcessOutput(wxString start_text){
 
 
         wxString text(pipeStr);
+
+        std::string space = "  ";
+
+        wxString space_text(space);
+
+        this->Process_Output->PrintProcessOutput(space_text);
 
         this->Process_Output->PrintProcessOutput(text);
 
@@ -2173,7 +2179,7 @@ bool MainFrame::Control_Build_Script_Existance(){
 
      std::string warehouse_Location = this->Des_Reader->Get_Warehouse_Location();
 
-     std::string script_path = warehouse_Location + "\\Project_Build_Script.ps1";
+     std::string script_path = warehouse_Location + "\\WAREHOUSE\\Project_Build_Script.ps1";
 
      Cpp_FileOperations FileManager;
 

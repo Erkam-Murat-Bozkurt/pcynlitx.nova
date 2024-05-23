@@ -190,7 +190,7 @@ size_t Project_Script_Writer::Split_Range(int range_size, int partition, int & r
         range = 1;
     }
 
-    remaining_job = range_size%partition;
+    remaining_job = range_size - range*partition;
 
     return range;    
 }
@@ -732,6 +732,28 @@ void Project_Script_Writer::Construct_Path(std::string & path,
 
            path.push_back('/');        
         }
+     }
+
+
+     std::string warehouse_word = "WAREHOUSE";
+
+     size_t warehouse_word_size = warehouse_word.length();
+
+     for(size_t i=0;i<warehouse_word_size;i++){
+
+         path.push_back(warehouse_word[i]);         
+     }
+
+
+     if(opr_sis == 'w'){
+
+        path.push_back('\\');        
+     }
+
+
+     if(opr_sis == 'l'){
+
+        path.push_back('/');        
      }
 
 

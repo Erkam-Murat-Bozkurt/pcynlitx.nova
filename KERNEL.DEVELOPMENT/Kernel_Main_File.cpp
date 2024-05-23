@@ -147,7 +147,7 @@ int main(int argc, char ** argv){
 
         Kernel Build_System(argv[1],'w','n');
 
-        std::cout << "\n\n C++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED \n";
+        std::cout << "\n\nC++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED \n";
 
         Build_System.Receive_Build_Type('n');
 
@@ -155,7 +155,9 @@ int main(int argc, char ** argv){
 
         Build_System.Clear_Dynamic_Memory();
 
-        std::cout << "\n THE CONSTRUCTION COMPLATED ";
+        std::cout << "\nTHE CONSTRUCTION COMPLATED ";
+
+        std::cout << "\n";
     }
 
     if(str == "-if"){

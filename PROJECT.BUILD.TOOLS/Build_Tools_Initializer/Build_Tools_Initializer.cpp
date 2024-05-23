@@ -78,7 +78,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
      this->Des_Reader.Read_Descriptor_File();
 
 
-    char read_opr [] = "\n\n   The project descriptor file read ";
+    char read_opr [] = "The project descriptor file read\n\n";
 
      std::cout << read_opr;
 
@@ -97,7 +97,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      this->Git_Data_Proc.Determine_Git_Repo_Info();    
 
-     char git_data [] = "\n\n   The data for git version controller has been collected ";
+     char git_data [] = "The data for git version controller has been collected\n\n";
 
      std::cout << git_data;
 
@@ -114,7 +114,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      this->Dep_Determiner.Collect_Dependency_Information();
 
-     char dependency_data [] = "\n\n   Source file dependencies has been determined ";
+     char dependency_data [] = "Source file dependencies has been determined\n\n";
 
      std::cout << dependency_data;
 
@@ -142,7 +142,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      this->Rep_Init.Clear_Dynamic_Memory();
 
-     char warehouse_constration [] = "\n\n   The project warehouse constructed ";
+     char warehouse_constration [] = "The project warehouse constructed\n\n";
 
      std::cout << warehouse_constration;
 
@@ -159,7 +159,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      this->Mk_Builder.Clear_Dynamic_Memory();
      
-     char make_file_construction [] = "\n\n   The project makefiles constructed ";
+     char make_file_construction [] = "The project makefiles constructed\n\n";
 
      std::cout << make_file_construction;
 
@@ -175,7 +175,7 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
 
      this->Script_Writer.Build_Compiler_Script();
 
-     char script_construction [] = "\n\n   The project scripts constructed ";
+     char script_construction [] = "The project scripts constructed\n\n";
 
      std::cout << script_construction;
 
