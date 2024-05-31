@@ -84,7 +84,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
   this->is_bold_style_selected = false;
 
 
-  this->SetBackgroundColour(wxColour(240,240,240));
+  this->SetBackgroundColour(wxColour(240,240,240,0xff));
 
   this->Interface_Manager.SetFlags(wxAUI_MGR_LIVE_RESIZE);
 
@@ -144,7 +144,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Custom_Main_Panel = new Custom_wxPanel(this,wxID_ANY,wxDefaultPosition,
 
-                            wxDefaultSize,wxColour(200,200,200),&this->Central_Pane_Info);
+                            wxDefaultSize,wxColour(200,200,215),&this->Central_Pane_Info);
   
 
   this->Custom_Main_Panel->SetSize(this->GetClientSize());
@@ -462,9 +462,11 @@ void MainFrame::PaintNow(wxWindow * wnd)
 
 void MainFrame::DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(240,240,240));
+     dc.SetPen(wxPen(wxColour(240,240,240,0xff)));
 
-     dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+10,rect.GetHeight()+10);
+     dc.SetBrush(wxColour(240,240,240,0xff));
+
+     dc.DrawRectangle(rect.GetX(), rect.GetY(), rect.GetWidth()+1,rect.GetHeight()+1);
 }
 
 void MainFrame::OnPaint(wxPaintEvent & event)

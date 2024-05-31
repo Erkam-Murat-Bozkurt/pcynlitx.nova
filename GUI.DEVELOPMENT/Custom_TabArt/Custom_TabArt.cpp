@@ -56,9 +56,11 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
  void Custom_TabArt::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect & rect) {
 
-      dc.SetBrush(wxColour(240,240,240));
+      dc.SetPen(wxPen(wxColour(240,240,240,0xff)));
 
-      dc.DrawRectangle(rect.GetX()-1, rect.GetY()-1,rect.GetWidth()+2,rect.GetHeight()+2);
+      dc.SetBrush(wxColour(240,240,240,0xff));
+
+      dc.DrawRectangle(rect.GetX(), rect.GetY(),rect.GetWidth(),rect.GetHeight());
  }
 
  void Custom_TabArt::DrawTab(wxDC & dc, wxWindow *wnd, const wxAuiNotebookPage &page,
@@ -142,9 +144,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
            wxRect r(tab_x, tab_y, tab_width-2, tab_height-3);
 
-           dc.SetPen(wxPen(wxColour(135,135,145)));
+           dc.SetPen(wxPen(wxColour(155,155,165,0xff)));
             
-           dc.SetBrush(wxColour(175,175,185));
+           dc.SetBrush(wxColour(175,175,185,0xff));
 
            
 

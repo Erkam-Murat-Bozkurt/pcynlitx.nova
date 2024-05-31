@@ -126,11 +126,11 @@ void Intro_Page_Loader::OnPaint(wxPaintEvent& event)
 
 void Intro_Page_Loader::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect & rect)
 {
-     dc.SetPen(wxPen(wxColour(250,250,250)));
+     dc.SetPen(wxPen(wxColour(200,200,200,0xff)));
 
-     dc.SetBrush(wxColour(250,250,250));
+     dc.SetBrush(wxColour(250,250,250,0xff));
 
-     dc.DrawRectangle(rect.GetX(), rect.GetY(), rect.GetWidth()+1,rect.GetHeight()+1);
+     dc.DrawRectangle(rect.GetX(), rect.GetY(), rect.GetWidth(),rect.GetHeight());
 
 
      wxSize Bitmap_Size = this->intro_page_bitmap->GetSize();

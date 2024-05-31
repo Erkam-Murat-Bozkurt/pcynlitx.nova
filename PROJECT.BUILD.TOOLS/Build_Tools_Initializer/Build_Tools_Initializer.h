@@ -19,6 +19,7 @@
 #include "Source_File_Dependency_Determiner.hpp"
 #include "Git_Data_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
+#include "Cpp_FileOperations.h"
 
 class Build_Tools_Initializer
 {
@@ -30,6 +31,8 @@ public:
  void Setup_Build_Tools();
  void Clear_Dynamic_Memory();
 protected:
+ void Determine_Git_File_List_Path();
+ void Remove_Git_File_List();
  Git_Data_Processor Git_Data_Proc;
  Descriptor_File_Reader Des_Reader;
  Repo_Warehouse_Initializer Rep_Init;
@@ -37,8 +40,10 @@ protected:
  Auto_MakeFile_Builder Mk_Builder;
  Project_Script_Writer Script_Writer;
  Custom_System_Interface * SysInt;
+ std::string git_file_list_path;
  bool Memory_Delete_Condition;
  char build_type;
+ char opr_sis;
 };
 
 #endif /* BUILD_TOOLS_INITIALIZER_H */

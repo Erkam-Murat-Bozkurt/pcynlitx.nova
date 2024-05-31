@@ -167,7 +167,7 @@ void Style_Loader::Set_Lexer_Style(wxFont Default_Font, wxStyledTextCtrl * text_
 
      text_ctrl->SetKeyWords(0, wxT("int char this if else for while void class float double Description virtual  long bool size_t"));
 
-     text_ctrl->SetKeyWords(1, wxT("public private protected break PROCESS true false delete new return"));
+     text_ctrl->SetKeyWords(1, wxT("public private protected break PROCESS true false delete new return nullptr const"));
 
      text_ctrl->SetUseTabs(false);
 

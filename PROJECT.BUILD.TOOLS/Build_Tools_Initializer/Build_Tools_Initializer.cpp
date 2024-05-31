@@ -15,6 +15,8 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis, c
 
     this->build_type = build_type;
 
+    this->opr_sis = opr_sis;
+
     this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
 
     this->Git_Data_Proc.Receive_Descriptor_File_Path(DesPATH);
@@ -191,5 +193,64 @@ void Build_Tools_Initializer::Setup_Build_Tools(){
      if(this->build_type == 'g'){
 
         this->SysInt->WriteTo_NamedPipe_FromChild(endLines);
+     }
+
+     this->Remove_Git_File_List();
+}
+
+void Build_Tools_Initializer::Remove_Git_File_List(){
+
+     this->Determine_Git_File_List_Path();
+
+     Cpp_FileOperations FileOperator;
+
+     FileOperator.Delete_File(this->git_file_list_path);
+
+     FileOperator.Clear_Dynamic_Memory();
+}
+
+
+void Build_Tools_Initializer::Determine_Git_File_List_Path()
+{
+     char repo_list_file_name [] = "repo_files.txt";
+
+     size_t file_name_size = strlen(repo_list_file_name);
+
+     std::string warehouse_path = this->Des_Reader.Get_Warehouse_Location();
+
+     size_t warehouse_path_size = warehouse_path.length();
+
+     if(!this->git_file_list_path.empty()){
+
+        this->git_file_list_path.clear();
+
+        this->git_file_list_path.shrink_to_fit();
+     }
+
+
+     for(size_t i=0;i<warehouse_path_size;i++){
+
+         this->git_file_list_path.push_back(warehouse_path[i]) ;
+     }
+
+     if(this->opr_sis == 'w'){
+
+       if(warehouse_path[warehouse_path_size-1] != '\\'){
+
+          this->git_file_list_path.push_back('\\') ;
+       }
+     }
+
+     if(this->opr_sis == 'l'){
+
+         if(warehouse_path[warehouse_path_size-1] != '/'){
+
+            this->git_file_list_path.push_back('/') ;
+         }
+     }
+
+     for(size_t i=0;i<file_name_size;i++){
+
+        this->git_file_list_path.push_back(repo_list_file_name[i]) ;
      }
 }
