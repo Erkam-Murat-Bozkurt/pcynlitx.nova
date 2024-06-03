@@ -389,7 +389,7 @@ void MainFrame::Open_PopUp_Menu(wxCommandEvent & event){
 
         this->Custom_Main_Panel->Start_Button->GetPosition(&x,&y);
 
-        this->Custom_Main_Panel->bottom_window->PopupMenu(this->Custom_Main_Panel->Main_Menu,x,y-11);
+        this->Custom_Main_Panel->bottom_window->PopupMenu(this->Custom_Main_Panel->Main_Menu,x,y-5);
      }
 }
 

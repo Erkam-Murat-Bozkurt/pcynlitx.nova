@@ -95,6 +95,7 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->Start_Button->Show(true);
 
+     this->Start_Button->SetForegroundColour(wxColour(25,25,35));
 
 
 

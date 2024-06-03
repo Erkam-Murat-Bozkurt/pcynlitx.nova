@@ -138,7 +138,13 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Empty_Project_File_Button->SetMinSize(wxSize(200,60));
 
+     this->Empty_Project_File_Button->SetForegroundColour(wxColour(50,50,50));
+
+
      this->Project_File_Selection_Button->SetMinSize(wxSize(200,60));
+
+     this->Project_File_Selection_Button->SetForegroundColour(wxColour(50,50,50));
+
 
 
 
@@ -154,8 +160,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Project_File_Selection_Text_Panel->SetMinSize(wxSize(350,80));
 
-     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(68,158,157,0xff));
-
+     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(135, 135, 165,0xff));
 
 
 
@@ -188,7 +193,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      project_file_text->SetFont(Text_Font);
 
-     project_file_text->SetForegroundColour(wxColour(250,250,250));
+     project_file_text->SetForegroundColour(wxColour(255,255,255));
 
      project_file_text->CentreOnParent(wxBOTH);
 

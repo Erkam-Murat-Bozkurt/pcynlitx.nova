@@ -27,7 +27,7 @@
      showgrid="true"
      inkscape:zoom="16.1875"
      inkscape:cx="32.277992"
-     inkscape:cy="24.895753"
+     inkscape:cy="29.837838"
      inkscape:window-width="1920"
      inkscape:window-height="991"
      inkscape:window-x="-9"
@@ -59,7 +59,7 @@
   <title
      id="title1" />
   <rect
-     style="fill:#b4b4cd;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#d7d7e1;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
      id="rect2"
      width="48.536148"
      height="48.178619"
@@ -67,7 +67,7 @@
      y="5.5835409"
      ry="1.4500039" />
   <polyline
-     style="fill:none;stroke:#555564;stroke-width:6.59519;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:none;stroke:#64646e;stroke-width:6.59519;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
      points="  38,15 22,33 12,25 "
      id="polyline1"
      transform="matrix(0.9253086,0,0,1.0205407,6.8596092,4.441026)" />

@@ -59,7 +59,7 @@
   <title
      id="title1" />
   <rect
-     style="fill:#b4b4c8;fill-opacity:1;stroke:none;stroke-width:2.40909;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#d7d7e1;fill-opacity:1;stroke:none;stroke-width:2.40909;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
      id="rect2"
      width="49.628437"
      height="48.887341"
@@ -67,14 +67,14 @@
      y="5.2056918"
      ry="1.8268651" />
   <ellipse
-     style="fill:#b4b4c8;fill-opacity:1;stroke:#55555f;stroke-width:4.58;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#d7d7e1;fill-opacity:1;stroke:#64646e;stroke-width:4.58;stroke-miterlimit:5.5;stroke-dasharray:none;stroke-opacity:1"
      id="path1"
      cx="28.637558"
      cy="27.41168"
      rx="14.038493"
      ry="14.403856" />
   <path
-     style="fill:#f0f0f0;fill-opacity:1;fill-rule:evenodd;stroke:#55555f;stroke-width:7.224;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#f0f0f0;fill-opacity:1;fill-rule:evenodd;stroke:#64646e;stroke-width:7.224;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
      d="M 46.014166,47.546424 37.954361,37.758278"
      id="path2"
      inkscape:connector-type="polyline"
