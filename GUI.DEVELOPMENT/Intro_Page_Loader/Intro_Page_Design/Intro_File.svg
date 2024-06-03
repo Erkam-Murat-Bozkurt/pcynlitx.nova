@@ -38,7 +38,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
      inkscape:cx="145.7145"
-     inkscape:cy="219.70818"
+     inkscape:cy="138.3909"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -100,17 +100,17 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:6.35px;line-height:1.45;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#969696;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="-76.133743"
+       x="-75.86647"
        y="232.27647"
        id="text825"><tspan
          sodipodi:role="line"
-         x="-76.133743"
+         x="-75.86647"
          y="232.27647"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#646478;fill-opacity:1;stroke-width:0.264583"
-         id="tspan1">Intelligent Software System</tspan><tspan
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:7.05556px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold';fill:#737382;fill-opacity:1;stroke-width:0.264583"
+         id="tspan1">INTELLIGENT SOFTWARE SYSTEM</tspan><tspan
          sodipodi:role="line"
-         x="-76.133743"
-         y="242.17583"
+         x="-75.86647"
+         y="241.85886"
          style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.93889px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Light';fill:#5a5a6e;fill-opacity:1;stroke-width:0.264583"
          id="tspan4" /></text>
     <rect
@@ -172,14 +172,14 @@
        y="202.95473" />
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:7.05556px;line-height:3.5432px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Bold';fill:#58b2b1;fill-opacity:1;stroke:#ffffff;stroke-width:0.574146;stroke-miterlimit:1.7"
-       x="-76.042801"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:6.70278px;line-height:3.36604px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Bold';fill:#58b2b1;fill-opacity:1;stroke:#ffffff;stroke-width:0.574146;stroke-miterlimit:1.7"
+       x="-75.641899"
        y="247.26224"
        id="text13"><tspan
          sodipodi:role="line"
          id="tspan13"
-         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:7.05556px;line-height:3.5432px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold';fill:#8787a5;fill-opacity:1;stroke:none;stroke-width:0.574146;stroke-opacity:1"
-         x="-76.042801"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:6.70278px;line-height:3.36604px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Semi-Bold';fill:#7d7db1;fill-opacity:1;stroke:none;stroke-width:0.574146;stroke-opacity:1"
+         x="-75.641899"
          y="247.26224">http:://www.nwinix.com</tspan></text>
   </g>
 </svg>

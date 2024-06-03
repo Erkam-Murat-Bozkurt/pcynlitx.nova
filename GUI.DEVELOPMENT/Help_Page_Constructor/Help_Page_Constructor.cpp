@@ -44,6 +44,16 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
 
     this->yes_no_condition = false;
 
+    this->SetDoubleBuffered(true);
+
+    this->SetBackgroundStyle(wxBG_STYLE_PAINT);
+
+    this->SetExtraStyle(wxCLIP_CHILDREN);
+
+    this->SetExtraStyle(wxNO_FULL_REPAINT_ON_RESIZE);
+
+    this->SetBackgroundColour(wxColour(240,240,240));
+
     this->GetEventHandler()->Bind(wxEVT_PAINT,&Help_Page_Constructor::OnPaint,this,wxID_ANY);
 
     this->GetEventHandler()->Bind(wxEVT_SIZE,&Help_Page_Constructor::OnSize,this,wxID_ANY);
@@ -65,27 +75,39 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
     this->text_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxDefaultSize);
 
 
+
     int button_panel_size_x = this->GetSize().GetX()-150;
     
     wxSize button_panel_size = wxSize(button_panel_size_x,80);
 
-    this->close_button_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,button_panel_size);
+    this->close_button_panel        = new wxPanel(this,wxID_ANY,wxDefaultPosition,button_panel_size);
 
     this->welcome_page_button_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,button_panel_size);
 
-    this->intro_page_button_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,button_panel_size); 
+    this->intro_page_button_panel   = new wxPanel(this,wxID_ANY,wxDefaultPosition,button_panel_size); 
     
+
+    this->figure_panel->SetBackgroundColour(wxColour(240,240,240));
 
     this->figure = new wxStaticBitmap(this->figure_panel,wxID_ANY,bmp);
 
-    this->figure->SetBackgroundColour(wxColour(250,250,250));
+    this->figure->SetBackgroundColour(wxColour(240,240,240));
+    
+    this->figure->Update();
+
+
+
+    this->text_panel->SetBackgroundColour(wxColour(240,240,240));
+    
+    this->text_panel->Update();
+
 
     this->text   = new wxStaticText(this->text_panel ,wxID_ANY,message);
 
     this->text_title = new wxStaticText(this->text_title_panel ,wxID_ANY,message_title);
 
 
-    this->text_title->SetForegroundColour(wxColour(100,100,100));
+    this->text_title->SetForegroundColour(wxColour(80,80,80));
 
     wxFont Title_Font = text->GetFont();
 
@@ -94,7 +116,7 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
     this->text_title->SetFont(Title_Font.Bold());
 
 
-    this->text->SetForegroundColour(wxColour(60,60,70));
+    this->text->SetForegroundColour(wxColour(50,50,60));
 
 
     wxFont textFont = this->text_title->GetFont();
@@ -124,18 +146,18 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
 
 
 
-    //this->CloseButton->SetForegroundColour(wxColour(50,50,50));
+    this->CloseButton->SetForegroundColour(wxColour(50,50,50));
 
-    //this->IntroButton->SetForegroundColour(wxColour(50,50,50));
+    this->IntroButton->SetForegroundColour(wxColour(50,50,50));
 
-    //this->WelcomeButton->SetForegroundColour(wxColour(50,50,50));
+    this->WelcomeButton->SetForegroundColour(wxColour(50,50,50));
 
 
-    //this->CloseButton->SetFont(buttonFont.Bold());
+    this->CloseButton->SetFont(buttonFont);
 
-    //this->IntroButton->SetFont(buttonFont.Bold());
+    this->IntroButton->SetFont(buttonFont);
 
-    //this->WelcomeButton->SetFont(buttonFont.Bold());
+    this->WelcomeButton->SetFont(buttonFont);
 
 
     wxBoxSizer * text_sizer = new wxBoxSizer(wxVERTICAL);
@@ -150,7 +172,7 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
 
     panel_sizer->Add(text_sizer,1,  wxALIGN_LEFT | wxALL, 50);
 
-    panel_sizer->Add(this->figure_panel,0, wxRIGHT | wxTOP | wxBOTTOM,50);
+    panel_sizer->Add(this->figure_panel,1, wxRIGHT | wxTOP | wxBOTTOM,50);
 
 
     wxBoxSizer * button_sizer = new wxBoxSizer(wxVERTICAL);
@@ -185,16 +207,7 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
 
     topsizer->SetSizeHints(this);
 
-    this->SetDoubleBuffered(true);
 
-    this->SetBackgroundStyle(wxBG_STYLE_PAINT);
-
-    this->SetExtraStyle(wxCLIP_CHILDREN);
-
-    this->SetExtraStyle(wxNO_FULL_REPAINT_ON_RESIZE);
-
-
-    this->SetBackgroundColour(wxColour(250,250,250));
 
     this->SetSize(size);
 
@@ -210,6 +223,20 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
     this->Show();
 
     this->PaintNow(this);
+
+    this->PaintNow(this->figure_panel);
+
+    this->PaintNow(this->figure);
+
+    this->figure_panel->Refresh();
+
+    this->figure->SetBackgroundColour(wxColour(240,240,240));
+
+    this->figure->Update();
+
+    this->figure->Refresh();
+
+    this->Update();
 
     wxBell();
 
@@ -231,7 +258,7 @@ Help_Page_Constructor::~Help_Page_Constructor()
 
 void Help_Page_Constructor::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
 {
-     dc.SetBrush(wxColour(250,250,250));
+     dc.SetBrush(wxColour(240,240,240));
 
      dc.DrawRectangle(rect.GetX()-5, rect.GetY()-5, rect.GetWidth()+5,rect.GetHeight()+5);
 }
@@ -245,6 +272,7 @@ void Help_Page_Constructor::PaintNow(wxWindow * wnd)
      wxRect rect(Rect_Size);
 
      this->DrawBackground(dc,wnd,rect);
+     
 }
 
 
@@ -253,6 +281,11 @@ void Help_Page_Constructor::OnSize(wxSizeEvent & event){
      event.Skip(true);
 
      this->PaintNow(this);
+
+     this->PaintNow(this->figure_panel);
+
+     this->PaintNow(this->figure);
+
 }
 
 
@@ -266,10 +299,6 @@ void Help_Page_Constructor::OnSize(wxSizeEvent & event){
       wxRect rect(this->GetSize());
 
       this->DrawBackground(dc,this,rect);
-
-      wxRect rect_text(this->GetSize());
-
-      this->DrawBackground(dc,this,rect_text);
 }
 
 

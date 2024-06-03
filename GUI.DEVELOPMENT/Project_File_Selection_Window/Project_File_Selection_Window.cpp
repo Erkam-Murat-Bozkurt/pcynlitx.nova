@@ -160,7 +160,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Project_File_Selection_Text_Panel->SetMinSize(wxSize(350,80));
 
-     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(135, 135, 165,0xff));
+     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(125, 125, 155,0xff));
 
 
 

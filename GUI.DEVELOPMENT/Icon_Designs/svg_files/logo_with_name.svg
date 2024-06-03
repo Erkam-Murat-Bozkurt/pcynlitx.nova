@@ -26,16 +26,16 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1481"
-     inkscape:window-height="1020"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
      id="namedview8"
      showgrid="true"
      inkscape:zoom="17.718349"
-     inkscape:cx="11.231295"
-     inkscape:cy="18.032154"
-     inkscape:window-x="32"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:cx="11.203075"
+     inkscape:cy="18.003935"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
      inkscape:current-layer="svg2"
      inkscape:showpageshadow="2"
      inkscape:pagecheckerboard="0"
@@ -64,47 +64,36 @@
   <defs
      id="defs6" />
   <rect
-     style="fill:#fffffd;fill-opacity:1;stroke:none;stroke-width:0.0711598;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     id="rect819-3"
-     width="17.088291"
-     height="17.068336"
-     x="2.0882306"
-     y="2.0317919"
-     ry="0.74775642"
-     inkscape:export-filename="/home/erkam/PCYNLITX.SETUP.FILES/ICON_DESIGNS/PNG_ICONS/archive.png"
-     inkscape:export-xdpi="500"
-     inkscape:export-ydpi="500" />
-  <rect
-     style="fill:#62bcbb;fill-opacity:1;stroke:#62bcbb;stroke-width:0.503592;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#9191b1;fill-opacity:1;stroke:#9191b1;stroke-width:0.503592;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect9-5-91-1-0"
      width="8.5366507"
      height="7.4740596"
-     x="9.908865"
-     y="2.4864366" />
+     x="10.078181"
+     y="2.3735592" />
   <rect
-     style="fill:#62bcbb;fill-opacity:1;stroke:#62bcbb;stroke-width:0.526975;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#9191b1;fill-opacity:1;stroke:#9191b1;stroke-width:0.526975;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect5-8"
      width="4.8841367"
      height="14.314374"
-     x="2.9875755"
-     y="2.5066087" />
+     x="3.1568923"
+     y="2.3937314" />
   <rect
-     style="fill:#62bcbb;fill-opacity:1;stroke:#62bcbb;stroke-width:0.543985;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#9191b1;fill-opacity:1;stroke:#9191b1;stroke-width:0.543985;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect5-8-4"
      width="4.8864493"
      height="12.122233"
-     x="11.926495"
-     y="-18.396828"
+     x="11.813617"
+     y="-18.566143"
      transform="rotate(90)" />
   <text
      xml:space="preserve"
      style="font-weight:bold;font-size:5.33333px;line-height:1.13571px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans Bold';fill:#866870;stroke-width:0.744;stroke-linejoin:round;stroke-miterlimit:1"
-     x="1.4491127"
-     y="22.874224"
+     x="1.6184288"
+     y="22.761347"
      id="text1"><tspan
        sodipodi:role="line"
        id="tspan1"
-       x="1.4491127"
-       y="22.874224"
+       x="1.6184288"
+       y="22.761347"
        style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.33333px;line-height:1.13571px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Bold';fill:#64646e;fill-opacity:1">Nwinix</tspan></text>
 </svg>
