@@ -156,6 +156,8 @@ void Project_Descriptions_Printer::Construct_Close_Panel(){
       
            wxT("CLOSE"),wxDefaultPosition, wxSize(110, 50));
 
+     this->CloseButton->SetForegroundColour(wxColour(50,50,50));
+
      this->CloseButton->Centre(wxBOTH);
 
 }
@@ -280,7 +282,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
      this->textctrl->Clear();     
 
-     wxTextAttr AttrBold(wxColor(100, 100, 120));
+     wxTextAttr AttrBold(wxColor(100, 100, 140));
 
      AttrBold.SetFontWeight(wxFONTWEIGHT_BOLD);
 
@@ -289,7 +291,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
      AttrBold.SetFontFaceName(wxT("Calibri"));
 
 
-     wxTextAttr AttrLigth(wxColor(50,50,50));
+     wxTextAttr AttrLigth(wxColor(70,70,70));
 
      AttrLigth.SetFontWeight(wxFONTWEIGHT_LIGHT);
 

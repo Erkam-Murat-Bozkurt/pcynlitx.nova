@@ -107,7 +107,7 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
     this->text_title = new wxStaticText(this->text_title_panel ,wxID_ANY,message_title);
 
 
-    this->text_title->SetForegroundColour(wxColour(80,80,80));
+    this->text_title->SetForegroundColour(wxColour(100, 100, 140));
 
     wxFont Title_Font = text->GetFont();
 
@@ -125,7 +125,7 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
 
 
 
-    int button_size_x = button_panel_size_x-5;
+    int button_size_x = button_panel_size_x-175;
 
        
     this->WelcomeButton  = new wxButton(this->welcome_page_button_panel,ID_SELECTION_WELCOME,
@@ -141,16 +141,26 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
      
                          wxT("CLOSE PAGE"),wxDefaultPosition, wxSize(button_size_x,70));
    
+    
+
+    this->WelcomeButton->CentreOnParent(wxBOTH);
+
+    this->IntroButton->CentreOnParent(wxBOTH);
+
+    this->CloseButton->CentreOnParent(wxBOTH);
+   
+    
+
     wxFont buttonFont = this->CloseButton->GetFont();
 
 
 
 
-    this->CloseButton->SetForegroundColour(wxColour(50,50,50));
+    this->CloseButton->SetForegroundColour(wxColour(80,80,80));
 
-    this->IntroButton->SetForegroundColour(wxColour(50,50,50));
+    this->IntroButton->SetForegroundColour(wxColour(80,80,80));
 
-    this->WelcomeButton->SetForegroundColour(wxColour(50,50,50));
+    this->WelcomeButton->SetForegroundColour(wxColour(80,80,80));
 
 
     this->CloseButton->SetFont(buttonFont);
@@ -178,15 +188,15 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
     wxBoxSizer * button_sizer = new wxBoxSizer(wxVERTICAL);
 
 
-    button_sizer->Add(this->welcome_page_button_panel,0,wxEXPAND | wxLEFT | wxRIGHT ,50);
+    button_sizer->Add(this->welcome_page_button_panel,0,wxALIGN_CENTER_HORIZONTAL  | wxFIXED_MINSIZE | wxLEFT | wxRIGHT ,50);
 
     button_sizer->AddSpacer(10);
 
-    button_sizer->Add(this->intro_page_button_panel,0,wxEXPAND | wxLEFT | wxRIGHT ,50);
+    button_sizer->Add(this->intro_page_button_panel,0,wxALIGN_CENTER_HORIZONTAL  | wxFIXED_MINSIZE | wxLEFT | wxRIGHT ,50);
 
     button_sizer->AddSpacer(10);
 
-    button_sizer->Add(this->close_button_panel,0,wxEXPAND |  wxLEFT | wxRIGHT,50);
+    button_sizer->Add(this->close_button_panel,0,wxALIGN_CENTER_HORIZONTAL  | wxFIXED_MINSIZE |  wxLEFT | wxRIGHT,50);
    
     button_sizer->AddSpacer(70);
 
@@ -198,7 +208,7 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
 
     topsizer->Add(panel_sizer,2, wxEXPAND | wxALL,0);
 
-    topsizer->Add(button_sizer,0,wxALIGN_CENTER_HORIZONTAL | wxALL,0);
+    topsizer->Add(button_sizer,0,wxALIGN_CENTER_HORIZONTAL | wxFIXED_MINSIZE | wxALL,0);
 
 
     topsizer->Layout();
