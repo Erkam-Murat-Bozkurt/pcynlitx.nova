@@ -264,8 +264,6 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
 
            dial->ShowModal();
 
-
-
            if(dial->GetYesNoCond()){
 
               if(this->SysPtr->IsChildProcessStillAlive()){
@@ -274,8 +272,6 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
               }
 
               this->window_open_status = false;
-
-              this->Destroy();
            }
      }
      else{

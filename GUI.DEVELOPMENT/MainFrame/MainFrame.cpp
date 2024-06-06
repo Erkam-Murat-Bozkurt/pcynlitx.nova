@@ -1381,6 +1381,12 @@ void MainFrame::ReadProcessOutput(wxString start_text){
          sleep(0.05);
 
      }while(this->fork_wait);
+
+
+     if(!this->Process_Output->GetWindowsOpenStatus()){
+
+         this->Process_Output->Destroy();
+     }
 }
 
 
