@@ -282,7 +282,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
      this->textctrl->Clear();     
 
-     wxTextAttr AttrBold(wxColor(100, 100, 140));
+     wxTextAttr AttrBold(wxColor(100, 100, 110));
 
      AttrBold.SetFontWeight(wxFONTWEIGHT_BOLD);
 

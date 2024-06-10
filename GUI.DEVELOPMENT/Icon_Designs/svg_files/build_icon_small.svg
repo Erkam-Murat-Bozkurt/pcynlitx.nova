@@ -57,11 +57,11 @@
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
-     inkscape:window-width="1902"
-     inkscape:window-height="973"
-     inkscape:window-x="32"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
      showguides="false"
      inkscape:showpageshadow="2"
      inkscape:pagecheckerboard="0"
@@ -99,26 +99,26 @@
        y="72.104164"
        id="text16" />
     <rect
-       style="fill:#7c7d8c;fill-opacity:1;stroke:none;stroke-width:0.0789931;stroke-miterlimit:1.7;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#eb7878;fill-opacity:1;stroke:none;stroke-width:0.0658405;stroke-miterlimit:1.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect2"
-       width="0.81061959"
-       height="0.79832864"
-       x="73.276085"
+       width="0.68574172"
+       height="0.6556111"
+       x="73.400963"
        y="85.07457" />
     <rect
-       style="fill:#7c7d8c;fill-opacity:1;stroke:none;stroke-width:0.043436;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#eb7878;fill-opacity:1;stroke:none;stroke-width:0.0490956;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
        id="rect2-6"
        width="1.3275728"
-       height="0.39847678"
+       height="0.50908285"
        x="72.769844"
-       y="85.979218" />
+       y="85.868614" />
     <rect
-       style="fill:#7c7d8c;fill-opacity:1;stroke:none;stroke-width:0.0315613;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#eb7878;fill-opacity:1;stroke:none;stroke-width:0.0356319;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
        id="rect2-6-8"
        width="1.2987249"
-       height="0.38981894"
+       height="0.49685711"
        x="85.081253"
-       y="-73.158447"
+       y="-73.265488"
        transform="rotate(90)" />
   </g>
 </svg>
