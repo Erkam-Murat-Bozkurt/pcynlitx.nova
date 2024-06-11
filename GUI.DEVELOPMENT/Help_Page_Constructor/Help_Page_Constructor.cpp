@@ -107,7 +107,7 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
     this->text_title = new wxStaticText(this->text_title_panel ,wxID_ANY,message_title);
 
 
-    this->text_title->SetForegroundColour(wxColour(100, 100, 140));
+    this->text_title->SetForegroundColour(wxColour(100, 100, 110));
 
     wxFont Title_Font = text->GetFont();
 

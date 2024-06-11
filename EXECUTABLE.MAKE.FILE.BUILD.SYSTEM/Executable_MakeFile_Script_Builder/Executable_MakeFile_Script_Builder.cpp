@@ -280,13 +280,16 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("\nLibrary_Updater.exe ");
 
      std::string des_path = this->Des_Reader->Get_Descriptor_File_Path();
 
+
+     this->FileManager.WriteToFile("\nCBuild.exe ");
+
      this->FileManager.WriteToFile(des_path);
 
-     
+     this->FileManager.WriteToFile(" -up_lib");
+
 
      this->FileManager.WriteToFile("\n");
 
@@ -1122,7 +1125,6 @@ void Executable_MakeFile_Script_Builder::Construct_Script_Path(){
          this->script_path.push_back(this->Construction_Directory_Path[i]);
      }
 
-
      if(this->opr_sis == 'w'){
 
         if(this->script_path.back()!='\\'){
@@ -1138,7 +1140,6 @@ void Executable_MakeFile_Script_Builder::Construct_Script_Path(){
            this->script_path.push_back('/');
         }
      }
-
      
      for(size_t i=0;i<name_without_ext.size();i++){
 
@@ -1156,7 +1157,6 @@ void Executable_MakeFile_Script_Builder::Construct_Script_Path(){
      }     
 
      this->script_path.shrink_to_fit();
-
 }
 
 

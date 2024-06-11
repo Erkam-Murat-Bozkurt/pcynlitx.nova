@@ -52,6 +52,7 @@ protected:
  void Receive_Exe_File_Name(char * Exe_Name);
  void Construct_New_Directory_For_Build_Files();
  void Script_Name_Determination(std::string & name, char * src_file_name);
+ void Script_Path_Determination(std::string & path, char * src_file_name);
  Git_Data_Processor Git_Data_Proc;
  Executable_MakeFile_ComConstructor ComConstructor;
  Executable_MakeFile_Script_Builder Script_Builder;

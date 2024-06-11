@@ -72,14 +72,14 @@
          x="-7.5713506"
          y="-9.8610802" />
       <ellipse
-         style="fill:none;fill-opacity:1;stroke:#dc7878;stroke-width:9.53123382;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;fill-opacity:1;stroke:#c86464;stroke-width:11.1102984;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
          id="path5"
          cx="114.12885"
          cy="114.61602"
          rx="132.70367"
          ry="144.27586" />
       <polyline
-         style="fill:none;fill-opacity:1;stroke:#dc7878;stroke-width:7.1758;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;fill-opacity:1;stroke:#c86464;stroke-width:7.1758;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
          points="  38,15 22,33 12,25 "
          id="polyline1-1"
          transform="matrix(4.1072126,0,0,5.3489755,7.2303803,-12.964375)" />

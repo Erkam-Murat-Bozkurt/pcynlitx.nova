@@ -102,7 +102,7 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path,
 
      this->Git_Data_Proc.Determine_Git_Repo_Info();
 
-     char git_data_collection [] = "\n\n   Git version control data collected";
+     char git_data_collection [] = "\n\nGit version control data collected";
 
      std::cout << git_data_collection;
 
@@ -151,7 +151,7 @@ void Executable_MakeFile_Builder::Advanced_MakeFile_Construction(char * mn_src_p
      this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
 
 
-     char dependency_determination [] =  "\n\n   The source file dependencies determined";
+     char dependency_determination [] =  "\n\nThe source file dependencies determined";
 
      std::cout << dependency_determination;
 
@@ -183,7 +183,7 @@ void Executable_MakeFile_Builder::Advanced_MakeFile_Construction(char * mn_src_p
      this->Script_Builder.Build_Compiler_Script_For_Executable_File(mn_src_path);
 
 
-     char script_writing [] =  "\n   The construction script writed";
+     char script_writing [] =  "\nThe construction script writed";
 
      std::cout << script_writing;
 
@@ -256,20 +256,19 @@ void Executable_MakeFile_Builder::Simple_MakeFile_Construction(char * mn_src_pat
      this->Project_Rebuild_Script_Writer.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
 
 
+
+     std::string script_path = this->new_dir_path;
      
-
-     std::string script_name;
-
-     this->Script_Name_Determination(script_name,mn_src_path);
+     this->Script_Path_Determination(script_path,mn_src_path);
 
 
-     this->Project_Rebuild_Script_Writer.Set_Script_Path(this->new_dir_path,script_name);
+     this->Project_Rebuild_Script_Writer.Set_Script_Path_Directly(script_path);
      
      this->Project_Rebuild_Script_Writer.Build_Update_Script();
 
      this->Project_Rebuild_Script_Writer.Clear_Dynamic_Memory();
 
-     char script_construction [] = "\n\n   The project compiler script has been constructed";
+     char script_construction [] = "\n\nThe project compiler script has been constructed";
 
      std::cout << script_construction;
 
@@ -311,6 +310,32 @@ void Executable_MakeFile_Builder::Simple_MakeFile_Construction(char * mn_src_pat
       
 }
 
+
+void Executable_MakeFile_Builder::Script_Path_Determination(std::string & path, char *  src_file_path){
+
+     std::string script_name;
+     
+     this->Script_Name_Determination(script_name,src_file_path);
+
+     if(this->opr_sis == 'w'){
+
+        path.push_back('\\');
+     }
+
+     if(this->opr_sis == 'l'){
+
+        path.push_back('/');
+     }
+
+     size_t name_size = script_name.length();
+
+     for(size_t i=0;i<name_size;i++){
+
+         path.push_back(script_name[i]);
+     }
+
+     path.shrink_to_fit();
+}
 
 
 void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
@@ -1125,6 +1150,7 @@ void Executable_MakeFile_Builder::Determine_New_Directory_Path(){
 
      this->new_dir_path = this->warehouse_path;
 
+
      if(this->opr_sis == 'w'){
 
         if(this->new_dir_path.back()!='\\'){
@@ -1148,7 +1174,6 @@ void Executable_MakeFile_Builder::Determine_New_Directory_Path(){
      }
 
 
-
      if(this->opr_sis == 'w'){
 
         if(this->new_dir_path.back()!='\\'){
@@ -1165,8 +1190,6 @@ void Executable_MakeFile_Builder::Determine_New_Directory_Path(){
         }
      }
 
-
-
      size_t name_size = this->Exe_File_Name.length();
 
      for(size_t i=0;i<name_size;i++){
@@ -1180,6 +1203,7 @@ void Executable_MakeFile_Builder::Determine_New_Directory_Path(){
 
          this->new_dir_path.push_back(upper_case);
      }
+
 
      std::string dir_add_word = "_BUILDER";
 

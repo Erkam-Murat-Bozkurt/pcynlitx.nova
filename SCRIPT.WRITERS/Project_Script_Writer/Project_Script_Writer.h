@@ -29,6 +29,7 @@ public:
  void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * ptr);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader* ptr);
  void Set_Script_Path(std::string dir, std::string file_name);
+ void Set_Script_Path_Directly(std::string path);
  void Build_Compiler_Script();
  void Build_Update_Script();
  void Clear_Dynamic_Memory();

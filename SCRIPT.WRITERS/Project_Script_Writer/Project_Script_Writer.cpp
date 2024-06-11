@@ -231,6 +231,14 @@ void Project_Script_Writer::Determine_Project_Script_Path(){
      this->Construct_Path(this->script_path,script_path_add,this->warehouse_path);
 }
 
+
+void Project_Script_Writer::Set_Script_Path_Directly(std::string path){
+
+      this->script_path = path;
+
+      this->is_script_path_setted = true;
+}
+
 void Project_Script_Writer::Set_Script_Path(std::string dir, std::string file_name){
 
      this->Memory_Delete_Condition = false;
