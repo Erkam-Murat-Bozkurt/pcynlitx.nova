@@ -99,26 +99,26 @@
        y="72.104164"
        id="text16" />
     <rect
-       style="fill:#eb7878;fill-opacity:1;stroke:none;stroke-width:0.0658405;stroke-miterlimit:1.7;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#d26464;fill-opacity:0.85490197;stroke:none;stroke-width:0.0744383;stroke-miterlimit:1.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect2"
-       width="0.68574172"
-       height="0.6556111"
-       x="73.400963"
+       width="0.76423639"
+       height="0.75194544"
+       x="73.322472"
        y="85.07457" />
     <rect
-       style="fill:#eb7878;fill-opacity:1;stroke:none;stroke-width:0.0490956;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#d26464;fill-opacity:0.854902;stroke:none;stroke-width:0.0382957;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
        id="rect2-6"
-       width="1.3275728"
-       height="0.50908285"
-       x="72.769844"
-       y="85.868614" />
+       width="0.88871634"
+       height="0.46269965"
+       x="73.208702"
+       y="85.915001" />
     <rect
-       style="fill:#eb7878;fill-opacity:1;stroke:none;stroke-width:0.0356319;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#d26464;fill-opacity:0.85490197;stroke:none;stroke-width:0.0336582;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
        id="rect2-6-8"
        width="1.2987249"
-       height="0.49685711"
+       height="0.44333804"
        x="85.081253"
-       y="-73.265488"
+       y="-73.211967"
        transform="rotate(90)" />
   </g>
 </svg>
