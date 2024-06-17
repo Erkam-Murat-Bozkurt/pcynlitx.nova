@@ -27,6 +27,8 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 MakeFile_Path_Determiner::MakeFile_Path_Determiner()
 {
    this->Memory_Delete_Condition = false;
+
+   this->is_cmake_construction = false;
 }
 
 
@@ -97,6 +99,10 @@ void MakeFile_Path_Determiner::Receive_DataMap(std::unordered_map<std::string, C
 }
 
 
+void MakeFile_Path_Determiner::Set_CMAKE_Construction_Status(bool is_cmake){
+
+     this->is_cmake_construction = is_cmake;
+}
 
 
 void MakeFile_Path_Determiner::Determine_MakeFile_Data(std::string file_path){
@@ -159,25 +165,34 @@ Compiler_Data * MakeFile_Path_Determiner::Find_Compiler_Data_From_Source_File_Pa
 
 void MakeFile_Path_Determiner::Determine_Make_File_Name(){
 
-     std::string make_file_extention = ".make";
+     if(this->is_cmake_construction){
 
-     std::string Source_File_Name = this->Data_Ptr->source_file_name_witout_ext;
+        this->make_file_name = "CMakeLists.txt";
+     }
+     else{
+          
+           std::string make_file_extention = ".make";
 
-     size_t src_name_size = Source_File_Name.length();
+           std::string Source_File_Name = this->Data_Ptr->source_file_name_witout_ext;
 
-     size_t extention_size = make_file_extention.length();
+           size_t src_name_size = Source_File_Name.length();
 
-     for(size_t i=0;i<src_name_size;i++){
+           size_t extention_size = make_file_extention.length();
 
-         this->make_file_name.push_back(Source_File_Name[i]);         
+           for(size_t i=0;i<src_name_size;i++){
+
+               this->make_file_name.push_back(Source_File_Name[i]);         
+           }
+
+           for(size_t i=0;i<extention_size;i++){
+
+               this->make_file_name.push_back(make_file_extention[i]);         
+           }
+
+           this->make_file_name.shrink_to_fit();
      }
 
-     for(size_t i=0;i<extention_size;i++){
 
-         this->make_file_name.push_back(make_file_extention[i]);         
-     }
-
-     this->make_file_name.shrink_to_fit();
 }
 
 

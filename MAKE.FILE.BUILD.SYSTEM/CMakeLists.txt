@@ -12,6 +12,9 @@ add_library(make_fbld_sys
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Builder/Make_File_Builder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Builder/Make_File_Builder.h
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMake_List_Builder/CMake_List_Builder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMake_List_Builder/CMake_List_Builder.hpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Cleaner/Make_File_Cleaner.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Cleaner/Make_File_Cleaner.hpp
 
@@ -34,6 +37,7 @@ target_include_directories(make_fbld_sys PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Cleaner    
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Data_Collector    
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Directory_Constructor    
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMake_List_Builder    
 
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Build_Tools_Initializer
@@ -124,6 +128,7 @@ target_link_directories(make_fbld_sys PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Path_Determiner    
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Data_Collector    
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Directory_Constructor    
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMake_List_Builder    
 
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Build_Tools_Initializer

@@ -36,6 +36,7 @@ public:
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Operating_System(char opr_sis);
  void Receive_DataMap(std::unordered_map<std::string, Compiler_Data> * ptr);
+ void Set_CMAKE_Construction_Status(bool is_cmake);
  std::string Get_Warehouse_Object_Dir();
  std::string Get_Repo_Dir();
  std::string Get_Dependency_Code_Line();
@@ -82,6 +83,7 @@ private:
  std::string make_file_path;
  std::string make_file_name;
  char opr_sis;
+ bool is_cmake_construction;
  bool Include_Line_Condition;
  bool Memory_Delete_Condition;
 };
