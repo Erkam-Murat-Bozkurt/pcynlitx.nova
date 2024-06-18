@@ -153,7 +153,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Empty_Project_File_Text_Panel->SetMinSize(wxSize(350,80));
 
-     this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(95,95,110,0xff));
+     this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(112,112,120,0xff));
 
 
      this->Project_File_Selection_Text_Panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(350,80));
@@ -162,7 +162,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      //this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(110, 130, 170,0xff));
 
-     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(190, 100, 100,0xff));
+     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(65, 160, 160,0xff));
 
 
 

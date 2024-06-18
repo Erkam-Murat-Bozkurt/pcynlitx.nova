@@ -28,7 +28,7 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Git_Data_Processor Data_Processor('w');
+    Git_Data_Processor Data_Processor('w','n');
 
     Data_Processor.Receive_Descriptor_File_Path(argv[1]);
 
@@ -54,6 +54,18 @@ int main(int argc, char ** argv){
     }
 
     std::cout << "\n\n";
+
+
+    std::vector<std::string> *  dir_list =  Data_Processor.Get_Git_Record_Directory_Address();
+
+    std::cout << "\n Directory List Determined";
+
+    std::cin.get();
+
+    for(size_t i=0;i<dir_list->size();i++){
+
+        std::cout << "\n dir_list[" << i << "]:" << dir_list->at(i);
+    }
 
     //Data_Processor.Set_Git_Ignoring_Files();
 

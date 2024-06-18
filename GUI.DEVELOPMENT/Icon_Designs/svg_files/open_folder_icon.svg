@@ -2,12 +2,12 @@
 <svg
    data-name="Layer 1"
    id="Layer_1"
-   viewBox="0 0 64.300299 64.475039"
+   viewBox="0 0 60.409808 60.759268"
    version="1.1"
    sodipodi:docname="open_folder_icon.svg"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   width="64.300301"
-   height="64.475037"
+   width="60.409809"
+   height="60.759266"
    inkscape:export-filename="..\..\..\..\Pcynlitx_Build_Platform\icons\open_folder_icon.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
@@ -26,8 +26,8 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="true"
      inkscape:zoom="5.7231455"
-     inkscape:cx="37.304661"
-     inkscape:cy="38.789858"
+     inkscape:cx="37.828848"
+     inkscape:cy="38.964587"
      inkscape:window-width="1920"
      inkscape:window-height="991"
      inkscape:window-x="-9"
@@ -37,8 +37,8 @@
     <inkscape:grid
        id="grid5"
        units="px"
-       originx="49.712857"
-       originy="49.881583"
+       originx="50.213814"
+       originy="50.033084"
        spacingx="1"
        spacingy="1"
        empcolor="#0099e5"
@@ -59,7 +59,7 @@
   <title
      id="title1" />
   <path
-     d="M 59.237707,18.904654 V 59.919633 H 4.8835417 V 5.2330003 H 20.596423 C 24.700159,13.950048 25.762337,18.904654 34.184964,18.904654 Z M 34.572235,13.435994 H 59.237707 V 5.2330003 H 26.163193 c 3.148012,7.0381697 3.691555,8.2029937 8.409042,8.2029937 z"
+     d="M 55.195709,17.920415 V 56.052364 H 5.3844999 V 5.2097712 H 19.784088 C 23.544831,13.314079 24.518232,17.920415 32.23689,17.920415 Z M 32.591793,12.836159 H 55.195709 V 5.2097712 H 24.885584 c 2.884899,6.5434418 3.383012,7.6263878 7.706209,7.6263878 z"
      id="path1"
-     style="fill:#c8c8d7;fill-opacity:1;stroke:none;stroke-width:1.4073;stroke-dasharray:none;stroke-opacity:1" />
+     style="fill:#d2d2e1;fill-opacity:1;stroke:#6e6e7d;stroke-width:1.5;stroke-dasharray:none;stroke-opacity:1" />
 </svg>
