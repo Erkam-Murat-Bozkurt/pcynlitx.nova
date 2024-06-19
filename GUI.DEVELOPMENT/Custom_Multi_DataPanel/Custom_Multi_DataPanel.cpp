@@ -248,7 +248,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      text->SetFont(Title_Font);
 
-     text->SetForegroundColour(wxColour(90, 90, 130));
+     text->SetForegroundColour(wxColour(58, 58, 70,0xff));
      
 
 

@@ -156,7 +156,7 @@ void Project_Descriptions_Printer::Construct_Close_Panel(){
       
            wxT("CLOSE"),wxDefaultPosition, wxSize(110, 50));
 
-     this->CloseButton->SetForegroundColour(wxColour(50,50,50));
+     //this->CloseButton->SetForegroundColour(wxColour(50,50,50));
 
      this->CloseButton->Centre(wxBOTH);
 
