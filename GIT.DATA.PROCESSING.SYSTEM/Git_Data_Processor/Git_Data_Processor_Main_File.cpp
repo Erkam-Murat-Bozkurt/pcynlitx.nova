@@ -36,6 +36,8 @@ int main(int argc, char ** argv){
 
     Data_Processor.Determine_Git_Repo_Info();
 
+    /*
+
     size_t index_size = Data_Processor.Get_Git_File_Index_Size();
 
     for(size_t i=0;i<index_size;i++){
@@ -55,6 +57,9 @@ int main(int argc, char ** argv){
 
     std::cout << "\n\n";
 
+    */
+
+    /*
 
     std::vector<std::string> *  dir_list =  Data_Processor.Get_Git_Record_Directory_Address();
 
@@ -71,12 +76,13 @@ int main(int argc, char ** argv){
 
     std::cin.get();
 
+    */
 
     Data_Processor.Extract_Directory_Tree();
 
-    std::cout << "\n Directory Tree Determined";
+    //std::cout << "\n Directory Tree Determined";
 
-    std::cin.get();
+    //std::cin.get();
     
     std::vector<std::string> *  dir_tree =  Data_Processor.Get_Directory_Tree();
 
@@ -84,6 +90,23 @@ int main(int argc, char ** argv){
     for(size_t i=0;i<dir_tree->size();i++){
 
         std::cout << "\n dir[" << i << "]:" << dir_tree->at(i);
+    }
+
+
+    std::vector<Git_Sub_Directory_Data> * Sub_Dir_Data = Data_Processor.Get_Directory_Tree_Data();
+
+    for(size_t i=0;i<Sub_Dir_Data->size();i++){
+
+        std::cout << "\n\n";
+
+        std::cout << "\n dir:" << Sub_Dir_Data->at(i).dir_path;
+
+        size_t sub_dir_size = Sub_Dir_Data->at(i).sub_dirs.size();
+
+        for(size_t j=0;j<sub_dir_size;j++){
+
+            std::cout << "\n sub_dir[" << j << "]:" << Sub_Dir_Data->at(i).sub_dirs.at(j);
+        }
     }
 
 

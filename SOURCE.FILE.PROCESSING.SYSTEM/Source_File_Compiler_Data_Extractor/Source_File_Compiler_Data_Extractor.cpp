@@ -47,7 +47,7 @@ void Source_File_Compiler_Data_Extractor::Clear_Dynamic_Memory(){
 
      this->Clear_Buffer_Memory(&this->buffer);
 
-     std::vector<Compiler_Data>::iterator it;
+     //std::vector<Compiler_Data>::iterator it;
 
      this->Clear_Data_Memory(&this->compiler_data);
 }

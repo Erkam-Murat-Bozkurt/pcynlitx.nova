@@ -13,10 +13,17 @@
 #include "Git_Ignoring_Files_Lister.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "DirectoryOperations.h"
+#include "StringOperator.h"
 #include "CharOperator.h"
 #include "Cpp_FileOperations.h"
 #include "Custom_System_Interface.h"
 
+
+struct Git_Sub_Directory_Data
+{
+    std::string dir_path;
+    std::vector<std::string> sub_dirs;
+};
 
 
 class Git_Data_Processor
@@ -32,6 +39,7 @@ public:
  void Receive_Git_Modifications();
  void Set_Gui_Read_Status(bool status);
  void Extract_Directory_Tree();
+ void Construct_SubDirectory_Data();
  size_t  Get_Git_File_Index_Size();
  std::string Get_Git_File_Index(int num);
  std::string Get_File_System_Path(int num);
@@ -47,14 +55,19 @@ public:
  std::vector<std::string> * Get_Updated_Header_Files();
  std::vector<std::string> * Get_Updated_Source_Files();
  std::vector<std::string> * Get_Directory_Tree();
+ std::vector<Git_Sub_Directory_Data> * Get_Directory_Tree_Data();
  void Clear_Dynamic_Memory();
 protected:
+ void Find_Upper_Directory(std::string & upper, std::string dir);
+ void Clear_Sub_Directory_Data(Git_Sub_Directory_Data & Data);
+ void Clear_Std_String(std::string & str);
  Git_Modification_Receiver Modf_Receiver;
  Git_Modification_Lister   Modf_Lister;
  Git_File_List_Writer      List_Writer;
  Git_File_List_Receiver    List_Receiver;
  Descriptor_File_Reader    Des_Reader;
  std::vector<std::string> Directory_Tree;
+ std::vector<Git_Sub_Directory_Data> Sub_Dir_Data;
  bool gui_read_status;
  char opr_sis;
  char * CString;

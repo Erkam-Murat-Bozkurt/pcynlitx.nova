@@ -102,9 +102,12 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
 
           if(!is_exist){
 
-             this->Directory_Tree.push_back(dir_list->at(i));
+             if(dir_list->at(i).size()>0){
 
-             this->Directory_Tree.shrink_to_fit();
+                this->Directory_Tree.push_back(dir_list->at(i));
+
+                this->Directory_Tree.shrink_to_fit();
+             }
           }
       }
 
@@ -113,8 +116,10 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
 
 
 
-      int dir_data[2*this->Directory_Tree.size()];
 
+      // Determination of upper directories
+
+      
       CharOperator Cr_Opr;
 
       char dir_char;
@@ -128,6 +133,57 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
 
           dir_char = '/';
       }
+
+
+      for(size_t i=0;i<this->Directory_Tree.size();i++)
+      {
+          bool is_upper_directort_exist = false;
+
+          int reputation = Cr_Opr.DetermineCharacterRepitation(this->Directory_Tree.at(i),dir_char);
+
+          if(reputation>0){
+
+             std::string upper_dir;
+
+             this->Find_Upper_Directory(upper_dir,this->Directory_Tree.at(i));
+
+             bool is_exist_ = false;
+
+
+             for(size_t j=0;j<this->Directory_Tree.size();j++){
+
+                 if(this->Directory_Tree.at(j) == upper_dir){
+
+                    is_exist_ = true;
+
+                    break;
+                 }
+             }
+
+             if(!is_exist_){
+
+               if(upper_dir.size()>0){
+
+                  std::cout << "\n upper_dir:" << upper_dir;
+
+                  std::cin.get();
+
+                  this->Directory_Tree.push_back(upper_dir);
+
+                  this->Directory_Tree.shrink_to_fit();
+                }
+             }
+          }
+      }
+
+      this->Directory_Tree.shrink_to_fit();
+
+
+
+      // THE ORDERING OPERATIONS
+
+
+      int dir_data[2*this->Directory_Tree.size()];
 
       for(size_t i=0;i<this->Directory_Tree.size();i++){
 
@@ -171,8 +227,123 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
                }
            }
       }
- }
 
+      this->Construct_SubDirectory_Data();
+}
+
+
+
+void Git_Data_Processor::Find_Upper_Directory(std::string & upper, std::string dir){
+
+     size_t dir_size = dir.size();
+
+     size_t end_point = dir_size;
+
+     for(size_t i=dir_size;i>0;i--){
+
+         if((dir[i]=='/') || (dir[i]=='\\')){
+
+            end_point = i;
+
+            break;
+         }
+     }
+
+     for(size_t i=0;i<end_point;i++){
+
+         upper.push_back(dir[i]);
+     }
+
+     upper.shrink_to_fit();
+}
+
+
+
+void Git_Data_Processor::Construct_SubDirectory_Data()
+{
+     StringOperator StrOpr;
+
+     CharOperator Cr_Opr;
+
+     char dir_char;
+
+     if(this->opr_sis == 'w'){
+
+        dir_char = '\\';
+     }
+
+     if(this->opr_sis == 'l'){
+
+        dir_char = '/';
+     }
+
+     for(size_t i=0;i<this->Directory_Tree.size();i++){
+
+          std::string dir = this->Directory_Tree.at(i);
+
+          int dir_rep = Cr_Opr.DetermineCharacterRepitation(this->Directory_Tree.at(i),dir_char);
+
+          Git_Sub_Directory_Data Temp_Data;
+
+          Temp_Data.dir_path = dir;
+
+          for(size_t j=0;j<this->Directory_Tree.size();j++){
+
+              bool is_sub_dir = false;
+
+              if(StrOpr.CheckStringInclusion(this->Directory_Tree.at(j),dir)){
+
+                 int sub_dir_rep = Cr_Opr.DetermineCharacterRepitation(this->Directory_Tree.at(j),dir_char);
+
+                 if((sub_dir_rep - dir_rep) == 1){
+
+                    if(this->Directory_Tree.at(j).size()>dir.size()){
+
+                       is_sub_dir = true;
+                    }
+                 }
+              }
+
+              if(is_sub_dir){
+
+                 Temp_Data.sub_dirs.push_back(this->Directory_Tree.at(j));
+              }
+          }
+
+          Temp_Data.sub_dirs.shrink_to_fit();
+
+          Sub_Dir_Data.push_back(Temp_Data);
+
+          this->Clear_Sub_Directory_Data(Temp_Data);
+     }
+}
+
+
+void Git_Data_Processor::Clear_Sub_Directory_Data(Git_Sub_Directory_Data & Data){
+
+     this->Clear_Std_String(Data.dir_path);
+
+     if(!Data.sub_dirs.empty()){
+
+         for(size_t i=0;i<Data.sub_dirs.size();i++){
+
+             this->Clear_Std_String(Data.sub_dirs.at(i));
+         }
+     }
+
+     Data.sub_dirs.shrink_to_fit();
+}
+
+
+void Git_Data_Processor::Clear_Std_String(std::string & str){
+
+     if(!str.empty()){
+
+         str.clear();
+
+         str.shrink_to_fit();
+     }
+}
 
 void Git_Data_Processor::Clear_Dynamic_Memory()
 {
@@ -303,7 +474,13 @@ std::vector<std::string> * Git_Data_Processor::Get_Updated_Source_Files()
 }
 
 
- std::vector<std::string> * Git_Data_Processor::Get_Directory_Tree(){
+std::vector<std::string> * Git_Data_Processor::Get_Directory_Tree(){
 
       return &this->Directory_Tree;
- }
+}
+
+
+std::vector<Git_Sub_Directory_Data> * Git_Data_Processor::Get_Directory_Tree_Data(){
+
+     return &this->Sub_Dir_Data;
+}
