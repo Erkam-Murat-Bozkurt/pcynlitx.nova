@@ -67,12 +67,24 @@ int main(int argc, char ** argv){
         std::cout << "\n dir_list[" << i << "]:" << dir_list->at(i);
     }
 
-    //Data_Processor.Set_Git_Ignoring_Files();
+    std::cout << "\n Directory Tree Determination started";
 
-    //Data_Processor.Write_Git_Modification_File();
+    std::cin.get();
 
-    //Data_Processor.Receive_Git_Modifications();
 
+    Data_Processor.Extract_Directory_Tree();
+
+    std::cout << "\n Directory Tree Determined";
+
+    std::cin.get();
+    
+    std::vector<std::string> *  dir_tree =  Data_Processor.Get_Directory_Tree();
+
+
+    for(size_t i=0;i<dir_tree->size();i++){
+
+        std::cout << "\n dir[" << i << "]:" << dir_tree->at(i);
+    }
 
 
     return 0;

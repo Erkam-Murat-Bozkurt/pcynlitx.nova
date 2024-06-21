@@ -82,6 +82,98 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
 }
 
 
+ void Git_Data_Processor::Extract_Directory_Tree(){
+
+      std::vector<std::string> *  dir_list =  this->Get_Git_Record_Directory_Address();
+      
+      for(size_t i=0;i<dir_list->size();i++)
+      {
+          bool is_exist = false;
+
+          for(size_t j=0;j<this->Directory_Tree.size();j++){
+
+              if(this->Directory_Tree.at(j) == dir_list->at(i)){
+
+                  is_exist = true;
+
+                  break;
+              }
+          }
+
+          if(!is_exist){
+
+             this->Directory_Tree.push_back(dir_list->at(i));
+
+             this->Directory_Tree.shrink_to_fit();
+          }
+      }
+
+      this->Directory_Tree.shrink_to_fit();
+
+
+
+
+      int dir_data[2*this->Directory_Tree.size()];
+
+      CharOperator Cr_Opr;
+
+      char dir_char;
+
+      if(this->opr_sis == 'w'){
+
+          dir_char = '\\';
+      }
+
+      if(this->opr_sis == 'l'){
+
+          dir_char = '/';
+      }
+
+      for(size_t i=0;i<this->Directory_Tree.size();i++){
+
+          dir_data[i] = Cr_Opr.DetermineCharacterRepitation(this->Directory_Tree.at(i),dir_char);
+      }
+
+      for(size_t i=0;i<this->Directory_Tree.size();i++){
+
+           for(size_t j=0;j<this->Directory_Tree.size();j++){
+
+               if(dir_data[i]<dir_data[j]){
+
+                  std::string temp_dir_str = this->Directory_Tree.at(j);
+
+                  this->Directory_Tree.at(j) = this->Directory_Tree.at(i);
+
+                  this->Directory_Tree.at(i) = temp_dir_str;
+
+                  int dir_dat = dir_data[j];
+
+                  dir_data[j] = dir_data[i];
+
+                  dir_data[i] = dir_dat;
+               }
+           }
+      }
+
+
+      
+      for(size_t i=0;i<this->Directory_Tree.size();i++){
+
+           for(size_t j=0;j<this->Directory_Tree.size();j++){
+
+               if(this->Directory_Tree.at(i).size() <= this->Directory_Tree.at(j).size()){
+
+                  std::string temp_dir_str = this->Directory_Tree.at(j);
+
+                  this->Directory_Tree.at(j) = this->Directory_Tree.at(i);
+
+                  this->Directory_Tree.at(i) = temp_dir_str;
+               }
+           }
+      }
+ }
+
+
 void Git_Data_Processor::Clear_Dynamic_Memory()
 {
      if(!this->Memory_Delete_Condition){
@@ -209,3 +301,9 @@ std::vector<std::string> * Git_Data_Processor::Get_Updated_Source_Files()
 {
      return  this->Modf_Receiver.Get_Updated_Source_Files();
 }
+
+
+ std::vector<std::string> * Git_Data_Processor::Get_Directory_Tree(){
+
+      return &this->Directory_Tree;
+ }

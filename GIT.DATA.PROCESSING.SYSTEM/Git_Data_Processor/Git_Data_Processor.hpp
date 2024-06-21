@@ -13,8 +13,10 @@
 #include "Git_Ignoring_Files_Lister.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "DirectoryOperations.h"
+#include "CharOperator.h"
 #include "Cpp_FileOperations.h"
 #include "Custom_System_Interface.h"
+
 
 
 class Git_Data_Processor
@@ -29,7 +31,7 @@ public:
  void Write_Git_Modification_File();
  void Receive_Git_Modifications();
  void Set_Gui_Read_Status(bool status);
- void Set_Git_Ignoring_Files();
+ void Extract_Directory_Tree();
  size_t  Get_Git_File_Index_Size();
  std::string Get_Git_File_Index(int num);
  std::string Get_File_System_Path(int num);
@@ -42,18 +44,17 @@ public:
  std::vector<std::string> * Get_Git_Record_Path_Address();
  std::vector<std::string> * Get_File_Name_Address();
  std::string Get_Git_Repo_Directory();
-
  std::vector<std::string> * Get_Updated_Header_Files();
  std::vector<std::string> * Get_Updated_Source_Files();
-
+ std::vector<std::string> * Get_Directory_Tree();
  void Clear_Dynamic_Memory();
-
 protected:
  Git_Modification_Receiver Modf_Receiver;
  Git_Modification_Lister   Modf_Lister;
  Git_File_List_Writer      List_Writer;
  Git_File_List_Receiver    List_Receiver;
  Descriptor_File_Reader    Des_Reader;
+ std::vector<std::string> Directory_Tree;
  bool gui_read_status;
  char opr_sis;
  char * CString;
