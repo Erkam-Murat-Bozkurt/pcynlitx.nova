@@ -156,11 +156,11 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
 
 
 
-    this->CloseButton->SetForegroundColour(wxColour(80,80,80));
+    //this->CloseButton->SetForegroundColour(wxColour(80,80,80));
 
-    this->IntroButton->SetForegroundColour(wxColour(80,80,80));
+    //this->IntroButton->SetForegroundColour(wxColour(80,80,80));
 
-    this->WelcomeButton->SetForegroundColour(wxColour(80,80,80));
+    //this->WelcomeButton->SetForegroundColour(wxColour(80,80,80));
 
 
     this->CloseButton->SetFont(buttonFont);

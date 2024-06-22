@@ -39,7 +39,6 @@ public:
  void Receive_Git_Modifications();
  void Set_Gui_Read_Status(bool status);
  void Extract_Directory_Tree();
- void Construct_SubDirectory_Data();
  size_t  Get_Git_File_Index_Size();
  std::string Get_Git_File_Index(int num);
  std::string Get_File_System_Path(int num);
@@ -56,8 +55,11 @@ public:
  std::vector<std::string> * Get_Updated_Source_Files();
  std::vector<std::string> * Get_Directory_Tree();
  std::vector<Git_Sub_Directory_Data> * Get_Directory_Tree_Data();
+ std::vector<Git_Sub_Directory_Data> * Get_Git_Root_Dirs();
  void Clear_Dynamic_Memory();
 protected:
+ void Construct_SubDirectory_Data();
+ void Filtering_Root_Directories();
  void Find_Upper_Directory(std::string & upper, std::string dir);
  void Clear_Sub_Directory_Data(Git_Sub_Directory_Data & Data);
  void Clear_Std_String(std::string & str);
@@ -66,8 +68,9 @@ protected:
  Git_File_List_Writer      List_Writer;
  Git_File_List_Receiver    List_Receiver;
  Descriptor_File_Reader    Des_Reader;
- std::vector<std::string> Directory_Tree;
+ std::vector<std::string>  Directory_Tree;
  std::vector<Git_Sub_Directory_Data> Sub_Dir_Data;
+ std::vector<Git_Sub_Directory_Data> Root_Dirs;
  bool gui_read_status;
  char opr_sis;
  char * CString;

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   viewBox="0 0 21.1645 26.18754"
-   height="26.18754"
-   width="21.164499"
+   viewBox="0 0 17.044478 21.051623"
+   height="21.051622"
+   width="17.044477"
    id="svg2"
    version="1.1"
    sodipodi:docname="logo_with_name.svg"
@@ -31,8 +31,8 @@
      id="namedview8"
      showgrid="true"
      inkscape:zoom="17.718349"
-     inkscape:cx="11.203075"
-     inkscape:cy="18.003935"
+     inkscape:cx="10.074302"
+     inkscape:cy="16.988039"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
@@ -43,8 +43,8 @@
     <inkscape:grid
        type="xygrid"
        id="grid10"
-       originx="5.145969"
-       originy="-23.01868"
+       originx="4.0171956"
+       originy="-24.034577"
        spacingy="1"
        spacingx="1"
        units="px"
@@ -64,36 +64,37 @@
   <defs
      id="defs6" />
   <rect
-     style="fill:#64adab;fill-opacity:1;stroke:#64adab;stroke-width:0.503592;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#d76e6e;fill-opacity:1;stroke:#d76e6e;stroke-width:0.454045;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect9-5-91-1-0"
-     width="8.5366507"
-     height="7.4740596"
-     x="10.078181"
-     y="2.3735592" />
+     width="7.6972213"
+     height="6.7383018"
+     x="7.7644668"
+     y="1.332876" />
   <rect
-     style="fill:#64adab;fill-opacity:1;stroke:#64adab;stroke-width:0.526975;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#d76e6e;fill-opacity:1;stroke:#d76e6e;stroke-width:0.475128;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect5-8"
-     width="4.8841367"
-     height="14.314374"
-     x="3.1568923"
-     y="2.3937314" />
+     width="4.4038677"
+     height="12.905245"
+     x="1.5237637"
+     y="1.3510623" />
   <rect
-     style="fill:#64adab;fill-opacity:1;stroke:#64adab;stroke-width:0.543985;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#d76e6e;fill-opacity:1;stroke:#d76e6e;stroke-width:0.490464;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect5-8-4"
-     width="4.8864493"
-     height="12.122233"
-     x="11.813617"
-     y="-18.566143"
+     width="4.4054198"
+     height="10.930225"
+     x="9.8436403"
+     y="-15.417786"
      transform="rotate(90)" />
   <text
      xml:space="preserve"
-     style="font-weight:bold;font-size:5.33333px;line-height:1.13571px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans Bold';fill:#866870;stroke-width:0.744;stroke-linejoin:round;stroke-miterlimit:1"
-     x="1.6184288"
-     y="22.761347"
-     id="text1"><tspan
+     style="font-weight:bold;font-size:4.8086px;line-height:1.02397px;font-family:'Noto Sans';-inkscape-font-specification:'Noto Sans Bold';fill:#866870;stroke-width:0.6708;stroke-linejoin:round;stroke-miterlimit:1"
+     x="0.53161949"
+     y="19.714853"
+     id="text1"
+     transform="scale(1.0000605,0.9999395)"><tspan
        sodipodi:role="line"
        id="tspan1"
-       x="1.6184288"
-       y="22.761347"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:5.33333px;line-height:1.13571px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Bold';fill:#64646e;fill-opacity:1">Nwinix</tspan></text>
+       x="0.53161949"
+       y="19.714853"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4.8086px;line-height:1.02397px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Bold';fill:#64646e;fill-opacity:1;stroke-width:0.6708">Nwinix</tspan></text>
 </svg>

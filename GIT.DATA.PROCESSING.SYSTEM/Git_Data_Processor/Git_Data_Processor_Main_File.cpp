@@ -109,6 +109,29 @@ int main(int argc, char ** argv){
         }
     }
 
+    std::cout << "\n\n";
+
+
+    std::cout << "\n\n ROOT DIRS:";
+
+
+    std::vector<Git_Sub_Directory_Data> * Root_Dir_Data = Data_Processor.Get_Git_Root_Dirs();
+
+    for(size_t i=0;i<Root_Dir_Data->size();i++){
+
+        std::cout << "\n\n";
+
+        std::cout << "\n Root dir:" << Root_Dir_Data->at(i).dir_path;
+
+        size_t sub_dir_size = Root_Dir_Data->at(i).sub_dirs.size();
+
+        for(size_t j=0;j<sub_dir_size;j++){
+
+            std::cout << "\n sub_dir[" << j << "]:" << Root_Dir_Data->at(i).sub_dirs.at(j);
+        }
+    }
+
+
 
     return 0;
 }

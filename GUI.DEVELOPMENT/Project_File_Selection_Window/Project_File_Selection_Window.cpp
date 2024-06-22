@@ -155,6 +155,9 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(100,100,115));
 
+     //this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(200,100,100));
+
+
 
      this->Project_File_Selection_Text_Panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(350,75));
 
@@ -164,7 +167,10 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      //this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(68,158,157));
 
-     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(200,100,100));
+     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(100,100,115));
+
+
+     //this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(200,100,100));
 
 
      wxString new_file_text_string = wxT("NEW EMPTY PROJECT FILE");

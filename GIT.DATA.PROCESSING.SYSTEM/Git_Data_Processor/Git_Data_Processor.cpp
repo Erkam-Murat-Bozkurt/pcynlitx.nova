@@ -229,6 +229,8 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
       }
 
       this->Construct_SubDirectory_Data();
+
+      this->Filtering_Root_Directories();
 }
 
 
@@ -319,6 +321,22 @@ void Git_Data_Processor::Construct_SubDirectory_Data()
 }
 
 
+void Git_Data_Processor::Filtering_Root_Directories(){
+
+     for(size_t i=0;i<this->Sub_Dir_Data.size();i++){
+
+         size_t sub_dir_size = this->Sub_Dir_Data.at(i).sub_dirs.size();
+
+         if(sub_dir_size>0){
+
+            this->Root_Dirs.push_back(this->Sub_Dir_Data.at(i));
+         }
+     }
+
+     this->Root_Dirs.shrink_to_fit();
+}
+
+
 void Git_Data_Processor::Clear_Sub_Directory_Data(Git_Sub_Directory_Data & Data){
 
      this->Clear_Std_String(Data.dir_path);
@@ -360,6 +378,31 @@ void Git_Data_Processor::Clear_Dynamic_Memory()
          this->Modf_Receiver.Clear_Dynamic_Memory();
 
          this->Des_Reader.Clear_Dynamic_Memory();
+
+         if(!this->Sub_Dir_Data.empty()){
+
+            for(size_t i=0;i<this->Sub_Dir_Data.size();i++){
+
+                this->Clear_Sub_Directory_Data(this->Sub_Dir_Data.at(i));
+            }
+
+            this->Sub_Dir_Data.clear();
+
+            this->Sub_Dir_Data.shrink_to_fit();
+         }
+
+
+         if(!this->Directory_Tree.empty()){
+
+            for(size_t i=0;i<this->Directory_Tree.size();i++){
+
+                this->Clear_Std_String(this->Directory_Tree.at(i));
+            }
+
+            this->Directory_Tree.clear();
+
+            this->Directory_Tree.shrink_to_fit();
+         }
      }
 }
 
@@ -484,3 +527,9 @@ std::vector<Git_Sub_Directory_Data> * Git_Data_Processor::Get_Directory_Tree_Dat
 
      return &this->Sub_Dir_Data;
 }
+
+
+ std::vector<Git_Sub_Directory_Data> * Git_Data_Processor::Get_Git_Root_Dirs(){
+
+     return &this->Root_Dirs;
+ }
