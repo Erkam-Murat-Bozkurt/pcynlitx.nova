@@ -323,6 +323,20 @@ void Git_Data_Processor::Construct_SubDirectory_Data()
 
 void Git_Data_Processor::Filtering_Root_Directories(){
 
+     CharOperator Cr_Opr;
+
+     char dir_char;
+
+     if(this->opr_sis == 'w'){
+
+        dir_char = '\\';
+     }
+
+     if(this->opr_sis == 'l'){
+
+        dir_char = '/';
+     }
+
      for(size_t i=0;i<this->Sub_Dir_Data.size();i++){
 
          size_t sub_dir_size = this->Sub_Dir_Data.at(i).sub_dirs.size();
@@ -330,6 +344,18 @@ void Git_Data_Processor::Filtering_Root_Directories(){
          if(sub_dir_size>0){
 
             this->Root_Dirs.push_back(this->Sub_Dir_Data.at(i));
+         }
+
+         if(sub_dir_size == 0){
+
+            std::string dir_path = this->Sub_Dir_Data.at(i).dir_path;
+
+            int dir_char_rep = Cr_Opr.DetermineCharacterRepitation(dir_path,dir_char);
+
+            if(dir_char_rep ==0){
+
+               this->Root_Dirs.push_back(this->Sub_Dir_Data.at(i));
+            }
          }
      }
 

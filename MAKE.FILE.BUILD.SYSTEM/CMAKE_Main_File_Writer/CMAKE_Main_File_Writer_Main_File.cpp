@@ -45,6 +45,7 @@ int main(int argc, char ** argv){
 
     Data_Processor.Determine_Git_Repo_Info();
 
+    Data_Processor.Extract_Directory_Tree();
 
 
     CMAKE_Main_File_Writer CMK_MF_Builder;
@@ -57,6 +58,30 @@ int main(int argc, char ** argv){
     
     CMK_MF_Builder.Build_Main_CMAKE_File();
        
+    CMK_MF_Builder.CMAKE_SubDirectory_Determination();
+
+    std::vector<Git_Sub_Directory_Data> * Root_Dir_Data = CMK_MF_Builder.Get_CMAKE_Root_Dirs();
+
+    for(size_t i=0;i<Root_Dir_Data->size();i++){
+
+        std::cout << "\n\n";
+
+        std::cout << "\n Root dir:" << Root_Dir_Data->at(i).dir_path;
+
+        std::cout << "\n Source File Inclution Status:" << Root_Dir_Data->at(i).source_file_inc_status;
+
+        size_t sub_dir_size = Root_Dir_Data->at(i).sub_dirs.size();
+
+        for(size_t j=0;j<sub_dir_size;j++){
+
+            std::cout << "\n sub_dir[" << j << "]:" << Root_Dir_Data->at(i).sub_dirs.at(j);
+
+
+        }
+    }
+
+
+
     CMK_MF_Builder.Clear_Object_Memory();
 
     return 0;

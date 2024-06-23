@@ -25,6 +25,7 @@
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
 #include "Descriptor_File_Reader.hpp"
+#include "Source_File_Determiner.h"
 #include "Header_File_Determiner.h"
 #include "Git_Data_Processor.hpp"
 #include "Cpp_FileOperations.h"
@@ -40,6 +41,8 @@ public:
  void Receive_Git_Data_Processor(Git_Data_Processor * Git_Proc);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Operating_System(char opr_sis);
+ void CMAKE_SubDirectory_Determination();
+ std::vector<Git_Sub_Directory_Data> * Get_CMAKE_Root_Dirs();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 private:
