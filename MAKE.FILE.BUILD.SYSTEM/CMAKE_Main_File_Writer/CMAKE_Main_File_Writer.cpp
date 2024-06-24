@@ -81,6 +81,22 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
      std::string warehouse_word = "WAREHOUSE";
 
+     std::string warehouse_path = warehouse_location;
+
+     
+     if(this->opr_sis == 'w'){
+
+        warehouse_path.push_back('\\');
+     }
+
+     if(this->opr_sis == 'l'){
+
+        warehouse_path.push_back('/');
+     }
+
+     warehouse_path = warehouse_path + warehouse_word;
+
+
      std::string cmake_list_file_name = "CMakeLists.txt";
 
      std::string CMAKE_File_Path = warehouse_location;
@@ -149,7 +165,7 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
                this->FileManager.WriteToFile("\n\n    ");
 
-               this->FileManager.WriteToFile(CMAKE_File_Path);
+               this->FileManager.WriteToFile(warehouse_path);
 
                if(this->opr_sis == 'w'){
 
