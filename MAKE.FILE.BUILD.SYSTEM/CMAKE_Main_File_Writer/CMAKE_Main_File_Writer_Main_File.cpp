@@ -58,7 +58,7 @@ int main(int argc, char ** argv){
     
     CMK_MF_Builder.Build_Main_CMAKE_File();
        
-    CMK_MF_Builder.CMAKE_SubDirectory_Determination();
+    /*
 
     std::vector<Git_Sub_Directory_Data> * Root_Dir_Data = CMK_MF_Builder.Get_CMAKE_Root_Dirs();
 
@@ -80,9 +80,13 @@ int main(int argc, char ** argv){
         }
     }
 
-
+    */
 
     CMK_MF_Builder.Clear_Object_Memory();
+
+    std::cout << "\n\n The main CMAKE list file constructed";
+
+    std::cout << "\n\n";
 
     return 0;
 }

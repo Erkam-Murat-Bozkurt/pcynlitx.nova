@@ -73,6 +73,8 @@ void CMAKE_Main_File_Writer::Receive_Descriptor_File_Reader(Descriptor_File_Read
 
 void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
+     this->CMAKE_SubDirectory_Determination();
+
      this->Memory_Delete_Condition = false;
 
      std::string warehouse_location = this->Des_Reader->Get_Warehouse_Location();
@@ -128,12 +130,132 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
      this->FileManager.WriteToFile("\n cmake_minimum_required(VERSION 3.10)");
 
 
-
+     this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
 
 
+
+
+     std::vector<Git_Sub_Directory_Data> * Git_Sub_Dirs = this->Git_Processor->Get_Git_Root_Dirs();
+
+     if(Git_Sub_Dirs->size()>0){
+
+        this->FileManager.WriteToFile("\n add_subdirectory(");
+
+        for(size_t i=0;i<Git_Sub_Dirs->size();i++){
+
+            if(Git_Sub_Dirs->at(i).source_file_inc_status){
+
+               this->FileManager.WriteToFile("\n\n    ");
+
+               this->FileManager.WriteToFile(CMAKE_File_Path);
+
+               if(this->opr_sis == 'w'){
+
+                  this->FileManager.WriteToFile("\\");
+               }
+
+               if(this->opr_sis == 'l'){
+
+                  this->FileManager.WriteToFile("/");
+               }
+
+               this->FileManager.WriteToFile(Git_Sub_Dirs->at(i).dir_path);
+            }
+        }
+
+        this->FileManager.WriteToFile("\n\n");
+
+        this->FileManager.WriteToFile(" );");
+     }
+
+
+
+
+     const std::vector<std::string> & Inc_Dirs =  this->Des_Reader->Get_Include_Directories();
+
+     if(Inc_Dirs.size()>0){
+
+        this->FileManager.WriteToFile("\n");
+
+        this->FileManager.WriteToFile("\n");
+
+        this->FileManager.WriteToFile("\n include_directories(");
+
+        for(size_t i=0;i<Inc_Dirs.size();i++){
+
+            this->FileManager.WriteToFile("\n\n   ");
+
+            this->FileManager.WriteToFile(Inc_Dirs.at(i));         
+        }
+
+        this->FileManager.WriteToFile("\n\n");
+
+        this->FileManager.WriteToFile(" );");
+     }
+
+
+
+     const std::vector<std::string> & Lib_Dirs =  this->Des_Reader->Get_Library_Directories();
+
+     const std::vector<std::string> & Src_Dirs =  this->Des_Reader->Get_Source_File_Directories();
+
+
+     if((Lib_Dirs.size()>0) || (Src_Dirs.size()>0) ){
+          
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("\n link_directories(");
+         
+
+         for(size_t i=0;i<Lib_Dirs.size();i++){
+
+             this->FileManager.WriteToFile("\n ");
+
+             this->FileManager.WriteToFile(Lib_Dirs.at(i));         
+         }
+
+         for(size_t i=0;i<Src_Dirs.size();i++){
+
+             this->FileManager.WriteToFile("\n ");
+
+             this->FileManager.WriteToFile(Src_Dirs.at(i));         
+         }
+
+         this->FileManager.WriteToFile("\n )");
+     }
+
+
+
+
+
+
+     const std::vector<std::string> &  libs =  this->Des_Reader->Get_Library_Files();
+
+     if(libs.size()>0){
+
+        this->FileManager.WriteToFile("\n link_libraries(");
+
+        for(size_t i=0;i<libs.size();i++){
+
+            this->FileManager.WriteToFile("\n ");
+
+            this->FileManager.WriteToFile(libs.at(i));         
+        }
+
+        this->FileManager.WriteToFile("\n )");
+     }
+
+
+
+     this->FileManager.WriteToFile("\n");
+
      this->FileManager.FileClose();
+
+
 }
 
 
@@ -186,6 +308,7 @@ void CMAKE_Main_File_Writer::CMAKE_SubDirectory_Determination(){
          }
      }
 }
+
 
 
 std::vector<Git_Sub_Directory_Data> * CMAKE_Main_File_Writer::Get_CMAKE_Root_Dirs()

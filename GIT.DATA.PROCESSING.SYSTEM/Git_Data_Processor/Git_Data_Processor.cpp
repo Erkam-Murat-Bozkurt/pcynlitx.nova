@@ -164,10 +164,6 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
 
                if(upper_dir.size()>0){
 
-                  std::cout << "\n upper_dir:" << upper_dir;
-
-                  std::cin.get();
-
                   this->Directory_Tree.push_back(upper_dir);
 
                   this->Directory_Tree.shrink_to_fit();

@@ -41,13 +41,14 @@ public:
  void Receive_Git_Data_Processor(Git_Data_Processor * Git_Proc);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Operating_System(char opr_sis);
- void CMAKE_SubDirectory_Determination();
  std::vector<Git_Sub_Directory_Data> * Get_CMAKE_Root_Dirs();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 private:
  void Clear_String_Vector(std::vector<std::string> & str); 
  void Clear_String_Memory(std::string & pointer);
+ void CMAKE_SubDirectory_Determination();
+ void Write_CMAKE_Sub_Directory_Declerations();
  Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;
  IntToCharTranslater Translater;
