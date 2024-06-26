@@ -6,7 +6,7 @@
    viewBox="0 0 20.000006 20"
    id="svg6"
    sodipodi:docname="close_tab.svg"
-   inkscape:version="1.3.1 (91b66b0783, 2023-11-16)"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
    inkscape:export-filename="..\..\..\..\Pcynlitx_Build_Platform\icons\close_tab.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
@@ -44,8 +44,8 @@
      id="namedview8"
      showgrid="true"
      inkscape:zoom="14.75"
-     inkscape:cx="5.5932203"
-     inkscape:cy="10.20339"
+     inkscape:cx="5.6271186"
+     inkscape:cy="10.237288"
      inkscape:window-x="128"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
@@ -68,7 +68,8 @@
      style="fill:#afafb9;fill-opacity:1;stroke-width:1.81818"
      sodipodi:type="inkscape:offset"
      inkscape:radius="0"
-     inkscape:original="M 2.2226562 0 C 0.99154508 0 0 0.99154508 0 2.2226562 L 0 17.777344 C 0 19.008455 0.99154508 20 2.2226562 20 L 17.777344 20 C 19.008455 20 20 19.008455 20 17.777344 L 20 2.2226562 C 20 0.99154508 19.008455 0 17.777344 0 L 2.2226562 0 z " />
+     inkscape:original="M 2.2226562 0 C 0.99154508 0 0 0.99154508 0 2.2226562 L 0 17.777344 C 0 19.008455 0.99154508 20 2.2226562 20 L 17.777344 20 C 19.008455 20 20 19.008455 20 17.777344 L 20 2.2226562 C 20 0.99154508 19.008455 0 17.777344 0 L 2.2226562 0 z "
+     d="M 2.2226562,0 C 0.99154508,0 0,0.99154508 0,2.2226562 V 17.777344 C 0,19.008455 0.99154508,20 2.2226562,20 H 17.777344 C 19.008455,20 20,19.008455 20,17.777344 V 2.2226562 C 20,0.99154508 19.008455,0 17.777344,0 Z" />
   <path
      style="fill:#3c3c3c;fill-opacity:1;stroke:none;stroke-width:0.0764265;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      d="m 5.0492789,4.4284957 v 1.706068 L 8.1122241,9.2545021 5.0492789,12.374441 v 1.706068 H 6.724181 l 3.0629458,-3.119941 3.0629452,3.119941 h 1.674903 V 12.374441 L 11.462029,9.2545021 14.524975,6.1345637 V 4.4284957 H 12.850072 L 9.7871268,7.5484338 6.724181,4.4284957 Z"

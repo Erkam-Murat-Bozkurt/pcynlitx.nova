@@ -133,7 +133,9 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
      this->FileManager.WriteToFile("\n");
 
 
+     std::string project_name = "default_proj";
 
+     std::string version_num = "1.0";
 
      this->FileManager.WriteToFile("\n set( CMAKE_CXX_COMPILER \"D:/mingw64/bin/g++.exe\" )");
 
@@ -146,47 +148,68 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
      this->FileManager.WriteToFile("\n cmake_minimum_required(VERSION 3.10)");
 
 
-     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n project(");
+
+     this->FileManager.WriteToFile(project_name);
+
+     this->FileManager.WriteToFile(" VERSION ");
+
+     this->FileManager.WriteToFile(version_num);
+
+     this->FileManager.WriteToFile(")");
+
 
      this->FileManager.WriteToFile("\n");
 
+     this->FileManager.WriteToFile("\n");
 
 
 
-     std::vector<Git_Sub_Directory_Data> * Git_Sub_Dirs = this->Git_Processor->Get_Git_Root_Dirs();
 
-     if(Git_Sub_Dirs->size()>0){
+     if(this->sub_dirs.size()>0){
 
-        this->FileManager.WriteToFile("\n add_subdirectory(");
+        for(size_t i=0;i<this->sub_dirs.size();i++){
 
-        for(size_t i=0;i<Git_Sub_Dirs->size();i++){
+               //std::string sub_dir_path = warehouse_path;
 
-            if(Git_Sub_Dirs->at(i).source_file_inc_status){
+               //sub_dir_path.push_back('/');
+
+               std::string sub_dir_path =  "MAKE.FILES\\" + this->sub_dirs.at(i);
+
+               //std::cout << "\n this->sub_dirs.at(" << i << "):" << this->sub_dirs.at(i);
+
+               //std::cin.get();
+
+
+               //std::cout << "\n sub_dir_path:" << sub_dir_path;
+
+
+               for(size_t i=0;i<sub_dir_path.size();i++){
+
+                   if(sub_dir_path[i] == '\\'){
+
+                      sub_dir_path[i] = '/';
+                   }
+               }
 
                this->FileManager.WriteToFile("\n\n    ");
 
-               this->FileManager.WriteToFile(warehouse_path);
+               this->FileManager.WriteToFile("\n add_subdirectory(");
 
-               if(this->opr_sis == 'w'){
+               //((this->FileManager.WriteToFile("\n\n    ");
 
-                  this->FileManager.WriteToFile("\\");
-               }
+               //std::cout << "\n this->sub_dirs.at(" << i <<")"  << this->sub_dirs.at(i);
 
-               if(this->opr_sis == 'l'){
+               //std::cin.get();
 
-                  this->FileManager.WriteToFile("/");
-               }
+               this->FileManager.WriteToFile(sub_dir_path);
 
-               this->FileManager.WriteToFile(Git_Sub_Dirs->at(i).dir_path);
-            }
+                //this->FileManager.WriteToFile("\n\n");
+
+               this->FileManager.WriteToFile(" )");
         }
-
-        this->FileManager.WriteToFile("\n\n");
-
-        this->FileManager.WriteToFile(" );");
      }
-
-
 
 
      const std::vector<std::string> & Inc_Dirs =  this->Des_Reader->Get_Include_Directories();
@@ -208,10 +231,8 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
         this->FileManager.WriteToFile("\n\n");
 
-        this->FileManager.WriteToFile(" );");
+        this->FileManager.WriteToFile(" )");
      }
-
-
 
      const std::vector<std::string> & Lib_Dirs =  this->Des_Reader->Get_Library_Directories();
 
@@ -246,9 +267,6 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
 
 
-
-
-
      const std::vector<std::string> &  libs =  this->Des_Reader->Get_Library_Files();
 
      if(libs.size()>0){
@@ -278,7 +296,7 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
 void CMAKE_Main_File_Writer::CMAKE_SubDirectory_Determination(){
 
-     std::vector<Git_Sub_Directory_Data> * Git_Sub_Dirs = this->Git_Processor->Get_Git_Root_Dirs();
+     std::vector<std::string> * Git_Sub_Dirs = this->Git_Processor->Get_Directory_Tree();
 
      std::vector<std::string> * file_paths = this->Git_Processor->Get_File_System_Path_Address();
 
@@ -290,37 +308,25 @@ void CMAKE_Main_File_Writer::CMAKE_SubDirectory_Determination(){
 
      for(size_t i=0;i<Git_Sub_Dirs->size();i++){
 
-         Git_Sub_Dirs->at(i).source_file_inc_status = false;
-     }
-
-     for(size_t i=0;i<Git_Sub_Dirs->size();i++){
-
-         std::string dir_path = Git_Sub_Dirs->at(i).dir_path;
-
-         bool is_a_cmake_dir = false;
+         std::string dir_path = Git_Sub_Dirs->at(i);
 
          for(size_t j=0;j<file_paths->size();j++){
 
              bool inc = StrOpr.CheckStringInclusion(file_paths->at(j),dir_path);
 
              if(inc){
-
+            
                 bool is_src_file = SRC_Determiner.Is_Source_File(file_paths->at(j));
 
                 bool is_hdr_file = HDR_Determiner.Is_Header(file_paths->at(j));
 
                 if(is_src_file || is_hdr_file){
 
-                   is_a_cmake_dir = true;
+                   this->sub_dirs.push_back(dir_path);
 
                    break;
                 }
              }
-         }
-
-         if(is_a_cmake_dir){
-
-            Git_Sub_Dirs->at(i).source_file_inc_status = true;
          }
      }
 }

@@ -115,7 +115,7 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
 
 
 
-
+      /*
 
       // Determination of upper directories
 
@@ -175,9 +175,26 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
       this->Directory_Tree.shrink_to_fit();
 
 
+     */
+
 
       // THE ORDERING OPERATIONS
 
+
+    
+      CharOperator Cr_Opr;
+
+      char dir_char;
+
+      if(this->opr_sis == 'w'){
+
+          dir_char = '\\';
+      }
+
+      if(this->opr_sis == 'l'){
+
+          dir_char = '/';
+      }
 
       int dir_data[2*this->Directory_Tree.size()];
 

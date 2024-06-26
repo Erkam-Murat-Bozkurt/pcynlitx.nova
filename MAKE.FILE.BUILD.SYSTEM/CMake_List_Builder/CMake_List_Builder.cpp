@@ -129,7 +129,11 @@ void CMake_List_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile("  ");
 
-     this->FileManager.WriteToFile(this->Data_Ptr->source_file_path);          
+     std::string src_file_path = this->Data_Ptr->source_file_path;
+
+     this->Convert_CMAKE_Format(src_file_path);
+
+     this->FileManager.WriteToFile(src_file_path);          
 
 
 
@@ -140,21 +144,19 @@ void CMake_List_Builder::Build_MakeFile(std::string file_path){
 
          this->FileManager.WriteToFile("  ");
 
+         std::string dep_header_dir = this->Data_Ptr->dependent_headers_dir.at(i);
+      
+         this->Convert_CMAKE_Format(dep_header_dir);
 
-         this->FileManager.WriteToFile(this->Data_Ptr->dependent_headers_dir.at(i));      
+         this->FileManager.WriteToFile(dep_header_dir);      
 
-         if(this->opr_sis == 'w'){
+         this->FileManager.WriteToFile("/");
 
-             this->FileManager.WriteToFile("\\");
-         }
-         
-         if(this->opr_sis == 'l'){
+         std::string dep_header_name = this->Data_Ptr->dependent_headers.at(i);
 
-            this->FileManager.WriteToFile("/");
-         }
+         this->Convert_CMAKE_Format(dep_header_name);
 
-         this->FileManager.WriteToFile(this->Data_Ptr->dependent_headers.at(i));      
-
+         this->FileManager.WriteToFile(dep_header_name);      
      }
 
 
@@ -165,6 +167,16 @@ void CMake_List_Builder::Build_MakeFile(std::string file_path){
      this->FileManager.FileClose();
 }
 
+void CMake_List_Builder::Convert_CMAKE_Format(std::string & str){
+
+     for(size_t i=0;i<str.size();i++){
+
+         if(str[i] == '\\'){
+
+            str[i] = '/';
+         }
+     }
+}
 
 void CMake_List_Builder::Clear_String_Vector(std::vector<std::string> & str){
 

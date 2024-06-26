@@ -29,7 +29,7 @@
      showgrid="true"
      inkscape:zoom="19.8912"
      inkscape:cx="10.029561"
-     inkscape:cy="6.8371943"
+     inkscape:cy="6.7869208"
      inkscape:window-width="1920"
      inkscape:window-height="991"
      inkscape:window-x="-9"
@@ -74,7 +74,7 @@
     </clipPath>
   </defs>
   <path
-     style="fill:#c8c8d7;fill-opacity:1;stroke:#5a5a64;stroke-width:1.515;stroke-miterlimit:5.5;stroke-opacity:1"
+     style="fill:#d2d2e1;fill-opacity:1;stroke:#5a5a64;stroke-width:1.515;stroke-miterlimit:5.5;stroke-opacity:1"
      d="M 1.1507863,0.87429201 V 16.696307 l 17.9837647,-0.02476 0.02388,-12.1753702 0.0013,-0.6506141 -0.885252,0.00934 -6.121792,-0.041701 -1.972262,-2.93890625 z"
      id="path2"
      sodipodi:nodetypes="ccccccccc" />
@@ -86,7 +86,7 @@
      x="1.1109265"
      y="3.6835001" />
   <rect
-     style="fill:#afafb9;fill-opacity:1;stroke:none;stroke-width:0.638197;stroke-miterlimit:1.7"
+     style="fill:#b9b9c3;fill-opacity:1;stroke:none;stroke-width:0.638197;stroke-miterlimit:1.7"
      id="rect2"
      width="16.746511"
      height="11.668892"

@@ -42,6 +42,7 @@ public:
  void Clear_Object_Memory();
 private:
  Compiler_Data * Find_Compiler_Data_From_Source_File_Path(std::string name);
+ void Convert_CMAKE_Format(std::string & str);
  void Clear_String_Vector(std::vector<std::string> & str); 
  void Clear_String_Memory(std::string & pointer);
  MakeFile_Path_Determiner Path_Determiner;

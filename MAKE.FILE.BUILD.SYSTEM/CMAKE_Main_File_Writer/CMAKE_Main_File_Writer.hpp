@@ -53,7 +53,7 @@ private:
  Cpp_FileOperations FileManager;
  IntToCharTranslater Translater;
  std::unordered_map<std::string, Compiler_Data> * DataMap_Pointer;
- std::vector<Compiler_Data> * Comp_Data_Ptr;
+ std::vector<std::string> sub_dirs;
  Git_Data_Processor * Git_Processor;
  char opr_sis;
  bool Include_Line_Condition;

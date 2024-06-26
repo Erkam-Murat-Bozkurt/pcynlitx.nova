@@ -93,6 +93,8 @@ int main(int argc, char ** argv){
     }
 
 
+    /*
+
     std::vector<Git_Sub_Directory_Data> * Sub_Dir_Data = Data_Processor.Get_Directory_Tree_Data();
 
     for(size_t i=0;i<Sub_Dir_Data->size();i++){
@@ -131,7 +133,7 @@ int main(int argc, char ** argv){
         }
     }
 
-
+    */
 
     return 0;
 }
