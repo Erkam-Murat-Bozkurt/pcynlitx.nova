@@ -81,7 +81,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->dir_ctrl = new wxDir;
 
 
-     this->tab_ctrl_hight = tabctrl_hight;
+     this->tab_ctrl_hight = tabctrl_hight +1;
 
      this->Frame_Pointer = frame;
 
@@ -200,9 +200,9 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      int bottom_win_y = this->Tree_Control_Position.y + this->tree_control->GetSize().GetY();
 
 
-     this->Bottom_Window =  new Custom_Window(this,wxPoint(0,bottom_win_y),
+     this->Bottom_Window =  new Custom_Window(this,wxPoint(0,bottom_win_y+3),
      
-                           wxSize(Tab_Bar_size.x,60),wxColour(240,240,240,0xff));
+                           wxSize(Tab_Bar_size.x,55),wxColour(240,240,240,0xff));
 
 
 
@@ -304,9 +304,9 @@ void Custom_Tree_View_Panel::Initialize_Sizer()
 
      this->panel_sizer->Add(this->Top_Bar_Window,0, wxEXPAND | wxALL,0);
 
-     this->panel_sizer->Add(this->Title_Window,0,  wxEXPAND |  wxLEFT | wxRIGHT,10);
+     this->panel_sizer->Add(this->Title_Window,0,  wxEXPAND  | wxRIGHT,15);
 
-     this->panel_sizer->Add(this->tree_control,1,   wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM,10);
+     this->panel_sizer->Add(this->tree_control,1,  wxEXPAND | wxRIGHT | wxBOTTOM,16);
 
      this->panel_sizer->Add(this->Bottom_Window,0, wxEXPAND | wxALL,0);
 

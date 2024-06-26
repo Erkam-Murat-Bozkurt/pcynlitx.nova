@@ -210,7 +210,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
                             wxSize(400,950),&this->Interface_Manager,
 
-                            *(this->Default_Font),this->Book_Manager->GetTabCtrlHeight(),theme_clr);
+                            *(this->Default_Font),this->Book_Manager->GetTabCtrlHeight()+1,theme_clr);
 
   this->Dir_List_Manager->start_menu_window_size = this->Custom_Main_Panel->bottom_window->GetSize();
 
