@@ -64,11 +64,16 @@ void CMAKE_Main_File_Writer::Receive_Descriptor_File_Reader(Descriptor_File_Read
      this->Des_Reader = ptr;
 }
 
- void CMAKE_Main_File_Writer::Receive_Git_Data_Processor(Git_Data_Processor * Git_Proc){
+void CMAKE_Main_File_Writer::Receive_Git_Data_Processor(Git_Data_Processor * Git_Proc){
 
       this->Git_Processor = Git_Proc;
- }
+}
 
+
+void CMAKE_Main_File_Writer::Receive_CMAKE_Lists_Construction_Directories(const std::vector<std::string> * dirs){
+
+    this->Const_Dirs = dirs;
+}
 
 
 void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
@@ -167,15 +172,15 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
 
 
-     if(this->sub_dirs.size()>0){
+     if(this->Const_Dirs->size()>0){
 
-        for(size_t i=0;i<this->sub_dirs.size();i++){
+        for(size_t i=0;i<this->Const_Dirs->size();i++){
 
                //std::string sub_dir_path = warehouse_path;
 
                //sub_dir_path.push_back('/');
 
-               std::string sub_dir_path =  "MAKE.FILES\\" + this->sub_dirs.at(i);
+               std::string sub_dir_path =  this->Const_Dirs->at(i);
 
                //std::cout << "\n this->sub_dirs.at(" << i << "):" << this->sub_dirs.at(i);
 

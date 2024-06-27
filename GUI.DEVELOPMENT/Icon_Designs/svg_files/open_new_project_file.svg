@@ -25,9 +25,9 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     inkscape:zoom="3.0351563"
-     inkscape:cx="36.406692"
-     inkscape:cy="46.455598"
+     inkscape:zoom="6.0703126"
+     inkscape:cx="36.48906"
+     inkscape:cy="47.608751"
      inkscape:window-width="1920"
      inkscape:window-height="991"
      inkscape:window-x="-9"
@@ -76,29 +76,31 @@
            style="fill:#787887;fill-opacity:1;stroke-width:0"
            sodipodi:nodetypes="ssssssssssssssssccscsscsscsccscsscssccccssssccsssssss" />
         <rect
-           style="fill:#af9b87;fill-opacity:1;stroke-width:6.26315;stroke-miterlimit:0"
+           style="fill:#af9b87;fill-opacity:1;stroke:none;stroke-width:1.14038;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
            id="rect1-9"
-           width="39.422241"
-           height="39.401131"
+           width="44.87146"
+           height="45.017151"
            x="39.211479"
            y="50.273739"
-           ry="5.1046004" />
+           ry="5.0171566" />
       </g>
       <rect
          style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:4.37543;stroke-miterlimit:0"
          id="rect1"
          width="17.151146"
          height="81.90966"
-         x="134.72958"
-         y="149.66006" />
+         x="142.13065"
+         y="157.40938"
+         ry="7.7493148" />
       <rect
-         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:4.37543;stroke-miterlimit:0"
-         id="rect1-0"
-         width="20.477417"
-         height="68.604576"
-         x="180.06236"
-         y="-176.73137"
-         transform="rotate(90)" />
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:4.42374;stroke-miterlimit:0"
+         id="rect1-6"
+         width="19.288544"
+         height="74.450363"
+         x="-208.88914"
+         y="112.3505"
+         ry="7.0436049"
+         transform="rotate(-90)" />
     </g>
   </g>
 </svg>

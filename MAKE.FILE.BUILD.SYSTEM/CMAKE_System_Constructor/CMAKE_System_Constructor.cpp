@@ -259,8 +259,14 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
          
          Mk_Builder.Build_MakeFile(source_file_path);
 
+         std::string construction_dir = Mk_Builder.Get_Construction_Dir();
+
+         this->construction_dirs.push_back(construction_dir);
+
          Mk_Builder.Clear_Dynamic_Memory();
      }
+
+     this->construction_dirs.shrink_to_fit();
 }
 
 
@@ -313,6 +319,12 @@ void CMAKE_System_Constructor::Construct_Path(std::string * pointer, std::string
 
          pointer->push_back(string[i]);
      }
+}
+
+
+const std::vector<std::string> * CMAKE_System_Constructor::Get_CMAKE_Lists_Construction_Directories(){
+
+     return &this->construction_dirs;
 }
 
 

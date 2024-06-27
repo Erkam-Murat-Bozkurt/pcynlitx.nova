@@ -60,6 +60,7 @@ void CMAKE_Build_System_Generator::Construct_Build_System(){
 
      this->CMAKE_ListFileBuilder.Build_Make_Files();
 
-     this->CMAKE_MainFileBuilder.Build_Main_CMAKE_File();
+     this->CMAKE_MainFileBuilder.Receive_CMAKE_Lists_Construction_Directories(this->CMAKE_ListFileBuilder.Get_CMAKE_Lists_Construction_Directories());
 
+     this->CMAKE_MainFileBuilder.Build_Main_CMAKE_File();
 }

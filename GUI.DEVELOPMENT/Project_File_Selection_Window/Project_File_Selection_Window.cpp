@@ -153,7 +153,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Empty_Project_File_Text_Panel->SetMinSize(wxSize(350,80));
 
-     this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(175,175,185));
+     this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(185,185,195));
 
      //this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(200,100,100));
 
@@ -163,7 +163,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Project_File_Selection_Text_Panel->SetMinSize(wxSize(350,80));
 
-     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(175,175,185,0xff));
+     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(185,185,195,0xff));
 
      //this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(68,158,157));
 
@@ -172,9 +172,9 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
      //this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(100,100,115));
 
 
-     wxString new_file_text_string = wxT("Construct a new project file");
+     //wxString new_file_text_string = wxT("Construct a new project file");
      
-     //wxString new_file_text_string = wxT("EMPTY PROJECT FILE");
+     wxString new_file_text_string = wxT("A NEW EMPTY PROJECT FILE");
 
      wxStaticText * new_file_text  
      
@@ -182,23 +182,25 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      wxFont Text_Font = new_file_text->GetFont();
 
-     Text_Font.SetPointSize(12);
+     Text_Font.SetPointSize(10);
 
-     //Text_Font.SetFaceName(wxT("Segoe UI Semibold"));
+     Text_Font.SetFaceName(wxT("Segoe UI Semibold"));
 
-     Text_Font.SetFaceName(wxT("Segoe UI"));
+     //Text_Font.SetFaceName(wxT("Noto Sans"));
 
      new_file_text->SetFont(Text_Font);
 
-     new_file_text->SetForegroundColour(wxColour(50,50,50));
+     new_file_text->SetForegroundColour(wxColour(90,90,100));
+
+     //new_file_text->SetForegroundColour(wxColour(250,250,250));
      
      new_file_text->CentreOnParent(wxBOTH);
 
 
 
-     wxString existing_file_text_string = wxT("Use a ready project file");
+     //wxString existing_file_text_string = wxT("Use a ready project file");
 
-     //wxString existing_file_text_string = wxT("READY PROJECT FILE");
+     wxString existing_file_text_string = wxT("USE A READY PROJECT FILE");
      
      wxStaticText * project_file_text  
      
@@ -206,7 +208,9 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      project_file_text->SetFont(Text_Font);
 
-     project_file_text->SetForegroundColour(wxColour(50,50,50));
+     project_file_text->SetForegroundColour(wxColour(90,90,100));
+
+     //project_file_text->SetForegroundColour(wxColour(250,250,250));
 
      project_file_text->CentreOnParent(wxBOTH);
 

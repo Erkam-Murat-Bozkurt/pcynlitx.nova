@@ -40,6 +40,7 @@ public:
  void Build_Make_Files(); 
  void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dep_ptr);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ const std::vector<std::string> * Get_CMAKE_Lists_Construction_Directories();
  void Clear_Dynamic_Memory();
 protected:
  void Determine_Project_Directories();
@@ -58,6 +59,7 @@ protected:
  MakeFile_Directory_Constructor Mk_Dir_Constructor;
  Descriptor_File_Reader * Des_Reader;
  std::vector<std::thread> threadPool;
+ std::vector<std::string> construction_dirs;
  std::unordered_map<std::string, Compiler_Data> DataMap;
  std::string Warehouse_Path;
  std::string Repo_Dir;

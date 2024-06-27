@@ -82,18 +82,18 @@
         </g>
       </g>
       <rect
-         style="fill:#af9b87;fill-opacity:1;stroke-width:20.1528;stroke-miterlimit:0"
+         style="fill:#af9b87;fill-opacity:1;stroke:none;stroke-width:3.55307;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
          id="rect1"
-         width="121.12262"
-         height="132.77213"
-         x="-316.75369"
-         y="41.959499"
-         ry="17.201248" />
+         width="133.82828"
+         height="149.58713"
+         x="-319.27939"
+         y="42.141769"
+         ry="14.793462" />
       <polyline
-         style="fill:none;fill-opacity:1;stroke:#ffffff;stroke-width:6.868;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
+         style="fill:none;fill-opacity:1;stroke:#fdffff;stroke-width:6.868;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-opacity:1"
          points="  38,15 22,33 12,25 "
          id="polyline1"
-         transform="matrix(1.8362223,0,0,2.3371321,-300.30619,51.002182)" />
+         transform="matrix(1.8787555,0,0,2.5785688,-299.33414,52.291227)" />
     </g>
   </g>
 </svg>

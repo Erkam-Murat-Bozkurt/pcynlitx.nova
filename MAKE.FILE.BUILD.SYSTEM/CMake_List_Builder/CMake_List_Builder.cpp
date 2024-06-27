@@ -167,6 +167,42 @@ void CMake_List_Builder::Build_MakeFile(std::string file_path){
      this->FileManager.FileClose();
 }
 
+void CMake_List_Builder::Find_Construction_Directory(std::string & dir, std::string file_path){
+
+     size_t dir_size = file_path.size();
+
+     size_t end_point = dir_size;
+
+     for(size_t i=dir_size;i>0;i--){
+
+         if((file_path[i]=='/') || (file_path[i]=='\\')){
+
+            end_point = i;
+
+            break;
+         }
+     }
+
+     for(size_t i=0;i<end_point;i++){
+
+         dir.push_back(file_path[i]);
+     }
+
+     dir.shrink_to_fit();
+}
+
+std::string CMake_List_Builder::Get_Construction_Dir(){
+
+     std::string Make_File_Path = this->Path_Determiner.Get_MakeFile_Path();
+
+     std::string dir;
+
+     this->Find_Construction_Directory(dir,Make_File_Path);
+
+     return dir;
+}
+
+
 void CMake_List_Builder::Convert_CMAKE_Format(std::string & str){
 
      for(size_t i=0;i<str.size();i++){

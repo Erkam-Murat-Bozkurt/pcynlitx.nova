@@ -38,10 +38,12 @@ public:
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Operating_System(char opr_sis);
  void Receive_DataMap(std::unordered_map<std::string, Compiler_Data> * ptr);
+ std::string Get_Construction_Dir();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 private:
  Compiler_Data * Find_Compiler_Data_From_Source_File_Path(std::string name);
+ void Find_Construction_Directory(std::string & upper, std::string dir);
  void Convert_CMAKE_Format(std::string & str);
  void Clear_String_Vector(std::vector<std::string> & str); 
  void Clear_String_Memory(std::string & pointer);
