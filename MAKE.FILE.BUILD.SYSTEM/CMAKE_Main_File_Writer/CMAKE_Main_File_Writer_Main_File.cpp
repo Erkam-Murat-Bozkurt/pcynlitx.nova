@@ -58,9 +58,13 @@ int main(int argc, char ** argv){
     
     CMK_MF_Builder.Build_Main_CMAKE_File();
        
+    CMK_MF_Builder.CMAKE_SubDirectory_Determination();
+
+
     /*
 
-    std::vector<Git_Sub_Directory_Data> * Root_Dir_Data = CMK_MF_Builder.Get_CMAKE_Root_Dirs();
+    const std::vector<Git_Sub_Directory_Data> * Root_Dir_Data = CMK_MF_Builder.Get_CMAKE_SubDir_List();
+
 
     for(size_t i=0;i<Root_Dir_Data->size();i++){
 
@@ -70,13 +74,13 @@ int main(int argc, char ** argv){
 
         std::cout << "\n Source File Inclution Status:" << Root_Dir_Data->at(i).source_file_inc_status;
 
+        std::cout << "\n CMAKE dir status:" << Root_Dir_Data->at(i).cmake_dir_status;
+
         size_t sub_dir_size = Root_Dir_Data->at(i).sub_dirs.size();
 
         for(size_t j=0;j<sub_dir_size;j++){
 
             std::cout << "\n sub_dir[" << j << "]:" << Root_Dir_Data->at(i).sub_dirs.at(j);
-
-
         }
     }
 

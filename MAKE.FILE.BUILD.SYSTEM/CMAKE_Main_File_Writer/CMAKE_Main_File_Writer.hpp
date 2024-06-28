@@ -42,19 +42,19 @@ public:
  void Receive_Git_Data_Processor(Git_Data_Processor * Git_Proc);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Operating_System(char opr_sis);
- std::vector<Git_Sub_Directory_Data> * Get_CMAKE_Root_Dirs();
+ void CMAKE_SubDirectory_Determination();
+ const std::vector<Git_Sub_Directory_Data> * Get_CMAKE_SubDir_List();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 private:
  void Clear_String_Vector(std::vector<std::string> & str); 
  void Clear_String_Memory(std::string & pointer);
- void CMAKE_SubDirectory_Determination();
- void Write_CMAKE_Sub_Directory_Declerations();
+ void Find_File_Directory(std::string & file_dir, std::string file_path);
  Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;
  IntToCharTranslater Translater;
  std::unordered_map<std::string, Compiler_Data> * DataMap_Pointer;
- std::vector<std::string> sub_dirs;
+ std::vector<Git_Sub_Directory_Data> cmake_sub_dirs_list;
  const std::vector<std::string> * Const_Dirs;
  Git_Data_Processor * Git_Processor;
  char opr_sis;

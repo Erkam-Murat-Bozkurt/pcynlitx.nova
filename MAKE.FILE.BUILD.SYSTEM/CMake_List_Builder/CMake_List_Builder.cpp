@@ -91,7 +91,9 @@ Compiler_Data * CMake_List_Builder::Find_Compiler_Data_From_Source_File_Path(std
         
          std::cerr << "\n Out of Range error: " << oor.what() << '\n';
 
-         std::cout << "\n the file located on path " << path << " can not find on Make_File_Builder object!.\n";
+         std::cout << "\n the file located on path " 
+         
+         << path << " can not find on Make_File_Builder object!.\n";
 
          exit(EXIT_FAILURE);
     }     
@@ -159,6 +161,58 @@ void CMake_List_Builder::Build_MakeFile(std::string file_path){
          this->FileManager.WriteToFile(dep_header_name);      
      }
 
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile(")");
+     
+     /*
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     
+     this->FileManager.WriteToFile("target_include_directories(");
+     
+     for(size_t i=0;i<this->Data_Ptr->dependent_headers.size();i++){
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("  ");
+
+         std::string dep_header_dir = this->Data_Ptr->dependent_headers_dir.at(i);
+      
+         this->Convert_CMAKE_Format(dep_header_dir);
+
+         this->FileManager.WriteToFile(dep_header_dir);      
+     }
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile(")");
+
+       
+     */
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+     
+     this->FileManager.WriteToFile("include_directories(");
+     
+     for(size_t i=0;i<this->Data_Ptr->dependent_headers.size();i++){
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("  ");
+
+         std::string dep_header_dir = this->Data_Ptr->dependent_headers_dir.at(i);
+      
+         this->Convert_CMAKE_Format(dep_header_dir);
+
+         this->FileManager.WriteToFile(dep_header_dir);      
+     }
 
      this->FileManager.WriteToFile("\n");
 

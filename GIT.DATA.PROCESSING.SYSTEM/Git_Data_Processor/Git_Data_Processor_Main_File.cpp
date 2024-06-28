@@ -93,7 +93,6 @@ int main(int argc, char ** argv){
     }
 
 
-    /*
 
     std::vector<Git_Sub_Directory_Data> * Sub_Dir_Data = Data_Processor.Get_Directory_Tree_Data();
 
@@ -133,7 +132,6 @@ int main(int argc, char ** argv){
         }
     }
 
-    */
 
     return 0;
 }

@@ -84,6 +84,8 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
 
  void Git_Data_Processor::Extract_Directory_Tree(){
 
+      // ON THE FOÇLOWING LINES THE DIRECTORY REPUTATION ELEMINATED
+
       std::vector<std::string> *  dir_list =  this->Get_Git_Record_Directory_Address();
       
       for(size_t i=0;i<dir_list->size();i++)
@@ -114,8 +116,6 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
       this->Directory_Tree.shrink_to_fit();
 
 
-
-      /*
 
       // Determination of upper directories
 
@@ -175,26 +175,8 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
       this->Directory_Tree.shrink_to_fit();
 
 
-     */
-
 
       // THE ORDERING OPERATIONS
-
-
-    
-      CharOperator Cr_Opr;
-
-      char dir_char;
-
-      if(this->opr_sis == 'w'){
-
-          dir_char = '\\';
-      }
-
-      if(this->opr_sis == 'l'){
-
-          dir_char = '/';
-      }
 
       int dir_data[2*this->Directory_Tree.size()];
 
@@ -224,7 +206,6 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
            }
       }
 
-
       
       for(size_t i=0;i<this->Directory_Tree.size();i++){
 
@@ -243,7 +224,7 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
 
       this->Construct_SubDirectory_Data();
 
-      this->Filtering_Root_Directories();
+      //this->Filtering_Root_Directories();
 }
 
 
@@ -327,7 +308,11 @@ void Git_Data_Processor::Construct_SubDirectory_Data()
 
           Temp_Data.sub_dirs.shrink_to_fit();
 
-          Sub_Dir_Data.push_back(Temp_Data);
+          Temp_Data.cmake_dir_status = false;
+
+          Temp_Data.source_file_inc_status = false;
+
+          this->Sub_Dir_Data.push_back(Temp_Data);
 
           this->Clear_Sub_Directory_Data(Temp_Data);
      }

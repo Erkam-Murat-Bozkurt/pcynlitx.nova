@@ -23,6 +23,7 @@ struct Git_Sub_Directory_Data
 {
     std::string dir_path;
     bool source_file_inc_status;
+    bool cmake_dir_status;
     std::vector<std::string> sub_dirs;
 };
 
