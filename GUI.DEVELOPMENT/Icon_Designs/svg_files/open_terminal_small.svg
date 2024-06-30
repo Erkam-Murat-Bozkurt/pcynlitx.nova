@@ -32,7 +32,7 @@
      showgrid="true"
      inkscape:zoom="89.647224"
      inkscape:cx="5.1814209"
-     inkscape:cy="2.4540637"
+     inkscape:cy="2.4429089"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
@@ -64,7 +64,7 @@
   <defs
      id="defs6432" />
   <rect
-     style="fill:#c89b87;fill-opacity:1;stroke:#91919b;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#e0e0df;fill-opacity:1;stroke:#91919b;stroke-width:0;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="rect819"
      width="6.034636"
      height="5.9795051"
@@ -77,10 +77,10 @@
      inkscape:connector-curvature="0"
      id="path7201-3-3-6"
      d="M 1.618494,0.86776617 0.85248188,1.574161 1.7279254,2.482383 0.85248188,3.2896912 1.618494,4.096999 3.2599512,2.482383 1.618494,0.86776617"
-     style="fill:#ffffff;fill-opacity:1;stroke:#55555f;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+     style="fill:#8c8c8c;fill-opacity:1;stroke:#55555f;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   <path
      inkscape:connector-curvature="0"
      id="path7211-6-6-7"
      d="m 3.1035293,3.8072785 c 0,1.0228361 0,1.0228361 0,1.0228361 H 5.0479478 V 3.8072785 Z"
-     style="fill:#ffffff;fill-opacity:1;stroke:#55555f;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+     style="fill:#8c8c8c;fill-opacity:1;stroke:#55555f;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
 </svg>

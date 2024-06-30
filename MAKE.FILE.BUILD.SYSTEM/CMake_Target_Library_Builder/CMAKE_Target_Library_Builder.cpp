@@ -22,35 +22,37 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 */
 
-#include "CMake_List_Builder.hpp"
+#include "CMAKE_Target_Library_Builder.hpp"
 
-CMake_List_Builder::CMake_List_Builder()
+CMAKE_Target_Library_Builder::CMAKE_Target_Library_Builder()
 {
    this->Memory_Delete_Condition = false;
 }
 
 
-CMake_List_Builder::~CMake_List_Builder(){
+CMAKE_Target_Library_Builder::~CMAKE_Target_Library_Builder(){
 
     this->Clear_Object_Memory();
 }
 
 
-void CMake_List_Builder::Clear_Object_Memory(){
+void CMAKE_Target_Library_Builder::Clear_Object_Memory(){
 
      this->Clear_Dynamic_Memory();
 }
 
-void CMake_List_Builder::Clear_Dynamic_Memory(){
+void CMAKE_Target_Library_Builder::Clear_Dynamic_Memory(){
 
      if(!this->Memory_Delete_Condition){
 
          this->Memory_Delete_Condition = true;
+
+         this->StrOpr.Clear_Dynamic_Memory();
      }
 }
 
 
-void CMake_List_Builder::Receive_Operating_System(char opr_sis){
+void CMAKE_Target_Library_Builder::Receive_Operating_System(char opr_sis){
 
      this->opr_sis = opr_sis;
 
@@ -58,14 +60,14 @@ void CMake_List_Builder::Receive_Operating_System(char opr_sis){
 }
 
 
-void CMake_List_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void CMAKE_Target_Library_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
 
      this->Des_Reader = ptr;
 
      this->Path_Determiner.Receive_Descriptor_File_Reader(ptr);
 }
 
-void CMake_List_Builder::Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr)
+void CMAKE_Target_Library_Builder::Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr)
 {
      this->Comp_Data_Ptr = ptr;
 
@@ -73,7 +75,7 @@ void CMake_List_Builder::Receive_Compiler_Data_Pointer(std::vector<Compiler_Data
 }
 
 
-void CMake_List_Builder::Receive_DataMap(std::unordered_map<std::string, Compiler_Data> * ptr){
+void CMAKE_Target_Library_Builder::Receive_DataMap(std::unordered_map<std::string, Compiler_Data> * ptr){
 
      this->DataMap_Pointer = ptr;
 
@@ -81,7 +83,7 @@ void CMake_List_Builder::Receive_DataMap(std::unordered_map<std::string, Compile
 }
 
 
-Compiler_Data * CMake_List_Builder::Find_Compiler_Data_From_Source_File_Path(std::string path)
+Compiler_Data * CMAKE_Target_Library_Builder::Find_Compiler_Data_From_Source_File_Path(std::string path)
 {
     try {        
 
@@ -100,7 +102,7 @@ Compiler_Data * CMake_List_Builder::Find_Compiler_Data_From_Source_File_Path(std
 }
 
 
-void CMake_List_Builder::Build_MakeFile(std::string file_path){
+void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->Memory_Delete_Condition = false;
 
@@ -111,10 +113,24 @@ void CMake_List_Builder::Build_MakeFile(std::string file_path){
      this->Data_Ptr = this->Find_Compiler_Data_From_Source_File_Path(file_path);
 
      
-     std::string Make_File_Path = this->Path_Determiner.Get_MakeFile_Path();
+     std::string file_dir = this->Data_Ptr->src_sys_dir;
+
+     std::string CMake_File_Path = file_dir;
+
+     if(this->opr_sis == 'w'){
+
+        CMake_File_Path.push_back('\\');
+     }
+
+     if(this->opr_sis == 'l'){
+
+        CMake_File_Path.push_back('\\');
+     }
 
 
-     this->FileManager.SetFilePath(Make_File_Path);
+     CMake_File_Path = CMake_File_Path + "CMakeLists.txt";
+
+     this->FileManager.SetFilePath(CMake_File_Path);
 
      this->FileManager.FileOpen(RWCf);     
 
@@ -139,7 +155,6 @@ void CMake_List_Builder::Build_MakeFile(std::string file_path){
 
 
 
-     
      for(size_t i=0;i<this->Data_Ptr->dependent_headers.size();i++){
 
          this->FileManager.WriteToFile("\n");
@@ -219,9 +234,60 @@ void CMake_List_Builder::Build_MakeFile(std::string file_path){
      this->FileManager.WriteToFile(")");
 
      this->FileManager.FileClose();
+
+     std::string cmake_main_file_path, cmake_sub_dir;
+
+     this->CMAKE_Main_File_Path_Determination(cmake_main_file_path);
+
+     this->CMAKE_SubDir_Determination(cmake_sub_dir);
+
+     std::string sub_directory_command = "add_subdirectory(" + cmake_sub_dir + ")";
+
+
+     this->StrOpr.SetFilePath(cmake_main_file_path);
+
+     int start_point = 0;
+
+     int string_line = this->StrOpr.FindNextWordLine(sub_directory_command,start_point);
+
+     bool _exist_status = true;
+
+     if(string_line == 0){
+
+        _exist_status = false;
+     }
+
+
+     if(this->FileManager.Is_Path_Exist(cmake_main_file_path)){
+
+        if(!_exist_status){
+
+           this->FileManager.SetFilePath(cmake_main_file_path);
+
+           this->FileManager.FileOpen(Af);     
+
+           this->FileManager.WriteToFile("\n\n    ");
+
+           this->FileManager.WriteToFile("\n add_subdirectory(");
+
+           this->FileManager.WriteToFile(cmake_sub_dir);
+
+           this->FileManager.WriteToFile(")");
+
+           this->FileManager.FileClose();
+        }
+     }
+     else{
+
+           std::cout << "\n Main CMakeLists.txt file is not exist";
+           std::cout << "\n The Main CMakeLists.txt file must be constructed";
+           std::cout << "\n\n";
+
+           exit(EXIT_FAILURE);
+     }
 }
 
-void CMake_List_Builder::Find_Construction_Directory(std::string & dir, std::string file_path){
+void CMAKE_Target_Library_Builder::Find_Construction_Directory(std::string & dir, std::string file_path){
 
      size_t dir_size = file_path.size();
 
@@ -245,7 +311,49 @@ void CMake_List_Builder::Find_Construction_Directory(std::string & dir, std::str
      dir.shrink_to_fit();
 }
 
-std::string CMake_List_Builder::Get_Construction_Dir(){
+void CMAKE_Target_Library_Builder::CMAKE_Main_File_Path_Determination(std::string & path){
+
+     std::string warehouse_location = this->Des_Reader->Get_Repo_Directory_Location();
+
+     std::string cmake_list_file_name = "CMakeLists.txt";
+
+     path = warehouse_location;
+     
+     if(this->opr_sis == 'w'){
+
+        path.push_back('\\');
+     }
+
+     if(this->opr_sis == 'l'){
+
+        path.push_back('/');
+     }
+     
+     path = path + cmake_list_file_name;
+}
+
+
+void CMAKE_Target_Library_Builder::CMAKE_SubDir_Determination(std::string & sub_dir_path){
+
+     std::string git_dir = this->Data_Ptr->src_git_record_dir;
+
+
+     if(this->opr_sis == 'w'){
+
+          for(size_t i=0;i<git_dir.size();i++){
+
+               if(git_dir[i]=='\\'){
+
+                    git_dir[i] = '/';
+               }
+          }
+     }     
+     
+     sub_dir_path = git_dir;
+}
+
+
+std::string CMAKE_Target_Library_Builder::Get_Construction_Dir(){
 
      std::string Make_File_Path = this->Path_Determiner.Get_MakeFile_Path();
 
@@ -257,7 +365,7 @@ std::string CMake_List_Builder::Get_Construction_Dir(){
 }
 
 
-void CMake_List_Builder::Convert_CMAKE_Format(std::string & str){
+void CMAKE_Target_Library_Builder::Convert_CMAKE_Format(std::string & str){
 
      for(size_t i=0;i<str.size();i++){
 
@@ -268,7 +376,7 @@ void CMake_List_Builder::Convert_CMAKE_Format(std::string & str){
      }
 }
 
-void CMake_List_Builder::Clear_String_Vector(std::vector<std::string> & str){
+void CMAKE_Target_Library_Builder::Clear_String_Vector(std::vector<std::string> & str){
 
      str.shrink_to_fit();
 
@@ -287,7 +395,7 @@ void CMake_List_Builder::Clear_String_Vector(std::vector<std::string> & str){
 
 
 
-void CMake_List_Builder::Clear_String_Memory(std::string & str)
+void CMAKE_Target_Library_Builder::Clear_String_Memory(std::string & str)
 {
      if(!str.empty()){
 

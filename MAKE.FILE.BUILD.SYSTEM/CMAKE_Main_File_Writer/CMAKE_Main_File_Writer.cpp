@@ -82,7 +82,9 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
      this->Memory_Delete_Condition = false;
 
-     std::string warehouse_location = this->Des_Reader->Get_Warehouse_Location();
+     std::string warehouse_location = this->Des_Reader->Get_Repo_Directory_Location();
+
+     /*
 
      std::string warehouse_word = "WAREHOUSE";
 
@@ -101,37 +103,29 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
      warehouse_path = warehouse_path + warehouse_word;
 
+     */
+
 
      std::string cmake_list_file_name = "CMakeLists.txt";
 
-     std::string CMAKE_File_Path = warehouse_location;
-
+     std::string CMAKE_Main_File_Path = warehouse_location;
+     
      if(this->opr_sis == 'w'){
 
-        CMAKE_File_Path.push_back('\\');
+        CMAKE_Main_File_Path.push_back('\\');
      }
 
      if(this->opr_sis == 'l'){
 
-        CMAKE_File_Path.push_back('/');
-     }
-
-     CMAKE_File_Path = CMAKE_File_Path + warehouse_word;
-     
-     if(this->opr_sis == 'w'){
-
-        CMAKE_File_Path.push_back('\\');
-     }
-
-     if(this->opr_sis == 'l'){
-
-        CMAKE_File_Path.push_back('/');
+        CMAKE_Main_File_Path.push_back('/');
      }
      
-     CMAKE_File_Path = CMAKE_File_Path + cmake_list_file_name;
+     CMAKE_Main_File_Path = CMAKE_Main_File_Path + cmake_list_file_name;
+
+     std::cout << "\n CMAKE_Main_File_Path:" << CMAKE_Main_File_Path;
 
 
-     this->FileManager.SetFilePath(CMAKE_File_Path);
+     this->FileManager.SetFilePath(CMAKE_Main_File_Path);
 
      this->FileManager.FileOpen(RWCf);     
 
@@ -181,6 +175,8 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
      this->FileManager.WriteToFile("\n");
 
+
+     /*
 
      CharOperator Cr_Opr;
 
@@ -244,16 +240,16 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
                    this->FileManager.WriteToFile("\n add_subdirectory(");
 
-                   this->FileManager.WriteToFile("\n\n    ");
-
                    this->FileManager.WriteToFile(sub_dir_path);
 
-                   this->FileManager.WriteToFile("\n\n )");
+                   this->FileManager.WriteToFile(")");
                 }
             }
         }
      }
 
+
+     */
 
      const std::vector<std::string> & Inc_Dirs =  this->Des_Reader->Get_Include_Directories();
 

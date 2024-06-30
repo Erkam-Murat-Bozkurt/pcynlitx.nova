@@ -1,8 +1,8 @@
 
 
 
-#ifndef CMAKE_LIST_BUILDER_HPP
-#define CMAKE_LIST_BUILDER_HPP
+#ifndef CMAKE_TARGET_LIBRARY_BUILDER_HPP
+#define CMAKE_TARGET_LIBRARY_BUILDER_HPP
 
 #include <cstring>
 #include <cstdlib>
@@ -24,15 +24,16 @@
 #include "Source_File_Information_Collector.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Header_File_Determiner.h"
+#include "StringOperator.h"
 #include "Cpp_FileOperations.h"
 #include "DirectoryOperations.h"
 #include "IntToCharTranslater.h"
 
-class CMake_List_Builder
+class CMAKE_Target_Library_Builder
 {
 public:
- CMake_List_Builder();
- virtual ~CMake_List_Builder();
+ CMAKE_Target_Library_Builder();
+ virtual ~CMAKE_Target_Library_Builder();
  void Build_MakeFile(std::string file_name);
  void Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
@@ -47,8 +48,11 @@ private:
  void Convert_CMAKE_Format(std::string & str);
  void Clear_String_Vector(std::vector<std::string> & str); 
  void Clear_String_Memory(std::string & pointer);
+ void CMAKE_Main_File_Path_Determination(std::string & path);
+ void CMAKE_SubDir_Determination(std::string & sub_dir_path);
  MakeFile_Path_Determiner Path_Determiner;
  Descriptor_File_Reader * Des_Reader;
+ StringOperator StrOpr;
  Cpp_FileOperations FileManager;
  IntToCharTranslater Translater;
  std::unordered_map<std::string, Compiler_Data> * DataMap_Pointer;
@@ -59,4 +63,4 @@ private:
  bool Memory_Delete_Condition;
 };
 
-#endif /* CMAKE_LIST_BUILDER_HPP */
+#endif /* CMAKE_TARGET_LIBRARY_BUILDER_HPP */

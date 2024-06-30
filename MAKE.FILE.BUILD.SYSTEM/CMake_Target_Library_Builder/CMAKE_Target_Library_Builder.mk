@@ -77,8 +77,8 @@ VPATH = $(DIR_OPS)        $(CPP_OPS)      $(CHAR_OPS) \
 		$(MAKE_FILE_PATH)
 
 
-CMake_List_Builder.exe: CMake_List_Builder_Main_File.cpp \
-	CMake_List_Builder.cpp \
+CMAKE_Target_Library_Builder.exe: CMAKE_Target_Library_Builder_Main_File.cpp \
+	CMAKE_Target_Library_Builder.cpp \
     MakeFile_Path_Determiner.cpp \
     Source_File_Information_Collector.cpp \
 	Source_File_Dependency_Determiner.cpp \
@@ -103,9 +103,10 @@ CMake_List_Builder.exe: CMake_List_Builder_Main_File.cpp \
 	Descriptor_File_Data_Collector.cpp \
 	DirectoryOperations.cpp \
 	Custom_System_Interface.cpp \
+	StringOperator.cpp \
 	CharOperator.cpp \
 	Cpp_FileOperations.cpp \
-	CMake_List_Builder.hpp \
+	CMAKE_Target_Library_Builder.hpp \
 	MakeFile_Path_Determiner.hpp \
 	MakeFile_Data_Collector.hpp \
 	Source_File_Dependency_Determiner.hpp \
@@ -129,11 +130,12 @@ CMake_List_Builder.exe: CMake_List_Builder_Main_File.cpp \
 	Source_File_Determiner.h \
 	Header_File_Determiner.h \
 	Custom_System_Interface.h \
+	StringOperator.h \
 	DirectoryOperations.h \
 	CharOperator.h \
 	Cpp_FileOperations.h
 
-	g++ -std=c++17 -g -o CMake_List_Builder.exe \
+	g++ -std=c++17 -g -o CMAKE_Target_Library_Builder.exe \
 	 -I$(DIR_OPS)        -I$(CPP_OPS)     -I$(CHAR_OPS) \
 	 -I$(STRING_OPS)     -I$(HEAD_DET)    -I$(INT_TO_CHAR)\
 	 -I$(SOURCE_DETR) \
@@ -185,8 +187,8 @@ CMake_List_Builder.exe: CMake_List_Builder_Main_File.cpp \
 	 -L$(SRC_INF_CL_SF) \
 	 -L$(SRC_DEP_SL_SF) \
 	 -L$(MAKE_FILE_PATH) \
-		CMake_List_Builder_Main_File.cpp \
-		CMake_List_Builder.cpp \
+		CMAKE_Target_Library_Builder_Main_File.cpp \
+		CMAKE_Target_Library_Builder.cpp \
 		$(MAKE_FILE_PATH)\MakeFile_Path_Determiner.cpp \
 	    $(MAKE_DATA_COL)\MakeFile_Data_Collector.cpp \
 		$(SRC_DEP_DT)\Source_File_Dependency_Determiner.cpp \
@@ -222,7 +224,7 @@ CMake_List_Builder.exe: CMake_List_Builder_Main_File.cpp \
 		$(SYS_INT)\Custom_System_Interface.cpp \
 		$(CPP_OPS)\Cpp_FileOperations.cpp \
 		$(INT_TO_CHAR)\IntToCharTranslater.cpp \
-		-include CMake_List_Builder.hpp \
+		-include CMAKE_Target_Library_Builder.hpp \
 		-include $(MAKE_FILE_PATH)\MakeFile_Path_Determiner.hpp \
 	    -include $(MAKE_DATA_COL)\MakeFile_Data_Collector.hpp \
 		-include $(SRC_DEP_DT)\Source_File_Dependency_Determiner.hpp \

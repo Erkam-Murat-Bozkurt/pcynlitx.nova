@@ -8,7 +8,7 @@
 #include <map>
 #include <unordered_map>
 #include <iterator>
-#include "CMake_List_Builder.hpp"
+#include "CMAKE_Target_Library_Builder.hpp"
 #include "MakeFile_Path_Determiner.hpp"
 #include "Git_Data_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
@@ -20,7 +20,7 @@ int main(int argc, char ** argv){
 
     if(argc < 3){
 
-       std::cout << "\n The usage: MakeFile_Path_Determiner.exe <Descriptor File Path> <File Path>";
+       std::cout << "\n The usage: MakeFile_Path_Determiner.exe <Descriptor File Path> <Target File Path>";
 
        std::cout << "\n\n";
 
@@ -54,8 +54,6 @@ int main(int argc, char ** argv){
     
     Dep_Determiner.Collect_Dependency_Information();
 
-    std::string src_file_name = "Kernel.cpp";
-
 
     std::vector<Compiler_Data> * Compiler_Data_Pointer = Dep_Determiner.Get_Compiler_Data_Address();
 
@@ -72,19 +70,19 @@ int main(int argc, char ** argv){
      }
 
 
-    CMake_List_Builder CMK_LST_Builder;
+    CMAKE_Target_Library_Builder CMK_TARGET_LST_Builder;
 
-    CMK_LST_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
+    CMK_TARGET_LST_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
 
-    CMK_LST_Builder.Receive_Compiler_Data_Pointer(Compiler_Data_Pointer);
+    CMK_TARGET_LST_Builder.Receive_Compiler_Data_Pointer(Compiler_Data_Pointer);
 
-    CMK_LST_Builder.Receive_Operating_System('w');
+    CMK_TARGET_LST_Builder.Receive_Operating_System('w');
     
-    CMK_LST_Builder.Receive_DataMap(&DataMap);
+    CMK_TARGET_LST_Builder.Receive_DataMap(&DataMap);
 
-    CMK_LST_Builder.Build_MakeFile(argv[2]);
+    CMK_TARGET_LST_Builder.Build_MakeFile(argv[2]);
        
-    CMK_LST_Builder.Clear_Object_Memory();
+    CMK_TARGET_LST_Builder.Clear_Object_Memory();
 
     return 0;
 }

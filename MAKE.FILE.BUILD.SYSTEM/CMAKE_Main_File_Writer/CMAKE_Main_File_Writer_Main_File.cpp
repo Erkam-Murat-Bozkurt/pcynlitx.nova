@@ -61,8 +61,6 @@ int main(int argc, char ** argv){
     CMK_MF_Builder.CMAKE_SubDirectory_Determination();
 
 
-    /*
-
     const std::vector<Git_Sub_Directory_Data> * Root_Dir_Data = CMK_MF_Builder.Get_CMAKE_SubDir_List();
 
 
@@ -83,8 +81,6 @@ int main(int argc, char ** argv){
             std::cout << "\n sub_dir[" << j << "]:" << Root_Dir_Data->at(i).sub_dirs.at(j);
         }
     }
-
-    */
 
     CMK_MF_Builder.Clear_Object_Memory();
 

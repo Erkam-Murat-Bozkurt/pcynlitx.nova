@@ -208,7 +208,7 @@ int StringOperator::FindNextWordLine(std::string search_word,int startPoint){
 
     this->CharacterOperations.ForwardFilePointer(&this->Cpp_File_Manager,startPoint);
 
-    this->wordPosition = startPoint;
+    int word_line = 0, search_line = 0;
 
     do{
             std::string string_line = this->Cpp_File_Manager.Read();
@@ -230,22 +230,24 @@ int StringOperator::FindNextWordLine(std::string search_word,int startPoint){
 
                if(include_condition){
 
+                  word_line = search_line;
+
                   break;
                }
                else{
-                     this->wordPosition++;
+                     search_line++;
                }
             }
             else{
 
-                this->wordPosition++;
+                search_line++;
             }
 
     }while(!this->Cpp_File_Manager.Control_Stop_Condition());
 
     this->Cpp_File_Manager.FileClose();
 
-    return this->wordPosition;
+    return word_line;
 }
 
 
