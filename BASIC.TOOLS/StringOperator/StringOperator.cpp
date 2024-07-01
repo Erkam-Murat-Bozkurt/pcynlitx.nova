@@ -251,6 +251,51 @@ int StringOperator::FindNextWordLine(std::string search_word,int startPoint){
 }
 
 
+bool StringOperator::Is_String_Exist_On_File(std::string search_word){
+
+     bool is_exist = false;
+
+     this->Cpp_File_Manager.FileOpen(Rf);
+
+     int search_line = 0, start_point = 0;
+
+     this->CharacterOperations.ForwardFilePointer(&this->Cpp_File_Manager,start_point);
+
+
+    do{
+            std::string string_line = this->Cpp_File_Manager.Read();
+
+            if(this->Cpp_File_Manager.Control_Stop_Condition()){
+
+               break;
+            }
+
+            if(this->CheckStringLine(string_line)){
+
+               this->ReceiveFileLine(string_line);
+
+
+               bool include_condition
+
+                = this->CheckStringInclusion(string_line,search_word);
+
+
+               if(include_condition){
+
+                  is_exist = true;
+
+                  break;
+               }
+            }
+
+
+    }while(!this->Cpp_File_Manager.Control_Stop_Condition());
+
+    this->Cpp_File_Manager.FileClose();
+
+    return is_exist;
+}
+
 std::string StringOperator::ReadFileLine(int lineNumber){
 
        this->Cpp_File_Manager.FileOpen(Rf);

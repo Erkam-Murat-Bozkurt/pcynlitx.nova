@@ -324,7 +324,9 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
 
 
-     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("\n include(directories.cmake)");
 
      this->FileManager.FileClose();
 
