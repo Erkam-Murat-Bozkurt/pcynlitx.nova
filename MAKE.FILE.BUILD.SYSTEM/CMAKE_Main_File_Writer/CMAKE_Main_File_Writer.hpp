@@ -38,6 +38,7 @@ public:
  CMAKE_Main_File_Writer();
  virtual ~CMAKE_Main_File_Writer();
  void Build_Main_CMAKE_File();
+ void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dep_ptr);
  void Receive_CMAKE_Lists_Construction_Directories(const std::vector<std::string> * dirs);
  void Receive_Git_Data_Processor(Git_Data_Processor * Git_Proc);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
@@ -50,6 +51,8 @@ private:
  void Clear_String_Vector(std::vector<std::string> & str); 
  void Clear_String_Memory(std::string & pointer);
  void Find_File_Directory(std::string & file_dir, std::string file_path);
+ Source_File_Dependency_Determiner * Dep_Determiner;
+ std::vector<Compiler_Data> * Compiler_Data_Pointer;
  Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;
  IntToCharTranslater Translater;

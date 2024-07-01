@@ -243,27 +243,27 @@ void CMAKE_System_Constructor::Perform_Data_Map_Construction(){
 
 void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
 
-     CMAKE_Target_Library_Builder Mk_Builder;
+     CMAKE_Target_Library_Builder Target_Builder;
 
-     Mk_Builder.Receive_Compiler_Data_Pointer(this->Dep_Determiner->Get_Compiler_Data_Address());
+     Target_Builder.Receive_Compiler_Data_Pointer(this->Dep_Determiner->Get_Compiler_Data_Address());
 
-     Mk_Builder.Receive_Operating_System(this->opr_sis);
+     Target_Builder.Receive_Operating_System(this->opr_sis);
 
-     Mk_Builder.Receive_DataMap(&this->DataMap);
+     Target_Builder.Receive_DataMap(&this->DataMap);
 
-     Mk_Builder.Receive_Descriptor_File_Reader(this->Des_Reader);
+     Target_Builder.Receive_Descriptor_File_Reader(this->Des_Reader);
 
      for(size_t i=start;i<end;i++){
 
          std::string source_file_path = this->Compiler_Data_Pointer->at(i).source_file_path;
          
-         Mk_Builder.Build_MakeFile(source_file_path);
+         Target_Builder.Build_MakeFile(source_file_path);
 
-         std::string construction_dir = Mk_Builder.Get_Construction_Dir();
+         std::string construction_dir = Target_Builder.Get_Construction_Dir();
 
          this->construction_dirs.push_back(construction_dir);
 
-         Mk_Builder.Clear_Dynamic_Memory();
+         Target_Builder.Clear_Dynamic_Memory();
      }
 
      this->construction_dirs.shrink_to_fit();

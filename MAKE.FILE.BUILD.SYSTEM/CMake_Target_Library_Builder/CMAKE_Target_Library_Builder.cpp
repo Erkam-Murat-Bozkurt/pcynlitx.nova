@@ -148,7 +148,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("  ");
+     this->FileManager.WriteToFile("  OBJECT ");
 
      std::string src_file_path = this->Data_Ptr->source_file_path;
 

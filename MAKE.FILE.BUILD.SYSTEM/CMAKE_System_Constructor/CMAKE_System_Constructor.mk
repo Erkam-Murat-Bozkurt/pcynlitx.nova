@@ -14,7 +14,7 @@ DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers
 DES_SYN_CON=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
 DIR_ENUM=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Directory_Enumerator
 MAKE_DATA_COL=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\MakeFile_Data_Collector
-MAKE_BLD=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\CMake_List_Builder
+MAKE_BLD=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\CMAKE_Target_Library_Builder
 MK_FILE_CLNR=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\Make_File_Cleaner
 SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
 SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
@@ -86,7 +86,7 @@ VPATH = $(INT_TO_CHAR)    $(FILE_OPRS)    $(DIR_OPS)   \
 
 CMAKE_System_Constructor.exe: CMAKE_System_Constructor_Main_File.cpp \
 	CMAKE_System_Constructor.cpp \
-	CMake_List_Builder.cpp \
+	CMAKE_Target_Library_Builder.cpp \
 	MakeFile_Path_Determiner.cpp \
 	MakeFile_Data_Collector.cpp \
 	Source_File_Dependency_Determiner.cpp \
@@ -117,7 +117,7 @@ CMAKE_System_Constructor.exe: CMAKE_System_Constructor_Main_File.cpp \
 	Cpp_FileOperations.cpp \
 	CharOperator.cpp \
 	CMAKE_System_Constructor.hpp \
-	CMake_List_Builder.hpp \
+	CMAKE_Target_Library_Builder.hpp \
 	MakeFile_Path_Determiner.hpp \
 	MakeFile_Data_Collector.hpp \
 	Source_File_Dependency_Determiner.hpp \
@@ -230,7 +230,7 @@ CMAKE_System_Constructor.exe: CMAKE_System_Constructor_Main_File.cpp \
 	-L$(MAKE_FILE_DIR_CON) \
 	CMAKE_System_Constructor_Main_File.cpp \
 	CMAKE_System_Constructor.cpp \
-	$(MAKE_BLD)\CMake_List_Builder.cpp \
+	$(MAKE_BLD)\CMAKE_Target_Library_Builder.cpp \
 	$(MAKE_DATA_COL)\MakeFile_Data_Collector.cpp  \
 	$(MAKE_FILE_PATH)\MakeFile_Path_Determiner.cpp \
 	$(MAKE_FILE_DIR_CON)\MakeFile_Directory_Constructor.cpp \
@@ -270,7 +270,7 @@ CMAKE_System_Constructor.exe: CMAKE_System_Constructor_Main_File.cpp \
 	$(FILE_OPRS)\Cpp_FileOperations.cpp \
 	$(SYS_INT)\Custom_System_Interface.cpp \
 	-include CMAKE_System_Constructor.hpp \
-	-include $(MAKE_BLD)\CMAKE_List_Builder.hpp \
+	-include $(MAKE_BLD)\CMAKE_Target_Library_Builder.hpp \
 	-include $(MAKE_DATA_COL)\MakeFile_Data_Collector.hpp  \
 	-include $(MAKE_FILE_DIR_CON)\MakeFile_Directory_Constructor.hpp \
 	-include $(SRC_DEP_DT)\Source_File_Dependency_Determiner.hpp \

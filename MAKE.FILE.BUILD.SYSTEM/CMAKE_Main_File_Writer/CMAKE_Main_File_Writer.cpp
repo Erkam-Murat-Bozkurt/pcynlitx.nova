@@ -328,9 +328,57 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
      this->FileManager.WriteToFile("\n include(directories.cmake)");
 
+
+     this->Compiler_Data_Pointer = this->Dep_Determiner->Get_Compiler_Data_Address();
+
+     int target_counter = 0;
+
+     std::string project_target_list;
+
+     std::string space_string = " ";
+
+     for(size_t i=0;i<this->Compiler_Data_Pointer->size();i++){
+
+         std::string target_name = "$<TARGET_OBJECTS:" +
+         
+          this->Compiler_Data_Pointer->at(i).source_file_name_witout_ext + ">";
+
+         project_target_list = project_target_list + space_string + target_name;   
+
+         target_counter++;
+
+         if(target_counter>1){
+
+             project_target_list = project_target_list + "\n\t";
+
+             target_counter = 0;
+         }      
+     }
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile("add_library(default_proj_lib ");
+
+     this->FileManager.WriteToFile(project_target_list);
+
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile(")");
+
+     this->FileManager.WriteToFile("\n\n");
+
      this->FileManager.FileClose();
 
 
+}
+
+
+
+void CMAKE_Main_File_Writer::Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner 
+
+     * dep_ptr){
+
+     this->Dep_Determiner = dep_ptr;
 }
 
 

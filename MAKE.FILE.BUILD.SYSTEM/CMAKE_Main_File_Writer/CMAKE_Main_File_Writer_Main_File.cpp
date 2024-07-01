@@ -48,11 +48,28 @@ int main(int argc, char ** argv){
     Data_Processor.Extract_Directory_Tree();
 
 
+
+
+    Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
+
+    Dep_Determiner.Receive_Descriptor_File_Reader(&Des_Reader);
+
+    Dep_Determiner.Receive_Git_Data_Processor(&Data_Processor);
+
+    Dep_Determiner.Collect_Dependency_Information();
+
+
+    std::cout << "\n\e[1;32mDependency information have been determined..\e[0m\n";
+
+
+
     CMAKE_Main_File_Writer CMK_MF_Builder;
 
     CMK_MF_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
 
     CMK_MF_Builder.Receive_Git_Data_Processor(&Data_Processor);
+
+    CMK_MF_Builder.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
 
     CMK_MF_Builder.Receive_Operating_System('w');
     
@@ -60,6 +77,8 @@ int main(int argc, char ** argv){
        
     CMK_MF_Builder.CMAKE_SubDirectory_Determination();
 
+
+    /*
 
     const std::vector<Git_Sub_Directory_Data> * Root_Dir_Data = CMK_MF_Builder.Get_CMAKE_SubDir_List();
 
@@ -81,6 +100,8 @@ int main(int argc, char ** argv){
             std::cout << "\n sub_dir[" << j << "]:" << Root_Dir_Data->at(i).sub_dirs.at(j);
         }
     }
+
+    */
 
     CMK_MF_Builder.Clear_Object_Memory();
 
