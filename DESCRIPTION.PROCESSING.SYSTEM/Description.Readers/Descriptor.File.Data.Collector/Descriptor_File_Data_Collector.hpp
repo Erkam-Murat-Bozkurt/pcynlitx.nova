@@ -32,7 +32,8 @@ public:
  int Get_Source_File_Directories_Record_Area(int index);
  int Get_Include_Directories_Record_Area(int index);
  int Get_Standard_Record_Area(int index);
- int Get_Options_Record_Area(int index);
+ int Get_Compiler_Options_Record_Area(int index);
+ int Get_Linker_Options_Record_Area(int index);
  int Get_Warehouse_Location_Record_Area(int index);
  int Get_Main_File_Name_Record_Area(int index);
  int Get_Executable_File_Name_Record_Area(int index);
@@ -50,7 +51,8 @@ protected:
  void Determine_Source_File_Directories_Record_Area();
  void Determine_Library_Directories_Record_Area();
  void Determine_Library_Files_Record_Area();
- void Determine_Options_Record_Area();
+ void Determine_Compiler_Options_Record_Area();
+ void Determine_Linker_Options_Record_Area();
  void Determine_Warehouse_Location_Record_Area();
  void Determine_Root_Directory_Record_Area();
  void Delete_Spaces_on_String(std::string * pointer);
@@ -70,7 +72,8 @@ protected:
  int Source_File_Directories_Record_Area[2];
  int Include_Directories_Record_Area[2];
  int Standard_Record_Area[2];
- int Options_Record_Area[2];
+ int Compiler_Options_Record_Area[2];
+ int Linker_Options_Record_Area[2];
  int Main_File_Name_Record_Area[2];
  int Executable_File_Name_Area[2];
  int Library_Directories_Record_Number;

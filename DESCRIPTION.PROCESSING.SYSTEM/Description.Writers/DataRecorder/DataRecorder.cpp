@@ -515,7 +515,13 @@ void DataRecorder::Receive_Decriptor_File(){
 
      this->Place_String_Data(this->Des_Reader.Get_Repo_Directory_Location(),this->root_dir);
 
-     this->Place_String_Data(this->Des_Reader.Get_Options(),this->options);
+     std::string compiler_options = this->Des_Reader.Get_Compiler_Options();
+
+     std::string linker_options = this->Des_Reader.Get_Linker_Options();
+
+     std::string read_options = compiler_options + linker_options;
+
+     this->Place_String_Data(read_options,this->options);
 
      this->Place_String_Data(this->Des_Reader.Get_Standard(),this->standard);   
 }

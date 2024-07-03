@@ -217,13 +217,19 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
      this->FileManager.WriteToFile("\n");
 
      
-     this->FileManager.WriteToFile("include_directories(");
+     this->FileManager.WriteToFile("target_include_directories(");
+
+     this->FileManager.WriteToFile(this->Data_Ptr->source_file_name_witout_ext);     
+
+     this->FileManager.WriteToFile(" PUBLIC ");
+     
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
      
      for(size_t i=0;i<this->Data_Ptr->dependent_headers.size();i++){
 
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("  ");
+         this->FileManager.WriteToFile("\n\t");
 
          std::string dep_header_dir = this->Data_Ptr->dependent_headers_dir.at(i);
       
@@ -236,7 +242,108 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile(")");
 
+
+
+     const std::vector<std::string> & Lib_Dirs =  this->Des_Reader->Get_Library_Directories();
+
+     if(Lib_Dirs.size()>0){
+
+        this->FileManager.WriteToFile("\n\n ");
+
+        this->FileManager.WriteToFile("target_link_directories(");
+
+        this->FileManager.WriteToFile(this->Data_Ptr->source_file_name_witout_ext);          
+
+        this->FileManager.WriteToFile(" PUBLIC ");
+
+        for(size_t i=0;i<Lib_Dirs.size();i++){
+
+            this->FileManager.WriteToFile("\n\n    ");
+
+            this->FileManager.WriteToFile(Lib_Dirs.at(i));
+        }
+
+        this->FileManager.WriteToFile("\n\n )");
+     }
+
+
+     const std::vector<std::string> & Libs =  this->Des_Reader->Get_Library_Files();
+
+     if(Libs.size()>0){
+
+        this->FileManager.WriteToFile("\n\n ");
+
+        this->FileManager.WriteToFile("target_link_libraries(");
+
+        this->FileManager.WriteToFile(this->Data_Ptr->source_file_name_witout_ext);          
+
+        this->FileManager.WriteToFile(" PUBLIC ");
+
+        this->FileManager.WriteToFile("\n\n    ");
+
+        int lib_counter = 0;
+
+        for(size_t i=0;i<Libs.size();i++){
+
+            this->FileManager.WriteToFile(Libs.at(i));
+
+            this->FileManager.WriteToFile(" ");
+
+            lib_counter++;
+
+            if(lib_counter>3){
+
+               this->FileManager.WriteToFile("\n\n    ");
+
+               lib_counter = 0;
+            }
+        }
+
+        this->FileManager.WriteToFile("\n )");
+     }  
+
+
+
+     this->FileManager.WriteToFile("\n\n ");
+
+     this->FileManager.WriteToFile("target_compile_options(");
+
+     this->FileManager.WriteToFile(this->Data_Ptr->source_file_name_witout_ext);          
+
+     this->FileManager.WriteToFile(" PUBLIC ");
+
+     this->FileManager.WriteToFile("\n\n    ");
+
+     std::string com_options = this->Des_Reader->Get_Compiler_Options();
+
+     for(size_t i=0;i<com_options.size();i++){
+
+         if(com_options.at(i)=='\\'){
+
+            com_options.erase(i,1);
+         }
+     }
+
+     this->FileManager.WriteToFile(com_options);
+
+     this->FileManager.WriteToFile(")");
+
+     this->FileManager.WriteToFile("\n\n ");
+
+     this->FileManager.WriteToFile("target_link_options(");
+
+     this->FileManager.WriteToFile(this->Data_Ptr->source_file_name_witout_ext);          
+
+     this->FileManager.WriteToFile(" PUBLIC ");
+
+     this->FileManager.WriteToFile("\n\n    ");
+
+     this->FileManager.WriteToFile(this->Des_Reader->Get_Linker_Options());
+
+     this->FileManager.WriteToFile(")");
+
      this->FileManager.FileClose();
+
 
      std::string directory_list_file_path, cmake_sub_dir;
 

@@ -21,7 +21,7 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_File_Reader('w');    
+    Descriptor_File_Reader Des_File_Reader('w','n');    
 
     Des_File_Reader.Receive_Descriptor_File_Path(argv[1]);
 
@@ -169,19 +169,38 @@ int main(int argc, char ** argv){
 
     std::cout << "\n\n";
 
-    std::cout << "\n OPTIONS RECORD: ";
+    std::cout << "\n COMPILER OPTIONS RECORD: ";
 
-    if(Des_File_Reader.Get_Options() != ""){
+    if(Des_File_Reader.Get_Compiler_Options() != ""){
 
        std::cout << "\n ";
 
-       std::cout << Des_File_Reader.Get_Options();
+       std::cout << Des_File_Reader.Get_Compiler_Options();
     }
     else{
 
-        std::cout << "\n There is no debugging opption decleration";
+        std::cout << "\n There is no compiler opption decleration";
     }
 
+
+
+
+    std::cout << "\n\n";
+
+    std::cout << "\n LINKER OPTIONS RECORD: ";
+
+    if(Des_File_Reader.Get_Linker_Options() != ""){
+
+       std::cout << "\n ";
+
+       std::cout << Des_File_Reader.Get_Linker_Options();
+    }
+    else{
+
+        std::cout << "\n There is no linker option decleration";
+    }
+
+    std::cout << "\n\n";
     std::cout << "\n\n";
 
 

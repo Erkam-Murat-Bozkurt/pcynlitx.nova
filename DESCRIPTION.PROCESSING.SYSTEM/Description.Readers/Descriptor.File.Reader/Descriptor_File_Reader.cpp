@@ -111,7 +111,9 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
          this->Clear_String_Memory(&this->standard);
 
-         this->Clear_String_Memory(&this->options);
+         this->Clear_String_Memory(&this->compiler_options);
+
+         this->Clear_String_Memory(&this->linker_options);
 
          this->Clear_String_Memory(&this->warehouse_location);
 
@@ -175,7 +177,9 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
 
          this->Read_Library_Files();
 
-         this->Read_Options();
+         this->Read_Compiler_Options();
+
+         this->Read_Linker_Options();
      }
      else{
 
@@ -222,7 +226,9 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
 
              if(this->gui_read_success){
 
-                this->Read_Options();
+                this->Read_Compiler_Options();
+
+                this->Read_Linker_Options();
              }
          }
        }
@@ -670,11 +676,11 @@ void Descriptor_File_Reader::Read_Library_Files(){
 
 
 
-void Descriptor_File_Reader::Read_Options(){
+void Descriptor_File_Reader::Read_Compiler_Options(){
 
-     int start_line = this->Data_Collector.Get_Options_Record_Area(0);
+     int start_line = this->Data_Collector.Get_Compiler_Options_Record_Area(0);
 
-     int end_line   = this->Data_Collector.Get_Options_Record_Area(1);
+     int end_line   = this->Data_Collector.Get_Compiler_Options_Record_Area(1);
 
      int record_num = 0;
 
@@ -689,12 +695,12 @@ void Descriptor_File_Reader::Read_Options(){
 
          this->Clear_String_Memory(&line);
       }
-
+   
       if(record_num < 1){
 
-         this->options.clear();   // There is no any decleration about the options
+         this->compiler_options.clear();   // There is no any decleration about the options
 
-         this->options.shrink_to_fit();
+         this->compiler_options.shrink_to_fit();
       }
       else{
 
@@ -705,7 +711,7 @@ void Descriptor_File_Reader::Read_Options(){
 
                if(this->StringManager.CheckStringLine(line)){
 
-                  this->options += line;
+                  this->compiler_options += line;
 
                   this->Clear_String_Memory(&line);
 
@@ -716,24 +722,77 @@ void Descriptor_File_Reader::Read_Options(){
             }
       }
 
-      this->Divide_Options();
+      this->Divide_Options(this->compiler_options);
 }
 
 
-void Descriptor_File_Reader::Divide_Options(){
 
-     if(!this->options.empty()){
 
-        std::string temp_opts = this->options;
+void Descriptor_File_Reader::Read_Linker_Options(){
+
+     int start_line = this->Data_Collector.Get_Linker_Options_Record_Area(0);
+
+     int end_line   = this->Data_Collector.Get_Linker_Options_Record_Area(1);
+
+     int record_num = 0;
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            record_num++;
+         }
+
+         this->Clear_String_Memory(&line);
+      }
+   
+      if(record_num < 1){
+
+         this->linker_options.clear();   // There is no any decleration about the options
+
+         this->linker_options.shrink_to_fit();
+      }
+      else{
+
+
+           for(int i=start_line+1;i<end_line-1;i++){
+
+               std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
+
+               if(this->StringManager.CheckStringLine(line)){
+
+                  this->linker_options += line;
+
+                  this->Clear_String_Memory(&line);
+
+                  break;
+               }
+
+               this->Clear_String_Memory(&line);
+            }
+      }
+
+      this->Divide_Options(this->linker_options);
+}
+
+
+void Descriptor_File_Reader::Divide_Options(std::string & options){
+
+
+     if(!options.empty()){
+
+        std::string temp_opts = options;
 
         temp_opts.shrink_to_fit();
 
 
-        if(!this->options.empty()){
+        if(!options.empty()){
         
-           this->options.clear();
+            options.clear();
 
-           this->options.shrink_to_fit();
+            options.shrink_to_fit();
         }
 
 
@@ -749,6 +808,7 @@ void Descriptor_File_Reader::Divide_Options(){
             }
         }
 
+
         if(space_counter>3){
 
            space_counter = 0;
@@ -762,7 +822,7 @@ void Descriptor_File_Reader::Divide_Options(){
 
            for(size_t i=start_point;i<options_size;i++){
 
-               this->options.push_back(temp_opts[i]);
+               options.push_back(temp_opts[i]);
 
                if(temp_opts[i] == ' '){
 
@@ -771,15 +831,19 @@ void Descriptor_File_Reader::Divide_Options(){
 
                 if(space_counter>3){
 
-                   this->options.push_back('\\');
+                   options.push_back('\\');
 
-                   this->options.push_back('\n');
+                   options.push_back('\n');
 
-                   this->options.push_back(' ');
+                   options.push_back(' ');
 
                    space_counter = 0;
                 }
             }
+          }
+          else{
+
+               options = temp_opts;
           }
        }
 }
@@ -841,7 +905,7 @@ const std::vector<std::string> & Descriptor_File_Reader::Get_Source_File_Directo
 
 const std::vector<std::string> & Descriptor_File_Reader::Get_Library_Files(){
 
-     return this->Library_Directories;
+     return this->Library_Files;
 }
 
 
@@ -872,9 +936,14 @@ std::string Descriptor_File_Reader::Get_Standard(){
 }
 
 
-std::string Descriptor_File_Reader::Get_Options(){
+std::string Descriptor_File_Reader::Get_Compiler_Options(){
 
-       return this->options;
+       return this->compiler_options;
+}
+
+std::string Descriptor_File_Reader::Get_Linker_Options(){
+
+       return this->linker_options;
 }
 
 std::string Descriptor_File_Reader::Get_Warehouse_Location(){

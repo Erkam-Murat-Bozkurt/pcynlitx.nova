@@ -625,28 +625,72 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
     this->textctrl->SetDefaultStyle(AttrBold);
 
-    this->textctrl->AppendText(wxT("\n\n    OPTIONS RECORD:"));
+    this->textctrl->AppendText(wxT("\n\n   COMPILER OPTIONS RECORD:"));
 
     this->textctrl->SetDefaultStyle(AttrLigth);
 
     this->textctrl->AppendText(wxT("\n\n "));
 
 
-    std::string options;
+    std::string com_options;
 
-    if(!this->Des_Reader->Get_Options().empty()){
+    if(!this->Des_Reader->Get_Compiler_Options().empty()){
 
-       options = this->Des_Reader->Get_Options();
+       com_options = this->Des_Reader->Get_Compiler_Options();
 
-       size_t start_point = 0, end_point = options.size();
+       size_t start_point = 0, end_point = com_options.size();
 
-       for(size_t i=0;i<options.size();i++){
+       for(size_t i=0;i<com_options.size();i++){
 
            std::string line;
 
-           while(options[i] != '\n'){
+           while(com_options[i] != '\n'){
 
-               line.push_back(options[i]);
+               line.push_back(com_options[i]);
+
+               i++;
+           }
+
+           this->textctrl->AppendText(" ");
+
+           this->textctrl->AppendText(" ");
+
+           this->textctrl->AppendText(" ");
+
+           this->textctrl->AppendText(wxString(line));
+
+           this->textctrl->AppendText(wxT("\n"));
+       }
+    }
+
+    this->textctrl->AppendText(wxT("\n\n "));
+
+
+
+    this->textctrl->SetDefaultStyle(AttrBold);
+
+    this->textctrl->AppendText(wxT("\n\n   LINKER OPTIONS RECORD:"));
+
+    this->textctrl->SetDefaultStyle(AttrLigth);
+
+    this->textctrl->AppendText(wxT("\n\n "));
+
+
+    std::string link_options;
+
+    if(!this->Des_Reader->Get_Linker_Options().empty()){
+
+       link_options = this->Des_Reader->Get_Linker_Options();
+
+       size_t start_point = 0, end_point = link_options.size();
+
+       for(size_t i=0;i<link_options.size();i++){
+
+           std::string line;
+
+           while(link_options[i] != '\n'){
+
+               line.push_back(link_options[i]);
 
                i++;
            }

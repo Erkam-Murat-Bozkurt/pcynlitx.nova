@@ -374,7 +374,13 @@ void GUI_List_Data_Recorder::Receive_Decriptor_File(){
 
      this->Place_String_Data(this->Des_Reader.Get_Repo_Directory_Location(),this->root_dir);
 
-     this->Place_String_Data(this->Des_Reader.Get_Options(),this->options);
+     std::string compiler_options = this->Des_Reader.Get_Compiler_Options();
+
+     std::string linker_options   = this->Des_Reader.Get_Linker_Options();
+
+     std::string total_options = compiler_options + linker_options;
+
+     this->Place_String_Data(total_options,this->options);
 
      this->Place_String_Data(this->Des_Reader.Get_Standard(),this->standard);   
 }

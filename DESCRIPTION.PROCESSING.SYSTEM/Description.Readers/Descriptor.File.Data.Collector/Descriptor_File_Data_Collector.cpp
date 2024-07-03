@@ -48,7 +48,8 @@ void Descriptor_File_Data_Collector::Initialize_Members(){
         this->Source_File_Directories_Record_Area[i] = 0;
         this->Include_Directories_Record_Area[i] = 0;
         this->Standard_Record_Area[i] = 0;
-        this->Options_Record_Area[i] = 0;
+        this->Compiler_Options_Record_Area[i] = 0;
+        this->Linker_Options_Record_Area[i] = 0;
         this->Warehouse_Location_Record_Area[i] = 0;
         this->Root_Directory_Record_Area[i] = 0;
      }
@@ -98,7 +99,9 @@ void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(){
 
      this->Determine_Library_Files_Record_Area();
 
-     this->Determine_Options_Record_Area();
+     this->Determine_Compiler_Options_Record_Area();
+
+     this->Determine_Linker_Options_Record_Area();
 
      this->StringManager.Clear_Dynamic_Memory();
 
@@ -323,9 +326,9 @@ void Descriptor_File_Data_Collector::Determine_Library_Files_Record_Area(){
 }
 
 
-void Descriptor_File_Data_Collector::Determine_Options_Record_Area(){
+void Descriptor_File_Data_Collector::Determine_Compiler_Options_Record_Area(){
 
-     char key_word [] = "[OPTIONS]";
+     char key_word [] = "[COMPILER-OPTIONS]";
 
 
      int record_stard = 1;
@@ -338,14 +341,41 @@ void Descriptor_File_Data_Collector::Determine_Options_Record_Area(){
      char end_brace []   = "}";
 
 
-     this->Options_Record_Area[0] =
+     this->Compiler_Options_Record_Area[0] =
 
      this->FindStringPoint(start_brace,keyword_line-1);
 
 
-     int start_brace_line = this->Options_Record_Area[0];
+     int start_brace_line = this->Compiler_Options_Record_Area[0];
 
-     this->Options_Record_Area[1] =
+     this->Compiler_Options_Record_Area[1] =
+
+     this->FindStringPoint(end_brace,start_brace_line);
+}
+
+void Descriptor_File_Data_Collector::Determine_Linker_Options_Record_Area(){
+
+     char key_word [] = "[LINKER-OPTIONS]";
+
+
+     int record_stard = 1;
+
+     int keyword_line = this->FindStringPoint(key_word,record_stard);
+
+
+     char start_brace [] = "{";
+
+     char end_brace []   = "}";
+
+
+     this->Linker_Options_Record_Area[0] =
+
+     this->FindStringPoint(start_brace,keyword_line-1);
+
+
+     int start_brace_line = this->Linker_Options_Record_Area[0];
+
+     this->Linker_Options_Record_Area[1] =
 
      this->FindStringPoint(end_brace,start_brace_line);
 }
@@ -483,9 +513,14 @@ int Descriptor_File_Data_Collector::Get_Standard_Record_Area(int index) {
       return this->Standard_Record_Area[index];
 }
 
-int Descriptor_File_Data_Collector::Get_Options_Record_Area(int index){
+int Descriptor_File_Data_Collector::Get_Compiler_Options_Record_Area(int index){
 
-     return this->Options_Record_Area[index];
+     return this->Compiler_Options_Record_Area[index];
+}
+
+int Descriptor_File_Data_Collector::Get_Linker_Options_Record_Area(int index){
+
+     return this->Linker_Options_Record_Area[index];
 }
 
 int Descriptor_File_Data_Collector::Get_Warehouse_Location_Record_Area(int index){

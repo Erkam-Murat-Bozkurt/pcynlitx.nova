@@ -36,7 +36,8 @@ public:
  const std::vector<std::string> & Get_Library_Files();
  const std::vector<std::string> & Get_Exe_File_Names();  
  std::string Get_Standard();
- std::string Get_Options();
+ std::string Get_Compiler_Options();
+ std::string Get_Linker_Options();
  std::string Get_Warehouse_Location();
  std::string Get_Repo_Directory_Location();
  std::string Get_Descriptor_File_Path();
@@ -58,8 +59,9 @@ protected:
  void Read_Source_File_Directories();
  void Read_Library_Directories();
  void Read_Library_Files();
- void Read_Options();
- void Divide_Options();
+ void Read_Compiler_Options();
+ void Read_Linker_Options();
+ void Divide_Options(std::string & options);
  void Clear_String_Memory(std::string * ptr);
  void Clear_Vectory_Memory(std::vector<std::string> * ptr);
  Descriptor_File_Data_Collector Data_Collector;
@@ -73,7 +75,8 @@ protected:
  int exec_file_name_num;
  std::string descriptor_file_path;
  std::string standard;
- std::string options;
+ std::string compiler_options;
+ std::string linker_options;
  std::string root_dir;
  std::string warehouse_location;
  std::string error_message;

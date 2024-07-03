@@ -958,7 +958,10 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
      }
 
 
-     std::string options = this->Des_Reader.Get_Options();
+     std::string options = this->Des_Reader.Get_Compiler_Options() +
+     
+                           this->Des_Reader.Get_Linker_Options();
+
 
      options.shrink_to_fit();
 

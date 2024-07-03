@@ -366,7 +366,9 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      char compiler_input_command [] = "g++ -Wall -std=c++17 -o";
 
-     options = this->Des_Reader->Get_Options();
+     this->options = this->Des_Reader->Get_Compiler_Options() + 
+     
+                     this->Des_Reader->Get_Linker_Options();
 
 
      char Include_Character [] = "-I";
@@ -678,7 +680,10 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
 
      char compiler_input_command [] = "g++ -Wall -std=c++17 -o";
 
-     options = this->Des_Reader->Get_Options();
+     this->options = this->Des_Reader->Get_Compiler_Options() + 
+     
+                     this->Des_Reader->Get_Linker_Options();
+
 
 
      char Include_Character [] = "-I";

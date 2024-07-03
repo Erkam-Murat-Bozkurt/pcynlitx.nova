@@ -122,8 +122,6 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
      
      CMAKE_Main_File_Path = CMAKE_Main_File_Path + cmake_list_file_name;
 
-     std::cout << "\n CMAKE_Main_File_Path:" << CMAKE_Main_File_Path;
-
 
      this->FileManager.SetFilePath(CMAKE_Main_File_Path);
 
@@ -366,6 +364,40 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
      this->FileManager.WriteToFile(")");
 
      this->FileManager.WriteToFile("\n\n");
+
+
+     const std::vector<std::string> & Libs =  this->Des_Reader->Get_Library_Files();
+
+     if(Libs.size()>0){
+
+        this->FileManager.WriteToFile("\n\n ");
+
+        this->FileManager.WriteToFile("link_libraries(");
+
+        this->FileManager.WriteToFile("\n\n    ");
+
+        int lib_counter = 0;
+
+        for(size_t i=0;i<Libs.size();i++){
+
+            this->FileManager.WriteToFile(Libs.at(i));
+
+            this->FileManager.WriteToFile(" ");
+
+            lib_counter++;
+
+            if(lib_counter>3){
+
+               this->FileManager.WriteToFile("\n\n    ");
+
+               lib_counter = 0;
+            }
+        }
+
+        this->FileManager.WriteToFile("\n )");
+     }  
+
+
 
      this->FileManager.FileClose();
 

@@ -140,7 +140,9 @@ void Descriptor_File_Syntax_Controller::Control_Keywords(){
 
      char lib_files [] = "[LIBRARY-FILES]";
 
-     char options [] = "[OPTIONS]";
+     char compiler_options [] = "[COMPILER-OPTIONS]";
+
+     char linker_options [] = "[LINKER-OPTIONS]";
 
 
      this->syntax_error_status = false;
@@ -275,7 +277,26 @@ void Descriptor_File_Syntax_Controller::Control_Keywords(){
         }
      };
 
-     if(!this->Control_String_Inclusion(options)){
+     if(!this->Control_String_Inclusion(compiler_options)){
+
+         std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
+         std::cout << "\n\n";
+
+
+         if(this->gui_read_status){
+
+            this->syntax_error_status = true;
+
+            this->syntax_error_number++;
+         }
+         else{
+
+            exit(0);
+         }
+     };
+
+     
+     if(!this->Control_String_Inclusion(linker_options)){
 
          std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
          std::cout << "\n\n";

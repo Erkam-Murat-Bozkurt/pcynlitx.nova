@@ -53,6 +53,9 @@ void CMAKE_Build_System_Generator::Receive_Source_File_Dependency_Determiner(Sou
      * dep_ptr){
 
      this->CMAKE_ListFileBuilder.Receive_Source_File_Dependency_Determiner(dep_ptr);
+
+     this->CMAKE_MainFileBuilder.Receive_Source_File_Dependency_Determiner(dep_ptr);
+
 }
 
 

@@ -161,7 +161,15 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
      this->WriteNewLines(new_lines);
 
 
-     this->FileManager.WriteToFile("[OPTIONS]{");
+     this->FileManager.WriteToFile("[COMPILER-OPTIONS]{");
+
+     this->WriteNewLines(new_lines);
+
+     this->FileManager.WriteToFile("}");
+
+     this->WriteNewLines(new_lines);
+
+     this->FileManager.WriteToFile("[LINKER-OPTIONS]{");
 
      this->WriteNewLines(new_lines);
 
