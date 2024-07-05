@@ -39,7 +39,6 @@ public:
  virtual ~CMAKE_Main_File_Writer();
  void Build_Main_CMAKE_File();
  void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dep_ptr);
- void Receive_CMAKE_Lists_Construction_Directories(const std::vector<std::string> * dirs);
  void Receive_Git_Data_Processor(Git_Data_Processor * Git_Proc);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Operating_System(char opr_sis);
@@ -58,7 +57,6 @@ private:
  IntToCharTranslater Translater;
  std::unordered_map<std::string, Compiler_Data> * DataMap_Pointer;
  std::vector<Git_Sub_Directory_Data> cmake_sub_dirs_list;
- const std::vector<std::string> * Const_Dirs;
  Git_Data_Processor * Git_Processor;
  char opr_sis;
  bool Include_Line_Condition;

@@ -70,12 +70,6 @@ void CMAKE_Main_File_Writer::Receive_Git_Data_Processor(Git_Data_Processor * Git
 }
 
 
-void CMAKE_Main_File_Writer::Receive_CMAKE_Lists_Construction_Directories(const std::vector<std::string> * dirs){
-
-    this->Const_Dirs = dirs;
-}
-
-
 void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
      this->CMAKE_SubDirectory_Determination();
@@ -83,27 +77,6 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
      this->Memory_Delete_Condition = false;
 
      std::string warehouse_location = this->Des_Reader->Get_Repo_Directory_Location();
-
-     /*
-
-     std::string warehouse_word = "WAREHOUSE";
-
-     std::string warehouse_path = warehouse_location;
-
-     
-     if(this->opr_sis == 'w'){
-
-        warehouse_path.push_back('\\');
-     }
-
-     if(this->opr_sis == 'l'){
-
-        warehouse_path.push_back('/');
-     }
-
-     warehouse_path = warehouse_path + warehouse_word;
-
-     */
 
 
      std::string cmake_list_file_name = "CMakeLists.txt";
@@ -172,82 +145,6 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
-
-
-     /*
-
-     CharOperator Cr_Opr;
-
-     char dir_char;
-
-     if(this->opr_sis == 'w'){
-
-        dir_char = '\\';
-     }
-
-     if(this->opr_sis == 'l'){
-
-        dir_char = '/';
-     }
-
-
-     int first_order_sub_dir_num = 0;
-
-     if(this->cmake_sub_dirs_list.size()>0){
-
-        for(size_t i=0;i<this->cmake_sub_dirs_list.size();i++){
-
-            Git_Sub_Directory_Data Dir_Data =  this->cmake_sub_dirs_list.at(i);
-
-            int dir_char_rep = Cr_Opr.DetermineCharacterRepitation(Dir_Data.dir_path,dir_char);
-
-            if(dir_char_rep == 0){
-
-                if(Dir_Data.cmake_dir_status){
-
-                    first_order_sub_dir_num++;
-                }
-            }
-        }
-     }
-
-     if(first_order_sub_dir_num>0){
-
-        for(size_t i=0;i<this->cmake_sub_dirs_list.size();i++){
-
-            Git_Sub_Directory_Data Dir_Data =  this->cmake_sub_dirs_list.at(i);
-
-            std::string sub_dir_path = Dir_Data.dir_path;
-
-
-            for(size_t i=0;i<Dir_Data.dir_path.size();i++){
-
-                if(sub_dir_path[i] == '\\'){
-
-                   sub_dir_path[i] = '/';
-                }
-            }
-
-            int dir_char_rep = Cr_Opr.DetermineCharacterRepitation(Dir_Data.dir_path,dir_char);
-
-            if(dir_char_rep == 0){
-
-                if(Dir_Data.cmake_dir_status){
-
-                   this->FileManager.WriteToFile("\n\n    ");
-
-                   this->FileManager.WriteToFile("\n add_subdirectory(");
-
-                   this->FileManager.WriteToFile(sub_dir_path);
-
-                   this->FileManager.WriteToFile(")");
-                }
-            }
-        }
-     }
-
-
-     */
 
      const std::vector<std::string> & Inc_Dirs =  this->Des_Reader->Get_Include_Directories();
 
@@ -397,11 +294,7 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
         this->FileManager.WriteToFile("\n )");
      }  
 
-
-
      this->FileManager.FileClose();
-
-
 }
 
 

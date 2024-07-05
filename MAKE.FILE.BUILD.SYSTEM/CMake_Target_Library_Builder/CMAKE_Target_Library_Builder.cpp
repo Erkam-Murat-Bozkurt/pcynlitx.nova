@@ -182,35 +182,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile(")");
-     
-     /*
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile("\n");
-
-     
-     this->FileManager.WriteToFile("target_include_directories(");
-     
-     for(size_t i=0;i<this->Data_Ptr->dependent_headers.size();i++){
-
-         this->FileManager.WriteToFile("\n");
-
-         this->FileManager.WriteToFile("  ");
-
-         std::string dep_header_dir = this->Data_Ptr->dependent_headers_dir.at(i);
-      
-         this->Convert_CMAKE_Format(dep_header_dir);
-
-         this->FileManager.WriteToFile(dep_header_dir);      
-     }
-
-     this->FileManager.WriteToFile("\n");
-
-     this->FileManager.WriteToFile(")");
-
-       
-     */
+  
 
      this->FileManager.WriteToFile("\n");
 
@@ -344,107 +316,6 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.FileClose();
 
-
-     std::string directory_list_file_path, cmake_sub_dir;
-
-     this->CMAKE_SubDir_Determination(cmake_sub_dir);
-
-     this->CMAKE_Sub_Directory_File_Path_Determination(directory_list_file_path);
-
-     std::string sub_directory_command = "add_subdirectory(" + cmake_sub_dir + ")";
-
-
-     if(!this->FileManager.Is_Path_Exist(directory_list_file_path)){
-        
-        this->FileManager.SetFilePath(directory_list_file_path);
-
-        this->FileManager.FileOpen(Af);  
- 
-        this->FileManager.WriteToFile("\n\n");
-
-        this->FileManager.WriteToFile(sub_directory_command);
-
-        this->FileManager.FileClose();
-
-     }
-     else{
-
-
-          this->StrOpr.SetFilePath(directory_list_file_path);
-
-          bool _exist_status = this->StrOpr.Is_String_Exist_On_File(sub_directory_command);
-
-          this->StrOpr.Clear_Dynamic_Memory();
-
-          if(!_exist_status){
-
-             this->FileManager.SetFilePath(directory_list_file_path);
-
-             this->FileManager.FileOpen(Af);  
- 
-             this->FileManager.WriteToFile("\n\n");
-
-             this->FileManager.WriteToFile(sub_directory_command);
-
-             this->FileManager.FileClose();
-          }
-     }
-
-
-
-     std::string include_command = "include(" + file_name + ")";
-
-     std::string CMAKE_List_File_Path = file_dir;
-     
-     if(this->opr_sis == 'w'){
-
-          CMAKE_List_File_Path.push_back('\\');
-     }
-
-     if(this->opr_sis == 'l'){
-
-        CMAKE_List_File_Path.push_back('/');
-     }
-     
-     CMAKE_List_File_Path = CMAKE_List_File_Path + "CMakeLists.txt";
-
-     if(this->FileManager.Is_Path_Exist(CMAKE_List_File_Path)){
-          
-        this->StrOpr.SetFilePath(CMAKE_List_File_Path);
-
-        bool inc_word_exist_status = this->StrOpr.Is_String_Exist_On_File(include_command);;
-
-        this->StrOpr.Clear_Dynamic_Memory();
-
-        if(!inc_word_exist_status){
-
-           this->FileManager.SetFilePath(CMAKE_List_File_Path);
-
-           this->FileManager.FileOpen(Af);     
-
-           this->FileManager.WriteToFile("\n");
-
-           this->FileManager.WriteToFile(include_command);
-
-           this->FileManager.WriteToFile("\n");
-
-           this->FileManager.FileClose();      
-        }    
-     }
-     else{
-
-           this->FileManager.SetFilePath(CMAKE_List_File_Path);
-
-           this->FileManager.FileOpen(Af);     
-
-           this->FileManager.WriteToFile("\n");
-
-           this->FileManager.WriteToFile(include_command);
-
-           this->FileManager.WriteToFile("\n");
-
-           this->FileManager.FileClose();
-     }
 }
 
 void CMAKE_Target_Library_Builder::Find_Construction_Directory(std::string & dir, std::string file_path){
@@ -512,6 +383,114 @@ void CMAKE_Target_Library_Builder::CMAKE_SubDir_Determination(std::string & sub_
      sub_dir_path = git_dir;
 }
 
+
+ void CMAKE_Target_Library_Builder::Add_Target_Path_To_Directory_List(){ // Mutual exclusion is required
+       
+      std::string directory_list_file_path, cmake_sub_dir;
+
+      this->CMAKE_SubDir_Determination(cmake_sub_dir);
+
+      this->CMAKE_Sub_Directory_File_Path_Determination(directory_list_file_path);
+
+      std::string sub_directory_command = "add_subdirectory(" + cmake_sub_dir + ")";
+
+
+      if(!this->FileManager.Is_Path_Exist(directory_list_file_path)){
+        
+         this->FileManager.SetFilePath(directory_list_file_path);
+
+         this->FileManager.FileOpen(Af);  
+ 
+         this->FileManager.WriteToFile("\n\n");
+
+         this->FileManager.WriteToFile(sub_directory_command);
+
+         this->FileManager.FileClose();
+     }
+     else{
+
+
+          this->StrOpr.SetFilePath(directory_list_file_path);
+
+          bool _exist_status = this->StrOpr.Is_String_Exist_On_File(sub_directory_command);
+
+          this->StrOpr.Clear_Dynamic_Memory();
+
+          if(!_exist_status){
+
+             this->FileManager.SetFilePath(directory_list_file_path);
+
+             this->FileManager.FileOpen(Af);  
+ 
+             this->FileManager.WriteToFile("\n\n");
+
+             this->FileManager.WriteToFile(sub_directory_command);
+
+             this->FileManager.FileClose();
+          }
+     }
+ }
+
+void CMAKE_Target_Library_Builder::Construct_SubDirectory_List_File(){
+
+     std::string file_name = this->Data_Ptr->source_file_name_witout_ext  + ".cmake";
+
+     std::string file_dir = this->Data_Ptr->src_sys_dir;
+
+     std::string include_command = "include(" + file_name + ")";
+
+     std::string CMAKE_List_File_Path = file_dir;
+     
+     if(this->opr_sis == 'w'){
+
+          CMAKE_List_File_Path.push_back('\\');
+     }
+
+     if(this->opr_sis == 'l'){
+
+        CMAKE_List_File_Path.push_back('/');
+     }
+     
+     CMAKE_List_File_Path = CMAKE_List_File_Path + "CMakeLists.txt";
+
+     if(this->FileManager.Is_Path_Exist(CMAKE_List_File_Path)){
+          
+        this->StrOpr.SetFilePath(CMAKE_List_File_Path);
+
+        bool inc_word_exist_status = this->StrOpr.Is_String_Exist_On_File(include_command);;
+
+        this->StrOpr.Clear_Dynamic_Memory();
+
+        if(!inc_word_exist_status){
+
+           this->FileManager.SetFilePath(CMAKE_List_File_Path);
+
+           this->FileManager.FileOpen(Af);     
+
+           this->FileManager.WriteToFile("\n");
+
+           this->FileManager.WriteToFile(include_command);
+
+           this->FileManager.WriteToFile("\n");
+
+           this->FileManager.FileClose();      
+        }    
+     }
+     else{
+
+           this->FileManager.SetFilePath(CMAKE_List_File_Path);
+
+           this->FileManager.FileOpen(Af);     
+
+           this->FileManager.WriteToFile("\n");
+
+           this->FileManager.WriteToFile(include_command);
+
+           this->FileManager.WriteToFile("\n");
+
+           this->FileManager.FileClose();
+     }
+}
 
 std::string CMAKE_Target_Library_Builder::Get_Construction_Dir(){
 

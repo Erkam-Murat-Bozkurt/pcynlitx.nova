@@ -35,14 +35,14 @@
 class CMAKE_Build_System_Generator
 {
 public:
- CMAKE_Build_System_Generator(char * DesPath, char opr_sis);
+ CMAKE_Build_System_Generator(char * DesPath, char opr_sis, char build_type);
  virtual ~CMAKE_Build_System_Generator();
  void Construct_Build_System();
- void Receive_Git_Data_Processor(Git_Data_Processor * proc);
- void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dep_ptr);
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Clear_Dynamic_Memory();
 protected:
+ Git_Data_Processor Data_Processor;
+ Descriptor_File_Reader Des_Reader;
+ Source_File_Dependency_Determiner Dep_Determiner;
  CMAKE_System_Constructor CMAKE_ListFileBuilder;
  CMAKE_Main_File_Writer CMAKE_MainFileBuilder;
  char opr_sis;

@@ -243,6 +243,12 @@ void CMAKE_System_Constructor::Perform_Data_Map_Construction(){
 
 void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
 
+     std::unique_lock<std::mutex> mt(this->mtx);
+
+     mt.unlock();
+
+
+
      CMAKE_Target_Library_Builder Target_Builder;
 
      Target_Builder.Receive_Compiler_Data_Pointer(this->Dep_Determiner->Get_Compiler_Data_Address());
@@ -258,6 +264,15 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
          std::string source_file_path = this->Compiler_Data_Pointer->at(i).source_file_path;
          
          Target_Builder.Build_MakeFile(source_file_path);
+
+         mt.lock();
+
+         Target_Builder.Add_Target_Path_To_Directory_List();
+
+         Target_Builder.Construct_SubDirectory_List_File();
+
+         mt.unlock();
+
 
          std::string construction_dir = Target_Builder.Get_Construction_Dir();
 

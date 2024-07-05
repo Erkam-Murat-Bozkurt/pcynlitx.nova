@@ -61,6 +61,7 @@ protected:
  std::vector<std::thread> threadPool;
  std::vector<std::string> construction_dirs;
  std::unordered_map<std::string, Compiler_Data> DataMap;
+ std::mutex mtx;
  std::string Warehouse_Path;
  std::string Repo_Dir;
  std::string repo_head_dir;
