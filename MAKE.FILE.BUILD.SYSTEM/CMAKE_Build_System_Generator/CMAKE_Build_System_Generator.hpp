@@ -37,7 +37,7 @@ class CMAKE_Build_System_Generator
 public:
  CMAKE_Build_System_Generator(char * DesPath, char opr_sis, char build_type);
  virtual ~CMAKE_Build_System_Generator();
- void Construct_Build_System();
+ void Construct_Build_System(std::string project_name, std::string version_num);
  void Clear_Dynamic_Memory();
 protected:
  Git_Data_Processor Data_Processor;

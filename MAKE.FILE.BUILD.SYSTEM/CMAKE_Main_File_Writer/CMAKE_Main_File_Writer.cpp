@@ -70,9 +70,7 @@ void CMAKE_Main_File_Writer::Receive_Git_Data_Processor(Git_Data_Processor * Git
 }
 
 
-void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
-
-     this->CMAKE_SubDirectory_Determination();
+void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std::string version_num){
 
      this->Memory_Delete_Condition = false;
 
@@ -102,10 +100,6 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
      this->FileManager.WriteToFile("\n");
 
-
-     std::string project_name = "default_proj";
-
-     std::string version_num = "1.0";
 
      this->FileManager.WriteToFile("\n set( CMAKE_CXX_COMPILER \"D:/mingw64/bin/g++.exe\" )");
 
@@ -252,7 +246,13 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
      this->FileManager.WriteToFile("\n\n");
 
-     this->FileManager.WriteToFile("add_library(default_proj_lib ");
+     this->FileManager.WriteToFile("add_library(");
+
+     this->FileManager.WriteToFile(project_name);
+
+
+     this->FileManager.WriteToFile("_lib ");
+
 
      this->FileManager.WriteToFile(project_target_list);
 
@@ -304,112 +304,4 @@ void CMAKE_Main_File_Writer::Receive_Source_File_Dependency_Determiner(Source_Fi
      * dep_ptr){
 
      this->Dep_Determiner = dep_ptr;
-}
-
-
-
-void CMAKE_Main_File_Writer::CMAKE_SubDirectory_Determination(){
-
-     const std::vector<Git_Sub_Directory_Data> * Git_Sub_Dirs = this->Git_Processor->Get_Directory_Tree_Data();
-
-     std::vector<std::string> * file_paths = this->Git_Processor->Get_File_System_Path_Address();
-
-     Header_File_Determiner HDR_Determiner(this->opr_sis);
-
-     Source_File_Determiner SRC_Determiner;
-
-     StringOperator StrOpr;
-
-     for(size_t i=0;i<Git_Sub_Dirs->size();i++){
-
-         Git_Sub_Directory_Data Dir_Data = Git_Sub_Dirs->at(i);
-
-         for(size_t j=0;j<file_paths->size();j++){
-           
-             bool inc = StrOpr.CheckStringInclusion(file_paths->at(j),Dir_Data.dir_path);
-
-             if(inc){
-            
-                bool is_src_file = SRC_Determiner.Is_Source_File(file_paths->at(j));
-
-                bool is_hdr_file = HDR_Determiner.Is_Header(file_paths->at(j));
-
-                if(is_src_file || is_hdr_file){
-
-                   Dir_Data.cmake_dir_status = true;
-
-                   std::string file_dir;
-
-                   this->Find_File_Directory(file_dir,file_paths->at(j));
-
-                   if(Dir_Data.dir_path == file_dir){
-
-                      Dir_Data.source_file_inc_status = true;
-                   }
-                
-                   break;
-                }
-             }
-         }
-     }
-}
-
-
-
-void CMAKE_Main_File_Writer::Find_File_Directory(std::string & file_dir, std::string file_path){
-
-     std::string repo_dir = this->Des_Reader->Get_Repo_Directory_Location();
-
-     size_t path_size = file_path.size();
-
-     size_t end_point = path_size;
-
-     size_t start_point = repo_dir.size() + 1;
-
-     for(size_t i=path_size;i>0;i--){
-
-         if((file_path[i]=='/') || (file_path[i]=='\\')){
-
-            end_point = i;
-
-            break;
-         }
-     }
-
-     for(size_t i=start_point;i<end_point;i++){
-
-         file_dir.push_back(file_path[i]);
-     }
-
-     file_dir.shrink_to_fit();
-}
-
-
-void CMAKE_Main_File_Writer::Clear_String_Vector(std::vector<std::string> & str){
-
-     str.shrink_to_fit();
-
-     for(size_t i=0;i<str.size();i++){
-
-         this->Clear_String_Memory(str.at(i));
-     }
-
-     if(!str.empty())
-     {
-         str.clear();
-         str.shrink_to_fit();
-     }
- }
-
-
-
-
-void CMAKE_Main_File_Writer::Clear_String_Memory(std::string & str)
-{
-     if(!str.empty()){
-
-         str.clear();
-
-         str.shrink_to_fit();
-     }
 }

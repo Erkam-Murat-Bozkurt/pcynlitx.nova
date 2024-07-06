@@ -72,14 +72,22 @@ void CMAKE_Build_System_Generator::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
+         this->Data_Processor.Clear_Dynamic_Memory();
 
+         this->Des_Reader.Clear_Dynamic_Memory();
+
+         this->Dep_Determiner.Clear_Dynamic_Memory();
+
+         this->CMAKE_ListFileBuilder.Clear_Dynamic_Memory();
+
+         this->CMAKE_MainFileBuilder.Clear_Dynamic_Memory();
      }
 }
 
 
-void CMAKE_Build_System_Generator::Construct_Build_System(){
+void CMAKE_Build_System_Generator::Construct_Build_System(std::string project_name, std::string version_num){
 
-     this->CMAKE_MainFileBuilder.Build_Main_CMAKE_File();
+     this->CMAKE_MainFileBuilder.Build_Main_CMAKE_File(project_name,version_num);
 
      this->CMAKE_ListFileBuilder.Build_Make_Files();
 }

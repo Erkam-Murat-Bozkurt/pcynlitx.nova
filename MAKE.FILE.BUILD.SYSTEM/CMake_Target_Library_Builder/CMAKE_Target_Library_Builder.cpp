@@ -48,6 +48,8 @@ void CMAKE_Target_Library_Builder::Clear_Dynamic_Memory(){
          this->Memory_Delete_Condition = true;
 
          this->StrOpr.Clear_Dynamic_Memory();
+
+         this->Path_Determiner.Clear_Dynamic_Memory();
      }
 }
 

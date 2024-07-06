@@ -37,24 +37,18 @@ class CMAKE_Main_File_Writer
 public:
  CMAKE_Main_File_Writer();
  virtual ~CMAKE_Main_File_Writer();
- void Build_Main_CMAKE_File();
+ void Build_Main_CMAKE_File(std::string project_name, std::string version_num);
  void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dep_ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * Git_Proc);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Operating_System(char opr_sis);
- void CMAKE_SubDirectory_Determination();
- const std::vector<Git_Sub_Directory_Data> * Get_CMAKE_SubDir_List();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 private:
- void Clear_String_Vector(std::vector<std::string> & str); 
- void Clear_String_Memory(std::string & pointer);
- void Find_File_Directory(std::string & file_dir, std::string file_path);
  Source_File_Dependency_Determiner * Dep_Determiner;
  std::vector<Compiler_Data> * Compiler_Data_Pointer;
  Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;
- IntToCharTranslater Translater;
  Git_Data_Processor * Git_Processor;
  char opr_sis;
  bool Include_Line_Condition;

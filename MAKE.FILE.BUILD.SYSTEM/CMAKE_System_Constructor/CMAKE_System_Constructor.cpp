@@ -6,7 +6,7 @@
 
 CMAKE_System_Constructor::CMAKE_System_Constructor(char * DesPath, char opr_sis) 
 {
-     this->Memory_Delete_Condition = true;
+     this->Memory_Delete_Condition = false;
 
      this->opr_sis = opr_sis;
 
