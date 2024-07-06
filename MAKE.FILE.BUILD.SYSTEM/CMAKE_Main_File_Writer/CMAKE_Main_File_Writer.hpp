@@ -55,8 +55,6 @@ private:
  Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;
  IntToCharTranslater Translater;
- std::unordered_map<std::string, Compiler_Data> * DataMap_Pointer;
- std::vector<Git_Sub_Directory_Data> cmake_sub_dirs_list;
  Git_Data_Processor * Git_Processor;
  char opr_sis;
  bool Include_Line_Condition;

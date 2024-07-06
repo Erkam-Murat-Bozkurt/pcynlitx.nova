@@ -12,9 +12,6 @@ add_library(make_fbld_sys
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Builder/Make_File_Builder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Builder/Make_File_Builder.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Target_Library_Builder/CMAKE_Target_Library_Builder.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Target_Library_Builder/CMAKE_Target_Library_Builder.hpp
-
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Cleaner/Make_File_Cleaner.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Cleaner/Make_File_Cleaner.hpp
 
@@ -24,17 +21,24 @@ add_library(make_fbld_sys
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Data_Collector/MakeFile_Data_Collector.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Data_Collector/MakeFile_Data_Collector.hpp
     
-
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Directory_Constructor/MakeFile_Directory_Constructor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Directory_Constructor/MakeFile_Directory_Constructor.hpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Build_System_Generator/CMAKE_Build_System_Generator.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Build_System_Generator/CMAKE_Build_System_Generator.hpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_System_Constructor/CMAKE_System_Constructor.cpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_System_Constructor/CMAKE_System_Constructor.hpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Main_File_Writer/CMAKE_Main_File_Writer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Main_File_Writer/CMAKE_Main_File_Writer.hpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMake_Target_Library_Builder/CMAKE_Target_Library_Builder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMake_Target_Library_Builder/CMAKE_Target_Library_Builder.hpp
 )
+
+
 
 target_include_directories(make_fbld_sys PUBLIC
 
@@ -44,9 +48,11 @@ target_include_directories(make_fbld_sys PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Make_File_Cleaner    
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Data_Collector    
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Directory_Constructor    
-    ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Target_Library_Builder    
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Build_System_Generator
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_System_Constructor
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Main_File_Writer
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMake_Target_Library_Builder    
+
 
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Build_Tools_Initializer
@@ -137,10 +143,10 @@ target_link_directories(make_fbld_sys PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Path_Determiner    
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Data_Collector    
     ${CMAKE_CURRENT_SOURCE_DIR}/MakeFile_Directory_Constructor    
-    ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Target_Library_Builder    
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMake_Target_Library_Builder    
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Build_System_Generator
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_System_Constructor
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Main_File_Writer
-
 
     ${CMAKE_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Build_Tools_Initializer
 

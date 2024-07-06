@@ -347,15 +347,11 @@ void CMAKE_Main_File_Writer::CMAKE_SubDirectory_Determination(){
                       Dir_Data.source_file_inc_status = true;
                    }
                 
-                   this->cmake_sub_dirs_list.push_back(Dir_Data);
-
                    break;
                 }
              }
          }
      }
-
-     this->cmake_sub_dirs_list.shrink_to_fit();
 }
 
 
@@ -386,12 +382,6 @@ void CMAKE_Main_File_Writer::Find_File_Directory(std::string & file_dir, std::st
      }
 
      file_dir.shrink_to_fit();
-}
-
-
-const std::vector<Git_Sub_Directory_Data> * CMAKE_Main_File_Writer::Get_CMAKE_SubDir_List(){
-
-     return &this->cmake_sub_dirs_list;
 }
 
 

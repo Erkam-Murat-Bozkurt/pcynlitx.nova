@@ -73,8 +73,6 @@ void CMAKE_System_Constructor::Build_Make_Files(){
 
      this->Mk_Dir_Constructor.Construct_MakeFile_Directories();
 
-     this->Determine_Project_Directories();
-
      this->Compiler_Data_Pointer = this->Dep_Determiner->Get_Compiler_Data_Address();
 
      this->Compiler_Data_Pointer->shrink_to_fit();
@@ -273,28 +271,9 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
 
          mt.unlock();
 
-
-         std::string construction_dir = Target_Builder.Get_Construction_Dir();
-
-         this->construction_dirs.push_back(construction_dir);
-
          Target_Builder.Clear_Dynamic_Memory();
      }
-
-     this->construction_dirs.shrink_to_fit();
 }
-
-
-
-void CMAKE_System_Constructor::Determine_Project_Directories(){
-
-     this->Memory_Delete_Condition = false;
-
-     std::string Objects_Folder = "OBJECT.FILES";
-
-     this->Construct_Path(&(this->repo_obj_dir),Objects_Folder,this->Warehouse_Path);
-}
-
 
 
 void CMAKE_System_Constructor::Construct_Path(std::string * pointer, std::string string, 
@@ -336,11 +315,6 @@ void CMAKE_System_Constructor::Construct_Path(std::string * pointer, std::string
      }
 }
 
-
-const std::vector<std::string> * CMAKE_System_Constructor::Get_CMAKE_Lists_Construction_Directories(){
-
-     return &this->construction_dirs;
-}
 
 
 void CMAKE_System_Constructor::Clear_Vector_Memory(std::vector<std::string> & vec){
