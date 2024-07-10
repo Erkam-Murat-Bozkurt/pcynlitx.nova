@@ -61,6 +61,7 @@ CMAKE_SYS_CON=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\CMAKE_System_Constructor
 
 CMAKE_MN_FL_WR=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\CMAKE_Main_File_Writer
 
+CMAKE_EXE_BLDR=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\CMAKE_Executable_Target_Constructor
 
 
 VPATH = $(INT_TO_CHAR)    $(FILE_OPRS)    $(DIR_OPS)   \
@@ -87,11 +88,13 @@ VPATH = $(INT_TO_CHAR)    $(FILE_OPRS)    $(DIR_OPS)   \
 		$(SYS_INT) \
 		$(MAKE_FILE_DIR_CON) \
 		$(CMAKE_SYS_CON) \
-		$(CMAKE_MN_FL_WR)
+		$(CMAKE_MN_FL_WR) \
+		$(CMAKE_EXE_BLDR)
 	    
 
 CMAKE_Build_System_Generator.exe: CMAKE_Build_System_Generator_Main_File.cpp \
 	CMAKE_Build_System_Generator.cpp \
+	CMAKE_Executable_Target_Constructor.cpp \
 	CMAKE_Main_File_Writer.cpp \
 	CMAKE_System_Constructor.cpp \
 	CMAKE_Target_Library_Builder.cpp \
@@ -125,6 +128,7 @@ CMAKE_Build_System_Generator.exe: CMAKE_Build_System_Generator_Main_File.cpp \
 	Cpp_FileOperations.cpp \
 	CharOperator.cpp \
 	CMAKE_Build_System_Generator.hpp \
+	CMAKE_Executable_Target_Constructor.hpp \
 	CMAKE_System_Constructor.hpp \
 	CMAKE_System_Constructor.hpp \
 	CMAKE_Target_Library_Builder.hpp \
@@ -200,6 +204,7 @@ CMAKE_Build_System_Generator.exe: CMAKE_Build_System_Generator_Main_File.cpp \
 	-I$(MAKE_FILE_DIR_CON) \
 	-I$(CMAKE_SYS_CON) \
 	-I$(CMAKE_MN_FL_WR) \
+	-I$(CMAKE_EXE_BLDR) \
 	-L$(MAKE_BLD) \
 	-L$(MAKE_DATA_COL) \
 	-L$(MAKE_FILE_PATH) \
@@ -242,8 +247,10 @@ CMAKE_Build_System_Generator.exe: CMAKE_Build_System_Generator_Main_File.cpp \
 	-L$(MAKE_FILE_DIR_CON) \
 	-L$(CMAKE_SYS_CON) \
 	-L$(CMAKE_MN_FL_WR) \
+	-L$(CMAKE_EXE_BLDR) \
 	CMAKE_Build_System_Generator_Main_File.cpp \
 	CMAKE_Build_System_Generator.cpp \
+	$(CMAKE_EXE_BLDR)\CMAKE_Executable_Target_Constructor.cpp \
 	$(CMAKE_SYS_CON)\CMAKE_System_Constructor.cpp \
 	$(CMAKE_MN_FL_WR)\CMAKE_Main_File_Writer.cpp \
 	$(MAKE_BLD)\CMAKE_Target_Library_Builder.cpp \
@@ -286,6 +293,7 @@ CMAKE_Build_System_Generator.exe: CMAKE_Build_System_Generator_Main_File.cpp \
 	$(FILE_OPRS)\Cpp_FileOperations.cpp \
 	$(SYS_INT)\Custom_System_Interface.cpp \
 	-include CMAKE_Build_System_Generator.hpp \
+	-include $(CMAKE_EXE_BLDR)\CMAKE_Executable_Target_Constructor.hpp \
 	-include $(CMAKE_SYS_CON)\CMAKE_System_Constructor.hpp \
 	-include $(CMAKE_MN_FL_WR)\CMAKE_Main_File_Writer.hpp \
 	-include $(MAKE_BLD)\CMAKE_Target_Library_Builder.hpp \

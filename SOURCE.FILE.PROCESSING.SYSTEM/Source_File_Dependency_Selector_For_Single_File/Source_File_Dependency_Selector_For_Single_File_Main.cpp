@@ -27,7 +27,7 @@ int main(int argc, char ** argv){
 
 
 
-    Descriptor_File_Reader Des_Reader('w');
+    Descriptor_File_Reader Des_Reader('w','n');
 
     Des_Reader.Receive_Descriptor_File_Path(argv[1]);
 
@@ -35,7 +35,7 @@ int main(int argc, char ** argv){
 
     std::cout << "\n Descriptor File Readed";
 
-    Git_Data_Processor Git_Data_Proc('w');
+    Git_Data_Processor Git_Data_Proc('w','n');
 
     Git_Data_Proc.Receive_Descriptor_File_Path(argv[1]);
 

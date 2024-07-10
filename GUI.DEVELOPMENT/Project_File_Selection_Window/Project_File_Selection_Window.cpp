@@ -190,7 +190,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      new_file_text->SetFont(Text_Font);
 
-     new_file_text->SetForegroundColour(wxColour(250,250,250));
+     new_file_text->SetForegroundColour(wxColour(240,240,250));
 
      //new_file_text->SetForegroundColour(wxColour(250,250,250));
      
@@ -208,7 +208,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      project_file_text->SetFont(Text_Font);
 
-     project_file_text->SetForegroundColour(wxColour(250,250,250));
+     project_file_text->SetForegroundColour(wxColour(240,240,250));
 
      //project_file_text->SetForegroundColour(wxColour(250,250,250));
 

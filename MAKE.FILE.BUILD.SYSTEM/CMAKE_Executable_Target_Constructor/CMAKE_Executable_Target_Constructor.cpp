@@ -76,8 +76,6 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      this->Memory_Delete_Condition = false;
 
-     this->Dep_Determiner->Collect_Dependency_Information(file_path);
-
      this->Comp_Data_Ptr = this->Dep_Determiner->Get_Compiler_Data_Address();
 
 
@@ -183,6 +181,8 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
          this->FileManager.WriteToFile(dep_header_name);      
      }
 
+
+
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile(")");
@@ -216,6 +216,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
      this->FileManager.WriteToFile(")");
 
 
+
      const std::vector<std::string> & Lib_Dirs =  this->Des_Reader->Get_Library_Directories();
 
      if(Lib_Dirs.size()>0){
@@ -237,6 +238,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
         this->FileManager.WriteToFile("\n\n )");
      }
+
 
 
      const std::vector<std::string> & Libs =  this->Des_Reader->Get_Library_Files();
@@ -273,6 +275,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
         this->FileManager.WriteToFile("\n )");
      }  
+
 
 
      this->FileManager.WriteToFile("\n\n ");
@@ -367,7 +370,6 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
      }
 
 
-
      std::string include_command = "include(" + file_name + ")";
 
      std::string CMAKE_List_File_Path = file_dir;
@@ -422,8 +424,6 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
            this->FileManager.FileClose();
      }
-
-
 }
 
 void CMAKE_Executable_Target_Constructor::Find_Construction_Directory(std::string & dir, std::string file_path){

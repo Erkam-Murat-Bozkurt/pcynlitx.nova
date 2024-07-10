@@ -97,6 +97,12 @@ add_executable(CMAKE_Build
 
         ${CMAKE_CURRENT_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/CMAKE_Build_System_Generator/CMAKE_Build_System_Generator_Main_File.cpp)
 
+
+add_executable(CMAKE_Build_Executable
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor_Main_File.cpp)
+
+
 add_executable(build_gui
 
         ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/wxLauncher.cpp )
@@ -131,6 +137,11 @@ target_link_libraries(CBuild PUBLIC kernel proj_bld_tools exec_make_bld script_w
 
 
 target_link_libraries(CMAKE_Build PUBLIC proj_bld_tools  make_fbld_sys 
+
+                   src_proc_sys git_data_processing_system src_dat_col des_reader basic_tools)
+
+
+target_link_libraries(CMAKE_Build_Executable PUBLIC proj_bld_tools  make_fbld_sys 
 
                    src_proc_sys git_data_processing_system src_dat_col des_reader basic_tools)
 

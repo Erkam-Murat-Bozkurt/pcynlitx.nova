@@ -3,8 +3,8 @@
 
 
 
-#ifndef CMAKE_TARGET_LIBRARY_BUILDER_HPP
-#define CMAKE_TARGET_LIBRARY_BUILDER_HPP
+#ifndef CMAKE_EXECUTABLE_TARGET_CONSTRUCTOR_HPP
+#define CMAKE_EXECUTABLE_TARGET_CONSTRUCTOR_HPP
 
 #include <cstring>
 #include <cstdlib>
@@ -53,7 +53,6 @@ private:
  Descriptor_File_Reader * Des_Reader;
  StringOperator StrOpr;
  Cpp_FileOperations FileManager;
- IntToCharTranslater Translater;
  std::vector<Compiler_Data> * Comp_Data_Ptr;
  Compiler_Data * Data_Ptr;
  char opr_sis;
@@ -61,4 +60,4 @@ private:
  bool Memory_Delete_Condition;
 };
 
-#endif /* CMAKE_TARGET_LIBRARY_BUILDER_HPP */
+#endif /* CMAKE_EXECUTABLE_TARGET_CONSTRUCTOR_HPP */

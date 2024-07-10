@@ -179,7 +179,7 @@ void Project_Src_Code_Rdr::Read_For_Small_Data_Set(size_t repo_size){
 
 size_t Project_Src_Code_Rdr::Split_Range(size_t range_size, size_t partition, size_t & remaining_job){
 
-    if(range_size ==0){
+    if(range_size == 0){
 
         range_size = 1;
     }
@@ -196,7 +196,7 @@ size_t Project_Src_Code_Rdr::Split_Range(size_t range_size, size_t partition, si
         range = 1;
     }
 
-    remaining_job = range_size%partition;
+    remaining_job = range_size- partition*range;
 
     return range;    
 }

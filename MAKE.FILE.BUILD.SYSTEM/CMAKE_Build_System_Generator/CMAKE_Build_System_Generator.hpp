@@ -16,6 +16,7 @@
 #include <thread>
 #include <mutex>
 #include "CMAKE_System_Constructor.hpp"
+#include "CMAKE_Executable_Target_Constructor.hpp"
 #include "CMAKE_Main_File_Writer.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "CMAKE_Target_Library_Builder.hpp"
@@ -38,6 +39,7 @@ public:
  CMAKE_Build_System_Generator(char * DesPath, char opr_sis, char build_type);
  virtual ~CMAKE_Build_System_Generator();
  void Construct_Build_System(std::string project_name, std::string version_num);
+ void Construct_Exe_Build_System(std::string target_main_file_path, std::string exe_name);
  void Clear_Dynamic_Memory();
 protected:
  Git_Data_Processor Data_Processor;
@@ -45,6 +47,8 @@ protected:
  Source_File_Dependency_Determiner Dep_Determiner;
  CMAKE_System_Constructor CMAKE_ListFileBuilder;
  CMAKE_Main_File_Writer CMAKE_MainFileBuilder;
+ CMAKE_Executable_Target_Constructor Executable_Target_Constructor;
+ std::string DesPATH;
  char opr_sis;
  bool Memory_Delete_Condition;
 };
