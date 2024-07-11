@@ -52,6 +52,7 @@ void Descriptor_File_Data_Collector::Initialize_Members(){
         this->Linker_Options_Record_Area[i] = 0;
         this->Warehouse_Location_Record_Area[i] = 0;
         this->Root_Directory_Record_Area[i] = 0;
+        this->Build_System_Type_Record_Area[i] = 0;
      }
 
      this->Library_Directories_Record_Number = 0;
@@ -102,6 +103,8 @@ void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(){
      this->Determine_Compiler_Options_Record_Area();
 
      this->Determine_Linker_Options_Record_Area();
+
+     this->Determine_Build_System_Type();
 
      this->StringManager.Clear_Dynamic_Memory();
 
@@ -353,6 +356,35 @@ void Descriptor_File_Data_Collector::Determine_Compiler_Options_Record_Area(){
      this->FindStringPoint(end_brace,start_brace_line);
 }
 
+
+void Descriptor_File_Data_Collector::Determine_Build_System_Type(){
+
+     char key_word [] = "[BUILD-SYSTEM]";
+
+
+     int record_stard = 1;
+
+     int keyword_line = this->FindStringPoint(key_word,record_stard);
+
+
+     char start_brace [] = "{";
+
+     char end_brace []   = "}";
+
+
+     this->Build_System_Type_Record_Area[0] =
+
+     this->FindStringPoint(start_brace,keyword_line-1);
+
+
+     int start_brace_line = this->Build_System_Type_Record_Area[0];
+
+     this->Build_System_Type_Record_Area[1] =
+
+     this->FindStringPoint(end_brace,start_brace_line);
+}
+
+
 void Descriptor_File_Data_Collector::Determine_Linker_Options_Record_Area(){
 
      char key_word [] = "[LINKER-OPTIONS]";
@@ -536,4 +568,10 @@ int Descriptor_File_Data_Collector::Get_Main_File_Name_Record_Area(int index){
 int Descriptor_File_Data_Collector::Get_Executable_File_Name_Record_Area(int index){
 
     return this->Executable_File_Name_Area[index];
+}
+
+
+int Descriptor_File_Data_Collector::Get_Build_System_Type_Record_Area(int index){
+
+    return this->Build_System_Type_Record_Area[index];
 }

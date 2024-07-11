@@ -23,7 +23,6 @@ Descriptor_File_Reader::Descriptor_File_Reader(char opr_sis, char build_type) :
    this->gui_syntax_error = false;
 
    this->is_project_file_invalid = false;
-
 }
 
 
@@ -180,6 +179,8 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
          this->Read_Compiler_Options();
 
          this->Read_Linker_Options();
+
+         this->Read_Build_System_Type();
      }
      else{
 
@@ -516,6 +517,83 @@ void Descriptor_File_Reader::Read_Standard(){
      }
 }
 
+
+
+
+
+void Descriptor_File_Reader::Read_Build_System_Type(){
+
+     int start_line = this->Data_Collector.Get_Build_System_Type_Record_Area(0);
+
+     int end_line   = this->Data_Collector.Get_Build_System_Type_Record_Area(1);
+
+     int record_num = 0;
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            record_num++;
+         }
+     }
+
+     if((record_num == 0) && (this->Data_Record_Cond == false)) {
+
+        std::cout << "\n\n";
+
+        std::cout << "\n Error:";
+
+        this->error_message = "\n There is no any decleration about build system type selection";
+
+        std::cout << this->error_message;
+
+        std::cout << "\n\n";
+
+        if(!this->gui_read_status){
+
+            exit(0);
+        }
+        else{
+
+            this->gui_read_success = false;
+        }
+     }
+
+     if(this->gui_read_status){
+
+        if(this->gui_read_success){
+
+            for(int i=start_line+1;i<end_line-1;i++){
+
+                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+
+                if(this->StringManager.CheckStringLine(line)){
+
+                   this->build_system = line;
+
+                   break;
+                }
+            }
+        }
+     }
+     else{
+           
+            for(int i=start_line+1;i<end_line-1;i++){
+
+                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+
+                if(this->StringManager.CheckStringLine(line)){
+
+                   this->build_system = line;
+
+                   break;
+                }
+            }
+     }
+
+}
 
 
 
@@ -959,6 +1037,12 @@ std::string Descriptor_File_Reader::Get_Repo_Directory_Location(){
 std::string Descriptor_File_Reader::Get_Descriptor_File_Path(){
 
      return this->descriptor_file_path;
+}
+
+
+std::string Descriptor_File_Reader::Get_Build_System_Type(){
+
+     return this->build_system;
 }
 
 

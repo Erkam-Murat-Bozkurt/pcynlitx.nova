@@ -144,6 +144,8 @@ void Descriptor_File_Syntax_Controller::Control_Keywords(){
 
      char linker_options [] = "[LINKER-OPTIONS]";
 
+     char build_system_type [] = "[BUILD-SYSTEM]";
+
 
      this->syntax_error_status = false;
 
@@ -301,6 +303,27 @@ void Descriptor_File_Syntax_Controller::Control_Keywords(){
          std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
          std::cout << "\n\n";
 
+
+         if(this->gui_read_status){
+
+            this->syntax_error_status = true;
+
+            this->syntax_error_number++;
+         }
+         else{
+
+            exit(0);
+         }
+     };
+
+      
+     if(!this->Control_String_Inclusion(build_system_type)){
+
+         std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
+         std::cout << "\n\n";
+
+         std::cout << "\n this->gui_read_status:" << this->gui_read_status;
+         std::cin.get();
 
          if(this->gui_read_status){
 

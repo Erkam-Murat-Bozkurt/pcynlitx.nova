@@ -36,6 +36,7 @@ public:
  const std::vector<std::string> & Get_Library_Files();
  const std::vector<std::string> & Get_Exe_File_Names();  
  std::string Get_Standard();
+ std::string Get_Build_System_Type();
  std::string Get_Compiler_Options();
  std::string Get_Linker_Options();
  std::string Get_Warehouse_Location();
@@ -61,6 +62,7 @@ protected:
  void Read_Library_Files();
  void Read_Compiler_Options();
  void Read_Linker_Options();
+ void Read_Build_System_Type();
  void Divide_Options(std::string & options);
  void Clear_String_Memory(std::string * ptr);
  void Clear_Vectory_Memory(std::vector<std::string> * ptr);
@@ -75,6 +77,7 @@ protected:
  int exec_file_name_num;
  std::string descriptor_file_path;
  std::string standard;
+ std::string build_system;
  std::string compiler_options;
  std::string linker_options;
  std::string root_dir;

@@ -37,6 +37,7 @@ public:
  int Get_Warehouse_Location_Record_Area(int index);
  int Get_Main_File_Name_Record_Area(int index);
  int Get_Executable_File_Name_Record_Area(int index);
+ int Get_Build_System_Type_Record_Area(int index);
  int Get_Root_Directory_Record_Area(int index);
  int Get_Descriptor_File_Line_Number();
  std::string Get_Descriptor_File_Line(int line_number);
@@ -55,6 +56,7 @@ protected:
  void Determine_Linker_Options_Record_Area();
  void Determine_Warehouse_Location_Record_Area();
  void Determine_Root_Directory_Record_Area();
+ void Determine_Build_System_Type();
  void Delete_Spaces_on_String(std::string * pointer);
  void Clear_String_Memory(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
@@ -76,6 +78,7 @@ protected:
  int Linker_Options_Record_Area[2];
  int Main_File_Name_Record_Area[2];
  int Executable_File_Name_Area[2];
+ int Build_System_Type_Record_Area[2];
  int Library_Directories_Record_Number;
  int Source_File_Directories_Record_Number;
  int Include_Directories_Record_Number;

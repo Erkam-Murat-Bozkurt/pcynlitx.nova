@@ -25,7 +25,7 @@ int main(int argc, char ** argv){
 
     Des_File_Reader.Receive_Descriptor_File_Path(argv[1]);
 
-    Des_File_Reader.Set_Gui_Read_Status(true);
+    Des_File_Reader.Set_Gui_Read_Status(false);
 
     Des_File_Reader.Read_Descriptor_File();
 
@@ -199,6 +199,24 @@ int main(int argc, char ** argv){
 
         std::cout << "\n There is no linker option decleration";
     }
+
+
+
+    std::cout << "\n\n";
+
+    std::cout << "\n BUILD SYSTEM TYPE RECORD: ";
+
+    if(Des_File_Reader.Get_Build_System_Type() != ""){
+
+       std::cout << "\n ";
+
+       std::cout << Des_File_Reader.Get_Build_System_Type();
+    }
+    else{
+
+        std::cout << "\n There is no build system decleration";
+    }
+
 
     std::cout << "\n\n";
     std::cout << "\n\n";
