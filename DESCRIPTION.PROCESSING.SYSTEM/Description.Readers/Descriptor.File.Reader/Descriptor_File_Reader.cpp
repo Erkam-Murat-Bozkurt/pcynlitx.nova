@@ -231,6 +231,11 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
 
                 this->Read_Linker_Options();
              }
+             
+             if(this->gui_read_success){
+
+                this->Read_Build_System_Type();
+             }
          }
        }
      }

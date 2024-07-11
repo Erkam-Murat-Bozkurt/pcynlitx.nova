@@ -20,6 +20,7 @@
 #include <wx/stattext.h>
 #include <wx/caret.h>
 #include <winuser.h>
+#include <wx/msgdlg.h>
 #include <thread>
 #include <mutex>
 #include <condition_variable>

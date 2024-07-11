@@ -384,6 +384,41 @@ void Project_Descriptions_Printer::Print_Descriptions(){
      this->textctrl->AppendText(wxT("\n"));
 
 
+
+     this->textctrl->SetDefaultStyle(AttrBold);
+
+     this->textctrl->AppendText(wxT("\n\n    BUILD SYSTEM:"));
+
+     this->textctrl->SetDefaultStyle(AttrLigth);
+
+     this->textctrl->AppendText(wxT("\n\n"));
+
+
+
+     std::string build_system_type;
+
+     if(!this->Des_Reader->Get_Build_System_Type().empty()){
+
+        build_system_type =  this->Des_Reader->Get_Build_System_Type();
+
+        build_system_type.push_back('\n');
+
+        this->textctrl->AppendText(" ");
+
+        this->textctrl->AppendText(" ");
+
+        this->textctrl->AppendText(" ");
+
+        this->textctrl->AppendText(" ");
+
+        this->textctrl->AppendText(wxString(build_system_type));
+     }
+
+     this->textctrl->AppendText(wxT("\n"));
+
+
+
+
      this->textctrl->SetDefaultStyle(AttrBold);
 
      this->textctrl->AppendText(wxT("\n\n    INCLUDE DIRECTORY RECORD:"));

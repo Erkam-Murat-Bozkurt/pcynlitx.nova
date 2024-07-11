@@ -28,6 +28,9 @@ BEGIN_EVENT_TABLE(Custom_Multi_DataPanel,wxDialog )
 
     EVT_BUTTON(ID_INSERT_OPTIONS,Custom_Multi_DataPanel::Insert_Option)
 
+    EVT_BUTTON(ID_INSERT_BUILD_SYSTEM_TYPE,Custom_Multi_DataPanel::Select_Build_System_Type)
+
+
 
 
 
@@ -342,6 +345,34 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
 
 
+     // SETTINGS FOR BUILD SYSTEM SELECTION PANEL
+
+
+     this->listctrl_build_system_type = new wxDataViewListCtrl(this->scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,75));
+
+     this->InsertButton_for_build_system_type = new wxButton(this->scroll_win,ID_INSERT_BUILD_SYSTEM_TYPE,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+
+     this->Buton_Sizers[3] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->Buton_Sizers[3]->Add(this->InsertButton_for_build_system_type,0, wxEXPAND | wxALL,10);
+
+
+
+     this->List_Ctrl_Sizers[3] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->List_Ctrl_Sizers[3]->Add(this->listctrl_build_system_type,1,wxEXPAND | wxALL,10);
+
+     this->DataPanel_Sizers[3] = new wxBoxSizer(wxVERTICAL);
+
+     this->DataPanel_Sizers[3]->Add(this->List_Ctrl_Sizers[3],0, wxEXPAND | wxTOP | wxALL,10);
+
+     this->DataPanel_Sizers[3]->Add(this->Buton_Sizers[3],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+     this->listctrl_build_system_type->AppendTextColumn(wxT("BUILD SYSTEM TYPE"));
+
+
+
+
 
 
      // SETTINGS FOR HEADER FILE LOCATIONS DATA PANEL
@@ -355,23 +386,23 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->Clear_Button_for_header_file_locations   = new wxButton(this->scroll_win,ID_CLEAR_HEADER_FILE_LOCATION,wxT("CLEAR"),wxDefaultPosition, wxSize(75, 40)); 
 
 
-     this->Buton_Sizers[3] = new wxBoxSizer(wxHORIZONTAL);
+     this->Buton_Sizers[4] = new wxBoxSizer(wxHORIZONTAL);
 
-     this->Buton_Sizers[3]->Add(this->InsertButton_for_header_file_location,0, wxEXPAND | wxALL,10);
+     this->Buton_Sizers[4]->Add(this->InsertButton_for_header_file_location,0, wxEXPAND | wxALL,10);
 
-     this->Buton_Sizers[3]->Add(this->Remove_Button_for_header_file_locations, 0, wxEXPAND | wxALL,10);
+     this->Buton_Sizers[4]->Add(this->Remove_Button_for_header_file_locations, 0, wxEXPAND | wxALL,10);
 
-     this->Buton_Sizers[3]->Add(this->Clear_Button_for_header_file_locations, 0, wxEXPAND | wxALL,10);
+     this->Buton_Sizers[4]->Add(this->Clear_Button_for_header_file_locations, 0, wxEXPAND | wxALL,10);
 
-     this->List_Ctrl_Sizers[3] = new wxBoxSizer(wxHORIZONTAL);
+     this->List_Ctrl_Sizers[4] = new wxBoxSizer(wxHORIZONTAL);
 
-     this->List_Ctrl_Sizers[3]->Add(this->listctrl_for_header_dir,1,wxEXPAND | wxALL,10);
+     this->List_Ctrl_Sizers[4]->Add(this->listctrl_for_header_dir,1,wxEXPAND | wxALL,10);
 
-     this->DataPanel_Sizers[3] = new wxBoxSizer(wxVERTICAL);
+     this->DataPanel_Sizers[4] = new wxBoxSizer(wxVERTICAL);
 
-     this->DataPanel_Sizers[3]->Add(this->List_Ctrl_Sizers[3],1, wxEXPAND | wxTOP | wxALL,10);
+     this->DataPanel_Sizers[4]->Add(this->List_Ctrl_Sizers[4],1, wxEXPAND | wxTOP | wxALL,10);
 
-     this->DataPanel_Sizers[3]->Add(this->Buton_Sizers[3],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+     this->DataPanel_Sizers[4]->Add(this->Buton_Sizers[4],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
 
      this->listctrl_for_header_dir->AppendTextColumn(wxT("TARGET HEADER FILE DIRECTORIES "));
 
@@ -392,25 +423,25 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->Clear_Button_for_src_file_locations  = new wxButton(this->scroll_win,ID_CLEAR_SRC_LOCATIONS,wxT("CLEAR"),wxDefaultPosition, wxSize(75, 40)); 
 
 
-     this->Buton_Sizers[4] = new wxBoxSizer(wxHORIZONTAL);
+     this->Buton_Sizers[5] = new wxBoxSizer(wxHORIZONTAL);
 
-     this->Buton_Sizers[4]->Add(this->InsertButton_for_src_file_locations,  0, wxEXPAND | wxALL,10);
+     this->Buton_Sizers[5]->Add(this->InsertButton_for_src_file_locations,  0, wxEXPAND | wxALL,10);
 
-     this->Buton_Sizers[4]->Add(this->Remove_Button_for_src_file_locations, 0, wxEXPAND | wxALL,10);
+     this->Buton_Sizers[5]->Add(this->Remove_Button_for_src_file_locations, 0, wxEXPAND | wxALL,10);
 
-     this->Buton_Sizers[4]->Add(this->Clear_Button_for_src_file_locations,  0, wxEXPAND | wxALL,10);
-
-
-     this->List_Ctrl_Sizers[4] = new wxBoxSizer(wxHORIZONTAL);
-
-     this->List_Ctrl_Sizers[4]->Add(this->listctrl_src_file_location,1,wxEXPAND | wxALL,10);
+     this->Buton_Sizers[5]->Add(this->Clear_Button_for_src_file_locations,  0, wxEXPAND | wxALL,10);
 
 
-     this->DataPanel_Sizers[4] = new wxBoxSizer(wxVERTICAL);
+     this->List_Ctrl_Sizers[5] = new wxBoxSizer(wxHORIZONTAL);
 
-     this->DataPanel_Sizers[4]->Add(this->List_Ctrl_Sizers[4],1, wxEXPAND | wxTOP | wxALL,10);
+     this->List_Ctrl_Sizers[5]->Add(this->listctrl_src_file_location,1,wxEXPAND | wxALL,10);
 
-     this->DataPanel_Sizers[4]->Add(this->Buton_Sizers[4],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+     this->DataPanel_Sizers[5] = new wxBoxSizer(wxVERTICAL);
+
+     this->DataPanel_Sizers[5]->Add(this->List_Ctrl_Sizers[5],1, wxEXPAND | wxTOP | wxALL,10);
+
+     this->DataPanel_Sizers[5]->Add(this->Buton_Sizers[5],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
 
      this->listctrl_src_file_location->AppendTextColumn(wxT("TARGET SOURCE FILE DIRECTORIES "));
 
@@ -428,26 +459,26 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->Clear_Button_for_library_dir  = new wxButton(this->scroll_win,ID_CLEAR_LIB_DIRECTORIES,wxT("CLEAR"),wxDefaultPosition, wxSize(75, 40)); 
 
 
-     this->Buton_Sizers[5] = new wxBoxSizer(wxHORIZONTAL);
+     this->Buton_Sizers[6] = new wxBoxSizer(wxHORIZONTAL);
 
-     this->Buton_Sizers[5]->Add(this->InsertButton_for_library_dir,0, wxEXPAND | wxALL,10);
+     this->Buton_Sizers[6]->Add(this->InsertButton_for_library_dir,0, wxEXPAND | wxALL,10);
 
-     this->Buton_Sizers[5]->Add(this->Remove_Button_for_library_dir, 0, wxEXPAND | wxALL,10);
+     this->Buton_Sizers[6]->Add(this->Remove_Button_for_library_dir, 0, wxEXPAND | wxALL,10);
 
-     this->Buton_Sizers[5]->Add(this->Clear_Button_for_library_dir, 0, wxEXPAND | wxALL,10);
-
-
-
-     this->List_Ctrl_Sizers[5] = new wxBoxSizer(wxHORIZONTAL);
-
-     this->List_Ctrl_Sizers[5]->Add(this->listctrl_library_dir,1,wxEXPAND | wxALL,10);
+     this->Buton_Sizers[6]->Add(this->Clear_Button_for_library_dir, 0, wxEXPAND | wxALL,10);
 
 
-     this->DataPanel_Sizers[5] = new wxBoxSizer(wxVERTICAL);
 
-     this->DataPanel_Sizers[5]->Add(this->List_Ctrl_Sizers[5],1, wxEXPAND | wxTOP | wxALL,10);
+     this->List_Ctrl_Sizers[6] = new wxBoxSizer(wxHORIZONTAL);
 
-     this->DataPanel_Sizers[5]->Add(this->Buton_Sizers[5],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+     this->List_Ctrl_Sizers[6]->Add(this->listctrl_library_dir,1,wxEXPAND | wxALL,10);
+
+
+     this->DataPanel_Sizers[6] = new wxBoxSizer(wxVERTICAL);
+
+     this->DataPanel_Sizers[6]->Add(this->List_Ctrl_Sizers[6],1, wxEXPAND | wxTOP | wxALL,10);
+
+     this->DataPanel_Sizers[6]->Add(this->Buton_Sizers[6],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
 
      this->listctrl_library_dir->AppendTextColumn(wxT("TARGET LIBRARY DIRECTORIES "));
 
@@ -459,34 +490,34 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->listctrl_library_name          = new wxDataViewListCtrl(this->scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,300));
 
-     this->InsertButton_for_library_name  = new wxButton(this->scroll_win,ID_INSERT_LIBRARIES,wxT("INSERT"),   wxDefaultPosition, wxSize(75, 40));
+     this->InsertButton_for_library_name  = new wxButton(this->scroll_win,ID_INSERT_LIBRARIES,  wxT("INSERT"),   wxDefaultPosition, wxSize(75, 40));
 
      this->Remove_Button_for_library_name = new wxButton(this->scroll_win,ID_REMOVE_LIBRARY_NAME,wxT("REMOVE"),wxDefaultPosition, wxSize(75, 40));
 
      this->Clear_Button_for_library_name  = new wxButton(this->scroll_win,ID_CLEAR_LIBRARY_NAMES,wxT("CLEAR"), wxDefaultPosition, wxSize(75, 40)); 
 
 
-     this->Buton_Sizers[6] = new wxBoxSizer(wxHORIZONTAL);
+     this->Buton_Sizers[7] = new wxBoxSizer(wxHORIZONTAL);
 
-     this->Buton_Sizers[6]->Add(this->InsertButton_for_library_name,  0, wxEXPAND | wxALL,10);
+     this->Buton_Sizers[7]->Add(this->InsertButton_for_library_name,  0, wxEXPAND | wxALL,10);
 
-     this->Buton_Sizers[6]->Add(this->Remove_Button_for_library_name, 0, wxEXPAND | wxALL,10);
+     this->Buton_Sizers[7]->Add(this->Remove_Button_for_library_name, 0, wxEXPAND | wxALL,10);
 
-     this->Buton_Sizers[6]->Add(this->Clear_Button_for_library_name,  0, wxEXPAND | wxALL,10);
-
-
+     this->Buton_Sizers[7]->Add(this->Clear_Button_for_library_name,  0, wxEXPAND | wxALL,10);
 
 
-     this->List_Ctrl_Sizers[6] = new wxBoxSizer(wxHORIZONTAL);
-
-     this->List_Ctrl_Sizers[6]->Add(this->listctrl_library_name,1,wxEXPAND | wxALL,10);
 
 
-     this->DataPanel_Sizers[6] = new wxBoxSizer(wxVERTICAL);
+     this->List_Ctrl_Sizers[7] = new wxBoxSizer(wxHORIZONTAL);
 
-     this->DataPanel_Sizers[6]->Add(this->List_Ctrl_Sizers[6],1, wxEXPAND | wxTOP | wxALL,10);
+     this->List_Ctrl_Sizers[7]->Add(this->listctrl_library_name,1,wxEXPAND | wxALL,10);
 
-     this->DataPanel_Sizers[6]->Add(this->Buton_Sizers[6],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+     this->DataPanel_Sizers[7] = new wxBoxSizer(wxVERTICAL);
+
+     this->DataPanel_Sizers[7]->Add(this->List_Ctrl_Sizers[7],1, wxEXPAND | wxTOP | wxALL,10);
+
+     this->DataPanel_Sizers[7]->Add(this->Buton_Sizers[7],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
 
      this->listctrl_library_name->AppendTextColumn(wxT("TARGET LIBRARIES FOR LINKING"));
 
@@ -506,20 +537,20 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
 
 
-     this->Buton_Sizers[7] = new wxBoxSizer(wxHORIZONTAL);
+     this->Buton_Sizers[8] = new wxBoxSizer(wxHORIZONTAL);
 
-     this->Buton_Sizers[7]->Add(this->InsertButton_for_options,0, wxEXPAND | wxALL,10);
+     this->Buton_Sizers[8]->Add(this->InsertButton_for_options,0, wxEXPAND | wxALL,10);
 
-     this->List_Ctrl_Sizers[7] = new wxBoxSizer(wxHORIZONTAL);
+     this->List_Ctrl_Sizers[8] = new wxBoxSizer(wxHORIZONTAL);
 
-     this->List_Ctrl_Sizers[7]->Add(this->listctrl_options,1,wxEXPAND | wxALL,10);
+     this->List_Ctrl_Sizers[8]->Add(this->listctrl_options,1,wxEXPAND | wxALL,10);
 
 
-     this->DataPanel_Sizers[7] = new wxBoxSizer(wxVERTICAL);
+     this->DataPanel_Sizers[8] = new wxBoxSizer(wxVERTICAL);
 
-     this->DataPanel_Sizers[7]->Add(this->List_Ctrl_Sizers[7],1, wxEXPAND | wxTOP | wxALL,10);
+     this->DataPanel_Sizers[8]->Add(this->List_Ctrl_Sizers[8],1, wxEXPAND | wxTOP | wxALL,10);
 
-     this->DataPanel_Sizers[7]->Add(this->Buton_Sizers[7],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+     this->DataPanel_Sizers[8]->Add(this->Buton_Sizers[8],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
 
      this->listctrl_options->AppendTextColumn(wxT("TARGET COMPILER OPTIONS"));
 
@@ -553,19 +584,19 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->panel_clear_button->SetForegroundColour(wxColour(50,50,50));
 
 
-     this->Buton_Sizers[8] = new wxBoxSizer(wxVERTICAL);
+     this->Buton_Sizers[9] = new wxBoxSizer(wxVERTICAL);
 
-     this->Buton_Sizers[8]->Add(panel_close_button,0, wxFIXED_MINSIZE | wxALL,20);
+     this->Buton_Sizers[9]->Add(panel_close_button,0, wxFIXED_MINSIZE | wxALL,20);
 
-     this->Buton_Sizers[8]->Add(panel_save_button, 0, wxFIXED_MINSIZE | wxALL,20);
+     this->Buton_Sizers[9]->Add(panel_save_button, 0, wxFIXED_MINSIZE | wxALL,20);
 
-     this->Buton_Sizers[8]->Add(panel_clear_button,0, wxFIXED_MINSIZE | wxALL,20);
+     this->Buton_Sizers[9]->Add(panel_clear_button,0, wxFIXED_MINSIZE | wxALL,20);
 
-     this->close_panel->SetSizer(this->Buton_Sizers[8]);
+     this->close_panel->SetSizer(this->Buton_Sizers[9]);
 
      this->close_panel->Fit();
 
-     this->Buton_Sizers[8]->SetSizeHints(close_panel);
+     this->Buton_Sizers[9]->SetSizeHints(close_panel);
 
 
 
@@ -580,7 +611,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->Frame_Sizer->Add(this->DataPanel_Sizers[2],0,wxEXPAND | wxALL, 20);
 
-     this->Frame_Sizer->Add(this->DataPanel_Sizers[3],1,wxEXPAND | wxALL, 20);
+     this->Frame_Sizer->Add(this->DataPanel_Sizers[3],0,wxEXPAND | wxALL, 20);
 
      this->Frame_Sizer->Add(this->DataPanel_Sizers[4],1,wxEXPAND | wxALL, 20);
 
@@ -589,6 +620,9 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->Frame_Sizer->Add(this->DataPanel_Sizers[6],0,wxEXPAND | wxALL, 20);
 
      this->Frame_Sizer->Add(this->DataPanel_Sizers[7],0,wxEXPAND | wxALL, 20);
+
+     this->Frame_Sizer->Add(this->DataPanel_Sizers[8],0,wxEXPAND | wxALL, 20);
+
 
 
 
@@ -647,6 +681,8 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->listctrl_library_name->Show();
 
      this->listctrl_standard->Show();
+
+     this->listctrl_build_system_type->Show();
 
      this->listctrl_options->Show();
 
@@ -800,6 +836,8 @@ void Custom_Multi_DataPanel::Clear_List_All_Ctrl_Contents(){
      this->listctrl_standard->DeleteAllItems();
 
      this->listctrl_options->DeleteAllItems();
+
+     this->listctrl_build_system_type->DeleteAllItems();
 }
 
 
@@ -1252,9 +1290,34 @@ void Custom_Multi_DataPanel::Insert_Option(wxCommandEvent & event){
 
 
 
+void Custom_Multi_DataPanel::Select_Build_System_Type(wxCommandEvent & event){
 
+     wxMessageDialog * dial = new wxMessageDialog(this,wxT("Event triggered"));
 
+     dial->ShowModal();
 
+     if(event.GetId() == ID_INSERT_BUILD_SYSTEM_TYPE){
+
+         dial = new wxMessageDialog(this,wxT("Event triggered second time"));
+
+        dial->ShowModal();
+
+        event.Skip(true);
+
+        wxString build_system_type = wxGetTextFromUser(wxT(""),
+
+                  wxT("   ENTER BUILD SYSTEM TYPE  "));
+
+        int row_num = this->listctrl_build_system_type->GetItemCount();
+
+        for(int i=0;i<row_num;i++){
+
+            this->listctrl_build_system_type->DeleteItem(i);
+        }
+
+        this->AppendDataItem(this->listctrl_build_system_type,build_system_type);
+     }
+}
 
 
 void Custom_Multi_DataPanel::Save_Git_Repo_Dir(wxCommandEvent & event){

@@ -62,7 +62,8 @@ enum
   
   ID_CLOSE_DESCRIPTION_PANEL = 127,
   ID_SAVE_PANEL_DESCRIPTIONS = 128,
-  ID_CLEAR_PANEL_DESCRIPTIONS = 129
+  ID_CLEAR_PANEL_DESCRIPTIONS = 129,
+  ID_INSERT_BUILD_SYSTEM_TYPE = 130
 };
 
 
@@ -113,7 +114,7 @@ protected:
 
     void Insert_Data_For_Name(wxCommandEvent & event);
 
-
+    void Select_Build_System_Type(wxCommandEvent & event);
 
     void Inser_Git_Repo_Dir(wxCommandEvent & event);
 
@@ -130,8 +131,6 @@ protected:
     void Insert_Standart(wxCommandEvent & event);
 
     void Insert_Option(wxCommandEvent & event);
-
-
 
     void Save_Git_Repo_Dir(wxCommandEvent & event);
 
@@ -267,6 +266,9 @@ protected:
 
     wxDataViewListCtrl * listctrl_options;
 
+    wxDataViewListCtrl * listctrl_build_system_type;
+
+
 
     wxButton * InsertButton_for_git_repo_path;
 
@@ -283,6 +285,9 @@ protected:
     wxButton * InsertButton_for_standard;
 
     wxButton * InsertButton_for_options;
+
+    wxButton * InsertButton_for_build_system_type;
+
 
 
 
@@ -301,6 +306,9 @@ protected:
     wxButton * Save_Button_for_standard;
 
     wxButton * Save_Button_for_options;
+
+    wxButton * Save_Button_for_build_system_type;
+
 
 
 
