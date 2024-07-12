@@ -52,7 +52,6 @@ BEGIN_EVENT_TABLE(Custom_Multi_DataPanel,wxDialog )
 
 
 
-
     EVT_BUTTON(ID_REMOVE_HEADER_FILE_LOCATION,Custom_Multi_DataPanel::Remove_Header_File_Location)
 
     EVT_BUTTON(ID_REMOVE_SRC_LOCATION,Custom_Multi_DataPanel::Remove_Source_File_Location)
@@ -735,6 +734,8 @@ void Custom_Multi_DataPanel::Save_Panel_Descriptions(wxCommandEvent & event){
 
         this->Record_Data.standard = this->Collect_List_Ctrl_Data(this->listctrl_standard);
 
+        this->Record_Data.build_system_type = this->Collect_List_Ctrl_Data(this->listctrl_build_system_type);
+
 
         std::string header_locations = this->Collect_List_Ctrl_Data(this->listctrl_for_header_dir);
 
@@ -1028,6 +1029,13 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
         this->Load_Data_List_Ctrl(this->listctrl_git_repo_path,repo_dir);      
      }
 
+     std::string build_system_type = this->Des_Reader.Get_Build_System_Type();
+
+
+     if(build_system_type.size()>0){
+
+        this->Load_Data_List_Ctrl(this->listctrl_build_system_type,build_system_type);      
+     }
 }
 
 
@@ -1292,15 +1300,7 @@ void Custom_Multi_DataPanel::Insert_Option(wxCommandEvent & event){
 
 void Custom_Multi_DataPanel::Select_Build_System_Type(wxCommandEvent & event){
 
-     wxMessageDialog * dial = new wxMessageDialog(this,wxT("Event triggered"));
-
-     dial->ShowModal();
-
      if(event.GetId() == ID_INSERT_BUILD_SYSTEM_TYPE){
-
-         dial = new wxMessageDialog(this,wxT("Event triggered second time"));
-
-        dial->ShowModal();
 
         event.Skip(true);
 

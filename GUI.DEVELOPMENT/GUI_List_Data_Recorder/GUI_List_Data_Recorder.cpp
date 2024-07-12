@@ -94,6 +94,8 @@ void GUI_List_Data_Recorder::Receive_Descriptions_Record_Data(Record_Data_For_Gu
      this->Place_String_Data(Data->options,this->options);
 
      this->Place_String_Data(Data->standard,this->standard); 
+
+     this->Place_String_Data(Data->build_system_type,this->build_system_type); 
 }
 
 
@@ -185,6 +187,13 @@ void GUI_List_Data_Recorder::Record_Data(std::string Data_Type, std::string Data
         this->Clear_String_Memory(this->standard);
 
         this->Place_String_Data(data_record,this->standard);
+     }  
+
+     if(data_type == "BUILD-SYSTEM"){
+
+        this->Clear_String_Memory(this->build_system_type);
+
+        this->Place_String_Data(data_record,this->build_system_type);
      }  
 
      if(data_type == "OPTIONS"){

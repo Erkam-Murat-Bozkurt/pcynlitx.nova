@@ -24,6 +24,7 @@
 struct Record_Data_For_Gui {
 
        std::string standard;
+       std::string build_system_type;
        std::string options;
        std::string root_dir;
        std::string warehouse_location;
@@ -68,6 +69,7 @@ private:
   void Clear_Data_Memory();
   char opr_sis;
   std::string standard;
+  std::string build_system_type;
   std::string options;
   std::string root_dir;
   std::string warehouse_location;
