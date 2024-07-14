@@ -17,7 +17,9 @@
 #include <wx\textdlg.h>
 #include <wx\msgdlg.h>
 #include <wx\dir.h>
-#include <wx/dialog.h>
+#include <wx\dialog.h>
+#include <wx\choicdlg.h>
+#include <wx\choice.h>
 #include "GUI_List_Data_Recorder.hpp"
 #include "Process_Manager.hpp"
 #include "Custom_DataPanel.hpp"

@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="5.028008mm"
-   height="2.0661075mm"
-   viewBox="0 0 5.0280076 2.0661076"
+   width="3.0927694mm"
+   height="2.1170573mm"
+   viewBox="0 0 3.0927692 2.1170574"
    version="1.1"
    id="svg8"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
@@ -51,9 +51,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="45.254834"
-     inkscape:cx="11.545728"
-     inkscape:cy="6.9826795"
+     inkscape:zoom="32"
+     inkscape:cx="7.796875"
+     inkscape:cy="5.09375"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -69,8 +69,8 @@
     <inkscape:grid
        type="xygrid"
        id="grid10"
-       originx="-71.964462"
-       originy="-209.53812"
+       originx="-71.914459"
+       originy="-209.75121"
        spacingy="1"
        spacingx="1"
        units="mm"
@@ -91,7 +91,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-71.964447,-84.263138)">
+     transform="translate(-71.914446,-84.476228)">
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:justify;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -118,38 +118,6 @@
        y="84.693756"
        ry="0.21900889" />
     <rect
-       style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.0586897;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
-       id="rect1"
-       width="4.5965881"
-       height="2.0000024"
-       x="71.999985"
-       y="84.725014"
-       ry="0.1455579" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:1.76389px;line-height:0.55362px;font-family:Lato;-inkscape-font-specification:'Lato Heavy';fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0503821;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
-       x="73.993378"
-       y="85.074905"
-       id="text2"
-       transform="scale(0.99241635,1.0076416)"><tspan
-         sodipodi:role="line"
-         id="tspan2"
-         style="font-style:italic;font-variant:normal;font-weight:900;font-stretch:normal;font-size:1.76389px;line-height:0.55362px;font-family:Lato;-inkscape-font-specification:'Lato Heavy Italic';fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.0503821;stroke-dasharray:none;stroke-opacity:1"
-         x="73.993378"
-         y="85.074905"><tspan
-           style="font-style:italic;font-variant:normal;font-weight:900;font-stretch:normal;font-size:1.76389px;line-height:0.55362px;font-family:Lato;-inkscape-font-specification:'Lato Heavy Italic';fill:#f07d7d;fill-opacity:1"
-           id="tspan3">N</tspan><tspan
-           style="font-style:italic;font-variant:normal;font-weight:900;font-stretch:normal;font-size:1.76389px;line-height:0.55362px;font-family:Lato;-inkscape-font-specification:'Lato Heavy Italic';fill:#73737d;fill-opacity:0.949153"
-           id="tspan4">wx</tspan></tspan></text>
-    <rect
-       style="fill:#f07d7d;fill-opacity:1;stroke:none;stroke-width:0.0392021;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
-       id="rect4"
-       width="1.6562597"
-       height="0.28559503"
-       x="71.964447"
-       y="85.43943"
-       ry="0.0027672609" />
-    <rect
        style="fill:none;fill-opacity:1;stroke-width:0.0499999;stroke-linejoin:round;stroke-miterlimit:0"
        id="rect5"
        width="6.0355387"
@@ -157,5 +125,29 @@
        x="71.964447"
        y="84.263138"
        ry="0.0052385842" />
+    <rect
+       style="fill:#b4b4c3;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3"
+       width="1.7707096"
+       height="0.43794909"
+       x="72.992958"
+       y="84.722481"
+       ry="0.001211918" />
+    <rect
+       style="fill:#b4b4c3;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3-1"
+       width="1.7707096"
+       height="0.43794909"
+       x="72.992958"
+       y="85.315781"
+       ry="0.001211918" />
+    <rect
+       style="fill:#b4b4c3;fill-opacity:1;stroke:none;stroke-width:0.1;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+       id="rect3-1-5"
+       width="1.7707096"
+       height="0.43794909"
+       x="72.992958"
+       y="85.909081"
+       ry="0.001211918" />
   </g>
 </svg>

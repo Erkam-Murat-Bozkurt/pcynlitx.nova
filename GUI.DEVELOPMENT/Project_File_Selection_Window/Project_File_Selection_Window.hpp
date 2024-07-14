@@ -83,6 +83,9 @@ protected:
 
     wxBitmap * open_existing_file;
 
+    wxBitmap * exclamation_mark_bmp;
+
+
     char opr_sis;
 
     bool * Descriptor_File_Selection_Status;
@@ -115,7 +118,7 @@ protected:
 
     wxButton * Project_File_Selection_Button;
 
-
+    
     wxPanel  * Empty_Project_File_Panel;
 
     wxPanel  * Project_File_Selection_Panel;

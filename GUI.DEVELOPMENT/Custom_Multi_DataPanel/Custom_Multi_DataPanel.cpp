@@ -349,7 +349,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->listctrl_build_system_type = new wxDataViewListCtrl(this->scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,75));
 
-     this->InsertButton_for_build_system_type = new wxButton(this->scroll_win,ID_INSERT_BUILD_SYSTEM_TYPE,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+     this->InsertButton_for_build_system_type = new wxButton(this->scroll_win,ID_INSERT_BUILD_SYSTEM_TYPE,wxT("SELECT"),wxDefaultPosition, wxSize(75, 40));
 
      this->Buton_Sizers[3] = new wxBoxSizer(wxHORIZONTAL);
 
@@ -953,88 +953,112 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
 
      this->Des_Reader.Read_Descriptor_File();
 
-     const std::vector<std::string> & include_dir = this->Des_Reader.Get_Include_Directories();
+     bool syntax_error_status = this->Des_Reader.Get_Syntax_Error_Status();
 
-     const std::vector<std::string> & lib_dir     = this->Des_Reader.Get_Library_Directories();
+     bool invalid_des_file_status = this->Des_Reader.Get_Invalid_Descriptor_File_Status();
 
-     const std::vector<std::string> & src_dir     = this->Des_Reader.Get_Source_File_Directories();
+     bool error_status = false;
 
-     const std::vector<std::string> & lib_files   = this->Des_Reader.Get_Library_Files();
+     if(syntax_error_status || invalid_des_file_status){
 
-
-
-     if(include_dir.size()>0){
-
-        this->Load_Data_List_Ctrl(this->listctrl_for_header_dir,include_dir);
+         error_status = true;
      }
 
-     if(lib_dir.size()>0){
+     if(!error_status){
 
-        this->Load_Data_List_Ctrl(this->listctrl_library_dir,lib_dir);
-     }
+         const std::vector<std::string> & include_dir = this->Des_Reader.Get_Include_Directories();
 
+         const std::vector<std::string> & lib_dir     = this->Des_Reader.Get_Library_Directories();
 
-     if(src_dir.size()>0){
+         const std::vector<std::string> & src_dir     = this->Des_Reader.Get_Source_File_Directories();
 
-        this->Load_Data_List_Ctrl(this->listctrl_src_file_location,src_dir);
-     }
-
-
-     if(lib_files.size()>0){
-
-        this->Load_Data_List_Ctrl(this->listctrl_library_name,lib_files);
-     }
+         const std::vector<std::string> & lib_files   = this->Des_Reader.Get_Library_Files();
 
 
+         if(include_dir.size()>0){
 
-     std::string c_standard = this->Des_Reader.Get_Standard();
+            this->Load_Data_List_Ctrl(this->listctrl_for_header_dir,include_dir);
+         }
 
-     c_standard.shrink_to_fit();
+         if(lib_dir.size()>0){
 
-     if(c_standard.size()>0){
-
-        this->Load_Data_List_Ctrl(this->listctrl_standard,c_standard);
-     }
+            this->Load_Data_List_Ctrl(this->listctrl_library_dir,lib_dir);
+         }
 
 
-     std::string options = this->Des_Reader.Get_Compiler_Options() +
+         if(src_dir.size()>0){
+
+            this->Load_Data_List_Ctrl(this->listctrl_src_file_location,src_dir);
+         }
+
+
+         if(lib_files.size()>0){
+
+            this->Load_Data_List_Ctrl(this->listctrl_library_name,lib_files);
+         }
+
+         std::string c_standard = this->Des_Reader.Get_Standard();
+
+         c_standard.shrink_to_fit();
+
+         if(c_standard.size()>0){
+
+            this->Load_Data_List_Ctrl(this->listctrl_standard,c_standard);
+         }
+
+         std::string options = this->Des_Reader.Get_Compiler_Options() +
      
-                           this->Des_Reader.Get_Linker_Options();
+                               this->Des_Reader.Get_Linker_Options();
+
+         options.shrink_to_fit();
+
+         if(options.size()>0){
+
+            this->Load_Data_List_Ctrl(this->listctrl_options,options);
+         }
+
+         std::string warehouse_loc = this->Des_Reader.Get_Warehouse_Location();
+
+         warehouse_loc.shrink_to_fit();
+
+         if(warehouse_loc.size()>0){
+
+            this->Load_Data_List_Ctrl(this->listctrl_warehouse_location,warehouse_loc);
+         }
 
 
-     options.shrink_to_fit();
+         std::string repo_dir = this->Des_Reader.Get_Repo_Directory_Location();
 
-     if(options.size()>0){
+         repo_dir.shrink_to_fit();
 
-        this->Load_Data_List_Ctrl(this->listctrl_options,options);
+         if(repo_dir.size()>0){
+
+            this->Load_Data_List_Ctrl(this->listctrl_git_repo_path,repo_dir);      
+         }
+
+         std::string build_system_type = this->Des_Reader.Get_Build_System_Type();
+
+ 
+         if(build_system_type.size()>0){
+
+            this->Load_Data_List_Ctrl(this->listctrl_build_system_type,build_system_type);      
+         }
      }
+     else{
 
+           
+           wxString Message = "There is a syntax error in descriptor file";
 
-     std::string warehouse_loc = this->Des_Reader.Get_Warehouse_Location();
+           Message += "\nor descriptor file is invalid";
 
-     warehouse_loc.shrink_to_fit();
+           Message += "\nPlease control descriptor file";
 
-     if(warehouse_loc.size()>0){
+            
+           Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
+            
+           wxT("STATUS:\n"),wxID_ANY,wxT("NWINIX DATA RECORD OPERATION REPORT"),*this->exclamation_mark_bmp);
 
-        this->Load_Data_List_Ctrl(this->listctrl_warehouse_location,warehouse_loc);
-     }
-
-
-     std::string repo_dir = this->Des_Reader.Get_Repo_Directory_Location();
-
-     repo_dir.shrink_to_fit();
-
-     if(repo_dir.size()>0){
-
-        this->Load_Data_List_Ctrl(this->listctrl_git_repo_path,repo_dir);      
-     }
-
-     std::string build_system_type = this->Des_Reader.Get_Build_System_Type();
-
-
-     if(build_system_type.size()>0){
-
-        this->Load_Data_List_Ctrl(this->listctrl_build_system_type,build_system_type);      
+           dial->ShowModal();
      }
 }
 
@@ -1304,9 +1328,45 @@ void Custom_Multi_DataPanel::Select_Build_System_Type(wxCommandEvent & event){
 
         event.Skip(true);
 
-        wxString build_system_type = wxGetTextFromUser(wxT(""),
+        wxString Choices[3];
 
-                  wxT("   ENTER BUILD SYSTEM TYPE  "));
+        std::string cmake_ = "CMAKE";
+
+        std::string gnu_make_ = "GNU Make";
+
+        std::string empty_choice = "";
+
+
+        wxString build_system_type;
+
+        Choices[0] = wxString(cmake_);
+
+        Choices[1] = wxString(gnu_make_);
+
+        Choices[2] = wxString(empty_choice);
+
+        wxSingleChoiceDialog Choice(this,wxT("Please select build system"),wxT("BUILD SYSTEM SELECTION PANEL"),2,Choices,
+        
+            nullptr,wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER | wxOK | wxCANCEL | wxCENTRE,wxDefaultPosition);
+
+        Choice.SetSize(wxSize(450,320));
+
+        Choice.Centre(wxBOTH);
+
+        if(Choice.ShowModal() == wxID_OK){
+
+           int selection = Choice.GetSelection();
+
+           if(selection == 0){
+
+               build_system_type = Choices[0];
+           }
+           
+           if(selection == 1){
+
+               build_system_type = Choices[1];
+           }
+        };
 
         int row_num = this->listctrl_build_system_type->GetItemCount();
 

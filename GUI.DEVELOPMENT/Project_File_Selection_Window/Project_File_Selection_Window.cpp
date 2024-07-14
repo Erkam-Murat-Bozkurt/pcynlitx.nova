@@ -32,6 +32,12 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->SetIcon(Frame_Icon);
 
+
+     this->exclamation_mark_bmp 
+  
+      = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+
+
      this->SetTitle(wxT("PROJECT FILE SELECTION PANEL"));
 
 
@@ -421,7 +427,38 @@ void Project_File_Selection_Window::Select_File(){
 
          *this->Descriptor_File_Selection_Status = true;
 
-         this->Destroy();
+          Descriptor_File_Reader Des_Reader('w','g'); 
+ 
+          Des_Reader.Receive_Descriptor_File_Path(openFileDialog->GetPath().ToStdString());
+
+          Des_Reader.Read_Descriptor_File();
+
+          bool syntax_error_status = Des_Reader.Get_Syntax_Error_Status();
+
+          bool invalid_descriptor_file_status = Des_Reader.Get_Invalid_Descriptor_File_Status();
+
+          if(syntax_error_status || invalid_descriptor_file_status){
+
+              *this->Descriptor_File_Selection_Status = false;
+
+              wxString Message = "\nThere is a syntax error in descriptor file";
+
+              Message += "\nor descriptor file is invalid";
+
+              Message += "\nPlease control descriptor file";
+
+              Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
+            
+                         wxT("STATUS:\n"),wxID_ANY,wxT("NWINIX DATA RECORD OPERATION REPORT"),*this->exclamation_mark_bmp);
+
+              dial->ShowModal();
+
+              this->Destroy();
+          }
+          else{
+
+               this->Destroy();
+          }
      }
      else{
 

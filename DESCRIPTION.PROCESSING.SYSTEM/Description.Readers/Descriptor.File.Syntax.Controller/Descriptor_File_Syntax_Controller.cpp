@@ -322,9 +322,6 @@ void Descriptor_File_Syntax_Controller::Control_Keywords(){
          std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
          std::cout << "\n\n";
 
-         std::cout << "\n this->gui_read_status:" << this->gui_read_status;
-         std::cin.get();
-
          if(this->gui_read_status){
 
             this->syntax_error_status = true;
