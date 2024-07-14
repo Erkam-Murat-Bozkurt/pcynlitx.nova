@@ -26,7 +26,9 @@ BEGIN_EVENT_TABLE(Custom_Multi_DataPanel,wxDialog )
 
     EVT_BUTTON(ID_INSERT_STANDART,Custom_Multi_DataPanel::Insert_Standart)
 
-    EVT_BUTTON(ID_INSERT_OPTIONS,Custom_Multi_DataPanel::Insert_Option)
+    EVT_BUTTON(ID_INSERT_COMPILER_OPTIONS,Custom_Multi_DataPanel::Insert_Compiler_Options)
+
+    EVT_BUTTON(ID_INSERT_LINKER_OPTIONS,Custom_Multi_DataPanel::Insert_Linker_Options)
 
     EVT_BUTTON(ID_INSERT_BUILD_SYSTEM_TYPE,Custom_Multi_DataPanel::Select_Build_System_Type)
 
@@ -48,7 +50,10 @@ BEGIN_EVENT_TABLE(Custom_Multi_DataPanel,wxDialog )
 
     EVT_BUTTON(ID_SAVE_STANDART,Custom_Multi_DataPanel::Save_Standart)
 
-    EVT_BUTTON(ID_SAVE_OPTIONS,Custom_Multi_DataPanel::Save_Option)
+    EVT_BUTTON(ID_SAVE_COMPILER_OPTIONS,Custom_Multi_DataPanel::Save_Compiler_Options)
+
+    EVT_BUTTON(ID_SAVE_LINKER_OPTIONS,Custom_Multi_DataPanel::Save_Linker_Options)
+
 
 
 
@@ -527,22 +532,22 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
 
 
-     // SETTINGS FOR OPTIONS DATA PANEL
+     // SETTINGS FOR COMPILER OPTIONS DATA PANEL
 
 
-     this->listctrl_options = new wxDataViewListCtrl(this->scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,150));
+     this->listctrl_compiler_options = new wxDataViewListCtrl(this->scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,150));
 
-     this->InsertButton_for_options = new wxButton(this->scroll_win,ID_INSERT_OPTIONS,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+     this->InsertButton_for_compiler_options = new wxButton(this->scroll_win,ID_INSERT_COMPILER_OPTIONS,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
 
 
 
      this->Buton_Sizers[8] = new wxBoxSizer(wxHORIZONTAL);
 
-     this->Buton_Sizers[8]->Add(this->InsertButton_for_options,0, wxEXPAND | wxALL,10);
+     this->Buton_Sizers[8]->Add(this->InsertButton_for_compiler_options,0, wxEXPAND | wxALL,10);
 
      this->List_Ctrl_Sizers[8] = new wxBoxSizer(wxHORIZONTAL);
 
-     this->List_Ctrl_Sizers[8]->Add(this->listctrl_options,1,wxEXPAND | wxALL,10);
+     this->List_Ctrl_Sizers[8]->Add(this->listctrl_compiler_options,1,wxEXPAND | wxALL,10);
 
 
      this->DataPanel_Sizers[8] = new wxBoxSizer(wxVERTICAL);
@@ -551,8 +556,37 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->DataPanel_Sizers[8]->Add(this->Buton_Sizers[8],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
 
-     this->listctrl_options->AppendTextColumn(wxT("TARGET COMPILER OPTIONS"));
+     this->listctrl_compiler_options->AppendTextColumn(wxT("TARGET COMPILER OPTIONS"));
 
+
+
+
+
+     // SETTINGS FOR LIBKER OPTIONS DATA PANEL
+
+
+     this->listctrl_linker_options = new wxDataViewListCtrl(this->scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,150));
+
+     this->InsertButton_for_linker_options = new wxButton(this->scroll_win,ID_INSERT_LINKER_OPTIONS,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+
+
+
+     this->Buton_Sizers[9] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->Buton_Sizers[9]->Add(this->InsertButton_for_linker_options,0, wxEXPAND | wxALL,10);
+
+     this->List_Ctrl_Sizers[9] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->List_Ctrl_Sizers[9]->Add(this->listctrl_linker_options,1,wxEXPAND | wxALL,10);
+
+
+     this->DataPanel_Sizers[9] = new wxBoxSizer(wxVERTICAL);
+
+     this->DataPanel_Sizers[9]->Add(this->List_Ctrl_Sizers[9],1, wxEXPAND | wxTOP | wxALL,10);
+
+     this->DataPanel_Sizers[9]->Add(this->Buton_Sizers[9],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+     this->listctrl_linker_options->AppendTextColumn(wxT("TARGET COMPILER OPTIONS"));
 
 
 
@@ -622,6 +656,9 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->Frame_Sizer->Add(this->DataPanel_Sizers[8],0,wxEXPAND | wxALL, 20);
 
+     this->Frame_Sizer->Add(this->DataPanel_Sizers[9],0,wxEXPAND | wxALL, 20);
+
+
 
 
 
@@ -683,7 +720,9 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->listctrl_build_system_type->Show();
 
-     this->listctrl_options->Show();
+     this->listctrl_compiler_options->Show();
+
+     this->listctrl_linker_options->Show();
 
      this->close_panel->Show();
 
@@ -730,7 +769,11 @@ void Custom_Multi_DataPanel::Save_Panel_Descriptions(wxCommandEvent & event){
 
         this->Record_Data.warehouse_location = this->Collect_List_Ctrl_Data(this->listctrl_warehouse_location);
 
-        this->Record_Data.options   = this->Collect_List_Ctrl_Data(this->listctrl_options);
+        this->Record_Data.compiler_options   = this->Collect_List_Ctrl_Data(this->listctrl_compiler_options);
+
+        this->Record_Data.linker_options     = this->Collect_List_Ctrl_Data(this->listctrl_linker_options);
+
+
 
         this->Record_Data.standard = this->Collect_List_Ctrl_Data(this->listctrl_standard);
 
@@ -773,7 +816,9 @@ void Custom_Multi_DataPanel::Clear_Record_Data(){
 
      this->Clear_String_Memory(this->Record_Data.warehouse_location);
 
-     this->Clear_String_Memory(this->Record_Data.options);
+     this->Clear_String_Memory(this->Record_Data.compiler_options);
+
+     this->Clear_String_Memory(this->Record_Data.linker_options);
 
      this->Clear_String_Memory(this->Record_Data.standard);
 
@@ -836,7 +881,9 @@ void Custom_Multi_DataPanel::Clear_List_All_Ctrl_Contents(){
 
      this->listctrl_standard->DeleteAllItems();
 
-     this->listctrl_options->DeleteAllItems();
+     this->listctrl_compiler_options->DeleteAllItems();
+
+     this->listctrl_linker_options->DeleteAllItems();
 
      this->listctrl_build_system_type->DeleteAllItems();
 }
@@ -879,14 +926,14 @@ void Custom_Multi_DataPanel::Create_Exe_Script_Panel(){
 
 void Custom_Multi_DataPanel::Construct_NewData_Panels(){
           
-     this->listctrl_for_path       = new wxDataViewListCtrl(this, wxID_ANY,wxDefaultPosition,wxSize(700,200));
+     this->listctrl_for_path  = new wxDataViewListCtrl(this, wxID_ANY,wxDefaultPosition,wxSize(700,200));
 
      this->listctrl_for_path->AppendTextColumn(wxT("THE SOURCE FILE PATH"));
 
-     this->InsertButton_for_path   = new wxButton(this,ID_INSERT_ITEM_FOR_PATH,wxT("INSERT"),wxDefaultPosition, wxSize(80, 50));
+     this->InsertButton_for_path = new wxButton(this,ID_INSERT_ITEM_FOR_PATH,wxT("INSERT"),wxDefaultPosition, wxSize(80, 50));
 
 
-     this->Start_Button     = new wxButton(this,ID_SAVE_MAKE_FILE_DATA,wxT("START"),wxDefaultPosition, wxSize(150, 60));
+     this->Start_Button = new wxButton(this,ID_SAVE_MAKE_FILE_DATA,wxT("START"),wxDefaultPosition, wxSize(150, 60));
 
 
      this->vbox_path = new wxBoxSizer(wxVERTICAL);
@@ -912,7 +959,7 @@ void Custom_Multi_DataPanel::Construct_NewData_Panels(){
      this->listctrl_for_name->AppendTextColumn(wxT("THE NAME OF THE EXECUTABLE FILE TO BE COMPILED"));
 
 
-     this->InsertButton_for_name   = new wxButton(this,ID_INSERT_ITEM_FOR_NAME,wxT("INSERT"),wxDefaultPosition, wxSize(80, 50));
+     this->InsertButton_for_name = new wxButton(this,ID_INSERT_ITEM_FOR_NAME,wxT("INSERT"),wxDefaultPosition, wxSize(80, 50));
 
 
      this->vbox_name  = new wxBoxSizer(wxVERTICAL);
@@ -953,7 +1000,7 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
 
      this->Des_Reader.Read_Descriptor_File();
 
-     bool syntax_error_status = this->Des_Reader.Get_Syntax_Error_Status();
+     bool syntax_error_status     = this->Des_Reader.Get_Syntax_Error_Status();
 
      bool invalid_des_file_status = this->Des_Reader.Get_Invalid_Descriptor_File_Status();
 
@@ -1006,16 +1053,26 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
             this->Load_Data_List_Ctrl(this->listctrl_standard,c_standard);
          }
 
-         std::string options = this->Des_Reader.Get_Compiler_Options() +
-     
-                               this->Des_Reader.Get_Linker_Options();
 
-         options.shrink_to_fit();
 
-         if(options.size()>0){
+         std::string compiler_options = this->Des_Reader.Get_Compiler_Options();
+                                    
+         compiler_options.shrink_to_fit();
 
-            this->Load_Data_List_Ctrl(this->listctrl_options,options);
+         if(compiler_options.size()>0){
+
+            this->Load_Data_List_Ctrl(this->listctrl_compiler_options,compiler_options);
          }
+
+
+         std::string linker_options = this->Des_Reader.Get_Linker_Options();
+
+         if(linker_options.size()>0){
+
+            this->Load_Data_List_Ctrl(this->listctrl_linker_options,linker_options);
+         }
+
+
 
          std::string warehouse_loc = this->Des_Reader.Get_Warehouse_Location();
 
@@ -1027,6 +1084,7 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
          }
 
 
+
          std::string repo_dir = this->Des_Reader.Get_Repo_Directory_Location();
 
          repo_dir.shrink_to_fit();
@@ -1036,9 +1094,10 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
             this->Load_Data_List_Ctrl(this->listctrl_git_repo_path,repo_dir);      
          }
 
+
+
          std::string build_system_type = this->Des_Reader.Get_Build_System_Type();
 
- 
          if(build_system_type.size()>0){
 
             this->Load_Data_List_Ctrl(this->listctrl_build_system_type,build_system_type);      
@@ -1299,27 +1358,47 @@ void Custom_Multi_DataPanel::Insert_Standart(wxCommandEvent & event){
 
 
 
-void Custom_Multi_DataPanel::Insert_Option(wxCommandEvent & event){
+void Custom_Multi_DataPanel::Insert_Compiler_Options(wxCommandEvent & event){
 
-     if(event.GetId() == ID_INSERT_OPTIONS ){
+     if(event.GetId() == ID_INSERT_COMPILER_OPTIONS ){
 
         event.Skip(true);
 
-        wxString Options = wxGetTextFromUser(wxT(""),
+        wxString Compiler_Options = wxGetTextFromUser(wxT(""),
 
                   wxT("   ENTER COMPILER OPTIONS  "));
 
-        int row_num = this->listctrl_options->GetItemCount();
+        int row_num = this->listctrl_compiler_options->GetItemCount();
 
         for(int i=0;i<row_num;i++){
 
-            this->listctrl_options->DeleteItem(i);
+            this->listctrl_compiler_options->DeleteItem(i);
         }
 
-        this->AppendDataItem(this->listctrl_options,Options);
+        this->AppendDataItem(this->listctrl_compiler_options,Compiler_Options);
      }
 }
 
+void Custom_Multi_DataPanel::Insert_Linker_Options(wxCommandEvent & event){
+
+     if(event.GetId() == ID_INSERT_LINKER_OPTIONS ){
+
+        event.Skip(true);
+
+        wxString Linker_Options = wxGetTextFromUser(wxT(""),
+
+                  wxT("   ENTER LINKER OPTIONS  "));
+
+        int row_num = this->listctrl_linker_options->GetItemCount();
+
+        for(int i=0;i<row_num;i++){
+
+            this->listctrl_linker_options->DeleteItem(i);
+        }
+
+        this->AppendDataItem(this->listctrl_linker_options,Linker_Options);
+     }
+}
 
 
 void Custom_Multi_DataPanel::Select_Build_System_Type(wxCommandEvent & event){
@@ -1437,18 +1516,29 @@ void Custom_Multi_DataPanel::Save_Standart(wxCommandEvent & event){
 }
 
 
-void Custom_Multi_DataPanel::Save_Option(wxCommandEvent & event){
+void Custom_Multi_DataPanel::Save_Compiler_Options(wxCommandEvent & event){
 
-     if(event.GetId() == ID_SAVE_OPTIONS ){
+     if(event.GetId() == ID_SAVE_COMPILER_OPTIONS ){
 
         event.Skip(true);
 
-        wxString DataType(wxT("OPTIONS"));
+        wxString DataType(wxT("COMPILER-OPTIONS"));
 
-        this->Save_Data(this->listctrl_options,DataType);
+        this->Save_Data(this->listctrl_compiler_options,DataType);
      }
 }
 
+void Custom_Multi_DataPanel::Save_Linker_Options(wxCommandEvent & event){
+
+     if(event.GetId() == ID_SAVE_LINKER_OPTIONS ){
+
+        event.Skip(true);
+
+        wxString DataType(wxT("LINKER-OPTIONS"));
+
+        this->Save_Data(this->listctrl_linker_options,DataType);
+     }
+}
 
 
 void Custom_Multi_DataPanel::Save_Source_File_Location(wxCommandEvent & event){

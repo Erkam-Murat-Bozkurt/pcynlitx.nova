@@ -91,7 +91,9 @@ void GUI_List_Data_Recorder::Receive_Descriptions_Record_Data(Record_Data_For_Gu
 
      this->Place_String_Data(Data->root_dir,this->root_dir);
 
-     this->Place_String_Data(Data->options,this->options);
+     this->Place_String_Data(Data->compiler_options,this->compiler_options);
+
+     this->Place_String_Data(Data->linker_options,this->linker_options);
 
      this->Place_String_Data(Data->standard,this->standard); 
 
@@ -196,11 +198,18 @@ void GUI_List_Data_Recorder::Record_Data(std::string Data_Type, std::string Data
         this->Place_String_Data(data_record,this->build_system_type);
      }  
 
-     if(data_type == "OPTIONS"){
+     if(data_type == "COMPILER-OPTIONS"){
 
-        this->Clear_String_Memory(this->options);
+        this->Clear_String_Memory(this->compiler_options);
 
-        this->Place_String_Data(data_record,this->options);       
+        this->Place_String_Data(data_record,this->compiler_options);       
+     }    
+
+     if(data_type == "LINKER-OPTIONS"){
+
+        this->Clear_String_Memory(this->linker_options);
+
+        this->Place_String_Data(data_record,this->linker_options);       
      }    
 
      this->Update_Descriptor_File();     
@@ -318,17 +327,32 @@ void GUI_List_Data_Recorder::Update_Descriptor_File(){
      this->WriteNewLines(two_lines);
 
 
-     this->File_Manager.WriteToFile("[OPTIONS]{");
+     this->File_Manager.WriteToFile("[COMPILER-OPTIONS]{");
 
      this->WriteNewLines(single_line);
 
-     this->Write_String_Data(this->options);
+     this->Write_String_Data(this->compiler_options);
 
      this->WriteNewLines(single_line);
 
      this->File_Manager.WriteToFile("}");
 
      this->WriteNewLines(two_lines);
+
+
+
+     this->File_Manager.WriteToFile("[LINKER-OPTIONS]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_String_Data(this->linker_options);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+     this->WriteNewLines(two_lines);
+
 
 
      this->File_Manager.WriteToFile("[MAIN-FILE-NAMES]{");
@@ -387,9 +411,9 @@ void GUI_List_Data_Recorder::Receive_Decriptor_File(){
 
      std::string linker_options   = this->Des_Reader.Get_Linker_Options();
 
-     std::string total_options = compiler_options + linker_options;
+     this->Place_String_Data(linker_options,this->linker_options);
 
-     this->Place_String_Data(total_options,this->options);
+     this->Place_String_Data(compiler_options,this->compiler_options);
 
      this->Place_String_Data(this->Des_Reader.Get_Standard(),this->standard);   
 }
@@ -433,7 +457,9 @@ void GUI_List_Data_Recorder::Clear_Data_Memory(){
 
      this->Clear_String_Memory(this->standard);
 
-     this->Clear_String_Memory(this->options);
+     this->Clear_String_Memory(this->linker_options);
+
+     this->Clear_String_Memory(this->compiler_options);
 
      this->Clear_String_Memory(this->warehouse_location);
 

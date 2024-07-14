@@ -40,32 +40,35 @@ enum
   ID_INSERT_LIB_DIRECTORIES = 107,
   ID_INSERT_LIBRARIES = 108,
   ID_INSERT_STANDART = 109,
-  ID_INSERT_OPTIONS  = 110,
+  ID_INSERT_COMPILER_OPTIONS  = 110,
+  ID_INSERT_LINKER_OPTIONS  = 111,
 
 
-  ID_SAVE_GIT_REPO_DIR   = 111,
-  ID_SAVE_CONSTRUCTION_POINT = 112,
-  ID_SAVE_HEADER_FILE_LOCATION = 113,
-  ID_SAVE_SRC_LOCATION  = 114,
-  ID_SAVE_LIB_DIRECTORY = 115,
-  ID_SAVE_LIBRARY_NAME = 116,
-  ID_SAVE_STANDART = 117,
-  ID_SAVE_OPTIONS  = 118,
 
-  ID_REMOVE_HEADER_FILE_LOCATION = 119,
-  ID_REMOVE_SRC_LOCATION  = 120,
-  ID_REMOVE_LIB_DIRECTORY = 121,
-  ID_REMOVE_LIBRARY_NAME = 122,
+  ID_SAVE_GIT_REPO_DIR   = 112,
+  ID_SAVE_CONSTRUCTION_POINT = 113,
+  ID_SAVE_HEADER_FILE_LOCATION = 114,
+  ID_SAVE_SRC_LOCATION  = 115,
+  ID_SAVE_LIB_DIRECTORY = 116,
+  ID_SAVE_LIBRARY_NAME = 117,
+  ID_SAVE_STANDART = 118,
+  ID_SAVE_COMPILER_OPTIONS  = 119,
+  ID_SAVE_LINKER_OPTIONS  = 120,
 
-  ID_CLEAR_HEADER_FILE_LOCATION = 123,
-  ID_CLEAR_SRC_LOCATIONS  = 124,
-  ID_CLEAR_LIB_DIRECTORIES = 125,
-  ID_CLEAR_LIBRARY_NAMES = 126,
+  ID_REMOVE_HEADER_FILE_LOCATION = 121,
+  ID_REMOVE_SRC_LOCATION  = 122,
+  ID_REMOVE_LIB_DIRECTORY = 123,
+  ID_REMOVE_LIBRARY_NAME = 124,
+
+  ID_CLEAR_HEADER_FILE_LOCATION = 125,
+  ID_CLEAR_SRC_LOCATIONS  = 126,
+  ID_CLEAR_LIB_DIRECTORIES = 127,
+  ID_CLEAR_LIBRARY_NAMES = 128,
   
-  ID_CLOSE_DESCRIPTION_PANEL = 127,
-  ID_SAVE_PANEL_DESCRIPTIONS = 128,
-  ID_CLEAR_PANEL_DESCRIPTIONS = 129,
-  ID_INSERT_BUILD_SYSTEM_TYPE = 130
+  ID_CLOSE_DESCRIPTION_PANEL = 129,
+  ID_SAVE_PANEL_DESCRIPTIONS = 130,
+  ID_CLEAR_PANEL_DESCRIPTIONS = 131,
+  ID_INSERT_BUILD_SYSTEM_TYPE = 132
 };
 
 
@@ -132,7 +135,10 @@ protected:
 
     void Insert_Standart(wxCommandEvent & event);
 
-    void Insert_Option(wxCommandEvent & event);
+    void Insert_Compiler_Options(wxCommandEvent & event);
+
+    void Insert_Linker_Options(wxCommandEvent & event);
+
 
     void Save_Git_Repo_Dir(wxCommandEvent & event);
 
@@ -148,7 +154,9 @@ protected:
     
     void Save_Standart(wxCommandEvent & event);
 
-    void Save_Option(wxCommandEvent & event);
+    void Save_Compiler_Options(wxCommandEvent & event);
+
+    void Save_Linker_Options(wxCommandEvent & event);
 
     void Close_Description_Panel(wxCommandEvent & event);
 
@@ -266,7 +274,9 @@ protected:
 
     wxDataViewListCtrl * listctrl_standard;
 
-    wxDataViewListCtrl * listctrl_options;
+    wxDataViewListCtrl * listctrl_linker_options;
+
+    wxDataViewListCtrl * listctrl_compiler_options;
 
     wxDataViewListCtrl * listctrl_build_system_type;
 
@@ -286,7 +296,10 @@ protected:
 
     wxButton * InsertButton_for_standard;
 
-    wxButton * InsertButton_for_options;
+    wxButton * InsertButton_for_compiler_options;
+
+    wxButton * InsertButton_for_linker_options;
+
 
     wxButton * InsertButton_for_build_system_type;
 
@@ -307,7 +320,10 @@ protected:
 
     wxButton * Save_Button_for_standard;
 
-    wxButton * Save_Button_for_options;
+    wxButton * Save_Button_for_compiler_options;
+
+    wxButton * Save_Button_for_linker_options;
+
 
     wxButton * Save_Button_for_build_system_type;
 

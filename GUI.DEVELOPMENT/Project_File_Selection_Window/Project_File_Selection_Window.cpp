@@ -443,13 +443,19 @@ void Project_File_Selection_Window::Select_File(){
 
               wxString Message = "\nThere is a syntax error in descriptor file";
 
-              Message += "\nor descriptor file is invalid";
+              Message += "\nor descriptor file is invalid!";
 
-              Message += "\nPlease control descriptor file";
+              Message += "\n\nPlease control descriptor file";
 
               Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
             
-                         wxT("STATUS:\n"),wxID_ANY,wxT("NWINIX DATA RECORD OPERATION REPORT"),*this->exclamation_mark_bmp);
+                         wxT("ERROR REPORT:"),wxID_ANY,
+                         
+                         wxT("NWINIX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
+
+              dial->SetSize(wxSize(600,420));
+
+              dial->Centre(wxBOTH);
 
               dial->ShowModal();
 

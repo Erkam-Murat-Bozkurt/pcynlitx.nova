@@ -25,7 +25,8 @@ struct Record_Data_For_Gui {
 
        std::string standard;
        std::string build_system_type;
-       std::string options;
+       std::string linker_options;
+       std::string compiler_options;
        std::string root_dir;
        std::string warehouse_location;
        std::vector<std::string> Include_Directories;
@@ -70,7 +71,8 @@ private:
   char opr_sis;
   std::string standard;
   std::string build_system_type;
-  std::string options;
+  std::string linker_options;
+  std::string compiler_options;
   std::string root_dir;
   std::string warehouse_location;
   std::string Descriptor_File_Path;
