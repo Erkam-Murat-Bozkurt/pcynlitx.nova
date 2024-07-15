@@ -1115,7 +1115,7 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
             
            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
             
-           wxT("STATUS:\n"),wxID_ANY,wxT("NWINIX DATA RECORD OPERATION REPORT"),*this->exclamation_mark_bmp);
+               wxT("STATUS:\n"),wxID_ANY,wxT("NWINIX DATA RECORD OPERATION REPORT"),*this->exclamation_mark_bmp);
 
            dial->ShowModal();
      }
@@ -1411,7 +1411,7 @@ void Custom_Multi_DataPanel::Select_Build_System_Type(wxCommandEvent & event){
 
         std::string cmake_ = "CMAKE";
 
-        std::string gnu_make_ = "GNU Make";
+        std::string shell_scripting_ = "Shell-Scripting";
 
         std::string empty_choice = "";
 
@@ -1420,7 +1420,7 @@ void Custom_Multi_DataPanel::Select_Build_System_Type(wxCommandEvent & event){
 
         Choices[0] = wxString(cmake_);
 
-        Choices[1] = wxString(gnu_make_);
+        Choices[1] = wxString(shell_scripting_);
 
         Choices[2] = wxString(empty_choice);
 

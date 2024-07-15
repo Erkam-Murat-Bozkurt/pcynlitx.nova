@@ -271,6 +271,20 @@ void GUI_List_Data_Recorder::Update_Descriptor_File(){
      this->WriteNewLines(two_lines);
 
 
+     this->WriteNewLines(two_lines);
+
+     this->File_Manager.WriteToFile("[BUILD-SYSTEM]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_String_Data(this->build_system_type);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+     this->WriteNewLines(two_lines);
+
 
      this->File_Manager.WriteToFile("[INCLUDE-DIRECTORIES]{");
 
