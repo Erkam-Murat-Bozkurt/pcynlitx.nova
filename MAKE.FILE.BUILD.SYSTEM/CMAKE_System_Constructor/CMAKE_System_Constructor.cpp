@@ -9,8 +9,6 @@ CMAKE_System_Constructor::CMAKE_System_Constructor(char * DesPath, char opr_sis)
      this->Memory_Delete_Condition = false;
 
      this->opr_sis = opr_sis;
-
-     this->Mk_Dir_Constructor.Receive_Operating_System(opr_sis);
 }
 
 
@@ -35,8 +33,6 @@ void CMAKE_System_Constructor::Clear_Dynamic_Memory(){
 
          this->Clear_String_Memory(this->Repo_Dir);
 
-         this->Mk_Dir_Constructor.Clear_Dynamic_Memory();
-
          this->DataMap.clear();
      }
 }
@@ -49,8 +45,6 @@ void CMAKE_System_Constructor::Receive_Descriptor_File_Reader(Descriptor_File_Re
      this->Warehouse_Path = this->Des_Reader->Get_Warehouse_Location();
 
      this->Repo_Dir = this->Des_Reader->Get_Repo_Directory_Location();
-
-     this->Mk_Dir_Constructor.Receive_Descriptor_File_Reader(ptr);
 }
 
 
@@ -59,8 +53,6 @@ void CMAKE_System_Constructor::Receive_Source_File_Dependency_Determiner(Source_
      * dep_ptr){
 
      this->Dep_Determiner = dep_ptr;
-
-     this->Mk_Dir_Constructor.Receive_Compiler_Data_Pointer(dep_ptr->Get_Compiler_Data_Address());
 }
 
 
@@ -68,10 +60,6 @@ void CMAKE_System_Constructor::Receive_Source_File_Dependency_Determiner(Source_
 void CMAKE_System_Constructor::Build_Make_Files(){
 
      // Determination of the directories recorded on the git repo
-
-     this->Mk_Dir_Constructor.Collect_Directory_Info();
-
-     this->Mk_Dir_Constructor.Construct_MakeFile_Directories();
 
      this->Compiler_Data_Pointer = this->Dep_Determiner->Get_Compiler_Data_Address();
 

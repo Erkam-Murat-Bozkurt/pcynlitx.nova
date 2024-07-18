@@ -16,6 +16,7 @@
 #include <string>
 #include <windows.h>
 #include "Build_Tools_Initializer.h"
+#include "CMAKE_Build_System_Generator.hpp"
 #include "Executable_MakeFile_Builder.hpp"
 #include "Repo_Warehouse_Initializer.h"
 #include "Auto_MakeFile_Builder.h"
@@ -42,6 +43,7 @@ public:
  void Clear_Dynamic_Memory();
 protected:
  Build_Tools_Initializer Bld_Init;
+ CMAKE_Build_System_Generator CMAKE_Builder;
  Executable_MakeFile_Builder Exe_Bld;
  Descriptor_File_Reader Des_Reader;
  Git_Data_Processor Git_Prog;

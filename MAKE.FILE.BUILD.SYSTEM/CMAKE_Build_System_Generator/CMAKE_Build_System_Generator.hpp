@@ -26,6 +26,7 @@
 #include "Source_File_Dependency_Determiner.hpp"
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"
+#include "Repo_Warehouse_Initializer.h"
 #include "Git_Data_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Header_File_Determiner.h"
@@ -38,18 +39,24 @@ class CMAKE_Build_System_Generator
 public:
  CMAKE_Build_System_Generator(char * DesPath, char opr_sis, char build_type);
  virtual ~CMAKE_Build_System_Generator();
+ void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dep_ptr);
+ void Receive_Git_Data_Processor(Git_Data_Processor * Git_Proc);
+ void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_System_Interface(Custom_System_Interface * sysInt);
  void Construct_Build_System(std::string project_name, std::string version_num);
  void Construct_Exe_Build_System(std::string target_main_file_path, std::string exe_name);
  void Clear_Dynamic_Memory();
 protected:
- Git_Data_Processor Data_Processor;
- Descriptor_File_Reader Des_Reader;
- Source_File_Dependency_Determiner Dep_Determiner;
+ Git_Data_Processor * Data_Processor;
+ Descriptor_File_Reader * Des_Reader;
+ Source_File_Dependency_Determiner * Dep_Determiner;
  CMAKE_System_Constructor CMAKE_ListFileBuilder;
  CMAKE_Main_File_Writer CMAKE_MainFileBuilder;
  CMAKE_Executable_Target_Constructor Executable_Target_Constructor;
+ Custom_System_Interface * SysInt;
  std::string DesPATH;
  char opr_sis;
+ char build_type;
  bool Memory_Delete_Condition;
 };
 

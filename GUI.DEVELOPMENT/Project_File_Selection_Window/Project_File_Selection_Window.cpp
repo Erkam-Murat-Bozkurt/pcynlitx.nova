@@ -119,11 +119,11 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Empty_Project_File_Button     = new wxButton(this->Empty_Project_File_Button_Panel,ID_CONSTRUCT_EMPTY_PROJECT_FILE,
      
-                                         wxT("NEW FILE"), wxDefaultPosition,   wxSize(200, 60));
+                                         wxT("CREATE FILE"), wxDefaultPosition,   wxSize(150,70));
 
      this->Project_File_Selection_Button = new wxButton(this->Project_File_Selection_Button_Panel,ID_SELECT_AN_EXISTING_PROJECT_FILE,
      
-                                         wxT("SELECT FILE"),wxDefaultPosition, wxSize(200, 60));
+                                         wxT("SELECT FILE"),wxDefaultPosition, wxSize(150,70));
 
 
 
@@ -131,7 +131,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      bld_font.SetFaceName(wxT("Segoe UI"));
 
-     bld_font.SetPointSize(11);
+     bld_font.SetPointSize(10);
 
      //bld_font.SetFaceName(wxT("Noto Sans"));
 
@@ -142,14 +142,14 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
 
 
-     this->Empty_Project_File_Button->SetMinSize(wxSize(200,60));
+     this->Empty_Project_File_Button->SetMinSize(wxSize(150,70));
 
-     //this->Empty_Project_File_Button->SetForegroundColour(wxColour(50,50,50));
+     this->Empty_Project_File_Button->SetForegroundColour(wxColour(100,100,100));
 
 
-     this->Project_File_Selection_Button->SetMinSize(wxSize(200,60));
+     this->Project_File_Selection_Button->SetMinSize(wxSize(150,70));
 
-     //this->Project_File_Selection_Button->SetForegroundColour(wxColour(50,50,50));
+     this->Project_File_Selection_Button->SetForegroundColour(wxColour(100,100,100));
 
 
 
@@ -159,7 +159,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Empty_Project_File_Text_Panel->SetMinSize(wxSize(350,80));
 
-     this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(175,175,185));
+     this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(140,140,155));
 
      //this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(200,100,100));
 
@@ -169,7 +169,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Project_File_Selection_Text_Panel->SetMinSize(wxSize(350,80));
 
-     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(175,175,185,0xff));
+     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(140,140,155,0xff));
 
      //this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(68,158,157));
 
@@ -180,7 +180,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      //wxString new_file_text_string = wxT("Construct a new project file");
      
-     wxString new_file_text_string = wxT("A NEW EMPTY PROJECT FILE");
+     wxString new_file_text_string = wxT("START A NEW PROJECT");
 
      wxStaticText * new_file_text  
      
@@ -188,15 +188,15 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      wxFont Text_Font = new_file_text->GetFont();
 
-     Text_Font.SetPointSize(10);
+     Text_Font.SetPointSize(11);
 
-     Text_Font.SetFaceName(wxT("Segoe UI Semibold"));
+     Text_Font.SetFaceName(wxT("Segoe UI"));
 
      //Text_Font.SetFaceName(wxT("Noto Sans"));
 
      new_file_text->SetFont(Text_Font);
 
-     new_file_text->SetForegroundColour(wxColour(80,80,95));
+     new_file_text->SetForegroundColour(wxColour(255,255,255));
 
      //new_file_text->SetForegroundColour(wxColour(250,250,250));
      
@@ -206,7 +206,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      //wxString existing_file_text_string = wxT("Use a ready project file");
 
-     wxString existing_file_text_string = wxT("USE A READY PROJECT FILE");
+     wxString existing_file_text_string = wxT("CONTINUE A CURRENT PROJECT");
      
      wxStaticText * project_file_text  
      
@@ -214,7 +214,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      project_file_text->SetFont(Text_Font);
 
-     project_file_text->SetForegroundColour(wxColour(80,80,95));
+     project_file_text->SetForegroundColour(wxColour(255,255,255));
 
      //project_file_text->SetForegroundColour(wxColour(250,250,250));
 
@@ -421,7 +421,9 @@ void Project_File_Selection_Window::Select_File(){
 
      openFileDialog->CenterOnScreen(wxBOTH);
 
-     if (openFileDialog->ShowModal() == wxID_OK){
+     int return_mode = openFileDialog->ShowModal();
+
+     if (return_mode == wxID_OK){
 
          *this->Descriptor_File_Path_Pointer = openFileDialog->GetPath();
 
@@ -468,7 +470,10 @@ void Project_File_Selection_Window::Select_File(){
      }
      else{
 
-        *this->Descriptor_File_Selection_Status = false;
+          if(return_mode == wxID_CANCEL){
+
+            this->Destroy();
+          }
      }
 
      delete openFileDialog;

@@ -11,6 +11,9 @@
 #include "Descriptor_File_Reader.hpp"
 
 
+std::string Convert_Std_String(char * str);
+
+
 int main(int argc, char ** argv){
 
     if(argc< 4){
@@ -85,14 +88,77 @@ int main(int argc, char ** argv){
 
 
 
+    SetPriorityClass(GetCurrentProcess(),HIGH_PRIORITY_CLASS);
+
+    Custom_System_Interface System_Interface;
+
+    System_Interface.SetCpuRate();
+    
+
+
+
+    Descriptor_File_Reader Des_File_Reader('w','n');    
+
+    Des_File_Reader.Receive_Descriptor_File_Path(argv[2]);
+
+    Des_File_Reader.Read_Descriptor_File();
+
+
+    Git_Data_Processor Data_Processor('w','n');
+
+    Data_Processor.Receive_Descriptor_File_Path(argv[2]);
+
+    Data_Processor.Write_Git_Repo_List_File();
+
+    Data_Processor.Determine_Git_Repo_Info();
+
+
+    Source_File_Dependency_Determiner Dep_Determiner(argv[2],'w');
+
+    Dep_Determiner.Receive_Descriptor_File_Reader(&Des_File_Reader);
+
+    Dep_Determiner.Receive_Git_Data_Processor(&Data_Processor);
+
+
+
+    if(build_type == "-ef"){
+
+       Dep_Determiner.Collect_Dependency_Information(_argm3);
+    }
+
+
+    if(build_type == "-bs"){
+         
+       Dep_Determiner.Collect_Dependency_Information();
+    }
+
+
 
     // BUILD SYSTEM GENERATOR OBJECT CONSTRUCTION
 
     CMAKE_Build_System_Generator BLD_System_Generator(argv[2],'w','n');
 
+    BLD_System_Generator.Receive_System_Interface(&System_Interface);
+
+    BLD_System_Generator.Receive_Descriptor_File_Reader(&Des_File_Reader);
+
+    BLD_System_Generator.Receive_Git_Data_Processor(&Data_Processor);
+
+    BLD_System_Generator.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
+
     if(build_type == "-bs"){
 
        BLD_System_Generator.Construct_Build_System(_argm3,_argm4);
+    }
+
+
+
+
+    if(build_type == "-bs_gui"){
+
+        System_Interface.Connect_NamedPipe_From_Child_Process();
+
+        BLD_System_Generator.Construct_Build_System(_argm3,_argm4);
     }
 
 
@@ -102,6 +168,29 @@ int main(int argc, char ** argv){
 
     }
 
+    if(build_type == "-ef_gui"){
+
+        System_Interface.Connect_NamedPipe_From_Child_Process();
+
+        BLD_System_Generator.Construct_Exe_Build_System(_argm3,_argm4);
+
+    }
+
+
+    std::cout << "\n";
+
+    if(build_type == "-bs_gui"){
+
+       System_Interface.Close_Child_Handles_For_Named_Pipe_Connection();
+    }
+
+    if(build_type == "-ef_gui"){
+
+       System_Interface.Close_Child_Handles_For_Named_Pipe_Connection();
+
+    }
+
+
     std::cout << "\n\nThe end of the program ..";
 
     std::cout << "\n\n";
@@ -109,3 +198,22 @@ int main(int argc, char ** argv){
     return 0;
 }
 
+
+
+
+
+std::string Convert_Std_String(char * str){
+
+     std::string st_string;
+
+     size_t  string_size = strlen(str);
+
+     for(size_t i=0;i<string_size;i++){
+
+         st_string.push_back(str[i]);
+     }
+
+     st_string.shrink_to_fit();
+
+     return st_string;
+}

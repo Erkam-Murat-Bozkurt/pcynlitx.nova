@@ -28,7 +28,6 @@ add_library(make_fbld_sys
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Build_System_Generator/CMAKE_Build_System_Generator.hpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_System_Constructor/CMAKE_System_Constructor.cpp
-
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_System_Constructor/CMAKE_System_Constructor.hpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Main_File_Writer/CMAKE_Main_File_Writer.cpp
