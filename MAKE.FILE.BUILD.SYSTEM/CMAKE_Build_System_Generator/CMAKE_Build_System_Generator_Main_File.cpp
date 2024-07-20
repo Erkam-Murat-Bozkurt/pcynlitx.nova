@@ -96,6 +96,7 @@ int main(int argc, char ** argv){
     
 
 
+    /*
 
     Descriptor_File_Reader Des_File_Reader('w','n');    
 
@@ -132,7 +133,7 @@ int main(int argc, char ** argv){
        Dep_Determiner.Collect_Dependency_Information();
     }
 
-
+    */
 
     // BUILD SYSTEM GENERATOR OBJECT CONSTRUCTION
 
@@ -140,18 +141,10 @@ int main(int argc, char ** argv){
 
     BLD_System_Generator.Receive_System_Interface(&System_Interface);
 
-    BLD_System_Generator.Receive_Descriptor_File_Reader(&Des_File_Reader);
-
-    BLD_System_Generator.Receive_Git_Data_Processor(&Data_Processor);
-
-    BLD_System_Generator.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
-
     if(build_type == "-bs"){
 
        BLD_System_Generator.Construct_Build_System(_argm3,_argm4);
     }
-
-
 
 
     if(build_type == "-bs_gui"){

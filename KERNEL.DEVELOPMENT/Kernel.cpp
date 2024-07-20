@@ -29,20 +29,17 @@ Kernel::Kernel(char * DesPATH, char opr_sis, char build_type) : Bld_Init(DesPATH
      std::string build_system_type = this->Des_Reader.Get_Build_System_Type();
 
 
-     if(build_system_type == "Shell-Scripting"){
-
-        this->Lib_Up.Receive_Descriptor_File_Path(DesPATH);
+     this->Lib_Up.Receive_Descriptor_File_Path(DesPATH);
      
-        this->Git_Prog.Receive_Descriptor_File_Path(DesPATH);
+     this->Git_Prog.Receive_Descriptor_File_Path(DesPATH);
 
-        this->Git_Prog.Write_Git_Repo_List_File();
+     this->Git_Prog.Write_Git_Repo_List_File();
 
-        this->Git_Prog.Determine_Git_Repo_Info();
+     this->Git_Prog.Determine_Git_Repo_Info();
      
-        this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
+     this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
-        this->Dep_Determiner.Receive_Git_Data_Processor(&this->Git_Prog);
-     }
+     this->Dep_Determiner.Receive_Git_Data_Processor(&this->Git_Prog);
 }
 
 Kernel::~Kernel(){

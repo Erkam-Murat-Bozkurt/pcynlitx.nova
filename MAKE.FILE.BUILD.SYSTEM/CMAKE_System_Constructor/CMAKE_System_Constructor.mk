@@ -57,7 +57,7 @@ HDR_DEP_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_Dependency_Da
 MAKE_FILE_DIR_CON=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\MakeFile_Directory_Constructor
 
 
-
+CMAKE_MAIN_FILE_WRT=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\CMAKE_Main_File_Writer
 
 VPATH = $(INT_TO_CHAR)    $(FILE_OPRS)    $(DIR_OPS)   \
 	    $(STRING_OPS)     $(CHAR_OPS)     $(MAKE_BLD)   \
@@ -81,11 +81,13 @@ VPATH = $(INT_TO_CHAR)    $(FILE_OPRS)    $(DIR_OPS)   \
 		$(DEP_DAT_STCK) \
 		$(HDR_DEP_EXT) \
 		$(SYS_INT) \
-		$(MAKE_FILE_DIR_CON)
+		$(MAKE_FILE_DIR_CON) \
+		$(CMAKE_MAIN_FILE_WRT)
 	    
 
 CMAKE_System_Constructor.exe: CMAKE_System_Constructor_Main_File.cpp \
 	CMAKE_System_Constructor.cpp \
+	CMAKE_Main_File_Writer.cpp \
 	CMAKE_Target_Library_Builder.cpp \
 	MakeFile_Path_Determiner.cpp \
 	MakeFile_Data_Collector.cpp \
@@ -117,6 +119,7 @@ CMAKE_System_Constructor.exe: CMAKE_System_Constructor_Main_File.cpp \
 	Cpp_FileOperations.cpp \
 	CharOperator.cpp \
 	CMAKE_System_Constructor.hpp \
+	CMAKE_Main_File_Writer.hpp \
 	CMAKE_Target_Library_Builder.hpp \
 	MakeFile_Path_Determiner.hpp \
 	MakeFile_Data_Collector.hpp \
@@ -188,6 +191,7 @@ CMAKE_System_Constructor.exe: CMAKE_System_Constructor_Main_File.cpp \
 	-I$(HDR_DEP_EXT) \
 	-I$(SYS_INT) \
 	-I$(MAKE_FILE_DIR_CON) \
+	-I$(CMAKE_MAIN_FILE_WRT) \
 	-L$(MAKE_BLD) \
 	-L$(MAKE_DATA_COL) \
 	-L$(MAKE_FILE_PATH) \
@@ -228,8 +232,10 @@ CMAKE_System_Constructor.exe: CMAKE_System_Constructor_Main_File.cpp \
 	-L$(HDR_DEP_EXT) \
 	-L$(SYS_INT) \
 	-L$(MAKE_FILE_DIR_CON) \
+	-L$(CMAKE_MAIN_FILE_WRT) \
 	CMAKE_System_Constructor_Main_File.cpp \
 	CMAKE_System_Constructor.cpp \
+	$(CMAKE_MAIN_FILE_WRT)\CMAKE_Main_File_Writer.cpp \
 	$(MAKE_BLD)\CMAKE_Target_Library_Builder.cpp \
 	$(MAKE_DATA_COL)\MakeFile_Data_Collector.cpp  \
 	$(MAKE_FILE_PATH)\MakeFile_Path_Determiner.cpp \
@@ -270,6 +276,7 @@ CMAKE_System_Constructor.exe: CMAKE_System_Constructor_Main_File.cpp \
 	$(FILE_OPRS)\Cpp_FileOperations.cpp \
 	$(SYS_INT)\Custom_System_Interface.cpp \
 	-include CMAKE_System_Constructor.hpp \
+	-include $(CMAKE_MAIN_FILE_WRT)\CMAKE_Main_File_Writer.hpp \
 	-include $(MAKE_BLD)\CMAKE_Target_Library_Builder.hpp \
 	-include $(MAKE_DATA_COL)\MakeFile_Data_Collector.hpp  \
 	-include $(MAKE_FILE_DIR_CON)\MakeFile_Directory_Constructor.hpp \

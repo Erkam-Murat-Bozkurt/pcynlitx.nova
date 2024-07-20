@@ -34,12 +34,10 @@
 class CMAKE_Executable_Target_Constructor
 {
 public:
- CMAKE_Executable_Target_Constructor();
+ CMAKE_Executable_Target_Constructor(char * DesPath, char opr_sis, char build_type);
  virtual ~CMAKE_Executable_Target_Constructor();
  void Build_MakeFile(std::string file_path, std::string exe_name);
- void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * ptr);
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
- void Receive_Operating_System(char opr_sis);
+ void Receive_System_Interface(Custom_System_Interface * sysInt);
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 private:
@@ -49,12 +47,16 @@ private:
  void Clear_String_Memory(std::string & pointer);
  void CMAKE_Sub_Directory_File_Path_Determination(std::string & path);
  void CMAKE_SubDir_Determination(std::string & sub_dir_path);
- Source_File_Dependency_Determiner * Dep_Determiner;
- Descriptor_File_Reader * Des_Reader;
+ Descriptor_File_Reader Des_Reader;
+ Git_Data_Processor Data_Processor;
+ Source_File_Dependency_Determiner Dep_Determiner;
+ Custom_System_Interface * SysInt;
  StringOperator StrOpr;
  Cpp_FileOperations FileManager;
  std::vector<Compiler_Data> * Comp_Data_Ptr;
  Compiler_Data * Data_Ptr;
+ std::string DesPATH;
+ char build_type;
  char opr_sis;
  bool Include_Line_Condition;
  bool Memory_Delete_Condition;

@@ -4,11 +4,41 @@
 
 #include "CMAKE_System_Constructor.hpp"
 
-CMAKE_System_Constructor::CMAKE_System_Constructor(char * DesPath, char opr_sis) 
+CMAKE_System_Constructor::CMAKE_System_Constructor(char * DesPath, char opr_sis, char build_type) :
+
+    Des_Reader(opr_sis,build_type),
+    
+    Dep_Determiner(DesPath,opr_sis) , Data_Processor(opr_sis,build_type)
 {
      this->Memory_Delete_Condition = false;
 
      this->opr_sis = opr_sis;
+
+     
+    this->build_type = build_type;
+
+     size_t des_path_size = strlen(DesPath);
+
+     for(size_t i=0;i<des_path_size;i++){
+
+         this->DesPATH.push_back(DesPath[i]);
+     }
+
+     this->DesPATH.shrink_to_fit();
+
+
+     this->Memory_Delete_Condition = false;
+
+     this->opr_sis = opr_sis;
+
+     
+     if(this->build_type == 'g'){
+
+        this->Des_Reader.Set_Gui_Read_Status(true);
+
+        this->Data_Processor.Set_Gui_Read_Status(true);
+     }
+
 }
 
 
@@ -38,30 +68,78 @@ void CMAKE_System_Constructor::Clear_Dynamic_Memory(){
 }
 
 
-void CMAKE_System_Constructor::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void CMAKE_System_Constructor::Receive_System_Interface(Custom_System_Interface * sysInt){
 
-     this->Des_Reader = ptr;
-
-     this->Warehouse_Path = this->Des_Reader->Get_Warehouse_Location();
-
-     this->Repo_Dir = this->Des_Reader->Get_Repo_Directory_Location();
+     this->SysInt = sysInt;
 }
 
 
-void CMAKE_System_Constructor::Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner 
-
-     * dep_ptr){
-
-     this->Dep_Determiner = dep_ptr;
-}
-
-
-
-void CMAKE_System_Constructor::Build_Make_Files(){
+void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::string version_num){
 
      // Determination of the directories recorded on the git repo
+          
+     this->Des_Reader.Receive_Descriptor_File_Path(this->DesPATH);
 
-     this->Compiler_Data_Pointer = this->Dep_Determiner->Get_Compiler_Data_Address();
+     this->Des_Reader.Read_Descriptor_File();
+
+
+     char read_opr [] = "The project descriptor file read\n\n";
+
+     std::cout << read_opr;
+
+     if(this->build_type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(read_opr);
+     }
+ 
+
+     this->Data_Processor.Receive_Descriptor_File_Path(this->DesPATH);
+
+     this->Data_Processor.Write_Git_Repo_List_File();
+
+     this->Data_Processor.Determine_Git_Repo_Info();  
+
+
+     char git_data [] = "The data for git version controller has been collected\n\n";
+
+     std::cout << git_data;
+
+
+     if(this->build_type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(git_data);
+     }
+
+
+     this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
+
+     this->Dep_Determiner.Receive_Git_Data_Processor(&this->Data_Processor);
+
+     this->Dep_Determiner.Collect_Dependency_Information();
+
+
+     char dependency_data [] = "Source file dependencies has been determined\n\n";
+
+     std::cout << dependency_data;
+
+     if(this->build_type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(dependency_data);
+     }
+
+
+     this->CMK_MF_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
+
+     this->CMK_MF_Builder.Receive_Git_Data_Processor(&Data_Processor);
+
+     this->CMK_MF_Builder.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
+
+     this->CMK_MF_Builder.Receive_Operating_System(this->opr_sis);
+    
+     this->CMK_MF_Builder.Build_Main_CMAKE_File(project_name,version_num);
+
+
+     this->Compiler_Data_Pointer = this->Dep_Determiner.Get_Compiler_Data_Address();
 
      this->Compiler_Data_Pointer->shrink_to_fit();
 
@@ -236,13 +314,13 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
 
      CMAKE_Target_Library_Builder Target_Builder;
 
-     Target_Builder.Receive_Compiler_Data_Pointer(this->Dep_Determiner->Get_Compiler_Data_Address());
+     Target_Builder.Receive_Compiler_Data_Pointer(this->Dep_Determiner.Get_Compiler_Data_Address());
 
      Target_Builder.Receive_Operating_System(this->opr_sis);
 
      Target_Builder.Receive_DataMap(&this->DataMap);
 
-     Target_Builder.Receive_Descriptor_File_Reader(this->Des_Reader);
+     Target_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
      for(size_t i=start;i<end;i++){
 

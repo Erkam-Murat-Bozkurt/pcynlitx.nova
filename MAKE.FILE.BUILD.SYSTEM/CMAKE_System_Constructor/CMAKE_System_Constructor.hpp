@@ -18,6 +18,7 @@
 #include <thread>
 #include <mutex>
 #include "Descriptor_File_Reader.hpp"
+#include "CMAKE_Main_File_Writer.hpp"
 #include "CMAKE_Target_Library_Builder.hpp"
 #include "Make_File_Cleaner.hpp"
 #include "MakeFile_Data_Collector.hpp"
@@ -35,11 +36,10 @@
 class CMAKE_System_Constructor
 {
 public:
- CMAKE_System_Constructor(char * DesPath, char opr_sis);
+ CMAKE_System_Constructor(char * DesPath, char opr_sis, char build_type);
  virtual ~CMAKE_System_Constructor();
- void Build_Make_Files(); 
- void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dep_ptr);
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Build_Make_Files(std::string project_name, std::string version_num); 
+ void Receive_System_Interface(Custom_System_Interface * sysInt);
  void Clear_Dynamic_Memory();
 protected:
  void Write_MakeFiles(int start, int end);
@@ -52,9 +52,12 @@ protected:
  void Construct_For_Large_Data_Set(size_t data_size);
  void Construct_For_Middle_Data_Set(size_t data_size);
  void Construct_For_Small_Data_Set(size_t data_size);
- Source_File_Dependency_Determiner * Dep_Determiner;
+ CMAKE_Main_File_Writer CMK_MF_Builder;
+ Descriptor_File_Reader Des_Reader;
+ Git_Data_Processor Data_Processor;
+ Source_File_Dependency_Determiner Dep_Determiner;
  std::vector<Compiler_Data> * Compiler_Data_Pointer;
- Descriptor_File_Reader * Des_Reader;
+ Custom_System_Interface * SysInt;
  std::vector<std::thread> threadPool;
  std::unordered_map<std::string, Compiler_Data> DataMap;
  std::mutex mtx;
@@ -62,7 +65,9 @@ protected:
  std::string Repo_Dir;
  std::string repo_head_dir;
  std::string repo_obj_dir;
+ std::string DesPATH;
  char opr_sis;
+ char build_type;
  bool Memory_Delete_Condition;
 };
 

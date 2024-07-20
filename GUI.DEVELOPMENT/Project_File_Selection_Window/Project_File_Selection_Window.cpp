@@ -136,20 +136,20 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
      //bld_font.SetFaceName(wxT("Noto Sans"));
 
 
-     this->Empty_Project_File_Button->SetFont(bld_font);
+     this->Empty_Project_File_Button->SetFont(bld_font.Bold());
 
-     this->Project_File_Selection_Button->SetFont(bld_font);
+     this->Project_File_Selection_Button->SetFont(bld_font.Bold());
 
 
 
      this->Empty_Project_File_Button->SetMinSize(wxSize(150,70));
 
-     this->Empty_Project_File_Button->SetForegroundColour(wxColour(100,100,100));
+     this->Empty_Project_File_Button->SetForegroundColour(wxColour(150,150,150));
 
 
      this->Project_File_Selection_Button->SetMinSize(wxSize(150,70));
 
-     this->Project_File_Selection_Button->SetForegroundColour(wxColour(100,100,100));
+     this->Project_File_Selection_Button->SetForegroundColour(wxColour(150,150,150));
 
 
 
@@ -190,7 +190,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      Text_Font.SetPointSize(11);
 
-     Text_Font.SetFaceName(wxT("Segoe UI"));
+     Text_Font.SetFaceName(wxT("Segoe UI Semibold"));
 
      //Text_Font.SetFaceName(wxT("Noto Sans"));
 

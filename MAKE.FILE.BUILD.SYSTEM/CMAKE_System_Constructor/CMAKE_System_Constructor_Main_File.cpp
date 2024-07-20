@@ -10,52 +10,20 @@
 
 int main(int argc, char ** argv){
 
-    if(argc< 2){
+    if(argc< 4){
 
-       std::cout << "\n\n usage: <exe-file> <Descriptor File Path>";
+       std::cout << "\n\n usage: <exe-file> <Descriptor File Path> <project_name> <version_num>";
 
        std::cout << "\n\n";
 
        exit(0);
     }
 
-
-
-
-    Descriptor_File_Reader Des_File_Reader('w','n');    
-
-    Des_File_Reader.Receive_Descriptor_File_Path(argv[1]);
-
-    Des_File_Reader.Read_Descriptor_File();
-
-
-    Git_Data_Processor Data_Processor('w','n');
-
-    Data_Processor.Receive_Descriptor_File_Path(argv[1]);
-
-    Data_Processor.Write_Git_Repo_List_File();
-
-    Data_Processor.Determine_Git_Repo_Info();
-
-
-    Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
-
-    Dep_Determiner.Receive_Descriptor_File_Reader(&Des_File_Reader);
-
-    Dep_Determiner.Receive_Git_Data_Processor(&Data_Processor);
-
-    Dep_Determiner.Collect_Dependency_Information();
-
-
     std::cout << "\n\e[1;32mDependency information have been determined..\e[0m\n";
 
-    CMAKE_System_Constructor Make_Builder(argv[1],'w');
+    CMAKE_System_Constructor Make_Builder(argv[1],'w','n');
 
-    Make_Builder.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
-
-    Make_Builder.Receive_Descriptor_File_Reader(&Des_File_Reader);
-
-    Make_Builder.Build_Make_Files();
+    Make_Builder.Build_Make_Files(argv[2],argv[3]);
 
     std::cout << "\n\nThe end of the program ..";
 

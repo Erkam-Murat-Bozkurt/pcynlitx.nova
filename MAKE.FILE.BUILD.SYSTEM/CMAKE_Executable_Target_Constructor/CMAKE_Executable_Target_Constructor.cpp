@@ -26,9 +26,35 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "CMAKE_Executable_Target_Constructor.hpp"
 
-CMAKE_Executable_Target_Constructor::CMAKE_Executable_Target_Constructor()
+CMAKE_Executable_Target_Constructor::CMAKE_Executable_Target_Constructor(char * DesPath, char opr_sis, 
+
+    char build_type) : 
+  
+    Des_Reader(opr_sis,build_type),
+    
+    Dep_Determiner(DesPath,opr_sis) , Data_Processor(opr_sis,build_type)
 {
-   this->Memory_Delete_Condition = false;
+    this->Memory_Delete_Condition = false;
+
+    this->opr_sis = opr_sis;
+ 
+    this->build_type = build_type;
+
+    size_t des_path_size = strlen(DesPath);
+
+    for(size_t i=0;i<des_path_size;i++){
+
+        this->DesPATH.push_back(DesPath[i]);
+    }
+
+    this->DesPATH.shrink_to_fit();
+     
+    if(this->build_type == 'g'){
+
+       this->Des_Reader.Set_Gui_Read_Status(true);
+
+       this->Data_Processor.Set_Gui_Read_Status(true);
+    }
 }
 
 
@@ -54,21 +80,9 @@ void CMAKE_Executable_Target_Constructor::Clear_Dynamic_Memory(){
 }
 
 
-void CMAKE_Executable_Target_Constructor::Receive_Operating_System(char opr_sis){
+void CMAKE_Executable_Target_Constructor::Receive_System_Interface(Custom_System_Interface * sysInt){
 
-     this->opr_sis = opr_sis;
-}
-
-
-void CMAKE_Executable_Target_Constructor::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
-
-     this->Des_Reader = ptr;
-}
-
-void CMAKE_Executable_Target_Constructor::Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * ptr)
-{
-     this->Dep_Determiner = ptr;
-
+     this->SysInt = sysInt;
 }
 
 
@@ -76,7 +90,59 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      this->Memory_Delete_Condition = false;
 
-     this->Comp_Data_Ptr = this->Dep_Determiner->Get_Compiler_Data_Address();
+     
+     // Determination of the directories recorded on the git repo
+          
+     this->Des_Reader.Receive_Descriptor_File_Path(this->DesPATH);
+
+     this->Des_Reader.Read_Descriptor_File();
+
+
+     char read_opr [] = "The project descriptor file read\n\n";
+
+     std::cout << read_opr;
+
+     if(this->build_type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(read_opr);
+     }
+ 
+
+     this->Data_Processor.Receive_Descriptor_File_Path(this->DesPATH);
+
+     this->Data_Processor.Write_Git_Repo_List_File();
+
+     this->Data_Processor.Determine_Git_Repo_Info();  
+
+
+     char git_data [] = "The data for git version controller has been collected\n\n";
+
+     std::cout << git_data;
+
+
+     if(this->build_type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(git_data);
+     }
+
+
+     this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
+
+     this->Dep_Determiner.Receive_Git_Data_Processor(&this->Data_Processor);
+
+     this->Dep_Determiner.Collect_Dependency_Information(file_path);
+
+
+     char dependency_data [] = "Source file dependencies has been determined\n\n";
+
+     std::cout << dependency_data;
+
+     if(this->build_type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(dependency_data);
+     }
+
+     this->Comp_Data_Ptr = this->Dep_Determiner.Get_Compiler_Data_Address();
 
 
 
@@ -148,7 +214,9 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      this->FileManager.WriteToFile("\t");
 
-     std::string src_file_path = this->Data_Ptr->source_file_path;
+     std::string src_file_path = file_path;
+
+     
 
      this->Convert_CMAKE_Format(src_file_path);
 
@@ -217,7 +285,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
 
 
-     const std::vector<std::string> & Lib_Dirs =  this->Des_Reader->Get_Library_Directories();
+     const std::vector<std::string> & Lib_Dirs =  this->Des_Reader.Get_Library_Directories();
 
      if(Lib_Dirs.size()>0){
 
@@ -241,7 +309,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
 
 
-     const std::vector<std::string> & Libs =  this->Des_Reader->Get_Library_Files();
+     const std::vector<std::string> & Libs =  this->Des_Reader.Get_Library_Files();
 
      if(Libs.size()>0){
 
@@ -288,7 +356,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      this->FileManager.WriteToFile("\n\n    ");
 
-     std::string com_options = this->Des_Reader->Get_Compiler_Options();
+     std::string com_options = this->Des_Reader.Get_Compiler_Options();
 
      for(size_t i=0;i<com_options.size();i++){
 
@@ -314,7 +382,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      this->FileManager.WriteToFile("\n\n    ");
 
-     this->FileManager.WriteToFile(this->Des_Reader->Get_Linker_Options());
+     this->FileManager.WriteToFile(this->Des_Reader.Get_Linker_Options());
 
      this->FileManager.WriteToFile(")");
 
@@ -426,6 +494,8 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
      }
 }
 
+
+
 void CMAKE_Executable_Target_Constructor::Find_Construction_Directory(std::string & dir, std::string file_path){
 
      size_t dir_size = file_path.size();
@@ -452,7 +522,7 @@ void CMAKE_Executable_Target_Constructor::Find_Construction_Directory(std::strin
 
 void CMAKE_Executable_Target_Constructor::CMAKE_Sub_Directory_File_Path_Determination(std::string & path){
 
-     std::string warehouse_location = this->Des_Reader->Get_Repo_Directory_Location();
+     std::string warehouse_location = this->Des_Reader.Get_Repo_Directory_Location();
 
      std::string directory_list_file_name = "directories.cmake";
 

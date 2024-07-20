@@ -54,55 +54,17 @@ int main(int argc, char ** argv){
 
     _argm3.shrink_to_fit();
 
-    std::cout << "\n _argm2:" << _argm2;
-
-    std::cout << "\n _argm3:" << _argm3;
-
-    std::cin.get();
-
-
-    Descriptor_File_Reader Des_File_Reader('w','n');    
-
-    Des_File_Reader.Receive_Descriptor_File_Path(argv[1]);
-
-    Des_File_Reader.Read_Descriptor_File();
-
-
-    Git_Data_Processor Data_Processor('w','n');
-
-    Data_Processor.Receive_Descriptor_File_Path(argv[1]);
-
-    Data_Processor.Write_Git_Repo_List_File();
-
-    Data_Processor.Determine_Git_Repo_Info();
-
-
-    Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
-
-    Dep_Determiner.Receive_Descriptor_File_Reader(&Des_File_Reader);
-
-    Dep_Determiner.Receive_Git_Data_Processor(&Data_Processor);
-
-    Dep_Determiner.Collect_Dependency_Information(_argm2);
-
 
     std::cout << "\n\e[1;32mDependency information have been determined..\e[0m\n";
 
 
-    CMAKE_Executable_Target_Constructor CMK_TARGET_EXE_Builder;
+    CMAKE_Executable_Target_Constructor CMK_TARGET_EXE_Builder(argv[1],'w','n');
     
-    CMK_TARGET_EXE_Builder.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
-
-    CMK_TARGET_EXE_Builder.Receive_Descriptor_File_Reader(&Des_File_Reader);
-
-    CMK_TARGET_EXE_Builder.Receive_Operating_System('w');
-
-
     CMK_TARGET_EXE_Builder.Build_MakeFile(_argm2,_argm3);
        
     CMK_TARGET_EXE_Builder.Clear_Object_Memory();
 
-    std::cout << "\nCMAKE Target constructed..";
+    std::cout << "\n\nCMAKE Target constructed..\n\n";
 
     return 0;
 }
