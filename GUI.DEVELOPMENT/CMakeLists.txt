@@ -178,9 +178,9 @@ target_include_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
 
 
-    D:/wxWidgets-3.2.4/include
+    D:/wxWidgets-3.2.5/include
 
-    D:/wxWidgets-3.2.4/lib/gcc810_x64_dll/mswu
+    D:/wxWidgets-3.2.5/lib/gcc810_x64_dll/mswu
 )
 
 
@@ -268,7 +268,7 @@ target_link_directories(BuildSystem_GUI PUBLIC
 
 
 
-    D:/wxWidgets-3.2.4/lib/gcc810_x64_dll
+    D:/wxWidgets-3.2.5/lib/gcc810_x64_dll
 
     D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0
 

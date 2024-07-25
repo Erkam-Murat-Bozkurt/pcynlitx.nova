@@ -40,30 +40,18 @@ add_subdirectory(GUI.DEVELOPMENT)
 
 include_directories(
 
-        D:/wxWidgets-3.2.4/include
+    D:/wxWidgets-3.2.5/include
 
-        D:/wxWidgets-3.2.4/lib/gcc810_x64_dll/mswu
+    D:/wxWidgets-3.2.5/lib/gcc810_x64_dll/mswu
 )
 
 link_directories(
 
-        D:/wxWidgets-3.2.4/lib/gcc810_x64_dll
+    D:/wxWidgets-3.2.5/lib/gcc810_x64_dll
 
-        D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0
+    D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0
 )
 
-link_libraries( pthread libwxmsw32ud_core.a libwxbase32ud.a libwxtiffd.a 
-                      
-                libwxjpegd.a libwxpngd.a libwxzlibd.a libwxregexud.a libwxexpatd.a libwxbase32ud_xml.a libwxmsw32ud_aui.a
-                
-                libwxmsw32ud_stc.a libwxscintillad.a libwxbase32ud_net.a libwxmsw32ud_xrc.a libwxmsw32ud_richtext.a
-        
-                libwxmsw32ud_webview.a libwxmsw32ud_ribbon.a libwxmsw32ud_propgrid.a libwxmsw32ud_html.a libwxmsw32ud_adv.a 
-        
-                libwxmsw32ud_gl.a libwxmsw32ud_media.a libwxmsw32ud_core.a kernel32 user32 gdi32 comdlg32 winspool winmm
-
-                shell32 comctl32 ole32 oleaut32 uuid rpcrt4 advapi32 wsock32 wininet uxtheme oleacc 
-)
 
 
 

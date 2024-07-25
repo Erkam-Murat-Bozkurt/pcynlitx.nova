@@ -39,6 +39,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 #include <wx/listctrl.h>
 #include <wx/string.h>
 #include <wx/msgdlg.h>
+#include <wx/display.h>
 #include "MainFrame.h"
 #include "Intro_Page_Loader.h"
 #include "Event_ID_Numbers.h"
@@ -98,6 +99,8 @@ bool wxLauncher::OnInit(){
          }
 
          this->Frame->Show(true);
+
+         this->Frame->Centre(wxBOTH);
 
          return true;
      }

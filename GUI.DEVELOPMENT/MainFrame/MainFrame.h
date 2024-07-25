@@ -136,6 +136,7 @@ private:
   bool Control_Build_Script_Existance();
   bool Control_Project_File_Syntax();
   void Print_Project_File_Syntax_Error();
+  void Update_Screen_Size();
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;

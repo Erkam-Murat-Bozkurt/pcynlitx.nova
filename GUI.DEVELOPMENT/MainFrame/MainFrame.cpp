@@ -42,6 +42,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->ClearBackground();
 
+  this->Update_Screen_Size();
 
 
   SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
@@ -88,10 +89,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Interface_Manager.SetFlags(wxAUI_MGR_LIVE_RESIZE);
 
-
-  this->SetSize(wxSize(1250,950));
-
-  this->SetMinSize(wxSize(1250,950));
 
   this->Refresh();
 
@@ -162,9 +159,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Book_Manager = new Custom_Notebook(this,this->Custom_Main_Panel,&this->Interface_Manager,
 
-                       *(this->Default_Font),wxSize(800,900),theme_clr);
+                       *(this->Default_Font),wxSize(700,750),theme_clr);
 
-  this->Book_Manager->SetMinSize(wxSize(800,900));
+  this->Book_Manager->SetMinSize(wxSize(700,750));
 
 
   this->Book_Manager->SetAutoLayout(true);
@@ -377,6 +374,38 @@ MainFrame::~MainFrame()
    this->Close(true);
 }
 
+
+
+
+void MainFrame::Update_Screen_Size(){
+
+     // This operation is performed for adaptation for different screen resolutions
+
+     wxDisplay Screen(this);
+ 
+     wxSize screen_size = Screen.GetClientArea().GetSize();
+
+     int screen_x = screen_size.x;
+
+     int screen_y = screen_size.y;
+
+
+     wxSize frame_size = this->GetSize();
+
+     int frame_x = frame_size.x;
+
+     int frame_y = frame_size.y;
+
+     frame_x = screen_x - 400;
+
+     frame_y = screen_y - 65;
+
+     this->SetSize(this->FromDIP(wxSize(frame_x,frame_y)));
+
+     this->SetMinSize(this->FromDIP(wxSize(frame_x,frame_y)));
+
+     this->Centre(wxBOTH);
+}
 
 
 void MainFrame::Open_PopUp_Menu(wxCommandEvent & event){
