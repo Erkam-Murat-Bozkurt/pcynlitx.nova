@@ -154,7 +154,11 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
             this->FileManager.WriteToFile("\n\n   ");
 
-            this->FileManager.WriteToFile(Inc_Dirs.at(i));         
+            std::string inc_dir = Inc_Dirs.at(i);
+
+            this->Convert_CMAKE_Format(inc_dir);
+
+            this->FileManager.WriteToFile(inc_dir);         
         }
 
         this->FileManager.WriteToFile("\n\n");
@@ -180,14 +184,22 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
              this->FileManager.WriteToFile("\n ");
 
-             this->FileManager.WriteToFile(Lib_Dirs.at(i));         
+             std::string lib_dir = Lib_Dirs.at(i);
+
+             this->Convert_CMAKE_Format(lib_dir);
+
+             this->FileManager.WriteToFile(lib_dir);         
          }
 
          for(size_t i=0;i<Src_Dirs.size();i++){
 
              this->FileManager.WriteToFile("\n ");
 
-             this->FileManager.WriteToFile(Src_Dirs.at(i));         
+             std::string src_dir = Src_Dirs.at(i);
+
+             this->Convert_CMAKE_Format(src_dir);
+
+             this->FileManager.WriteToFile(src_dir);         
          }
 
          this->FileManager.WriteToFile("\n )");
@@ -205,7 +217,11 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
             this->FileManager.WriteToFile("\n ");
 
-            this->FileManager.WriteToFile(libs.at(i));         
+            std::string link_lib = libs.at(i);
+
+            this->Convert_CMAKE_Format(link_lib);
+
+            this->FileManager.WriteToFile(link_lib);         
         }
 
         this->FileManager.WriteToFile("\n )");
@@ -279,7 +295,7 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
             this->FileManager.WriteToFile(Libs.at(i));
 
-            this->FileManager.WriteToFile(" ");
+            this->FileManager.WriteToFile("  ");
 
             lib_counter++;
 
@@ -304,4 +320,16 @@ void CMAKE_Main_File_Writer::Receive_Source_File_Dependency_Determiner(Source_Fi
      * dep_ptr){
 
      this->Dep_Determiner = dep_ptr;
+}
+
+
+void CMAKE_Main_File_Writer::Convert_CMAKE_Format(std::string & str){
+
+     for(size_t i=0;i<str.size();i++){
+
+         if(str[i] == '\\'){
+
+            str[i] = '/';
+         }
+     }
 }

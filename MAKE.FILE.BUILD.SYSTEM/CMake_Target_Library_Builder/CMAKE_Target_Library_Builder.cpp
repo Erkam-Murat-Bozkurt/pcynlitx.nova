@@ -234,7 +234,11 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
             this->FileManager.WriteToFile("\n\n    ");
 
-            this->FileManager.WriteToFile(Lib_Dirs.at(i));
+            std::string lib_dir = Lib_Dirs.at(i);
+
+            this->Convert_CMAKE_Format(lib_dir);
+
+            this->FileManager.WriteToFile(lib_dir);
         }
 
         this->FileManager.WriteToFile("\n\n )");
@@ -259,9 +263,13 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
         for(size_t i=0;i<Libs.size();i++){
 
+            std::string libs = Libs.at(i);
+
+            this->Convert_CMAKE_Format(libs);
+
             this->FileManager.WriteToFile(Libs.at(i));
 
-            this->FileManager.WriteToFile(" ");
+            this->FileManager.WriteToFile("  ");
 
             lib_counter++;
 

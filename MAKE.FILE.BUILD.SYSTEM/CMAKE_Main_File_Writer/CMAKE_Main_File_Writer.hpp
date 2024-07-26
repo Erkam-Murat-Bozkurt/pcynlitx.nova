@@ -45,6 +45,7 @@ public:
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
 private:
+ void Convert_CMAKE_Format(std::string & str);
  Source_File_Dependency_Determiner * Dep_Determiner;
  std::vector<Compiler_Data> * Compiler_Data_Pointer;
  Descriptor_File_Reader * Des_Reader;
