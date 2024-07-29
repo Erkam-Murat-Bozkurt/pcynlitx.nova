@@ -106,6 +106,8 @@ void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(){
 
      this->Determine_Build_System_Type();
 
+     this->Receive_Descriptor_File_Index_With_Spaces();
+
      this->StringManager.Clear_Dynamic_Memory();
 
      this->FileManager.Clear_Dynamic_Memory();
@@ -126,6 +128,30 @@ void Descriptor_File_Data_Collector::Receive_Descriptor_File_Index(){
           this->File_Index_With_Spaces.push_back(string_line);
 
           this->Delete_Spaces_on_String(&string_line);
+
+          this->File_Index.push_back(string_line);
+
+          this->File_Size++;
+
+      }while(!this->FileManager.Control_Stop_Condition());
+
+      this->FileManager.FileClose();
+}
+
+
+
+void Descriptor_File_Data_Collector::Receive_Descriptor_File_Index_With_Spaces(){
+
+     this->Clear_Vector_Memory(&this->File_Index);
+
+     this->FileManager.FileOpen(Rf);
+
+     this->File_Size = 0;
+
+     this->Memory_Delete_Condition = false;
+
+     do{
+          std::string string_line = this->FileManager.ReadLine();
 
           this->File_Index.push_back(string_line);
 

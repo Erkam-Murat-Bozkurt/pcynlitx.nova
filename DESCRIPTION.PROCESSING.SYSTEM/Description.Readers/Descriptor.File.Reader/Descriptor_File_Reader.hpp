@@ -63,6 +63,8 @@ protected:
  void Read_Compiler_Options();
  void Read_Linker_Options();
  void Read_Build_System_Type();
+ bool Is_Include_Character(std::string str);
+ void Delete_Spaces_on_String(std::string * str);
  void Divide_Options(std::string & options);
  void Clear_String_Memory(std::string * ptr);
  void Clear_Vectory_Memory(std::vector<std::string> * ptr);

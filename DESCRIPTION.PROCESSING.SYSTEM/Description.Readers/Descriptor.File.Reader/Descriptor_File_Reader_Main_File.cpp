@@ -169,6 +169,7 @@ int main(int argc, char ** argv){
 
     std::cout << "\n\n";
 
+
     std::cout << "\n COMPILER OPTIONS RECORD: ";
 
     if(Des_File_Reader.Get_Compiler_Options() != ""){
@@ -181,8 +182,6 @@ int main(int argc, char ** argv){
 
         std::cout << "\n There is no compiler opption decleration";
     }
-
-
 
 
     std::cout << "\n\n";
@@ -199,7 +198,6 @@ int main(int argc, char ** argv){
 
         std::cout << "\n There is no linker option decleration";
     }
-
 
 
     std::cout << "\n\n";

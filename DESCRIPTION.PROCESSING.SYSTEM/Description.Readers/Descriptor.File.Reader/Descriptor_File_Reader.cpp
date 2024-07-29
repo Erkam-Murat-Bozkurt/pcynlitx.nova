@@ -322,9 +322,14 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
 
                   if(this->StringManager.CheckStringLine(line)){
 
-                     this->root_dir = line;
+                    if(this->Is_Include_Character(line)){
 
-                     break;
+                       this->Delete_Spaces_on_String(&line);
+
+                       this->root_dir = line;
+
+                       break;
+                    }
                   }
               }
             }
@@ -340,9 +345,14 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
 
                if(this->StringManager.CheckStringLine(line)){
 
-                  this->root_dir = line;
+                  if(this->Is_Include_Character(line)){
 
-                  break;
+                     this->Delete_Spaces_on_String(&line);
+
+                     this->root_dir = line;
+
+                     break;
+                  }
                }
            }
          }
@@ -423,9 +433,14 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
 
                 if(this->StringManager.CheckStringLine(line)){
 
-                   this->warehouse_location = line;
+                   if(this->Is_Include_Character(line)){
 
-                   break;
+                      this->Delete_Spaces_on_String(&line);
+
+                      this->warehouse_location = line;
+
+                      break;
+                   }
                 }
             }
         }
@@ -438,9 +453,14 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
 
                 if(this->StringManager.CheckStringLine(line)){
 
-                   this->warehouse_location = line;
+                   if(this->Is_Include_Character(line)){
 
-                   break;
+                       this->Delete_Spaces_on_String(&line);
+
+                       this->warehouse_location = line;
+
+                       break;
+                   }
                 }
             }
      }
@@ -616,7 +636,10 @@ void Descriptor_File_Reader::Read_Include_Directories(){
 
          if(this->StringManager.CheckStringLine(line)){
 
-            this->include_dir_num++;
+            if(this->Is_Include_Character(line)){
+
+               this->include_dir_num++;
+            }
          }
       }
 
@@ -630,10 +653,19 @@ void Descriptor_File_Reader::Read_Include_Directories(){
 
              if(this->StringManager.CheckStringLine(line)){
 
-                this->Include_Directories.push_back(line);
+                if(this->Is_Include_Character(line)){
+
+                   this->Delete_Spaces_on_String(&line);
+
+                   this->Include_Directories.push_back(line);
+                }
              }
           }
       }
+
+      this->Include_Directories.shrink_to_fit();
+
+      this->include_dir_num = this->Include_Directories.size();
 }
 
 
@@ -652,7 +684,10 @@ void Descriptor_File_Reader::Read_Source_File_Directories(){
 
          if(this->StringManager.CheckStringLine(line)){
 
-            this->source_file_dir_num++;
+            if(this->Is_Include_Character(line)){
+
+               this->source_file_dir_num++;
+            }
          }
 
          this->Clear_String_Memory(&line);
@@ -669,12 +704,21 @@ void Descriptor_File_Reader::Read_Source_File_Directories(){
 
             if(this->StringManager.CheckStringLine(line)){
 
-                this->Source_File_Directories.push_back(line);
+               if(this->Is_Include_Character(line)){
+
+                  this->Delete_Spaces_on_String(&line);
+
+                  this->Source_File_Directories.push_back(line);
+               }
             }
 
             this->Clear_String_Memory(&line);
         }
      }
+
+     this->Source_File_Directories.shrink_to_fit();
+
+     this->source_file_dir_num = this->Source_File_Directories.size();
 }
 
 
@@ -693,7 +737,10 @@ void Descriptor_File_Reader::Read_Library_Directories(){
 
          if(this->StringManager.CheckStringLine(line)){
 
-             this->lib_dir_num++;
+            if(this->Is_Include_Character(line)){
+
+               this->lib_dir_num++;
+            }
          }
 
          this->Clear_String_Memory(&line);
@@ -709,12 +756,21 @@ void Descriptor_File_Reader::Read_Library_Directories(){
 
             if(this->StringManager.CheckStringLine(line)){
 
-              this->Library_Directories.push_back(line);
+               if(this->Is_Include_Character(line)){
+
+                  this->Delete_Spaces_on_String(&line);
+
+                  this->Library_Directories.push_back(line);
+               }
             }
 
             this->Clear_String_Memory(&line);
         }
      }
+
+     this->Library_Directories.shrink_to_fit();
+
+     this->lib_dir_num = this->Library_Directories.size();
 }
 
 
@@ -733,7 +789,10 @@ void Descriptor_File_Reader::Read_Library_Files(){
 
          if(this->StringManager.CheckStringLine(line)){
 
-             this->lib_file_num++;
+             if(this->Is_Include_Character(line)){
+
+                this->lib_file_num++;
+             }
          }
 
          this->Clear_String_Memory(&line);
@@ -749,12 +808,19 @@ void Descriptor_File_Reader::Read_Library_Files(){
 
             if(this->StringManager.CheckStringLine(line)){
 
-               this->Library_Files.push_back(line);
+               if(this->Is_Include_Character(line)){
+
+                  this->Library_Files.push_back(line);
+               }
             }
 
             this->Clear_String_Memory(&line);
         }
      }
+
+     this->Library_Files.shrink_to_fit();
+
+     this->lib_file_num = this->Library_Files.size();
 }
 
 
@@ -773,12 +839,15 @@ void Descriptor_File_Reader::Read_Compiler_Options(){
 
          if(this->StringManager.CheckStringLine(line)){
 
-            record_num++;
+            if(this->Is_Include_Character(line)){
+
+               record_num++;
+            }
          }
 
          this->Clear_String_Memory(&line);
       }
-   
+         
       if(record_num < 1){
 
          this->compiler_options.clear();   // There is no any decleration about the options
@@ -787,18 +856,16 @@ void Descriptor_File_Reader::Read_Compiler_Options(){
       }
       else{
 
-
            for(int i=start_line+1;i<end_line-1;i++){
 
                std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
 
                if(this->StringManager.CheckStringLine(line)){
 
-                  this->compiler_options += line;
+                  if(this->Is_Include_Character(line)){
 
-                  this->Clear_String_Memory(&line);
-
-                  break;
+                     this->compiler_options += line;
+                  }
                }
 
                this->Clear_String_Memory(&line);
@@ -806,6 +873,8 @@ void Descriptor_File_Reader::Read_Compiler_Options(){
       }
 
       this->Divide_Options(this->compiler_options);
+
+      this->compiler_options.shrink_to_fit();
 }
 
 
@@ -846,11 +915,10 @@ void Descriptor_File_Reader::Read_Linker_Options(){
 
                if(this->StringManager.CheckStringLine(line)){
 
-                  this->linker_options += line;
+                  if(this->Is_Include_Character(line)){
 
-                  this->Clear_String_Memory(&line);
-
-                  break;
+                     this->linker_options += line;
+                  }
                }
 
                this->Clear_String_Memory(&line);
@@ -858,11 +926,14 @@ void Descriptor_File_Reader::Read_Linker_Options(){
       }
 
       this->Divide_Options(this->linker_options);
+
+      this->linker_options.shrink_to_fit();
 }
 
 
 void Descriptor_File_Reader::Divide_Options(std::string & options){
 
+     int space_car_num = 0, standard_char = 0;
 
      if(!options.empty()){
 
@@ -879,6 +950,13 @@ void Descriptor_File_Reader::Divide_Options(std::string & options){
         }
 
 
+        while(temp_opts[0] == ' '){
+
+              temp_opts.erase(0,1);
+        }
+
+        temp_opts.shrink_to_fit();
+
         size_t options_size = temp_opts.length();
 
         int space_counter = 0;
@@ -887,12 +965,32 @@ void Descriptor_File_Reader::Divide_Options(std::string & options){
 
            if(temp_opts[i] == ' '){
 
-              space_counter++;
+              int index = i+1;
+
+              while(temp_opts[index] == ' '){
+
+                    temp_opts.erase(index,1);
+              }
+
+              temp_opts.shrink_to_fit();
+
+              space_car_num++;
             }
         }
 
+        temp_opts.shrink_to_fit();
 
-        if(space_counter>3){
+        options_size = temp_opts.size();
+
+        for(size_t i=0;i<options_size;i++){
+
+           if(temp_opts[i] == ' '){
+
+              space_car_num++;
+            }
+        }
+
+        if(space_car_num>3){
 
            space_counter = 0;
 
@@ -907,12 +1005,44 @@ void Descriptor_File_Reader::Divide_Options(std::string & options){
 
                options.push_back(temp_opts[i]);
 
-               if(temp_opts[i] == ' '){
+               if((temp_opts[i] != ' ') && (temp_opts[i] != '\n')){
+
+                  standard_char++;
+               }
+
+               if(temp_opts[i+1] == ' '){
+
+                  space_car_num++;
+               }
+
+               if((temp_opts[i+2] != ' ') && (temp_opts[i+2] != '\n')){
+
+                  standard_char++;
+               }
+
+               if((space_car_num > 0) && (standard_char >1 )){
 
                   space_counter++;
-                }
 
-                if(space_counter>3){
+                  space_car_num =0;
+
+                  standard_char =0;                
+               }
+
+               if(space_car_num > 1){
+
+                  space_car_num = 1;
+               }
+
+               if(temp_opts[i] == '\n'){
+
+                  space_counter=0;
+               }
+
+
+                if(space_counter>=3){
+
+                   options.push_back(' ');
 
                    options.push_back('\\');
 
@@ -922,6 +1052,8 @@ void Descriptor_File_Reader::Divide_Options(std::string & options){
 
                    space_counter = 0;
                 }
+
+                options.shrink_to_fit();
             }
           }
           else{
@@ -929,8 +1061,28 @@ void Descriptor_File_Reader::Divide_Options(std::string & options){
                options = temp_opts;
           }
        }
+
+       options.shrink_to_fit();
+
 }
 
+
+bool Descriptor_File_Reader::Is_Include_Character(std::string str){
+
+     bool is_include = false;
+
+     for(size_t i=0;i<str.length();i++){
+
+         if((str.at(i) != ' ') && (str.at(i) != '\n')){
+
+              is_include = true;
+
+              return is_include;
+         }
+     }
+
+     return is_include;
+}
 
 void Descriptor_File_Reader::Clear_Vectory_Memory(std::vector<std::string> * pointer){
 
@@ -966,6 +1118,29 @@ void Descriptor_File_Reader::Clear_String_Memory(std::string * pointer){
 
          pointer->shrink_to_fit();
      }
+}
+
+
+
+void Descriptor_File_Reader::Delete_Spaces_on_String(std::string * str)
+{
+    bool search_cond = true;
+
+    do{
+
+        search_cond = false;
+
+        for(size_t i=0;i<str->length();i++){
+
+           if( ((*str)[i] == ' ') || ((*str)[i] == '\t') ){
+
+              search_cond = true;
+
+              str->erase(i,1);
+           }
+        }
+
+  }while(search_cond);
 }
 
 

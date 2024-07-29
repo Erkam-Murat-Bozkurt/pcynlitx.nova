@@ -267,7 +267,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
             this->Convert_CMAKE_Format(libs);
 
-            this->FileManager.WriteToFile(Libs.at(i));
+            this->FileManager.WriteToFile(libs);
 
             this->FileManager.WriteToFile("  ");
 
@@ -303,10 +303,16 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
          if(com_options.at(i)=='\\'){
 
             com_options.erase(i,1);
+
+            com_options.shrink_to_fit();
          }
      }
 
+     com_options.shrink_to_fit();
+
      this->FileManager.WriteToFile(com_options);
+
+     this->FileManager.WriteToFile("\n\n    ");
 
      this->FileManager.WriteToFile(")");
 
@@ -320,12 +326,25 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile("\n\n    ");
 
-     this->FileManager.WriteToFile(this->Des_Reader->Get_Linker_Options());
+     std::string link_ops = this->Des_Reader->Get_Linker_Options();
+
+     for(size_t i=0;i<link_ops.length();i++){
+
+         if(link_ops.at(i)=='\\'){
+
+            link_ops.erase(i,1);
+
+            link_ops.shrink_to_fit();
+         }
+     }
+
+     this->FileManager.WriteToFile(link_ops);
+
+     this->FileManager.WriteToFile("\n\n    ");
 
      this->FileManager.WriteToFile(")");
 
      this->FileManager.FileClose();
-
 }
 
 void CMAKE_Target_Library_Builder::Find_Construction_Directory(std::string & dir, std::string file_path){
