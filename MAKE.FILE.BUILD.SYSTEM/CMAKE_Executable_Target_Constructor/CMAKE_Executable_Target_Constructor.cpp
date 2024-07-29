@@ -301,7 +301,11 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
             this->FileManager.WriteToFile("\n\n\t");
 
-            this->FileManager.WriteToFile(Lib_Dirs.at(i));
+            std::string lib_dir = Lib_Dirs.at(i);
+
+            this->Convert_CMAKE_Format(lib_dir);
+
+            this->FileManager.WriteToFile(lib_dir);
         }
 
         this->FileManager.WriteToFile("\n\n )");
@@ -382,7 +386,21 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      this->FileManager.WriteToFile("\n\n    ");
 
-     this->FileManager.WriteToFile(this->Des_Reader.Get_Linker_Options());
+
+     std::string link_options = this->Des_Reader.Get_Linker_Options();
+
+     for(size_t i=0;i<link_options.size();i++){
+
+         if(link_options.at(i)=='\\'){
+
+            link_options.erase(i,1);
+         }
+     }
+
+
+     this->FileManager.WriteToFile(link_options);
+
+     this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile(")");
 

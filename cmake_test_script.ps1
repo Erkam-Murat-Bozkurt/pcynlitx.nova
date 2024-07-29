@@ -37,3 +37,11 @@ Write-Output ""
 cd D:\PCYNLITX_WIN_CMAKE_CONFIGS
 
 mingw32-make -f .\Makefile
+
+cd D:\pcynlitx_build_platform
+
+.\CMAKE_Build.exe -ef D:\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt D:\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test\KERNEL.DEVELOPMENT\Kernel\Kernel_Main_File.cpp _pcyKernel
+
+cd D:\PCYNLITX_WIN_CMAKE_CONFIGS
+
+mingw32-make -f .\Makefile
