@@ -146,6 +146,12 @@ void Descriptor_File_Syntax_Controller::Control_Keywords(){
 
      char build_system_type [] = "[BUILD-SYSTEM]";
 
+     char project_name [] = "[PROJECT-NAME]";
+
+     char version_number [] = "[VERSION-NUMBER]";
+
+
+
 
      this->syntax_error_status = false;
 
@@ -318,6 +324,43 @@ void Descriptor_File_Syntax_Controller::Control_Keywords(){
 
       
      if(!this->Control_String_Inclusion(build_system_type)){
+
+         std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
+         std::cout << "\n\n";
+
+         if(this->gui_read_status){
+
+            this->syntax_error_status = true;
+
+            this->syntax_error_number++;
+         }
+         else{
+
+            exit(0);
+         }
+     };
+
+
+       
+     if(!this->Control_String_Inclusion(project_name)){
+
+         std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
+         std::cout << "\n\n";
+
+         if(this->gui_read_status){
+
+            this->syntax_error_status = true;
+
+            this->syntax_error_number++;
+         }
+         else{
+
+            exit(0);
+         }
+     };
+
+
+     if(!this->Control_String_Inclusion(version_number)){
 
          std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
          std::cout << "\n\n";

@@ -43,6 +43,8 @@ public:
  std::string Get_Repo_Directory_Location();
  std::string Get_Descriptor_File_Path();
  std::string Get_Error_Message();
+ std::string Get_Project_Name();
+ std::string Get_Version_Number();
  int Get_Library_Directory_Number();
  int Get_Library_Files_Number();
  int Get_Source_File_Directory_Number();
@@ -63,6 +65,8 @@ protected:
  void Read_Compiler_Options();
  void Read_Linker_Options();
  void Read_Build_System_Type();
+ void Read_Project_Name();
+ void Read_Version_Number();
  bool Is_Include_Character(std::string str);
  void Delete_Spaces_on_String(std::string * str);
  void Divide_Options(std::string & options);
@@ -83,6 +87,8 @@ protected:
  std::string compiler_options;
  std::string linker_options;
  std::string root_dir;
+ std::string project_name;
+ std::string version_number;
  std::string warehouse_location;
  std::string error_message;
  std::vector<std::string> Include_Directories;

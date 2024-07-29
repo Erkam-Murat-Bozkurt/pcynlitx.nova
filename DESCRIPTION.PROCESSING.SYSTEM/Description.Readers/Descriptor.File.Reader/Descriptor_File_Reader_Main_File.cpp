@@ -216,6 +216,41 @@ int main(int argc, char ** argv){
     }
 
 
+
+
+    std::cout << "\n\n";
+
+    std::cout << "\n PROJECT NAME RECORD: ";
+
+    if(Des_File_Reader.Get_Project_Name() != ""){
+
+       std::cout << "\n ";
+
+       std::cout << Des_File_Reader.Get_Project_Name();
+    }
+    else{
+
+        std::cout << "\n There is no Project name decleration";
+    }
+
+
+
+    std::cout << "\n\n";
+
+    std::cout << "\n PROJECT VERSION RECORD: ";
+
+    if(Des_File_Reader.Get_Version_Number() != ""){
+
+       std::cout << "\n ";
+
+       std::cout << Des_File_Reader.Get_Version_Number();
+    }
+    else{
+
+        std::cout << "\n There is no version number decleration";
+    }
+
+
     std::cout << "\n\n";
     std::cout << "\n\n";
 

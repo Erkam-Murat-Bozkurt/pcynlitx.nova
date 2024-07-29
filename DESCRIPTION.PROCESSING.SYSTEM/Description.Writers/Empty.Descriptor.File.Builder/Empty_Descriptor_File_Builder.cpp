@@ -132,6 +132,25 @@ void Empty_Descriptor_File_Builder::Build_Empty_File(char * path){
      this->WriteNewLines(new_lines);
 
 
+     this->FileManager.WriteToFile("[PROJECT-NAME]{");
+
+     this->WriteNewLines(new_lines);
+
+     this->FileManager.WriteToFile("}");
+
+     this->WriteNewLines(new_lines);
+
+
+     this->FileManager.WriteToFile("[VERSION-NUMBER]{");
+
+     this->WriteNewLines(new_lines);
+
+     this->FileManager.WriteToFile("}");
+
+     this->WriteNewLines(new_lines);
+
+     
+
      this->FileManager.WriteToFile("[INCLUDE-DIRECTORIES]{");
 
      this->WriteNewLines(new_lines);

@@ -181,6 +181,10 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
          this->Read_Linker_Options();
 
          this->Read_Build_System_Type();
+
+         this->Read_Project_Name();
+
+         this->Read_Version_Number();
      }
      else{
 
@@ -235,6 +239,10 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
              if(this->gui_read_success){
 
                 this->Read_Build_System_Type();
+
+                this->Read_Project_Name();
+
+                this->Read_Version_Number();
              }
          }
        }
@@ -620,6 +628,158 @@ void Descriptor_File_Reader::Read_Build_System_Type(){
 
 }
 
+
+
+
+void Descriptor_File_Reader::Read_Project_Name(){
+
+     int start_line = this->Data_Collector.Get_Project_Name_Record_Area(0);
+
+     int end_line   = this->Data_Collector.Get_Project_Name_Record_Area(1);
+
+     int record_num = 0;
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            record_num++;
+         }
+     }
+
+     if((record_num == 0) && (this->Data_Record_Cond == false)) {
+
+        std::cout << "\n\n";
+
+        std::cout << "\n Error:";
+
+        this->error_message = "\n There is no any decleration about project name";
+
+        std::cout << this->error_message;
+
+        std::cout << "\n\n";
+
+        if(!this->gui_read_status){
+
+            exit(0);
+        }
+        else{
+
+            this->gui_read_success = false;
+        }
+     }
+
+     if(this->gui_read_status){
+
+        if(this->gui_read_success){
+
+            for(int i=start_line+1;i<end_line-1;i++){
+
+                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+
+                if(this->StringManager.CheckStringLine(line)){
+
+                   this->project_name = line;
+
+                   break;
+                }
+            }
+        }
+     }
+     else{
+           
+            for(int i=start_line+1;i<end_line-1;i++){
+
+                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+
+                if(this->StringManager.CheckStringLine(line)){
+
+                   this->project_name = line;
+
+                   break;
+                }
+            }
+     }
+
+}
+
+
+
+void Descriptor_File_Reader::Read_Version_Number(){
+
+     int start_line = this->Data_Collector.Get_Version_Number_Record_Area(0);
+
+     int end_line   = this->Data_Collector.Get_Version_Number_Record_Area(1);
+
+     int record_num = 0;
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            record_num++;
+         }
+     }
+
+     if((record_num == 0) && (this->Data_Record_Cond == false)) {
+
+        std::cout << "\n\n";
+
+        std::cout << "\n Error:";
+
+        this->error_message = "\n There is no any decleration about version number";
+
+        std::cout << this->error_message;
+
+        std::cout << "\n\n";
+
+        if(!this->gui_read_status){
+
+            exit(0);
+        }
+        else{
+
+            this->gui_read_success = false;
+        }
+     }
+
+     if(this->gui_read_status){
+
+        if(this->gui_read_success){
+
+            for(int i=start_line+1;i<end_line-1;i++){
+
+                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+
+                if(this->StringManager.CheckStringLine(line)){
+
+                   this->version_number = line;
+
+                   break;
+                }
+            }
+        }
+     }
+     else{
+           
+            for(int i=start_line+1;i<end_line-1;i++){
+
+                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+
+                if(this->StringManager.CheckStringLine(line)){
+
+                   this->version_number = line;
+
+                   break;
+                }
+            }
+     }
+
+}
 
 
 void Descriptor_File_Reader::Read_Include_Directories(){
@@ -1225,6 +1385,16 @@ std::string Descriptor_File_Reader::Get_Build_System_Type(){
      return this->build_system;
 }
 
+std::string Descriptor_File_Reader::Get_Project_Name(){
+
+     return this->project_name;
+}
+
+std::string Descriptor_File_Reader::Get_Version_Number(){
+
+     return this->version_number;
+}
+
 
 int Descriptor_File_Reader::Get_Library_Directory_Number(){
 
@@ -1272,3 +1442,4 @@ bool Descriptor_File_Reader::Get_Invalid_Descriptor_File_Status(){
 
      return this->is_project_file_invalid;
 }
+
