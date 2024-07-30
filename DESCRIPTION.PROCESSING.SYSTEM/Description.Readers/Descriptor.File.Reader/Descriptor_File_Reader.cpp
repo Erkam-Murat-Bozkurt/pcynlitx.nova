@@ -604,6 +604,8 @@ void Descriptor_File_Reader::Read_Build_System_Type(){
 
                 if(this->StringManager.CheckStringLine(line)){
 
+                   this->Delete_Spaces_on_String(&line);
+
                    this->build_system = line;
 
                    break;
@@ -618,6 +620,8 @@ void Descriptor_File_Reader::Read_Build_System_Type(){
                 std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
                 if(this->StringManager.CheckStringLine(line)){
+
+                   this->Delete_Spaces_on_String(&line);
 
                    this->build_system = line;
 
@@ -680,6 +684,8 @@ void Descriptor_File_Reader::Read_Project_Name(){
                 std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
                 if(this->StringManager.CheckStringLine(line)){
+
+                   this->Delete_Spaces_on_String(&line);
 
                    this->project_name = line;
 
@@ -756,6 +762,8 @@ void Descriptor_File_Reader::Read_Version_Number(){
                 std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
                 if(this->StringManager.CheckStringLine(line)){
+
+                   this->Delete_Spaces_on_String(&line);
 
                    this->version_number = line;
 

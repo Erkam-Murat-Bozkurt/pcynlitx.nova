@@ -147,7 +147,6 @@ int main(int argc, char ** argv){
 
         Kernel Build_System(argv[1],'w','n');
 
-        std::cout << "\n\nC++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED \n";
 
         Build_System.Receive_Build_Type('n');
 

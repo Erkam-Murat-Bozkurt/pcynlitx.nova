@@ -51,6 +51,7 @@ protected:
  Library_Updater Lib_Up;
  Custom_System_Interface * SysInt;
  std::string DesPATH;
+ std::string Build_System_Type;
  char strategy;
  char build_type;
  bool Memory_Delete_Condition;

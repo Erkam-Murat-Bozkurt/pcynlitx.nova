@@ -13,7 +13,9 @@ Kernel::Kernel(char * DesPATH, char opr_sis, char build_type) : Bld_Init(DesPATH
      Dep_Determiner(DesPATH,opr_sis), Lib_Up(opr_sis,build_type)
 {     
 
-     this->Receive_Build_Type(build_type);
+     this->Receive_Build_Type(build_type); 
+     
+     // Build type is the selection between GUI application or Command line operation
 
      if(build_type == 'g'){
 
@@ -26,8 +28,9 @@ Kernel::Kernel(char * DesPATH, char opr_sis, char build_type) : Bld_Init(DesPATH
 
      this->Des_Reader.Read_Descriptor_File();
 
-     std::string build_system_type = this->Des_Reader.Get_Build_System_Type();
+     this->Build_System_Type = this->Des_Reader.Get_Build_System_Type();
 
+     // Build system type is the selction between CMAKE or Native script builder
 
      this->Lib_Up.Receive_Descriptor_File_Path(DesPATH);
      
@@ -68,13 +71,34 @@ void Kernel::Receive_System_Interface(Custom_System_Interface * Int){
      this->SysInt = Int;
 
      this->Dep_Determiner.Receive_System_Interface(Int);
+
+     this->CMAKE_Builder.Receive_System_Interface(Int);
 }
+
 
 void Kernel::Setup_Build_Tools(){
 
-     this->Bld_Init.Receive_System_Interface(this->SysInt);
+     if(this->Build_System_Type == "CMAKE"){
 
-     this->Bld_Init.Setup_Build_Tools();
+        std::cout << "\n\nCMAKE BUILD SYSTEM CONSTRUCTION PROCESS INITIATED \n";
+
+        std::string project_name   = this->Des_Reader.Get_Project_Name();
+
+        std::string version_number = this->Des_Reader.Get_Version_Number(); 
+
+        this->CMAKE_Builder.Construct_Build_System(project_name,version_number);
+     }
+     else{
+
+          if(this->Build_System_Type == "Shell-Scripting"){
+
+             std::cout << "\n\nC++ BUILD SYSTEM CONSTRUCTION PROCESS INITIATED \n";
+
+             this->Bld_Init.Receive_System_Interface(this->SysInt);
+
+             this->Bld_Init.Setup_Build_Tools();
+          }
+     }
 }
 
 
@@ -82,9 +106,16 @@ void Kernel::Build_MakeFile(char * src_path,
 
      char * Exe_Name, char strategy){
 
-     this->Exe_Bld.Receive_System_Interface(this->SysInt);
+     if(strategy=='c'){
 
-     this->Exe_Bld.Build_MakeFile(src_path,Exe_Name,strategy);
+        this->CMAKE_Builder.Construct_Exe_Build_System(src_path,Exe_Name);
+     }
+     else{
+
+        this->Exe_Bld.Receive_System_Interface(this->SysInt);
+
+        this->Exe_Bld.Build_MakeFile(src_path,Exe_Name,strategy);
+     }
 }
 
 void Kernel::Update_Library(){

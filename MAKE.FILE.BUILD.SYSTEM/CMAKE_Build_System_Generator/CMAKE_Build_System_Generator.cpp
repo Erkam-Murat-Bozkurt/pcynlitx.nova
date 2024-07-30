@@ -5,7 +5,9 @@
 
 CMAKE_Build_System_Generator::CMAKE_Build_System_Generator(char * DesPath, char opr_sis, char build_type) 
 
-  : CMAKE_SysCon(DesPath,opr_sis,build_type), Executable_Target_Constructor(DesPath,opr_sis,build_type)
+  : CMAKE_SysCon(DesPath,opr_sis,build_type),
+   
+    Executable_Target_Constructor(DesPath,opr_sis,build_type)
 {
      this->Memory_Delete_Condition = false;
 }
