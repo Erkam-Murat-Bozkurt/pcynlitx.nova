@@ -147,10 +147,18 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
 
      this->Perform_MakeFile_Construction();
 
+
+     char construction_result [] = "\n  The new makefiles have been constructed..\n";
+
      std::cout << "\n";
-     std::cout << "\nThe new makefiles have been constructed..";
+     std::cout << construction_result;
      std::cout << "\n";
      std::cout << "\n";
+
+     if(this->build_type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(construction_result);
+     }
 }
 
 

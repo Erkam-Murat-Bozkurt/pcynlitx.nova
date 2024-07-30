@@ -328,7 +328,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
 
 
-  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Construct_CMAKE_Build_System,this,ID_CONSTRUCT_CMAKE_BUILD_SYSTEM);
+  //this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Construct_CMAKE_Build_System,this,ID_CONSTRUCT_CMAKE_BUILD_SYSTEM);
 
   this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Construct_CMAKE_Target,this,ID_CONSTRUCT_CMAKE_TARGET);
 
@@ -1157,16 +1157,35 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
            if(this->Des_Reader->Get_Gui_Read_Success_Status()){
 
-              std::string warehose_word = "\\WAREHOUSE";
-
-              this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location() + warehose_word;
 
 
               wxString label = wxT("BUILD SYSTEM CONSTRUCTION PROCESS");
 
               wxString start_text = wxT("\n\n  BUILD SYSTEM CONSTRUCTION STARTED\n\n");
 
-              this->Start_Construction_Process(label,this->Warehouse_Location,start_text);
+              wxString CMAKE_label = wxT("CMAKE BUILD SYSTEM CONSTRUCTION PROCESS");
+
+              wxString CMAKE_start_text = wxT("\n\nCMAKE BUILD SYSTEM CONSTRUCTION STARTED\n\n");
+
+              std::string build_system_type = this->Des_Reader->Get_Build_System_Type();
+
+              if(build_system_type == "CMAKE"){
+
+                  std::string repo_dir = this->Des_Reader->Get_Repo_Directory_Location();
+
+                  this->Start_Construction_Process(CMAKE_label,repo_dir,CMAKE_start_text);
+              }
+              else{
+
+                   if(build_system_type == "Shell-Scripting"){
+
+                      std::string warehose_word = "\\WAREHOUSE";
+
+                      this->Warehouse_Location = this->Des_Reader->Get_Warehouse_Location() + warehose_word;
+
+                      this->Start_Construction_Process(label,this->Warehouse_Location,start_text);
+                   }
+              }             
             }
             else{
 
@@ -1174,7 +1193,6 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
               wxString message(error_message);
             
-
               Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
             
               wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX BUILD SYSTEM COSTRUCTION REPORT"),

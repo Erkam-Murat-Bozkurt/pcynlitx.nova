@@ -10,6 +10,8 @@ CMAKE_Build_System_Generator::CMAKE_Build_System_Generator(char * DesPath, char 
     Executable_Target_Constructor(DesPath,opr_sis,build_type)
 {
      this->Memory_Delete_Condition = false;
+
+     this->build_type = build_type;
 }
 
 
@@ -56,7 +58,7 @@ void CMAKE_Build_System_Generator::Construct_Build_System(std::string project_na
 
      this->CMAKE_SysCon.Build_Make_Files(project_name,version_num);
      
-     char build_system_geration [] = "CMAKE Build System Generated..\n\n";
+     char build_system_geration [] = "\n  CMAKE Build System Generated..\n\n";
 
      std::cout << build_system_geration;
 
@@ -73,7 +75,7 @@ void CMAKE_Build_System_Generator::Construct_Build_System(std::string project_na
 
       this->Executable_Target_Constructor.Build_MakeFile(target_main_file_path,exe_name);
      
-      char build_system_geration [] = "CMAKE Target Generated..\n\n";
+      char build_system_geration [] = "\n  CMAKE Target Generated..\n\n";
 
       std::cout << build_system_geration;
 
