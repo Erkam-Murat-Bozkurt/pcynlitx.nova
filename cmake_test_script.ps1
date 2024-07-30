@@ -10,6 +10,17 @@ if($Path_exist){
 }
 
 
+cd D:\PCYNLITX.BUILD.TEST
+
+$Path_exist = Test-Path -Path "D:\PCYNLITX_WIN_CMAKE_CONFIGS"
+
+if($Path_exist){
+
+    Remove-Item -LiteralPath "D:\PCYNLITX_WIN_CMAKE_CONFIGS" -Recurse -Force
+}
+
+
+
 cd D:\
 
 Copy-Item -LiteralPath "D:\Pcynlitx.Win.Test" -Destination "D:\PCYNLITX.BUILD.TEST" -Recurse -Force
@@ -27,7 +38,7 @@ Write-Output ""
 
 cd D:\pcynlitx_build_platform
 
-.\CMAKE_Build.exe -bs D:\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt Pcynlitx_Project 1.0
+.\CBuild.exe D:\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt -ip
 
 cd  D:\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test
 
@@ -49,7 +60,7 @@ mingw32-make -f .\Makefile
 
 cd D:\pcynlitx_build_platform
 
-.\CMAKE_Build.exe -ef D:\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt D:\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test\KERNEL.DEVELOPMENT\Kernel\Kernel_Main_File.cpp _pcyKernel
+.\CBuild.exe D:\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt -if D:\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test\KERNEL.DEVELOPMENT\Kernel\Kernel_Main_File.cpp _pcyKernel c
 
 cd D:\PCYNLITX_WIN_CMAKE_CONFIGS
 

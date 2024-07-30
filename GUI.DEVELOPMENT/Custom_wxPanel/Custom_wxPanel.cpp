@@ -311,6 +311,9 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
 
 
+     this->CMAKE_Menu->Append(ID_CONSTRUCT_CMAKE_BUILD_SYSTEM,"&Construct CMAKE Build System");
+
+     this->CMAKE_Menu->Append(ID_CONSTRUCT_CMAKE_TARGET,"&Construct CMAKE Target");
 
 
      this->Help_Menu->Append(ID_OPEN_INTROPAGE,"&Intro Page","",wxITEM_NORMAL);

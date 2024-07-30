@@ -328,6 +328,13 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
 
 
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Construct_CMAKE_Build_System,this,ID_CONSTRUCT_CMAKE_BUILD_SYSTEM);
+
+  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Construct_CMAKE_Target,this,ID_CONSTRUCT_CMAKE_TARGET);
+
+
+
+
 
 
 
@@ -898,6 +905,22 @@ void MainFrame::Determine_Source_File_Dependencies(wxCommandEvent & event){
      }
 
 }
+
+
+void MainFrame::Construct_CMAKE_Build_System(wxCommandEvent & event){
+
+     wxMessageDialog * dial = new wxMessageDialog(this,wxT("Event Triggred"),wxT("Event Trigered"));
+
+     dial->ShowModal();
+}
+
+void MainFrame::Construct_CMAKE_Target(wxCommandEvent & event){
+
+     wxMessageDialog * dial = new wxMessageDialog(this,wxT("Event Triggred"),wxT("Event Trigered"));
+
+     dial->ShowModal();
+}
+
 
 
 void MainFrame::Run_Source_File_Dependency_Determination_Process(wxString FilePATH){

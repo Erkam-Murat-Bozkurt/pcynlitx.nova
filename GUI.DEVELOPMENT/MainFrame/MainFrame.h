@@ -130,6 +130,8 @@ private:
   void OpenFile(wxCommandEvent & event);
   void Determine_Source_File_Dependencies(wxCommandEvent & event);
   void Run_Source_File_Dependency_Determination_Process(wxString FilePATH);
+  void Construct_CMAKE_Build_System(wxCommandEvent & event);
+  void Construct_CMAKE_Target(wxCommandEvent & event);
   void Print_File_Dependency_Output();
   void Print_File_Dependency_to_tree_control();
   void Run_Project_Script_On_Terminal(wxCommandEvent & event);
