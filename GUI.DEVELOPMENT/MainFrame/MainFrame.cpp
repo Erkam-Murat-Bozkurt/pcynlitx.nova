@@ -326,20 +326,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
 
 
-
-
-  //this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Construct_CMAKE_Build_System,this,ID_CONSTRUCT_CMAKE_BUILD_SYSTEM);
-
-  this->Custom_Main_Panel->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Construct_CMAKE_Target,this,ID_CONSTRUCT_CMAKE_TARGET);
-
-
-
-
-
-
-
-
-
   wxRect Book_Manager_Rect(this->Custom_Main_Panel->GetSize());
 
   this->Book_Manager->Refresh(true,&Book_Manager_Rect);
@@ -1071,7 +1057,21 @@ void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
 
               this->Multi_DataPanel->ShowModal();
 
-              char strategy = 'a';
+              std::string build_system_type = this->Des_Reader->Get_Build_System_Type();
+
+              char strategy = '\0';
+
+              if(build_system_type == "CMAKE"){
+
+                  strategy = 'c';
+              }
+              else{
+
+                   if(build_system_type == "Shell-Scripting"){
+
+                       strategy = 'a';
+                   }
+              }
 
               this->Single_File_Script_Construction_Executer(this->Multi_DataPanel->FilePath,
            
@@ -1102,10 +1102,25 @@ void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath,
    
          if(this->Des_Reader->Get_Gui_Read_Success_Status()){
 
-            this->Determine_Executable_File_Script_Construction_Point(FileName);
+            wxString open_dir;
 
-            wxString Construction_Point(this->Executable_File_Script_Construction_Point);
+            std::string build_system_type = this->Des_Reader->Get_Build_System_Type();
+
+            if(build_system_type == "CMAKE"){
+
+               std::string dir = this->Des_Reader->Get_Repo_Directory_Location();
+
+               open_dir = wxString(dir);
+            }
+            else{
+
+                this->Determine_Executable_File_Script_Construction_Point(FileName);
+
+                wxString Construction_Point(this->Executable_File_Script_Construction_Point);
  
+                open_dir = Construction_Point;
+            }
+
             std::string src_path = FilePath.ToStdString();
 
             std::string exe_name = FileName.ToStdString();
@@ -1116,10 +1131,9 @@ void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath,
 
             wxString start_text = wxT("\n\n   EXECUTABLE MAKEFILE CONSTRUCTION STARTED");
 
-            this->Start_Construction_Process(label,this->Executable_File_Script_Construction_Point,start_text);
+            this->Start_Construction_Process(label,open_dir,start_text);
          }
          else{
-
 
             std::string error_message = this->Des_Reader->Get_Error_Message();
 

@@ -98,7 +98,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
      this->Des_Reader.Read_Descriptor_File();
 
 
-     char read_opr [] = "The project descriptor file read\n\n";
+     char read_opr [] = "\n\n   The project descriptor file read\n\n";
 
      std::cout << read_opr;
 
@@ -115,7 +115,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
      this->Data_Processor.Determine_Git_Repo_Info();  
 
 
-     char git_data [] = "The data for git version controller has been collected\n\n";
+     char git_data [] = " The data for git version controller has been collected\n\n";
 
      std::cout << git_data;
 
@@ -133,7 +133,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
      this->Dep_Determiner.Collect_Dependency_Information(file_path);
 
 
-     char dependency_data [] = "Source file dependencies has been determined\n\n";
+     char dependency_data [] = " Source file dependencies has been determined\n\n";
 
      std::cout << dependency_data;
 
