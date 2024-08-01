@@ -1171,8 +1171,6 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
            if(this->Des_Reader->Get_Gui_Read_Success_Status()){
 
-
-
               wxString label = wxT("BUILD SYSTEM CONSTRUCTION PROCESS");
 
               wxString start_text = wxT("\n\n  BUILD SYSTEM CONSTRUCTION STARTED\n\n");
