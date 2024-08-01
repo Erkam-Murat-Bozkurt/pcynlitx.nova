@@ -23,7 +23,9 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 #include "GUI_List_Data_Recorder.hpp"
 
 
-GUI_List_Data_Recorder::GUI_List_Data_Recorder(char opr_sis) : Des_Reader (opr_sis,'g') , File_Manager(opr_sis)
+GUI_List_Data_Recorder::GUI_List_Data_Recorder(char opr_sis) 
+
+   : Des_Reader (opr_sis,'g') , File_Manager(opr_sis)
 {
     this->opr_sis = opr_sis;
 
@@ -98,6 +100,10 @@ void GUI_List_Data_Recorder::Receive_Descriptions_Record_Data(Record_Data_For_Gu
      this->Place_String_Data(Data->standard,this->standard); 
 
      this->Place_String_Data(Data->build_system_type,this->build_system_type); 
+
+     this->Place_String_Data(Data->project_name,this->project_name); 
+
+     this->Place_String_Data(Data->version_number,this->version_number); 
 }
 
 
@@ -198,6 +204,21 @@ void GUI_List_Data_Recorder::Record_Data(std::string Data_Type, std::string Data
         this->Place_String_Data(data_record,this->build_system_type);
      }  
 
+     if(data_type == "PROJET-NAME"){
+
+        this->Clear_String_Memory(this->project_name);
+
+        this->Place_String_Data(data_record,this->project_name);
+     }  
+
+     if(data_type == "VERSION-NUMBER"){
+
+        this->Clear_String_Memory(this->version_number);
+
+        this->Place_String_Data(data_record,this->version_number);
+     }  
+
+
      if(data_type == "COMPILER-OPTIONS"){
 
         this->Clear_String_Memory(this->compiler_options);
@@ -284,6 +305,39 @@ void GUI_List_Data_Recorder::Update_Descriptor_File(){
      this->File_Manager.WriteToFile("}");
 
      this->WriteNewLines(two_lines);
+
+
+
+     this->WriteNewLines(two_lines);
+
+     this->File_Manager.WriteToFile("[PROJECT-NAME]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_String_Data(this->project_name);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+     this->WriteNewLines(two_lines);
+
+
+     
+     this->WriteNewLines(two_lines);
+
+     this->File_Manager.WriteToFile("[VERSION-NUMBER]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_String_Data(this->version_number);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+     this->WriteNewLines(two_lines);
+
 
 
      this->File_Manager.WriteToFile("[INCLUDE-DIRECTORIES]{");

@@ -68,7 +68,9 @@ enum
   ID_CLOSE_DESCRIPTION_PANEL = 129,
   ID_SAVE_PANEL_DESCRIPTIONS = 130,
   ID_CLEAR_PANEL_DESCRIPTIONS = 131,
-  ID_INSERT_BUILD_SYSTEM_TYPE = 132
+  ID_INSERT_BUILD_SYSTEM_TYPE = 132,
+  ID_INSERT_PROJECT_NAME = 133,
+  ID_INSERT_VERSION_NUMBER = 134
 };
 
 
@@ -139,6 +141,9 @@ protected:
 
     void Insert_Linker_Options(wxCommandEvent & event);
 
+    void Insert_Project_Name(wxCommandEvent & event);
+
+    void Insert_Version_Number(wxCommandEvent & event);
 
     void Save_Git_Repo_Dir(wxCommandEvent & event);
 
@@ -280,6 +285,10 @@ protected:
 
     wxDataViewListCtrl * listctrl_build_system_type;
 
+    wxDataViewListCtrl * listctrl_project_name;
+
+    wxDataViewListCtrl * listctrl_version_number;
+
 
 
     wxButton * InsertButton_for_git_repo_path;
@@ -300,8 +309,12 @@ protected:
 
     wxButton * InsertButton_for_linker_options;
 
-
     wxButton * InsertButton_for_build_system_type;
+
+    wxButton * InsertButton_for_project_name;
+
+    wxButton * InsertButton_for_version_number;
+
 
 
 
@@ -327,6 +340,9 @@ protected:
 
     wxButton * Save_Button_for_build_system_type;
 
+    wxButton * Save_Button_for_project_name;
+
+    wxButton * Save_Button_for_version_number;
 
 
 

@@ -25,6 +25,8 @@ struct Record_Data_For_Gui {
 
        std::string standard;
        std::string build_system_type;
+       std::string project_name;
+       std::string version_number;
        std::string linker_options;
        std::string compiler_options;
        std::string root_dir;
@@ -71,6 +73,8 @@ private:
   char opr_sis;
   std::string standard;
   std::string build_system_type;
+  std::string project_name;
+  std::string version_number;
   std::string linker_options;
   std::string compiler_options;
   std::string root_dir;

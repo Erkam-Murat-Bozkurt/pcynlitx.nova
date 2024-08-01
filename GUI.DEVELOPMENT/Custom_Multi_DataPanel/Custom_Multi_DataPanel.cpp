@@ -32,7 +32,9 @@ BEGIN_EVENT_TABLE(Custom_Multi_DataPanel,wxDialog )
 
     EVT_BUTTON(ID_INSERT_BUILD_SYSTEM_TYPE,Custom_Multi_DataPanel::Select_Build_System_Type)
 
+    EVT_BUTTON(ID_INSERT_PROJECT_NAME,Custom_Multi_DataPanel::Insert_Project_Name)
 
+    EVT_BUTTON(ID_INSERT_VERSION_NUMBER,Custom_Multi_DataPanel::Insert_Version_Number)
 
 
 
@@ -590,6 +592,62 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
 
 
+     // SETTINGS FOR PROJECT NAME DATA PANEL
+
+
+     this->listctrl_project_name = new wxDataViewListCtrl(this->scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,150));
+
+     this->InsertButton_for_project_name = new wxButton(this->scroll_win,ID_INSERT_PROJECT_NAME,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+
+
+
+     this->Buton_Sizers[10] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->Buton_Sizers[10]->Add(this->InsertButton_for_project_name,0, wxEXPAND | wxALL,10);
+
+     this->List_Ctrl_Sizers[10] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->List_Ctrl_Sizers[10]->Add(this->listctrl_project_name,1,wxEXPAND | wxALL,10);
+
+
+     this->DataPanel_Sizers[10] = new wxBoxSizer(wxVERTICAL);
+
+     this->DataPanel_Sizers[10]->Add(this->List_Ctrl_Sizers[10],1, wxEXPAND | wxTOP | wxALL,10);
+
+     this->DataPanel_Sizers[10]->Add(this->Buton_Sizers[10],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+     this->listctrl_project_name->AppendTextColumn(wxT("PROJECT NAME"));
+
+
+
+     // SETTINGS FOR VERSION NUMBER PANEL
+
+
+     this->listctrl_version_number = new wxDataViewListCtrl(this->scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,150));
+
+     this->InsertButton_for_version_number = new wxButton(this->scroll_win,ID_INSERT_VERSION_NUMBER,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+
+
+
+
+     this->Buton_Sizers[11] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->Buton_Sizers[11]->Add(this->InsertButton_for_version_number,0, wxEXPAND | wxALL,10);
+
+     this->List_Ctrl_Sizers[11] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->List_Ctrl_Sizers[11]->Add(this->listctrl_version_number,1,wxEXPAND | wxALL,10);
+
+
+     this->DataPanel_Sizers[11] = new wxBoxSizer(wxVERTICAL);
+
+     this->DataPanel_Sizers[11]->Add(this->List_Ctrl_Sizers[11],1, wxEXPAND | wxTOP | wxALL,10);
+
+     this->DataPanel_Sizers[11]->Add(this->Buton_Sizers[11],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+     this->listctrl_version_number->AppendTextColumn(wxT("VERSION MUNBER"));
+
+
 
      this->close_panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(220,1000));
 
@@ -617,19 +675,19 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->panel_clear_button->SetForegroundColour(wxColour(50,50,50));
 
 
-     this->Buton_Sizers[9] = new wxBoxSizer(wxVERTICAL);
+     this->Buton_Sizers[12] = new wxBoxSizer(wxVERTICAL);
 
-     this->Buton_Sizers[9]->Add(panel_close_button,0, wxFIXED_MINSIZE | wxALL,20);
+     this->Buton_Sizers[12]->Add(panel_close_button,0, wxFIXED_MINSIZE | wxALL,20);
 
-     this->Buton_Sizers[9]->Add(panel_save_button, 0, wxFIXED_MINSIZE | wxALL,20);
+     this->Buton_Sizers[12]->Add(panel_save_button, 0, wxFIXED_MINSIZE | wxALL,20);
 
-     this->Buton_Sizers[9]->Add(panel_clear_button,0, wxFIXED_MINSIZE | wxALL,20);
+     this->Buton_Sizers[12]->Add(panel_clear_button,0, wxFIXED_MINSIZE | wxALL,20);
 
-     this->close_panel->SetSizer(this->Buton_Sizers[9]);
+     this->close_panel->SetSizer(this->Buton_Sizers[12]);
 
      this->close_panel->Fit();
 
-     this->Buton_Sizers[9]->SetSizeHints(close_panel);
+     this->Buton_Sizers[12]->SetSizeHints(this->close_panel);
 
 
 
@@ -658,7 +716,9 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->Frame_Sizer->Add(this->DataPanel_Sizers[9],0,wxEXPAND | wxALL, 20);
 
+     this->Frame_Sizer->Add(this->DataPanel_Sizers[10],0,wxEXPAND | wxALL, 20);
 
+     this->Frame_Sizer->Add(this->DataPanel_Sizers[11],0,wxEXPAND | wxALL, 20);
 
 
 
@@ -682,7 +742,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->topSizer->Add(this->scroll_win,1, wxEXPAND  | wxALL,0);
 
 
-     this->SetSizer(topSizer);
+     this->SetSizer(this->topSizer);
 
      this->Fit();
 
@@ -719,6 +779,10 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->listctrl_standard->Show();
 
      this->listctrl_build_system_type->Show();
+
+     this->listctrl_project_name->Show();
+
+     this->listctrl_version_number->Show();
 
      this->listctrl_compiler_options->Show();
 
@@ -773,11 +837,12 @@ void Custom_Multi_DataPanel::Save_Panel_Descriptions(wxCommandEvent & event){
 
         this->Record_Data.linker_options     = this->Collect_List_Ctrl_Data(this->listctrl_linker_options);
 
+        this->Record_Data.project_name       = this->Collect_List_Ctrl_Data(this->listctrl_version_number);
 
 
-        this->Record_Data.standard = this->Collect_List_Ctrl_Data(this->listctrl_standard);
+        this->Record_Data.standard           = this->Collect_List_Ctrl_Data(this->listctrl_standard);
 
-        this->Record_Data.build_system_type = this->Collect_List_Ctrl_Data(this->listctrl_build_system_type);
+        this->Record_Data.build_system_type  = this->Collect_List_Ctrl_Data(this->listctrl_build_system_type);
 
 
         std::string header_locations = this->Collect_List_Ctrl_Data(this->listctrl_for_header_dir);
@@ -1102,6 +1167,21 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
 
             this->Load_Data_List_Ctrl(this->listctrl_build_system_type,build_system_type);      
          }
+
+         std::string project_name = this->Des_Reader.Get_Project_Name();
+
+         if(project_name.size()>0){
+
+            this->Load_Data_List_Ctrl(this->listctrl_project_name,project_name);      
+         }
+
+         std::string version_number = this->Des_Reader.Get_Version_Number();
+
+         if(version_number.size()>0){
+
+            this->Load_Data_List_Ctrl(this->listctrl_version_number,version_number);      
+         }
+
      }
      else{
 
@@ -1191,6 +1271,50 @@ void Custom_Multi_DataPanel::Insert_Data_For_Name(wxCommandEvent & event){
         }
 
         this->AppendDataItem(this->listctrl_for_name,this->ExeFileName);
+     }
+}
+
+
+
+void Custom_Multi_DataPanel::Insert_Project_Name(wxCommandEvent & event){
+     
+     if(event.GetId() == ID_INSERT_PROJECT_NAME ){
+
+        event.Skip(true);
+
+        wxString Project_Name  = wxGetTextFromUser(wxT(""),
+
+                  wxT("   ENTER PROJECT NAME   "));
+
+        int row_num = this->listctrl_project_name->GetItemCount();
+
+        for(int i=0;i<row_num;i++){
+
+            this->listctrl_project_name->DeleteItem(i);
+        }
+
+        this->AppendDataItem(this->listctrl_project_name,Project_Name);
+     }
+}
+
+void Custom_Multi_DataPanel::Insert_Version_Number(wxCommandEvent & event){
+     
+     if(event.GetId() == ID_INSERT_VERSION_NUMBER ){
+
+        event.Skip(true);
+
+        wxString Version_Number  = wxGetTextFromUser(wxT(""),
+
+                  wxT("   ENTER EXECUTABLE FILE NAME   "));
+
+        int row_num = this->listctrl_version_number->GetItemCount();
+
+        for(int i=0;i<row_num;i++){
+
+            this->listctrl_version_number->DeleteItem(i);
+        }
+
+        this->AppendDataItem(this->listctrl_version_number,Version_Number);
      }
 }
 
