@@ -30,6 +30,7 @@ public:
  std::string GetStringBuffer();
  size_t GetBufferLength();
 private:
+ void Delete_Spaces_on_String(std::string * str);
  void Initialize_Members();
  CharOperator CharacterOperations;
  Cpp_FileOperations Cpp_File_Manager;

@@ -439,15 +439,45 @@ void Project_File_Selection_Window::Select_File(){
 
           bool invalid_descriptor_file_status = Des_Reader.Get_Invalid_Descriptor_File_Status();
 
+          bool gui_read_success_status = Des_Reader.Get_Gui_Read_Success_Status();
+
           if(syntax_error_status || invalid_descriptor_file_status){
 
               *this->Descriptor_File_Selection_Status = false;
 
-              wxString Message = "\nThere is a syntax error in descriptor file";
+              wxString Message = "\nThere is an error in descriptor file";
 
               Message += "\nor descriptor file is invalid!";
 
               Message += "\n\nPlease control descriptor file";
+
+              Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
+            
+                         wxT("ERROR REPORT:"),wxID_ANY,
+                         
+                         wxT("NWINIX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
+
+              dial->SetSize(wxSize(600,420));
+
+              dial->Centre(wxBOTH);
+
+              dial->ShowModal();
+
+              this->Destroy();
+          }
+
+
+          if(!gui_read_success_status){
+
+              wxString Message = "\nIt is looks like some ";
+
+              Message += "\ninformation missed on the project file";
+
+              Message += "\nPlease control descriptor file";
+
+              Message += "\n\nMessage:";
+
+              Message += Des_Reader.Get_Error_Message();
 
               Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
             

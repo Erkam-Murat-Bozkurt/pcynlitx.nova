@@ -136,6 +136,8 @@ bool StringOperator::CheckStringLine(char * readedline){
 
 bool StringOperator::CheckStringLine(std::string readedline){
 
+     this->Delete_Spaces_on_String(&readedline);
+
      this->isStringLine = false;
 
      bool isNewLine = false , isNull = false;
@@ -158,6 +160,27 @@ bool StringOperator::CheckStringLine(std::string readedline){
      return this->isStringLine;
 }
 
+
+void StringOperator::Delete_Spaces_on_String(std::string * str)
+{
+    bool search_cond = true;
+
+    do{
+
+        search_cond = false;
+
+        for(size_t i=0;i<str->length();i++){
+
+           if( ((*str)[i] == ' ') || ((*str)[i] == '\t') ){
+
+              search_cond = true;
+
+              str->erase(i,1);
+           }
+        }
+
+  }while(search_cond);
+}
 
 void StringOperator::LoadStringBuffer(std::string ReadLine){
 

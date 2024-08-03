@@ -53,11 +53,14 @@ void Descriptor_File_Data_Collector::Initialize_Members(){
         this->Warehouse_Location_Record_Area[i] = 0;
         this->Root_Directory_Record_Area[i] = 0;
         this->Build_System_Type_Record_Area[i] = 0;
+        this->Project_Name_Record_Area[i] = 0;
+        this->Version_Number_Record_Area[i] = 0;
      }
 
      this->Library_Directories_Record_Number = 0;
      this->Source_File_Directories_Record_Number = 0;
      this->Include_Directories_Record_Number = 0;
+     
      this->Memory_Delete_Condition = false;
 }
 

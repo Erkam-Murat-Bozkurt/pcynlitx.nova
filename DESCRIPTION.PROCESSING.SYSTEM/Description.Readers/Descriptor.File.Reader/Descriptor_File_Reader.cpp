@@ -22,6 +22,8 @@ Descriptor_File_Reader::Descriptor_File_Reader(char opr_sis, char build_type) :
 
    this->gui_syntax_error = false;
 
+   this->gui_read_success = true;
+
    this->is_project_file_invalid = false;
 }
 
@@ -120,6 +122,12 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
          this->Clear_String_Memory(&this->descriptor_file_path);
 
+         this->Clear_String_Memory(&this->build_system);
+
+         this->Clear_String_Memory(&this->project_name);
+
+         this->Clear_String_Memory(&this->version_number);
+
          this->Data_Collector.Clear_Dynamic_Memory();
 
          this->Syntax_Controller.Clear_Dynamic_Memory();
@@ -152,100 +160,73 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
 
            this->is_project_file_invalid = true;
         }
-     }
 
-
-     this->Syntax_Controller.Clear_Dynamic_Memory();
-
-     this->Data_Collector.Collect_Descriptor_File_Data();
-
-
-     if(!this->gui_read_status){
-
-         this->Read_Root_Directory_Location();
-
-         this->Read_Warehouse_Location();
-
-         this->Read_Standard();
-
-         this->Read_Include_Directories();
-
-         this->Read_Source_File_Directories();
-
-         this->Read_Library_Directories();
-
-         this->Read_Library_Files();
-
-         this->Read_Compiler_Options();
-
-         this->Read_Linker_Options();
-
-         this->Read_Build_System_Type();
-
-         this->Read_Project_Name();
-
-         this->Read_Version_Number();
+        this->Syntax_Controller.Clear_Dynamic_Memory();
      }
      else{
 
-      if(!this->is_project_file_invalid){
+          this->Syntax_Controller.Clear_Dynamic_Memory();
 
-         if(!this->gui_syntax_error){
+          this->Data_Collector.Collect_Descriptor_File_Data();
 
-             this->gui_read_success = true;
+          if(!this->gui_read_status){
 
-             if(this->gui_read_success){
+              this->Read_Root_Directory_Location();
 
-                this->Read_Root_Directory_Location();
-             }
+              this->Read_Warehouse_Location();
 
-             if(this->gui_read_success){
+              this->Read_Standard();
 
-                this->Read_Warehouse_Location();
-             }
+              this->Read_Include_Directories();
 
-             if(this->gui_read_success){
+              this->Read_Source_File_Directories();
 
-                this->Read_Standard();
-             }
+              this->Read_Library_Directories();
 
-             if(this->gui_read_success){
+              this->Read_Library_Files();
 
-                this->Read_Include_Directories();
-             }
+              this->Read_Compiler_Options();
 
-             if(this->gui_read_success){
+              this->Read_Linker_Options();
 
-                this->Read_Source_File_Directories();
-             }
+              this->Read_Build_System_Type();
 
-             if(this->gui_read_success){
+              this->Read_Project_Name();
 
-                this->Read_Library_Directories();
-             }
+              this->Read_Version_Number();
+          }
+          else{
 
-             if(this->gui_read_success){
+               if(!this->is_project_file_invalid){
 
-                this->Read_Library_Files();
-             }
+                  if(!this->gui_syntax_error){
 
-             if(this->gui_read_success){
+                      this->Read_Root_Directory_Location();
 
-                this->Read_Compiler_Options();
+                      this->Read_Warehouse_Location();
 
-                this->Read_Linker_Options();
-             }
+                      this->Read_Standard();
+
+                      this->Read_Include_Directories();
+
+                      this->Read_Source_File_Directories();
+
+                      this->Read_Library_Directories();
+
+                      this->Read_Library_Files();
+
+                      this->Read_Compiler_Options();
+
+                      this->Read_Linker_Options();
              
-             if(this->gui_read_success){
+                      this->Read_Build_System_Type();
 
-                this->Read_Build_System_Type();
+                      this->Read_Project_Name();
 
-                this->Read_Project_Name();
-
-                this->Read_Version_Number();
-             }
-         }
-       }
+                      this->Read_Version_Number();
+                  }
+               }
+           }
      }
 
      this->Data_Collector.Clear_Dynamic_Memory();
@@ -275,7 +256,9 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
 
             std::cout << "\n Error:";
 
-            this->error_message =  "\n There are multiple project root directory declerations";
+            this->Clear_String_Memory(&this->error_message);
+
+            this->error_message =  "\nThere are multiple project root directory declerations";
 
             std::cout << this->error_message;
 
@@ -289,7 +272,6 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
 
                 this->gui_read_success = false;
             }
-
          }
      }
 
@@ -300,7 +282,9 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
 
         std::cout << "\n Error:";
 
-        this->error_message = "\n There is no any decleration about project root directory";
+        this->Clear_String_Memory(&this->error_message);
+
+        this->error_message = "\nThere is no any decleration about project root directory";
 
         std::cout << this->error_message;
 
@@ -391,6 +375,8 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
 
             std::cout << "\n Error:";
 
+            this->Clear_String_Memory(&this->error_message);
+
             this->error_message = "\n There are multiple project warehouse declerations";
 
             std::cout << this->error_message;
@@ -415,7 +401,9 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
 
         std::cout << "\n Error:";
 
-        this->error_message = "\n There is no any decleration about project warehouse location";
+        this->Clear_String_Memory(&this->error_message);
+
+        this->error_message = "\nThere is no any decleration about project warehouse location";
 
         std::cout << this->error_message;
 
@@ -500,7 +488,9 @@ void Descriptor_File_Reader::Read_Standard(){
 
             std::cout << "\n Error:";
 
-            this->error_message =  "\n There are multiple C++ standart declerations";
+            this->Clear_String_Memory(&this->error_message);
+
+            this->error_message =  "\nThere are multiple C++ standart declerations";
 
             std::cout << this->error_message;
 
@@ -578,7 +568,9 @@ void Descriptor_File_Reader::Read_Build_System_Type(){
 
         std::cout << "\n Error:";
 
-        this->error_message = "\n There is no any decleration about build system type selection";
+        this->Clear_String_Memory(&this->error_message);
+
+        this->error_message = "\nThere is no any decleration about build system type selection";
 
         std::cout << this->error_message;
 
@@ -646,12 +638,13 @@ void Descriptor_File_Reader::Read_Project_Name(){
      for(int i=start_line+1;i<end_line-1;i++){
 
          std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
-
+         
          if(this->StringManager.CheckStringLine(line)){
 
             record_num++;
          }
      }
+
 
      if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
@@ -659,7 +652,9 @@ void Descriptor_File_Reader::Read_Project_Name(){
 
         std::cout << "\n Error:";
 
-        this->error_message = "\n There is no any decleration about project name";
+        this->Clear_String_Memory(&this->error_message);
+
+        this->error_message = "\nThere is no any decleration about project name";
 
         std::cout << this->error_message;
 
@@ -737,7 +732,9 @@ void Descriptor_File_Reader::Read_Version_Number(){
 
         std::cout << "\n Error:";
 
-        this->error_message = "\n There is no any decleration about version number";
+        this->Clear_String_Memory(&this->error_message);
+
+        this->error_message = "\nThere is no any decleration about version number";
 
         std::cout << this->error_message;
 

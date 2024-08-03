@@ -434,7 +434,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
         project_name =  this->Des_Reader->Get_Project_Name();
 
-        build_system_type.push_back('\n');
+        project_name.push_back('\n');
 
         this->textctrl->AppendText(" ");
 
@@ -453,7 +453,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
      this->textctrl->SetDefaultStyle(AttrBold);
 
-     this->textctrl->AppendText(wxT("\n\n    PROJECT NAME:"));
+     this->textctrl->AppendText(wxT("\n\n    VERSION NUMBER:"));
 
      this->textctrl->SetDefaultStyle(AttrLigth);
 
@@ -467,7 +467,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
         version_number =  this->Des_Reader->Get_Version_Number();
 
-        build_system_type.push_back('\n');
+        version_number.push_back('\n');
 
         this->textctrl->AppendText(" ");
 
