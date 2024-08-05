@@ -163,9 +163,14 @@ bool StringOperator::CheckStringLine(std::string readedline){
 
 void StringOperator::Delete_Spaces_on_String(std::string * str)
 {
-    bool search_cond = true;
+     while((*str)[0] == ' '){
 
-    do{
+         str->erase(0,1);
+     }
+   
+     bool search_cond = true;
+
+     do{
 
         search_cond = false;
 
@@ -179,7 +184,7 @@ void StringOperator::Delete_Spaces_on_String(std::string * str)
            }
         }
 
-  }while(search_cond);
+     }while(search_cond);
 }
 
 void StringOperator::LoadStringBuffer(std::string ReadLine){

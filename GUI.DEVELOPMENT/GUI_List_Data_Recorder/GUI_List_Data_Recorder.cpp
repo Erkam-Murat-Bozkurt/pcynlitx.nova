@@ -543,6 +543,12 @@ void GUI_List_Data_Recorder::Clear_Data_Memory(){
      this->Clear_String_Memory(this->warehouse_location);
 
      this->Clear_String_Memory(this->root_dir);
+
+     this->Clear_String_Memory(this->build_system_type);
+
+     this->Clear_String_Memory(this->project_name);
+
+     this->Clear_String_Memory(this->version_number);
 }
 
 

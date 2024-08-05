@@ -517,6 +517,8 @@ void Descriptor_File_Reader::Read_Standard(){
 
               if(this->StringManager.CheckStringLine(line)){
 
+                 this->Delete_Spaces_on_String(&line);
+
                  this->standard = line;
 
                  break;
@@ -531,6 +533,8 @@ void Descriptor_File_Reader::Read_Standard(){
                 std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
 
                 if(this->StringManager.CheckStringLine(line)){
+
+                   this->Delete_Spaces_on_String(&line);
 
                    this->standard = line;
 
@@ -629,6 +633,8 @@ void Descriptor_File_Reader::Read_Build_System_Type(){
 
 void Descriptor_File_Reader::Read_Project_Name(){
 
+     this->Clear_String_Memory(&this->project_name);
+
      int start_line = this->Data_Collector.Get_Project_Name_Record_Area(0);
 
      int end_line   = this->Data_Collector.Get_Project_Name_Record_Area(1);
@@ -697,6 +703,8 @@ void Descriptor_File_Reader::Read_Project_Name(){
 
                 if(this->StringManager.CheckStringLine(line)){
 
+                   this->Delete_Spaces_on_String(&line);
+
                    this->project_name = line;
 
                    break;
@@ -709,6 +717,8 @@ void Descriptor_File_Reader::Read_Project_Name(){
 
 
 void Descriptor_File_Reader::Read_Version_Number(){
+
+     this->Clear_String_Memory(&this->version_number);
 
      int start_line = this->Data_Collector.Get_Version_Number_Record_Area(0);
 
@@ -818,9 +828,9 @@ void Descriptor_File_Reader::Read_Include_Directories(){
 
              if(this->StringManager.CheckStringLine(line)){
 
-                if(this->Is_Include_Character(line)){
+                this->Delete_Spaces_on_String(&line);
 
-                   this->Delete_Spaces_on_String(&line);
+                if(this->Is_Include_Character(line)){
 
                    this->Include_Directories.push_back(line);
                 }
@@ -869,9 +879,9 @@ void Descriptor_File_Reader::Read_Source_File_Directories(){
 
             if(this->StringManager.CheckStringLine(line)){
 
-               if(this->Is_Include_Character(line)){
+               this->Delete_Spaces_on_String(&line);
 
-                  this->Delete_Spaces_on_String(&line);
+               if(this->Is_Include_Character(line)){
 
                   this->Source_File_Directories.push_back(line);
                }
@@ -974,6 +984,8 @@ void Descriptor_File_Reader::Read_Library_Files(){
             if(this->StringManager.CheckStringLine(line)){
 
                if(this->Is_Include_Character(line)){
+
+                  this->Delete_Spaces_on_String_Start(&line);
 
                   this->Library_Files.push_back(line);
                }
@@ -1228,8 +1240,8 @@ void Descriptor_File_Reader::Divide_Options(std::string & options){
        }
 
        options.shrink_to_fit();
-
 }
+
 
 
 bool Descriptor_File_Reader::Is_Include_Character(std::string str){
@@ -1248,6 +1260,7 @@ bool Descriptor_File_Reader::Is_Include_Character(std::string str){
 
      return is_include;
 }
+
 
 void Descriptor_File_Reader::Clear_Vectory_Memory(std::vector<std::string> * pointer){
 
@@ -1287,6 +1300,15 @@ void Descriptor_File_Reader::Clear_String_Memory(std::string * pointer){
 
 
 
+void Descriptor_File_Reader::Delete_Spaces_on_String_Start(std::string * str)
+{
+     while(str->at(0) == ' '){
+
+           str->erase(0,1);
+     }
+}
+
+
 void Descriptor_File_Reader::Delete_Spaces_on_String(std::string * str)
 {
     bool search_cond = true;
@@ -1305,7 +1327,7 @@ void Descriptor_File_Reader::Delete_Spaces_on_String(std::string * str)
            }
         }
 
-  }while(search_cond);
+    }while(search_cond);
 }
 
 
