@@ -204,7 +204,7 @@ void GUI_List_Data_Recorder::Record_Data(std::string Data_Type, std::string Data
         this->Place_String_Data(data_record,this->build_system_type);
      }  
 
-     if(data_type == "PROJET-NAME"){
+     if(data_type == "PROJECT-NAME"){
 
         this->Clear_String_Memory(this->project_name);
 
@@ -475,6 +475,9 @@ void GUI_List_Data_Recorder::Receive_Decriptor_File(){
 
      this->Place_String_Data(this->Des_Reader.Get_Repo_Directory_Location(),this->root_dir);
 
+     this->Place_String_Data(this->Des_Reader.Get_Standard(),this->standard);   
+
+
      std::string compiler_options = this->Des_Reader.Get_Compiler_Options();
 
      std::string linker_options   = this->Des_Reader.Get_Linker_Options();
@@ -483,7 +486,15 @@ void GUI_List_Data_Recorder::Receive_Decriptor_File(){
 
      this->Place_String_Data(compiler_options,this->compiler_options);
 
-     this->Place_String_Data(this->Des_Reader.Get_Standard(),this->standard);   
+
+      std::string project_name   = this->Des_Reader.Get_Project_Name();
+
+      std::string version_number = this->Des_Reader.Get_Version_Number();
+
+
+      this->Place_String_Data(project_name,this->project_name);
+
+      this->Place_String_Data(version_number,this->version_number);
 }
 
 

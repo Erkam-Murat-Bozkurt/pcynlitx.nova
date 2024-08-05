@@ -837,8 +837,9 @@ void Custom_Multi_DataPanel::Save_Panel_Descriptions(wxCommandEvent & event){
 
         this->Record_Data.linker_options     = this->Collect_List_Ctrl_Data(this->listctrl_linker_options);
 
-        this->Record_Data.project_name       = this->Collect_List_Ctrl_Data(this->listctrl_version_number);
+        this->Record_Data.project_name       = this->Collect_List_Ctrl_Data(this->listctrl_project_name);
 
+        this->Record_Data.version_number     = this->Collect_List_Ctrl_Data(this->listctrl_version_number);
 
         this->Record_Data.standard           = this->Collect_List_Ctrl_Data(this->listctrl_standard);
 
@@ -886,6 +887,10 @@ void Custom_Multi_DataPanel::Clear_Record_Data(){
      this->Clear_String_Memory(this->Record_Data.linker_options);
 
      this->Clear_String_Memory(this->Record_Data.standard);
+
+     this->Clear_String_Memory(this->Record_Data.project_name);
+
+     this->Clear_String_Memory(this->Record_Data.version_number);
 
      this->Clear_Vector_Memory(this->Record_Data.Include_Directories);
 
@@ -951,6 +956,10 @@ void Custom_Multi_DataPanel::Clear_List_All_Ctrl_Contents(){
      this->listctrl_linker_options->DeleteAllItems();
 
      this->listctrl_build_system_type->DeleteAllItems();
+
+     this->listctrl_project_name->DeleteAllItems();
+
+     this->listctrl_version_number->DeleteAllItems();
 }
 
 
@@ -1069,6 +1078,7 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
 
      bool invalid_des_file_status = this->Des_Reader.Get_Invalid_Descriptor_File_Status();
 
+
      bool error_status = false;
 
      if(syntax_error_status || invalid_des_file_status){
@@ -1182,11 +1192,34 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
             this->Load_Data_List_Ctrl(this->listctrl_version_number,version_number);      
          }
 
+         bool gui_read_error_status  = !this->Des_Reader.Get_Gui_Read_Success_Status(); 
+
+         if(gui_read_error_status){
+
+            wxString Message = "\nSome information may be missed on the project file";
+
+            Message += "\nPlease control descriptor file";
+
+            Message += "\n\nMessage:";
+
+            Message += Des_Reader.Get_Error_Message();
+
+            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
+            
+                         wxT("ERROR REPORT:"),wxID_ANY,
+                         
+                         wxT("NWINIX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
+
+            dial->SetSize(wxSize(600,420));
+
+            dial->Centre(wxBOTH);
+
+            dial->ShowModal();
+         }
      }
      else{
-
            
-           wxString Message = "There is a syntax error in descriptor file";
+           wxString Message = "There is an error in descriptor file";
 
            Message += "\nor descriptor file is invalid";
 
@@ -1592,9 +1625,7 @@ void Custom_Multi_DataPanel::Save_Git_Repo_Dir(wxCommandEvent & event){
         wxString DataType(wxT("PROJECT-ROOT-DIR"));
 
         this->Save_Data(this->listctrl_git_repo_path,DataType);
-
      }
-
 }
 
 

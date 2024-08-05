@@ -469,21 +469,21 @@ void Project_File_Selection_Window::Select_File(){
 
           if(!gui_read_success_status){
 
-              wxString Message = "\nIt is looks like some ";
+              wxString Message = "\nLACK OF INFORMATION ON THE PROJECT FILE!";
 
-              Message += "\ninformation missed on the project file";
+              Message += "\n\nPlease control descriptor file before";
 
-              Message += "\nPlease control descriptor file";
+              Message += "\nbuild system construction process";
 
-              Message += "\n\nMessage:";
+              Message += "\n\nThe problem detected:";
 
               Message += Des_Reader.Get_Error_Message();
 
               Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
             
-                         wxT("ERROR REPORT:"),wxID_ANY,
+                    wxT("ERROR REPORT:"),wxID_ANY,
                          
-                         wxT("NWINIX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
+                    wxT("NWINIX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
 
               dial->SetSize(wxSize(600,420));
 
