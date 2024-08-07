@@ -2,9 +2,6 @@
 
 add_library(des_writer 
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/DataRecorder/DataRecorder.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/DataRecorder/DataRecorder.h
-
     ${CMAKE_CURRENT_SOURCE_DIR}/Empty.Descriptor.File.Builder/Empty_Descriptor_File_Builder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Empty.Descriptor.File.Builder/Empty_Descriptor_File_Builder.hpp
     
@@ -38,11 +35,7 @@ target_include_directories(des_writer PUBLIC
 
 target_link_directories(des_writer PUBLIC
 
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/DataRecorder
-
     ${CMAKE_CURRENT_SOURCE_DIR}/Empty.Descriptor.File.Builder 
-
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/CharOperator
 
@@ -56,13 +49,11 @@ target_link_directories(des_writer PUBLIC
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
 
-
     ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
 
     ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
 
     ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Reader
-
 
 )
 

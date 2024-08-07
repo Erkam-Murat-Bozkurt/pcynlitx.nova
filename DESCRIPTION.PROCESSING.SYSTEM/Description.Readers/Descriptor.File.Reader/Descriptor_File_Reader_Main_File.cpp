@@ -194,11 +194,16 @@ void Print_Descriptor_File_Informations(Descriptor_File_Reader & Des_File_Reader
 
      std::cout << "\n COMPILER OPTIONS RECORD: ";
 
-     if(Des_File_Reader.Get_Compiler_Options() != ""){
+     const std::vector<std::string> & compiler_options = Des_File_Reader.Get_Compiler_Options();
+
+     if(compiler_options.size()>0){
 
         std::cout << "\n ";
 
-        std::cout << Des_File_Reader.Get_Compiler_Options();
+        for(size_t i=0;i<compiler_options.size();i++){
+
+            std::cout << compiler_options.at(i);
+        }
      }
      else{
 
@@ -210,11 +215,16 @@ void Print_Descriptor_File_Informations(Descriptor_File_Reader & Des_File_Reader
 
      std::cout << "\n LINKER OPTIONS RECORD: ";
 
-     if(Des_File_Reader.Get_Linker_Options() != ""){
+     const std::vector<std::string> & linker_options = Des_File_Reader.Get_Linker_Options();
+
+     if(linker_options.size()>0){
 
         std::cout << "\n ";
- 
-        std::cout << Des_File_Reader.Get_Linker_Options();
+
+        for(size_t i=0;i<linker_options.size();i++){
+
+            std::cout << linker_options.at(i);
+        }
      }
      else{
 

@@ -732,40 +732,25 @@ void Project_Descriptions_Printer::Print_Descriptions(){
     this->textctrl->AppendText(wxT("\n\n "));
 
 
-    std::string com_options;
-
     if(!this->Des_Reader->Get_Compiler_Options().empty()){
 
-       com_options = this->Des_Reader->Get_Compiler_Options();
-
-       size_t start_point = 0, end_point = com_options.size();
+       const std::vector<std::string> & com_options = this->Des_Reader->Get_Compiler_Options();
 
        for(size_t i=0;i<com_options.size();i++){
 
-           std::string line;
+           this->textctrl->AppendText(" ");           
 
-           while(com_options[i] != '\n'){
+           this->textctrl->AppendText(" ");           
 
-               line.push_back(com_options[i]);
+           this->textctrl->AppendText(" ");           
 
-               i++;
-           }
+           std::string str_line = com_options.at(i);
 
-           this->textctrl->AppendText(" ");
-
-           this->textctrl->AppendText(" ");
-
-           this->textctrl->AppendText(" ");
-
-           this->textctrl->AppendText(wxString(line));
-
-           this->textctrl->AppendText(wxT("\n"));
+           this->textctrl->AppendText(wxString(str_line));
        }
     }
 
     this->textctrl->AppendText(wxT("\n\n "));
-
-
 
     this->textctrl->SetDefaultStyle(AttrBold);
 
@@ -776,32 +761,22 @@ void Project_Descriptions_Printer::Print_Descriptions(){
     this->textctrl->AppendText(wxT("\n\n "));
 
 
-    std::string link_options;
 
     if(!this->Des_Reader->Get_Linker_Options().empty()){
 
-       link_options = this->Des_Reader->Get_Linker_Options();
-
-       size_t start_point = 0, end_point = link_options.size();
+       const std::vector<std::string> & link_options = this->Des_Reader->Get_Linker_Options();
 
        for(size_t i=0;i<link_options.size();i++){
 
-           std::string line;
-
-           while(link_options[i] != '\n'){
-
-               line.push_back(link_options[i]);
-
-               i++;
-           }
-
            this->textctrl->AppendText(" ");
 
            this->textctrl->AppendText(" ");
 
            this->textctrl->AppendText(" ");
 
-           this->textctrl->AppendText(wxString(line));
+           std::string str_line = link_options.at(i);
+
+           this->textctrl->AppendText(wxString(str_line));
 
            this->textctrl->AppendText(wxT("\n"));
        }

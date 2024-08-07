@@ -223,36 +223,6 @@ int main(int argc, char ** argv){
     }
 
 
-
-    if(str == "-ar"){
-
-       argument_pass_cond = true;
-
-       DataRecorder Dt_Recorder(argv[1],'w','n');
-
-       Dt_Recorder.Add_Data_Record(argv[3],argv[4]);
-
-       Dt_Recorder.Clear_Object_Memory();
-
-       System_Interface.WriteChildProcess_StdOutput();
-
-       System_Interface.WriteChildProcess_StdError();
-       
-    }
-
-    if(str == "-cr"){
-
-       argument_pass_cond = true;
-
-       DataRecorder Dt_Recorder(argv[1],'w','n');
-
-       Dt_Recorder.Clear_Data_Record(argv[3]);
-
-       System_Interface.WriteChildProcess_StdOutput();
-
-       System_Interface.WriteChildProcess_StdError();
-    }
-
     if(str == "-up_lib"){
 
         argument_pass_cond = true;

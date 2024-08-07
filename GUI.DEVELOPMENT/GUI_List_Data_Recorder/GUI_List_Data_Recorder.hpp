@@ -27,8 +27,6 @@ struct Record_Data_For_Gui {
        std::string build_system_type;
        std::string project_name;
        std::string version_number;
-       std::string linker_options;
-       std::string compiler_options;
        std::string root_dir;
        std::string warehouse_location;
        std::vector<std::string> Include_Directories;
@@ -36,6 +34,8 @@ struct Record_Data_For_Gui {
        std::vector<std::string> Library_Directories;
        std::vector<std::string> Library_Files;
        std::vector<std::string> Exe_File_Names;
+       std::vector<std::string> compiler_options;
+       std::vector<std::string> linker_options;
        std::vector<std::string> Main_File_Names;  
 };
 
@@ -49,6 +49,7 @@ public:
   void Receive_Descriptions_Record_Data(Record_Data_For_Gui * Data);
   void Receive_Descriptor_File_Path(std::string DesPATH);
   void Record_Data(std::string Data_Type, std::string Data_Record);
+  void Record_Data(std::string Data_Type, std::vector<std::string> & vec);
   void Extract_Data_List(std::vector<std::string> & vec, std::string data);
   void Update_Descriptor_File();
   wxWindow * parent;
@@ -75,11 +76,11 @@ private:
   std::string build_system_type;
   std::string project_name;
   std::string version_number;
-  std::string linker_options;
-  std::string compiler_options;
   std::string root_dir;
   std::string warehouse_location;
   std::string Descriptor_File_Path;
+  std::vector<std::string> compiler_options;
+  std::vector<std::string> linker_options;
   std::vector<std::string> Include_Directories;
   std::vector<std::string> Source_File_Directories;
   std::vector<std::string> Library_Directories;

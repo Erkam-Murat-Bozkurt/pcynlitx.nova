@@ -222,9 +222,9 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
      std::string compiler_input_command = "g++ -Wall -c -std=c++17 ";
 
 
-     std::string compiler_options = this->Des_Reader->Get_Compiler_Options();
+     const std::vector<std::string> & compiler_options = this->Des_Reader->Get_Compiler_Options();
 
-     std::string linker_options = this->Des_Reader->Get_Linker_Options();
+     //const std::vector<std::string> & linker_options   = this->Des_Reader->Get_Linker_Options();
 
 
      std::string Include_Character = "-I";
@@ -249,11 +249,14 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      if(!compiler_options.empty()){
 
-        this->Place_String(&this->Compiler_System_Command,compiler_options);
+        for(size_t i=0;i<compiler_options.size();i++){
 
-        this->Place_String(&this->Compiler_System_Command,Space_Character);
+            this->Place_String(&this->Compiler_System_Command,compiler_options.at(i));
 
-        this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+            this->Place_String(&this->Compiler_System_Command,Space_Character);
+
+            this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+        }
      }
      
      // THE ADDITION OF INCLUDE DIRECTORIES PATHS

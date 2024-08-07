@@ -35,10 +35,10 @@ public:
  const std::vector<std::string> & Get_Source_File_Directories();
  const std::vector<std::string> & Get_Library_Files();
  const std::vector<std::string> & Get_Exe_File_Names();  
+ const std::vector<std::string> & Get_Compiler_Options();
+ const std::vector<std::string> & Get_Linker_Options();
  std::string Get_Standard();
  std::string Get_Build_System_Type();
- std::string Get_Compiler_Options();
- std::string Get_Linker_Options();
  std::string Get_Warehouse_Location();
  std::string Get_Repo_Directory_Location();
  std::string Get_Descriptor_File_Path();
@@ -85,8 +85,6 @@ protected:
  std::string descriptor_file_path;
  std::string standard;
  std::string build_system;
- std::string compiler_options;
- std::string linker_options;
  std::string root_dir;
  std::string project_name;
  std::string version_number;
@@ -96,6 +94,8 @@ protected:
  std::vector<std::string> Source_File_Directories;
  std::vector<std::string> Library_Directories;
  std::vector<std::string> Library_Files;
+ std::vector<std::string> compiler_options;
+ std::vector<std::string> linker_options;
  bool gui_read_status;
  bool gui_read_success;
  bool gui_syntax_error;

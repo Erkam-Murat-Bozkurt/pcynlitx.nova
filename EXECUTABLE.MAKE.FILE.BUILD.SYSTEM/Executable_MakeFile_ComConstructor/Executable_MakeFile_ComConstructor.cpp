@@ -366,9 +366,11 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      char compiler_input_command [] = "g++ -Wall -std=c++17 -o";
 
-     this->options = this->Des_Reader->Get_Compiler_Options() + 
-     
-                     this->Des_Reader->Get_Linker_Options();
+     const std::vector<std::string> & compiler_options = this->Des_Reader->Get_Compiler_Options();
+
+     const std::vector<std::string> & linker_options   = this->Des_Reader->Get_Linker_Options();
+
+
 
 
      char Include_Character [] = "-I";
@@ -410,19 +412,52 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      this->Place_Information(&this->Compiler_System_Command,tab);
 
-     if(!options.empty()){
+     if(!compiler_options.empty()){
 
-        this->Place_Information(&this->Compiler_System_Command,this->options);
+        for(size_t i=0;i<compiler_options.size();i++){
 
-        this->Place_Information(&this->Compiler_System_Command,Space_Character);
+            std::string option = compiler_options.at(i);
 
-        this->Place_Information(&this->Compiler_System_Command,slash);
+            if(option.back()!= '\\'){
 
-        this->Place_Information(&this->Compiler_System_Command,new_line);
+                 option.push_back('\\');
+            }
 
-        this->Place_Information(&this->Compiler_System_Command,tab);
+            this->Place_Information(&this->Compiler_System_Command,option);
+
+            this->Place_Information(&this->Compiler_System_Command,Space_Character);
+
+            this->Place_Information(&this->Compiler_System_Command,slash);
+
+            this->Place_Information(&this->Compiler_System_Command,new_line);
+
+            this->Place_Information(&this->Compiler_System_Command,tab);
+        }
      }
 
+
+     if(!linker_options.empty()){
+
+        for(size_t i=0;i<linker_options.size();i++){
+
+            std::string option = linker_options.at(i);
+
+            if(option.back()!= '\\'){
+
+                 option.push_back('\\');
+            }
+
+            this->Place_Information(&this->Compiler_System_Command,option);
+
+            this->Place_Information(&this->Compiler_System_Command,Space_Character);
+
+            this->Place_Information(&this->Compiler_System_Command,slash);
+
+            this->Place_Information(&this->Compiler_System_Command,new_line);
+
+            this->Place_Information(&this->Compiler_System_Command,tab);
+        }
+     }
 
 
      std::vector<std::string> dir_buffer;
@@ -680,9 +715,9 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
 
      char compiler_input_command [] = "g++ -Wall -std=c++17 -o";
 
-     this->options = this->Des_Reader->Get_Compiler_Options() + 
-     
-                     this->Des_Reader->Get_Linker_Options();
+     const std::vector<std::string> & compiler_options = this->Des_Reader->Get_Compiler_Options();
+
+     const std::vector<std::string> & linker_options   = this->Des_Reader->Get_Linker_Options();
 
 
 
@@ -727,17 +762,53 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
 
      this->Place_Information(&this->Compiler_System_Command,tab);
 
-     if(!options.empty()){
 
-        this->Place_Information(&this->Compiler_System_Command,this->options);
 
-        this->Place_Information(&this->Compiler_System_Command,Space_Character);
+     if(!compiler_options.empty()){
 
-        this->Place_Information(&this->Compiler_System_Command,slash);
+        for(size_t i=0;i<compiler_options.size();i++){
 
-        this->Place_Information(&this->Compiler_System_Command,new_line);
+            std::string option = compiler_options.at(i);
 
-        this->Place_Information(&this->Compiler_System_Command,tab);
+            if(option.back()!= '\\'){
+
+                 option.push_back('\\');
+            }
+
+            this->Place_Information(&this->Compiler_System_Command,option);
+
+            this->Place_Information(&this->Compiler_System_Command,Space_Character);
+
+            this->Place_Information(&this->Compiler_System_Command,slash);
+
+            this->Place_Information(&this->Compiler_System_Command,new_line);
+
+            this->Place_Information(&this->Compiler_System_Command,tab);
+        }
+     }
+
+
+     if(!linker_options.empty()){
+
+        for(size_t i=0;i<linker_options.size();i++){
+
+            std::string option = linker_options.at(i);
+
+            if(option.back()!= '\\'){
+
+                 option.push_back('\\');
+            }
+
+            this->Place_Information(&this->Compiler_System_Command,option);
+
+            this->Place_Information(&this->Compiler_System_Command,Space_Character);
+
+            this->Place_Information(&this->Compiler_System_Command,slash);
+
+            this->Place_Information(&this->Compiler_System_Command,new_line);
+
+            this->Place_Information(&this->Compiler_System_Command,tab);
+        }
      }
 
 

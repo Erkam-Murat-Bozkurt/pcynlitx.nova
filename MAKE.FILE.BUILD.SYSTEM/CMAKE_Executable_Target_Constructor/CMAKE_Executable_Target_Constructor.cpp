@@ -360,17 +360,16 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      this->FileManager.WriteToFile("\n\n    ");
 
-     std::string com_options = this->Des_Reader.Get_Compiler_Options();
+     const std::vector<std::string> & com_options = this->Des_Reader.Get_Compiler_Options();
 
      for(size_t i=0;i<com_options.size();i++){
 
-         if(com_options.at(i)=='\\'){
+         this->FileManager.WriteToFile("\n\n ");
 
-            com_options.erase(i,1);
-         }
+         this->FileManager.WriteToFile(com_options.at(i));
      }
 
-     this->FileManager.WriteToFile(com_options);
+     this->FileManager.WriteToFile("\n\n ");
 
 
      this->FileManager.WriteToFile(")");
@@ -387,18 +386,16 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
      this->FileManager.WriteToFile("\n\n    ");
 
 
-     std::string link_options = this->Des_Reader.Get_Linker_Options();
+     const std::vector<std::string> & link_options = this->Des_Reader.Get_Linker_Options();
 
      for(size_t i=0;i<link_options.size();i++){
 
-         if(link_options.at(i)=='\\'){
+         this->FileManager.WriteToFile("\n\n ");
 
-            link_options.erase(i,1);
-         }
+         this->FileManager.WriteToFile(link_options.at(i));
      }
 
-
-     this->FileManager.WriteToFile(link_options);
+     this->FileManager.WriteToFile("\n\n ");
 
      this->FileManager.WriteToFile("\n");
 

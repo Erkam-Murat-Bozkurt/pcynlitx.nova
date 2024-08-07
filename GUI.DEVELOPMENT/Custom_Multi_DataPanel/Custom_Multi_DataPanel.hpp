@@ -70,7 +70,12 @@ enum
   ID_CLEAR_PANEL_DESCRIPTIONS = 131,
   ID_INSERT_BUILD_SYSTEM_TYPE = 132,
   ID_INSERT_PROJECT_NAME = 133,
-  ID_INSERT_VERSION_NUMBER = 134
+  ID_INSERT_VERSION_NUMBER = 134,
+
+  ID_REMOVE_COMPILER_OPTION = 135,
+  ID_REMOVE_LINKER_OPTION = 136,
+  ID_CLEAR_COMPILER_OPTIONS = 137,
+  ID_CLEAR_LINKER_OPTIONS = 138
 };
 
 
@@ -178,7 +183,12 @@ protected:
     
     void Remove_Library_Name(wxCommandEvent & event);
 
-    
+    void Remove_Compiler_Option(wxCommandEvent & event);
+
+    void Remove_Linker_Option(wxCommandEvent & event);
+
+
+
     void Clear_Header_File_Locations(wxCommandEvent & event);
 
     void Clear_Source_File_Locations(wxCommandEvent & event);
@@ -186,6 +196,11 @@ protected:
     void Clear_Library_Directories(wxCommandEvent & event);
 
     void Clear_Library_Names(wxCommandEvent & event);
+
+    void Clear_Compiler_Options(wxCommandEvent & event);
+
+    void Clear_Linker_Options(wxCommandEvent & event);
+
 
     void Load_Data_List_Ctrl(wxDataViewListCtrl * listctrl, 
 
@@ -195,7 +210,9 @@ protected:
 
          std::string data);
 
-    std::string Collect_List_Ctrl_Data(wxDataViewListCtrl * listctrl);
+    void Collect_List_Ctrl_Data(wxDataViewListCtrl * listctrl, std::vector<std::string> & vec);
+
+    void Collect_List_Ctrl_Data(wxDataViewListCtrl * listctrl, std::string & str);
 
     void Clear_Record_Data();
 
@@ -355,6 +372,11 @@ protected:
 
     wxButton * Remove_Button_for_library_name;
 
+    wxButton * Remove_Button_for_compiler_options;
+
+    wxButton * Remove_Button_for_linker_options;
+
+
 
 
 
@@ -365,6 +387,11 @@ protected:
     wxButton * Clear_Button_for_library_dir;
 
     wxButton * Clear_Button_for_library_name;
+
+    wxButton * Clear_Button_for_compiler_options;
+
+    wxButton * Clear_Button_for_linker_options;
+
 
 
     wxButton * panel_close_button;

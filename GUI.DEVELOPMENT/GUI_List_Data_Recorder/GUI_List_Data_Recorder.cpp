@@ -89,13 +89,14 @@ void GUI_List_Data_Recorder::Receive_Descriptions_Record_Data(Record_Data_For_Gu
 
      this->Place_Vector_Data(Data->Library_Files,this->Library_Files);
 
+     this->Place_Vector_Data(Data->compiler_options,this->compiler_options);
+
+     this->Place_Vector_Data(Data->linker_options,this->linker_options);
+
+
      this->Place_String_Data(Data->warehouse_location,this->warehouse_location);
 
      this->Place_String_Data(Data->root_dir,this->root_dir);
-
-     this->Place_String_Data(Data->compiler_options,this->compiler_options);
-
-     this->Place_String_Data(Data->linker_options,this->linker_options);
 
      this->Place_String_Data(Data->standard,this->standard); 
 
@@ -109,15 +110,148 @@ void GUI_List_Data_Recorder::Receive_Descriptions_Record_Data(Record_Data_For_Gu
 
 void GUI_List_Data_Recorder::Record_Data(std::string Data_Type, std::string Data_Record){
     
+     this->Receive_Decriptor_File();
+
+     if(Data_Type == "PROJECT-ROOT-DIR")
+     {
+        if(this->Is_Data_List(Data_Record)){
+
+           std::cout << "\n There are more than one decleration for root directory";
+
+           exit(EXIT_FAILURE);
+        }
+
+        this->Clear_String_Memory(this->root_dir);
+        
+        this->Place_String_Data(Data_Record,this->root_dir);
+     }
+
+     if(Data_Type == "PROJECT-WAREHOUSE-LOCATION"){
+
+        if(this->Is_Data_List(Data_Record)){
+
+           std::cout << "\n There are more than one decleration for project warhouse";
+
+           exit(EXIT_FAILURE);
+        }
+
+        this->Clear_String_Memory(this->warehouse_location);
+
+        this->Place_String_Data(Data_Record,this->warehouse_location);
+     }
+
+     if(Data_Type == "C++-STANDARD"){
+
+        this->Clear_String_Memory(this->standard);
+
+        this->Place_String_Data(Data_Record,this->standard);
+     }  
+
+     if(Data_Type == "BUILD-SYSTEM"){
+
+        this->Clear_String_Memory(this->build_system_type);
+
+        this->Place_String_Data(Data_Record,this->build_system_type);
+     }  
+
+     if(Data_Type == "PROJECT-NAME"){
+
+        this->Clear_String_Memory(this->project_name);
+
+        this->Place_String_Data(Data_Record,this->project_name);
+     }  
+
+     if(Data_Type == "VERSION-NUMBER"){
+
+        this->Clear_String_Memory(this->version_number);
+
+        this->Place_String_Data(Data_Record,this->version_number);
+     }  
+
+     this->Update_Descriptor_File();     
+}
+
+
+void GUI_List_Data_Recorder::Record_Data(std::string Data_Type, 
+
+     std::vector<std::string> & Data_Record){
+    
+     this->Receive_Decriptor_File();
+
+     if(Data_Type == "INCLUDE-DIRECTORIES"){
+
+        this->Clear_String_Vector(this->Include_Directories);
+
+        this->Place_Vector_Data(this->Include_Directories,Data_Record);    
+     }
+
+     if(Data_Type == "SOURCE-FILE-DIRECTORIES"){
+
+        this->Clear_String_Vector(this->Source_File_Directories);
+
+        this->Place_Vector_Data(this->Source_File_Directories,Data_Record);  
+     }
+
+     if(Data_Type == "LIBRARY-DIRECTORIES"){
+
+        this->Clear_String_Vector(this->Library_Directories);
+
+        this->Place_Vector_Data(this->Library_Directories,Data_Record);        
+     }
+
+     if(Data_Type == "LIBRARY-FILES"){
+
+        this->Clear_String_Vector(this->Library_Files);
+
+        this->Place_Vector_Data(this->Library_Files,Data_Record);        
+     }
+
+     if(Data_Type == "COMPILER-OPTIONS"){
+
+        this->Clear_String_Vector(this->compiler_options);
+
+        this->Place_Vector_Data(this->compiler_options,Data_Record);       
+     }  
+
+     if(Data_Type == "LINKER-OPTIONS"){
+
+        this->Clear_String_Vector(this->linker_options);
+
+        this->Place_Vector_Data(this->linker_options,Data_Record);       
+     }    
+
+     if(Data_Type == "EXECUTABLE-FILE-NAMES"){
+
+        this->Clear_String_Vector(this->Exe_File_Names);
+
+        this->Place_Vector_Data(this->Exe_File_Names,Data_Record);          
+     }
+
+     if(Data_Type == "MAIN-FILE-NAMES"){
+
+        this->Clear_String_Vector(this->Main_File_Names);
+
+        this->Place_Vector_Data(this->Main_File_Names,Data_Record);          
+     }        
+
+     this->Update_Descriptor_File();     
+}
+
+
+
+/*
+
+void GUI_List_Data_Recorder::Record_Data(std::string Data_Type, 
+
+     std::string Data_Record){
+    
      this->Clear_Data_Memory();
 
      this->Receive_Decriptor_File();
 
-     std::string data_type, data_record;
+     std::string data_type;
 
      this->Place_String_Data(Data_Type,data_type);
-
-     this->Place_String_Data(Data_Record,data_record);
 
      if(data_type == "PROJECT-ROOT-DIR")
      {
@@ -148,48 +282,6 @@ void GUI_List_Data_Recorder::Record_Data(std::string Data_Type, std::string Data
         this->Place_String_Data(data_record,this->warehouse_location);
      }
 
-     if(data_type == "INCLUDE-DIRECTORIES"){
-
-        this->Clear_String_Vector(this->Include_Directories);
-
-        this->Extract_Data_List(this->Include_Directories,data_record);    
-     }
-
-     if(data_type == "SOURCE-FILE-DIRECTORIES"){
-
-        this->Clear_String_Vector(this->Source_File_Directories);
-
-        this->Extract_Data_List(this->Source_File_Directories,data_record);  
-     }
-
-     if(data_type == "LIBRARY-DIRECTORIES"){
-
-        this->Clear_String_Vector(this->Library_Directories);
-
-        this->Extract_Data_List(this->Library_Directories,data_record);        
-     }
-
-     if(data_type == "LIBRARY-FILES"){
-
-        this->Clear_String_Vector(this->Library_Files);
-
-        this->Extract_Data_List(this->Library_Files,data_record);        
-     }
-
-     if(data_type == "EXECUTABLE-FILE-NAMES"){
-
-        this->Clear_String_Vector(this->Exe_File_Names);
-
-        this->Extract_Data_List(this->Exe_File_Names,data_record);        
-     }
-
-     if(data_type == "MAIN-FILE-NAMES"){
-
-        this->Clear_String_Vector(this->Main_File_Names);
-
-        this->Extract_Data_List(this->Main_File_Names,data_record);        
-     }                    
-
      if(data_type == "C++-STANDARD"){
 
         this->Clear_String_Memory(this->standard);
@@ -218,24 +310,10 @@ void GUI_List_Data_Recorder::Record_Data(std::string Data_Type, std::string Data
         this->Place_String_Data(data_record,this->version_number);
      }  
 
-
-     if(data_type == "COMPILER-OPTIONS"){
-
-        this->Clear_String_Memory(this->compiler_options);
-
-        this->Place_String_Data(data_record,this->compiler_options);       
-     }    
-
-     if(data_type == "LINKER-OPTIONS"){
-
-        this->Clear_String_Memory(this->linker_options);
-
-        this->Place_String_Data(data_record,this->linker_options);       
-     }    
-
      this->Update_Descriptor_File();     
 }
 
+*/
 
 
 void GUI_List_Data_Recorder::Update_Descriptor_File(){
@@ -260,7 +338,6 @@ void GUI_List_Data_Recorder::Update_Descriptor_File(){
      this->WriteNewLines(single_line);
 
      this->File_Manager.WriteToFile("}");
-
 
 
      this->WriteNewLines(two_lines);
@@ -399,7 +476,7 @@ void GUI_List_Data_Recorder::Update_Descriptor_File(){
 
      this->WriteNewLines(single_line);
 
-     this->Write_String_Data(this->compiler_options);
+     this->Write_Vector_Data(this->compiler_options);
 
      this->WriteNewLines(single_line);
 
@@ -413,7 +490,7 @@ void GUI_List_Data_Recorder::Update_Descriptor_File(){
 
      this->WriteNewLines(single_line);
 
-     this->Write_String_Data(this->linker_options);
+     this->Write_Vector_Data(this->linker_options);
 
      this->WriteNewLines(single_line);
 
@@ -477,14 +554,9 @@ void GUI_List_Data_Recorder::Receive_Decriptor_File(){
 
      this->Place_String_Data(this->Des_Reader.Get_Standard(),this->standard);   
 
+     this->Place_Vector_Data(this->Des_Reader.Get_Linker_Options(),this->linker_options);
 
-     std::string compiler_options = this->Des_Reader.Get_Compiler_Options();
-
-     std::string linker_options   = this->Des_Reader.Get_Linker_Options();
-
-     this->Place_String_Data(linker_options,this->linker_options);
-
-     this->Place_String_Data(compiler_options,this->compiler_options);
+     this->Place_Vector_Data(this->Des_Reader.Get_Compiler_Options(),this->compiler_options);
 
 
       std::string project_name   = this->Des_Reader.Get_Project_Name();
@@ -536,9 +608,9 @@ void GUI_List_Data_Recorder::Clear_Data_Memory(){
 
      this->Clear_String_Memory(this->standard);
 
-     this->Clear_String_Memory(this->linker_options);
+     this->Clear_String_Vector(this->linker_options);
 
-     this->Clear_String_Memory(this->compiler_options);
+     this->Clear_String_Vector(this->compiler_options);
 
      this->Clear_String_Memory(this->warehouse_location);
 

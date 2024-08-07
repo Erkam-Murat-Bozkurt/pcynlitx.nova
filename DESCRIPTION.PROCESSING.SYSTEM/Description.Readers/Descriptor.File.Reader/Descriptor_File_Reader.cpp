@@ -110,11 +110,11 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
          this->Clear_Vectory_Memory(&this->Library_Files);
 
+         this->Clear_Vectory_Memory(&this->compiler_options);
+
+         this->Clear_Vectory_Memory(&this->linker_options);
+
          this->Clear_String_Memory(&this->standard);
-
-         this->Clear_String_Memory(&this->compiler_options);
-
-         this->Clear_String_Memory(&this->linker_options);
 
          this->Clear_String_Memory(&this->warehouse_location);
 
@@ -1037,19 +1037,35 @@ void Descriptor_File_Reader::Read_Compiler_Options(){
 
                std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
 
+               while(line[0] == ' '){
+
+                     line.erase(0,1);
+               }
+
+
                if(this->StringManager.CheckStringLine(line)){
 
                   if(this->Is_Include_Character(line)){
 
-                     this->compiler_options += line;
+                     for(size_t j=0;j<line.size();j++){
+
+                         if(line.at(j)=='\\'){
+
+                            line.erase(j,1);
+
+                            line.shrink_to_fit();
+                         }
+                     }
+
+                     this->compiler_options.push_back(line);
+
+                     this->Clear_String_Memory(&line);
                   }
                }
-
-               this->Clear_String_Memory(&line);
             }
       }
 
-      this->Divide_Options(this->compiler_options);
+      //this->Divide_Options(this->compiler_options);
 
       this->compiler_options.shrink_to_fit();
 }
@@ -1090,19 +1106,34 @@ void Descriptor_File_Reader::Read_Linker_Options(){
 
                std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
 
+               while(line[0] == ' '){
+
+                     line.erase(0,1);
+               }
+
                if(this->StringManager.CheckStringLine(line)){
 
                   if(this->Is_Include_Character(line)){
 
-                     this->linker_options += line;
+                    for(size_t j=0;j<line.size();j++){
+
+                      if(line.at(j)=='\\'){
+
+                         line.erase(j,1);
+
+                         line.shrink_to_fit();
+                       }
+                    }
+                  
+                    this->linker_options.push_back(line);
+
+                    this->Clear_String_Memory(&line);
                   }
                }
-
-               this->Clear_String_Memory(&line);
             }
       }
 
-      this->Divide_Options(this->linker_options);
+      //this->Divide_Options(this->linker_options);
 
       this->linker_options.shrink_to_fit();
 }
@@ -1381,12 +1412,12 @@ std::string Descriptor_File_Reader::Get_Standard(){
 }
 
 
-std::string Descriptor_File_Reader::Get_Compiler_Options(){
+const std::vector<std::string> & Descriptor_File_Reader::Get_Compiler_Options(){
 
        return this->compiler_options;
 }
 
-std::string Descriptor_File_Reader::Get_Linker_Options(){
+const std::vector<std::string> & Descriptor_File_Reader::Get_Linker_Options(){
 
        return this->linker_options;
 }

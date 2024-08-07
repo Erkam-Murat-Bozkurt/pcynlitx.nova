@@ -37,15 +37,19 @@ private:
   StringOperator StringOperations;
   Cpp_FileOperations File_Manager;
   std::string standard;
-  std::string options;
   std::string root_dir;
   std::string warehouse_location;
+  std::string project_name;
+  std::string version_number;
+  std::string build_system;
   std::vector<std::string> Include_Directories;
   std::vector<std::string> Source_File_Directories;
   std::vector<std::string> Library_Directories;
   std::vector<std::string> Library_Files;
   std::vector<std::string> Exe_File_Names;
   std::vector<std::string> Main_File_Names;
+  std::vector<std::string> compiler_options;
+  std::vector<std::string> linker_options;
   bool Memory_Delete_Condition;
 };
 

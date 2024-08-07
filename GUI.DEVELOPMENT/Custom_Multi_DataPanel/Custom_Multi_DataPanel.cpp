@@ -67,6 +67,10 @@ BEGIN_EVENT_TABLE(Custom_Multi_DataPanel,wxDialog )
   
     EVT_BUTTON(ID_REMOVE_LIBRARY_NAME,Custom_Multi_DataPanel::Remove_Library_Name)
   
+    EVT_BUTTON(ID_REMOVE_COMPILER_OPTION,Custom_Multi_DataPanel::Remove_Compiler_Option)
+
+    EVT_BUTTON(ID_REMOVE_LINKER_OPTION,Custom_Multi_DataPanel::Remove_Linker_Option)
+
 
 
     EVT_BUTTON(ID_CLEAR_HEADER_FILE_LOCATION,Custom_Multi_DataPanel::Clear_Header_File_Locations)
@@ -76,6 +80,11 @@ BEGIN_EVENT_TABLE(Custom_Multi_DataPanel,wxDialog )
     EVT_BUTTON(ID_CLEAR_LIB_DIRECTORIES,Custom_Multi_DataPanel::Clear_Library_Directories)
   
     EVT_BUTTON(ID_CLEAR_LIBRARY_NAMES,Custom_Multi_DataPanel::Clear_Library_Names)
+
+    EVT_BUTTON(ID_CLEAR_COMPILER_OPTIONS,Custom_Multi_DataPanel::Clear_Compiler_Options)
+
+    EVT_BUTTON(ID_CLEAR_LINKER_OPTIONS,Custom_Multi_DataPanel::Clear_Linker_Options)
+
 
 
     EVT_BUTTON(ID_CLOSE_DESCRIPTION_PANEL,Custom_Multi_DataPanel::Close_Description_Panel)
@@ -541,11 +550,21 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->InsertButton_for_compiler_options = new wxButton(this->scroll_win,ID_INSERT_COMPILER_OPTIONS,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
 
+     this->Remove_Button_for_compiler_options  = new wxButton(this->scroll_win,ID_REMOVE_COMPILER_OPTION,wxT("REMOVE"),wxDefaultPosition, wxSize(75, 40));
+
+     this->Clear_Button_for_compiler_options   = new wxButton(this->scroll_win,ID_CLEAR_COMPILER_OPTIONS,wxT("CLEAR"),wxDefaultPosition, wxSize(75, 40)); 
+
 
 
      this->Buton_Sizers[8] = new wxBoxSizer(wxHORIZONTAL);
 
      this->Buton_Sizers[8]->Add(this->InsertButton_for_compiler_options,0, wxEXPAND | wxALL,10);
+
+     this->Buton_Sizers[8]->Add(this->Remove_Button_for_compiler_options,0, wxEXPAND | wxALL,10);
+
+     this->Buton_Sizers[8]->Add(this->Clear_Button_for_compiler_options,0, wxEXPAND | wxALL,10);
+
+
 
      this->List_Ctrl_Sizers[8] = new wxBoxSizer(wxHORIZONTAL);
 
@@ -571,11 +590,20 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->InsertButton_for_linker_options = new wxButton(this->scroll_win,ID_INSERT_LINKER_OPTIONS,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
 
+     this->Remove_Button_for_linker_options  = new wxButton(this->scroll_win,ID_REMOVE_LINKER_OPTION,wxT("REMOVE"),wxDefaultPosition, wxSize(75, 40));
+
+     this->Clear_Button_for_linker_options   = new wxButton(this->scroll_win,ID_CLEAR_LINKER_OPTIONS,wxT("CLEAR"),wxDefaultPosition, wxSize(75, 40)); 
+
 
 
      this->Buton_Sizers[9] = new wxBoxSizer(wxHORIZONTAL);
 
      this->Buton_Sizers[9]->Add(this->InsertButton_for_linker_options,0, wxEXPAND | wxALL,10);
+
+     this->Buton_Sizers[9]->Add(this->Remove_Button_for_linker_options,0, wxEXPAND | wxALL,10);
+
+     this->Buton_Sizers[9]->Add(this->Clear_Button_for_linker_options,0, wxEXPAND | wxALL,10);
+
 
      this->List_Ctrl_Sizers[9] = new wxBoxSizer(wxHORIZONTAL);
 
@@ -828,43 +856,63 @@ void Custom_Multi_DataPanel::Save_Panel_Descriptions(wxCommandEvent & event){
         event.Skip(true);
 
         this->Clear_Record_Data();
+        
+        this->Collect_List_Ctrl_Data(this->listctrl_git_repo_path,this->Record_Data.root_dir);
      
-        this->Record_Data.root_dir = this->Collect_List_Ctrl_Data(this->listctrl_git_repo_path);
+        this->Collect_List_Ctrl_Data(this->listctrl_warehouse_location,this->Record_Data.warehouse_location);
 
-        this->Record_Data.warehouse_location = this->Collect_List_Ctrl_Data(this->listctrl_warehouse_location);
+        this->Collect_List_Ctrl_Data(this->listctrl_compiler_options,this->Record_Data.compiler_options);
 
-        this->Record_Data.compiler_options   = this->Collect_List_Ctrl_Data(this->listctrl_compiler_options);
+        this->Collect_List_Ctrl_Data(this->listctrl_linker_options,this->Record_Data.linker_options);
 
-        this->Record_Data.linker_options     = this->Collect_List_Ctrl_Data(this->listctrl_linker_options);
+        this->Collect_List_Ctrl_Data(this->listctrl_project_name,this->Record_Data.project_name);
 
-        this->Record_Data.project_name       = this->Collect_List_Ctrl_Data(this->listctrl_project_name);
+        this->Collect_List_Ctrl_Data(this->listctrl_version_number,this->Record_Data.version_number);
 
-        this->Record_Data.version_number     = this->Collect_List_Ctrl_Data(this->listctrl_version_number);
+        this->Collect_List_Ctrl_Data(this->listctrl_standard,this->Record_Data.standard);
 
-        this->Record_Data.standard           = this->Collect_List_Ctrl_Data(this->listctrl_standard);
+        this->Collect_List_Ctrl_Data(this->listctrl_build_system_type,this->Record_Data.build_system_type);
 
-        this->Record_Data.build_system_type  = this->Collect_List_Ctrl_Data(this->listctrl_build_system_type);
+        this->Collect_List_Ctrl_Data(this->listctrl_for_header_dir,this->Record_Data.Include_Directories);
+
+        this->Collect_List_Ctrl_Data(this->listctrl_library_dir,this->Record_Data.Library_Directories);
+
+        this->Collect_List_Ctrl_Data(this->listctrl_library_name,this->Record_Data.Library_Files);
+
+        this->Collect_List_Ctrl_Data(this->listctrl_src_file_location,this->Record_Data.Source_File_Directories);
 
 
-        std::string header_locations = this->Collect_List_Ctrl_Data(this->listctrl_for_header_dir);
+
+
+        /*
+
+        std::vector<std:::string> warehouse_location;
 
         this->Data_Recorder.Extract_Data_List(this->Record_Data.Include_Directories,header_locations);
 
 
-        std::string source_file_locations = this->Collect_List_Ctrl_Data(this->listctrl_src_file_location);
+        std::string source_file_locations;
+        
+        this->Collect_List_Ctrl_Data(this->listctrl_src_file_location);
 
         this->Data_Recorder.Extract_Data_List(this->Record_Data.Source_File_Directories,source_file_locations);
 
 
-        std::string library_file_locations = this->Collect_List_Ctrl_Data(this->listctrl_library_dir);
+        std::string library_file_locations;
+        
+        this->Collect_List_Ctrl_Data(this->listctrl_library_dir);
 
         this->Data_Recorder.Extract_Data_List(this->Record_Data.Library_Directories,library_file_locations);
 
         
-        std::string library_file_names = this->Collect_List_Ctrl_Data(this->listctrl_library_name);
+        std::string library_file_names;
+        
+        this->Collect_List_Ctrl_Data(this->listctrl_library_name);
 
         this->Data_Recorder.Extract_Data_List(this->Record_Data.Library_Files,library_file_names);
 
+
+       */
 
 
         this->Data_Recorder.Receive_Descriptions_Record_Data(&this->Record_Data);
@@ -882,10 +930,6 @@ void Custom_Multi_DataPanel::Clear_Record_Data(){
 
      this->Clear_String_Memory(this->Record_Data.warehouse_location);
 
-     this->Clear_String_Memory(this->Record_Data.compiler_options);
-
-     this->Clear_String_Memory(this->Record_Data.linker_options);
-
      this->Clear_String_Memory(this->Record_Data.standard);
 
      this->Clear_String_Memory(this->Record_Data.project_name);
@@ -899,6 +943,10 @@ void Custom_Multi_DataPanel::Clear_Record_Data(){
      this->Clear_Vector_Memory(this->Record_Data.Library_Directories);
 
      this->Clear_Vector_Memory(this->Record_Data.Source_File_Directories);
+
+     this->Clear_Vector_Memory(this->Record_Data.compiler_options);
+
+     this->Clear_Vector_Memory(this->Record_Data.linker_options);
 }
 
 
@@ -1130,17 +1178,15 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
 
 
 
-         std::string compiler_options = this->Des_Reader.Get_Compiler_Options();
+         const std::vector<std::string> & compiler_options = this->Des_Reader.Get_Compiler_Options();
                                     
-         compiler_options.shrink_to_fit();
-
          if(compiler_options.size()>0){
 
             this->Load_Data_List_Ctrl(this->listctrl_compiler_options,compiler_options);
          }
 
 
-         std::string linker_options = this->Des_Reader.Get_Linker_Options();
+         const std::vector<std::string> & linker_options = this->Des_Reader.Get_Linker_Options();
 
          if(linker_options.size()>0){
 
@@ -1523,7 +1569,9 @@ void Custom_Multi_DataPanel::Insert_Compiler_Options(wxCommandEvent & event){
 
         wxString Compiler_Options = wxGetTextFromUser(wxT(""),
 
-                  wxT("   ENTER COMPILER OPTIONS  "));
+                  wxT("   ENTER A COMPILER OPTION  "));
+
+        /*
 
         int row_num = this->listctrl_compiler_options->GetItemCount();
 
@@ -1531,6 +1579,8 @@ void Custom_Multi_DataPanel::Insert_Compiler_Options(wxCommandEvent & event){
 
             this->listctrl_compiler_options->DeleteItem(i);
         }
+
+        */
 
         this->AppendDataItem(this->listctrl_compiler_options,Compiler_Options);
      }
@@ -1544,7 +1594,9 @@ void Custom_Multi_DataPanel::Insert_Linker_Options(wxCommandEvent & event){
 
         wxString Linker_Options = wxGetTextFromUser(wxT(""),
 
-                  wxT("   ENTER LINKER OPTIONS  "));
+                  wxT("   ENTER A LINKER OPTION  "));
+
+        /*
 
         int row_num = this->listctrl_linker_options->GetItemCount();
 
@@ -1552,6 +1604,8 @@ void Custom_Multi_DataPanel::Insert_Linker_Options(wxCommandEvent & event){
 
             this->listctrl_linker_options->DeleteItem(i);
         }
+
+        */
 
         this->AppendDataItem(this->listctrl_linker_options,Linker_Options);
      }
@@ -1737,30 +1791,162 @@ void Custom_Multi_DataPanel::Save_Library_Name(wxCommandEvent & event){
 
 void Custom_Multi_DataPanel::Save_Data(wxDataViewListCtrl * listctrl, wxString DataType){
 
-     std::string  list_ctrl_data = this->Collect_List_Ctrl_Data(listctrl);
+     std::string data_type = DataType.ToStdString();
 
-     this->Data_Recorder.Record_Data(DataType.ToStdString(),list_ctrl_data);
+     if(data_type == "PROJECT-ROOT-DIR")
+     {
+        std::string root_dir;
+
+        this->Collect_List_Ctrl_Data(listctrl,root_dir);
+
+        this->Data_Recorder.Record_Data(DataType.ToStdString(),root_dir);
+     }
+
+
+     if(data_type == "PROJECT-WAREHOUSE-LOCATION"){
+
+        std::string warehouse_location;
+
+        this->Collect_List_Ctrl_Data(listctrl,warehouse_location);
+
+        this->Data_Recorder.Record_Data(DataType.ToStdString(),warehouse_location);
+     }
+
+
+     if(data_type == "C++-STANDARD"){
+
+        std::string standard;
+
+       this->Collect_List_Ctrl_Data(listctrl,standard);
+
+       this->Data_Recorder.Record_Data(DataType.ToStdString(),standard);
+     }  
+
+
+     if(data_type == "BUILD-SYSTEM"){
+
+        std::string build_type;
+
+        this->Collect_List_Ctrl_Data(listctrl,build_type);
+
+        this->Data_Recorder.Record_Data(DataType.ToStdString(),build_type);
+     }  
+
+
+
+     if(data_type == "PROJECT-NAME"){
+
+        std::string project_name;
+
+        this->Collect_List_Ctrl_Data(listctrl,project_name);
+
+        this->Data_Recorder.Record_Data(DataType.ToStdString(),project_name);
+     }  
+
+
+     if(data_type == "VERSION-NUMBER"){
+
+        std::string version_number;
+
+        this->Collect_List_Ctrl_Data(listctrl,version_number);
+
+        this->Data_Recorder.Record_Data(DataType.ToStdString(),version_number);
+     }  
+
+
+
+     if(data_type == "INCLUDE-DIRECTORIES"){
+
+        std::vector<std::string> inc_dirs;
+
+        this->Collect_List_Ctrl_Data(listctrl,inc_dirs);
+
+        this->Data_Recorder.Record_Data(DataType.ToStdString(),inc_dirs);
+     }
+
+
+
+     if(data_type == "SOURCE-FILE-DIRECTORIES"){
+
+        std::vector<std::string> src_dirs;
+
+        this->Collect_List_Ctrl_Data(listctrl,src_dirs);
+
+        this->Data_Recorder.Record_Data(DataType.ToStdString(),src_dirs);
+     }
+
+
+
+     if(data_type == "LIBRARY-DIRECTORIES"){
+
+        std::vector<std::string> lib_dirs;
+
+        this->Collect_List_Ctrl_Data(listctrl,lib_dirs);
+
+        this->Data_Recorder.Record_Data(DataType.ToStdString(),lib_dirs);
+     }
+
+
+     if(data_type == "LIBRARY-FILES"){
+
+        std::vector<std::string> lib_files;
+
+        this->Collect_List_Ctrl_Data(listctrl,lib_files);
+
+        this->Data_Recorder.Record_Data(DataType.ToStdString(),lib_files);
+     }
+
+
+     if(data_type == "COMPILER-OPTIONS"){
+    
+        std::vector<std::string> comp_options;
+
+        this->Collect_List_Ctrl_Data(listctrl,comp_options);
+
+        this->Data_Recorder.Record_Data(DataType.ToStdString(),comp_options);
+     }  
+
+
+     if(data_type == "LINKER-OPTIONS"){
+
+        std::vector<std::string> linker_options;
+
+        this->Collect_List_Ctrl_Data(listctrl,linker_options); 
+
+        this->Data_Recorder.Record_Data(DataType.ToStdString(),linker_options);
+     }    
 }
 
 
-std::string Custom_Multi_DataPanel::Collect_List_Ctrl_Data(wxDataViewListCtrl * listctrl){
+void Custom_Multi_DataPanel::Collect_List_Ctrl_Data(wxDataViewListCtrl * listctrl, 
 
-       std::string  list_ctrl_data;
+     std::vector<std::string> & data){
 
-       wxString item_data = wxT("");
+     int item_count = listctrl->GetItemCount();
 
-       int item_count = listctrl->GetItemCount();
+     for(int i=0;i<item_count;i++){
 
-       for(int i=0;i<item_count;i++){
+         wxString item_data = wxT("");
 
-           item_data = item_data +
+         item_data = listctrl->GetTextValue(i,0);
 
-           listctrl->GetTextValue(i,0) + wxT('\n');
-       }
+         data.push_back(item_data.ToStdString());
+     }
+}
 
-       list_ctrl_data = item_data.ToStdString();
 
-       return list_ctrl_data;
+void Custom_Multi_DataPanel::Collect_List_Ctrl_Data(wxDataViewListCtrl * listctrl, 
+
+     std::string & str){
+
+     int item_count = listctrl->GetItemCount();
+
+     for(int i=0;i<item_count;i++){
+
+         wxString item_data = listctrl->GetTextValue(i,0);
+
+         str = item_data.ToStdString();
+     }
 }
 
 
@@ -1817,6 +2003,32 @@ void Custom_Multi_DataPanel::Remove_Library_Name(wxCommandEvent & event){
 }
 
 
+void Custom_Multi_DataPanel::Remove_Linker_Option(wxCommandEvent & event){
+
+     if(event.GetId() == ID_REMOVE_LINKER_OPTION){
+
+        event.Skip(true);
+
+        int row = this->listctrl_linker_options->GetSelectedRow();
+
+        this->listctrl_linker_options->DeleteItem(row);
+     }
+}
+
+void Custom_Multi_DataPanel::Remove_Compiler_Option(wxCommandEvent & event){
+
+     if(event.GetId() == ID_REMOVE_COMPILER_OPTION){
+
+        event.Skip(true);
+
+        int row = this->listctrl_compiler_options->GetSelectedRow();
+
+        this->listctrl_compiler_options->DeleteItem(row);
+     }
+}
+
+
+
 void Custom_Multi_DataPanel::Clear_Header_File_Locations(wxCommandEvent & event){
      
      if(event.GetId() == ID_CLEAR_HEADER_FILE_LOCATION ){
@@ -1862,6 +2074,28 @@ void Custom_Multi_DataPanel::Clear_Library_Names(wxCommandEvent & event){
         this->listctrl_library_name->DeleteAllItems();
      }
 }
+
+void Custom_Multi_DataPanel::Clear_Compiler_Options(wxCommandEvent & event){
+
+     if(event.GetId() == ID_CLEAR_COMPILER_OPTIONS){
+
+        event.Skip(true);
+
+        this->listctrl_compiler_options->DeleteAllItems();
+     }
+}
+
+
+void Custom_Multi_DataPanel::Clear_Linker_Options(wxCommandEvent & event){
+
+     if(event.GetId() == ID_CLEAR_LINKER_OPTIONS){
+
+        event.Skip(true);
+
+        this->listctrl_linker_options->DeleteAllItems();
+     }
+}
+
 
 bool Custom_Multi_DataPanel::Get_Data_Save_Status(){
 

@@ -87,7 +87,6 @@ void DataRecorder::Add_Data_Record(char * Data_Type, char * Data_Record){
 
      this->Place_String_Data(Data_Record,data_record);
 
-
      if(data_type == "PROJECT-ROOT-DIR"){
 
         if(this->Is_Data_List(data_record)){
@@ -137,7 +136,6 @@ void DataRecorder::Add_Data_Record(char * Data_Type, char * Data_Record){
         this->Extract_Data_List(this->Library_Files,data_record);        
      }
 
-
      if(data_type == "EXECUTABLE-FILE-NAMES"){
 
         this->Extract_Data_List(this->Exe_File_Names,data_record);        
@@ -155,11 +153,19 @@ void DataRecorder::Add_Data_Record(char * Data_Type, char * Data_Record){
         this->Place_String_Data(data_record,this->standard);
      }  
 
-     if(data_type == "OPTIONS"){
+     if(data_type == "COMPILER-OPTIONS"){
 
-        this->Clear_String_Memory(this->options);
+        this->Clear_String_Vector(this->compiler_options);
 
-        this->Place_String_Data(data_record,this->options);       
+        this->Place_String_Data(data_record,this->compiler_options);       
+     }    
+
+     
+     if(data_type == "LINKER-OPTIONS"){
+
+        this->Clear_String_Vector(this->linker_options);
+
+        this->Place_String_Data(data_record,this->linker_options);       
      }    
 
      this->Update_Descriptor_File();
@@ -221,9 +227,14 @@ void DataRecorder::Clear_Data_Record(char * Data_Type){
         this->Clear_String_Memory(this->standard);
      }  
 
-     if(data_type == "OPTIONS"){
+     if(data_type == "COMPILER-OPTIONS"){
 
-        this->Clear_String_Memory(this->options);
+        this->Clear_String_Memory(this->compiler_options);
+     }     
+
+     if(data_type == "LINKER-OPTIONS"){
+
+        this->Clear_String_Memory(this->linker_options);
      }     
 
      this->Update_Descriptor_File();
@@ -284,6 +295,41 @@ void DataRecorder::Update_Descriptor_File(){
      this->WriteNewLines(two_lines);
 
 
+
+     this->FileManager.WriteToFile("[BUILD-SYSTEM]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_String_Data(this->build_system);
+
+     this->FileManager.WriteToFile("}");
+
+     this->WriteNewLines(single_line);
+
+
+     this->FileManager.WriteToFile("[PROJECT-NAME]{");
+
+     this->WriteNewLines(new_lines);
+
+     this->Write_String_Data(this->project_name);
+
+     this->FileManager.WriteToFile("}");
+
+     this->WriteNewLines(new_lines);
+
+
+     this->FileManager.WriteToFile("[VERSION-NUMBER]{");
+
+     this->WriteNewLines(new_lines);
+
+     this->Write_String_Data(this->version_number);
+
+     this->WriteNewLines(new_lines);
+
+     this->FileManager.WriteToFile("}");
+
+
+
      this->File_Manager.WriteToFile("[INCLUDE-DIRECTORIES]{");
 
      this->WriteNewLines(single_line);
@@ -337,11 +383,23 @@ void DataRecorder::Update_Descriptor_File(){
      this->WriteNewLines(two_lines);
 
 
-     this->File_Manager.WriteToFile("[OPTIONS]{");
+     this->File_Manager.WriteToFile("[COMPILER-OPTIONS]{");
 
      this->WriteNewLines(single_line);
 
-     this->Write_String_Data(this->options);
+     this->Write_String_Data(this->compiler_options);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+     this->WriteNewLines(two_lines);
+
+     this->File_Manager.WriteToFile("[LINKER-OPTIONS]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_String_Data(this->linker_options);
 
      this->WriteNewLines(single_line);
 
@@ -428,25 +486,40 @@ void DataRecorder::Replace_Data_Record(char * Data_Type,  char * Data_Record){
         this->Clear_String_Memory(this->standard);
 
         this->Place_String_Data(data_record,this->standard);
-
      }  
 
-     if(data_type == "OPTIONS"){
+     if(data_type == "BUILD-SYSTEM"){
 
-        this->Clear_String_Memory(this->options);
+        this->Clear_String_Memory(this->build_system);
 
-        this->Place_String_Data(data_record,this->options);
-     }     
+        this->Place_String_Data(data_record,this->build_system);
+     }  
+
+     if(data_type == "PROJECT-NAME"){
+
+        this->Clear_String_Memory(this->project_name);
+
+        this->Place_String_Data(data_record,this->project_name);
+     }  
+
+     if(data_type == "VERSION-NUMBER"){
+
+        this->Clear_String_Memory(this->version_number);
+
+        this->Place_String_Data(data_record,this->version_number);
+     }  
 
      this->Update_Descriptor_File();
 }
 
 
 
-void DataRecorder::Replace_Data_Record(char * Data_Type,  std::vector<std::string> & vec){
+void DataRecorder::Replace_Data_Record(char * Data_Type, 
+
+     std::vector<std::string> & vec){
+
 
      this->Receive_Decriptor_File();
-
 
      std::string data_type, data_record;
 
@@ -495,6 +568,20 @@ void DataRecorder::Replace_Data_Record(char * Data_Type,  std::vector<std::strin
         this->Place_Vector_Data(this->Main_File_Names,vec);
      }                    
 
+     if(data_type == "COMPILER-OPTIONS"){
+
+        this->Clear_String_Vector(this->compiler_options);
+
+        this->Place_Vector_Data(this->compiler_options,vec)
+     }
+
+     if(data_type == "LINKER-OPTIONS"){
+
+        this->Clear_String_Vector(this->linker_options);
+
+        this->Place_Vector_Data(this->linker_options,vec);
+     }     
+
      this->Update_Descriptor_File();
 }
 
@@ -515,13 +602,15 @@ void DataRecorder::Receive_Decriptor_File(){
 
      this->Place_String_Data(this->Des_Reader.Get_Repo_Directory_Location(),this->root_dir);
 
-     std::string compiler_options = this->Des_Reader.Get_Compiler_Options();
+     this->Place_String_Data(this->Des_Reader.Get_Build_System_Type(),this->build_system);
 
-     std::string linker_options = this->Des_Reader.Get_Linker_Options();
+     this->Place_String_Data(this->Des_Reader.Get_Project_Name(),this->project_name);
 
-     std::string read_options = compiler_options + linker_options;
+     this->Place_String_Data(this->Des_Reader.Get_Version_Number(),this->version_number);
 
-     this->Place_String_Data(read_options,this->options);
+     this->Place_Vector_Data(this->Des_Reader.Get_Compiler_Options(),this->compiler_options);
+
+     this->Place_Vector_Data(this->Des_Reader.Get_Linker_Options(),this->linker_options);
 
      this->Place_String_Data(this->Des_Reader.Get_Standard(),this->standard);   
 }
@@ -565,9 +654,17 @@ void DataRecorder::Clear_Data_Memory(){
 
      this->Clear_String_Vector(this->Library_Files);
 
+     this->Clear_String_Vector(this->compiler_options);
+
+     this->Clear_String_Vector(this->linker_options);
+
      this->Clear_String_Memory(this->standard);
 
-     this->Clear_String_Memory(this->options);
+     this->Clear_String_Memory(this->build_system);
+
+     this->Clear_String_Memory(this->project_name);
+
+     this->Clear_String_Memory(this->version_number);
 
      this->Clear_String_Memory(this->warehouse_location);
 
