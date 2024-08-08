@@ -962,6 +962,8 @@ void Custom_Multi_DataPanel::Clear_Vector_Memory(std::vector<std::string> & vec)
         this->Clear_String_Memory(vec.at(i));
      }
 
+     vec.clear();
+
      vec.shrink_to_fit();
 }
 
