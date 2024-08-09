@@ -987,7 +987,21 @@ void Descriptor_File_Reader::Read_Library_Files(){
 
                   this->Delete_Spaces_on_String_Start(&line);
 
-                  this->Library_Files.push_back(line);
+                  if(this->Is_There_Multiple_Decleration_on_Same_Line(line)){
+
+                     std::vector<std::string> multi_line;
+
+                     this->Extract_Declerations_Performing_on_Same_Line(line,multi_line);
+
+                     for(size_t k=0;k<multi_line.size();k++){
+
+                         this->Library_Files.push_back(multi_line.at(k));
+                     }
+                  }
+                  else{
+
+                       this->Library_Files.push_back(line);
+                  }
                }
             }
 
@@ -1057,7 +1071,24 @@ void Descriptor_File_Reader::Read_Compiler_Options(){
                          }
                      }
 
-                     this->compiler_options.push_back(line);
+                     
+                     if(this->Is_There_Multiple_Decleration_on_Same_Line(line)){
+
+                        std::vector<std::string> multi_line;
+
+                        this->Extract_Declerations_Performing_on_Same_Line(line,multi_line);
+
+                        for(size_t k=0;k<multi_line.size();k++){
+
+                            this->compiler_options.push_back(multi_line.at(k));
+                        }
+                     }
+                     else{
+
+                          this->compiler_options.push_back(line);
+                     }
+
+                     //this->compiler_options.push_back(line);
 
                      this->Clear_String_Memory(&line);
                   }
@@ -1123,17 +1154,29 @@ void Descriptor_File_Reader::Read_Linker_Options(){
 
                          line.shrink_to_fit();
                        }
-                    }
-                  
-                    this->linker_options.push_back(line);
+                     }
+
+                     if(this->Is_There_Multiple_Decleration_on_Same_Line(line)){
+
+                        std::vector<std::string> multi_line;
+
+                        this->Extract_Declerations_Performing_on_Same_Line(line,multi_line);
+
+                        for(size_t k=0;k<multi_line.size();k++){
+
+                            this->linker_options.push_back(multi_line.at(k));
+                        }
+                     }
+                     else{
+
+                          this->linker_options.push_back(line);
+                     }
 
                     this->Clear_String_Memory(&line);
                   }
                }
             }
       }
-
-      //this->Divide_Options(this->linker_options);
 
       this->linker_options.shrink_to_fit();
 }
@@ -1362,12 +1405,106 @@ void Descriptor_File_Reader::Delete_Spaces_on_String(std::string * str)
 }
 
 
+bool Descriptor_File_Reader::Is_There_Multiple_Decleration_on_Same_Line(std::string & str_line){
+
+     // This function also trims the spaces onthe beginning and the end of the string
+
+     bool multiple_dec_status = false;
+
+     while(str_line.at(0) == ' '){
+
+           str_line.erase(0,1);
+     }
+
+     str_line.shrink_to_fit();
+
+
+     while(str_line.at(str_line.size()-1) == ' '){
+
+           str_line.erase(str_line.size()-1,1);
+
+           str_line.shrink_to_fit();
+     }
+
+
+     int space_number=0;
+
+     for(size_t i=0;i<str_line.size();i++){
+
+         if(str_line.at(i) == ' '){
+
+             space_number++;
+         }
+     }
+
+     if(space_number>0){
+
+         multiple_dec_status = true;
+     }
+
+     return multiple_dec_status;
+}
+
+
+void Descriptor_File_Reader::Extract_Declerations_Performing_on_Same_Line(std::string str_line, 
+ 
+      std::vector<std::string> & mt_line){
+
+      int space_counter = 0;
+
+      for(size_t i=0;i<str_line.size();i++){
+
+          if(str_line[i] == ' '){
+
+             space_counter++;
+          }
+      }
+
+      space_counter++;
+
+      for(size_t i=0;i<str_line.size();i++){
+
+          std::string temp;
+
+          for(size_t j=i;j<str_line.size();j++){
+
+              if(j == (str_line.size()-1)){
+
+                 space_counter--;
+
+                 i=j;
+              }
+
+              if(str_line[j] != ' '){
+
+                 temp.push_back(str_line[j]);
+              }
+              else{
+
+                  i=j;
+
+                  space_counter--;
+
+                  break;
+              }
+          }
+
+          mt_line.push_back(temp);
+
+          if(space_counter <=0){
+
+             break;
+          }
+      }
+
+      mt_line.shrink_to_fit();
+ }
+
 
 const std::vector<std::string> & Descriptor_File_Reader::Get_Include_Directories(){
 
     return this->Include_Directories;
 }
-
 
 const std::vector<std::string> & Descriptor_File_Reader::Get_Library_Directories(){
 

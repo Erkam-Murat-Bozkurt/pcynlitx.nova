@@ -202,6 +202,8 @@ void Print_Descriptor_File_Informations(Descriptor_File_Reader & Des_File_Reader
 
         for(size_t i=0;i<compiler_options.size();i++){
 
+            std::cout << "\n ";
+
             std::cout << compiler_options.at(i);
         }
      }
@@ -222,6 +224,8 @@ void Print_Descriptor_File_Informations(Descriptor_File_Reader & Des_File_Reader
         std::cout << "\n ";
 
         for(size_t i=0;i<linker_options.size();i++){
+
+            std::cout << "\n";
 
             std::cout << linker_options.at(i);
         }

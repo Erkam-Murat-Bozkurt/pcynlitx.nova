@@ -67,6 +67,8 @@ protected:
  void Read_Build_System_Type();
  void Read_Project_Name();
  void Read_Version_Number();
+ bool Is_There_Multiple_Decleration_on_Same_Line(std::string & str_line);
+ void Extract_Declerations_Performing_on_Same_Line(std::string str_line, std::vector<std::string> & mt_line);
  bool Is_Include_Character(std::string str);
  void Delete_Spaces_on_String(std::string * str);
  void Delete_Spaces_on_String_Start(std::string * str);
