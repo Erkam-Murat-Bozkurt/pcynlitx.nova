@@ -770,11 +770,6 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
 
             std::string option = compiler_options.at(i);
 
-            if(option.back()!= '\\'){
-
-                 option.push_back('\\');
-            }
-
             this->Place_Information(&this->Compiler_System_Command,option);
 
             this->Place_Information(&this->Compiler_System_Command,Space_Character);
@@ -793,11 +788,6 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
         for(size_t i=0;i<linker_options.size();i++){
 
             std::string option = linker_options.at(i);
-
-            if(option.back()!= '\\'){
-
-                 option.push_back('\\');
-            }
 
             this->Place_Information(&this->Compiler_System_Command,option);
 
