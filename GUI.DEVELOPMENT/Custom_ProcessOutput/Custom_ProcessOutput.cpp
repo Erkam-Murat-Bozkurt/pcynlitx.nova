@@ -270,8 +270,6 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
 
                  this->SysPtr->TerminateChildProcess();
               }
-
-              this->window_open_status = false;
            }
      }
      else{
@@ -303,20 +301,32 @@ void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
         
         wxString close_message = message_1 + message_2;
 
-        int answer = wxMessageBox(close_message, 
-         
-             "Please Confirm",wxICON_QUESTION | wxYES_NO);
 
-         if( answer == wxYES){
+        wxBitmap * exclamation_mark_bmp
+  
+           = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
 
-             this->SysPtr->TerminateChildProcess();
+    
+        Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,close_message,
+            
+           wxT("INTERRUPT CONFIRMATION"),wxID_ANY,
+               
+           wxT("THE PROCESS STOP CONFIRMATION"),
+               
+           *exclamation_mark_bmp, wxDefaultPosition,wxT("YES_NO"),wxSize(700,600));
 
-             event.Veto();
+           dial->ShowModal();
 
-             this->window_open_status = false;
+           if(dial->GetYesNoCond()){
+              
+               if(this->SysPtr->IsChildProcessStillAlive()){
 
-             this->Destroy();
-         }
+                  this->SysPtr->TerminateChildProcess();
+               }
+
+              event.Veto();
+
+           }
      }
      else{
 
@@ -356,6 +366,11 @@ void Custom_ProcessOutput::SetLightFont(){
      this->GetTextControl()->SetDefaultStyle(AttrLigth);
 }
 
+
+void Custom_ProcessOutput::SetWindowOpenStatus(bool status){
+
+      this->window_open_status = status;
+}
 
 void Custom_ProcessOutput::Receive_Directory_Open_Location(wxString loc){
 

@@ -1433,7 +1433,10 @@ void MainFrame::ReadProcessOutput(wxString start_text){
 
         if(this->Process_Output->GetWindowsOpenStatus()){
 
-           this->Process_Output->GetDialogAddress()->SetValue(this->progress_point);
+           if(this->SysInt.IsChildProcessStillAlive()){
+
+              this->Process_Output->GetDialogAddress()->SetValue(this->progress_point);
+           }
         }
  
 
@@ -1465,7 +1468,9 @@ void MainFrame::ReadProcessOutput(wxString start_text){
      }while(this->fork_wait);
 
 
-     if(!this->Process_Output->GetWindowsOpenStatus()){
+     if(this->Process_Output->GetWindowsOpenStatus()){
+
+         this->Process_Output->SetWindowOpenStatus(false);
 
          this->Process_Output->Destroy();
      }
