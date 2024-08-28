@@ -1,8 +1,8 @@
 
 
 
-set( CMAKE_CXX_COMPILER "D:/mingw64/bin/g++.exe" )
-set( CMAKE_C_COMPILER "D:/mingw64/bin/gcc.exe" )
+set( CMAKE_CXX_COMPILER "C:/Development.Tools/Mingw64/bin/g++.exe" )
+set( CMAKE_C_COMPILER "C:/Development.Tools/Mingw64/bin/gcc.exe" )
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
@@ -11,7 +11,7 @@ set( CMAKE_BUILD_TYPE "Debug")
 
 
 
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.30.2)
 
 project(pcynlitx.build VERSION 1.0)
 
@@ -40,16 +40,16 @@ add_subdirectory(GUI.DEVELOPMENT)
 
 include_directories(
 
-    D:/wxWidgets-3.2.5/include
+    C:/Development.Tools/wxWidgets-3.2.5/include
 
-    D:/wxWidgets-3.2.5/lib/gcc810_x64_dll/mswu
+    C:/Development.Tools/wxWidgets-3.2.5/lib/gcc810_x64_dll/mswu
 )
 
 link_directories(
 
-    D:/wxWidgets-3.2.5/lib/gcc810_x64_dll
+    C:/Development.Tools/wxWidgets-3.2.5/lib/gcc810_x64_dll
 
-    D:/mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0
+    C:/Development.Tools/Mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0
 )
 
 
