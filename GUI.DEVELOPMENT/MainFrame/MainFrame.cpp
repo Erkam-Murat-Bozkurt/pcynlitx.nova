@@ -42,18 +42,18 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->ClearBackground();
 
-  this->Update_Screen_Size();
+  //this->Update_Screen_Size();
 
 
   SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
 
   this->exclamation_mark_bmp 
   
-      = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+      = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
 
   this->logo_bmp 
   
-      = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\logo.png"),wxBITMAP_TYPE_ANY);
+      = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\logo.png"),wxBITMAP_TYPE_ANY);
 
 
   this->Des_Reader = new Descriptor_File_Reader('w','g');
@@ -63,7 +63,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Process_Ptr = new Process_Manager(this,wxID_ANY);
 
-  wxString Builder_Path(wxT("D:\\Pcynlitx_Build_Platform\\CBuild.exe"));
+  wxString Builder_Path(wxT("C:\\Development.Files\\Project.Test.platform\\CBuild.exe"));
 
   this->Process_Ptr->Receive_Builder_Path(Builder_Path);
 
@@ -337,7 +337,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Book_Manager->OpenIntroPage();
 
-  wxString Help_Page_Path = wxT("D:\\Pcynlitx_Build_Platform\\Introduction.txt");
+  wxString Help_Page_Path = wxT("C:\\Development.Files\\Project.Test.platform\\Introduction.txt");
 
   this->Book_Manager->Open_File(Help_Page_Path);
 
@@ -1500,7 +1500,7 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
 
         this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
-        wxString shell_command = "D:\\Pcynlitx_Build_Platform\\CBuild.exe " 
+        wxString shell_command = "C:\\Development.Files\\Project.Test.platform\\CBuild.exe " 
         
         + construction_dir + " -ed";
 

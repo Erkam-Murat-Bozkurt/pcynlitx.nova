@@ -61,7 +61,7 @@ void Project_Folder_Lister::Initialize_Properties(){
 
      wxSize size = this->treeCtrl->FromDIP(wxSize(16, 16));
 
-     this->Folder_Icon.LoadFile(wxT("D:\\Pcynlitx_Build_Platform\\icons\\Folder.png"),wxBITMAP_TYPE_PNG);
+     this->Folder_Icon.LoadFile(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\Folder.png"),wxBITMAP_TYPE_PNG);
 
      this->File_Icon = wxArtProvider::GetBitmap(wxART_NORMAL_FILE, wxART_OTHER, size);
 }

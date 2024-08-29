@@ -27,7 +27,7 @@ Custom_ProcessOutput::Custom_ProcessOutput(wxFrame *parent, wxWindowID id, const
 
      this->dir_list_show_cnd = false;
 
-     wxIcon Frame_Icon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+     wxIcon Frame_Icon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
      this->SetIcon(Frame_Icon);
 
@@ -251,7 +251,7 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
 
            wxBitmap * exclamation_mark_bmp
   
-           = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+           = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
 
     
            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,close_message,
@@ -304,7 +304,7 @@ void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
 
         wxBitmap * exclamation_mark_bmp
   
-           = new wxBitmap(wxT("D:\\Pcynlitx_Build_Platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+           = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
 
     
         Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,close_message,

@@ -81,7 +81,7 @@ bool wxLauncher::OnInit(){
 
      if(this->Frame)
      {
-        this->Frame_Icon = new wxIcon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+        this->Frame_Icon = new wxIcon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
          this->Frame->SetIcon(*this->Frame_Icon);
 

@@ -66,7 +66,7 @@ Custom_Progress_Dialog::Custom_Progress_Dialog(wxWindow * parent, wxWindowID id,
      this->Show(false);
 
 
-     wxIcon Frame_Icon(wxT("D:\\Pcynlitx_Build_Platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+     wxIcon Frame_Icon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
      this->SetIcon(Frame_Icon);
 
