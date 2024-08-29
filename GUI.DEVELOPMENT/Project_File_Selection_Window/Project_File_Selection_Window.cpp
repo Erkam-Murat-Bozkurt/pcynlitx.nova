@@ -371,13 +371,12 @@ void Project_File_Selection_Window::Construct_Empty_Project_File(wxCommandEvent 
 
            wxString DesPATH = construction_dir + wxT("\\Pcb_Descriptor.txt");
 
-           wxString shell_command = "D:\\Pcynlitx_Build_Platform\\CBuild.exe " 
+           wxString shell_command = "C:\\Development.Files\\Project.Test.platform\\CBuild.exe " 
         
            + construction_dir + " -ed";
 
            this->SysInt.Create_Process(shell_command.ToStdString());
 
-           //this->Process_Ptr->Fork_Process(shell_command);
            
            if(this->FileManager.Is_Path_Exist(DesPATH.ToStdString())){
 
@@ -387,6 +386,30 @@ void Project_File_Selection_Window::Construct_Empty_Project_File(wxCommandEvent 
 
                this->Destroy();
            }
+           else{
+
+
+               this->Descriptor_File_Path_Pointer->clear();
+
+               this->Descriptor_File_Path_Pointer->shrink_to_fit();
+ 
+               *this->Descriptor_File_Selection_Status = false;
+
+               wxString Message = "\nThere is an error on empty ";
+
+               Message += "\ndescriptor file construction process";
+
+               Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
+            
+                         wxT("ERROR REPORT:"),wxID_ANY,
+                         
+                         wxT("NWINIX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
+
+               dial->ShowModal();
+
+               this->Destroy();
+
+           }
         }
         else{
 
@@ -395,6 +418,20 @@ void Project_File_Selection_Window::Construct_Empty_Project_File(wxCommandEvent 
              this->Descriptor_File_Path_Pointer->shrink_to_fit();
 
              *this->Descriptor_File_Selection_Status = false;
+
+                           wxString Message = "\nThere is an error on empty ";
+
+              Message += "\ndescriptor file construction process";
+
+              Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
+            
+                         wxT("ERROR REPORT:"),wxID_ANY,
+                         
+                         wxT("NWINIX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
+
+              dial->ShowModal();
+
+              this->Destroy();
         }
      }
 }

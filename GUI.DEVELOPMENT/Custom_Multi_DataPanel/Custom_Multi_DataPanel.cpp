@@ -1126,15 +1126,20 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
 
      bool syntax_error_status     = this->Des_Reader.Get_Syntax_Error_Status();
 
+     bool leack_of_description    = this->Des_Reader.Get_Lack_of_Decleration_Error_Status();
+
+     bool description_error = syntax_error_status && !leack_of_description;
+
      bool invalid_des_file_status = this->Des_Reader.Get_Invalid_Descriptor_File_Status();
 
 
      bool error_status = false;
 
-     if(syntax_error_status || invalid_des_file_status){
+     if(description_error || invalid_des_file_status){
 
          error_status = true;
      }
+
 
      if(!error_status){
 
@@ -1242,7 +1247,14 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
 
          bool gui_read_error_status  = !this->Des_Reader.Get_Gui_Read_Success_Status(); 
 
-         if(gui_read_error_status){
+         bool leack_of_description    = this->Des_Reader.Get_Lack_of_Decleration_Error_Status();
+
+         // IN THE CASE OF NEW EMPTY FILE, LACK OF DESCRIPTION ERROR MUST NOT BE STOP THE DATA PANEL
+         // BECAUSE, THE DESCRIPTOR FILE CONSTRUCTION JUST STARTED AND IT DID NOT CONSTRUCTED YET, 
+         // The lack of description errors must be control on the build system construction process
+         // This is the reason why the condition (gui_read_error_status && !leack_of_description) is ued in here
+
+         if(gui_read_error_status && !leack_of_description){
 
             wxString Message = "\nSome information may be missed on the project file";
 

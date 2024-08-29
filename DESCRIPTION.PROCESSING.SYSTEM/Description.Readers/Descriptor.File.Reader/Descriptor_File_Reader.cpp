@@ -24,6 +24,8 @@ Descriptor_File_Reader::Descriptor_File_Reader(char opr_sis, char build_type) :
 
    this->gui_read_success = true;
 
+   this->lack_of_decleration_error = false;
+
    this->is_project_file_invalid = false;
 }
 
@@ -270,6 +272,8 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
             }
             else{
 
+                this->lack_of_decleration_error = true;
+
                 this->gui_read_success = false;
             }
          }
@@ -296,7 +300,9 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
         }
         else{
 
-            this->gui_read_success = false;
+           this->lack_of_decleration_error = true;
+
+           this->gui_read_success = false;
         }
 
      }
@@ -390,6 +396,8 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
             }
             else{
 
+                this->lack_of_decleration_error = true;
+
                 this->gui_read_success = false;
             }
          }
@@ -416,6 +424,9 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
         else{
 
             this->gui_read_success = false;
+
+            this->lack_of_decleration_error = true;
+
         }
      }
 
@@ -503,6 +514,9 @@ void Descriptor_File_Reader::Read_Standard(){
             else{
 
                   this->gui_read_success = false;
+
+                  this->lack_of_decleration_error = true;
+
             }
          }
      }
@@ -587,6 +601,8 @@ void Descriptor_File_Reader::Read_Build_System_Type(){
         else{
 
             this->gui_read_success = false;
+
+            this->lack_of_decleration_error = true;
         }
      }
 
@@ -673,6 +689,8 @@ void Descriptor_File_Reader::Read_Project_Name(){
         else{
 
             this->gui_read_success = false;
+
+            this->lack_of_decleration_error = true;
         }
      }
 
@@ -757,6 +775,8 @@ void Descriptor_File_Reader::Read_Version_Number(){
         else{
 
             this->gui_read_success = false;
+
+            this->lack_of_decleration_error = true;
         }
      }
 
@@ -1638,3 +1658,7 @@ bool Descriptor_File_Reader::Get_Invalid_Descriptor_File_Status(){
      return this->is_project_file_invalid;
 }
 
+bool Descriptor_File_Reader::Get_Lack_of_Decleration_Error_Status(){
+
+     return this->lack_of_decleration_error;
+}
