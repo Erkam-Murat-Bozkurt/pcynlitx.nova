@@ -26,8 +26,8 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="4.2923592"
-     inkscape:cx="68.959746"
-     inkscape:cy="55.097905"
+     inkscape:cx="118.23335"
+     inkscape:cy="73.735674"
      inkscape:window-width="1920"
      inkscape:window-height="1111"
      inkscape:window-x="-9"
@@ -114,13 +114,13 @@
          transform="scale(0.94296779,1.0604816)"><tspan
            sodipodi:role="line"
            id="tspan7"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:58.9517px;line-height:99.8349px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Bold';fill:#828296;fill-opacity:1;stroke-width:12.6704"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:58.9517px;line-height:99.8349px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#4b4b4b;fill-opacity:1;stroke-width:12.6704"
            x="-135.0457"
            y="-29.926582">SELECT A READY </tspan><tspan
            sodipodi:role="line"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:58.9517px;line-height:99.8349px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Bold';fill:#828296;fill-opacity:1;stroke-width:12.6704"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:58.9517px;line-height:99.8349px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#4b4b4b;fill-opacity:1;stroke-width:12.6704"
            x="-135.0457"
-           y="71.632393"
+           y="70.445999"
            id="tspan8">PROJECT FILE</tspan></text>
       <rect
          style="fill:none;fill-opacity:1;stroke:none;stroke-width:12.6704;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
@@ -139,7 +139,7 @@
          y="-144.01306"
          ry="23.122799" />
       <rect
-         style="fill:#87879b;stroke:#87879b;stroke-width:11.9788;stroke-linejoin:round;stroke-miterlimit:0;fill-opacity:1;stroke-opacity:1"
+         style="fill:#d25f5f;stroke:#d25f5f;stroke-width:11.9788;stroke-linejoin:round;stroke-miterlimit:0;fill-opacity:1;stroke-opacity:1"
          id="rect1"
          width="104.23047"
          height="121.86453"

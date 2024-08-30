@@ -26,7 +26,7 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:zoom="3.0351563"
-     inkscape:cx="73.142856"
+     inkscape:cx="72.97812"
      inkscape:cy="68.365507"
      inkscape:window-width="1920"
      inkscape:window-height="1111"
@@ -76,7 +76,7 @@
            style="fill:#87879b;fill-opacity:1;stroke-width:0"
            sodipodi:nodetypes="ssssssssssssssssccscsscsscsccscsscssccccssssccsssssss" />
         <rect
-           style="fill:#87879b;fill-opacity:1;stroke:none;stroke-width:1.00595;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+           style="fill:#d25f5f;fill-opacity:1;stroke:none;stroke-width:1.00595;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
            id="rect1-9"
            width="39.81897"
            height="39.473747"
@@ -91,13 +91,13 @@
            id="text7"><tspan
              sodipodi:role="line"
              id="tspan7"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.6667px;line-height:31.612px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Bold';fill:#828296;fill-opacity:1;stroke-width:4.012"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;line-height:31.612px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#4b4b4b;fill-opacity:1;stroke-width:4.012"
              x="96.372055"
              y="28.52956">CREATE A NEW</tspan><tspan
              sodipodi:role="line"
-             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:18.6667px;line-height:31.612px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Bold';fill:#828296;fill-opacity:1;stroke-width:4.012"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:18.6667px;line-height:31.612px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#4b4b4b;fill-opacity:1;stroke-width:4.012"
              x="96.372055"
-             y="60.687477"
+             y="60.311813"
              id="tspan8">PROJECT FILE</tspan></text>
       </g>
       <rect

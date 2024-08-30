@@ -101,9 +101,13 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
     
                          wxT("YES"),wxDefaultPosition, wxSize(100,60));
 
+       this->Yes_Button->SetSize(this->FromDIP(wxSize(100,60)));
+
        this->No_Button  = new wxButton(this->no_button_panel,ID_SELECTION_NO,
     
                          wxT("NO"),wxDefaultPosition, wxSize(100,60));
+
+       this->No_Button->SetSize(this->FromDIP(wxSize(100,60)));
     }
     else{
 
@@ -111,6 +115,8 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
          this->CloseButton  = new wxButton(this->close_button_panel,ID_CLOSE_MESSAGE_WINDOW,
      
                          wxT("CLOSE"),wxDefaultPosition, wxSize(100,60));
+
+         this->CloseButton->SetSize(this->FromDIP(wxSize(100,60)));
     }
 
 
@@ -178,9 +184,9 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     this->SetBackgroundColour(wxColour(250,250,250));
 
-    this->SetSize(size);
+    this->SetSize(this->FromDIP(size));
 
-    this->SetMinSize(size);
+    this->SetMinSize(this->FromDIP(size));
 
     wxIcon Frame_Icon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
@@ -192,7 +198,7 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
     this->Show();
 
     this->PaintNow(this);
-
+    
     wxBell();
 
 }

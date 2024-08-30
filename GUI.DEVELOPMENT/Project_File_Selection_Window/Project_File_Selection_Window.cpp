@@ -28,7 +28,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Descriptor_File_Selection_Status = nullptr;
 
-     wxIcon Frame_Icon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\frame_icon_second.png"),wxBITMAP_TYPE_PNG,-1,-1);
+     wxIcon Frame_Icon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
      this->SetIcon(Frame_Icon);
 
@@ -127,29 +127,29 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
 
 
-     wxFont bld_font = this->Empty_Project_File_Button->GetFont();
+     wxFont buton_font = this->Empty_Project_File_Button->GetFont();
 
-     bld_font.SetFaceName(wxT("Segoe UI"));
+     buton_font.SetFaceName(wxT("Segoe UI"));
 
-     bld_font.SetPointSize(10);
+     buton_font.SetPointSize(10);
 
      //bld_font.SetFaceName(wxT("Noto Sans"));
 
 
-     this->Empty_Project_File_Button->SetFont(bld_font.Bold());
+     this->Empty_Project_File_Button->SetFont(buton_font);
 
-     this->Project_File_Selection_Button->SetFont(bld_font.Bold());
+     this->Project_File_Selection_Button->SetFont(buton_font);
 
 
 
      this->Empty_Project_File_Button->SetMinSize(wxSize(150,70));
 
-     this->Empty_Project_File_Button->SetForegroundColour(wxColour(150,150,150));
+     //this->Empty_Project_File_Button->SetForegroundColour(wxColour(150,150,150));
 
 
      this->Project_File_Selection_Button->SetMinSize(wxSize(150,70));
 
-     this->Project_File_Selection_Button->SetForegroundColour(wxColour(150,150,150));
+     //this->Project_File_Selection_Button->SetForegroundColour(wxColour(150,150,150));
 
 
 
@@ -159,7 +159,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Empty_Project_File_Text_Panel->SetMinSize(wxSize(350,80));
 
-     this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(140,140,155));
+     this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(200,200,210));
 
      //this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(200,100,100));
 
@@ -169,7 +169,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Project_File_Selection_Text_Panel->SetMinSize(wxSize(350,80));
 
-     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(140,140,155,0xff));
+     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(200,200,210,0xff));
 
      //this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(68,158,157));
 
@@ -190,13 +190,13 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      Text_Font.SetPointSize(11);
 
-     Text_Font.SetFaceName(wxT("Segoe UI Semibold"));
+     Text_Font.SetFaceName(wxT("Segoe UI"));
 
      //Text_Font.SetFaceName(wxT("Noto Sans"));
 
      new_file_text->SetFont(Text_Font);
 
-     new_file_text->SetForegroundColour(wxColour(255,255,255));
+     new_file_text->SetForegroundColour(wxColour(55,55,55));
 
      //new_file_text->SetForegroundColour(wxColour(250,250,250));
      
@@ -214,7 +214,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      project_file_text->SetFont(Text_Font);
 
-     project_file_text->SetForegroundColour(wxColour(255,255,255));
+     project_file_text->SetForegroundColour(wxColour(55,55,55));
 
      //project_file_text->SetForegroundColour(wxColour(250,250,250));
 
@@ -429,6 +429,8 @@ void Project_File_Selection_Window::Construct_Empty_Project_File(wxCommandEvent 
                          
                          wxT("NWINIX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
 
+              dial->SetSize(this->FromDIP(wxSize(620,400)));
+
               dial->ShowModal();
 
               this->Destroy();
@@ -494,7 +496,7 @@ void Project_File_Selection_Window::Select_File(){
                          
                          wxT("NWINIX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
 
-              dial->SetSize(wxSize(600,420));
+              dial->SetSize(this->FromDIP(wxSize(600,420)));
 
               dial->Centre(wxBOTH);
 
@@ -522,7 +524,7 @@ void Project_File_Selection_Window::Select_File(){
                          
                     wxT("NWINIX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
 
-              dial->SetSize(wxSize(600,420));
+              dial->SetSize(this->FromDIP(wxSize(620,420)));
 
               dial->Centre(wxBOTH);
 

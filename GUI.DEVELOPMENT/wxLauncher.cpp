@@ -102,6 +102,11 @@ bool wxLauncher::OnInit(){
 
          this->Frame->Centre(wxBOTH);
 
+         this->Frame->SetSize(this->Frame->FromDIP(wxSize(1000,750)));
+
+         this->Frame->SetMinSize(this->Frame->FromDIP(wxSize(975,750)));
+
+
          return true;
      }
      else{

@@ -42,8 +42,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->ClearBackground();
 
-  //this->Update_Screen_Size();
-
 
   SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
 
@@ -135,7 +133,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Central_Pane_Info.Resizable(true);
 
-  this->Central_Pane_Info.MinSize(800,925);
+  this->Central_Pane_Info.MinSize(this->FromDIP(wxSize(800,925)));
 
 
 
@@ -144,9 +142,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
                             wxDefaultSize,wxColour(200,200,215),&this->Central_Pane_Info);
   
 
-  this->Custom_Main_Panel->SetSize(this->GetClientSize());
+  this->Custom_Main_Panel->SetSize(this->FromDIP(this->GetClientSize()));
 
-  this->Custom_Main_Panel->SetMinSize(wxSize(800,900));
+  this->Custom_Main_Panel->SetMinSize(this->FromDIP(wxSize(800,900)));
 
   this->Custom_Main_Panel->Fit();
 
@@ -161,7 +159,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
                        *(this->Default_Font),wxSize(700,750),theme_clr);
 
-  this->Book_Manager->SetMinSize(wxSize(700,750));
+  this->Book_Manager->SetSize(this->FromDIP(wxSize(700,750)));
+
+  this->Book_Manager->SetMinSize(this->FromDIP(wxSize(700,750)));
 
 
   this->Book_Manager->SetAutoLayout(true);
@@ -208,6 +208,10 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
                             wxSize(400,950),&this->Interface_Manager,
 
                             *(this->Default_Font),this->Book_Manager->GetTabCtrlHeight()+1,theme_clr);
+
+  this->Dir_List_Manager->SetSize(this->FromDIP(wxSize(400,950)));
+
+  this->Dir_List_Manager->SetMinSize(this->FromDIP(wxSize(400,950)));
 
   this->Dir_List_Manager->start_menu_window_size = this->Custom_Main_Panel->bottom_window->GetSize();
 
@@ -856,6 +860,8 @@ void MainFrame::Determine_Source_File_Dependencies(wxCommandEvent & event){
 
                   this->Progress_Dialog = new Custom_Progress_Dialog(this,wxID_ANY,wxT("PROCESS REPORT"),wxDefaultPosition);
 
+                  this->Progress_Dialog->SetSize(this->FromDIP(wxSize(800,600)));
+
                   this->Progress_Dialog->Construct_Text_Panel(wxT("Process Output"),20);
 
                   this->Progress_Dialog->SetBoldFont();
@@ -1252,6 +1258,8 @@ void MainFrame::Start_Construction_Process(wxString label,
      
 
      this->Process_Output = new Custom_ProcessOutput(this,wxID_ANY,label);
+
+     this->Process_Output->SetSize(this->FromDIP(wxSize(750,600)));
 
      this->Process_Output->Receive_System_Interface(&this->SysInt);
 

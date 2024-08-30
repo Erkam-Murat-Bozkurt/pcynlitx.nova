@@ -38,8 +38,6 @@ public:
 
       dc.SetBrush(wxColour(130,130,145,0xff));
 
-      //dc.SetBrush(wxColour(100,100,115,0xff));
-
       dc.DrawRectangle(rect.GetX()-1, rect.GetY() - 1, rect.GetWidth() + 5, rect.GetHeight() + 5);
     }
 };
