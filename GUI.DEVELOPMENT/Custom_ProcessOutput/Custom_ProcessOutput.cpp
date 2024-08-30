@@ -269,6 +269,8 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
               if(this->SysPtr->IsChildProcessStillAlive()){
 
                  this->SysPtr->TerminateChildProcess();
+
+                 this->process_interrrupt_status = true;
               }
            }
      }

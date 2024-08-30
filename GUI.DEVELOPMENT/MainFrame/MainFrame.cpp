@@ -142,9 +142,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
                             wxDefaultSize,wxColour(200,200,215),&this->Central_Pane_Info);
   
 
-  this->Custom_Main_Panel->SetSize(this->FromDIP(this->GetClientSize()));
+  this->Custom_Main_Panel->SetSize(this->Custom_Main_Panel->FromDIP(this->GetClientSize()));
 
-  this->Custom_Main_Panel->SetMinSize(this->FromDIP(wxSize(800,900)));
+  this->Custom_Main_Panel->SetMinSize(this->Custom_Main_Panel->FromDIP(wxSize(800,900)));
 
   this->Custom_Main_Panel->Fit();
 
@@ -159,9 +159,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
                        *(this->Default_Font),wxSize(700,750),theme_clr);
 
-  this->Book_Manager->SetSize(this->FromDIP(wxSize(700,750)));
+  this->Book_Manager->SetSize(this->Book_Manager->FromDIP(wxSize(700,750)));
 
-  this->Book_Manager->SetMinSize(this->FromDIP(wxSize(700,750)));
+  this->Book_Manager->SetMinSize(this->Book_Manager->FromDIP(wxSize(700,750)));
 
 
   this->Book_Manager->SetAutoLayout(true);
@@ -209,9 +209,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
                             *(this->Default_Font),this->Book_Manager->GetTabCtrlHeight()+1,theme_clr);
 
-  this->Dir_List_Manager->SetSize(this->FromDIP(wxSize(400,950)));
+  this->Dir_List_Manager->SetSize(this->Dir_List_Manager->FromDIP(wxSize(400,950)));
 
-  this->Dir_List_Manager->SetMinSize(this->FromDIP(wxSize(400,950)));
+  this->Dir_List_Manager->SetMinSize(this->Dir_List_Manager->FromDIP(wxSize(400,950)));
 
   this->Dir_List_Manager->start_menu_window_size = this->Custom_Main_Panel->bottom_window->GetSize();
 
@@ -1476,7 +1476,7 @@ void MainFrame::ReadProcessOutput(wxString start_text){
      }while(this->fork_wait);
 
 
-     if(this->Process_Output->GetWindowsOpenStatus()){
+     if(this->Process_Output->GetWindowsOpenStatus() && this->Process_Output->process_interrrupt_status){
 
          this->Process_Output->SetWindowOpenStatus(false);
 

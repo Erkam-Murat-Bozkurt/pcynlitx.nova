@@ -616,7 +616,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->DataPanel_Sizers[9]->Add(this->Buton_Sizers[9],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
 
-     this->listctrl_linker_options->AppendTextColumn(wxT("TARGET COMPILER OPTIONS"));
+     this->listctrl_linker_options->AppendTextColumn(wxT("TARGET LINKER OPTIONS"));
 
 
 

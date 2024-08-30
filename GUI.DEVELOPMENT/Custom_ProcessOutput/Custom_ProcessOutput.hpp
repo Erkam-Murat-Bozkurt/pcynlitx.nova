@@ -77,6 +77,8 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
 
   bool GetWindowsOpenStatus();
 
+  bool process_interrrupt_status;
+
 private:
 
   void OnClose(wxCloseEvent & ent);
