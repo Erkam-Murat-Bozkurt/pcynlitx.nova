@@ -274,15 +274,6 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
               }
            }
 
-
-           do{
-
-              sleep(0.01);
-
-           }while(this->IsChildProcessStillAlive());
-
-           //this->Destroy();
-
      }
      else{
 
