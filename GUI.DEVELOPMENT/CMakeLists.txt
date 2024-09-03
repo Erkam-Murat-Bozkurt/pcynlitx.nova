@@ -23,9 +23,6 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Window/Custom_Window.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Window/Custom_Window.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Gui_Shell_Script_Executer/Gui_Shell_Script_Executer.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Gui_Shell_Script_Executer/Gui_Shell_Script_Executer.cpp
-
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_ProcessOutput/Custom_ProcessOutput.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_ProcessOutput/Custom_ProcessOutput.hpp
 
@@ -148,8 +145,6 @@ target_include_directories(BuildSystem_GUI PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Progress_Dialog
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Gui_Shell_Script_Executer
-
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxDataViewTreeCtrl
 
     ${CMAKE_CURRENT_SOURCE_DIR}/GUI_List_Data_Recorder
@@ -236,8 +231,6 @@ target_link_directories(BuildSystem_GUI PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Dependency_Tree_Printer
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Progress_Dialog
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Gui_Shell_Script_Executer
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxDataViewTreeCtrl
 

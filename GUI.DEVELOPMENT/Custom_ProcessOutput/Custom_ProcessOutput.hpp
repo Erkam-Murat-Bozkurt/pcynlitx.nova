@@ -53,8 +53,6 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
 
   void Receive_Tree_View_Panel(Custom_Tree_View_Panel * ptr);
 
-  void Receive_Process_End_Status(bool * status);
-
   void Receive_System_Interface(Custom_System_Interface * Sys);
 
   void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect);
@@ -73,19 +71,31 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
 
   void PrintProcessOutput(wxString text);
 
+  void ReadProcessOutput(wxString start_text);
+
   int GetLogNumber();
 
   bool GetWindowsOpenStatus();
 
   bool process_interrrupt_status;
 
-private:
+  int progress_point;
 
+  char * cmd;
+
+  Custom_System_Interface SysInt;
+
+private:
+  
   void OnClose(wxCloseEvent & ent);
 
   void CloseWindow(wxCommandEvent & event);
 
-  bool * process_end_status;
+  bool IsChildProcessStillAlive();
+
+  bool ProcessTermination();
+
+  bool process_end_status;
 
   bool dir_list_show_cnd;
 

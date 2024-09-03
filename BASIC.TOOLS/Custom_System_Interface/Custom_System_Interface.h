@@ -52,6 +52,7 @@ public:
   STARTUPINFO siStartInfo;
   SECURITY_ATTRIBUTES saAttr; 
   UINT uExitCode;
+  DWORD64 Child_PID; 
 protected:
   void DeterminePipePath(); 
   TCHAR * Convert_CString_To_TCHAR(char * cmd);  
@@ -64,7 +65,6 @@ protected:
   std::string std_str_pipe_path;
   DWORD bufsize;
   CHAR chBuf[4096]; 
-  DWORD64 Child_PID; 
   DWORD  dwRead;
   DWORD  dwWritten; 
   HANDLE hStdin;

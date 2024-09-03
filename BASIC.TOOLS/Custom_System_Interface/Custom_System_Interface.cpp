@@ -576,7 +576,6 @@ bool Custom_System_Interface::TerminateChildProcess(){
      }
      else{
 
-
           BOOL success_status = TerminateProcess(processHandle,this->uExitCode);
 
           if(success_status == 0){
@@ -589,6 +588,8 @@ bool Custom_System_Interface::TerminateChildProcess(){
 
                termination_status = true;
           }
+
+          CloseHandle(processHandle);
      }
 
      return termination_status;

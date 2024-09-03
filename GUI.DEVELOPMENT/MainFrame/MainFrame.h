@@ -113,8 +113,6 @@ private:
   void Start_Construction_Process(wxString label, wxString dir_open, wxString start_text);
   void Descriptor_File_Selection_Check();
   void Close_Directory_Pane(wxAuiManagerEvent & event);
-  void ForkProcess(char * cmd, wxString start_text);
-  void ReadProcessOutput(wxString start_text);
   void OpenTerminal(wxCommandEvent & event);
   void Increase_Font_Size(wxCommandEvent & event);
   void Decrease_Font_Size(wxCommandEvent & event);
@@ -138,12 +136,11 @@ private:
   bool Control_Build_Script_Existance();
   bool Control_Project_File_Syntax();
   void Print_Project_File_Syntax_Error();
-  void Update_Screen_Size();
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;
-  std::thread * fork_process;
-  std::thread * read_process_output;
+  std::thread fork_process;
+  std::thread read_process_output;
   std::thread * print_file_dependency;
   std::thread * print_to_tree_ctrl;
   std::thread * project_file_selector;
@@ -155,7 +152,6 @@ private:
   Process_Manager * Process_Ptr;
   Custom_wxThread * Thread_Ptr;
   wxStaticBitmap * background_figure;
-  char opr_sis;
   wxString Descriptor_File_Path;
   wxString Warehouse_Location;
   wxString Construction_Point;
@@ -193,17 +189,12 @@ private:
   wxBitmap * exclamation_mark_bmp;
   wxBitmap * logo_bmp;
   std::condition_variable cv_fork;
-  std::condition_variable cv_read;
-  std::condition_variable cv_prog;
   bool is_pipe_ready;
   int process_end_counter;
   int Toolbar_ID;
-  int progress_point;
   bool is_bold_style_selected;
-  bool progres_wait;
-  bool fork_wait;
-  bool read_wait;
   std::mutex mtx;
+  char opr_sis;
   DECLARE_EVENT_TABLE()
 };
 

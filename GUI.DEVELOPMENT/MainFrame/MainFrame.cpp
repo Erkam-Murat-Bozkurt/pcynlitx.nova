@@ -218,8 +218,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->tree_control = this->Dir_List_Manager->GetTreeCtrl();
 
-  this->dir_control = new wxDir;
-
 
   this->Dir_List_Manager->Notebook_Ptr = this->Book_Manager;
 
@@ -371,38 +369,6 @@ MainFrame::~MainFrame()
    this->Close(true);
 }
 
-
-
-
-void MainFrame::Update_Screen_Size(){
-
-     // This operation is performed for adaptation for different screen resolutions
-
-     wxDisplay Screen(this);
- 
-     wxSize screen_size = Screen.GetClientArea().GetSize();
-
-     int screen_x = screen_size.x;
-
-     int screen_y = screen_size.y;
-
-
-     wxSize frame_size = this->GetSize();
-
-     int frame_x = frame_size.x;
-
-     int frame_y = frame_size.y;
-
-     frame_x = screen_x - 400;
-
-     frame_y = screen_y - 65;
-
-     this->SetSize(this->FromDIP(wxSize(frame_x,frame_y)));
-
-     this->SetMinSize(this->FromDIP(wxSize(frame_x,frame_y)));
-
-     this->Centre(wxBOTH);
-}
 
 
 void MainFrame::Open_PopUp_Menu(wxCommandEvent & event){
@@ -855,7 +821,7 @@ void MainFrame::Determine_Source_File_Dependencies(wxCommandEvent & event){
 
                   this->fork_process 
           
-                   = new std::thread(MainFrame::Run_Source_File_Dependency_Determination_Process,this,FilePATH);
+                   = std::thread(MainFrame::Run_Source_File_Dependency_Determination_Process,this,FilePATH);
 
 
                   this->Progress_Dialog = new Custom_Progress_Dialog(this,wxID_ANY,wxT("PROCESS REPORT"),wxDefaultPosition);
@@ -882,7 +848,7 @@ void MainFrame::Determine_Source_File_Dependencies(wxCommandEvent & event){
 
                   this->depPrinter->PrintDependencyTree();
 
-                  this->fork_process->join();
+                  this->fork_process.join();
                }
            }
            else{
@@ -1241,31 +1207,11 @@ void MainFrame::Start_Construction_Process(wxString label,
       
      this->Progress_Bar_Start_status = false;
 
-     this->Child_Process_End_Status  = false;
-
-     this->Child_Process_Started_to_Execution = false;
-
-     this->is_pipe_ready = false;
-
-     this->progres_wait = false;
-
-     this->fork_wait = false;
-
-     this->read_wait = false;
-
-     
-     char * cmd = this->Process_Ptr->Get_Process_Command();
-     
-
      this->Process_Output = new Custom_ProcessOutput(this,wxID_ANY,label);
 
      this->Process_Output->SetSize(this->FromDIP(wxSize(750,600)));
 
-     this->Process_Output->Receive_System_Interface(&this->SysInt);
-
      this->Process_Output->Directory_List_Show_Cond(true);
-
-     this->Process_Output->Receive_Process_End_Status(&this->Child_Process_End_Status);
 
      this->Process_Output->Receive_Directory_Open_Location(dir_open);
 
@@ -1275,57 +1221,14 @@ void MainFrame::Start_Construction_Process(wxString label,
      
      this->Process_Output->Construct_Output(max);
 
+     this->Process_Output->cmd = this->Process_Ptr->Get_Process_Command();
 
+     this->read_process_output = std::thread(&this->Process_Output->ReadProcessOutput,
+     
+                                 this->Process_Output,start_text);
 
-     this->fork_process = new std::thread(MainFrame::ForkProcess,this,cmd,start_text);
-
-     this->fork_process->detach();
-
+     this->read_process_output.detach();
 }
-
-
-
-void MainFrame::ForkProcess(char * cmd, wxString start_text){
-
-     std::unique_lock<std::mutex> lck(this->mtx);
-
-     lck.unlock();
-
-
-     this->SysInt.CreateProcessWith_NamedPipe_From_Parent(cmd);
-
-
-     this->progress_point = 0;
-
-     this->read_process_output = new std::thread(MainFrame::ReadProcessOutput,this,start_text);
-
-     this->read_process_output->detach();
-
-
-     lck.lock();
-
-     if(!this->Child_Process_End_Status){
-
-         this->fork_wait = true;
-
-         this->cv_fork.wait(lck);
-
-         this->fork_wait = false;
-
-         lck.unlock();
-     }
-     else{
-
-         lck.unlock();
-     }
-
-
-     this->SysInt.Close_Parent_Handles_For_Named_Pipe_Connection();
-
-}
-
-
-
 
 void MainFrame::PrintDescriptions(wxCommandEvent & event){
 
@@ -1373,117 +1276,6 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
         }
      }      
 }
-
-
-void MainFrame::ReadProcessOutput(wxString start_text){
-
-     std::unique_lock<std::mutex> lck(this->mtx);
-
-     lck.unlock();
-
-
-     int max=20;
-
-     do{
-
-        if(this->SysInt.IsPipeReadytoRead()){
-
-            break;
-        }
-        else{
-
-            sleep(0.05);
-        }
-
-     }while(!this->SysInt.IsPipeReadytoRead());
-
-
-
-     this->Process_Output->SetBoldFont();
-
-     this->Process_Output->GetTextControl()->AppendText(start_text);
-
-     this->Process_Output->SetLightFont();
-
-
-     std::string total_text;
-
-     size_t text_size = 0;
-
-     for(;;)
-     {
-        std::string pipeStr = this->SysInt.ReadNamedPipe_From_Parent();
-
-        total_text = total_text + pipeStr;
-
-        total_text.shrink_to_fit();
-
-        size_t next_size = total_text.size();
-
-        if(next_size > text_size){
-
-           this->progress_point += 2;
-        }
-
-        text_size = next_size;
-
-
-
-        wxString text(pipeStr);
-
-        std::string space = "  ";
-
-        wxString space_text(space);
-
-        this->Process_Output->PrintProcessOutput(space_text);
-
-        this->Process_Output->PrintProcessOutput(text);
-
-        if(this->Process_Output->GetWindowsOpenStatus()){
-
-           if(this->SysInt.IsChildProcessStillAlive()){
-
-              this->Process_Output->GetDialogAddress()->SetValue(this->progress_point);
-           }
-        }
- 
-
-        if(!this->SysInt.IsChildProcessStillAlive()){
-
-            if(this->Process_Output->GetWindowsOpenStatus()){
-
-               this->Process_Output->GetDialogAddress()->SetValue(max);
-            }
-
-            break;
-        }
-     } 
-
-
-     lck.lock();
-
-     this->Child_Process_End_Status = true;
-
-     lck.unlock();
-
-
-     do{
-
-         this->cv_fork.notify_all();
-
-         sleep(0.05);
-
-     }while(this->fork_wait);
-
-
-     if(this->Process_Output->GetWindowsOpenStatus() && this->Process_Output->process_interrrupt_status){
-
-         this->Process_Output->SetWindowOpenStatus(false);
-
-         this->Process_Output->Destroy();
-     }
-}
-
 
 
 void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)

@@ -84,6 +84,9 @@ void Custom_ProcessOutput::Directory_List_Show_Cond(bool cond){
 
 void Custom_ProcessOutput::Construct_Output(int size){
 
+     this->window_open_status = true;
+
+     this->process_interrrupt_status = false;
 
      this->text_ctrl_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(750,-1));
 
@@ -184,12 +187,6 @@ void Custom_ProcessOutput::Construct_Output(int size){
      this->Update();
 }
 
-void Custom_ProcessOutput::Receive_Process_End_Status(bool * status){
-
-     this->process_end_status = status;
-}
-
-
 void Custom_ProcessOutput::PrintProcessOutput(wxString text){
 
      this->textctrl->AppendText(text);  
@@ -235,12 +232,13 @@ void Custom_ProcessOutput::Receive_System_Interface(Custom_System_Interface * Sy
 }
 
 
-
 void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
 
      if(event.GetId() == ID_CLOSE_WINDOW){
 
-        if(*this->process_end_status == false){
+        event.Skip(false);
+
+        if(!this->process_end_status){
 
            wxString message_1 = "The construction process continuos!";
 
@@ -251,7 +249,9 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
 
            wxBitmap * exclamation_mark_bmp
   
-           = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+           = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\exclamation_icon.png"),
+           
+           wxBITMAP_TYPE_ANY);
 
     
            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,close_message,
@@ -266,13 +266,23 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
 
            if(dial->GetYesNoCond()){
 
-              if(this->SysPtr->IsChildProcessStillAlive()){
+              if(this->IsChildProcessStillAlive()){
 
-                 this->SysPtr->TerminateChildProcess();
+                 this->ProcessTermination();
 
                  this->process_interrrupt_status = true;
               }
            }
+
+
+           do{
+
+              sleep(0.01);
+
+           }while(this->IsChildProcessStillAlive());
+
+           this->Destroy();
+
      }
      else{
 
@@ -284,18 +294,74 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
 
              if(!this->dir_list_ptr->Get_Panel_Open_Status()){
 
-                this->dir_list_ptr->Load_Project_Directory(wxString(this->directory_open_location));
+                 this->dir_list_ptr->Load_Project_Directory(wxString(this->directory_open_location));
              }   
           }
      }
    }
 }
 
+bool Custom_ProcessOutput::ProcessTermination(){
+
+     bool termination_status = false;
+
+     HANDLE processHandle = INVALID_HANDLE_VALUE;
+
+     processHandle = OpenProcess(PROCESS_ALL_ACCESS, TRUE, this->SysInt.Child_PID);
+
+     if(processHandle == INVALID_HANDLE_VALUE){
+
+        std::cout << "\n The child process can not be openned";
+
+        std::cout << "\n in process termination process";
+
+        exit(EXIT_FAILURE);
+     }
+     else{
+
+          if(processHandle!=NULL){
+
+             UINT uExitCode;
+
+             BOOL success_status = TerminateProcess(processHandle,uExitCode);
+
+             if(success_status == 0 ){
+
+             }               
+             else{
+
+                termination_status = true;
+             }
+          }
+     }
+
+     return termination_status;
+}
+
+bool Custom_ProcessOutput::IsChildProcessStillAlive(){
+
+     bool is_alive = false;
+
+     DWORD ExitCode;
+
+     if(GetExitCodeProcess(this->SysInt.piProcInfo.hProcess,&ExitCode) == FALSE){
+
+     }
+     else{
+
+          if(ExitCode ==  STILL_ACTIVE){
+
+             is_alive = true;
+          }
+     }
+               
+     return is_alive;
+}
 
 
 void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
      
-     if(*this->process_end_status == false){
+     if(!this->process_end_status){
           
         wxString message_1 = "The construction process continuos!";
 
@@ -306,7 +372,9 @@ void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
 
         wxBitmap * exclamation_mark_bmp
   
-           = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+           = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\exclamation_icon.png"),
+           
+           wxBITMAP_TYPE_ANY);
 
     
         Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,close_message,
@@ -321,9 +389,9 @@ void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
 
            if(dial->GetYesNoCond()){
               
-               if(this->SysPtr->IsChildProcessStillAlive()){
+               if(this->SysInt.IsChildProcessStillAlive()){
 
-                  this->SysPtr->TerminateChildProcess();
+                  this->SysInt.TerminateChildProcess();
                }
 
               event.Veto();
@@ -338,6 +406,107 @@ void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
      }
 }
 
+
+
+void Custom_ProcessOutput::ReadProcessOutput(wxString start_text){
+
+     this->SysInt.CreateProcessWith_NamedPipe_From_Parent(this->cmd);
+
+     this->progress_point = 0;
+
+     int max=20;
+
+     do{
+
+        if(this->SysInt.IsPipeReadytoRead()){
+
+            break;
+        }
+        else{
+
+            sleep(0.05);
+        }
+
+     }while(!this->SysInt.IsPipeReadytoRead());
+
+
+     this->SetBoldFont();
+
+     this->GetTextControl()->AppendText(start_text);
+
+     this->SetLightFont();
+
+
+     std::string total_text;
+
+     size_t text_size = 0;
+
+
+     for(;;)
+     {
+        std::string pipeStr = this->SysInt.ReadNamedPipe_From_Parent();
+
+        total_text = total_text + pipeStr;
+
+        total_text.shrink_to_fit();
+
+        size_t next_size = total_text.size();
+
+        if(next_size > text_size){
+
+           this->progress_point += 2;
+        }
+
+        text_size = next_size;
+
+
+
+        wxString text(pipeStr);
+
+        std::string space = "  ";
+
+        wxString space_text(space);
+
+        this->PrintProcessOutput(space_text);
+
+        this->PrintProcessOutput(text);
+
+        if(this->GetWindowsOpenStatus()){
+
+           if(this->SysInt.IsChildProcessStillAlive() && 
+           
+             !this->process_interrrupt_status){
+
+              this->GetDialogAddress()->SetValue(this->progress_point);
+           }
+        }
+ 
+        if(!this->SysInt.IsChildProcessStillAlive() &&
+        
+            !this->process_interrrupt_status){
+
+            if(this->GetWindowsOpenStatus()){
+
+               this->GetDialogAddress()->SetValue(max);
+            }
+
+            break;
+        }
+
+        if(this->process_interrrupt_status){
+
+           break;
+        }
+     }
+
+     if(!this->process_interrrupt_status){
+
+         this->process_end_status = true;
+     }
+
+
+     this->SysInt.Close_Parent_Handles_For_Named_Pipe_Connection();
+}
 
 
 
