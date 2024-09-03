@@ -266,11 +266,11 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
 
            if(dial->GetYesNoCond()){
 
+              this->process_interrrupt_status = true;
+
               if(this->IsChildProcessStillAlive()){
 
                  this->ProcessTermination();
-
-                 this->process_interrrupt_status = true;
               }
            }
 
@@ -281,7 +281,7 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
 
            }while(this->IsChildProcessStillAlive());
 
-           this->Destroy();
+           //this->Destroy();
 
      }
      else{
@@ -395,7 +395,6 @@ void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
                }
 
               event.Veto();
-
            }
      }
      else{
@@ -503,7 +502,10 @@ void Custom_ProcessOutput::ReadProcessOutput(wxString start_text){
 
          this->process_end_status = true;
      }
+     else{
 
+          this->Destroy();
+     }
 
      this->SysInt.Close_Parent_Handles_For_Named_Pipe_Connection();
 }
