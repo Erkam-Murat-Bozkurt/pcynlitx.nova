@@ -1425,10 +1425,6 @@ void Custom_Multi_DataPanel::Save_MakeFile_Data(wxCommandEvent & event){
 }
 
 
-
-
-
-
 void Custom_Multi_DataPanel::Inser_Git_Repo_Dir(wxCommandEvent & event){
 
      if(event.GetId() == ID_INSERT_GIT_REPO_DIR ){
@@ -1444,6 +1440,8 @@ void Custom_Multi_DataPanel::Inser_Git_Repo_Dir(wxCommandEvent & event){
         if(dir_dialog.ShowModal() == wxID_OK){
 
            wxString DirectoryPath = dir_dialog.GetPath();
+
+           this->listctrl_git_repo_path->DeleteAllItems();
 
            this->AppendDataItem(this->listctrl_git_repo_path,DirectoryPath);
         }
@@ -1465,6 +1463,8 @@ void Custom_Multi_DataPanel::Insert_Construction_Point(wxCommandEvent & event){
         if(dir_dialog.ShowModal() == wxID_OK){
 
            wxString DirectoryPath = dir_dialog.GetPath();
+
+           this->listctrl_warehouse_location->DeleteAllItems();
 
            this->AppendDataItem(this->listctrl_warehouse_location,DirectoryPath);
         }
@@ -1585,17 +1585,6 @@ void Custom_Multi_DataPanel::Insert_Compiler_Options(wxCommandEvent & event){
 
                   wxT("   ENTER A COMPILER OPTION  "));
 
-        /*
-
-        int row_num = this->listctrl_compiler_options->GetItemCount();
-
-        for(int i=0;i<row_num;i++){
-
-            this->listctrl_compiler_options->DeleteItem(i);
-        }
-
-        */
-
         this->AppendDataItem(this->listctrl_compiler_options,Compiler_Options);
      }
 }
@@ -1609,17 +1598,6 @@ void Custom_Multi_DataPanel::Insert_Linker_Options(wxCommandEvent & event){
         wxString Linker_Options = wxGetTextFromUser(wxT(""),
 
                   wxT("   ENTER A LINKER OPTION  "));
-
-        /*
-
-        int row_num = this->listctrl_linker_options->GetItemCount();
-
-        for(int i=0;i<row_num;i++){
-
-            this->listctrl_linker_options->DeleteItem(i);
-        }
-
-        */
 
         this->AppendDataItem(this->listctrl_linker_options,Linker_Options);
      }
