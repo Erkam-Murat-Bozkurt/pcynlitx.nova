@@ -101,11 +101,11 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
      this->FileManager.WriteToFile("\n");
 
 
-     this->FileManager.WriteToFile("\n set( CMAKE_CXX_COMPILER \"D:/mingw64/bin/g++.exe\" )");
+     this->FileManager.WriteToFile("\n set( CMAKE_CXX_COMPILER \"C:/Development.Tools/Mingw64/bin/g++.exe\" )");
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("\n set( CMAKE_C_COMPILER \"D:/mingw64/bin/gcc.exe\" )");
+     this->FileManager.WriteToFile("\n set( CMAKE_C_COMPILER \"C:/Development.Tools/Mingw64/bin/gcc.exe\" )");
 
      this->FileManager.WriteToFile("\n");
 
@@ -179,10 +179,11 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
          this->FileManager.WriteToFile("\n link_directories(");
          
+         this->FileManager.WriteToFile("\n");
 
          for(size_t i=0;i<Lib_Dirs.size();i++){
 
-             this->FileManager.WriteToFile("\n ");
+             this->FileManager.WriteToFile("\n   ");
 
              std::string lib_dir = Lib_Dirs.at(i);
 
@@ -193,7 +194,7 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
          for(size_t i=0;i<Src_Dirs.size();i++){
 
-             this->FileManager.WriteToFile("\n ");
+             this->FileManager.WriteToFile("\n   ");
 
              std::string src_dir = Src_Dirs.at(i);
 
@@ -201,6 +202,8 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
              this->FileManager.WriteToFile(src_dir);         
          }
+
+         this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("\n )");
      }
@@ -211,11 +214,13 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
      if(libs.size()>0){
 
+        this->FileManager.WriteToFile("\n");
+
         this->FileManager.WriteToFile("\n link_libraries(");
 
         for(size_t i=0;i<libs.size();i++){
 
-            this->FileManager.WriteToFile("\n ");
+            this->FileManager.WriteToFile("\n    ");
 
             std::string link_lib = libs.at(i);
 
@@ -223,6 +228,8 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
             this->FileManager.WriteToFile(link_lib);         
         }
+
+         this->FileManager.WriteToFile("\n");
 
         this->FileManager.WriteToFile("\n )");
      }

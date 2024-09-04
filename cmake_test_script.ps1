@@ -1,29 +1,29 @@
 
 
-cd D:\PCYNLITX.BUILD.TEST
+cd C:\Development.Files\PCYNLITX.BUILD.TEST
 
-$Path_exist = Test-Path -Path "D:\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test"
-
-if($Path_exist){
-
-    Remove-Item -LiteralPath "D:\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test" -Recurse -Force
-}
-
-
-cd D:\PCYNLITX.BUILD.TEST
-
-$Path_exist = Test-Path -Path "D:\PCYNLITX_WIN_CMAKE_CONFIGS"
+$Path_exist = Test-Path -Path "C:\Development.Files\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test"
 
 if($Path_exist){
 
-    Remove-Item -LiteralPath "D:\PCYNLITX_WIN_CMAKE_CONFIGS" -Recurse -Force
+    Remove-Item -LiteralPath "C:\Development.Files\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test" -Recurse -Force
+}
+
+
+cd C:\Development.Files\PCYNLITX.BUILD.TEST
+
+$Path_exist = Test-Path -Path "C:\Development.Files\PCYNLITX_WIN_CMAKE_CONFIGS"
+
+if($Path_exist){
+
+    Remove-Item -LiteralPath "C:\Development.Files\PCYNLITX_WIN_CMAKE_CONFIGS" -Recurse -Force
 }
 
 
 
-cd D:\
+cd C:\Development.Files
 
-Copy-Item -LiteralPath "D:\Pcynlitx.Win.Test" -Destination "D:\PCYNLITX.BUILD.TEST" -Recurse -Force
+Copy-Item -LiteralPath "C:\Development.Files\Pcynlitx.Win.Test" -Destination "C:\Development.Files\PCYNLITX.BUILD.TEST" -Recurse -Force
 
 Write-Output ""
 
@@ -36,11 +36,11 @@ Read-Host -Prompt "Press any key to continue"
 Write-Output ""
 
 
-cd D:\pcynlitx_build_platform
+cd C:\Development.Files\Project.Test.platform
 
-.\CBuild.exe D:\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt -ip
+.\CBuild.exe C:\Development.Files\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt -ip
 
-cd  D:\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test
+cd  C:\Development.Files\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test
 
 powershell.exe .\configure_cmake.ps1
 
@@ -54,14 +54,14 @@ Read-Host -Prompt "Press any key to continue"
 Write-Output ""
 Write-Output ""
 
-cd D:\PCYNLITX_WIN_CMAKE_CONFIGS
+cd C:\Development.Files\PCYNLITX_WIN_CMAKE_CONFIGS
 
 mingw32-make -f .\Makefile
 
-cd D:\pcynlitx_build_platform
+cd C:\Development.Files\Project.Test.platform
 
-.\CBuild.exe D:\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt -if D:\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test\KERNEL.DEVELOPMENT\Kernel\Kernel_Main_File.cpp _pcyKernel c
+.\CBuild.exe C:\Development.Files\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt -if C:\Development.Files\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test\KERNEL.DEVELOPMENT\Kernel\Kernel_Main_File.cpp _pcyKernel c
 
-cd D:\PCYNLITX_WIN_CMAKE_CONFIGS
+cd C:\Development.Files\PCYNLITX_WIN_CMAKE_CONFIGS
 
 mingw32-make -f .\Makefile

@@ -124,10 +124,9 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
 
-
      wxIcon * Info_icon = new wxIcon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\logo_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
-     wxMenuItem * info_item = new wxMenuItem(this->Info_Menu,ID_SELECT_PROJECT_FILE,"&NWINIX PLATFORM"," ",wxITEM_NORMAL);
+     wxMenuItem * info_item = new wxMenuItem(this->Info_Menu,ID_SHOW_HELP_MENU,"&NWINIX PLATFORM"," ",wxITEM_NORMAL);
 
      info_item->SetBitmap(*Info_icon);
 
