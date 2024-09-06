@@ -156,8 +156,6 @@ void Project_Descriptions_Printer::Construct_Close_Panel(){
       
            wxT("CLOSE"),wxDefaultPosition, wxSize(110, 50));
 
-     //this->CloseButton->SetForegroundColour(wxColour(50,50,50));
-
      this->CloseButton->Centre(wxBOTH);
 
 }
@@ -783,6 +781,43 @@ void Project_Descriptions_Printer::Print_Descriptions(){
     }
 
     this->textctrl->AppendText(wxT("\n\n "));
+
+
+    
+    this->textctrl->AppendText(wxT("\n\n "));
+
+    this->textctrl->SetDefaultStyle(AttrBold);
+
+    this->textctrl->AppendText(wxT("\n\n   COMPILER PATHS RECORD:"));
+
+    this->textctrl->SetDefaultStyle(AttrLigth);
+
+    this->textctrl->AppendText(wxT("\n\n"));
+
+
+
+    if(!this->Des_Reader->Get_Compiler_Paths().empty()){
+
+       const std::vector<std::string> & compiler_paths = this->Des_Reader->Get_Compiler_Paths();
+
+       for(size_t i=0;i<compiler_paths.size();i++){
+
+           this->textctrl->AppendText(" ");
+
+           this->textctrl->AppendText(" ");
+
+           this->textctrl->AppendText(" ");
+
+           std::string str_line = compiler_paths.at(i);
+
+           this->textctrl->AppendText(wxString(str_line));
+
+           this->textctrl->AppendText(wxT("\n"));
+       }
+    }
+
+    this->textctrl->AppendText(wxT("\n\n "));
+
 
     this->textctrl->SetCanFocus(false);
 

@@ -103,22 +103,30 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
      const std::vector<std::string> & compiler_paths =  this->Des_Reader->Get_Compiler_Paths();
 
-     this->FileManager.WriteToFile("\n set( CMAKE_CXX_COMPILER ");
+     this->FileManager.WriteToFile("\n set(CMAKE_CXX_COMPILER \"");
      
-     this->FileManager.WriteToFile(compiler_paths[0]);
+     std::string cpp_compiler = compiler_paths[0];
+
+     this->Convert_CMAKE_Format(cpp_compiler);
+
+     this->FileManager.WriteToFile(cpp_compiler);
      
-     this->FileManager.WriteToFile(" )");
+     this->FileManager.WriteToFile("\")");
 
 
      if(compiler_paths.size()>1){
 
         this->FileManager.WriteToFile("\n");
 
-        this->FileManager.WriteToFile("\n set( CMAKE_C_COMPILER ");
+        this->FileManager.WriteToFile("\n set(CMAKE_C_COMPILER \"");
      
-        this->FileManager.WriteToFile(compiler_paths[1]);
+        std::string c_compiler = compiler_paths[1];
 
-        this->FileManager.WriteToFile(" )");
+        this->Convert_CMAKE_Format(c_compiler);
+
+        this->FileManager.WriteToFile(c_compiler);
+
+        this->FileManager.WriteToFile("\")");
      }
 
   
@@ -285,7 +293,7 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
      this->FileManager.WriteToFile("\n\n");
 
-     this->FileManager.WriteToFile("add_library(");
+     this->FileManager.WriteToFile(" add_library(");
 
      this->FileManager.WriteToFile(project_name);
 
