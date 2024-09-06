@@ -55,6 +55,7 @@ void Descriptor_File_Data_Collector::Initialize_Members(){
         this->Build_System_Type_Record_Area[i] = 0;
         this->Project_Name_Record_Area[i] = 0;
         this->Version_Number_Record_Area[i] = 0;
+        this->Compiler_Paths_Record_Area[i] = 0;
      }
 
      this->Library_Directories_Record_Number = 0;
@@ -112,6 +113,8 @@ void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(){
      this->Determine_Project_Name();
 
      this->Determine_Version_Number();
+
+     this->Determine_Compiler_Paths_Record_Area();
 
      this->Receive_Descriptor_File_Index_With_Spaces();
 
@@ -499,6 +502,33 @@ void Descriptor_File_Data_Collector::Determine_Version_Number(){
 }
 
 
+void Descriptor_File_Data_Collector::Determine_Compiler_Paths_Record_Area(){
+
+     char key_word [] = "[COMPILER-PATHS]";
+
+     int record_stard = 1;
+
+     int keyword_line = this->FindStringPoint(key_word,record_stard);
+
+
+     char start_brace [] = "{";
+
+     char end_brace []   = "}";
+
+
+     this->Compiler_Paths_Record_Area[0] =
+
+     this->FindStringPoint(start_brace,keyword_line-1);
+
+
+     int start_brace_line = this->Compiler_Paths_Record_Area[0];
+
+     this->Compiler_Paths_Record_Area[1] =
+
+     this->FindStringPoint(end_brace,start_brace_line);
+}
+
+
 int Descriptor_File_Data_Collector::FindStringPoint(std::string search_word,int startPoint){
 
     this->wordPosition = startPoint;
@@ -673,4 +703,10 @@ int Descriptor_File_Data_Collector::Get_Project_Name_Record_Area(int index){
 int Descriptor_File_Data_Collector::Get_Version_Number_Record_Area(int index){
 
     return this->Version_Number_Record_Area[index];
+}
+
+
+int Descriptor_File_Data_Collector::Get_Compiler_Paths_Record_Area(int index){
+
+    return this->Compiler_Paths_Record_Area[index];
 }

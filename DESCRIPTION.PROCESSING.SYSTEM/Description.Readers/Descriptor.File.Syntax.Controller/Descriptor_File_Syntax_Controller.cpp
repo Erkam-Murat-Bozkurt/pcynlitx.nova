@@ -150,6 +150,9 @@ void Descriptor_File_Syntax_Controller::Control_Keywords(){
 
      char version_number [] = "[VERSION-NUMBER]";
 
+     char compiler_paths [] = "[COMPILER-PATHS]";
+
+
 
 
 
@@ -361,6 +364,23 @@ void Descriptor_File_Syntax_Controller::Control_Keywords(){
 
 
      if(!this->Control_String_Inclusion(version_number)){
+
+         std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
+         std::cout << "\n\n";
+
+         if(this->gui_read_status){
+
+            this->syntax_error_status = true;
+
+            this->syntax_error_number++;
+         }
+         else{
+
+            exit(0);
+         }
+     };
+
+     if(!this->Control_String_Inclusion(compiler_paths)){
 
          std::cout << "\nERROR REPORT: There is a syntax error on descriptor file \n";
          std::cout << "\n\n";

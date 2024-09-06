@@ -101,11 +101,27 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
      this->FileManager.WriteToFile("\n");
 
 
-     this->FileManager.WriteToFile("\n set( CMAKE_CXX_COMPILER \"C:/Development.Tools/Mingw64/bin/g++.exe\" )");
+     const std::vector<std::string> & compiler_paths =  this->Des_Reader->Get_Compiler_Paths();
 
-     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n set( CMAKE_CXX_COMPILER ");
+     
+     this->FileManager.WriteToFile(compiler_paths[0]);
+     
+     this->FileManager.WriteToFile(" )");
 
-     this->FileManager.WriteToFile("\n set( CMAKE_C_COMPILER \"C:/Development.Tools/Mingw64/bin/gcc.exe\" )");
+
+     if(compiler_paths.size()>1){
+
+        this->FileManager.WriteToFile("\n");
+
+        this->FileManager.WriteToFile("\n set( CMAKE_C_COMPILER ");
+     
+        this->FileManager.WriteToFile(compiler_paths[1]);
+
+        this->FileManager.WriteToFile(" )");
+     }
+
+  
 
      this->FileManager.WriteToFile("\n");
 

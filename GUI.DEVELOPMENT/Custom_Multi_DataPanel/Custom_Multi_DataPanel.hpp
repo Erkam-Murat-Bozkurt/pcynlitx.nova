@@ -75,7 +75,10 @@ enum
   ID_REMOVE_COMPILER_OPTION = 135,
   ID_REMOVE_LINKER_OPTION = 136,
   ID_CLEAR_COMPILER_OPTIONS = 137,
-  ID_CLEAR_LINKER_OPTIONS = 138
+  ID_CLEAR_LINKER_OPTIONS = 138,
+  ID_SELECT_COMPILER_PATH = 139,
+  ID_CLEAR_COMPILER_SELECTIONS = 140,
+  ID_REMOVE_COMPILER_PATH = 141
 };
 
 
@@ -150,6 +153,10 @@ protected:
 
     void Insert_Version_Number(wxCommandEvent & event);
 
+    void Insert_Compiler_Path(wxCommandEvent & event);
+
+    void Clear_Compiler_Paths(wxCommandEvent & event);
+
     void Save_Git_Repo_Dir(wxCommandEvent & event);
 
     void Save_Construction_Point(wxCommandEvent & event);
@@ -186,6 +193,8 @@ protected:
     void Remove_Compiler_Option(wxCommandEvent & event);
 
     void Remove_Linker_Option(wxCommandEvent & event);
+
+    void Remove_Compiler_Path(wxCommandEvent & event);
 
 
 
@@ -306,6 +315,9 @@ protected:
 
     wxDataViewListCtrl * listctrl_version_number;
 
+    wxDataViewListCtrl * listctrl_compiler_path;
+
+
 
 
     wxButton * InsertButton_for_git_repo_path;
@@ -331,6 +343,8 @@ protected:
     wxButton * InsertButton_for_project_name;
 
     wxButton * InsertButton_for_version_number;
+
+    wxButton * InsertButton_for_compiler_paths;
 
 
 
@@ -376,6 +390,7 @@ protected:
 
     wxButton * Remove_Button_for_linker_options;
 
+    wxButton * Remove_Button_for_compiler_paths;
 
 
 
@@ -392,6 +407,8 @@ protected:
 
     wxButton * Clear_Button_for_linker_options;
 
+    wxButton * Clear_Button_for_compiler_paths;
+
 
 
     wxButton * panel_close_button;
@@ -399,7 +416,6 @@ protected:
     wxButton * panel_save_button; 
 
     wxButton * panel_clear_button;  
-
 
     wxPanel  * close_panel;
 

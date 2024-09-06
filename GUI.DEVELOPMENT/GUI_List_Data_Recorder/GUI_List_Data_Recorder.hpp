@@ -36,7 +36,8 @@ struct Record_Data_For_Gui {
        std::vector<std::string> Exe_File_Names;
        std::vector<std::string> compiler_options;
        std::vector<std::string> linker_options;
-       std::vector<std::string> Main_File_Names;  
+       std::vector<std::string> Main_File_Names;
+       std::vector<std::string> compiler_paths;  
 };
 
 
@@ -87,6 +88,7 @@ private:
   std::vector<std::string> Library_Files;
   std::vector<std::string> Exe_File_Names;
   std::vector<std::string> Main_File_Names;
+  std::vector<std::string> Compiler_Paths;
   bool Memory_Delete_Condition;
 };
 

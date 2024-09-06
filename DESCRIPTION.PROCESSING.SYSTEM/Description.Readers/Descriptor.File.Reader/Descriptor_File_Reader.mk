@@ -1,10 +1,10 @@
 
-DES_RED=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
-DES_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
-SYN_CON=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
-CPP_OPS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
-STRING_OPS=D:\pcynlitx.build\BASIC.TOOLS\StringOperator
-CHAR_OPS=D:\pcynlitx.build\BASIC.TOOLS\CharOperator
+DES_RED=C:\Development.Files\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
+DES_COL=C:\Development.Files\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
+SYN_CON=C:\Development.Files\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
+CPP_OPS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
+STRING_OPS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\StringOperator
+CHAR_OPS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\CharOperator
 
 
 VPATH = $(DES_RED) $(DES_COL) $(CPP_OPS) $(STRING_OPS) $(CHAR_OPS) $(SYN_CON)
@@ -14,7 +14,8 @@ Descriptor_File_Reader.exe: Descriptor_File_Reader_Main_File.cpp \
 	Descriptor_File_Syntax_Controller.cpp \
 	StringOperator.cpp CharOperator.cpp Cpp_FileOperations.cpp \
 	CharOperator.cpp Cpp_FileOperations.cpp \
-  Descriptor_File_Reader.hpp Descriptor_File_Data_Collector.hpp \
+    Descriptor_File_Reader.hpp \
+	Descriptor_File_Data_Collector.hpp \
 	Descriptor_File_Syntax_Controller.hpp \
 	StringOperator.h CharOperator.h Cpp_FileOperations.h
 

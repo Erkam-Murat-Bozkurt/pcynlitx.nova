@@ -238,6 +238,29 @@ void Print_Descriptor_File_Informations(Descriptor_File_Reader & Des_File_Reader
 
      std::cout << "\n\n";
 
+     std::cout << "\n COMPILER PATHS RECORD: ";
+
+     const std::vector<std::string> & compiler_paths = Des_File_Reader.Get_Compiler_Paths();
+
+     if(compiler_paths.size()>0){
+
+        std::cout << "\n ";
+
+        for(size_t i=0; i<compiler_paths.size();i++){
+
+            std::cout << "\n";
+
+            std::cout << compiler_paths.at(i);
+        }
+     }
+     else{
+
+        std::cout << "\n There is no compiler path decleration";
+     }
+
+
+     std::cout << "\n\n";
+
      std::cout << "\n BUILD SYSTEM TYPE RECORD: ";
 
      if(Des_File_Reader.Get_Build_System_Type() != ""){

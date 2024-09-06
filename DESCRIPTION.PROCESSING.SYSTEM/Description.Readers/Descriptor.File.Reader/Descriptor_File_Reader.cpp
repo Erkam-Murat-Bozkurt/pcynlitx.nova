@@ -116,6 +116,8 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
          this->Clear_Vectory_Memory(&this->linker_options);
 
+         this->Clear_Vectory_Memory(&this->compiler_paths);
+
          this->Clear_String_Memory(&this->standard);
 
          this->Clear_String_Memory(&this->warehouse_location);
@@ -196,6 +198,8 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
               this->Read_Project_Name();
 
               this->Read_Version_Number();
+
+              this->Read_Compiler_Paths();
           }
           else{
 
@@ -226,6 +230,8 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
                       this->Read_Project_Name();
 
                       this->Read_Version_Number();
+
+                      this->Read_Compiler_Paths();
                   }
                }
            }
@@ -917,6 +923,59 @@ void Descriptor_File_Reader::Read_Source_File_Directories(){
 }
 
 
+void Descriptor_File_Reader::Read_Compiler_Paths(){
+
+     int start_line = this->Data_Collector.Get_Compiler_Paths_Record_Area(0);
+
+     int end_line   = this->Data_Collector.Get_Compiler_Paths_Record_Area(1);
+
+     this->compiler_path_number = 0;
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            if(this->Is_Include_Character(line)){
+
+               this->compiler_path_number++;
+            }
+         }
+
+         this->Clear_String_Memory(&line);
+     }
+     
+     if(this->compiler_path_number > 0){
+
+        this->Memory_Delete_Condition = false;
+
+        for(int i=start_line+1;i<end_line-1;i++){
+
+            std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
+         
+            if(this->StringManager.CheckStringLine(line)){
+
+               this->Delete_Spaces_on_String(&line);
+
+               if(this->Is_Include_Character(line)){
+
+                  this->compiler_paths.push_back(line);
+               }
+            }
+
+            this->Clear_String_Memory(&line);
+        }
+     }
+
+     this->compiler_paths.shrink_to_fit();
+
+     this->compiler_path_number = this->compiler_paths.size();
+}
+
+
+
+
 
 void Descriptor_File_Reader::Read_Library_Directories(){
 
@@ -1541,6 +1600,11 @@ const std::vector<std::string> & Descriptor_File_Reader::Get_Library_Files(){
      return this->Library_Files;
 }
 
+const std::vector<std::string> & Descriptor_File_Reader::Get_Compiler_Paths(){
+
+      return this->compiler_paths;
+}
+
 
 std::string Descriptor_File_Reader::Get_Library_Directory(int i){
 
@@ -1567,7 +1631,6 @@ std::string Descriptor_File_Reader::Get_Standard(){
 
       return this->standard;
 }
-
 
 const std::vector<std::string> & Descriptor_File_Reader::Get_Compiler_Options(){
 

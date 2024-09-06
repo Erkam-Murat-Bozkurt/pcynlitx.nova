@@ -37,6 +37,7 @@ public:
  const std::vector<std::string> & Get_Exe_File_Names();  
  const std::vector<std::string> & Get_Compiler_Options();
  const std::vector<std::string> & Get_Linker_Options();
+ const std::vector<std::string> & Get_Compiler_Paths();
  std::string Get_Standard();
  std::string Get_Build_System_Type();
  std::string Get_Warehouse_Location();
@@ -68,6 +69,7 @@ protected:
  void Read_Build_System_Type();
  void Read_Project_Name();
  void Read_Version_Number();
+ void Read_Compiler_Paths();
  bool Is_There_Multiple_Decleration_on_Same_Line(std::string & str_line);
  void Extract_Declerations_Performing_on_Same_Line(std::string str_line, std::vector<std::string> & mt_line);
  bool Is_Include_Character(std::string str);
@@ -81,6 +83,7 @@ protected:
  StringOperator StringManager;
  int include_dir_num;
  int source_file_dir_num;
+ int compiler_path_number;
  int lib_dir_num;
  int lib_file_num;
  int main_file_name_num;
@@ -99,6 +102,7 @@ protected:
  std::vector<std::string> Library_Files;
  std::vector<std::string> compiler_options;
  std::vector<std::string> linker_options;
+ std::vector<std::string> compiler_paths;
  bool gui_read_status;
  bool gui_read_success;
  bool gui_syntax_error;

@@ -93,6 +93,9 @@ void GUI_List_Data_Recorder::Receive_Descriptions_Record_Data(Record_Data_For_Gu
 
      this->Place_Vector_Data(Data->linker_options,this->linker_options);
 
+     this->Place_Vector_Data(Data->compiler_paths,this->Compiler_Paths);
+
+
 
      this->Place_String_Data(Data->warehouse_location,this->warehouse_location);
 
@@ -233,6 +236,22 @@ void GUI_List_Data_Recorder::Record_Data(std::string Data_Type,
 
         this->Place_Vector_Data(this->Main_File_Names,Data_Record);          
      }        
+
+     
+     if(Data_Type == "MAIN-FILE-NAMES"){
+
+        this->Clear_String_Vector(this->Main_File_Names);
+
+        this->Place_Vector_Data(this->Main_File_Names,Data_Record);          
+     }    
+
+     
+     if(Data_Type == "COMPILER-PATHS"){
+
+        this->Clear_String_Vector(this->Compiler_Paths);
+
+        this->Place_Vector_Data(this->Compiler_Paths,Data_Record);          
+     }   
 
      this->Update_Descriptor_File();     
 }
@@ -526,6 +545,18 @@ void GUI_List_Data_Recorder::Update_Descriptor_File(){
      this->WriteNewLines(two_lines);
 
 
+     this->File_Manager.WriteToFile("[COMPILER-PATHS]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_Vector_Data(this->Compiler_Paths);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+     this->WriteNewLines(two_lines);
+
      this->File_Manager.WriteToFile("[END]:");
 
      this->WriteNewLines(two_lines);
@@ -557,6 +588,8 @@ void GUI_List_Data_Recorder::Receive_Decriptor_File(){
      this->Place_Vector_Data(this->Des_Reader.Get_Linker_Options(),this->linker_options);
 
      this->Place_Vector_Data(this->Des_Reader.Get_Compiler_Options(),this->compiler_options);
+
+     this->Place_Vector_Data(this->Des_Reader.Get_Compiler_Paths(),this->Compiler_Paths);
 
 
       std::string project_name   = this->Des_Reader.Get_Project_Name();
@@ -605,6 +638,8 @@ void GUI_List_Data_Recorder::Clear_Data_Memory(){
      this->Clear_String_Vector(this->Library_Directories);
 
      this->Clear_String_Vector(this->Library_Files);
+
+     this->Clear_String_Vector(this->Compiler_Paths);
 
      this->Clear_String_Memory(this->standard);
 

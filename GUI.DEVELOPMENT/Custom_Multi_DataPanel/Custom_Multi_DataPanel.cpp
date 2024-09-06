@@ -71,6 +71,8 @@ BEGIN_EVENT_TABLE(Custom_Multi_DataPanel,wxDialog )
 
     EVT_BUTTON(ID_REMOVE_LINKER_OPTION,Custom_Multi_DataPanel::Remove_Linker_Option)
 
+    EVT_BUTTON(ID_REMOVE_COMPILER_PATH,Custom_Multi_DataPanel::Remove_Compiler_Path)
+
 
 
     EVT_BUTTON(ID_CLEAR_HEADER_FILE_LOCATION,Custom_Multi_DataPanel::Clear_Header_File_Locations)
@@ -92,6 +94,12 @@ BEGIN_EVENT_TABLE(Custom_Multi_DataPanel,wxDialog )
     EVT_BUTTON(ID_SAVE_PANEL_DESCRIPTIONS,Custom_Multi_DataPanel::Save_Panel_Descriptions)
 
     EVT_BUTTON(ID_CLEAR_PANEL_DESCRIPTIONS,Custom_Multi_DataPanel::Clear_Panel_Descriptions)
+
+
+    EVT_BUTTON(ID_SELECT_COMPILER_PATH,Custom_Multi_DataPanel::Insert_Compiler_Path)
+
+    EVT_BUTTON(ID_CLEAR_COMPILER_SELECTIONS,Custom_Multi_DataPanel::Clear_Compiler_Paths)
+
 
 
     EVT_PAINT(Custom_Multi_DataPanel::OnPaint)
@@ -226,23 +234,23 @@ void Custom_Multi_DataPanel::Construct_MultiData_Panel(int num){
 
 void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
-     this->DataPanel_Sizers = new wxBoxSizer  * [16];
+     this->DataPanel_Sizers = new wxBoxSizer  * [18];
 
-     for(int i=0;i<16;i++){
+     for(int i=0;i<18;i++){
 
          this->DataPanel_Sizers[i] = nullptr;
      }
 
-     this->List_Ctrl_Sizers = new wxBoxSizer  * [16];
+     this->List_Ctrl_Sizers = new wxBoxSizer  * [18];
 
-     for(int i=0;i<16;i++){
+     for(int i=0;i<18;i++){
 
          this->List_Ctrl_Sizers[i] = nullptr;
      }
 
-     this->Buton_Sizers = new wxBoxSizer  * [16];
+     this->Buton_Sizers = new wxBoxSizer  * [18];
 
-     for(int i=0;i<16;i++){
+     for(int i=0;i<18;i++){
 
          this->Buton_Sizers[i] = nullptr;
      }
@@ -677,6 +685,44 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
 
 
+
+
+     // SETTINGS FOR COMPILER PATHS
+
+
+     this->listctrl_compiler_path = new wxDataViewListCtrl(this->scroll_win, wxID_ANY,wxDefaultPosition,wxSize(-1,150));
+
+     this->InsertButton_for_compiler_paths   = new wxButton(this->scroll_win,ID_SELECT_COMPILER_PATH,wxT("INSERT"),wxDefaultPosition, wxSize(75, 40));
+
+     this->Remove_Button_for_compiler_paths  = new wxButton(this->scroll_win,ID_REMOVE_COMPILER_PATH,wxT("REMOVE"),wxDefaultPosition, wxSize(75, 40));
+
+
+
+     this->Buton_Sizers[12] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->Buton_Sizers[12]->Add(this->InsertButton_for_compiler_paths,0, wxEXPAND | wxALL,10);
+
+     this->Buton_Sizers[12]->Add(this->Remove_Button_for_compiler_paths,0, wxEXPAND | wxALL,10);
+
+
+     this->List_Ctrl_Sizers[12] = new wxBoxSizer(wxHORIZONTAL);
+
+     this->List_Ctrl_Sizers[12]->Add(this->listctrl_compiler_path,1,wxEXPAND | wxALL,10);
+
+
+     this->DataPanel_Sizers[12] = new wxBoxSizer(wxVERTICAL);
+
+     this->DataPanel_Sizers[12]->Add(this->List_Ctrl_Sizers[12],1, wxEXPAND | wxTOP | wxALL,10);
+
+     this->DataPanel_Sizers[12]->Add(this->Buton_Sizers[12],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+     this->listctrl_compiler_path->AppendTextColumn(wxT("COMPILER PATHS"));
+
+
+
+
+     // CLOSE PANEL ETTINGS
+
      this->close_panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(220,1000));
 
      this->close_panel->SetBackgroundColour(wxColour(200,200,200,0xff));
@@ -703,19 +749,19 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->panel_clear_button->SetForegroundColour(wxColour(50,50,50));
 
 
-     this->Buton_Sizers[12] = new wxBoxSizer(wxVERTICAL);
+     this->Buton_Sizers[13] = new wxBoxSizer(wxVERTICAL);
 
-     this->Buton_Sizers[12]->Add(panel_close_button,0, wxFIXED_MINSIZE | wxALL,20);
+     this->Buton_Sizers[13]->Add(panel_close_button,0, wxFIXED_MINSIZE | wxALL,20);
 
-     this->Buton_Sizers[12]->Add(panel_save_button, 0, wxFIXED_MINSIZE | wxALL,20);
+     this->Buton_Sizers[13]->Add(panel_save_button, 0, wxFIXED_MINSIZE | wxALL,20);
 
-     this->Buton_Sizers[12]->Add(panel_clear_button,0, wxFIXED_MINSIZE | wxALL,20);
+     this->Buton_Sizers[13]->Add(panel_clear_button,0, wxFIXED_MINSIZE | wxALL,20);
 
-     this->close_panel->SetSizer(this->Buton_Sizers[12]);
+     this->close_panel->SetSizer(this->Buton_Sizers[13]);
 
      this->close_panel->Fit();
 
-     this->Buton_Sizers[12]->SetSizeHints(this->close_panel);
+     this->Buton_Sizers[13]->SetSizeHints(this->close_panel);
 
 
 
@@ -748,6 +794,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->Frame_Sizer->Add(this->DataPanel_Sizers[11],0,wxEXPAND | wxALL, 20);
 
+     this->Frame_Sizer->Add(this->DataPanel_Sizers[12],0,wxEXPAND | wxALL, 20);
 
 
 
@@ -816,6 +863,8 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->listctrl_linker_options->Show();
 
+     this->listctrl_compiler_path->Show();
+
      this->close_panel->Show();
 
      this->Centre(wxBOTH);
@@ -881,38 +930,7 @@ void Custom_Multi_DataPanel::Save_Panel_Descriptions(wxCommandEvent & event){
 
         this->Collect_List_Ctrl_Data(this->listctrl_src_file_location,this->Record_Data.Source_File_Directories);
 
-
-
-
-        /*
-
-        std::vector<std:::string> warehouse_location;
-
-        this->Data_Recorder.Extract_Data_List(this->Record_Data.Include_Directories,header_locations);
-
-
-        std::string source_file_locations;
-        
-        this->Collect_List_Ctrl_Data(this->listctrl_src_file_location);
-
-        this->Data_Recorder.Extract_Data_List(this->Record_Data.Source_File_Directories,source_file_locations);
-
-
-        std::string library_file_locations;
-        
-        this->Collect_List_Ctrl_Data(this->listctrl_library_dir);
-
-        this->Data_Recorder.Extract_Data_List(this->Record_Data.Library_Directories,library_file_locations);
-
-        
-        std::string library_file_names;
-        
-        this->Collect_List_Ctrl_Data(this->listctrl_library_name);
-
-        this->Data_Recorder.Extract_Data_List(this->Record_Data.Library_Files,library_file_names);
-
-
-       */
+        this->Collect_List_Ctrl_Data(this->listctrl_compiler_path,this->Record_Data.compiler_paths);
 
 
         this->Data_Recorder.Receive_Descriptions_Record_Data(&this->Record_Data);
@@ -947,6 +965,8 @@ void Custom_Multi_DataPanel::Clear_Record_Data(){
      this->Clear_Vector_Memory(this->Record_Data.compiler_options);
 
      this->Clear_Vector_Memory(this->Record_Data.linker_options);
+
+     this->Clear_Vector_Memory(this->Record_Data.compiler_paths);
 }
 
 
@@ -1010,6 +1030,8 @@ void Custom_Multi_DataPanel::Clear_List_All_Ctrl_Contents(){
      this->listctrl_project_name->DeleteAllItems();
 
      this->listctrl_version_number->DeleteAllItems();
+
+     this->listctrl_compiler_path->DeleteAllItems();
 }
 
 
@@ -1202,6 +1224,14 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
 
 
 
+         const std::vector<std::string> & compiler_paths = this->Des_Reader.Get_Compiler_Paths();
+
+         if(compiler_paths.size()>0){
+
+            this->Load_Data_List_Ctrl(this->listctrl_compiler_path,compiler_paths);
+         }
+
+
          std::string warehouse_loc = this->Des_Reader.Get_Warehouse_Location();
 
          warehouse_loc.shrink_to_fit();
@@ -1244,6 +1274,7 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
 
             this->Load_Data_List_Ctrl(this->listctrl_version_number,version_number);      
          }
+
 
          bool gui_read_error_status  = !this->Des_Reader.Get_Gui_Read_Success_Status(); 
 
@@ -1387,6 +1418,40 @@ void Custom_Multi_DataPanel::Insert_Project_Name(wxCommandEvent & event){
         }
 
         this->AppendDataItem(this->listctrl_project_name,Project_Name);
+     }
+}
+
+void Custom_Multi_DataPanel::Insert_Compiler_Path(wxCommandEvent & event){
+     
+     if(event.GetId() == ID_SELECT_COMPILER_PATH ){
+
+        event.Skip(true);
+
+        wxString Compiler_Path;
+        
+        wxFileDialog * openFileDialog = new wxFileDialog(this);
+
+        openFileDialog->CentreOnParent(wxBOTH);
+
+        if(openFileDialog->ShowModal() == wxID_OK){
+
+           Compiler_Path = openFileDialog->GetPath();
+        }
+
+        delete openFileDialog;
+
+        this->AppendDataItem(this->listctrl_compiler_path,Compiler_Path);
+     }
+}
+
+
+void Custom_Multi_DataPanel::Clear_Compiler_Paths(wxCommandEvent & event){
+     
+     if(event.GetId() == ID_CLEAR_COMPILER_SELECTIONS){
+
+        event.Skip(true);
+
+        this->listctrl_compiler_path->DeleteAllItems();
      }
 }
 
@@ -1951,6 +2016,19 @@ void Custom_Multi_DataPanel::Remove_Header_File_Location(wxCommandEvent & event)
         int row = this->listctrl_for_header_dir->GetSelectedRow();
 
         this->listctrl_for_header_dir->DeleteItem(row);
+     }
+}
+
+
+void Custom_Multi_DataPanel::Remove_Compiler_Path(wxCommandEvent & event){
+
+     if(event.GetId() == ID_REMOVE_COMPILER_PATH ){
+
+        event.Skip(true);
+
+        int row = this->listctrl_compiler_path->GetSelectedRow();
+
+        this->listctrl_compiler_path->DeleteItem(row);
      }
 }
 
