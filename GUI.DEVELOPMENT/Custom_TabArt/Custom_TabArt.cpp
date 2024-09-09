@@ -27,7 +27,7 @@ this program. If not, see <http://www.gnu.org/licenses/>.
 
  Custom_TabArt::Custom_TabArt(wxColour clr) : wxAuiDefaultTabArt()
  {
-    this->page_close_icon = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\close_tab.png"),
+    this->page_close_icon = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\close_tab.png"),
 
                              wxBITMAP_TYPE_ANY);
 

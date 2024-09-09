@@ -66,7 +66,7 @@ Dependency_Tree_Printer::Dependency_Tree_Printer(wxFrame * parent, wxWindowID id
      this->Show(false);
 
 
-     wxIcon Frame_Icon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+     wxIcon Frame_Icon(wxT("C:\\Program Files\\Nwinix\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
      this->SetIcon(Frame_Icon);
 

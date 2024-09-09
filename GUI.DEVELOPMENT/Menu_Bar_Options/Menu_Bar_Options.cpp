@@ -50,7 +50,7 @@ Menu_Bar_Options::Menu_Bar_Options(){
   //this->File_Menu->Append(ID_FILE_SAVE,"&Save","",wxITEM_NORMAL);
 
 
-   wxIcon * save_icon = new wxIcon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\save_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+   wxIcon * save_icon = new wxIcon(wxT("C:\\Program Files\\Nwinix\\icons\\save_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
    wxMenuItem * save_item = new wxMenuItem(this->File_Menu,ID_FILE_SAVE,"&Save"," ",wxITEM_NORMAL);
 
@@ -58,7 +58,7 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
    this->File_Menu->Append(save_item);
 
-   wxIcon * save_as_icon = new wxIcon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\save_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+   wxIcon * save_as_icon = new wxIcon(wxT("C:\\Program Files\\Nwinix\\icons\\save_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
    wxMenuItem * save_as_item = new wxMenuItem(this->File_Menu,ID_SAVE_AS,"&Save as"," ",wxITEM_NORMAL);
 
@@ -72,7 +72,7 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->File_Menu->Append(ID_OPEN_TREE_WIEW,"&Open Folder","",wxITEM_NORMAL);
 
-   wxIcon * exit_icon = new wxIcon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\exit_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+   wxIcon * exit_icon = new wxIcon(wxT("C:\\Program Files\\Nwinix\\icons\\exit_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
    wxMenuItem * exit_item = new wxMenuItem(this->File_Menu,ID_EXIT,"&EXIT"," ",wxITEM_NORMAL);
 
@@ -127,7 +127,7 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Project_Management->Append(ID_SHOW_PROJECT_FILE,"Show Project File","",wxITEM_NORMAL);
 
-  wxIcon * project_file_selection_icon = new wxIcon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\file_selection_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+  wxIcon * project_file_selection_icon = new wxIcon(wxT("C:\\Program Files\\Nwinix\\icons\\file_selection_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
   wxMenuItem * project_file_seletion_item = new wxMenuItem(this->Project_Management,ID_SELECT_PROJECT_FILE,"&Select project file"," ",wxITEM_NORMAL);
 
@@ -148,7 +148,7 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Project_Management->Append(wxID_NONE,                "&BUILD SYSTEM OPERATIONS "," ",wxITEM_NORMAL);
 
-   wxIcon * frame_icon = new wxIcon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\build_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+   wxIcon * frame_icon = new wxIcon(wxT("C:\\Program Files\\Nwinix\\icons\\build_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
    wxMenuItem * build_item = new wxMenuItem(this->Project_Management,ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,"&Build system initializer"," ",wxITEM_NORMAL);
 
@@ -158,7 +158,7 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
 
 
-   wxIcon * run_build_script_icon = new wxIcon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\open_terminal_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+   wxIcon * run_build_script_icon = new wxIcon(wxT("C:\\Program Files\\Nwinix\\icons\\open_terminal_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
    wxMenuItem * run_build_script_item = new wxMenuItem(this->Project_Management,ID_RUN_PROJECT_SCRIPT,"&Run project build script"," ",wxITEM_NORMAL);
 
@@ -167,7 +167,7 @@ Menu_Bar_Options::Menu_Bar_Options(){
    this->Project_Management->Append(run_build_script_item);
 
 
-   wxIcon * dependency_icon = new wxIcon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\dependecy_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+   wxIcon * dependency_icon = new wxIcon(wxT("C:\\Program Files\\Nwinix\\icons\\dependecy_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
    wxMenuItem * dependency_item = new wxMenuItem(this->Project_Management,ID_DETERMINE_SOURCE_FILE_DEPENDENCIES,"&Determine dependencies"," ",wxITEM_NORMAL);
 

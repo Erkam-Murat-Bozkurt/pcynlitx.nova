@@ -118,7 +118,7 @@ Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, 
 
      this->Des_Reader.Set_Gui_Read_Status(true);
 
-     wxIcon Frame_Icon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+     wxIcon Frame_Icon(wxT("C:\\Program Files\\Nwinix\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
      this->SetIcon(Frame_Icon);
 
@@ -127,11 +127,11 @@ Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, 
 
      this->save_bmp 
   
-      = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\save_success_icon.png"),wxBITMAP_TYPE_ANY);
+      = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\save_success_icon.png"),wxBITMAP_TYPE_ANY);
 
      this->exclamation_mark_bmp 
   
-      = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+      = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
 
      this->SetBackgroundColour(wxColour(250,250,250));
 
@@ -733,11 +733,17 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
 
 
-     this->panel_close_button  = new wxButton(close_panel,ID_CLOSE_DESCRIPTION_PANEL,wxT("CLOSE PANEL"),wxDefaultPosition, wxSize(150, 60));
+     this->panel_close_button  = new wxButton(close_panel,ID_CLOSE_DESCRIPTION_PANEL,
+     
+                               wxT("CLOSE PANEL"),wxDefaultPosition, wxSize(150, 60));
 
-     this->panel_save_button   = new wxButton(close_panel,ID_SAVE_PANEL_DESCRIPTIONS,wxT("SAVE PANEL"),wxDefaultPosition, wxSize(150, 60));
+     this->panel_save_button   = new wxButton(close_panel,ID_SAVE_PANEL_DESCRIPTIONS,
+     
+                               wxT("SAVE PANEL"),wxDefaultPosition, wxSize(150, 60));
 
-     this->panel_clear_button  = new wxButton(close_panel,ID_CLEAR_PANEL_DESCRIPTIONS,wxT("CLEAR PANEL"),wxDefaultPosition, wxSize(150, 60));
+     this->panel_clear_button  = new wxButton(close_panel,ID_CLEAR_PANEL_DESCRIPTIONS,
+     
+                               wxT("CLEAR PANEL"),wxDefaultPosition, wxSize(150, 60));
 
 
 

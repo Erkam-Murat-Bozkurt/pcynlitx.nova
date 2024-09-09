@@ -66,7 +66,7 @@ Custom_Progress_Dialog::Custom_Progress_Dialog(wxWindow * parent, wxWindowID id,
      this->Show(false);
 
 
-     wxIcon Frame_Icon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+     wxIcon Frame_Icon(wxT("C:\\Program Files\\Nwinix\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
      this->SetIcon(Frame_Icon);
 
@@ -101,13 +101,13 @@ void Custom_Progress_Dialog::Construct_Text_Panel(wxString title, int dialog_siz
 
      this->text_ctrl_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,-1));
 
-     this->text_ctrl_close_panel     = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,70));
+     this->text_ctrl_close_panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,70));
 
-     this->text_ctrl_dialog_panel    = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,30));
+     this->text_ctrl_dialog_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,30));
 
 
 
-     this->text_ctrl_close_button     = new wxButton(this,ID_CLOSE_PROGRESS_DIALOG,wxT("CLOSE"),
+     this->text_ctrl_close_button  = new wxButton(this,ID_CLOSE_PROGRESS_DIALOG,wxT("CLOSE"),
      
                              wxDefaultPosition, wxSize(100, 50));
 

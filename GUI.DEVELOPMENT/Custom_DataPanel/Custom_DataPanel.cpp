@@ -38,7 +38,7 @@ Custom_DataPanel::Custom_DataPanel(wxFrame * frm, wxSize frame_size)
 {
     this->frame_ptr = frm;
 
-    wxIcon Frame_Icon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+    wxIcon Frame_Icon(wxT("C:\\Program Files\\Nwinix\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
     this->SetIcon(Frame_Icon);
 
@@ -241,7 +241,7 @@ void Custom_DataPanel::Save_Data(wxCommandEvent & event){
          
         this->Process_Ptr = new Process_Manager(this->frame_ptr);
 
-        shell_command = "D:\\Pcynlitx_Build_Platform\\CBuild.exe " +
+        shell_command = "C:\\Program Files\\Nwinix\\Nwinix_Kernel.exe " +
 
         this->Descriptor_File_Path + wxT(" -ar ") + this->DataType;
 

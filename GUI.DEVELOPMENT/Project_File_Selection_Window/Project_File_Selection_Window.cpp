@@ -28,14 +28,14 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Descriptor_File_Selection_Status = nullptr;
 
-     wxIcon Frame_Icon(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+     wxIcon Frame_Icon(wxT("C:\\Program Files\\Nwinix\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
      this->SetIcon(Frame_Icon);
 
 
      this->exclamation_mark_bmp 
   
-      = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+      = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
 
 
      this->SetTitle(wxT("PROJECT FILE SELECTION PANEL"));
@@ -43,12 +43,12 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->new_empty_file 
   
-      = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\open_new_project_file.png"),wxBITMAP_TYPE_ANY);
+      = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\open_new_project_file.png"),wxBITMAP_TYPE_ANY);
 
 
      this->open_existing_file 
   
-      = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\select_project_file_icon.png"),wxBITMAP_TYPE_ANY);
+      = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\select_project_file_icon.png"),wxBITMAP_TYPE_ANY);
 
      this->SetBackgroundColour(wxColour(225,225,225));
 
@@ -371,7 +371,7 @@ void Project_File_Selection_Window::Construct_Empty_Project_File(wxCommandEvent 
 
            wxString DesPATH = construction_dir + wxT("\\Pcb_Descriptor.txt");
 
-           wxString shell_command = "C:\\Development.Files\\Project.Test.platform\\CBuild.exe " 
+           wxString shell_command = "C:\\Program Files\\Nwinix\\Nwinix_Kernel.exe " 
         
            + construction_dir + " -ed";
 

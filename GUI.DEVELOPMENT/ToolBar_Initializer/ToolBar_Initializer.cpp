@@ -44,19 +44,19 @@ ToolBar_Initializer::~ToolBar_Initializer(){
 
 void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockArt * Dock_Art_Pointer, wxAuiManager * Interface_Manager){
 
-     this->construct_build_system = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\build_system_generator.png"),wxBITMAP_TYPE_PNG);
+     this->construct_build_system = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\build_system_generator.png"),wxBITMAP_TYPE_PNG);
 
-     this->open_tree_view = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\open_folder_icon.png"),wxBITMAP_TYPE_PNG);
+     this->open_tree_view = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\open_folder_icon.png"),wxBITMAP_TYPE_PNG);
 
-     this->build_executable = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\build_executable.png"),wxBITMAP_TYPE_PNG);
+     this->build_executable = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\build_executable.png"),wxBITMAP_TYPE_PNG);
 
-     this->Select_Project_File = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\file_selection_icon.png"),wxBITMAP_TYPE_PNG);
+     this->Select_Project_File = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\file_selection_icon.png"),wxBITMAP_TYPE_PNG);
 
-     this->print_descriptions = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\zoom.png"),wxBITMAP_TYPE_PNG);
+     this->print_descriptions = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\zoom.png"),wxBITMAP_TYPE_PNG);
 
-     this->open_settings = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\description_enter.png"),wxBITMAP_TYPE_PNG);
+     this->open_settings = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\description_enter.png"),wxBITMAP_TYPE_PNG);
 
-     this->open_help_menu = new wxBitmap(wxT("C:\\Development.Files\\Project.Test.platform\\icons\\help.png"),wxBITMAP_TYPE_PNG);
+     this->open_help_menu = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\help.png"),wxBITMAP_TYPE_PNG);
 
 
      this->toolBar = new wxAuiToolBar(Frame_Pointer,wxID_ANY,wxDefaultPosition,wxDefaultSize,wxAUI_TB_PLAIN_BACKGROUND);
