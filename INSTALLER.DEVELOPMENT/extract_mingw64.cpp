@@ -7,7 +7,7 @@ void Place_String(char ** command, char * string, int * index_counter);
 
 int main(){
 
-    int value = system(".\\7z.exe x -y .\\mingw64.7z");
+    int value = system(".\\7z.exe x -y .\\Mingw64.7z");
 
     if(value == -1){
 
@@ -16,25 +16,26 @@ int main(){
         exit(EXIT_FAILURE);
     }
 
-    value = system("del .\\mingw64.7z");
+    value = system("del .\\Mingw64.7z");
 
-    value = system("rm .\\7z.exe /s /q");
+    value = system("del .\\7z.exe");
+
 
     char reg_exe [] = "reg.exe add HKCU\\Environment /v Path /t REG_SZ /d \"%Path%";
 
     char path_1 [] = ";C:\\Program Files\\Nwinix;";
 
-    char path_2 [] = "C:\\Program Files\\Mingw64\\mingw64;";
+    char path_2 [] = "C:\\Program Files\\Mingw64;";
 
-    char path_3 [] = "C:\\Program Files\\Mingw64\\mingw64\\bin;";
+    char path_3 [] = "C:\\Program Files\\Mingw64\\bin;";
 
-    char path_4 [] = "C:\\Program Files\\Mingw64\\mingw64\\include;";
+    char path_4 [] = "C:\\Program Files\\Mingw64\\include;";
 
-    char path_5 [] = "C:\\Program Files\\Mingw64\\mingw64\\x86_64-w64-mingw32;";
+    char path_5 [] = "C:\\Program Files\\Mingw64\\x86_64-w64-mingw32;";
 
-    char path_6 [] = "C:\\Program Files\\Mingw64\\mingw64\\x86_64-w64-mingw32\\include;";
+    char path_6 [] = "C:\\Program Files\\Mingw64\\x86_64-w64-mingw32\\include;";
 
-    char path_7 [] = "C:\\Program Files\\Mingw64\\mingw64\\x86_64-w64-mingw32\\lib;\" /f";
+    char path_7 [] = "C:\\Program Files\\Mingw64\\x86_64-w64-mingw32\\lib;\" /f";
 
     size_t reg_exe_size = strlen(reg_exe);
 

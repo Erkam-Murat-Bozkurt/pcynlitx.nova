@@ -11,7 +11,7 @@
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
-AppId={4A8B47E0-9ECF-43FB-B9CF-182533C62FB3}
+AppId={{4A8B47E0-9ECF-43FB-B9CF-182533C62FB3}}
 AppName={#AppName}
 AppVersion={#AppVersion}
 AppPublisher={#AppPublisher}
@@ -24,9 +24,9 @@ DisableProgramGroupPage=yes
 LicenseFile=C:\Development.Files\Project.Test.platform\LICENSE.txt
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputDir=D:\Pcynlitx
-OutputBaseFilename=Pcynlitx.Setup
-SetupIconFile=C:\Development.Files\Project.Test.platform\icons\Nwinix.ico
+OutputDir=C:\Development.Files\Project.Test.platform
+OutputBaseFilename=Nwinix.Setup
+SetupIconFile=C:\Development.Files\Project.Test.platform\Nwinix_Logo.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -38,16 +38,17 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Development.Files\Project.Test.platform\bin\Nwinix_Gui.exe"; DestDir: "C:\Program Files\Nwinix\bin"; Flags: ignoreversion
-Source: "C:\Development.Files\Project.Test.platform\7z\*"; DestDir: "C:\Program Files\Nwinix\7z"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Development.Files\Project.Test.platform\bin\*"; DestDir: "C:\Program Files\Nwinix\bin"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Development.Files\Project.Test.platform\Nwinix_Gui.exe"; DestDir: "C:\Program Files\Nwinix"; Flags: ignoreversion
+Source: "C:\Development.Files\Project.Test.platform\Nwinix_Kernel.exe"; DestDir: "C:\Program Files\Nwinix"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Development.Files\Project.Test.platform\7z.exe"; DestDir: "C:\Program Files\Nwinix"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Development.Files\Project.Test.platform\icons\*"; DestDir: "C:\Program Files\Nwinix\icons"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Development.Files\Project.Test.platform\Intro_File.png"; DestDir: "C:\Program Files\Nwinix"; Flags: ignoreversion
 Source: "C:\Development.Files\Project.Test.platform\LICENSE.txt"; DestDir: "C:\Program Files\Nwinix"; Flags: ignoreversion
+Source: "C:\Development.Files\Project.Test.platform\introduction.txt"; DestDir: "C:\Program Files\Nwinix"; Flags: ignoreversion
 Source: "C:\Development.Files\Project.Test.platform\Mingw64.Setup.exe"; DestDir: "C:\Program Files\Nwinix";  Flags: ignoreversion deleteafterinstall
 Source: "C:\Development.Files\Project.Test.platform\setup_fonts.exe"; DestDir: "C:\Program Files\Nwinix";  Flags: ignoreversion deleteafterinstall
-Source: "C:\Development.Files\Project.Test.platform\DLL_Files"; DestDir: "C:\Program Files\Nwinix";  Flags: ignoreversion deleteafterinstall
-Source: "C:\Development.Files\Project.Test.platform\Fira_Code.zip.zip"; DestDir: "C:\Program Files\Nwinix";  Flags: ignoreversion
+Source: "C:\Development.Files\Project.Test.platform\DLL_Files\*"; DestDir: "C:\Program Files\Nwinix";  Flags: ignoreversion deleteafterinstall
+Source: "C:\Development.Files\Project.Test.platform\FiraCode_Standard.tar"; DestDir: "C:\Program Files\Nwinix";  Flags: ignoreversion
 
 
 [Icons]
@@ -57,9 +58,8 @@ Name: "{autodesktop}\{#AppName}"; Filename: "C:\Program Files\Nwinix\bin\{#AppEx
 Type: filesandordirs; Name: "C:\Program Files\Nwinix"
 
 [Run]
-Filename: "C:\Program Files\Nwinix\setup_fonts.exe"; WorkingDir: "C:\Program Files\Nwinix";  Flags:runascurrentuser  runhidden; 
 Filename: "C:\Program Files\Nwinix\Mingw64.Setup.exe"; WorkingDir: "C:\Program Files\Nwinix";
-Filename: "C:\Program Files\Nwinix\bin\Nwinix.exe"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+Filename: "C:\Program Files\Nwinix\setup_fonts.exe"; WorkingDir: "C:\Program Files\Nwinix";  Flags:runascurrentuser  runhidden; 
 
  
 

@@ -7,7 +7,7 @@
    version="1.1"
    sodipodi:docname="logo_with_name.svg"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   inkscape:export-filename="..\logo.svg"
+   inkscape:export-filename="..\..\..\..\Project.Test.platform\icons\logo.png"
    inkscape:export-xdpi="500"
    inkscape:export-ydpi="500"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -43,8 +43,8 @@
     <inkscape:grid
        type="xygrid"
        id="grid10"
-       originx="4.0171956"
-       originy="-24.034577"
+       originx="4.0171957"
+       originy="-24.034576"
        spacingy="1"
        spacingx="1"
        units="px"
@@ -64,7 +64,7 @@
   <defs
      id="defs6" />
   <rect
-     style="fill:none;fill-opacity:1;stroke:#d76e6e;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#d5d4d3;fill-opacity:1;stroke:#d76e6e;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect9-5-91-1-0"
      width="3.7776399"
      height="3.3831062"
@@ -86,21 +86,21 @@
      y="-15.432047"
      transform="rotate(90)" />
   <rect
-     style="fill:none;fill-opacity:1;stroke:#d76e6e;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#d5d4d3;fill-opacity:1;stroke:#d76e6e;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect9-5-91-1-0-9"
      width="3.6370981"
      height="3.4965391"
      x="6.8866606"
      y="5.592144" />
   <rect
-     style="fill:none;fill-opacity:1;stroke:#d76e6e;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#d5d4d3;fill-opacity:1;stroke:#d76e6e;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect9-5-91-1-0-2"
      width="3.804183"
      height="3.4096498"
      x="11.527708"
      y="5.6373754" />
   <rect
-     style="fill:none;fill-opacity:1;stroke:#d76e6e;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#d5d4d3;fill-opacity:1;stroke:#d76e6e;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect9-5-91-1-0-3"
      width="3.6962466"
      height="3.3581522"
