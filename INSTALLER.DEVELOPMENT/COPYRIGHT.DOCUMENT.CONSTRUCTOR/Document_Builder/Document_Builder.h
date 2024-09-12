@@ -12,7 +12,6 @@ class Document_Builder
 {
 public:
   Document_Builder();
-  Document_Builder(const Document_Builder & orig);
   virtual ~Document_Builder();
   void Receive_Document_Path(std::string name);
   void Receive_File_Path(std::string path);
@@ -21,6 +20,7 @@ public:
 private:
   void Read_File();
   void Add_To_Document();
+  void Extract_File_Name(std::string path, std::string & file_name);
   void Clear_Std_String(std::string & str);
   std::string FilePath;
   std::string Document_Name;
@@ -29,7 +29,7 @@ private:
   bool Memory_Delete_Condition;
   bool File_Path_Receive_Status;
   bool Document_Name_Receive_Status;
-  int File_Line_Number;
+  int File_Number;
 };
 
 #endif /* DOCUMENT_BUILDER_H */

@@ -7,8 +7,8 @@ DOC_OPS=C:\Development.Files\pcynlitx.build\INSTALLER.DEVELOPMENT\COPYRIGHT.DOCU
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) $(DOC_OPS)
 
 Convert_Repo_To_Source.exe: Convert_Repo_To_Single_File_Main_File.cpp \
-	Convert_Repo_To_Single_File.cpp DirectoryOperations.cpp CharOperator.cpp \
-	Cpp_FileOperations.cpp Convert_Repo_To_Single_File.h DirectoryOperations.h \
+	Convert_Repo_To_Single_File.cpp Document_Builder.cpp DirectoryOperations.cpp CharOperator.cpp \
+	Cpp_FileOperations.cpp Convert_Repo_To_Single_File.h Document_Builder.h DirectoryOperations.h \
 	CharOperator.h Cpp_FileOperations.h\
 
 	g++ -o Convert_Repo_To_Source.exe -I$(DIR_OPS) -I$(CPP_OPS) -I$(DOC_OPS) -I$(CHAR_OPS) \

@@ -21,9 +21,9 @@ Document_Builder::Document_Builder(){
      this->File_Path_Receive_Status = false;
 
      this->Document_Name_Receive_Status = false;
-}
 
-Document_Builder::Document_Builder(const Document_Builder & orig){}
+     this->File_Number = 1;
+}
 
 Document_Builder::~Document_Builder(){
 
@@ -112,6 +112,17 @@ void Document_Builder::Receive_Document_Path(std::string Path){
 
 void Document_Builder::Read_File(){
 
+     for(size_t i=0;i<this->File_Content.size();i++){
+
+         this->File_Content.at(i).clear();
+
+         this->File_Content.at(i).shrink_to_fit();
+     }
+
+     this->File_Content.clear();
+
+     this->File_Content.shrink_to_fit();
+
      this->FileManager.SetFilePath(this->FilePath);
 
      this->FileManager.FileOpen(Rf);
@@ -141,18 +152,11 @@ void Document_Builder::Add_To_Document(){
 
      std::string file_name;
 
-     size_t File_Name_Size = this->FilePath.size();
+     this->Extract_File_Name(this->FilePath,file_name);
 
-     for(size_t i= 0;i<File_Name_Size;i++){
+     std::string FileHeader = "\n\nFILE NAME: \"" + file_name + "\", FILE NUMBER: " + std::to_string(this->File_Number) + "\n";
 
-         file_name.push_back(this->FilePath[i]);
-     }
-
-     file_name.shrink_to_fit();
-
-     std::string FileHeader = "\n\nFILE NAME: " + file_name;
-
-     for(int i=0;i<80;i++){
+     for(int i=0;i<100;i++){
 
          FileHeader = FileHeader + "-";
      }
@@ -166,9 +170,11 @@ void Document_Builder::Add_To_Document(){
          this->FileManager.WriteToFile(this->File_Content[i]);
      }
 
-     std::string File_Footer = "\n\nTHE END OF FILE \n\n";
+     std::string File_Footer = "\n\n\n# THE END OF FILE # \n\n\n\n\n";
 
      this->FileManager.WriteToFile(File_Footer);
+
+     this->File_Number++;
 
      this->FileManager.FileClose();
 }
@@ -196,6 +202,40 @@ void Document_Builder::Add_File_To_Document(){
            exit(0);
      }
 }
+
+
+void Document_Builder::Extract_File_Name(std::string path, std::string & file_name){
+
+     size_t path_size = path.size();
+
+     size_t start_point = path_size;
+
+     for(size_t i=path.size()-1;i>0;i--){
+
+         if(path[i] == '\\'){
+
+            break;
+         }
+         else{
+
+              start_point--;
+         }
+     }
+
+     for(size_t i=start_point;i<path.size();i++){
+
+         //std::cout << "\n path[" << i << "]:" << path[i];
+
+         //std::cin.get();
+
+         file_name.push_back(path[i]);
+
+
+     }
+
+     file_name.shrink_to_fit();     
+}
+
 
 void Document_Builder::Clear_Std_String(std::string & str){
 
