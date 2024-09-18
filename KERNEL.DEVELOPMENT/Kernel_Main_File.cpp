@@ -171,6 +171,8 @@ int main(int argc, char ** argv){
 
            std::cout << "\n";
            std::cout << "\n";
+
+           exit(0);
         }
 
         argument_pass_cond = true;

@@ -776,7 +776,7 @@ void Custom_System_Interface::DeterminePipePath(){
 
      GetCurrentDirectory(this->bufsize,Buffer);
 
-     char PipeName [] = "CBuild_StdOut.txt";
+     char PipeName [] = "Nwinix_StdOut.txt";
 
      size_t dir_size = strlen(Buffer);
 

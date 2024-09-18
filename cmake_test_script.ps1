@@ -38,7 +38,7 @@ Write-Output ""
 
 cd C:\Development.Files\Project.Test.platform
 
-.\CBuild.exe C:\Development.Files\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt -ip
+.\Nwinix_Kernel.exe C:\Development.Files\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt -ip
 
 cd  C:\Development.Files\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test
 
@@ -60,7 +60,7 @@ mingw32-make -f .\Makefile
 
 cd C:\Development.Files\Project.Test.platform
 
-.\CBuild.exe C:\Development.Files\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt -if C:\Development.Files\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test\KERNEL.DEVELOPMENT\Kernel\Kernel_Main_File.cpp _pcyKernel c
+.\Nwinix_Kernel.exe C:\Development.Files\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt -if C:\Development.Files\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test\KERNEL.DEVELOPMENT\Kernel\Kernel_Main_File.cpp _pcyKernel c
 
 cd C:\Development.Files\PCYNLITX_WIN_CMAKE_CONFIGS
 
