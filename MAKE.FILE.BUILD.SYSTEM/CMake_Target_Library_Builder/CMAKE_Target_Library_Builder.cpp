@@ -153,36 +153,52 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
      this->FileManager.WriteToFile(src_file_path);          
 
 
+     std::vector<std::string> dependent_header_paths;
+
 
      for(size_t i=0;i<this->Data_Ptr->dependent_headers.size();i++){
+
+
+         std::string dep_header_dir = this->Data_Ptr->dependent_headers_dir.at(i);
+      
+         std::string dep_header_name = this->Data_Ptr->dependent_headers.at(i);
+
+         std::string dep_header_path = dep_header_dir + "\\" + dep_header_name;
+
+         this->Convert_CMAKE_Format(dep_header_path);
+
+         if(!this->Check_String_Existance(dependent_header_paths,dep_header_path)){
+
+            dependent_header_paths.push_back(dep_header_path);
+         }
+     }
+
+     dependent_header_paths.shrink_to_fit();
+
+
+
+     for(size_t i=0;i<dependent_header_paths.size();i++){
 
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile("  ");
 
-         std::string dep_header_dir = this->Data_Ptr->dependent_headers_dir.at(i);
-      
-         this->Convert_CMAKE_Format(dep_header_dir);
-
-         this->FileManager.WriteToFile(dep_header_dir);      
-
-         this->FileManager.WriteToFile("/");
-
-         std::string dep_header_name = this->Data_Ptr->dependent_headers.at(i);
-
-         this->Convert_CMAKE_Format(dep_header_name);
-
-         this->FileManager.WriteToFile(dep_header_name);      
+         this->FileManager.WriteToFile(dependent_header_paths.at(i));      
      }
 
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile(")");
-  
+
+     this->Clear_String_Vector(dependent_header_paths);
+
+
 
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
+
+
 
      
      this->FileManager.WriteToFile("target_include_directories(");
@@ -193,22 +209,38 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
      
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("\n");
-     
-     for(size_t i=0;i<this->Data_Ptr->dependent_headers.size();i++){
 
-         this->FileManager.WriteToFile("\n\t");
+     std::vector<std::string> dependent_header_dirs;
+
+     for(size_t i=0;i<this->Data_Ptr->dependent_headers.size();i++){
 
          std::string dep_header_dir = this->Data_Ptr->dependent_headers_dir.at(i);
       
          this->Convert_CMAKE_Format(dep_header_dir);
 
-         this->FileManager.WriteToFile(dep_header_dir);      
+         if(!this->Check_String_Existance(dependent_header_dirs,dep_header_dir)){
+
+            dependent_header_dirs.push_back(dep_header_dir);
+         }
+     }
+
+     dependent_header_dirs.shrink_to_fit();
+
+
+
+     for(size_t i=0;i<dependent_header_dirs.size();i++){
+
+         this->FileManager.WriteToFile("\n\t");
+      
+         this->FileManager.WriteToFile(dependent_header_dirs.at(i));      
      }
 
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile(")");
+
+     this->Clear_String_Vector(dependent_header_dirs);
+
 
 
 
@@ -224,19 +256,37 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
         this->FileManager.WriteToFile(" PUBLIC ");
 
-        for(size_t i=0;i<Lib_Dirs.size();i++){
+        this->FileManager.WriteToFile("\n");
 
-            this->FileManager.WriteToFile("\n\n    ");
+        std::vector<std::string> library_directories;
+
+        for(size_t i=0;i<Lib_Dirs.size();i++){
 
             std::string lib_dir = Lib_Dirs.at(i);
 
             this->Convert_CMAKE_Format(lib_dir);
 
-            this->FileManager.WriteToFile(lib_dir);
+            if(!this->Check_String_Existance(library_directories,lib_dir)){
+
+               library_directories.push_back(lib_dir);
+            }
+        }
+
+        library_directories.shrink_to_fit();
+
+
+        for(size_t i=0;i<Lib_Dirs.size();i++){
+
+            this->FileManager.WriteToFile("\n\t");
+
+            this->FileManager.WriteToFile(library_directories.at(i));
         }
 
         this->FileManager.WriteToFile("\n\n )");
+
+        this->Clear_String_Vector(library_directories);
      }
+
 
 
      const std::vector<std::string> & Libs =  this->Des_Reader->Get_Library_Files();
@@ -288,8 +338,6 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile(" PUBLIC ");
 
-     this->FileManager.WriteToFile("\n\n    ");
-
      const std::vector<std::string> & compiler_options = this->Des_Reader->Get_Compiler_Options();
 
      for(size_t i=0;i<compiler_options.size();i++){
@@ -310,8 +358,6 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
      this->FileManager.WriteToFile(this->Data_Ptr->source_file_name_witout_ext);          
 
      this->FileManager.WriteToFile(" PUBLIC ");
-
-     this->FileManager.WriteToFile("\n\n    ");
 
      const std::vector<std::string> & link_ops = this->Des_Reader->Get_Linker_Options();
 
@@ -543,6 +589,26 @@ void CMAKE_Target_Library_Builder::Clear_String_Vector(std::vector<std::string> 
      }
  }
 
+
+
+bool CMAKE_Target_Library_Builder::Check_String_Existance(std::vector<std::string> & list, std::string str){
+
+     size_t list_size = list.size();
+
+     bool is_exist = false;
+
+     for(size_t j=0;j<list_size;j++){
+
+         if(list.at(j) == str){
+
+            is_exist = true;
+
+            return is_exist;
+          }
+     }
+
+     return is_exist;
+}
 
 
 

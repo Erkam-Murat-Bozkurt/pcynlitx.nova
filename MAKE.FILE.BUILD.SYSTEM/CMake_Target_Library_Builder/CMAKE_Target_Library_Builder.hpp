@@ -52,6 +52,7 @@ private:
  void Clear_String_Memory(std::string & pointer);
  void CMAKE_Sub_Directory_File_Path_Determination(std::string & path);
  void CMAKE_SubDir_Determination(std::string & sub_dir_path);
+ bool Check_String_Existance(std::vector<std::string> & list, std::string str);
  MakeFile_Path_Determiner Path_Determiner;
  Descriptor_File_Reader * Des_Reader;
  StringOperator StrOpr;
