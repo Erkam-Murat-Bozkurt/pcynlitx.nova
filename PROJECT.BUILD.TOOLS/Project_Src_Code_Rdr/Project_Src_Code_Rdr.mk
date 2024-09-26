@@ -1,25 +1,25 @@
 
 
-SYS_INT=D:\pcynlitx.build\BASIC.TOOLS\Custom_System_Interface
-INT_TRANS=D:\pcynlitx.build\BASIC.TOOLS\IntToCharTranslater
-STRING_OPS=D:\pcynlitx.build\BASIC.TOOLS\StringOperator
-DIR_OPS=D:\pcynlitx.build\BASIC.TOOLS\DirectoryOperations
-CHAR_OPS=D:\pcynlitx.build\BASIC.TOOLS\CharOperator
-FILE_OPRS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
-DES_READ=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
-DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
-DES_SYN_CON=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
-SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
-HEAD_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
+SYS_INT=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\Custom_System_Interface
+INT_TRANS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\IntToCharTranslater
+STRING_OPS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\StringOperator
+DIR_OPS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\DirectoryOperations
+CHAR_OPS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\CharOperator
+FILE_OPRS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
+DES_READ=C:\Development.Files\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
+DES_DATA_COL=C:\Development.Files\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
+DES_SYN_CON=C:\Development.Files\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
+SOURCE_DETR=C:\Development.Files\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
+HEAD_DETR=C:\Development.Files\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
 
 
 
-GIT_PROC=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Data_Processor
-GIT_LIST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Writer
-GIT_REC=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Receiver
-GIT_IGN=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Ignoring_Files_Lister
-GIT_MOD_LST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Lister
-GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiver
+GIT_PROC=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Data_Processor
+GIT_LIST=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Writer
+GIT_REC=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Receiver
+GIT_IGN=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Ignoring_Files_Lister
+GIT_MOD_LST=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Lister
+GIT_MOD_RCV=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiver
 
 
 

@@ -282,6 +282,39 @@ bool Header_File_Determiner::Is_Header(std::string file_path){
 }
 
 
+bool Header_File_Determiner::Is_Config_File(std::string file_path){
+
+     
+     bool is_config_file = false;
+
+     std::string auto_conf_file_add = ".in";
+
+
+     std::string file_extention;
+
+     bool is_there_file_ext = false;
+
+     this->Extract_File_Extention(file_extention,file_path,is_there_file_ext);
+
+     if(!is_there_file_ext){
+
+         return is_config_file;
+     }
+
+     
+     bool include_header_ext = this->StringManager.CompareString(file_extention,auto_conf_file_add);
+
+     if(include_header_ext){
+
+        is_config_file = true;
+
+        return is_config_file;
+     }
+
+     return is_config_file;
+}
+
+
 void Header_File_Determiner::Extract_File_Extention(std::string & ext, std::string file_path, 
 
      bool & is_there_ext){

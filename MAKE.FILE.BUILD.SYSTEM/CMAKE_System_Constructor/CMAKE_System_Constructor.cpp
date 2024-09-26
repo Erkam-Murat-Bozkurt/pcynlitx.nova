@@ -27,6 +27,7 @@ CMAKE_System_Constructor::CMAKE_System_Constructor(char * DesPath, char opr_sis,
 
      this->opr_sis = opr_sis;
 
+     this->Des_Path = DesPath;
      
     this->build_type = build_type;
 
@@ -96,7 +97,7 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
      this->Des_Reader.Read_Descriptor_File();
 
 
-     char read_opr [] = "The project descriptor file read\n\n";
+     char read_opr [] = "\n\nThe project descriptor file read\n\n";
 
      std::cout << read_opr;
 
@@ -113,7 +114,7 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
      this->Data_Processor.Determine_Git_Repo_Info();  
 
 
-     char git_data [] = "The data for git version controller has been collected\n\n";
+     char git_data [] = "\nThe data for git version controller has been collected\n\n";
 
      std::cout << git_data;
 
@@ -131,7 +132,7 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
      this->Dep_Determiner.Collect_Dependency_Information();
 
 
-     char dependency_data [] = "Source file dependencies has been determined\n\n";
+     char dependency_data [] = "\n\nSource file dependencies has been determined\n\n";
 
      std::cout << dependency_data;
 
@@ -156,12 +157,13 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
 
      this->Compiler_Data_Pointer->shrink_to_fit();
 
+
      this->Perform_Data_Map_Construction();
+
 
      this->Perform_MakeFile_Construction();
 
-
-     char construction_result [] = "\n  The new makefiles have been constructed..\n";
+     char construction_result [] = "\nThe new makefiles have been constructed..\n";
 
      std::cout << "\n";
      std::cout << construction_result;
@@ -335,20 +337,31 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
 
      CMAKE_Target_Library_Builder Target_Builder;
 
-     Target_Builder.Receive_Compiler_Data_Pointer(this->Dep_Determiner.Get_Compiler_Data_Address());
-
      Target_Builder.Receive_Operating_System(this->opr_sis);
-
-     Target_Builder.Receive_DataMap(&this->DataMap);
 
      Target_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
+
+     Source_File_Dependency_Determiner Dp_Determiner(this->Des_Path,this->opr_sis);
+
+     Dp_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
+
+     Dp_Determiner.Receive_Git_Data_Processor(&this->Data_Processor);
+
+     
      for(size_t i=start;i<end;i++){
 
          std::string source_file_path = this->Compiler_Data_Pointer->at(i).source_file_path;
-         
+
+         Dp_Determiner.Simple_Dependency_Determination_For_Single_Source_File(source_file_path);
+
+         const Simple_Source_File_Dependency * data_ptr = Dp_Determiner.Get_Simple_File_Dependencies();
+
+         Target_Builder.Receive_Simple_Dependency_Data(data_ptr);
+
          Target_Builder.Build_MakeFile(source_file_path);
 
+         
          mt.lock();
 
          Target_Builder.Add_Target_Path_To_Directory_List();
@@ -357,7 +370,10 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
 
          mt.unlock();
 
+
          Target_Builder.Clear_Dynamic_Memory();
+
+         Dp_Determiner.Clear_Dynamic_Memory();
      }
 }
 

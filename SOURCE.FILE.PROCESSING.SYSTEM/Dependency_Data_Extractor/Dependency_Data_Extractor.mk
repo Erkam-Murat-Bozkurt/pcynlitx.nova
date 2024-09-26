@@ -2,33 +2,33 @@
 
 
 
-STRING_OPS=D:\pcynlitx.build\BASIC.TOOLS\StringOperator
-DIR_OPS=D:\pcynlitx.build\BASIC.TOOLS\DirectoryOperations
-CPP_OPS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
-CHAR_OPS=D:\pcynlitx.build\BASIC.TOOLS\CharOperator
-DIR_ENUM=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Directory_Enumerator
-HEAD_DET=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
-SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
-INT_TO_CHAR=D:\pcynlitx.build\BASIC.TOOLS\IntToCharTranslater
-DES_READER=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
-DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
-DES_FILE_SYNT_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
-SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
-SRC_INF_COL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector
-HDR_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
-SRC_PROCESSOR=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Processor
-SRC_READER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Src_Code_Rdr
-SYS_INT=D:\pcynlitx.build\BASIC.TOOLS\Custom_System_Interface
+STRING_OPS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\StringOperator
+DIR_OPS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\DirectoryOperations
+CPP_OPS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
+CHAR_OPS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\CharOperator
+DIR_ENUM=C:\Development.Files\pcynlitx.build\PROJECT.BUILD.TOOLS\Directory_Enumerator
+HEAD_DET=C:\Development.Files\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
+SOURCE_DETR=C:\Development.Files\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
+INT_TO_CHAR=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\IntToCharTranslater
+DES_READER=C:\Development.Files\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
+DES_DATA_COL=C:\Development.Files\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
+DES_FILE_SYNT_COL=C:\Development.Files\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
+SRC_DT_COL=C:\Development.Files\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
+SRC_INF_COL=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector
+HDR_PROC=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
+SRC_PROCESSOR=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Processor
+SRC_READER=C:\Development.Files\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Src_Code_Rdr
+SYS_INT=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\Custom_System_Interface
 
 
-GIT_PROC=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Data_Processor
-GIT_LIST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Writer
-GIT_REC=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Receiver
-GIT_IGN=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Ignoring_Files_Lister
-GIT_MOD_LST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Lister
-GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiver
+GIT_PROC=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Data_Processor
+GIT_LIST=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Writer
+GIT_REC=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Receiver
+GIT_IGN=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Ignoring_Files_Lister
+GIT_MOD_LST=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Lister
+GIT_MOD_RCV=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiver
 
-DEP_DAT_STCK=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Stack_Container
+DEP_DAT_STCK=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Stack_Container
 
 VPATH = $(DIR_OPS) $(CPP_OPS) $(CHAR_OPS) \
 		$(SOURCE_DETR) $(DIR_ENUM) \

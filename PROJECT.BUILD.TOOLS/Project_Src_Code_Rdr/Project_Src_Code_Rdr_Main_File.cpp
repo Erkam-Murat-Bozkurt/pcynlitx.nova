@@ -31,7 +31,7 @@ int main(int argc, char ** argv){
     }
 
 
-    Git_Data_Processor Git_Data_Proc('w');
+    Git_Data_Processor Git_Data_Proc('w','n');
 
     Git_Data_Proc.Receive_Descriptor_File_Path(argv[1]);
 
@@ -118,6 +118,9 @@ int main(int argc, char ** argv){
        std::cout << "\n Is main   file:" << Data_Combined_Name->is_main_file;
        
        std::cout << "\n Is header file:" << Data_Combined_Name->is_header_file;
+
+       std::cout << "\n Is config file:" << Data_Combined_Name->is_config_file;
+
 
        bool is_repo_file = Code_Rd.Check_Repo_File_Status_From_Directory_File_Name_Combination(Data_Combined_Name->cmbn_name);
 

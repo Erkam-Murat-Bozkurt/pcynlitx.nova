@@ -43,6 +43,8 @@ void Source_File_Dependency_Determiner::Clear_Object_Memory(){
 
      this->DepSelector.Clear_Object_Memory();
 
+     this->Simple_Dep_Extractor.Clear_Dynamic_Memory();
+
      this->Clear_Dynamic_Memory();
 }
 
@@ -186,28 +188,17 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
       this->Warehouse_Path = this->DepSelector.Get_Warehouse_Path();
 
-      std::cout << "\nThe interpretation of dependency data started";
-
       this->Com_Data_Extractor.Receive_Dependency_Data(&this->DepSelector);
 
       this->Com_Data_Extractor.Extract_Compiler_Data();
-
-      std::cout << "\nThe interpretation of dependency data complated";
 
       this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
       this->Construct_Dependency_Map();
 
-      std::cout << "\nThe dependency map constructed";
-
       this->Re_Arrange_Priorities();
 
-      std::cout << "\nThe compiler data re-arranged";
-
       this->Order_Priorities();
-
-      std::cout << "\nThe priorities re-ordered.";
-      std::cout << "\n";
 
       this->Clear_Dynamic_Memory();
 

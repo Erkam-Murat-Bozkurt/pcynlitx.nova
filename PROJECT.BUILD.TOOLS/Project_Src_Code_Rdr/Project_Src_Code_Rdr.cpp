@@ -251,8 +251,10 @@ void Project_Src_Code_Rdr::Read_Source_Code(int start_point, int end_point){
 
          bool is_src_file = Src_Determiner.Is_Source_File(file_sys_path);
 
+         bool is_config_  = Hdr_Determiner.Is_Config_File(file_sys_path);
 
-         if(is_header || is_src_file){
+
+         if(is_header || is_src_file || is_config_){
                              
             std::string class_function_pattern;
 
@@ -269,14 +271,12 @@ void Project_Src_Code_Rdr::Read_Source_Code(int start_point, int end_point){
             buffer.is_header_file = false;
             buffer.is_main_file   = false;
             buffer.is_source_file = false;
+            buffer.is_config_file = false;
             buffer.inclusion_number = 0;
-
 
             if(is_header){
 
                buffer.is_header_file = true;
-               buffer.is_main_file   = false;
-               buffer.is_source_file = false;
             }
 
             FileManager.Read_File(file_sys_path);
@@ -302,8 +302,6 @@ void Project_Src_Code_Rdr::Read_Source_Code(int start_point, int end_point){
                    if(is_main_key_exist){
 
                       buffer.is_main_file   = true;
-                      buffer.is_header_file = false;
-                      buffer.is_source_file = false;
                    }
 
                                 
@@ -318,12 +316,17 @@ void Project_Src_Code_Rdr::Read_Source_Code(int start_point, int end_point){
                    if(is_member_function_key_exist){      
 
                       buffer.is_source_file = true;
-                      buffer.is_header_file = false;
-                      buffer.is_main_file   = false;
                    }
                 }
 
+                if(is_config_){
+
+                   buffer.is_config_file = true;
+                }
+
                 bool is_include_decleration = this->Include_Decleration_Test(string_line,StringManager);
+
+                //std::cout << "\n is_include_decleration:" << is_include_decleration;
 
                 if(is_include_decleration){
 
@@ -359,10 +362,20 @@ void Project_Src_Code_Rdr::Read_Source_Code(int start_point, int end_point){
             
             StringManager.Clear_Dynamic_Memory();
 
-            this->Determine_File_Name(file_sys_path,buffer.file_name);
 
-            this->Determine_File_Combined_Name(file_sys_path,buffer.cmbn_name);
-                        
+            if(buffer.is_config_file){
+
+                 this->Determine_Config_File_Name(file_sys_path,buffer.file_name);
+
+                 this->Determine_File_Combined_Name_For_Config_File(file_sys_path,buffer.cmbn_name);
+            }
+            else{
+
+                  this->Determine_File_Name(file_sys_path,buffer.file_name);
+
+                  this->Determine_File_Combined_Name(file_sys_path,buffer.cmbn_name);
+            }
+
 
             if(is_src_file){
 
@@ -389,6 +402,10 @@ void Project_Src_Code_Rdr::Read_Source_Code(int start_point, int end_point){
 
 
 }
+
+
+
+
 
 
 bool Project_Src_Code_Rdr::Is_There_Upper_Directory_Symbol(std::string inc_dec){
@@ -620,6 +637,50 @@ void Project_Src_Code_Rdr::Determine_File_Name(std::string path, std::string & f
      file_name.shrink_to_fit();
 }
 
+void Project_Src_Code_Rdr::Determine_Config_File_Name(std::string path, std::string & name){
+
+
+     this->Clear_String_Memory(name);
+
+     size_t file_path_size = path.length();
+
+     size_t dir_size = file_path_size;
+
+     for(size_t i=file_path_size;i>0;i--){
+
+        if((path[i] == '/') || (path[i] == '\\')){
+
+          break;
+        }
+        else{
+
+            dir_size--;
+        }
+     }
+
+
+     size_t name_end = file_path_size;
+
+     for(size_t i=file_path_size;i>0;i--){
+
+        if(path[i] == '.'){
+
+          break;
+        }
+        else{
+
+            name_end--;
+        }
+     }
+
+     for(size_t i=dir_size+1;i<name_end;i++){
+
+         name.push_back(path[i]);        
+     }
+
+     name.shrink_to_fit();
+}
+
 void Project_Src_Code_Rdr::Determine_File_Combined_Name(std::string path, std::string & file_name){
 
      this->Clear_String_Memory(file_name);
@@ -665,6 +726,69 @@ void Project_Src_Code_Rdr::Determine_File_Combined_Name(std::string path, std::s
 
      file_name.shrink_to_fit();
 }
+
+
+void Project_Src_Code_Rdr::Determine_File_Combined_Name_For_Config_File(std::string path, std::string & file_name){
+
+     this->Clear_String_Memory(file_name);
+
+     size_t file_path_size = path.length();
+
+     size_t upper_dir_size = file_path_size;
+
+     size_t root_dir_size  = this->root_directory.length(); 
+
+     
+     int dir_counter = 0;
+
+     for(size_t i=file_path_size;i>root_dir_size;i--){
+
+        if((path[i] == '/') || (path[i] == '\\')){
+
+           dir_counter++;
+
+           if(dir_counter>1){
+
+              break;
+           }  
+           else{
+
+                 upper_dir_size--;
+           }      
+        }
+        else{
+
+            upper_dir_size--;
+        }
+     }
+
+     size_t file_name_end = file_path_size;
+
+     for(size_t i=file_path_size;i>upper_dir_size;i--){
+
+          if(path[i] == '.'){
+
+             break;             
+          }
+          else{
+
+             file_name_end--;
+          }
+     }
+
+     size_t file_name_size = file_path_size - upper_dir_size;
+
+     int index = 0;
+
+     for(size_t i=upper_dir_size+1;i<file_name_end;i++){
+
+         file_name.push_back(path[i]);
+     }
+
+     file_name.shrink_to_fit();
+}
+
+
 
 
 bool Project_Src_Code_Rdr::Include_Decleration_Test(std::string string, StringOperator & str_opr)

@@ -26,7 +26,7 @@ int main(int argc, char ** argv){
     }
 
 
-    Git_Data_Processor Data_Processor('w');
+    Git_Data_Processor Data_Processor('w','n');
 
     Data_Processor.Receive_Descriptor_File_Path(argv[1]);
 

@@ -1,48 +1,49 @@
 
-STRING_OPS=D:\pcynlitx.build\BASIC.TOOLS\StringOperator
-DIR_OPS=D:\pcynlitx.build\BASIC.TOOLS\DirectoryOperations
-CPP_OPS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
-CHAR_OPS=D:\pcynlitx.build\BASIC.TOOLS\CharOperator
-DIR_ENUM=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Directory_Enumerator
-INT_TO_CHAR=D:\pcynlitx.build\BASIC.TOOLS\IntToCharTranslater
-SYS_INT=D:\pcynlitx.build\BASIC.TOOLS\Custom_System_Interface
+STRING_OPS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\StringOperator
+DIR_OPS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\DirectoryOperations
+CPP_OPS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
+CHAR_OPS=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\CharOperator
+INT_TO_CHAR=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\IntToCharTranslater
+SYS_INT=C:\Development.Files\pcynlitx.build\BASIC.TOOLS\Custom_System_Interface
 
 
 
-DES_READER=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
-DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
-SYNT_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
+DES_READER=C:\Development.Files\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
+DES_DATA_COL=C:\Development.Files\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
+SYNT_COL=C:\Development.Files\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
 
-SRC_READER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Src_Code_Rdr
-
-
-HEAD_DET=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
-SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
-SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
+SRC_READER=C:\Development.Files\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Src_Code_Rdr
 
 
-SRC_INF_CL_SF=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector_For_Single_File
-SRC_INF_CL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector
-SRC_COM_DT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Compiler_Data_Extractor
-SRC_DEP_SL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector
-SRC_DEP_SL_SF=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector_For_Single_File
-HDR_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
-DEP_DAT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Extractor
-SRC_PROCESSOR=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Processor
-SRC_DATA_SETTER=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Data_Setter
-QUICK_SRC_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Quick_Src_Dependency_Extractor
+HEAD_DET=C:\Development.Files\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
+SRC_DT_COL=C:\Development.Files\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
+SOURCE_DETR=C:\Development.Files\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
 
 
-GIT_PROC=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Data_Processor
-GIT_LIST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Writer
-GIT_REC=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Receiver
-GIT_IGN=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Ignoring_Files_Lister
-GIT_MOD_LST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Lister
-GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiver
+SRC_INF_CL_SF=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector_For_Single_File
+SRC_INF_CL=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector
+SRC_COM_DT_EXT=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Compiler_Data_Extractor
+SRC_DEP_SL=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector
+SRC_DEP_SL_SF=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector_For_Single_File
+HDR_PROC=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
+DEP_DAT_EXT=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Extractor
+SRC_PROCESSOR=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Processor
+SRC_DATA_SETTER=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Data_Setter
+QUICK_SRC_EXT=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Quick_Src_Dependency_Extractor
 
-DEP_DAT_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Processor
-DEP_DAT_STCK=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Stack_Container
-HDR_DEP_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_Dependency_Data_Extractor
+
+GIT_PROC=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Data_Processor
+GIT_LIST=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Writer
+GIT_REC=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Receiver
+GIT_IGN=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Ignoring_Files_Lister
+GIT_MOD_LST=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Lister
+GIT_MOD_RCV=C:\Development.Files\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiver
+
+DEP_DAT_PROC=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Processor
+DEP_DAT_STCK=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Stack_Container
+HDR_DEP_EXT=C:\Development.Files\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_Dependency_Data_Extractor
+
+DIR_ENUM=C:\Development.Files\pcynlitx.build\PROJECT.BUILD.TOOLS\Directory_Enumerator
 
 
 

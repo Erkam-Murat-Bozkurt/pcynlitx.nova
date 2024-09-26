@@ -93,7 +93,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
      this->Des_Reader.Read_Descriptor_File();
 
 
-     char read_opr [] = "\n\n   The project descriptor file read\n\n";
+     char read_opr [] = "\n\nThe project descriptor file read\n\n";
 
      std::cout << read_opr;
 
@@ -110,7 +110,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
      this->Data_Processor.Determine_Git_Repo_Info();  
 
 
-     char git_data [] = " The data for git version controller has been collected\n\n";
+     char git_data [] = "\nThe data for git version controller has been collected\n\n";
 
      std::cout << git_data;
 
@@ -128,7 +128,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
      this->Dep_Determiner.Collect_Dependency_Information(file_path);
 
 
-     char dependency_data [] = " Source file dependencies has been determined\n\n";
+     char dependency_data [] = "\nSource file dependencies has been determined\n\n";
 
      std::cout << dependency_data;
 
@@ -401,11 +401,11 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      std::string directory_list_file_path, cmake_sub_dir;
 
+
      this->CMAKE_SubDir_Determination(cmake_sub_dir);
 
 
      this->CMAKE_Sub_Directory_File_Path_Determination(directory_list_file_path);
-
 
 
      std::string sub_directory_command = "add_subdirectory(" + cmake_sub_dir + ")";
@@ -554,7 +554,9 @@ void CMAKE_Executable_Target_Constructor::CMAKE_Sub_Directory_File_Path_Determin
 
 void CMAKE_Executable_Target_Constructor::CMAKE_SubDir_Determination(std::string & sub_dir_path){
 
-     std::string git_dir = this->Data_Ptr->src_git_record_dir;
+     std::string git_dir = 
+     
+     this->Des_Reader.Get_Repo_Directory_Location() + "\\" + this->Data_Ptr->src_git_record_dir;
 
 
      if(this->opr_sis == 'w'){

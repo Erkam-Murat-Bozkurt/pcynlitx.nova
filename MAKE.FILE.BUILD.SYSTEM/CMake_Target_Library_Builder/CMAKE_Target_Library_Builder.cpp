@@ -79,6 +79,12 @@ void CMAKE_Target_Library_Builder::Receive_DataMap(std::unordered_map<std::strin
 }
 
 
+void CMAKE_Target_Library_Builder::Receive_Simple_Dependency_Data(const Simple_Source_File_Dependency * data_ptr){
+
+     this->dep_data_ptr = data_ptr;
+}
+
+
 Compiler_Data * CMAKE_Target_Library_Builder::Find_Compiler_Data_From_Source_File_Path(std::string path)
 {
     try {        
@@ -102,14 +108,9 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->Memory_Delete_Condition = false;
 
-     this->Path_Determiner.Set_CMAKE_Construction_Status(true);
 
-     this->Path_Determiner.Determine_MakeFile_Data(file_path);
+     std::string file_dir = this->dep_data_ptr->dir;
 
-     this->Data_Ptr = this->Find_Compiler_Data_From_Source_File_Path(file_path);
-
-     
-     std::string file_dir = this->Data_Ptr->src_sys_dir;
 
      std::string CMake_File_Path = file_dir;
 
@@ -123,7 +124,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
         CMake_File_Path.push_back('\\');
      }
 
-     std::string file_name = this->Data_Ptr->source_file_name_witout_ext  + ".cmake";
+     std::string file_name = this->dep_data_ptr->source_file_name_without_ext  + ".cmake";
 
 
      CMake_File_Path = CMake_File_Path +  file_name;
@@ -138,7 +139,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile("add_library(");
 
-     this->FileManager.WriteToFile(this->Data_Ptr->source_file_name_witout_ext);          
+     this->FileManager.WriteToFile(this->dep_data_ptr->source_file_name_without_ext);          
 
      this->FileManager.WriteToFile("\n");
 
@@ -146,7 +147,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile("  OBJECT ");
 
-     std::string src_file_path = this->Data_Ptr->source_file_path;
+     std::string src_file_path = this->dep_data_ptr->source_file_path;
 
      this->Convert_CMAKE_Format(src_file_path);
 
@@ -156,14 +157,9 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
      std::vector<std::string> dependent_header_paths;
 
 
-     for(size_t i=0;i<this->Data_Ptr->dependent_headers.size();i++){
-
-
-         std::string dep_header_dir = this->Data_Ptr->dependent_headers_dir.at(i);
+     for(size_t i=0;i<this->dep_data_ptr->Dependent_Header_Paths.size();i++){
       
-         std::string dep_header_name = this->Data_Ptr->dependent_headers.at(i);
-
-         std::string dep_header_path = dep_header_dir + "\\" + dep_header_name;
+         std::string dep_header_path = this->dep_data_ptr->Dependent_Header_Paths.at(i);
 
          this->Convert_CMAKE_Format(dep_header_path);
 
@@ -203,7 +199,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
      
      this->FileManager.WriteToFile("target_include_directories(");
 
-     this->FileManager.WriteToFile(this->Data_Ptr->source_file_name_witout_ext);     
+     this->FileManager.WriteToFile(this->dep_data_ptr->source_file_name_without_ext);     
 
      this->FileManager.WriteToFile(" PUBLIC ");
      
@@ -212,20 +208,38 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      std::vector<std::string> dependent_header_dirs;
 
-     for(size_t i=0;i<this->Data_Ptr->dependent_headers.size();i++){
+     for(size_t i=0;i<this->dep_data_ptr->Dependent_Header_Directories.size();i++){
 
-         std::string dep_header_dir = this->Data_Ptr->dependent_headers_dir.at(i);
+         std::string dep_header_dir = this->dep_data_ptr->Dependent_Header_Directories.at(i);
       
-         this->Convert_CMAKE_Format(dep_header_dir);
-
          if(!this->Check_String_Existance(dependent_header_dirs,dep_header_dir)){
 
             dependent_header_dirs.push_back(dep_header_dir);
          }
      }
 
-     dependent_header_dirs.shrink_to_fit();
+     for(size_t i=0;i<dependent_header_dirs.size();i++){
 
+         std::string dep_header_dir = dependent_header_dirs.at(i);
+      
+         std::string upper_dir = this->Search_For_New_Upper_Directory(dependent_header_dirs,dep_header_dir);
+
+         if(!this->Check_String_Existance(dependent_header_dirs,dep_header_dir)){
+
+            dependent_header_dirs.push_back(upper_dir);
+         }
+     }
+
+     
+    dependent_header_dirs.shrink_to_fit();
+
+     for(size_t i=0;i<dependent_header_dirs.size();i++){
+
+         this->Convert_CMAKE_Format(dependent_header_dirs.at(i));
+     }
+
+
+     dependent_header_dirs.shrink_to_fit();
 
 
      for(size_t i=0;i<dependent_header_dirs.size();i++){
@@ -252,7 +266,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
         this->FileManager.WriteToFile("target_link_directories(");
 
-        this->FileManager.WriteToFile(this->Data_Ptr->source_file_name_witout_ext);          
+        this->FileManager.WriteToFile(this->dep_data_ptr->source_file_name_without_ext);          
 
         this->FileManager.WriteToFile(" PUBLIC ");
 
@@ -297,7 +311,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
         this->FileManager.WriteToFile("target_link_libraries(");
 
-        this->FileManager.WriteToFile(this->Data_Ptr->source_file_name_witout_ext);          
+        this->FileManager.WriteToFile(this->dep_data_ptr->source_file_name_without_ext);          
 
         this->FileManager.WriteToFile(" PUBLIC ");
 
@@ -334,7 +348,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile("target_compile_options(");
 
-     this->FileManager.WriteToFile(this->Data_Ptr->source_file_name_witout_ext);          
+     this->FileManager.WriteToFile(this->dep_data_ptr->source_file_name_without_ext);          
 
      this->FileManager.WriteToFile(" PUBLIC ");
 
@@ -355,7 +369,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile("target_link_options(");
 
-     this->FileManager.WriteToFile(this->Data_Ptr->source_file_name_witout_ext);          
+     this->FileManager.WriteToFile(this->dep_data_ptr->source_file_name_without_ext);          
 
      this->FileManager.WriteToFile(" PUBLIC ");
 
@@ -424,8 +438,7 @@ void CMAKE_Target_Library_Builder::CMAKE_Sub_Directory_File_Path_Determination(s
 
 void CMAKE_Target_Library_Builder::CMAKE_SubDir_Determination(std::string & sub_dir_path){
 
-     std::string git_dir = this->Data_Ptr->src_git_record_dir;
-
+     std::string git_dir = this->dep_data_ptr->dir;
 
      if(this->opr_sis == 'w'){
 
@@ -491,9 +504,9 @@ void CMAKE_Target_Library_Builder::CMAKE_SubDir_Determination(std::string & sub_
 
 void CMAKE_Target_Library_Builder::Construct_SubDirectory_List_File(){
 
-     std::string file_name = this->Data_Ptr->source_file_name_witout_ext  + ".cmake";
+     std::string file_name = this->dep_data_ptr->source_file_name_without_ext  + ".cmake";
 
-     std::string file_dir = this->Data_Ptr->src_sys_dir;
+     std::string file_dir = this->dep_data_ptr->dir;
 
      std::string include_command = "include(" + file_name + ")";
 
@@ -559,6 +572,64 @@ std::string CMAKE_Target_Library_Builder::Get_Construction_Dir(){
      this->Find_Construction_Directory(dir,Make_File_Path);
 
      return dir;
+}
+
+
+
+
+std::string CMAKE_Target_Library_Builder::Search_For_New_Upper_Directory(std::vector<std::string> & dir_list,
+
+     std::string dir){
+     
+     std::string upper_directory;
+
+     this->Find_Upper_Directory(upper_directory,dir);
+        
+     bool is_exist = this->Check_String_Existance(dir_list,upper_directory);
+
+     std::string repo_dir = this->Des_Reader->Get_Repo_Directory_Location();
+
+     if(!is_exist){
+
+         size_t root_dir_size = repo_dir.size();
+
+         size_t next_dir_size = upper_directory.size();
+
+         if(next_dir_size > root_dir_size){
+
+            dir_list.push_back(upper_directory);
+         }
+
+         dir_list.shrink_to_fit();
+      }
+
+      return upper_directory;
+}
+
+
+
+void CMAKE_Target_Library_Builder::Find_Upper_Directory(std::string & upper_dir, std::string dir){
+
+     size_t dir_size = dir.length();
+
+     size_t end_point = 0;
+
+     for(size_t i=dir_size;i>0;i--){
+
+         if((dir[i]=='\\') || (dir[i]=='/')){
+
+             end_point = i;
+
+             break;
+         }
+     }
+
+     for(size_t i=0;i<end_point;i++){
+
+         upper_dir.push_back(dir[i]);
+     }
+
+     upper_dir.shrink_to_fit();
 }
 
 

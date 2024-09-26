@@ -225,6 +225,8 @@ bool Header_File_Processor::Is_Header(std::string file_path){
 
      std::string source_file_ext_cc  = ".cc";
 
+     std::string config_file = ".in";
+
 
      std::string file_extention;
 
@@ -276,6 +278,17 @@ bool Header_File_Processor::Is_Header(std::string file_path){
              this->is_header_file = true;
 
             return this->is_header_file;
+          }
+          else{
+
+               include_header_ext = this->StringManager.CompareString(file_extention,config_file);
+
+               if(include_header_ext){
+        
+                  this->is_header_file = true;
+
+                 return this->is_header_file;
+               }
           }
     }
 

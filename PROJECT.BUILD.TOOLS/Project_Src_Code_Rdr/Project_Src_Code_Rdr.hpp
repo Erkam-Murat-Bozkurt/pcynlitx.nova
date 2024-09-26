@@ -37,6 +37,7 @@ struct FileData
    bool is_source_file;
    bool is_main_file;   
    bool is_header_file;
+   bool is_config_file;
 };
 
 /*
@@ -81,7 +82,9 @@ protected:
  void Delete_Spaces_on_String(std::string * str);
  void Receive_File_Paths();
  void Determine_File_Name(std::string path, std::string & name);
+ void Determine_Config_File_Name(std::string path, std::string & name);
  void Determine_File_Combined_Name(std::string path, std::string & file_name);
+ void Determine_File_Combined_Name_For_Config_File(std::string path, std::string & file_name);
  bool Include_Decleration_Test(std::string string, StringOperator & str_opr);
  void Determine_Class_Function_Pattern(std::string file_path,std::string & pattern);
  void Clear_Buffer_Memory(FileData & buffer);

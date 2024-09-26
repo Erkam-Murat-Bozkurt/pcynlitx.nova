@@ -38,6 +38,7 @@ public:
  void Add_Target_Path_To_Directory_List();
  void Construct_SubDirectory_List_File();
  void Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr);
+ void Receive_Simple_Dependency_Data(const Simple_Source_File_Dependency * data);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Operating_System(char opr_sis);
  void Receive_DataMap(std::unordered_map<std::string, Compiler_Data> * ptr);
@@ -53,6 +54,9 @@ private:
  void CMAKE_Sub_Directory_File_Path_Determination(std::string & path);
  void CMAKE_SubDir_Determination(std::string & sub_dir_path);
  bool Check_String_Existance(std::vector<std::string> & list, std::string str);
+ void Find_Upper_Directory(std::string & upper_dir, std::string dir);
+ std::string Search_For_New_Upper_Directory(std::vector<std::string> & dir_list,std::string dir);
+ const Simple_Source_File_Dependency * dep_data_ptr;
  MakeFile_Path_Determiner Path_Determiner;
  Descriptor_File_Reader * Des_Reader;
  StringOperator StrOpr;

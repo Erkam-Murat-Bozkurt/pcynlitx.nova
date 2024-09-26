@@ -90,6 +90,7 @@ protected:
  std::vector<Search_Data> Dependent_Headers;
  std::vector<std::string> External_Header_Files;
  std::unordered_map<std::string, Search_Data *> Map_Inc_Dec;
+ int search_counter;
  bool Memory_Delete_Condition;
 };
 

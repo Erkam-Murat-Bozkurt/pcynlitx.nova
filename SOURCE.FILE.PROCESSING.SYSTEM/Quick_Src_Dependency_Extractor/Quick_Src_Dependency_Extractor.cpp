@@ -69,6 +69,8 @@ void Quick_Src_Dependency_Extractor::Receive_Git_Data_Processor(Git_Data_Process
 
 void Quick_Src_Dependency_Extractor::Extract_Dependency_Data(std::string src_file_path){
 
+     this->Clear_Dynamic_Memory();
+
      this->Extract_Dependency_Search_Data(src_file_path);
 
      std::string cmb_name;
@@ -78,6 +80,7 @@ void Quick_Src_Dependency_Extractor::Extract_Dependency_Data(std::string src_fil
      this->Dep_Data.Combined_Header_Name = cmb_name;
 
      this->Set_Dependency_Data(src_file_path);
+
 }
 
 
@@ -137,8 +140,6 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
      this->Data_Setter.Copy_String(this->Dep_Data.object_file_name,object_file_name);
 
 
-
-
      this->Clear_String_Memory(src_file_name);
 
      this->Clear_String_Memory(file_dir);
@@ -172,6 +173,10 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
             this->Dep_Data.Include_Declerations.push_back(this->Dep_Search_Data.at(i).include_decleration);
         }
      }
+
+     this->Dep_Data.Dependent_Header_Directories.shrink_to_fit();
+
+     this->Dep_Data.Include_Declerations.shrink_to_fit();
 }
 
 
@@ -409,6 +414,8 @@ void Quick_Src_Dependency_Extractor::Clear_Dynamic_Memory()
       this->Clear_Search_Data();
 
       this->Clear_External_Headers_Memory();
+
+      this->Clear_Dependency_Data();
 }
 
 void Quick_Src_Dependency_Extractor::Clear_External_Headers_Memory(){

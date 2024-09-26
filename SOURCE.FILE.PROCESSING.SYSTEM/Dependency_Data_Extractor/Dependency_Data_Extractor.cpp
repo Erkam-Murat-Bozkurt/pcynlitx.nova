@@ -18,6 +18,8 @@
 Dependency_Data_Extractor::Dependency_Data_Extractor()
 {
    this->Memory_Delete_Condition = false;
+
+   this->search_counter = 0;
 }
 
 
@@ -81,6 +83,8 @@ void Dependency_Data_Extractor::Recursive_Source_File_Dependency_Determination(s
      Head.search_complated = false;
 
      this->Search_Dependencies(Head);
+
+     int header_num = 0;
     
      for(size_t i=0;i<this->Dependent_Headers.size();i++){
 
@@ -161,6 +165,9 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data)
 {
     std::string filePath = Src_Data.path;
 
+    this->search_counter++;
+
+
     int inclusion_number = this->Determine_Inclusion_Number(filePath);          /*  The inclusion number determined */
 
     Src_Data.search_complated = true;
@@ -168,25 +175,57 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data)
     Src_Data.dep_counter = inclusion_number;
 
 
+   
+
+
+
+
+
     // THE START OF THE DEPENDENCY SEACRH
 
     if(inclusion_number>0){
-
+       
        this->Include_Declerations = this->Get_File_Include_Delarations(filePath);
+
 
        for(size_t k=0;k<this->Include_Declerations->size();k++){
 
-          std::string inc_dec = this->Include_Declerations->at(k);
+           std::string inc_dec = this->Include_Declerations->at(k);
+       
+           if(this->Check_New_Dependency_Status(inc_dec)){
 
-          if(this->Check_New_Dependency_Status(inc_dec)){
+              Search_Data buffer;
 
-             Search_Data buffer;
+              this->Determine_Dependent_File_Data_From_Decleration(buffer,inc_dec);
 
-             this->Determine_Dependent_File_Data_From_Decleration(buffer,inc_dec);
+              this->Add_Search_Data(buffer);
+           }
+       }   
 
-             this->Add_Search_Data(buffer);
-          }
-       }      
+       for(int j=0;j<this->Dependent_Headers.size();j++){
+
+          Search_Data SData = this->Dependent_Headers.at(j);
+
+          std::string searchPath = SData.path;
+
+          this->Include_Declerations = this->Get_File_Include_Delarations(searchPath);
+
+          for(size_t k=0;k<this->Include_Declerations->size();k++){
+
+              std::string inc_dec = this->Include_Declerations->at(k);
+       
+              if(this->Check_New_Dependency_Status(inc_dec)){
+
+                 Search_Data buffer;
+
+                 this->Determine_Dependent_File_Data_From_Decleration(buffer,inc_dec);
+
+                 this->Add_Search_Data(buffer);
+
+                 this->Search_Dependencies(buffer);
+              }
+         }      
+       }
     }
     else{
 

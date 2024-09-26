@@ -58,6 +58,7 @@ protected:
  Source_File_Dependency_Determiner Dep_Determiner;
  std::vector<Compiler_Data> * Compiler_Data_Pointer;
  Custom_System_Interface * SysInt;
+ char * Des_Path;
  std::vector<std::thread> threadPool;
  std::unordered_map<std::string, Compiler_Data> DataMap;
  std::mutex mtx;

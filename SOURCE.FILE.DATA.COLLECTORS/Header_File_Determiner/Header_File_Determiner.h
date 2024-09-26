@@ -30,9 +30,9 @@ public:
  virtual ~Header_File_Determiner();
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  bool Is_Header(std::string file_path);
+ bool Is_Config_File(std::string file_path);
  bool Is_This_Repo_Header(std::string file_path);
  bool Include_Decleration_Test(std::string string);
- bool Is_this_file_included_on_anywhere(std::string file_path);
  void Determine_Header_File_Directory(std::string path);
  void Determine_Header_File_Name(std::string path);
  void Determine_Header_File_Name_With_Extention(std::string path);
