@@ -63,12 +63,14 @@ struct Simple_Source_File_Dependency
   std::string Combined_Header_Name;
   std::string dir;
   std::string object_file_name;
+  std::string cmake_target_name;
   std::vector<std::string> External_Headers;
   std::vector<std::string> Dependent_Header_Names;
   std::vector<std::string> Dependent_Header_Directories;
   std::vector<std::string> Dependent_Header_Paths;
   std::vector<std::string> Include_Declerations;
   int included_file_hdr_num;
+  bool file_name_similarity_status;
 };
 
 
@@ -103,6 +105,8 @@ protected:
  void Clear_External_Headers_Memory();
  void Clear_Dependency_Data();
  void Clear_Vector_Memory(std::vector<std::string> & str);
+ bool Is_There_File_Name_Similarity(std::string fileName);
+ void Extract_Directory_Short_Paths(std::string sys_dir, std::vector<std::string> & sort_dir_path);
  Source_File_Data_Setter Data_Setter;
  Simple_Source_File_Dependency Dep_Data;
  Dependency_Data_Extractor Dep_Extractor;

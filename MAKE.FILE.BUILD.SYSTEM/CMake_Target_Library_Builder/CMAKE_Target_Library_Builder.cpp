@@ -124,7 +124,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
         CMake_File_Path.push_back('\\');
      }
 
-     std::string file_name = this->dep_data_ptr->source_file_name_without_ext  + ".cmake";
+     std::string file_name = this->dep_data_ptr->cmake_target_name  + ".cmake";
 
 
      CMake_File_Path = CMake_File_Path +  file_name;
@@ -139,7 +139,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile("add_library(");
 
-     this->FileManager.WriteToFile(this->dep_data_ptr->source_file_name_without_ext);          
+     this->FileManager.WriteToFile(this->dep_data_ptr->cmake_target_name);          
 
      this->FileManager.WriteToFile("\n");
 
@@ -199,7 +199,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
      
      this->FileManager.WriteToFile("target_include_directories(");
 
-     this->FileManager.WriteToFile(this->dep_data_ptr->source_file_name_without_ext);     
+     this->FileManager.WriteToFile(this->dep_data_ptr->cmake_target_name);     
 
      this->FileManager.WriteToFile(" PUBLIC ");
      
@@ -266,7 +266,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
         this->FileManager.WriteToFile("target_link_directories(");
 
-        this->FileManager.WriteToFile(this->dep_data_ptr->source_file_name_without_ext);          
+        this->FileManager.WriteToFile(this->dep_data_ptr->cmake_target_name);          
 
         this->FileManager.WriteToFile(" PUBLIC ");
 
@@ -311,7 +311,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
         this->FileManager.WriteToFile("target_link_libraries(");
 
-        this->FileManager.WriteToFile(this->dep_data_ptr->source_file_name_without_ext);          
+        this->FileManager.WriteToFile(this->dep_data_ptr->cmake_target_name);          
 
         this->FileManager.WriteToFile(" PUBLIC ");
 
@@ -348,7 +348,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile("target_compile_options(");
 
-     this->FileManager.WriteToFile(this->dep_data_ptr->source_file_name_without_ext);          
+     this->FileManager.WriteToFile(this->dep_data_ptr->cmake_target_name);          
 
      this->FileManager.WriteToFile(" PUBLIC ");
 
@@ -369,7 +369,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile("target_link_options(");
 
-     this->FileManager.WriteToFile(this->dep_data_ptr->source_file_name_without_ext);          
+     this->FileManager.WriteToFile(this->dep_data_ptr->cmake_target_name);          
 
      this->FileManager.WriteToFile(" PUBLIC ");
 
@@ -504,7 +504,7 @@ void CMAKE_Target_Library_Builder::CMAKE_SubDir_Determination(std::string & sub_
 
 void CMAKE_Target_Library_Builder::Construct_SubDirectory_List_File(){
 
-     std::string file_name = this->dep_data_ptr->source_file_name_without_ext  + ".cmake";
+     std::string file_name = this->dep_data_ptr->cmake_target_name  + ".cmake";
 
      std::string file_dir = this->dep_data_ptr->dir;
 

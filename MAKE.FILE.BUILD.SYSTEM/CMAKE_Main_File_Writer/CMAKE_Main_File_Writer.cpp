@@ -261,7 +261,7 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
      int target_counter = 0;
 
-     std::string project_target_list;
+     std::vector<std::string> project_target_list;
 
      std::string space_string = " ";
 
@@ -269,19 +269,15 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
          std::string target_name = "$<TARGET_OBJECTS:" +
          
-          this->Compiler_Data_Pointer->at(i).source_file_name_witout_ext + ">";
+         this->Compiler_Data_Pointer->at(i).cmake_target_name + ">";
 
-         project_target_list = project_target_list + space_string + target_name;   
+         if(!this->Check_String_Existance(project_target_list,target_name)){
 
-         target_counter++;
-
-         if(target_counter>1){
-
-             project_target_list = project_target_list + "\n\t";
-
-             target_counter = 0;
-         }      
+            project_target_list.push_back(target_name);
+         }
      }
+
+     project_target_list.shrink_to_fit();
 
      this->FileManager.WriteToFile("\n\n");
 
@@ -289,11 +285,14 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
      this->FileManager.WriteToFile(project_name);
 
-
      this->FileManager.WriteToFile("_lib ");
 
+     for(size_t i=0;i<project_target_list.size();i++){
 
-     this->FileManager.WriteToFile(project_target_list);
+         this->FileManager.WriteToFile("\n\t");
+
+         this->FileManager.WriteToFile(project_target_list.at(i));
+     }
 
      this->FileManager.WriteToFile("\n\n");
 
@@ -356,3 +355,24 @@ void CMAKE_Main_File_Writer::Convert_CMAKE_Format(std::string & str){
          }
      }
 }
+
+
+bool CMAKE_Main_File_Writer::Check_String_Existance(std::vector<std::string> & list, std::string str){
+
+     size_t list_size = list.size();
+
+     bool is_exist = false;
+
+     for(size_t j=0;j<list_size;j++){
+
+         if(list.at(j) == str){
+
+            is_exist = true;
+
+            return is_exist;
+          }
+     }
+
+     return is_exist;
+}
+

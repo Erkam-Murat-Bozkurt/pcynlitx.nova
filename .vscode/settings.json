@@ -75,4 +75,7 @@
         "cerrno": "cpp",
         "climits": "cpp"
     },
+    "editor.fontFamily": "JetBrains Mono Light",
+    "terminal.integrated.fontFamily": "JetBrains Mono ExtraLight",
+    "editor.fontVariations": false,
 }

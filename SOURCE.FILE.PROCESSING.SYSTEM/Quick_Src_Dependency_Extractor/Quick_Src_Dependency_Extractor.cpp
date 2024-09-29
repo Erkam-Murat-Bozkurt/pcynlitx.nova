@@ -140,6 +140,37 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
      this->Data_Setter.Copy_String(this->Dep_Data.object_file_name,object_file_name);
 
 
+     this->Dep_Data.file_name_similarity_status = true; // This operation is used for namespace differentioan
+
+     // In this case upper_directory_name is added to target name
+
+     // On the other case, there will be to target with same name.
+
+     std::vector<std::string> dir_sort_path;
+
+     this->Extract_Directory_Short_Paths(src_git_record_dir,dir_sort_path);
+
+        
+     size_t range_counter=0;
+
+    for(size_t k=0;k<dir_sort_path.size();k++){
+
+        range_counter++;
+    }
+
+    std::string target_name;
+
+    for(auto it=dir_sort_path.rbegin();it<dir_sort_path.rend();it++){
+
+        target_name += *it;
+            
+        target_name.push_back('_');
+     }
+
+     this->Dep_Data.cmake_target_name = target_name + file_name_without_ext;
+
+     this->Clear_Vector_Memory(dir_sort_path);
+
      this->Clear_String_Memory(src_file_name);
 
      this->Clear_String_Memory(file_dir);
@@ -177,6 +208,67 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
      this->Dep_Data.Dependent_Header_Directories.shrink_to_fit();
 
      this->Dep_Data.Include_Declerations.shrink_to_fit();
+}
+
+void Quick_Src_Dependency_Extractor::Extract_Directory_Short_Paths(std::string sys_dir, 
+
+     std::vector<std::string> & sort_dir_path){
+
+     size_t dir_size = sys_dir.length();
+     
+     std::string repo_dir = this->Des_Reader->Get_Repo_Directory_Location();
+
+     std::string file_path =  repo_dir + "\\" + sys_dir;
+
+     file_path.shrink_to_fit();
+
+     size_t end_point = file_path.size();
+
+     size_t start_point = end_point;
+
+     do{
+
+        std::string short_path;
+
+        for(size_t i=end_point;i>repo_dir.size();i--){
+
+            if((file_path[i] == '\\') || (file_path[i] == '/')){
+
+                break;
+            }
+            else{
+
+               start_point--;
+            }
+        }
+
+        for(size_t i=start_point+1;i<end_point;i++){
+
+            short_path.push_back(file_path[i]);
+        }
+
+        short_path.shrink_to_fit();
+
+
+        for(size_t i=file_path.length();i>start_point-1;i--){
+
+            file_path.erase(i,1);
+        }
+
+        file_path.shrink_to_fit();
+
+
+        if(!short_path.empty()){
+
+           sort_dir_path.push_back(short_path);
+        }
+
+        end_point = file_path.size();
+
+
+     }while(file_path.size()>repo_dir.size());
+
+     sort_dir_path.shrink_to_fit();
 }
 
 
@@ -242,11 +334,31 @@ void Quick_Src_Dependency_Extractor::Extract_Directory_File_Name_Combination(std
 }
 
 
- const Simple_Source_File_Dependency * Quick_Src_Dependency_Extractor::Get_Simple_Source_File_Dependency() const
- {
+const Simple_Source_File_Dependency * Quick_Src_Dependency_Extractor::Get_Simple_Source_File_Dependency() const
+{
        return &this->Dep_Data;
- } 
+} 
 
+
+
+bool Quick_Src_Dependency_Extractor::Is_There_File_Name_Similarity(std::string fileName){
+
+     bool similarity_status = false;
+
+     std::vector<std::string> * repoFileNames = this->Git_Data_Proc->Get_File_Name_Address();
+
+     for(size_t i=0;i<repoFileNames->size();i++){
+
+         if(fileName == repoFileNames->at(i)){
+
+            similarity_status = true;
+
+            return similarity_status;
+         }
+     }
+
+    return similarity_status;
+}
 
 
 bool Quick_Src_Dependency_Extractor::Is_Header_File(std::string path){

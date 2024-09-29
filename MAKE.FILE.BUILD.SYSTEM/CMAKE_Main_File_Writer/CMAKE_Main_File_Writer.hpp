@@ -46,6 +46,7 @@ public:
  void Clear_Object_Memory();
 private:
  void Convert_CMAKE_Format(std::string & str);
+ bool Check_String_Existance(std::vector<std::string> & list, std::string str);
  Source_File_Dependency_Determiner * Dep_Determiner;
  std::vector<Compiler_Data> * Compiler_Data_Pointer;
  Descriptor_File_Reader * Des_Reader;

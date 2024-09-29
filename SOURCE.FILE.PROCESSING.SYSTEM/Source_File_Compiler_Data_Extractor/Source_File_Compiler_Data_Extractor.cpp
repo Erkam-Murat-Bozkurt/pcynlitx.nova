@@ -39,11 +39,19 @@ void Source_File_Compiler_Data_Extractor::Clear_Dynamic_Memory(){
 
      this->Clear_Buffer_Memory(&this->buffer);
 
-     //std::vector<Compiler_Data>::iterator it;
-
      this->Clear_Data_Memory(&this->compiler_data);
 }
 
+
+void Source_File_Compiler_Data_Extractor::Receive_Git_Data_Processor(Git_Data_Processor * Proc){
+
+    this->Git_Data_Proc = Proc;
+}
+
+void Source_File_Compiler_Data_Extractor::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Reader){
+
+     this->Des_Reader = Reader;
+}
 
 void Source_File_Compiler_Data_Extractor::Clear_Data_Memory(std::vector<Compiler_Data> * Data)
 {
@@ -295,6 +303,39 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int start, int e
             buffer.priority = data_size;
   
 
+            buffer.file_name_similarity_status = true; // This operation is used for namespace differentioan
+
+            // In this case upper_directory_name is added to target name
+
+            // On the other case, there will be to target with same name.
+
+
+            std::vector<std::string> dir_sort_path;
+
+            this->Extract_Directory_Short_Path(src_ptr->at(0).src_git_record_dir,dir_sort_path);
+
+
+            size_t range_counter=0;
+
+            for(size_t k=0;k<dir_sort_path.size();k++){
+
+                range_counter++;
+            }
+
+            std::string target_name;
+
+            for(auto it=dir_sort_path.rbegin();it!=dir_sort_path.rend();it++){
+
+                target_name += *it;
+
+                target_name.push_back('_');
+            }
+
+
+            buffer.cmake_target_name = target_name + src_ptr->at(0).source_file_name_without_ext; 
+
+            this->Clear_Vector_Memory(&dir_sort_path);
+
             buffer.src_git_record_dir = src_ptr->at(0).src_git_record_dir;
 
             buffer.source_file_name_witout_ext = src_ptr->at(0).source_file_name_without_ext; 
@@ -345,12 +386,96 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int start, int e
 
       Com_Dt.shrink_to_fit();
 
+
       std::unique_lock<std::mutex> mt(this->mtx);
 
       this->Compiler_Data_Vectors.push_back(Com_Dt);
 
       mt.unlock();
 
+}
+
+
+bool Source_File_Compiler_Data_Extractor::Is_There_File_Name_Similarity(std::string fileName){
+
+     bool similarity_status = false;
+
+     std::vector<std::string> * repoFileNames = this->Git_Data_Proc->Get_File_Name_Address();
+
+     for(size_t i=0;i<repoFileNames->size();i++){
+
+         if(fileName == repoFileNames->at(i)){
+
+            similarity_status = true;
+
+            return similarity_status;
+         }
+     }
+
+    return similarity_status;
+}
+
+
+
+void Source_File_Compiler_Data_Extractor::Extract_Directory_Short_Path(std::string sys_dir, 
+
+     std::vector<std::string> & sort_dir_path){
+
+     size_t dir_size = sys_dir.length();
+     
+     std::string repo_dir = this->Des_Reader->Get_Repo_Directory_Location();
+
+     std::string file_path =  repo_dir + "\\" + sys_dir;
+
+     file_path.shrink_to_fit();
+
+     size_t end_point = file_path.size();
+
+     size_t start_point = end_point;
+
+     do{
+
+        std::string short_path;
+
+        for(size_t i=end_point;i>repo_dir.size();i--){
+
+            if((file_path[i] == '\\') || (file_path[i] == '/')){
+
+                break;
+            }
+            else{
+
+               start_point--;
+            }
+        }
+
+        for(size_t i=start_point+1;i<end_point;i++){
+
+            short_path.push_back(file_path[i]);
+        }
+
+        short_path.shrink_to_fit();
+
+
+        for(size_t i=file_path.length();i>start_point-1;i--){
+
+            file_path.erase(i,1);
+        }
+
+        file_path.shrink_to_fit();
+
+
+        if(!short_path.empty()){
+
+           sort_dir_path.push_back(short_path);
+        }
+
+        end_point = file_path.size();
+
+
+     }while(file_path.size()>repo_dir.size());
+
+     sort_dir_path.shrink_to_fit();
 }
 
 

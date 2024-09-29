@@ -80,6 +80,8 @@ void Source_File_Dependency_Determiner::Receive_Descriptor_File_Reader(Descripto
      this->DepSelector_For_Single_File.Receive_Descriptor_File_Reader(ptr);
 
      this->Simple_Dep_Extractor.Receive_Descriptor_File_Reader(ptr);
+     
+     this->Com_Data_Extractor.Receive_Descriptor_File_Reader(ptr);
 }
 
 
@@ -105,6 +107,8 @@ void Source_File_Dependency_Determiner::Receive_Git_Data_Processor(Git_Data_Proc
      this->Simple_Dep_Extractor.Receive_Git_Data_Processor(ptr);
 
      this->Simple_Dep_Extractor.Receive_Source_Code_Reader(&this->Code_Rd);
+
+     this->Com_Data_Extractor.Receive_Git_Data_Processor(ptr);
 }
 
 
