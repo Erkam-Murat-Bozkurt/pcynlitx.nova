@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   viewBox="0 0 17.044478 21.051623"
-   height="21.051622"
-   width="17.044477"
+   viewBox="0 0 19.378733 22.05957"
+   height="22.05957"
+   width="19.378733"
    id="svg2"
    version="1.1"
    sodipodi:docname="logo_with_name.svg"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   inkscape:export-filename="..\logo.svg"
+   inkscape:export-filename="..\..\..\..\..\Users\ermur\OneDrive\Masaüstü\logo.png"
    inkscape:export-xdpi="500"
    inkscape:export-ydpi="500"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -30,9 +30,9 @@
      inkscape:window-height="1111"
      id="namedview8"
      showgrid="true"
-     inkscape:zoom="35.436698"
-     inkscape:cx="10.116631"
-     inkscape:cy="8.0284004"
+     inkscape:zoom="50.115058"
+     inkscape:cx="6.9340437"
+     inkscape:cy="12.042289"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
@@ -43,8 +43,8 @@
     <inkscape:grid
        type="xygrid"
        id="grid10"
-       originx="4.0171956"
-       originy="-24.034577"
+       originx="5.2693959"
+       originy="-22.867034"
        spacingy="1"
        spacingx="1"
        units="px"
@@ -64,46 +64,69 @@
   <defs
      id="defs6" />
   <rect
-     style="fill:none;fill-opacity:1;stroke:#d76e6e;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-     id="rect9-5-91-1-0"
-     width="3.7776399"
-     height="3.3831062"
-     x="11.544405"
-     y="1.4160812" />
-  <rect
-     style="fill:#d76e6e;fill-opacity:1;stroke:#d76e6e;stroke-width:0.457776;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#c89173;fill-opacity:1;stroke:none;stroke-width:0.320958;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect5-8"
-     width="4.0825877"
-     height="12.922597"
-     x="1.5150876"
-     y="1.3423862" />
+     width="4.0592265"
+     height="6.3629947"
+     x="4.2275987"
+     y="4.1617904"
+     ry="0.35917348" />
   <rect
-     style="fill:#d76e6e;fill-opacity:1;stroke:#d76e6e;stroke-width:0.461942;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5-8-4"
-     width="3.8977742"
-     height="10.958747"
-     x="10.365547"
-     y="-15.432047"
-     transform="rotate(90)" />
+     style="fill:none;fill-opacity:0.988152;stroke:none;stroke-width:0.530272;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     id="rect5-8-9"
+     width="17.508259"
+     height="4.0267754"
+     x="1.3434083"
+     y="16.583454" />
   <rect
-     style="fill:none;fill-opacity:1;stroke:#d76e6e;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-     id="rect9-5-91-1-0-9"
-     width="3.6370981"
-     height="3.4965391"
-     x="6.8866606"
-     y="5.592144" />
-  <rect
-     style="fill:none;fill-opacity:1;stroke:#d76e6e;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-     id="rect9-5-91-1-0-2"
-     width="3.804183"
-     height="3.4096498"
-     x="11.527708"
-     y="5.6373754" />
-  <rect
-     style="fill:none;fill-opacity:1;stroke:#d76e6e;stroke-width:0.5;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#c89173;fill-opacity:1;stroke:none;stroke-width:0.570302;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect9-5-91-1-0-3"
-     width="3.6962466"
-     height="3.3581522"
-     x="6.92906"
-     y="1.4179" />
+     width="6.5611582"
+     height="6.3482561"
+     x="8.7150965"
+     y="4.1523557"
+     ry="0.39908165" />
+  <rect
+     style="fill:#c89173;fill-opacity:1;stroke:none;stroke-width:0.357012;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     id="rect9-5-91-1-0-3-4"
+     width="4.0070353"
+     height="4.0734906"
+     x="4.279357"
+     y="11.159633"
+     ry="0.23944899" />
+  <rect
+     style="fill:#c89173;fill-opacity:1;stroke:none;stroke-width:0.445851;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     id="rect9-5-91-1-0-2-2"
+     width="7.5602527"
+     height="4.0448437"
+     x="7.6833482"
+     y="11.156341"
+     ry="0.33921939" />
+  <text
+     xml:space="preserve"
+     style="font-size:4px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#d27d64;fill-opacity:0.5;stroke:#d27d64;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+     x="2.1124742"
+     y="21.473776"
+     id="text1"><tspan
+       sodipodi:role="line"
+       id="tspan1"
+       x="2.1124742"
+       y="21.473776"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Bold';fill:#b9785a;fill-opacity:1;stroke:none;stroke-opacity:1">NWINIX</tspan></text>
+  <rect
+     style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.404447;stroke-dasharray:none;stroke-opacity:1"
+     id="rect1"
+     width="12.050732"
+     height="12.328005"
+     x="3.992528"
+     y="3.5845022"
+     ry="0" />
+  <rect
+     style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.527391;stroke-dasharray:none;stroke-opacity:1"
+     id="rect2"
+     width="18.484491"
+     height="22.435198"
+     x="0.81438637"
+     y="0.024245083"
+     ry="0" />
 </svg>

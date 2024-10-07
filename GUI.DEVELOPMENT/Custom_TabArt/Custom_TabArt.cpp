@@ -87,12 +87,16 @@
 
        wxCoord tab_height = tab_size.y+14;
 
-       wxCoord tab_width  = tab_size.x;
+       //wxCoord tab_width  = tab_size.x;
 
        wxCoord tab_x = in_rect.x+1;
 
        wxCoord tab_y = in_rect.y+14;
 
+       wxCoord tab_width  = normal_textx+40;
+
+
+       *x_extent = tab_width+1;
 
 
 
@@ -133,7 +137,7 @@
 
            // draw base background color
 
-           wxRect r(tab_x, tab_y, tab_width-2, tab_height-3);
+           wxRect r(tab_x, tab_y, tab_width, tab_height-3);
 
            dc.SetPen(wxPen(wxColour(155,155,165,0xff)));
             
@@ -152,7 +156,7 @@
 
                 // draw inactive tab
 
-                wxRect r(tab_x, tab_y,tab_width-2, tab_height-3);
+                wxRect r(tab_x, tab_y,tab_width, tab_height-3);
 
                 dc.SetPen(wxPen(wxColour(180, 180, 180)));
 

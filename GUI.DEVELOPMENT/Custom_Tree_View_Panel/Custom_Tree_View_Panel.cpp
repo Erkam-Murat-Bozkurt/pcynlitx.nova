@@ -7,7 +7,7 @@
  * reserved and protected by the copyright holders.
  * 
  * This file is confidential and only available to authorized individuals with the
- * permission of the copyright holders.  If you encounter this file and do not have
+ * permission of the copyright holders. If you encounter this file and do not have
  * permission, please contact the copyright holders and delete this file.
 
 */
@@ -152,7 +152,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),
      
-                           wxSize(Tab_Bar_size.x,Tab_Bar_size.y-5),wxColour(175,175,185,0xff));
+                           wxSize(Tab_Bar_size.x,Tab_Bar_size.y-5),wxColour(80,80,90,0xff));
 
      this->Title_Window->Receive_Tab_ctrl_Hight(this->tab_ctrl_hight);
 
@@ -181,7 +181,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      text->SetFont(textFont);
 
-     text->SetForegroundColour(wxColour(50,50,50));
+     text->SetForegroundColour(wxColour(250,250,250));
 
      // TITLE WINDOW SETTINGS END
 
