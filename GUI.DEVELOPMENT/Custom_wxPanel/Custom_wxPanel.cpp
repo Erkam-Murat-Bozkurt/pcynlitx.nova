@@ -73,7 +73,7 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->start_text   = new wxStaticText(this->bottom_window ,
      
-                    wxID_ANY,wxT("NWINIX START MENU"),wxPoint(text_x,text_y),wxSize(200,50));
+                    wxID_ANY,wxT("PCYNLITX START MENU"),wxPoint(text_x,text_y),wxSize(200,50));
 
      this->start_text->Show(true);
 
@@ -118,7 +118,7 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      wxIcon * Info_icon = new wxIcon(wxT("C:\\Program Files\\Nwinix\\icons\\logo_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
-     wxMenuItem * info_item = new wxMenuItem(this->Info_Menu,ID_SHOW_HELP_MENU,"&NWINIX PLATFORM"," ",wxITEM_NORMAL);
+     wxMenuItem * info_item = new wxMenuItem(this->Info_Menu,ID_SHOW_HELP_MENU,"&PCYNLITX VERSION 2.0"," ",wxITEM_NORMAL);
 
      info_item->SetBitmap(*Info_icon);
 

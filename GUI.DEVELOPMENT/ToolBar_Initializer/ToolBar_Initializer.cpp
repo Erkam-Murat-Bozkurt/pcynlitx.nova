@@ -56,7 +56,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->Art_Pointer = new MyAuiTBArt();
 
-     this->toolBar->SetBackgroundColour(wxColour(80,80,95,0xff));
+     this->toolBar->SetBackgroundColour(wxColour(50,50,60,0xff));
 
      this->toolBar->SetArtProvider(this->Art_Pointer);
 
@@ -103,7 +103,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
      //this->toolBar->AddTool(ID_PRINT_DESCRIPTIONS,wxT(""),*this->print_descriptions,wxT(""));
 
 
-     this->toolBar->SetMargins(6,0,0,0);
+     this->toolBar->SetMargins(6,6,0,0);
 
      this->toolBar->SetOverflowVisible(false);
 

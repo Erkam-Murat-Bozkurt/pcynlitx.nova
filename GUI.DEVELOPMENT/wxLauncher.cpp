@@ -79,7 +79,7 @@ bool wxLauncher::OnInit(){
 
          this->SetTopWindow(this->Frame);
 
-         this->Frame->SetLabel(wxT("NWINIX C++ PROJECT MANAGEMENT SYSTEM"));
+         this->Frame->SetLabel(wxT("PCYNLITX IDE AND C++ PROJECT MANAGEMENT SYSTEM"));
 
          this->Frame->Centre(wxBOTH);
 

@@ -136,7 +136,7 @@ Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, 
 
      this->SetIcon(Frame_Icon);
 
-     this->SetTitle(wxT("NWINIX BUILD SYSTEM DESCRIPTION PANEL"));
+     this->SetTitle(wxT("PCYNLITX BUILD SYSTEM DESCRIPTION PANEL"));
 
 
      this->save_bmp 
@@ -276,19 +276,19 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->scroll_win->SetBackgroundColour(wxColour(240, 240, 240));
 
 
-     wxString title = wxT("NWINIX DEPENDENCY MANAGEMENT PANEL");
+     wxString title = wxT("PCYNLITX DEPENDENCY MANAGEMENT PANEL");
      
      wxStaticText * text   = new wxStaticText(this->scroll_win ,wxID_ANY,title);
 
      wxFont Title_Font = text->GetFont();
 
-     Title_Font.SetPointSize(10);
+     Title_Font.SetPointSize(14);
 
-     Title_Font.SetFaceName(wxT("Segoe UI Semibold"));
+     Title_Font.SetFaceName(wxT("Oswald"));
 
      text->SetFont(Title_Font);
 
-     text->SetForegroundColour(wxColour(58, 58, 70,0xff));
+     text->SetForegroundColour(wxColour(65, 65, 75,0xff));
      
 
 
@@ -760,6 +760,18 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
                                wxT("CLEAR PANEL"),wxDefaultPosition, wxSize(150, 60));
 
 
+     wxFont buton_font = this->panel_close_button->GetFont();
+     
+     buton_font.SetFaceName(wxT("Oswald"));
+                          
+     buton_font.SetPointSize(10);
+
+
+     this->panel_save_button->SetFont(buton_font);
+                                                    
+     this->panel_clear_button->SetFont(buton_font);
+
+     this->panel_close_button->SetFont(buton_font);
 
 
      this->panel_close_button->SetForegroundColour(wxColour(50,50,50));
@@ -900,7 +912,7 @@ void Custom_Multi_DataPanel::Save_Report(){
             
      Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
             
-     wxT("STATUS:\n"),wxID_ANY,wxT("NWINIX DATA RECORD OPERATION REPORT"),*this->save_bmp);
+     wxT("STATUS:\n"),wxID_ANY,wxT("PCYNLITX DATA RECORD OPERATION REPORT"),*this->save_bmp);
 
      dial->ShowModal();
 }
@@ -1319,7 +1331,7 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
             
                          wxT("ERROR REPORT:"),wxID_ANY,
                          
-                         wxT("NWINIX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
+                         wxT("PCYNLITX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
 
             dial->SetSize(wxSize(600,420));
 
