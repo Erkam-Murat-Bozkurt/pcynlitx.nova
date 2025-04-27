@@ -7,7 +7,7 @@
    version="1.1"
    sodipodi:docname="logo_with_name.svg"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   inkscape:export-filename="..\..\..\..\..\Users\ermur\OneDrive\Masaüstü\logo.png"
+   inkscape:export-filename="..\..\..\..\Project.Test.platform\icons\logo.png"
    inkscape:export-xdpi="500"
    inkscape:export-ydpi="500"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -30,9 +30,9 @@
      inkscape:window-height="1111"
      id="namedview8"
      showgrid="true"
-     inkscape:zoom="50.115058"
-     inkscape:cx="6.9340437"
-     inkscape:cy="12.042289"
+     inkscape:zoom="12.528765"
+     inkscape:cx="7.9417248"
+     inkscape:cy="6.2655819"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
@@ -64,69 +64,62 @@
   <defs
      id="defs6" />
   <rect
-     style="fill:#c89173;fill-opacity:1;stroke:none;stroke-width:0.320958;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5-8"
-     width="4.0592265"
-     height="6.3629947"
-     x="4.2275987"
-     y="4.1617904"
-     ry="0.35917348" />
-  <rect
      style="fill:none;fill-opacity:0.988152;stroke:none;stroke-width:0.530272;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
      id="rect5-8-9"
      width="17.508259"
      height="4.0267754"
-     x="1.3434083"
-     y="16.583454" />
-  <rect
-     style="fill:#c89173;fill-opacity:1;stroke:none;stroke-width:0.570302;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-     id="rect9-5-91-1-0-3"
-     width="6.5611582"
-     height="6.3482561"
-     x="8.7150965"
-     y="4.1523557"
-     ry="0.39908165" />
-  <rect
-     style="fill:#c89173;fill-opacity:1;stroke:none;stroke-width:0.357012;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-     id="rect9-5-91-1-0-3-4"
-     width="4.0070353"
-     height="4.0734906"
-     x="4.279357"
-     y="11.159633"
-     ry="0.23944899" />
-  <rect
-     style="fill:#c89173;fill-opacity:1;stroke:none;stroke-width:0.445851;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-     id="rect9-5-91-1-0-2-2"
-     width="7.5602527"
-     height="4.0448437"
-     x="7.6833482"
-     y="11.156341"
-     ry="0.33921939" />
+     x="-1.0270157"
+     y="14.241249" />
   <text
      xml:space="preserve"
      style="font-size:4px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#d27d64;fill-opacity:0.5;stroke:#d27d64;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
-     x="2.1124742"
-     y="21.473776"
+     x="1.5400656"
+     y="19.774542"
      id="text1"><tspan
        sodipodi:role="line"
        id="tspan1"
-       x="2.1124742"
-       y="21.473776"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Bold';fill:#b9785a;fill-opacity:1;stroke:none;stroke-opacity:1">NWINIX</tspan></text>
+       x="1.5400656"
+       y="19.774542"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:4px;font-family:Oswald;-inkscape-font-specification:'Oswald Bold';fill:#50505a;fill-opacity:1;stroke:none;stroke-opacity:1">PCYNLITX</tspan></text>
   <rect
-     style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.404447;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.467585;stroke-dasharray:none;stroke-opacity:1"
      id="rect1"
-     width="12.050732"
-     height="12.328005"
-     x="3.992528"
-     y="3.5845022"
+     width="13.715859"
+     height="14.477076"
+     x="2.859412"
+     y="1.5436715"
      ry="0" />
   <rect
-     style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.527391;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.609722;stroke-dasharray:none;stroke-opacity:1"
      id="rect2"
-     width="18.484491"
-     height="22.435198"
-     x="0.81438637"
-     y="0.024245083"
+     width="21.038614"
+     height="26.346197"
+     x="-0.75787437"
+     y="-2.6372249"
+     ry="0" />
+  <rect
+     style="fill:#fcaf3b;stroke:none;stroke-width:0.0356232;stroke-dasharray:none;stroke-opacity:1"
+     id="rect1-3"
+     width="9.4632053"
+     height="8.3424311"
+     x="2.4150813"
+     y="1.3649246"
+     ry="0" />
+  <rect
+     style="fill:#fcaf3b;fill-opacity:1;stroke:none;stroke-width:0.0233596;stroke-dasharray:none;stroke-opacity:1"
+     id="rect1-3-2"
+     width="2.6771922"
+     height="12.680229"
+     x="13.248134"
+     y="1.3342297"
+     ry="0" />
+  <rect
+     style="fill:#fcaf3b;stroke:none;stroke-width:0.0235973;stroke-dasharray:none;stroke-opacity:1"
+     id="rect1-3-2-4"
+     width="3.0225246"
+     height="11.489756"
+     x="10.999959"
+     y="-13.866346"
+     transform="rotate(90)"
      ry="0" />
 </svg>

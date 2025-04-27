@@ -51,7 +51,7 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
     this->GetEventHandler()->Bind(wxEVT_SIZE,&Help_Page_Constructor::OnSize,this,wxID_ANY);
 
 
-    std::string face_name = "Calibri"; 
+    std::string face_name = "Oswald"; 
 
     this->Default_Font = new wxFont(12,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
 
@@ -99,7 +99,7 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
     this->text_title = new wxStaticText(this->text_title_panel ,wxID_ANY,message_title);
 
 
-    this->text_title->SetForegroundColour(wxColour(100, 100, 110));
+    this->text_title->SetForegroundColour(wxColour(70, 70, 80));
 
     wxFont Title_Font = text->GetFont();
 
@@ -146,6 +146,7 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
     wxFont buttonFont = this->CloseButton->GetFont();
 
 
+    //this->CreateHyperlink();
 
 
     //this->CloseButton->SetForegroundColour(wxColour(80,80,80));
@@ -313,6 +314,8 @@ void Help_Page_Constructor::Open_Welcome_Page(wxCommandEvent & event){
 
      this->NoteBook_Ptr->OpenIntroPage();  
 
+     this->launch_link();
+     
      this->Destroy();
 }
 
@@ -327,4 +330,23 @@ void Help_Page_Constructor::Open_Intro_Page(wxCommandEvent & event){
      this->NoteBook_Ptr->Get_NoteBook_Pointer()->SetPageText(notebook_index,wxT("Introduction"));
 
      this->Destroy();
+}
+
+
+void Help_Page_Constructor::launch_link(){
+
+     std::string adress = "https://www.pcynlitx.com";
+
+     wxString url = wxString(adress);
+
+     wxLaunchDefaultBrowser(url,0);
+ 
+     /*
+     wxHyperlinkCtrl * hyp = new  	wxHyperlinkCtrl(this,
+          wxID_ANY,
+          wxT("WEB PAGE"),url,
+          wxDefaultPosition,
+          wxDefaultSize,
+          wxHL_DEFAULT_STYLE); */
+
 }

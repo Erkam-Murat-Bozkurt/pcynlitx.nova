@@ -59,6 +59,8 @@ private:
 
     void Open_Intro_Page(wxCommandEvent & event);
 
+    void launch_link();
+
     bool yes_no_condition;
 
     wxStaticText * text;
