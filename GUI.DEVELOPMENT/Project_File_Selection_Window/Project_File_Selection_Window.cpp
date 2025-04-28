@@ -148,7 +148,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      buton_font.SetFaceName(wxT("Oswald"));
 
-     buton_font.SetPointSize(10);
+     buton_font.SetPointSize(11);
 
 
      //bld_font.SetFaceName(wxT("Noto Sans"));
@@ -206,7 +206,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      wxFont Text_Font = new_file_text->GetFont();
 
-     Text_Font.SetPointSize(11);
+     Text_Font.SetPointSize(12);
 
      Text_Font.SetFaceName(wxT("Oswald"));
 

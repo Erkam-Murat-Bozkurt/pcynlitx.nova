@@ -122,7 +122,7 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
        
     this->WelcomeButton  = new wxButton(this->welcome_page_button_panel,ID_SELECTION_WELCOME,
     
-                         wxT("WELCOME PAGE"),wxDefaultPosition, wxSize(button_size_x,70));
+                         wxT("WEB PAGE"),wxDefaultPosition, wxSize(button_size_x,70));
 
     this->IntroButton    = new wxButton(this->intro_page_button_panel,ID_SELECTION_INTRO_PAGE,
     
@@ -340,13 +340,5 @@ void Help_Page_Constructor::launch_link(){
      wxString url = wxString(adress);
 
      wxLaunchDefaultBrowser(url,0);
- 
-     /*
-     wxHyperlinkCtrl * hyp = new  	wxHyperlinkCtrl(this,
-          wxID_ANY,
-          wxT("WEB PAGE"),url,
-          wxDefaultPosition,
-          wxDefaultSize,
-          wxHL_DEFAULT_STYLE); */
 
 }
