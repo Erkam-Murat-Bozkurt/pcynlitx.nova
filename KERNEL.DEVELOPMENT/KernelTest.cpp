@@ -38,7 +38,7 @@ int main(int argc, char ** argv){
 
     Custom_System_Interface SysInt;
 
-    char cmd [] = "C:\\Development.Files\\Project.Test.platform\\Nwinix_Kernel.exe C:\\Development.Files\\PCYNLITX.BUILD.TEST\\Pcb_Descriptor.txt -ip";
+    char cmd [] = "C:\\Development.Files\\Project.Test.platform\\Pcynlitx_Kernel.exe C:\\Development.Files\\PCYNLITX.BUILD.TEST\\Pcb_Descriptor.txt -ip";
 
 
     for(int i=0;i<test_number;i++){

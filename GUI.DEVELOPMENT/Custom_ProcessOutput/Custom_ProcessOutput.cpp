@@ -42,7 +42,7 @@ Custom_ProcessOutput::Custom_ProcessOutput(wxFrame *parent, wxWindowID id, const
 
      this->dir_list_show_cnd = false;
 
-     wxIcon Frame_Icon(wxT("C:\\Program Files\\Nwinix\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+     wxIcon Frame_Icon(wxT("C:\\Program Files\\Pcynlitx\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
      this->SetIcon(Frame_Icon);
 
@@ -264,7 +264,7 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
 
            wxBitmap * exclamation_mark_bmp
   
-           = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\exclamation_icon.png"),
+           = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\exclamation_icon.png"),
            
            wxBITMAP_TYPE_ANY);
 
@@ -378,7 +378,7 @@ void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
 
         wxBitmap * exclamation_mark_bmp
   
-           = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\exclamation_icon.png"),
+           = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\exclamation_icon.png"),
            
            wxBITMAP_TYPE_ANY);
 

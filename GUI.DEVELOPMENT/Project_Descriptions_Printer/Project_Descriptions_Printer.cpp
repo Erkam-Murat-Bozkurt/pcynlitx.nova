@@ -45,7 +45,7 @@ Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWi
 
      this->Memory_Delete_Condition = false;
 
-     wxIcon Frame_Icon(wxT("C:\\Program Files\\Nwinix\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+     wxIcon Frame_Icon(wxT("C:\\Program Files\\Pcynlitx\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
      this->SetIcon(Frame_Icon);
 

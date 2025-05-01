@@ -18,7 +18,7 @@ int main(int argc, char** argv){
     }
     else{
 
-        std::string Document_PATH = "C:\\Development.Files\\PCYNLITX.BUILD.TEST\\Nwinix.SCode.txt";
+        std::string Document_PATH = "C:\\Development.Files\\PCYNLITX.BUILD.TEST\\Pcynlitx.SCode.txt";
 
         std::string File_path;
 

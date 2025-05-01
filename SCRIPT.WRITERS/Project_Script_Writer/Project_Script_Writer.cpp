@@ -577,7 +577,7 @@ void Project_Script_Writer::Write_Project_Build_Script(){
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("\nNwinix_Kernel.exe ");
+     this->FileManager.WriteToFile("\nPcynlitx_Kernel.exe ");
 
      std::string des_path = this->Des_Reader->Get_Descriptor_File_Path();
 

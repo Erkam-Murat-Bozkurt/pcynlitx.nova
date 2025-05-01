@@ -13,7 +13,7 @@ set( CMAKE_BUILD_TYPE "Debug")
 
 cmake_minimum_required(VERSION 3.30.2)
 
-project(Nwinix VERSION 1.0)
+project(Pcynlitx VERSION 1.0)
 
 add_subdirectory(BASIC.TOOLS)
 
@@ -77,7 +77,7 @@ add_executable(Auto_MakeFile_Builder
         ${CMAKE_CURRENT_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Auto_MakeFile_Builder/Auto_MakeFile_Builder_Main_File.cpp)
 
 
-add_executable(Nwinix_Kernel
+add_executable(Pcynlitx_Kernel
 
         ${CMAKE_CURRENT_SOURCE_DIR}/KERNEL.DEVELOPMENT/Kernel_Main_File.cpp)
 
@@ -91,7 +91,7 @@ add_executable(CMAKE_Build_Executable
         ${CMAKE_CURRENT_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor_Main_File.cpp)
 
 
-add_executable(Nwinix_Gui
+add_executable(Pcynlitx_Gui
 
         ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/wxLauncher.cpp )
 
@@ -119,7 +119,7 @@ target_link_libraries(Auto_MakeFile_Builder PUBLIC make_fbld_sys proj_bld_tools
 
 
                    
-target_link_libraries(Nwinix_Kernel PUBLIC kernel proj_bld_tools exec_make_bld script_writers make_fbld_sys 
+target_link_libraries(Pcynlitx_Kernel PUBLIC kernel proj_bld_tools exec_make_bld script_writers make_fbld_sys 
 
                    src_proc_sys git_data_processing_system src_dat_col des_reader basic_tools)
 
@@ -133,16 +133,8 @@ target_link_libraries(CMAKE_Build_Executable PUBLIC proj_bld_tools  make_fbld_sy
 
                    src_proc_sys git_data_processing_system src_dat_col des_reader basic_tools)
 
-target_link_libraries(Nwinix_Gui PUBLIC BuildSystem_GUI pthread wxmsw32ud_core wxbase32ud wxtiffd 
+target_link_libraries(Pcynlitx_Gui PUBLIC BuildSystem_GUI pthread wxmsw32ud_core wxbase32ud  
                       
-                     wxjpegd wxpngd wxzlibd wxregexud wxexpatd wxbase32ud_xml wxmsw32ud_aui
-                
-                     wxmsw32ud_stc wxscintillad wxbase32ud_net wxmsw32ud_xrc wxmsw32ud_richtext
-        
-                     wxmsw32ud_webview wxmsw32ud_ribbon wxmsw32u_propgrid wxmsw32ud_html wxmsw32ud_adv 
-        
-                     wxmsw32ud_gl wxmsw32ud_media kernel32 user32 gdi32 comdlg32 winspool winmm
-
-                     shell32 comctl32 ole32 oleaut32 uuid rpcrt4 advapi32 wsock32 wininet uxtheme 
-
-                     oleacc gcc stdc++ )
+                      wxmsw32ud_aui wxmsw32ud_stc wxscintillad wxmsw32ud_richtext
+                          
+                      gcc stdc++)

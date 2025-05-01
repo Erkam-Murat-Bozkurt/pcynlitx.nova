@@ -132,7 +132,7 @@ Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, 
 
      this->Des_Reader.Set_Gui_Read_Status(true);
 
-     wxIcon Frame_Icon(wxT("C:\\Program Files\\Nwinix\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+     wxIcon Frame_Icon(wxT("C:\\Program Files\\Pcynlitx\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
      this->SetIcon(Frame_Icon);
 
@@ -141,11 +141,11 @@ Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, 
 
      this->save_bmp 
   
-      = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\save_success_icon.png"),wxBITMAP_TYPE_ANY);
+      = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\save_success_icon.png"),wxBITMAP_TYPE_ANY);
 
      this->exclamation_mark_bmp 
   
-      = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+      = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
 
      this->SetBackgroundColour(wxColour(250,250,250));
 
@@ -1351,7 +1351,7 @@ void Custom_Multi_DataPanel::Load_Data_From_Descriptor_File_To_Panel(){
             
            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
             
-               wxT("STATUS:\n"),wxID_ANY,wxT("NWINIX DATA RECORD OPERATION REPORT"),*this->exclamation_mark_bmp);
+               wxT("STATUS:\n"),wxID_ANY,wxT("PCYNLITX DATA RECORD OPERATION REPORT"),*this->exclamation_mark_bmp);
 
            dial->ShowModal();
      }

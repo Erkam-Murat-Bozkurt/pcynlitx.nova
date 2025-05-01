@@ -295,7 +295,7 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
      std::string des_path = this->Des_Reader->Get_Descriptor_File_Path();
 
 
-     this->FileManager.WriteToFile("\nNwinix_Kernel.exe ");
+     this->FileManager.WriteToFile("\nPcynlitx_Kernel.exe ");
 
      this->FileManager.WriteToFile(des_path);
 

@@ -30,7 +30,7 @@ public:
     
     const wxString & message_title=wxT(""), wxWindowID id=wxID_ANY, 
     
-    const wxString & title=wxT("NWINIX REPORT"), const wxBitmap & bmp=NULL,
+    const wxString & title=wxT("PCYNLITX REPORT"), const wxBitmap & bmp=NULL,
     
     const wxPoint &pos=wxDefaultPosition, const wxString & dial_style=wxT("Close"), 
     

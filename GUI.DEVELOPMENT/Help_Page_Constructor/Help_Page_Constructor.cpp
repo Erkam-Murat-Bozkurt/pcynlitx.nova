@@ -216,7 +216,7 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
 
     this->SetMinSize(size);
 
-    wxIcon Frame_Icon(wxT("C:\\Program Files\\Nwinix\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+    wxIcon Frame_Icon(wxT("C:\\Program Files\\Pcynlitx\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
     this->SetIcon(Frame_Icon);
 
@@ -321,7 +321,7 @@ void Help_Page_Constructor::Open_Welcome_Page(wxCommandEvent & event){
 
 void Help_Page_Constructor::Open_Intro_Page(wxCommandEvent & event){
 
-     wxString Help_Page_Path = wxT("C:\\Program Files\\Nwinix\\introduction.txt");
+     wxString Help_Page_Path = wxT("C:\\Program Files\\Pcynlitx\\introduction.txt");
 
      this->NoteBook_Ptr->Open_File(Help_Page_Path);
 

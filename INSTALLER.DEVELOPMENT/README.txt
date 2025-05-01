@@ -1,34 +1,34 @@
 
 
 
-THE INSTALLATION AND USAGE OF NWINIX:
+THE INSTALLATION AND USAGE OF PCYNLITX:
 ---------------------------------------
 
-The Nwinix platform has been developed by Mr. Erkam Murat Bozkurt
-and the copyright of Nwinix platform has been taken from US. Copyright 
+The Pcynlitx platform has been developed by Mr. Erkam Murat Bozkurt
+and the copyright of Pcynlitx platform has been taken from US. Copyright 
 Office. 
 
-NWINIX license:
+Pcynlitx license:
 -----------------
 The pcynlitx platform can be used with GNU GPLv3 open source software license.
 
 
-NWINIX DEPENDENCIES
+Pcynlitx DEPENDENCIES
 ---------------------
-The Nwinix platform requires mingw64 compiler tool chain and
-mingw64 compiler is installed automatically by Nwinix installer.
-The "Nwinix" installer performs the basic installation automatically 
+The Pcynlitx platform requires mingw64 compiler tool chain and
+mingw64 compiler is installed automatically by Pcynlitx installer.
+The "Pcynlitx" installer performs the basic installation automatically 
 and starts mingw64 installation after the basic installation completed.
 The application is installed to the folder "C:\Program Files" as 
-"C:\Program Files\Nwinix". The mingw64 installer setups the mingw64 
+"C:\Program Files\Pcynlitx". The mingw64 installer setups the mingw64 
 compiler and The path environments are setted by mingw64 installer. The mingw64 
-installer which is used in Nwinix installer is developed particularly for Nwinix 
-platform by the developer of the Nwinix platform "Erkam Murat Bozkurt". 
-The installer setups the proper mingw64 version for Nwinix. However, the installer 
+installer which is used in Pcynlitx installer is developed particularly for Pcynlitx 
+platform by the developer of the Pcynlitx platform "Erkam Murat Bozkurt". 
+The installer setups the proper mingw64 version for Pcynlitx. However, the installer 
 only performs an installation using the mingw64 binaries and the actual mingw64 tools
-have been developed by "mingw64 community". The developer of the Nwinix platform 
+have been developed by "mingw64 community". The developer of the Pcynlitx platform 
 "Erkam Murat Bozkurt" thanks to the mingw64 devlopers for their contributions on both 
-the Nwinix project and open source software ecosystem. You can find more informations 
+the Pcynlitx project and open source software ecosystem. You can find more informations 
 about mingw64 compiler and its licence on the informations given in below.
 
 In addition, in order to extract the compressed mingw64 files, the mingw64 

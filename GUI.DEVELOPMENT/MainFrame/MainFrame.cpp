@@ -13,7 +13,7 @@
 
 #include "Event_Table_Header.h"
 
-MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
+MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
         wxDefaultPosition, wxSize(1250,950),wxDEFAULT_FRAME_STYLE )
 {
@@ -39,11 +39,11 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->exclamation_mark_bmp 
   
-      = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+      = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
 
   this->logo_bmp 
   
-      = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\logo.png"),wxBITMAP_TYPE_ANY);
+      = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\logo.png"),wxBITMAP_TYPE_ANY);
 
 
   this->Des_Reader = new Descriptor_File_Reader('w','g');
@@ -53,7 +53,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Process_Ptr = new Process_Manager(this,wxID_ANY);
 
-  wxString Builder_Path(wxT("C:\\Program Files\\Nwinix\\Nwinix_Kernel.exe"));
+  wxString Builder_Path(wxT("C:\\Program Files\\Pcynlitx\\Pcynlitx_Kernel.exe"));
 
   this->Process_Ptr->Receive_Builder_Path(Builder_Path);
 
@@ -331,7 +331,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"NWINIX",
 
   this->Book_Manager->OpenIntroPage();
 
-  wxString Help_Page_Path = wxT("C:\\Program Files\\Nwinix\\Introduction.txt");
+  wxString Help_Page_Path = wxT("C:\\Program Files\\Pcynlitx\\Introduction.txt");
 
   this->Book_Manager->Open_File(Help_Page_Path);
 
@@ -416,7 +416,7 @@ void MainFrame::File_Save(wxCommandEvent & event){
             
             Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
             
-            wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+            wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
                
             *this->exclamation_mark_bmp, wxDefaultPosition);
 
@@ -662,7 +662,7 @@ void MainFrame::Run_Project_Script_On_Terminal(wxCommandEvent & event){
             
                   Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
             
-                  wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+                  wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
                
                   *this->exclamation_mark_bmp, wxDefaultPosition);
 
@@ -691,9 +691,9 @@ void MainFrame::Show_Help_Menu(wxCommandEvent & event)
 
         message = message + wxT("M.Sc. Control Sysytem Engineering\n\n");
 
-        message = message + wxT("http://www.nwinix.com\n\n");
+        message = message + wxT("http://www.pcynlitx.com\n\n");
 
-        message = message + wxT("help@nwinix.com\n\n");
+        message = message + wxT("help@pcynlitx.com\n\n");
 
 
         Help_Page_Constructor * dial = new Help_Page_Constructor(this,message,
@@ -1105,7 +1105,7 @@ void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath,
             
             Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
             
-            wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX BUILD SYSTEM COSTRUCTION REPORT"),
+            wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX BUILD SYSTEM COSTRUCTION REPORT"),
                
             *this->exclamation_mark_bmp, wxDefaultPosition);
 
@@ -1171,7 +1171,7 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
             
               Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
             
-              wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX BUILD SYSTEM COSTRUCTION REPORT"),
+              wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX BUILD SYSTEM COSTRUCTION REPORT"),
                
               *this->exclamation_mark_bmp, wxDefaultPosition);
 
@@ -1260,7 +1260,7 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
             
             Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
             
-               wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+               wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
                
                *this->exclamation_mark_bmp, wxDefaultPosition);
 
@@ -1292,7 +1292,7 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
 
         this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
-        wxString shell_command = "C:\\Program Files\\Nwinix\\Nwinix_Kernel.exe " 
+        wxString shell_command = "C:\\Program Files\\Pcynlitx\\Pcynlitx_Kernel.exe " 
         
         + construction_dir + " -ed";
 
@@ -1361,7 +1361,7 @@ void MainFrame::Select_File(wxString & FilePATH, wxString Title){
             
                Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
             
-               wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+               wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
                
                *this->exclamation_mark_bmp, wxDefaultPosition);
 
@@ -1652,7 +1652,7 @@ void MainFrame::Descriptor_File_Selection_Check(){
             
      Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
             
-         wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+         wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
                
          *this->exclamation_mark_bmp, wxDefaultPosition);
 
@@ -2141,7 +2141,7 @@ void MainFrame::Print_Project_File_Syntax_Error(){
             
      Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
             
-     wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+     wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
                
          *this->exclamation_mark_bmp, wxDefaultPosition);
 

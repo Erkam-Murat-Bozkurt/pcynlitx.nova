@@ -47,7 +47,7 @@ Gui_Shell_Script_Executer::Gui_Shell_Script_Executer(wxFrame * parent, wxWindowI
 
      this->Memory_Delete_Condition = false;
 
-     wxIcon Frame_Icon(wxT("C:\\Program Files\\Nwinix\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+     wxIcon Frame_Icon(wxT("C:\\Program Files\\Pcynlitx\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
      this->SetIcon(Frame_Icon);
 
@@ -64,7 +64,7 @@ Gui_Shell_Script_Executer::Gui_Shell_Script_Executer(wxFrame * parent, wxWindowI
 
      this->exclamation_mark_bmp 
   
-      = new wxBitmap(wxT("C:\\Program Files\\Nwinix\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+      = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
 
 
 
@@ -156,7 +156,7 @@ void Gui_Shell_Script_Executer::Execute_Shell_Script(std::string path){
 
                  Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,wxString(size),
             
-               wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+               wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
                
                *this->exclamation_mark_bmp, wxDefaultPosition,wxT("Close"),wxSize(1500,500));
 
@@ -177,7 +177,7 @@ void Gui_Shell_Script_Executer::Execute_Shell_Script(std::string path){
             
                dial = new Custom_Message_Dialog(this,Message,
             
-               wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+               wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
                
                *this->exclamation_mark_bmp, wxDefaultPosition);
 
@@ -191,7 +191,7 @@ void Gui_Shell_Script_Executer::Execute_Shell_Script(std::string path){
             
                  Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
             
-                 wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+                 wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
                
                  *this->exclamation_mark_bmp, wxDefaultPosition,wxT("Close"),wxSize(1500,500));
 
@@ -207,7 +207,7 @@ void Gui_Shell_Script_Executer::Execute_Shell_Script(std::string path){
             
                dial = new Custom_Message_Dialog(this,Message,
             
-               wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("NWINIX OPERATION REPORT"),
+               wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
                
                *this->exclamation_mark_bmp, wxDefaultPosition,wxT("Close"),wxSize(1500,500));
 

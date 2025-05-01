@@ -267,32 +267,24 @@ target_link_directories(BuildSystem_GUI PUBLIC
 )
 
 
-target_link_libraries(BuildSystem_GUI PUBLIC des_reader pthread wxmsw32u_core wxbase32u wxtiffd 
+target_link_libraries(BuildSystem_GUI PUBLIC des_reader pthread 
+
+                     wxmsw32u_core wxbase32u  
                       
-                     wxjpeg wxpng wxzlib wxregexu wxexpat wxbase32u_xml wxmsw32u_aui
+                     wxmsw32u_aui
                 
-                     wxmsw32u_stc wxscintillad wxbase32u_net wxmsw32u_xrc wxmsw32u_richtext
+                     wxmsw32u_stc wxscintillad  wxmsw32u_xrc wxmsw32u_richtext
         
-                     wxmsw32u_webview wxmsw32u_ribbon wxmsw32u_propgrid wxmsw32u_html wxmsw32u_adv 
-        
-                     wxmsw32u_gl wxmsw32u_media kernel32 user32 gdi32 comdlg32 winspool winmm
-
-                     shell32 comctl32 ole32 oleaut32 uuid rpcrt4 advapi32 wsock32 wininet uxtheme 
-
-                     oleacc gcc stdc++ User32)
+                     gcc stdc++ )
 
 
-link_libraries( pthread libwxmsw32ud_core.a libwxbase32u.a libwxtiff.a 
+link_libraries( pthread libwxmsw32u_core.a libwxbase32u.a libwxtiff.a 
                       
-                libwxjpeg.a libwxpng.a libwxzlib.a libwxregexu.a libwxexpat.a libwxbase32u_xml.a libwxmsw32u_aui.a
+                libwxmsw32u_aui.a
                 
-                libwxmsw32u_stc.a libwxscintilla.a libwxbase32u_net.a libwxmsw32u_xrc.a libwxmsw32u_richtext.a
+                libwxmsw32u_stc.a libwxscintilla.a 
         
-                libwxmsw32u_webview.a libwxmsw32u_ribbon.a libwxmsw32u_propgrid.a libwxmsw32u_html.a libwxmsw32u_adv.a 
-        
-                libwxmsw32u_gl.a libwxmsw32u_media.a libwxmsw32u_core.a kernel32 user32 gdi32 comdlg32 winspool winmm
-
-                shell32 comctl32 ole32 oleaut32 uuid rpcrt4 advapi32 wsock32 wininet uxtheme oleacc User32
+                libwxmsw32u_core.a 
 )
 
 target_compile_options(BuildSystem_GUI PUBLIC -static-libgcc -static-libstdc++ 

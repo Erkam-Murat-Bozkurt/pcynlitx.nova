@@ -4,8 +4,8 @@
 #define MyAppName "Mingw64"
 #define MyAppVersion "1.0"
 #define MyAppPublisher "Erkam Murat Bozkurt M.Sc Control Systems Engineering"
-#define MyAppURL "https://www.nwinix.tech/"
-#define TargetDir "C:\Program Files\Nwinix"
+#define MyAppURL "https://www.pcynlitx.com/"
+#define TargetDir "C:\Program Files\Pcynlitx"
 
 [Setup]
 
