@@ -325,14 +325,29 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int start, int e
             std::string target_name;
 
             for(auto it=dir_sort_path.rbegin();it!=dir_sort_path.rend();it++){
+                
+                std::string str = *it;
 
-                target_name += *it;
+                int encode = 0;
 
-                target_name.push_back('_');
+                for(char c : str){
+
+                    encode += static_cast<int>(c);
+                }
+
+                std::string str_encode = std::to_string(encode); 
+         
+                if(str_encode.size()>0){
+             
+                   target_name.push_back('_');
+                }
+
+                target_name += str_encode;
             }
 
 
-            buffer.cmake_target_name =  src_ptr->at(0).source_file_name_without_ext; 
+            buffer.cmake_target_name =  src_ptr->at(0).source_file_name_without_ext + target_name; 
+
 
             this->Clear_Vector_Memory(&dir_sort_path);
 

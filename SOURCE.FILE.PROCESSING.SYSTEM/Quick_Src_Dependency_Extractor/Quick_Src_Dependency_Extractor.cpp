@@ -147,7 +147,6 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
      // On the other case, there will be to target with same name.
 
 
-     /*
      std::vector<std::string> dir_sort_path;
 
      this->Extract_Directory_Short_Paths(src_git_record_dir,dir_sort_path);
@@ -164,14 +163,27 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
 
      for(auto it=dir_sort_path.rbegin();it<dir_sort_path.rend();it++){
 
-         target_name += *it;
-            
-         target_name.push_back('_');
+         std::string str = *it;
+
+         int encode = 0;
+
+         for(char c : str){
+
+             encode += static_cast<int>(c);
+         }
+
+         std::string str_encode = std::to_string(encode); 
+         
+         if(str_encode.size()>0){
+             
+            target_name.push_back('_');
+         }
+
+         target_name += str_encode;
      }
 
-     */
 
-     this->Dep_Data.cmake_target_name =  file_name_without_ext;
+     this->Dep_Data.cmake_target_name =  file_name_without_ext + target_name;
 
      //std::cout << "\n this->Dep_Data.cmake_target_name:" << this->Dep_Data.cmake_target_name;
 
