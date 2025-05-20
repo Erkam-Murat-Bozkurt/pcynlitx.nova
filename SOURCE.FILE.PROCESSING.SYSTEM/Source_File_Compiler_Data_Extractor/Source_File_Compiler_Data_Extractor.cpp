@@ -332,7 +332,7 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int start, int e
             }
 
 
-            buffer.cmake_target_name = target_name + src_ptr->at(0).source_file_name_without_ext; 
+            buffer.cmake_target_name =  src_ptr->at(0).source_file_name_without_ext; 
 
             this->Clear_Vector_Memory(&dir_sort_path);
 

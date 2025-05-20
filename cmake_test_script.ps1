@@ -1,4 +1,5 @@
 
+# REMOVING THE TEST DIRECTORIES
 
 cd C:\Development.Files\PCYNLITX.BUILD.TEST
 
@@ -20,6 +21,7 @@ if($Path_exist){
 }
 
 
+# CONSTRUCTING THE TEST DIRECTORIES
 
 cd C:\Development.Files
 
@@ -36,7 +38,19 @@ Read-Host -Prompt "Press any key to continue"
 Write-Output ""
 
 
-cd C:\Development.Files\Project.Test.platform
+
+# Pcynlitx_Kernel.exe will be updated.
+
+cd C:\Development.Files\PCYNLITX_BUILD_CONFIGS
+
+mingw32-make -f .\Makefile
+
+Copy-Item -LiteralPath "C:\Development.Files\PCYNLITX_BUILD_CONFIGS\Pcynlitx_Kernel.exe" -Destination "C:\Development.Files\PCYNLITX.BUILD.TEST" -Recurse -Force
+
+
+
+
+cd C:\Development.Files\PCYNLITX.BUILD.TEST
 
 .\Pcynlitx_Kernel.exe C:\Development.Files\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt -ip
 
@@ -49,19 +63,13 @@ Write-Output ""
 
 Write-Host "CMAKE Build system constructed" -ForegroundColor green
 
-Read-Host -Prompt "Press any key to continue"
+Read-Host -Prompt "Press any key to continue for build system test"
 
 Write-Output ""
 Write-Output ""
+
 
 cd C:\Development.Files\PCYNLITX_WIN_CMAKE_CONFIGS
 
 mingw32-make -f .\Makefile
 
-cd C:\Development.Files\Project.Test.platform
-
-.\Pcynlitx_Kernel.exe C:\Development.Files\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt -if C:\Development.Files\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test\KERNEL.DEVELOPMENT\Kernel\Kernel_Main_File.cpp _pcyKernel c
-
-cd C:\Development.Files\PCYNLITX_WIN_CMAKE_CONFIGS
-
-mingw32-make -f .\Makefile

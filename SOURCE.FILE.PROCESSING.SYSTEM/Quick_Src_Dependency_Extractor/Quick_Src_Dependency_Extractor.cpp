@@ -146,6 +146,8 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
 
      // On the other case, there will be to target with same name.
 
+
+     /*
      std::vector<std::string> dir_sort_path;
 
      this->Extract_Directory_Short_Paths(src_git_record_dir,dir_sort_path);
@@ -153,23 +155,33 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
         
      size_t range_counter=0;
 
-    for(size_t k=0;k<dir_sort_path.size();k++){
+     for(size_t k=0;k<dir_sort_path.size();k++){
 
         range_counter++;
-    }
-
-    std::string target_name;
-
-    for(auto it=dir_sort_path.rbegin();it<dir_sort_path.rend();it++){
-
-        target_name += *it;
-            
-        target_name.push_back('_');
      }
 
-     this->Dep_Data.cmake_target_name = target_name + file_name_without_ext;
+     std::string target_name;
 
-     this->Clear_Vector_Memory(dir_sort_path);
+     for(auto it=dir_sort_path.rbegin();it<dir_sort_path.rend();it++){
+
+         target_name += *it;
+            
+         target_name.push_back('_');
+     }
+
+     */
+
+     this->Dep_Data.cmake_target_name =  file_name_without_ext;
+
+     //std::cout << "\n this->Dep_Data.cmake_target_name:" << this->Dep_Data.cmake_target_name;
+
+     //std::cout << "\n target_name:" << target_name;
+
+     //std::cout << "\n file_name_without_ext:" << file_name_without_ext;
+
+
+
+     //this->Clear_Vector_Memory(dir_sort_path);
 
      this->Clear_String_Memory(src_file_name);
 
