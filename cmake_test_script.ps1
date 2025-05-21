@@ -73,3 +73,5 @@ cd C:\Development.Files\PCYNLITX_WIN_CMAKE_CONFIGS
 
 mingw32-make -f .\Makefile
 
+# .\Pcynlitx_Kernel.exe C:\Development.Files\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt -if 
+# C:\Development.Files\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test\KERNEL.DEVELOPMENT\Kernel\Kernel_Main_File.cpp sample.exe c

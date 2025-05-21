@@ -149,20 +149,15 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      for(size_t i=1;i<this->Comp_Data_Ptr->size();i++){
 
+         std::string str_encode;
+
+         this->Directory_Path_Encoder(this->Comp_Data_Ptr->at(i).src_git_record_dir,str_encode);
+
          std::string target_name = "$<TARGET_OBJECTS:" +
          
-          this->Comp_Data_Ptr->at(i).source_file_name_witout_ext + ">";
+         this->Comp_Data_Ptr->at(i).source_file_name_witout_ext + "_" + str_encode + ">";
 
-         target_dep_list = target_dep_list + target_name + space_string;
-
-         target_counter++;
-
-         if(target_counter>1){
-
-             target_dep_list = target_dep_list + "\n\t";
-
-             target_counter = 0;
-         }      
+         target_dep_list = target_dep_list + target_name + space_string + "\n\t";   
      }
 
 
@@ -186,8 +181,14 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
         CMake_File_Path.push_back('/');
      }
 
-     std::string file_name = this->Data_Ptr->source_file_name_witout_ext  + ".cmake";
 
+     std::string encode_string;
+          
+     this->Directory_Path_Encoder(this->Data_Ptr->src_git_record_dir,encode_string);
+
+
+
+     std::string file_name = this->Data_Ptr->source_file_name_witout_ext + "_" + encode_string + ".cmake";
 
      CMake_File_Path = CMake_File_Path +  file_name;
 
@@ -219,7 +220,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      this->FileManager.WriteToFile("\n\t");  
 
-     this->FileManager.WriteToFile(target_dep_list);
+     //this->FileManager.WriteToFile(target_dep_list);
 
      for(size_t i=0;i<this->Data_Ptr->dependent_headers.size();i++){
 
@@ -339,6 +340,10 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
                lib_counter = 0;
             }
         }
+
+        std::string project_lib_name = this->Des_Reader.Get_Project_Name() + "_lib";
+
+        this->FileManager.WriteToFile(project_lib_name);
 
         this->FileManager.WriteToFile("\n )");
      }  
@@ -502,6 +507,154 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
            this->FileManager.FileClose();
      }
+
+     //this->Determine_Project_Library_Name();
+}
+
+/*
+void CMAKE_Executable_Target_Constructor::Determine_Project_Library_Name(){
+
+     std::string repo_dir_path = this->Des_Reader.Get_Project_Name();
+
+     std::string repo_dir_name;
+
+     this->Extract_Repo_Directory_Name(repo_dir_name,repo_dir_path);
+
+     this->project_library_name = repo_dir_name;     
+
+     std::cout << "\n this->project_library_name:" << this->project_library_name;
+}
+     */
+
+
+/*
+
+void CMAKE_Executable_Target_Constructor::Extract_Repo_Directory_Name(std::string & name, 
+
+     std::string root_dir){
+
+     size_t root_dir_size = root_dir.size();
+
+     size_t start_point = root_dir_size;
+
+     for(size_t i=root_dir_size;i>0;i--){
+
+         if((root_dir[i] == '\\') || (root_dir[i] == '/') ){
+
+             start_point = i+1;
+             break;
+         }   
+     }    
+
+     for(size_t i=start_point;i<root_dir_size;i++){
+
+         name.push_back(tolower(root_dir[i]));
+     }
+
+     name.shrink_to_fit();
+}
+
+*/
+
+void CMAKE_Executable_Target_Constructor::Directory_Path_Encoder(std::string sys_dir, std::string & str_encode){
+    
+     std::vector<std::string> dir_sort_path;
+
+     std::string file_git_record_directory = sys_dir;
+
+     this->Extract_Directory_Short_Path(file_git_record_directory,dir_sort_path);
+     
+     for(auto it=dir_sort_path.rbegin();it<dir_sort_path.rend();it++){
+
+         std::string str = *it;
+
+         int encode = 0;
+
+         for(char c : str){
+
+             encode += static_cast<int>(c);
+         }
+
+         std::string str_numbers = std::to_string(encode); 
+         
+         if(str_numbers.size()>0){
+             
+            str_numbers.push_back('_');
+         }
+
+         str_encode += str_numbers;
+     }
+
+
+     str_encode.shrink_to_fit();
+
+     if(str_encode.back()=='_'){
+
+        str_encode.erase(str_encode.size()-1);
+     }
+}
+
+
+
+void CMAKE_Executable_Target_Constructor::Extract_Directory_Short_Path(std::string sys_dir, 
+
+     std::vector<std::string> & sort_dir_path){
+
+     size_t dir_size = sys_dir.length();
+     
+     std::string repo_dir = this->Des_Reader.Get_Repo_Directory_Location();
+
+     std::string file_path =  repo_dir + "\\" + sys_dir;
+
+     file_path.shrink_to_fit();
+
+     size_t end_point = file_path.size();
+
+     size_t start_point = end_point;
+
+     do{
+
+        std::string short_path;
+
+        for(size_t i=end_point;i>repo_dir.size();i--){
+
+            if((file_path[i] == '\\') || (file_path[i] == '/')){
+
+                break;
+            }
+            else{
+
+               start_point--;
+            }
+        }
+
+        for(size_t i=start_point+1;i<end_point;i++){
+
+            short_path.push_back(file_path[i]);
+        }
+
+        short_path.shrink_to_fit();
+
+
+        for(size_t i=file_path.length();i>start_point-1;i--){
+
+            file_path.erase(i,1);
+        }
+
+        file_path.shrink_to_fit();
+
+
+        if(!short_path.empty()){
+
+           sort_dir_path.push_back(short_path);
+        }
+
+        end_point = file_path.size();
+
+
+     }while(file_path.size()>repo_dir.size());
+
+     sort_dir_path.shrink_to_fit();
 }
 
 

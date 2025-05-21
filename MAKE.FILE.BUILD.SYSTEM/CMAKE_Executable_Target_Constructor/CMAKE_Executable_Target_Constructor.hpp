@@ -47,6 +47,11 @@ private:
  void Clear_String_Memory(std::string & pointer);
  void CMAKE_Sub_Directory_File_Path_Determination(std::string & path);
  void CMAKE_SubDir_Determination(std::string & sub_dir_path);
+ void Extract_Directory_Short_Path(std::string sys_dir, 
+      std::vector<std::string> & sort_dir_path); 
+ void Directory_Path_Encoder(std::string sys_dir, std::string & str_encode);
+ void Determine_Project_Library_Name();
+ void Extract_Repo_Directory_Name(std::string & name, std::string root_dir);
  Descriptor_File_Reader Des_Reader;
  Git_Data_Processor Data_Processor;
  Source_File_Dependency_Determiner Dep_Determiner;
@@ -56,6 +61,7 @@ private:
  std::vector<Compiler_Data> * Comp_Data_Ptr;
  Compiler_Data * Data_Ptr;
  std::string DesPATH;
+ std::string project_library_name;
  char build_type;
  char opr_sis;
  bool Include_Line_Condition;

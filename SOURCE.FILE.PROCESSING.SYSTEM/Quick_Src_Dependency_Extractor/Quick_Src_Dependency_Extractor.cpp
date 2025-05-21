@@ -185,15 +185,9 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
 
      this->Dep_Data.cmake_target_name =  file_name_without_ext + target_name;
 
-     //std::cout << "\n this->Dep_Data.cmake_target_name:" << this->Dep_Data.cmake_target_name;
-
-     //std::cout << "\n target_name:" << target_name;
-
-     //std::cout << "\n file_name_without_ext:" << file_name_without_ext;
 
 
-
-     //this->Clear_Vector_Memory(dir_sort_path);
+     this->Clear_Vector_Memory(dir_sort_path);
 
      this->Clear_String_Memory(src_file_name);
 
