@@ -65,6 +65,7 @@ public:
   wxBitmap * open_tree_view;
   wxBitmap * print_descriptions;
   wxBitmap * open_help_menu;
+  wxBitmap * close;
 };
 
 #endif /* TOOLBAR_INITIALIZER_H */

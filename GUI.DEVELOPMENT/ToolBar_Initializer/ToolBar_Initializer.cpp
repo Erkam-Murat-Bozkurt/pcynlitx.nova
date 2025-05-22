@@ -51,6 +51,8 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->open_help_menu = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\help.png"),wxBITMAP_TYPE_PNG);
 
+     this->close = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\close.png"),wxBITMAP_TYPE_PNG);
+
 
      this->toolBar = new wxAuiToolBar(Frame_Pointer,wxID_ANY,wxDefaultPosition,wxDefaultSize,wxAUI_TB_PLAIN_BACKGROUND);
 
@@ -90,6 +92,8 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->Art_Pointer->DrawPlainBackground(*this->WinDc,this->toolBar,this->toolBar->GetRect());
 
+     this->toolBar->AddTool(wxID_EXIT,wxT(""),*this->close,wxT(""));
+
      this->toolBar->AddTool(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,wxT(""),*this->construct_build_system,wxT(""));
 
      this->toolBar->AddTool(ID_OPEN_SETTINGS,wxT(""),*this->open_settings,wxT(""));
@@ -97,6 +101,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
      this->toolBar->AddTool(ID_OPEN_TREE_WIEW,wxT(""),*this->open_tree_view,wxT(""));
 
      this->toolBar->AddTool(ID_SELECT_PROJECT_FILE,wxT(""),*this->Select_Project_File,wxT(""));
+
 
      //this->toolBar->AddSpacer(10);
 

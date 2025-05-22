@@ -38,7 +38,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
      inkscape:cx="252.79067"
-     inkscape:cy="150.26019"
+     inkscape:cy="128.54191"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -109,23 +109,23 @@
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:22.9306px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808b96;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="-85.921249"
-       y="224.22577"
+       y="233.17929"
        id="text824-3"><tspan
          sodipodi:role="line"
          id="tspan822-0"
          x="-85.921249"
-         y="224.22577"
+         y="233.17929"
          style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:22.9306px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Heavy';opacity:0.85;fill:#505050;fill-opacity:1;stroke-width:0.264583">PCYNLITX</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:22.9306px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#fcaf3b;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="13.477438"
-       y="223.92288"
+       y="232.8764"
        id="text825-9"><tspan
          sodipodi:role="line"
          x="13.477438"
-         y="223.92288"
-         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:22.9306px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Heavy';fill:#b4b4c3;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+         y="232.8764"
+         style="font-style:normal;font-variant:normal;font-weight:900;font-stretch:normal;font-size:22.9306px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Heavy';fill:#fcaf3b;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
          id="tspan1">IDE</tspan></text>
   </g>
 </svg>

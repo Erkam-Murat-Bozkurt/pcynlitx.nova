@@ -19,7 +19,7 @@
 #include "MainFrame.h"
 
 BEGIN_EVENT_TABLE(MainFrame,wxFrame)
-
+  EVT_MENU(wxID_EXIT,MainFrame::Exit)
   EVT_MENU(ID_OPEN_TERMINAL,MainFrame::OpenTerminal)
   EVT_MENU(ID_OPEN_EMPTY_PROJECT_FILE,MainFrame::Open_Empty_Project_File)
   EVT_MENU(ID_SELECT_PROJECT_FILE,MainFrame::Select_Project_File)

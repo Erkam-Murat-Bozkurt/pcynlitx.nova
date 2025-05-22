@@ -59,16 +59,29 @@
   <title
      id="title1" />
   <rect
-     style="fill:#c8c8d2;fill-opacity:1;stroke:none;stroke-width:1.5;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#bebebe;fill-opacity:1;stroke:none;stroke-width:1.5;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
      id="rect2"
      width="49.584518"
      height="50.624828"
      x="5.0439143"
      y="4.869185"
      ry="1.523626" />
-  <path
-     inkscape:connector-curvature="0"
-     id="path900-3-6"
-     d="m 23.029493,34.826422 -5.279298,-5.867762 1.033475,-1.148594 1.03347,-1.148588 3.924622,1.938347 c 2.158546,1.066089 3.942902,1.907327 3.965246,1.869407 0.02207,-0.03796 2.191915,-2.893442 4.82127,-6.345614 l 4.780649,-6.276674 h 2.469619 c 1.358284,0 2.469603,0.01651 2.469603,0.03631 0,0.02724 -13.856451,22.70753 -13.926105,22.794379 -0.0074,0.0091 -2.388929,-2.623974 -5.292551,-5.85124 z"
-     style="fill:#32323c;fill-opacity:1;stroke:#000000;stroke-width:0;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0.5;stroke-opacity:1;paint-order:fill markers stroke" />
+  <rect
+     style="fill:#2d2d2d;fill-opacity:1;stroke:#fcaf3b;stroke-width:0"
+     id="rect1"
+     width="8.3869963"
+     height="30.053404"
+     x="42.137718"
+     y="-17.635992"
+     ry="0"
+     transform="rotate(45.018177)" />
+  <rect
+     style="fill:#2d2d2d;fill-opacity:1;stroke:#fcaf3b;stroke-width:0"
+     id="rect1-2"
+     width="8.386508"
+     height="19.089924"
+     x="-8.9294891"
+     y="31.451439"
+     ry="0"
+     transform="matrix(0.75335866,-0.65760986,0.64766492,0.76192529,0,0)" />
 </svg>
