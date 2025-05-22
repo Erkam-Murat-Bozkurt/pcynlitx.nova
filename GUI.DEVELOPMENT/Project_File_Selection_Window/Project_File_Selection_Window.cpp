@@ -41,7 +41,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Descriptor_File_Selection_Status = nullptr;
 
-     wxIcon Frame_Icon(wxT("C:\\Program Files\\Pcynlitx\\icons\\frame_icon_second.png"),wxBITMAP_TYPE_PNG,-1,-1);
+     wxIcon Frame_Icon(wxT("C:\\Program Files\\Pcynlitx\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
      this->SetIcon(Frame_Icon);
 
@@ -70,7 +70,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Project_File_Selection_Panel->SetMinSize(wxSize(350,175));
 
-     this->Project_File_Selection_Panel->SetBackgroundColour(wxColour(225,225,225));
+     this->Project_File_Selection_Panel->SetBackgroundColour(wxColour(215,215,215));
 
 
 
@@ -81,7 +81,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Empty_Project_File_Panel->SetMinSize(wxSize(350,175));
 
-     this->Empty_Project_File_Panel->SetBackgroundColour(wxColour(225,225,225));
+     this->Empty_Project_File_Panel->SetBackgroundColour(wxColour(215,215,215));
 
 
      wxStaticBitmap * select_project_file_figure 
@@ -124,9 +124,9 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Project_File_Selection_Button_Panel->SetMinSize(wxSize(350,135));
 
-     this->Empty_Project_File_Button_Panel->SetBackgroundColour(wxColour(225,225,225));
+     this->Empty_Project_File_Button_Panel->SetBackgroundColour(wxColour(215,215,215));
 
-     this->Project_File_Selection_Button_Panel->SetBackgroundColour(wxColour(225,225,225));
+     this->Project_File_Selection_Button_Panel->SetBackgroundColour(wxColour(215,215,215));
 
 
 
@@ -162,12 +162,12 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Empty_Project_File_Button->SetMinSize(wxSize(150,70));
 
-     //this->Empty_Project_File_Button->SetForegroundColour(wxColour(150,150,150));
+     this->Empty_Project_File_Button->SetForegroundColour(wxColour(50,50,60));
 
 
      this->Project_File_Selection_Button->SetMinSize(wxSize(150,70));
 
-     //this->Project_File_Selection_Button->SetForegroundColour(wxColour(150,150,150));
+     this->Project_File_Selection_Button->SetForegroundColour(wxColour(50,50,60));
 
 
 
@@ -177,7 +177,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Empty_Project_File_Text_Panel->SetMinSize(wxSize(350,80));
 
-     this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(200,200,210));
+     this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(50,50,60));
 
      //this->Empty_Project_File_Text_Panel->SetBackgroundColour(wxColour(200,100,100));
 
@@ -187,7 +187,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Project_File_Selection_Text_Panel->SetMinSize(wxSize(350,80));
 
-     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(200,200,210,0xff));
+     this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(50,50,60,0xff));
 
      //this->Project_File_Selection_Text_Panel->SetBackgroundColour(wxColour(68,158,157));
 
@@ -214,7 +214,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      new_file_text->SetFont(Text_Font);
 
-     new_file_text->SetForegroundColour(wxColour(75,75,85));
+     new_file_text->SetForegroundColour(wxColour(225,225,225));
 
      //new_file_text->SetForegroundColour(wxColour(250,250,250));
      
@@ -232,7 +232,7 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      project_file_text->SetFont(Text_Font);
 
-     project_file_text->SetForegroundColour(wxColour(75,75,85));
+     project_file_text->SetForegroundColour(wxColour(225,225,225));
 
      //project_file_text->SetForegroundColour(wxColour(250,250,250));
 

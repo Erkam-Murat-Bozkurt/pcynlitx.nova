@@ -7,7 +7,7 @@
    id="svg2"
    sodipodi:docname="open_new_project_file.svg"
    inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   inkscape:export-filename="..\..\..\..\Project.Test.platform\icons\open_new_project_file.png"
+   inkscape:export-filename="..\..\..\..\Project.Test.platform\open_new_project_file.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -67,9 +67,9 @@
       <g
          id="g2-9"
          transform="matrix(2.9780141,0,0,3.349138,-33.819172,-44.513146)"
-         style="fill:#787887;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none">
+         style="fill:#73737d;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none">
         <rect
-           style="fill:#c8c8d2;fill-opacity:1;stroke:none;stroke-width:1.00595;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
+           style="fill:#32323c;fill-opacity:1;stroke:none;stroke-width:1.00595;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
            id="rect1-9"
            width="39.81897"
            height="39.473747"
@@ -78,39 +78,39 @@
            ry="1.5143187" />
         <text
            xml:space="preserve"
-           style="font-style:italic;font-weight:900;font-size:24px;line-height:36px;font-family:Lato;-inkscape-font-specification:'Lato Heavy Italic';fill:#e1a5a5;fill-opacity:1;stroke:none;stroke-width:4.012;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           style="font-style:italic;font-weight:900;font-size:24px;line-height:36px;font-family:Lato;-inkscape-font-specification:'Lato Heavy Italic';fill:#73737d;fill-opacity:1;stroke:none;stroke-width:4.012;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
            x="96.372055"
            y="28.52956"
            id="text7"><tspan
              sodipodi:role="line"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:36px;font-family:Oswald;-inkscape-font-specification:Oswald;fill:#646473;fill-opacity:1;stroke-width:4.012"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:36px;font-family:Oswald;-inkscape-font-specification:Oswald;fill:#32323c;fill-opacity:1;stroke-width:4.012"
              x="96.372055"
              y="28.52956"
              id="tspan8">Create a new </tspan><tspan
              sodipodi:role="line"
-             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:36px;font-family:Oswald;-inkscape-font-specification:Oswald;fill:#646473;fill-opacity:1;stroke-width:4.012"
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:24px;line-height:36px;font-family:Oswald;-inkscape-font-specification:Oswald;fill:#32323c;fill-opacity:1;stroke-width:4.012"
              x="96.372055"
              y="65.01239"
              id="tspan2">project file</tspan></text>
         <path
-           style="fill:#c8c8d2;fill-opacity:1;stroke:#4b4b4b;stroke-width:0.205984"
+           style="fill:#32323c;fill-opacity:1;stroke:#4b4b4b;stroke-width:0.205984"
            d="M 23.228604,65.048616 H -2.3957841 L -1.9298863,-3.9051499 58.170956,-3.6580028 57.894075,38.347776 52.849531,38.304091 52.870119,1.1897141 2.8570636,1.2115568 2.8776516,59.58096 23.158779,59.559117 Z"
            id="path1" />
         <path
-           style="fill:#c8c8d2;fill-opacity:1;fill-rule:nonzero;stroke:#4b4b4b;stroke-width:0.213949;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+           style="fill:#32323c;fill-opacity:1;fill-rule:nonzero;stroke:#4b4b4b;stroke-width:0.213949;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
            d="m 14.277957,27.48031 0.0077,4.647319 29.709856,0.0083 0.0054,-4.632017 z"
            id="path2-4" />
         <path
-           style="fill:#c8c8d2;fill-opacity:1;fill-rule:nonzero;stroke:#4b4b4b;stroke-width:0.141676;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+           style="fill:#32323c;fill-opacity:1;fill-rule:nonzero;stroke:#4b4b4b;stroke-width:0.141676;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
            d="m 14.036195,40.592073 0.0036,4.390597 13.789607,0.0078 0.0025,-4.376138 z"
            id="path2-1" />
         <path
-           style="fill:#c8c8d2;fill-opacity:1;fill-rule:nonzero;stroke:#4b4b4b;stroke-width:0.221798;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
+           style="fill:#32323c;fill-opacity:1;fill-rule:nonzero;stroke:#4b4b4b;stroke-width:0.221798;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
            d="m 14.052855,15.164902 0.0077,4.968367 29.866665,0.0089 0.0054,-4.952008 z"
            id="path2-4-2" />
       </g>
       <rect
-         style="fill:#646473;fill-opacity:1;stroke:none;stroke-width:3.696;stroke-miterlimit:0"
+         style="fill:#e1e1e1;fill-opacity:1;stroke:none;stroke-width:3.696;stroke-miterlimit:0"
          id="rect1"
          width="14.326303"
          height="69.970703"
@@ -118,7 +118,7 @@
          y="126.82972"
          ry="6.6197929" />
       <rect
-         style="fill:#646473;fill-opacity:1;stroke:none;stroke-width:3.73681;stroke-miterlimit:0"
+         style="fill:#e1e1e1;fill-opacity:1;stroke:none;stroke-width:3.73681;stroke-miterlimit:0"
          id="rect1-6"
          width="16.477091"
          height="62.188175"
