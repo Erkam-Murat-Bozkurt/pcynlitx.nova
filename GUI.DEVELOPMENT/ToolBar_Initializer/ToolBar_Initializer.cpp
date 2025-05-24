@@ -92,7 +92,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->Art_Pointer->DrawPlainBackground(*this->WinDc,this->toolBar,this->toolBar->GetRect());
 
-     this->toolBar->AddTool(wxID_EXIT,wxT(""),*this->close,wxT(""));
+     this->toolBar->AddTool(ID_EXIT,wxT(""),*this->close,wxT(""));
 
      this->toolBar->AddTool(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,wxT(""),*this->construct_build_system,wxT(""));
 

@@ -520,7 +520,7 @@ void Custom_ProcessOutput::ReadProcessOutput(wxString start_text){
 
 void Custom_ProcessOutput::SetBoldFont(){
 
-     wxTextAttr AttrBold(wxColor(100, 100, 120));
+     wxTextAttr AttrBold(wxColor(50, 50, 60));
 
      AttrBold.SetFontWeight(wxFONTWEIGHT_BOLD);
 
