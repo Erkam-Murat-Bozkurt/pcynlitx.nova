@@ -52,10 +52,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="90.509668"
-     inkscape:cx="1.5357475"
+     inkscape:cx="1.5412718"
      inkscape:cy="2.9665339"
      inkscape:document-units="mm"
-     inkscape:current-layer="g5"
+     inkscape:current-layer="layer1"
      showgrid="true"
      inkscape:window-width="1920"
      inkscape:window-height="1111"
@@ -99,7 +99,7 @@
        y="72.104164"
        id="text16" />
     <polygon
-       style="fill:#898792;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#32323c;fill-opacity:1;stroke:#ffffff;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
        points="500.494,500.494 500.494,109.795 402.205,11.506 11.506,11.506 11.506,500.494 "
        id="polygon1"
        transform="matrix(0.00268917,0,0,0.00265852,72.749182,85.049875)" />

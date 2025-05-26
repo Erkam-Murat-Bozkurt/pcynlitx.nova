@@ -15,7 +15,7 @@
 
 MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX",
 
-        wxDefaultPosition, wxSize(1250,950),wxDEFAULT_FRAME_STYLE )
+        wxDefaultPosition, wxSize(1400,950),wxDEFAULT_FRAME_STYLE )
 {
 
   this->is_custom_panel_constructed = false;

@@ -413,37 +413,6 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
      this->Place_String(&this->Compiler_System_Command,go_to_new_line);
 
      this->Compiler_System_Command.shrink_to_fit();
-
-     /*
-     std::vector<std::string> inc_directive_buffer;
-
-     size_t dep_header_size = this->Compiler_Data_Ptr->dependent_headers.size();
-
-     for(size_t i=0;i<dep_header_size;i++){
-
-          std::string include_directive;
-
-          this->Determine_Include_Directive(&include_directive,i);
-
-          bool inc_directive_exist = this->Check_String_Existance(inc_directive_buffer,include_directive);
-
-          if(!inc_directive_exist){
-
-              this->Place_String(&this->Compiler_System_Command,include_directive);
-
-              this->Place_String(&this->Compiler_System_Command,Space_Character);
-
-              this->Place_String(&this->Compiler_System_Command,go_to_new_line);
-
-              inc_directive_buffer.push_back(include_directive);
-          }
-     }     
-
-     inc_directive_buffer.shrink_to_fit();
-
-     this->Clear_Vector_Memory(inc_directive_buffer);  
-     
-     */
 }
 
 
