@@ -51,6 +51,8 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
      this->Clear_String_Memory(this->Source_File_Name);
 
      this->Clear_String_Memory(this->Source_File_Directory);     
+
+     this->Clear_String_Memory(this->Construction_Code_Line);
 }
 
 
@@ -92,6 +94,8 @@ void MakeFile_Data_Collector::Collect_Make_File_Data(std::string fileName){
      this->Receive_Git_Record_Data(fileName);
 
      this->Determine_Compiler_System_Command();
+
+     this->Determine_Construction_Code_Line();
 
      this->Find_Object_File_Name();
 
@@ -174,7 +178,7 @@ void MakeFile_Data_Collector::Receive_Git_Record_Data(std::string file_name){
      this->Determine_Source_File_Directory(this->Source_File_Directory,source_file_sys_path);
      
      this->Header_File_Directory = this->Source_File_Directory;
- }
+}
 
 
 
@@ -215,8 +219,14 @@ void MakeFile_Data_Collector::Determine_Make_File_Name(){
 
 void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
-     std::string compiler_input_command = "g++ -Wall -c -std=c++17 ";
+     std::string compiler_input_command = "g++ -Wall -c -std=c++17"; 
 
+     std::string file_name_ = this->Compiler_Data_Ptr->source_file_name_witout_ext + "_depends.d " ;
+
+     compiler_input_command += " -MD -MF ";
+     
+     compiler_input_command += file_name_;
+     
 
      const std::vector<std::string> & compiler_options = this->Des_Reader->Get_Compiler_Options();
 
@@ -402,8 +412,9 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      this->Place_String(&this->Compiler_System_Command,go_to_new_line);
 
+     this->Compiler_System_Command.shrink_to_fit();
 
-
+     /*
      std::vector<std::string> inc_directive_buffer;
 
      size_t dep_header_size = this->Compiler_Data_Ptr->dependent_headers.size();
@@ -430,7 +441,9 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      inc_directive_buffer.shrink_to_fit();
 
-     this->Clear_Vector_Memory(inc_directive_buffer);   
+     this->Clear_Vector_Memory(inc_directive_buffer);  
+     
+     */
 }
 
 
@@ -491,17 +504,11 @@ void MakeFile_Data_Collector::Determine_Dependency_Code_Line(){
 
      std::string go_to_new_line = "\\\n\t";
 
+     std::string target_name = ".PHONY dep_list: ";
 
-     std::string objects_location = "$(PROJECT_OBJECTS_LOCATION)\\";
-
-     this->Place_String(&this->Dependency_Code_Line,objects_location);
-
-     this->Place_String(&this->Dependency_Code_Line,this->Object_File_Name);
-
-     this->Place_String(&this->Dependency_Code_Line,double_quotes);
+     this->Place_String(&this->Dependency_Code_Line,target_name);
 
      this->Place_String(&this->Dependency_Code_Line,this->Source_File_Name_With_Ext);
-
 
      this->Place_String(&this->Dependency_Code_Line,Space_Character);
 
@@ -536,6 +543,49 @@ void MakeFile_Data_Collector::Determine_Dependency_Code_Line(){
      }   
 
      this->Clear_Vector_Memory(header_files_buffer);
+}
+
+
+void MakeFile_Data_Collector::Determine_Construction_Code_Line(){
+
+     std::string object_file_name = this->Compiler_Data_Ptr->object_file_name;
+
+     std::string dependency_file_name = this->Compiler_Data_Ptr->source_file_name_witout_ext + "_depends.d" ;
+
+     std::string make_target_name = object_file_name + ": $(" +  dependency_file_name + ") \n";
+
+     this->Construction_Code_Line = make_target_name + "\n\t";
+
+     
+     std::string compiler_input_command = "g++ -Wall -c -std=c++17"; 
+
+
+
+     const std::vector<std::string> & compiler_options = this->Des_Reader->Get_Compiler_Options();
+
+     std::string Space_Character = " ";
+
+     std::string go_to_new_line = "\\\n\t";
+
+     this->Place_String(&this->Construction_Code_Line,compiler_input_command);
+
+     this->Place_String(&this->Construction_Code_Line,go_to_new_line);
+
+     if(!compiler_options.empty()){
+
+        for(size_t i=0;i<compiler_options.size();i++){
+
+            this->Place_String(&this->Construction_Code_Line,compiler_options.at(i));
+
+            this->Place_String(&this->Construction_Code_Line,Space_Character);
+
+            this->Place_String(&this->Construction_Code_Line,go_to_new_line);
+        }
+     }     
+
+     this->Construction_Code_Line +=  "-o $@";
+
+     this->Construction_Code_Line.shrink_to_fit();
 }
 
 
@@ -762,6 +812,11 @@ std::string MakeFile_Data_Collector::Get_Compiler_System_Command(){
 std::string MakeFile_Data_Collector::Get_Dependency_Code_Line(){
 
      return this->Dependency_Code_Line;
+}
+
+std::string MakeFile_Data_Collector::Get_Construction_Code_Line(){
+
+     return this->Construction_Code_Line;
 }
 
 std::string MakeFile_Data_Collector::Get_Object_File_Name(){

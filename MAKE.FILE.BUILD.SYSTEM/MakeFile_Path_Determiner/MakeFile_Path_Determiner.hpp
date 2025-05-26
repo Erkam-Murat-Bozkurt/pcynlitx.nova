@@ -40,6 +40,7 @@ public:
  std::string Get_Warehouse_Object_Dir();
  std::string Get_Repo_Dir();
  std::string Get_Dependency_Code_Line();
+ std::string Get_Construction_Code_Line();
  std::string Get_Compiler_System_Command();
  std::string Get_MakeFile_Path();
  std::string Get_Source_File_Git_Record_Dir();

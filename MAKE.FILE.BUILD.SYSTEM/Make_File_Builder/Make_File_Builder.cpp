@@ -265,6 +265,8 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
 
      std::string Compiler_System_Command = this->Path_Determiner.Get_Compiler_System_Command();
 
+     std::string Construction_Code_Line  = this->Path_Determiner.Get_Construction_Code_Line();
+
      this->FileManager.WriteToFile(Dependency_Code_Line);
 
      this->FileManager.WriteToFile("\n");
@@ -273,7 +275,11 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile(Compiler_System_Command);
 
-     this->FileManager.WriteToFile("\n");
+     this->FileManager.WriteToFile("\n\n");
+
+     this->FileManager.WriteToFile(Construction_Code_Line);
+
+     this->FileManager.WriteToFile("\n\n");
 
      this->FileManager.FileClose();
 }

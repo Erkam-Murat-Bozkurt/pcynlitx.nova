@@ -39,6 +39,7 @@ public:
  std::string Get_Make_File_Name();
  std::string Get_Compiler_System_Command();
  std::string Get_Dependency_Code_Line();
+ std::string Get_Construction_Code_Line();
  std::string Get_Object_File_Name();
  std::string Get_System_Header_File_Dir();
  std::string Get_Source_File_Name_With_Extention();
@@ -59,6 +60,7 @@ private:
  void Place_CString(std::string * ptr, char * Information);
  void Find_Object_File_Name();
  void Determine_Compiler_System_Command();
+ void Determine_Construction_Code_Line();
  void Determine_Warehouse_Object_Dir();
  bool Check_String_Existance(std::vector<std::string> & list, std::string str);
  void Determine_Include_Directive(std::string * directive, int index);
@@ -84,6 +86,7 @@ private:
 
  std::string Object_File_Name;
  std::string Compiler_System_Command;
+ std::string Construction_Code_Line;
  int  Git_Record_Index;
  char opr_sis;
  bool Include_Line_Condition;

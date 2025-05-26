@@ -760,8 +760,6 @@ void MakeFile_Path_Determiner::Clear_String_Memory(std::string & str)
 }
 
 
-
-
 std::string MakeFile_Path_Determiner::Get_Warehouse_Object_Dir(){
 
      return this->Data_Collector.Get_Warehouse_Object_Dir();
@@ -786,6 +784,12 @@ std::string MakeFile_Path_Determiner::Get_Dependency_Code_Line(){
 }
 
 
+std::string MakeFile_Path_Determiner::Get_Construction_Code_Line(){
+
+    return this->Data_Collector.Get_Construction_Code_Line();
+}
+
+
 std::vector<std::string> * MakeFile_Path_Determiner::Get_Header_Vpaths(){
 
     return &this->headers_vpaths;
@@ -796,7 +800,6 @@ std::vector<std::string> * MakeFile_Path_Determiner::Get_Header_Vpath_Alias(){
 
     return &this->headers_vpath_alias;
 }
-
 
 
 std::vector<std::string> * MakeFile_Path_Determiner::Get_Upper_Directory_Vpaths(){
@@ -827,3 +830,5 @@ std::string MakeFile_Path_Determiner::Get_Source_File_Git_Record_Dir(){
 
      return this->source_file_git_record_dir;
 }
+
+
