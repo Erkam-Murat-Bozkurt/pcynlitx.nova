@@ -171,7 +171,7 @@ void MakeFile_Path_Determiner::Determine_Make_File_Name(){
 
            std::string Source_File_Name = this->Data_Ptr->source_file_name_witout_ext;
 
-           size_t src_name_size = Source_File_Name.length();
+           size_t src_name_size  = Source_File_Name.length();
 
            size_t extention_size = make_file_extention.length();
 
@@ -187,8 +187,6 @@ void MakeFile_Path_Determiner::Determine_Make_File_Name(){
 
            this->make_file_name.shrink_to_fit();
      }
-
-
 }
 
 
@@ -772,9 +770,9 @@ std::string MakeFile_Path_Determiner::Get_Repo_Dir(){
 }
 
 
-std::string MakeFile_Path_Determiner::Get_Compiler_System_Command(){
+std::string MakeFile_Path_Determiner::Get_Compiler_Command_For_Dependency_Determination(){
 
-     return this->Data_Collector.Get_Compiler_System_Command();
+     return this->Data_Collector.Get_Compiler_Command_For_Dependency_Determination();
 }
 
 

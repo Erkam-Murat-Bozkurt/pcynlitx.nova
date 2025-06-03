@@ -38,6 +38,7 @@ public:
  void Construct_Compiler_Commands(std::string main_file_path);
  void Clear_Dynamic_Memory();
  std::string Get_Compiler_System_Command();
+ std::string Get_Dependency_Determination_Command();
  std::vector<std::string> * Get_Object_File_List();
  std::vector<std::string> * Get_Header_File_List();
  std::string Get_Src_File_Dr();
@@ -47,6 +48,7 @@ public:
 protected:
  void Clear_String_Memory(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
+ void Dependency_Determination_Command_Construction();
  void Determine_Compiler_System_Command();
  void Construct_Object_File_List();
  void Construct_Header_File_List();
@@ -54,6 +56,7 @@ protected:
  void Construct_Library_List();
  void Determine_Git_Src_Dir();
  void Determine_Compiler_System_Command_For_Simple_Construction();
+ void Determine_Dependency_Determination_Command_For_Simple_Construction();
  void Construct_Header_File_List_For_Simple_Construction();
  void Determine_Src_File_Dir(std::string file_path, char opr_sis);
  void Determine_Make_File_Name(std::string file_path);
@@ -85,7 +88,9 @@ protected:
  std::string src_file_dir;
  std::string git_src_dir;
  std::string source_file_name;
+ std::string source_file_name_without_ext;
  std::string Compiler_System_Command;
+ std::string Dependency_Determination_Command;
  std::string project_library_name;
  int  header_file_number;
  int  Data_Size;

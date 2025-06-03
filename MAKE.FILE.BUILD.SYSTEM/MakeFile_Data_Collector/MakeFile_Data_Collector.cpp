@@ -40,7 +40,7 @@ void MakeFile_Data_Collector::Clear_Dynamic_Memory(){
 
      this->Clear_String_Memory(this->Object_File_Name);
 
-     this->Clear_String_Memory(this->Compiler_System_Command);
+     this->Clear_String_Memory(this->Compiler_Command_For_Dependency_Determination);
 
      this->Clear_String_Memory(this->Dependency_Code_Line);
 
@@ -93,7 +93,7 @@ void MakeFile_Data_Collector::Collect_Make_File_Data(std::string fileName){
 
      this->Receive_Git_Record_Data(fileName);
 
-     this->Determine_Compiler_System_Command();
+     this->Specifiy_Compiler_Command_For_Dependency_Determination();
 
      this->Determine_Construction_Code_Line();
 
@@ -217,7 +217,7 @@ void MakeFile_Data_Collector::Determine_Make_File_Name(){
      }
 }
 
-void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
+void MakeFile_Data_Collector::Specifiy_Compiler_Command_For_Dependency_Determination(){
 
      std::string compiler_input_command = "g++ -Wall -c -std=c++17"; 
 
@@ -249,19 +249,19 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
      char slash_l [] = "/";
 
-     this->Place_String(&this->Compiler_System_Command,compiler_input_command);
+     this->Place_String(&this->Compiler_Command_For_Dependency_Determination,compiler_input_command);
 
-     this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+     this->Place_String(&this->Compiler_Command_For_Dependency_Determination,go_to_new_line);
 
      if(!compiler_options.empty()){
 
         for(size_t i=0;i<compiler_options.size();i++){
 
-            this->Place_String(&this->Compiler_System_Command,compiler_options.at(i));
+            this->Place_String(&this->Compiler_Command_For_Dependency_Determination,compiler_options.at(i));
 
-            this->Place_String(&this->Compiler_System_Command,Space_Character);
+            this->Place_String(&this->Compiler_Command_For_Dependency_Determination,Space_Character);
 
-            this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+            this->Place_String(&this->Compiler_Command_For_Dependency_Determination,go_to_new_line);
         }
      }
      
@@ -282,27 +282,27 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
          char * dir_index = this->Translater.Translate(i);
 
-         this->Place_String(&this->Compiler_System_Command,Include_Character);
+         this->Place_String(&this->Compiler_Command_For_Dependency_Determination,Include_Character);
 
-         this->Place_String(&this->Compiler_System_Command,include_dir_symbol);
+         this->Place_String(&this->Compiler_Command_For_Dependency_Determination,include_dir_symbol);
 
-         this->Place_CString(&this->Compiler_System_Command,dir_index);
+         this->Place_CString(&this->Compiler_Command_For_Dependency_Determination,dir_index);
 
-         this->Place_CString(&this->Compiler_System_Command,makro_end);
+         this->Place_CString(&this->Compiler_Command_For_Dependency_Determination,makro_end);
 
-         this->Place_String(&this->Compiler_System_Command,Space_Character);
+         this->Place_String(&this->Compiler_Command_For_Dependency_Determination,Space_Character);
 
-         this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+         this->Place_String(&this->Compiler_Command_For_Dependency_Determination,go_to_new_line);
      }
 
 
-     this->Place_String(&this->Compiler_System_Command,Include_Character);
+     this->Place_String(&this->Compiler_Command_For_Dependency_Determination,Include_Character);
 
-     this->Place_String(&this->Compiler_System_Command,Source_Location);
+     this->Place_String(&this->Compiler_Command_For_Dependency_Determination,Source_Location);
 
-     this->Place_String(&this->Compiler_System_Command,Space_Character);
+     this->Place_String(&this->Compiler_Command_For_Dependency_Determination,Space_Character);
 
-     this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+     this->Place_String(&this->Compiler_Command_For_Dependency_Determination,go_to_new_line);
 
 
 
@@ -324,13 +324,13 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
           if(!is_dir_exist){
 
-             this->Place_String(&this->Compiler_System_Command,Include_Character);
+             this->Place_String(&this->Compiler_Command_For_Dependency_Determination,Include_Character);
 
-             this->Place_String(&this->Compiler_System_Command,dir);
+             this->Place_String(&this->Compiler_Command_For_Dependency_Determination,dir);
 
-             this->Place_String(&this->Compiler_System_Command,Space_Character);
+             this->Place_String(&this->Compiler_Command_For_Dependency_Determination,Space_Character);
 
-             this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+             this->Place_String(&this->Compiler_Command_For_Dependency_Determination,go_to_new_line);
           }
 
           dir_buffer.push_back(dir);
@@ -349,13 +349,13 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
           if(!is_dir_exist){
 
-             this->Place_String(&this->Compiler_System_Command,Include_Character);
+             this->Place_String(&this->Compiler_Command_For_Dependency_Determination,Include_Character);
 
-             this->Place_String(&this->Compiler_System_Command,dir);
+             this->Place_String(&this->Compiler_Command_For_Dependency_Determination,dir);
 
-             this->Place_String(&this->Compiler_System_Command,Space_Character);
+             this->Place_String(&this->Compiler_Command_For_Dependency_Determination,Space_Character);
 
-             this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+             this->Place_String(&this->Compiler_Command_For_Dependency_Determination,go_to_new_line);
           }
 
           dir_buffer.push_back(dir);
@@ -372,13 +372,13 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
 
           if(!is_dir_exist){
 
-             this->Place_String(&this->Compiler_System_Command,Include_Character);
+             this->Place_String(&this->Compiler_Command_For_Dependency_Determination,Include_Character);
 
-             this->Place_String(&this->Compiler_System_Command,dir);
+             this->Place_String(&this->Compiler_Command_For_Dependency_Determination,dir);
 
-             this->Place_String(&this->Compiler_System_Command,Space_Character);
+             this->Place_String(&this->Compiler_Command_For_Dependency_Determination,Space_Character);
 
-             this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+             this->Place_String(&this->Compiler_Command_For_Dependency_Determination,go_to_new_line);
           }
 
           dir_buffer.push_back(dir);
@@ -391,28 +391,28 @@ void MakeFile_Data_Collector::Determine_Compiler_System_Command(){
      
 
 
-     this->Place_String(&this->Compiler_System_Command,Source_Location);
+     this->Place_String(&this->Compiler_Command_For_Dependency_Determination,Source_Location);
 
      if(this->opr_sis == 'w'){
      
-        this->Place_String(&this->Compiler_System_Command,slash_w);
+        this->Place_String(&this->Compiler_Command_For_Dependency_Determination,slash_w);
      }
      else{
      
          if(this->opr_sis =='l'){
          
-           this->Place_String(&this->Compiler_System_Command,slash_l);
+           this->Place_String(&this->Compiler_Command_For_Dependency_Determination,slash_l);
          }
      }
 
 
-     this->Place_String(&this->Compiler_System_Command,this->Source_File_Name_With_Ext);
+     this->Place_String(&this->Compiler_Command_For_Dependency_Determination,this->Source_File_Name_With_Ext);
 
-     this->Place_String(&this->Compiler_System_Command,Space_Character);
+     this->Place_String(&this->Compiler_Command_For_Dependency_Determination,Space_Character);
 
-     this->Place_String(&this->Compiler_System_Command,go_to_new_line);
+     this->Place_String(&this->Compiler_Command_For_Dependency_Determination,go_to_new_line);
 
-     this->Compiler_System_Command.shrink_to_fit();
+     this->Compiler_Command_For_Dependency_Determination.shrink_to_fit();
 }
 
 
@@ -526,7 +526,7 @@ void MakeFile_Data_Collector::Determine_Construction_Code_Line(){
      this->Construction_Code_Line = make_target_name + "\n\t";
 
      
-     std::string compiler_input_command = "g++ -Wall -c -std=c++17"; 
+     std::string compiler_input_command = "g++ -Wall -c -std=c++17 "; 
 
 
 
@@ -552,7 +552,90 @@ void MakeFile_Data_Collector::Determine_Construction_Code_Line(){
         }
      }     
 
-     this->Construction_Code_Line +=  "-o $@";
+
+
+     int included_dir_num = this->Des_Reader->Get_Include_Directory_Number();
+
+     std::string include_variable_start = "-I$(EXTERNAL_INCLUDE_DIR_";
+
+     std::string include_variable_close = ") ";
+
+     for(int i=0;i<included_dir_num;i++){
+
+
+         std::string included_dir = this->Des_Reader->Get_Include_Directory(i);
+
+         char * dir_index = this->Translater.Translate(i);
+
+         this->Place_String(&this->Construction_Code_Line,include_variable_start);
+
+         this->Place_CString(&this->Construction_Code_Line,dir_index);
+
+         this->Place_String(&this->Construction_Code_Line,include_variable_close);
+
+         this->Place_String(&this->Construction_Code_Line,go_to_new_line);
+     }
+
+
+
+
+
+     int library_dir_num = this->Des_Reader->Get_Library_Directory_Number();
+
+     std::string link_dir_variable_start = "-L$(EXTERNAL_LINK_DIR_";
+
+     std::string link_dir_close = ") ";
+
+
+     for(int i=0;i<library_dir_num;i++){
+
+         std::string link_dir = this->Des_Reader->Get_Library_Directory(i);
+
+         char * dir_index = this->Translater.Translate(i);
+
+         this->Place_String(&this->Construction_Code_Line,link_dir_variable_start);
+
+         this->Place_CString(&this->Construction_Code_Line,dir_index);
+
+         this->Place_String(&this->Construction_Code_Line,link_dir_close);
+
+         this->Place_String(&this->Construction_Code_Line,go_to_new_line);
+     }
+
+
+
+     this->Construction_Code_Line +=  "-o $@ ";
+
+     /*
+
+     this->Construction_Code_Line += go_to_new_line;
+
+     const std::vector<std::string> & linker_options = this->Des_Reader->Get_Linker_Options();
+
+     for(size_t i=0;i<linker_options.size();i++){
+
+         this->Construction_Code_Line += linker_options.at(i);
+
+         this->Construction_Code_Line += " ";
+
+         this->Construction_Code_Line += go_to_new_line;
+     }
+
+
+     const std::vector<std::string> & lib_file_names = this->Des_Reader->Get_Library_Files();
+
+     for(size_t i=0;i<lib_file_names.size();i++){
+
+         this->Construction_Code_Line += "-l";
+
+         this->Construction_Code_Line += lib_file_names.at(i);
+
+         this->Construction_Code_Line += " ";
+
+         this->Construction_Code_Line += go_to_new_line;
+     }
+
+     */
 
      this->Construction_Code_Line.shrink_to_fit();
 }
@@ -773,9 +856,9 @@ std::string MakeFile_Data_Collector::Get_Make_File_Name(){
      return this->Make_File_Name;
 }
 
-std::string MakeFile_Data_Collector::Get_Compiler_System_Command(){
+std::string MakeFile_Data_Collector::Get_Compiler_Command_For_Dependency_Determination(){
 
-     return this->Compiler_System_Command;
+     return this->Compiler_Command_For_Dependency_Determination;
 }
 
 std::string MakeFile_Data_Collector::Get_Dependency_Code_Line(){

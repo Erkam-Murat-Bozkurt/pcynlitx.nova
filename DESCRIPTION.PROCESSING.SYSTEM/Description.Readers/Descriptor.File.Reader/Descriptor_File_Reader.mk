@@ -28,7 +28,7 @@ Descriptor_File_Reader.exe: Descriptor_File_Reader_Main_File.cpp \
 		Descriptor_File_Reader_Main_File.cpp $(DES_RED)\Descriptor_File_Reader.cpp \
 		$(DES_COL)\Descriptor_File_Data_Collector.cpp \
 		$(SYN_CON)\Descriptor_File_Syntax_Controller.cpp \
-	  $(STRING_OPS)\StringOperator.cpp $(CHAR_OPS)\CharOperator.cpp \
+	    $(STRING_OPS)\StringOperator.cpp $(CHAR_OPS)\CharOperator.cpp \
 		$(CPP_OPS)\Cpp_FileOperations.cpp \
 		-include $(DES_RED)\Descriptor_File_Reader.hpp \
 		-include $(DES_COL)\Descriptor_File_Data_Collector.hpp \

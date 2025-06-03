@@ -31,9 +31,8 @@ int main(int argc, char ** argv){
 
     Des_File_Reader.Read_Descriptor_File();
 
-
     if(Des_File_Reader.Get_Gui_Read_Success_Status()){
-
+      
         Print_Descriptor_File_Informations(Des_File_Reader);
     }
     else{
@@ -42,6 +41,8 @@ int main(int argc, char ** argv){
 
         std::cout << "\n Error message:" << Des_File_Reader.Get_Error_Message();
     }
+
+    Des_File_Reader.Clear_Dynamic_Memory();
 
     std::cout << "\n\n";
     std::cout << "\n\n";
@@ -304,5 +305,28 @@ void Print_Descriptor_File_Informations(Descriptor_File_Reader & Des_File_Reader
      else{
 
          std::cout << "\n There is no version number decleration";
+     }
+
+     const std::vector<Library_Data> & data_list = Des_File_Reader.Get_Library_File_Data_List();
+
+     std::cout << "\n data_list.size():" << data_list.size();
+
+     for(size_t i=0;i<data_list.size();i++){
+
+         std::string libdir = data_list.at(i).library_dir;
+
+         std::string lib_name_with_ext = data_list.at(i).library_name_with_ext;
+
+         std::string library_name_without_ext = data_list.at(i).library_name_without_ext;
+
+         std::cout << "\n";
+
+         std::cout << "\n Library Directory:" << libdir;
+
+         std::cout << "\n Library Name:" << lib_name_with_ext;
+
+         std::cout << "\n Library Name witout extention:" << library_name_without_ext;
+
+         std::cout << "\n";
      }
 }

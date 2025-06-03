@@ -18,6 +18,9 @@ Descriptor_File_Reader::Descriptor_File_Reader(char opr_sis, char build_type) :
 
    Data_Collector(opr_sis), Syntax_Controller(opr_sis)
 {
+   
+   this->opr_sis = opr_sis;
+
    this->Initialize_Members();
 
    this->Memory_Delete_Condition = false;
@@ -145,11 +148,27 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
          this->Clear_String_Memory(&this->version_number);
 
+         for(size_t i=0;i<this->library_data_list.size();i++){
+
+             this->Clear_String_Memory(&this->library_data_list.at(i).library_dir);
+
+             this->Clear_String_Memory(&this->library_data_list.at(i).library_name_with_ext);
+             
+             this->Clear_String_Memory(&this->library_data_list.at(i).library_name_without_ext);
+         }
+
+         this->library_data_list.clear();
+
+         this->library_data_list.shrink_to_fit();
+
+
+
          this->Data_Collector.Clear_Dynamic_Memory();
 
          this->Syntax_Controller.Clear_Dynamic_Memory();
 
          this->StringManager.Clear_Dynamic_Memory();
+
 
          this->is_project_file_invalid = false;
 
@@ -249,6 +268,8 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
                }
            }
      }
+
+     this->Extract_Library_Names_From_Path();
 
      this->Data_Collector.Clear_Dynamic_Memory();
 }
@@ -1274,6 +1295,7 @@ void Descriptor_File_Reader::Read_Linker_Options(){
 }
 
 
+
 void Descriptor_File_Reader::Divide_Options(std::string & options){
 
      int space_car_num = 0, standard_char = 0;
@@ -1428,8 +1450,8 @@ bool Descriptor_File_Reader::Is_Include_Character(std::string str){
 }
 
 
-void Descriptor_File_Reader::Clear_Vectory_Memory(std::vector<std::string> * pointer){
-
+void Descriptor_File_Reader::Clear_Vectory_Memory(std::vector<std::string> * pointer)
+{
      std::vector<std::string>::iterator it;
 
      auto begin = pointer->begin();
@@ -1454,8 +1476,10 @@ void Descriptor_File_Reader::Clear_Vectory_Memory(std::vector<std::string> * poi
      }
 }
 
-void Descriptor_File_Reader::Clear_String_Memory(std::string * pointer){
 
+
+void Descriptor_File_Reader::Clear_String_Memory(std::string * pointer)
+{
      if(!pointer->empty()){
 
          pointer->clear();
@@ -1473,6 +1497,8 @@ void Descriptor_File_Reader::Delete_Spaces_on_String_Start(std::string * str)
            str->erase(0,1);
      }
 }
+
+
 
 
 void Descriptor_File_Reader::Delete_Spaces_on_String(std::string * str)
@@ -1495,6 +1521,8 @@ void Descriptor_File_Reader::Delete_Spaces_on_String(std::string * str)
 
     }while(search_cond);
 }
+
+
 
 
 bool Descriptor_File_Reader::Is_There_Multiple_Decleration_on_Same_Line(std::string & str_line){
@@ -1536,6 +1564,8 @@ bool Descriptor_File_Reader::Is_There_Multiple_Decleration_on_Same_Line(std::str
 
      return multiple_dec_status;
 }
+
+
 
 
 void Descriptor_File_Reader::Extract_Declerations_Performing_on_Same_Line(std::string str_line, 
@@ -1591,6 +1621,244 @@ void Descriptor_File_Reader::Extract_Declerations_Performing_on_Same_Line(std::s
 
       mt_line.shrink_to_fit();
  }
+
+
+
+
+
+ void Descriptor_File_Reader::Extract_Library_Names_From_Path()
+ {
+      const std::vector<std::string> & lib_name_list = this->Get_Library_Files();
+
+      if(lib_name_list.size()>0){
+
+          bool path_cond = false;
+
+          for(auto str: lib_name_list){
+
+              path_cond = this->Is_This_String_A_File_Path(str);
+
+              Library_Data data;
+
+              if(path_cond){
+
+                  this->Extract_Directory_From_Path(str,data.library_dir);
+
+                  this->Determine_File_Name_Without_Ext(str,data.library_name_without_ext);
+
+                  this->Extract_File_Name_From_Path(str,data.library_name_with_ext);   
+                  
+                  this->library_data_list.push_back(data);
+              }
+              else{
+
+                  this->Determine_File_Name_Without_Ext(str,data.library_name_without_ext);
+
+                  data.library_name_with_ext = str;   
+
+                  data.library_dir = "";
+                  
+                  data.library_dir.clear();
+
+                  data.library_dir.shrink_to_fit();
+
+                  this->library_data_list.push_back(data);
+              }
+         }  
+      }
+}
+
+
+void Descriptor_File_Reader::Extract_Directory_From_Path(std::string path, std::string & dir)
+{
+     size_t path_size = path.size();
+
+     size_t end_point = path_size;
+
+     for(size_t i=path_size;i>0;i--){
+
+         if(this->opr_sis == 'w'){
+
+            if(path[i]== '\\'){
+
+                break;
+            }
+            else{
+
+                 end_point--;
+            }
+         }
+
+         if(this->opr_sis == 'l'){
+
+            if(path[i]== '/'){
+
+                break;
+            }
+            else{
+
+                 end_point--;
+            }
+         }         
+    }
+
+    for(size_t i=0;i<end_point;i++)
+    {
+        dir.push_back(path[i]);
+    }
+
+    dir.shrink_to_fit();    
+}
+
+
+void Descriptor_File_Reader::Determine_File_Name_Without_Ext(std::string path, std::string & file_name)
+{
+     size_t file_path_size = path.length();
+
+     size_t dir_size = file_path_size;
+
+     size_t file_extention_start_point = file_path_size;
+
+
+    for(size_t i=file_path_size;i>0;i--){
+
+        if((path[i] == '/') || (path[i] == '\\')){
+
+            break;
+        }
+        else{
+
+              dir_size--;
+        }
+     }
+
+     for(size_t i=file_path_size;i>0;i--){
+
+         if(path[i] == '.'){
+
+           break;
+         }
+            else{
+
+                file_extention_start_point--;
+          }
+
+          if(file_extention_start_point <= dir_size){
+
+             file_extention_start_point = dir_size;
+          }
+     }
+
+     size_t file_name_size = 0;
+
+     if(file_extention_start_point <= dir_size){
+
+        file_name_size = file_path_size - dir_size;
+
+        // It is the case in which the file does not have extenton
+     }
+
+     if(file_extention_start_point > dir_size){
+
+        file_name_size = file_extention_start_point - dir_size;
+     }
+
+
+     size_t name_start_point = 0;
+
+     if(dir_size != 0){
+
+        name_start_point = dir_size +1;
+     }
+
+     for(size_t i=name_start_point;i<file_extention_start_point;i++){
+
+         file_name.push_back(path[i]);
+     }
+}
+
+
+void Descriptor_File_Reader::Determine_File_Name_Without_Ext(char * path, std::string & name){
+
+     std::string file_path;
+
+     size_t path_size = strlen(path);
+
+     for(size_t i=0;i<path_size;i++){
+     
+         file_path.push_back(path[i]);
+     }
+
+     file_path.shrink_to_fit();
+
+     this->Determine_File_Name_Without_Ext(file_path,name);
+}
+
+
+void Descriptor_File_Reader::Extract_File_Name_From_Path(std::string string,  std::string & name){
+
+     size_t string_size = string.length();
+
+     size_t start_point = 0;
+
+     for(size_t i=string_size;i>0;i--){
+
+        if(((string[i] == '/') || (string[i] == '\\'))){
+
+            start_point = i+1;
+
+            break;
+        }
+     }
+
+     for(size_t i=start_point;i<string_size;i++)
+     {
+         name.push_back(string[i]) ;
+     }
+
+     name.shrink_to_fit();
+}
+
+
+bool Descriptor_File_Reader::Is_This_String_A_File_Path(std::string str)
+{
+     bool path_cond = false;
+
+     if(this->opr_sis == 'w'){
+
+        for(auto str_index : str){
+               
+            if(str_index == '\\'){
+
+               path_cond = true;
+
+               break;
+            }
+         }
+      }
+      else{
+            if(this->opr_sis == 'l'){
+
+               for(auto str_index : str){
+
+                   if(str_index == '/'){
+     
+                      path_cond = true;
+
+                      break;
+                   }
+               }                     
+            }
+      }     
+
+      return path_cond;
+}
+
+
+const std::vector<Library_Data> & Descriptor_File_Reader::Get_Library_File_Data_List(){
+
+      return this->library_data_list;
+}
 
 
 const std::vector<std::string> & Descriptor_File_Reader::Get_Include_Directories(){

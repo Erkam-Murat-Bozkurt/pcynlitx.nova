@@ -178,6 +178,33 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
      this->FileManager.WriteToFile("\n");
 
 
+
+     char link_dir_alias [] = "EXTERNAL_LINK_DIR_";
+
+     int library_dir_num = this->Des_Reader->Get_Library_Directory_Number();
+
+     for(int i=0;i<library_dir_num;i++){
+
+         this->FileManager.WriteToFile("\n");
+
+         std::string link_dir = this->Des_Reader->Get_Library_Directory(i);
+
+         char * dir_index = this->Translater.Translate(i);
+
+         this->FileManager.WriteToFile(link_dir_alias);
+
+         this->FileManager.WriteToFile(dir_index);
+
+         this->FileManager.WriteToFile("=");
+
+         this->FileManager.WriteToFile(link_dir);
+     }
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
+
      char Ident [] =         "        ";
 
      char NextLine [] = " \\";
@@ -247,6 +274,33 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
      }
 
 
+
+     int lib_dir_num = this->Des_Reader->Get_Include_Directory_Number();
+
+
+     for(int i=0;i<lib_dir_num;i++){
+
+         this->FileManager.WriteToFile("$(");
+
+         std::string lib_dir = this->Des_Reader->Get_Library_Directory(i);
+
+         char * dir_index = this->Translater.Translate(i);
+
+         this->FileManager.WriteToFile(link_dir_alias);
+
+         this->FileManager.WriteToFile(dir_index);
+
+         this->FileManager.WriteToFile(")");
+
+         this->FileManager.WriteToFile(NextLine);
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile(Ident);
+     }
+
+
+
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
@@ -263,9 +317,16 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
 
      std::string Dependency_Code_Line    = this->Path_Determiner.Get_Dependency_Code_Line();
 
-     std::string Compiler_System_Command = this->Path_Determiner.Get_Compiler_System_Command();
+     std::string Compiler_System_Command_For_Dependency_Determination
+     
+                 = this->Path_Determiner.Get_Compiler_Command_For_Dependency_Determination();
+
 
      std::string Construction_Code_Line  = this->Path_Determiner.Get_Construction_Code_Line();
+
+
+
+     this->FileManager.WriteToFile("\n\n");
 
      this->FileManager.WriteToFile(Dependency_Code_Line);
 
@@ -273,7 +334,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile("\n\t");
 
-     this->FileManager.WriteToFile(Compiler_System_Command);
+     this->FileManager.WriteToFile(Compiler_System_Command_For_Dependency_Determination);
 
      this->FileManager.WriteToFile("\n\n");
 

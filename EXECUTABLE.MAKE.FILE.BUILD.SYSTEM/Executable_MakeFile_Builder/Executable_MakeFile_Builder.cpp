@@ -210,6 +210,8 @@ void Executable_MakeFile_Builder::Advanced_MakeFile_Construction(char * mn_src_p
 
      this->make_file_name     = this->ComConstructor.Get_Make_File_Name();
 
+     this->Dependency_Code_Line    = this->ComConstructor.Get_Dependency_Determination_Command();
+
      this->Compiler_System_Command = this->ComConstructor.Get_Compiler_System_Command();
 
      this->Write_MakeFile(Exe_Name);
@@ -294,6 +296,8 @@ void Executable_MakeFile_Builder::Simple_MakeFile_Construction(char * mn_src_pat
      this->git_src_dir        = this->ComConstructor.Get_Git_Src_Dr();
 
      this->make_file_name     = this->ComConstructor.Get_Make_File_Name();
+
+     this->Dependency_Code_Line = this->ComConstructor.Get_Dependency_Determination_Command();
 
      this->Compiler_System_Command = this->ComConstructor.Get_Compiler_System_Command();
 
@@ -450,13 +454,17 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      int library_dir_num = this->Des_Reader.Get_Library_Directory_Number();
 
+     int lib_dir_index =0;
+
      for(int i=0;i<library_dir_num;i++){
 
          this->FileManager.WriteToFile("\n");
 
          std::string link_dir = this->Des_Reader.Get_Library_Directory(i);
 
-         char * dir_index = this->Translater.Translate(i);
+         char * dir_index = this->Translater.Translate(lib_dir_index);
+
+         lib_dir_index++;
 
          this->FileManager.WriteToFile(link_dir_alias);
 
@@ -468,6 +476,31 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
      }
 
      this->FileManager.WriteToFile("\n");
+
+
+     const std::vector<Library_Data> & data_list = this->Des_Reader.Get_Library_File_Data_List();
+
+
+     for(auto lib_struct : data_list){
+
+         std::string lib_dir = lib_struct.library_dir;
+
+         if(lib_dir.size()>0){
+
+            char * dir_index = this->Translater.Translate(lib_dir_index);
+
+            lib_dir_index++;
+
+            this->FileManager.WriteToFile(link_dir_alias);
+
+            this->FileManager.WriteToFile(dir_index);
+
+            this->FileManager.WriteToFile("=");
+
+             this->FileManager.WriteToFile(lib_dir);
+         }
+     }
+
 
 
 
@@ -555,13 +588,17 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      
 
+     lib_dir_index = 0;
+
      for(int i=0;i<library_dir_num;i++){
 
          this->FileManager.WriteToFile("$(");
 
          std::string link_dir = this->Des_Reader.Get_Library_Directory(i);
 
-         char * dir_index = this->Translater.Translate(i);
+         char * dir_index = this->Translater.Translate(lib_dir_index);
+
+         lib_dir_index++;
 
          this->FileManager.WriteToFile(link_dir_alias);
 
@@ -574,6 +611,29 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
          this->FileManager.WriteToFile("\n");
 
          this->FileManager.WriteToFile(Ident);
+     }
+
+
+     for(auto lib_struct : data_list){
+
+         std::string lib_dir = lib_struct.library_dir;
+
+         if(lib_dir.size()>0){
+
+            char * dir_index = this->Translater.Translate(lib_dir_index);
+
+            lib_dir_index++;
+
+            this->FileManager.WriteToFile(link_dir_alias);
+
+            this->FileManager.WriteToFile(dir_index);
+
+            this->FileManager.WriteToFile("=");
+
+            this->FileManager.WriteToFile(lib_dir);
+
+            this->FileManager.WriteToFile("\n");
+         }
      }
 
 
@@ -704,9 +764,14 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
      this->FileManager.WriteToFile("\n\t");
 
 
+     this->FileManager.WriteToFile(this->Dependency_Code_Line);
+
+     this->FileManager.WriteToFile("\n\n");
+
      this->FileManager.WriteToFile(this->Compiler_System_Command);
 
      this->FileManager.WriteToFile("\n\n");
+
 
 
      this->FileManager.FileClose();
@@ -1062,6 +1127,8 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
 
      this->FileManager.WriteToFile("\n");
 
+     /*
+
      this->FileManager.WriteToFile("$(TARGET_LOCATION)");
 
      if(this->opr_sis == 'w'){
@@ -1073,11 +1140,15 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
 
         this->FileManager.WriteToFile("/");
      }
-
+      
+     
      this->FileManager.WriteToFile(Exe_Name);
 
      this->FileManager.WriteToFile(": ");
 
+          */
+
+     this->FileManager.WriteToFile(".PHONY dep_list: ");
 
      this->FileManager.WriteToFile(this->source_file_name);
 
@@ -1106,6 +1177,7 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
      this->project_library_name =  this->ComConstructor.Get_Project_Library_Name();
 
 
+     /*
      this->FileManager.WriteToFile("lib");
 
      this->FileManager.WriteToFile(this->project_library_name);
@@ -1115,17 +1187,21 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
      this->FileManager.WriteToFile(" \\");
 
      this->FileManager.WriteToFile("\n\t");
-
+     */
 
      this->FileManager.WriteToFile("\n\n");
 
      this->FileManager.WriteToFile("\n\t");
 
 
-     this->FileManager.WriteToFile(this->Compiler_System_Command);
+     this->FileManager.WriteToFile(this->Dependency_Code_Line);
 
      this->FileManager.WriteToFile("\n\n");
 
+
+     this->FileManager.WriteToFile(this->Compiler_System_Command);
+
+     this->FileManager.WriteToFile("\n\n");     
 
      this->FileManager.FileClose();
 

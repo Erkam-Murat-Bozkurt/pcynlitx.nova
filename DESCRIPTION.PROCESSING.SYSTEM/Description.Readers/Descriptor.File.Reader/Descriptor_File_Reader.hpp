@@ -15,6 +15,13 @@
 #include "StringOperator.h"
 #include "Cpp_FileOperations.h"
 
+struct Library_Data
+{
+    std::string library_dir;
+    std::string library_name_with_ext;
+    std::string library_name_without_ext;
+};
+
 class Descriptor_File_Reader
 {
 public:
@@ -30,6 +37,7 @@ public:
  std::string Get_Library_File(int i);
  std::string Get_Source_File_Directory(int i);
  std::string Get_Include_Directory(int i);
+ void Extract_Library_Names_From_Path();
  const std::vector<std::string> & Get_Include_Directories();
  const std::vector<std::string> & Get_Library_Directories();
  const std::vector<std::string> & Get_Source_File_Directories();
@@ -38,6 +46,7 @@ public:
  const std::vector<std::string> & Get_Compiler_Options();
  const std::vector<std::string> & Get_Linker_Options();
  const std::vector<std::string> & Get_Compiler_Paths();
+ const std::vector<Library_Data> & Get_Library_File_Data_List();
  std::string Get_Standard();
  std::string Get_Build_System_Type();
  std::string Get_Warehouse_Location();
@@ -70,6 +79,15 @@ protected:
  void Read_Project_Name();
  void Read_Version_Number();
  void Read_Compiler_Paths();
+ 
+ void Determine_File_Name_Without_Ext(std::string path, std::string & file_name);
+ void Determine_File_Name_With_Ext(std::string path, std::string & file_name);
+ void Determine_File_Name_Without_Ext(char * path, std::string & name);
+ void Extract_Directory_From_Path(std::string path, std::string & dir);
+ void Extract_File_Name_From_Path(std::string string, std::string & name);
+
+ 
+ bool Is_This_String_A_File_Path(std::string str);
  bool Is_There_Multiple_Decleration_on_Same_Line(std::string & str_line);
  void Extract_Declerations_Performing_on_Same_Line(std::string str_line, std::vector<std::string> & mt_line);
  bool Is_Include_Character(std::string str);
@@ -103,6 +121,7 @@ protected:
  std::vector<std::string> compiler_options;
  std::vector<std::string> linker_options;
  std::vector<std::string> compiler_paths;
+ std::vector<Library_Data> library_data_list;
  bool gui_read_status;
  bool gui_read_success;
  bool gui_syntax_error;
@@ -110,6 +129,7 @@ protected:
  bool is_project_file_invalid;
  bool Memory_Delete_Condition;
  bool Data_Record_Cond;
+ char opr_sis;
 };
 
 #endif /* DESCRIPTOR_FILE_READER */
