@@ -1176,19 +1176,6 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
 
      this->project_library_name =  this->ComConstructor.Get_Project_Library_Name();
 
-
-     /*
-     this->FileManager.WriteToFile("lib");
-
-     this->FileManager.WriteToFile(this->project_library_name);
-
-     this->FileManager.WriteToFile(".a");
-
-     this->FileManager.WriteToFile(" \\");
-
-     this->FileManager.WriteToFile("\n\t");
-     */
-
      this->FileManager.WriteToFile("\n\n");
 
      this->FileManager.WriteToFile("\n\t");

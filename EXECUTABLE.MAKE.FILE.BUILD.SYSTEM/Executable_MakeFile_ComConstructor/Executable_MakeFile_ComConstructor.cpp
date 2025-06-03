@@ -145,13 +145,9 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
 
      for(size_t i=0;i<data_list.size();i++){
 
-
-         std::cout << "\n data_list.at(" << i << ").library_name_with_ext:" <<
-
-         data_list.at(i).library_name_with_ext;
-
-
          this->Compiler_System_Command += data_list.at(i).library_name_with_ext;
+
+         this->Compiler_System_Command += " ";
 
          this->Compiler_System_Command += go_to_new_line;
      }
@@ -183,7 +179,7 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command(){
         }
      }     
 
-     this->Compiler_System_Command +=  "-o $@";
+     this->Compiler_System_Command +=  " $@ ";
 
      this->Compiler_System_Command.shrink_to_fit();
 }
@@ -864,7 +860,7 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
          this->Compiler_System_Command += go_to_new_line;
      }
 
-     this->Compiler_System_Command +=  " $@";
+     this->Compiler_System_Command +=  " $@ ";
 
      const std::vector<std::string> & linker_options = this->Des_Reader->Get_Linker_Options();
 
