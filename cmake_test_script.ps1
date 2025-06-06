@@ -1,17 +1,17 @@
 
 # REMOVING THE TEST DIRECTORIES
 
-cd C:\Development.Files\PCYNLITX.BUILD.TEST
+cd C:\PCYNLITX.BUILD.TEST
 
-$Path_exist = Test-Path -Path "C:\Development.Files\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test"
+$Path_exist = Test-Path -Path "C:\Development.Files\PCYNLITX.BUILD.TEST\Pcynlitx.Win"
 
 if($Path_exist){
 
-    Remove-Item -LiteralPath "C:\Development.Files\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test" -Recurse -Force
+    Remove-Item -LiteralPath "C:\Development.Files\PCYNLITX.BUILD.TEST\Pcynlitx.Win" -Recurse -Force
 }
 
 
-cd C:\Development.Files\PCYNLITX.BUILD.TEST
+cd C:\PCYNLITX.BUILD.TEST
 
 $Path_exist = Test-Path -Path "C:\Development.Files\PCYNLITX_WIN_CMAKE_CONFIGS"
 
@@ -25,7 +25,7 @@ if($Path_exist){
 
 cd C:\Development.Files
 
-Copy-Item -LiteralPath "C:\Development.Files\Pcynlitx.Win.Test" -Destination "C:\Development.Files\PCYNLITX.BUILD.TEST" -Recurse -Force
+Copy-Item -LiteralPath "C:\Development.Files\Pcynlitx.Win" -Destination "C:\Development.Files\PCYNLITX.BUILD.TEST" -Recurse -Force
 
 Write-Output ""
 
@@ -50,11 +50,11 @@ Copy-Item -LiteralPath "C:\Development.Files\PCYNLITX_BUILD_CONFIGS\Pcynlitx_Ker
 
 
 
-cd C:\Development.Files\PCYNLITX.BUILD.TEST
+cd C:\PCYNLITX.BUILD.TEST
 
-.\Pcynlitx_Kernel.exe C:\Development.Files\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt -ip
+.\Pcynlitx_Kernel.exe C:\PCYNLITX.BUILD.TEST\Pcb_Descriptor.txt -ip
 
-cd  C:\Development.Files\PCYNLITX.BUILD.TEST\Pcynlitx.Win.Test
+cd  C:\PCYNLITX.BUILD.TEST\Pcynlitx.Win
 
 powershell.exe .\configure_cmake.ps1
 

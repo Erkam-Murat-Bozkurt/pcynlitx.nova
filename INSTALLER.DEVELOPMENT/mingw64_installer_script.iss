@@ -28,17 +28,17 @@ WizardStyle=modern
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "C:\Development.Files\Mingw64_Installer\7z.exe"; DestDir: "C:\Program Files\Mingw64"; Flags: ignoreversion recursesubdirs 
-Source: "C:\Development.Files\Mingw64_Installer\Mingw64.7z"; DestDir: "C:\Program Files\Mingw64"; Flags: ignoreversion recursesubdirs 
+Source: "C:\Development.Files\Mingw64_Installer\mingw64\*"; DestDir: "C:\Program Files\Mingw64"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Development.Files\Mingw64_Installer\LICENSE.txt"; DestDir: "C:\Program Files\Mingw64"; Flags: ignoreversion
-Source: "C:\Development.Files\Mingw64_Installer\extract_mingw64.exe"; DestDir: "C:\Program Files\Mingw64";  Flags: ignoreversion deleteafterinstall
+Source: "C:\Development.Files\Mingw64_Installer\mingw64_path_set.exe"; DestDir: "C:\Program Files\Mingw64";  Flags: ignoreversion deleteafterinstall
+Source: "C:\Development.Files\Mingw64_Installer\libwinpthread-1.dll"; DestDir: "C:\Program Files\Mingw64";  Flags: ignoreversion 
 
 
 [UninstallDelete]
 Type: filesandordirs; Name: "C:\Program Files\Mingw64"
 
 [Run]
-Filename: "C:\Program Files\Mingw64\extract_mingw64.exe"; WorkingDir: "C:\Program Files\Mingw64"; Flags:runascurrentuser  runhidden; \
+Filename: "C:\Program Files\Mingw64\mingw64_path_set.exe"; WorkingDir: "C:\Program Files\Mingw64"; Flags:runascurrentuser  runhidden; \
 BeforeInstall: UpdateProgressbar(75); AfterInstall: UpdateProgressBar(90);
 
 [Code]

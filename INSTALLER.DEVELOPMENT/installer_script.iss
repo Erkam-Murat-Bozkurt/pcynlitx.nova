@@ -6,7 +6,7 @@
 #define AppVersion "1.0"
 #define AppPublisher "Erkam Murat Bozkurt M.Sc Control Systems Engineering"
 #define AppURL "https://www.pcynlitx.com/"
-#define AppExeName "Pcynlitx_Gui.exe"
+#define AppExeName "Pcynlitx.exe"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -38,28 +38,40 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Development.Files\Project.Test.platform\Pcynlitx_Gui.exe"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion
+Source: "C:\Development.Files\Project.Test.platform\Pcynlitx.exe"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion
 Source: "C:\Development.Files\Project.Test.platform\Pcynlitx_Kernel.exe"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Development.Files\Project.Test.platform\7z.exe"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Development.Files\Project.Test.platform\7-zip\*"; DestDir: "C:\Program Files\Pcynlitx\7z"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Development.Files\Project.Test.platform\icons\*"; DestDir: "C:\Program Files\Pcynlitx\icons"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "C:\Development.Files\Project.Test.platform\Intro_File.png"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion
 Source: "C:\Development.Files\Project.Test.platform\LICENSE.txt"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion
 Source: "C:\Development.Files\Project.Test.platform\introduction.txt"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion
+Source: "C:\Development.Files\Project.Test.platform\Pcynlitx.exe.manifest"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion
+Source: "C:\Development.Files\Project.Test.platform\setup_fonts.exe"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion 
+Source: "C:\Development.Files\Project.Test.platform\libgcc_s_seh-1.dll"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion 
+Source: "C:\Development.Files\Project.Test.platform\libstdc++-6.dll"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion 
+Source: "C:\Development.Files\Project.Test.platform\wxbase32ud_gcc810_x64.dll"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion 
+Source: "C:\Development.Files\Project.Test.platform\wxmsw32ud_aui_gcc810_x64.dll"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion 
+Source: "C:\Development.Files\Project.Test.platform\wxmsw32ud_core_gcc810_x64.dll"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion 
+Source: "C:\Development.Files\Project.Test.platform\wxmsw32ud_stc_gcc810_x64.dll"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion 
+Source: "C:\Development.Files\Project.Test.platform\libwinpthread-1.dll"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion 
+Source: "C:\Development.Files\Project.Test.platform\FiraCode_Standard\*"; DestDir: "C:\Program Files\Pcynlitx\FiraCode_Standard";  Flags: ignoreversion 
+Source: "C:\Development.Files\Project.Test.platform\Oswald\*"; DestDir: "C:\Program Files\Pcynlitx\Oswald";  Flags: ignoreversion
 Source: "C:\Development.Files\Project.Test.platform\Mingw64.Setup.exe"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion deleteafterinstall
-Source: "C:\Development.Files\Project.Test.platform\setup_fonts.exe"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion deleteafterinstall
-Source: "C:\Development.Files\Project.Test.platform\DLL_Files\*"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion deleteafterinstall
-Source: "C:\Development.Files\Project.Test.platform\FiraCode_Standard.tar"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion
+Source: "C:\Development.Files\Project.Test.platform\pcynlitx_path_set.exe"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion deleteafterinstall
 
 
 [Icons]
-Name: "{autodesktop}\{#AppName}"; Filename: "C:\Program Files\Pcynlitx\bin\{#AppExeName}"; IconFilename: "C:\Program Files\Pcynlitx\icons\Pcynlitx.ico"; Tasks: desktopicon
+Name: "{autodesktop}\{#AppName}"; Filename: "C:\Program Files\Pcynlitx\{#AppExeName}"; IconFilename: "C:\Program Files\Pcynlitx\icons\Pcynlitx.ico"; Tasks: desktopicon
+
 
 [UninstallDelete]
 Type: filesandordirs; Name: "C:\Program Files\Pcynlitx"
 
 [Run]
-Filename: "C:\Program Files\Pcynlitx\Mingw64.Setup.exe"; WorkingDir: "C:\Program Files\Pcynlitx";
 Filename: "C:\Program Files\Pcynlitx\setup_fonts.exe"; WorkingDir: "C:\Program Files\Pcynlitx";  Flags:runascurrentuser  runhidden; 
+Filename: "C:\Program Files\Pcynlitx\pcynlitx_path_set.exe"; WorkingDir: "C:\Program Files\Pcynlitx";  Flags:runascurrentuser  runhidden; 
+Filename: "C:\Program Files\Pcynlitx\Mingw64.Setup.exe"; WorkingDir: "C:\Program Files\Pcynlitx"; Flags: postinstall
+
 
  
 

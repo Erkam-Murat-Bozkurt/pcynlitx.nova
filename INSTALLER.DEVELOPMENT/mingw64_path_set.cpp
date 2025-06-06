@@ -7,35 +7,19 @@ void Place_String(char ** command, char * string, int * index_counter);
 
 int main(){
 
-    int value = system(".\\7z.exe x -y .\\Mingw64.7z");
-
-    if(value == -1){
-
-        std::cout << "\n The mingw64 compiler can not be extracted.";
-
-        exit(EXIT_FAILURE);
-    }
-
-    value = system("del .\\Mingw64.7z");
-
-    value = system("del .\\7z.exe");
-
-
     char reg_exe [] = "reg.exe add HKCU\\Environment /v Path /t REG_SZ /d \"%Path%";
 
-    char path_1 [] = ";C:\\Program Files\\Pcynlitx;";
+    char path_1 [] = "C:\\Program Files\\Mingw64;";
 
-    char path_2 [] = "C:\\Program Files\\Mingw64;";
+    char path_2 [] = "C:\\Program Files\\Mingw64\\bin;";
 
-    char path_3 [] = "C:\\Program Files\\Mingw64\\bin;";
+    char path_3 [] = "C:\\Program Files\\Mingw64\\include;";
 
-    char path_4 [] = "C:\\Program Files\\Mingw64\\include;";
+    char path_4 [] = "C:\\Program Files\\Mingw64\\x86_64-w64-mingw32;";
 
-    char path_5 [] = "C:\\Program Files\\Mingw64\\x86_64-w64-mingw32;";
+    char path_5 [] = "C:\\Program Files\\Mingw64\\x86_64-w64-mingw32\\include;";
 
-    char path_6 [] = "C:\\Program Files\\Mingw64\\x86_64-w64-mingw32\\include;";
-
-    char path_7 [] = "C:\\Program Files\\Mingw64\\x86_64-w64-mingw32\\lib;\" /f";
+    char path_6 [] = "C:\\Program Files\\Mingw64\\x86_64-w64-mingw32\\lib;\" /f";
 
     size_t reg_exe_size = strlen(reg_exe);
 
@@ -51,11 +35,10 @@ int main(){
 
     size_t path_6_size = strlen(path_6);
 
-    size_t path_7_size = strlen(path_7);
 
     size_t command_size = reg_exe_size + path_1_size + path_2_size + path_3_size
 
-                          + path_4_size + path_5_size + path_6_size + path_7_size;
+                          + path_4_size + path_5_size + path_6_size ;
 
     char * set_command = new char [10*command_size];
 
@@ -75,11 +58,9 @@ int main(){
 
     Place_String(&set_command,path_6,&index_counter);
 
-    Place_String(&set_command,path_7,&index_counter);
-
     set_command[index_counter] ='\0';
 
-    value = system(set_command);
+    int value = system(set_command);
 
     if(value == -1){
 

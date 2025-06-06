@@ -6,29 +6,25 @@
 
 int main(){
 
-    int value = system(".\\7z.exe x -y .\\FiraCode_Fonts.tar");
+
+    int value = system("xcopy /s /y .\\FiraCode_Standard C:\\Windows\\Fonts");
 
     if(value == -1){
 
-      std::cout << "\n The fonts can not be extracted.";
-
-      exit(EXIT_FAILURE);
-    }
-
-    value = system("xcopy /s /y .\\FiraCode_Fonts C:\\Windows\\Fonts");
-
-    if(value == -1){
-
-        std::cout << "\n The Liberation fonts can not be copied to the C:\\Windows\\Fonts";
+        std::cout << "\n The Fira Code fonts can not be copied to the C:\\Windows\\Fonts";
 
         exit(EXIT_FAILURE);
     }
 
-    value = system("del .\\FiraCode_Fonts.tar");
 
-    value = system("rmdir .\\7z.exe /s /q");
+    value = system("xcopy /s /y .\\Oswald C:\\Windows\\Fonts");
 
-    //value = system("rmdir .\\FiraCode_Fonts /s /q");
+    if(value == -1){
+
+        std::cout << "\n The Oswald fonts can not be copied to the C:\\Windows\\Fonts";
+
+        exit(EXIT_FAILURE);
+    }
 
 
 
@@ -41,8 +37,6 @@ int main(){
     char FiraCode_SemiBold  [] = "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts\" /v \"FiraCode-SemiBold (TrueType)\" /t REG_SZ /d FiraCode-SemiBold.ttf /f";
 
     char FiraCode_Medium    [] = "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts\" /v \"FiraCode-Medium (TrueType)\" /t REG_SZ /d FiraCode-Medium.ttf /f";
-
-    char FiraCode_Variable  [] = "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts\" /v \"FiraCode-VariableFont_wght (TrueType)\" /t REG_SZ /d FiraCode-VariableFont_wght.ttf /f";
 
 
 
@@ -92,14 +86,76 @@ int main(){
        exit(EXIT_FAILURE);
     }
 
-    value = system(FiraCode_Variable);
+
+    char Oswald_Regular     [] = "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts\" /v \"Oswald-Regular (TrueType)\" /t REG_SZ /d Oswald-Regular.ttf /f";
+
+    char Oswald_Bold        [] = "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts\" /v \"Oswald-Bold (TrueType)\" /t REG_SZ /d Oswald-Bold.ttf /f";
+
+    char Oswald_Light       [] = "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts\" /v \"Oswald-Light (TrueType)\" /t REG_SZ /d Oswald-Light.ttf /f";
+
+    char Oswald_SemiBold    [] = "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts\" /v \"Oswald-SemiBold (TrueType)\" /t REG_SZ /d Oswald-SemiBold.ttf /f";
+
+    char Oswald_Medium      [] = "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts\" /v \"Oswald-Medium (TrueType)\" /t REG_SZ /d Oswald-Medium.ttf /f";
+
+    char Oswald_ExtraLight  [] = "reg add \"HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Fonts\" /v \"Oswald-ExtraLight (TrueType)\" /t REG_SZ /d Oswald-ExtraLight.ttf /f";
+
+
+
+    value = system(Oswald_Regular);
 
     if(value == -1){
 
-       std::cout << "\n The FiraCode_Variable font can not be installed";
+        std::cout << "\n The Oswald_Regular font can not be installed.";
+
+        exit(EXIT_FAILURE);
+    }
+
+    value = system(Oswald_Bold);
+
+    if(value == -1){
+
+       std::cout << "\n The Oswald_Bold font can not be installed.";
 
        exit(EXIT_FAILURE);
     }
+
+    value = system(Oswald_Light);
+
+    if(value == -1){
+
+        std::cout << "\n The Oswald_Light font can not be installed.";
+
+        exit(EXIT_FAILURE);
+    }
+
+    value = system(Oswald_SemiBold);
+
+    if(value == -1){
+
+       std::cout << "\n The Oswald_SemiBold font can not be installed";
+
+       exit(EXIT_FAILURE);
+    }
+
+
+    value = system(Oswald_Medium);
+
+    if(value == -1){
+
+       std::cout << "\n The FiraCode_Medium font can not be installed";
+
+       exit(EXIT_FAILURE);
+    }
+
+    value = system(Oswald_ExtraLight);
+
+    if(value == -1){
+
+       std::cout << "\n The Oswald_Variable font can not be installed";
+
+       exit(EXIT_FAILURE);
+    }
+
 
     return 0;
 }
