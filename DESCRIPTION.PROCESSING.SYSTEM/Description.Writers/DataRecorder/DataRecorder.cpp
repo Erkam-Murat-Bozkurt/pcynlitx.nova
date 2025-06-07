@@ -161,6 +161,13 @@ void DataRecorder::Add_Data_Record(char * Data_Type, char * Data_Record){
         this->Place_String_Data(data_record,this->linker_options);       
      }    
 
+     if(data_type == "COMPILER-PATHS"){
+
+        this->Clear_String_Vector(this->compiler_paths);
+
+        this->Place_String_Data(data_record,this->compiler_paths);       
+     }
+
      this->Update_Descriptor_File();
 }
 
@@ -230,6 +237,16 @@ void DataRecorder::Clear_Data_Record(char * Data_Type){
         this->Clear_String_Memory(this->linker_options);
      }     
 
+     if(data_type == "VERSION-NUMBER"){
+
+        this->Clear_String_Memory(this->version_number);
+     }
+
+     if(data_type == "COMPILER-PATHS"){
+
+        this->Clear_String_Memory(this->compiler_paths);
+     }
+
      this->Update_Descriptor_File();
 }
 
@@ -289,37 +306,37 @@ void DataRecorder::Update_Descriptor_File(){
 
 
 
-     this->FileManager.WriteToFile("[BUILD-SYSTEM]{");
+     this->File_Manager.WriteToFile("[BUILD-SYSTEM]{");
 
      this->WriteNewLines(single_line);
 
      this->Write_String_Data(this->build_system);
 
-     this->FileManager.WriteToFile("}");
+     this->File_Manager.WriteToFile("}");
 
      this->WriteNewLines(single_line);
 
 
-     this->FileManager.WriteToFile("[PROJECT-NAME]{");
+     this->File_Manager.WriteToFile("[PROJECT-NAME]{");
 
-     this->WriteNewLines(new_lines);
+     this->WriteNewLines(single_line);
 
      this->Write_String_Data(this->project_name);
 
-     this->FileManager.WriteToFile("}");
+     this->File_Manager.WriteToFile("}");
 
-     this->WriteNewLines(new_lines);
+     this->WriteNewLines(single_line);
 
 
-     this->FileManager.WriteToFile("[VERSION-NUMBER]{");
+     this->File_Manager.WriteToFile("[VERSION-NUMBER]{");
 
-     this->WriteNewLines(new_lines);
+     this->WriteNewLines(single_line);
 
      this->Write_String_Data(this->version_number);
 
-     this->WriteNewLines(new_lines);
+     this->WriteNewLines(single_line);
 
-     this->FileManager.WriteToFile("}");
+     this->File_Manager.WriteToFile("}");
 
 
 
@@ -427,6 +444,22 @@ void DataRecorder::Update_Descriptor_File(){
      this->WriteNewLines(two_lines);
 
 
+
+
+     
+     this->File_Manager.WriteToFile("[COMPILER-PATHS]{");
+
+     this->WriteNewLines(single_line);
+
+     this->Write_Vector_Data(this->compiler_paths);
+
+     this->WriteNewLines(single_line);
+
+     this->File_Manager.WriteToFile("}");
+
+     this->WriteNewLines(two_lines);
+
+
      this->File_Manager.WriteToFile("[END]:");
 
      this->WriteNewLines(two_lines);
@@ -502,6 +535,14 @@ void DataRecorder::Replace_Data_Record(char * Data_Type,  char * Data_Record){
         this->Place_String_Data(data_record,this->version_number);
      }  
 
+     if(data_type == "COMPILER-PATHS"){
+
+        this->Clear_String_Memory(this->version_number);
+
+        this->Place_String_Data(data_record,this->compiler_paths);
+     }  
+
+
      this->Update_Descriptor_File();
 }
 
@@ -575,6 +616,13 @@ void DataRecorder::Replace_Data_Record(char * Data_Type,
         this->Place_Vector_Data(this->linker_options,vec);
      }     
 
+     if(data_type == "COMPILER-PATHS"){
+
+        this->Clear_String_Vector(this->compiler_paths);
+
+        this->Place_Vector_Data(this->compiler_paths,vec);
+     }     
+
      this->Update_Descriptor_File();
 }
 
@@ -606,6 +654,9 @@ void DataRecorder::Receive_Decriptor_File(){
      this->Place_Vector_Data(this->Des_Reader.Get_Linker_Options(),this->linker_options);
 
      this->Place_String_Data(this->Des_Reader.Get_Standard(),this->standard);   
+
+     this->Place_Vector_Data(this->Des_Reader.Get_Compiler_Paths(),this->compiler_paths);   
+
 }
 
 
@@ -650,6 +701,8 @@ void DataRecorder::Clear_Data_Memory(){
      this->Clear_String_Vector(this->compiler_options);
 
      this->Clear_String_Vector(this->linker_options);
+
+     this->Clear_String_Vector(this->compiler_paths);
 
      this->Clear_String_Memory(this->standard);
 

@@ -2004,6 +2004,16 @@ void Custom_Multi_DataPanel::Save_Data(wxDataViewListCtrl * listctrl, wxString D
 
         this->Data_Recorder.Record_Data(DataType.ToStdString(),linker_options);
      }    
+
+
+     if(data_type == "COMPILER-PATHS"){
+
+        std::vector<std::string> compiler_paths;
+
+        this->Collect_List_Ctrl_Data(listctrl,compiler_paths); 
+
+        this->Data_Recorder.Record_Data(DataType.ToStdString(),compiler_paths);
+     }  
 }
 
 

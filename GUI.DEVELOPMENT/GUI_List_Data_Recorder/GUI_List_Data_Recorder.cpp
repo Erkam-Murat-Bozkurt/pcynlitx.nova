@@ -163,6 +163,7 @@ void GUI_List_Data_Recorder::Record_Data(std::string Data_Type, std::string Data
         this->Place_String_Data(Data_Record,this->version_number);
      }  
 
+
      this->Update_Descriptor_File();     
 }
 
@@ -505,14 +506,14 @@ void GUI_List_Data_Recorder::Receive_Decriptor_File(){
      this->Place_Vector_Data(this->Des_Reader.Get_Compiler_Paths(),this->Compiler_Paths);
 
 
-      std::string project_name   = this->Des_Reader.Get_Project_Name();
+     std::string project_name   = this->Des_Reader.Get_Project_Name();
 
-      std::string version_number = this->Des_Reader.Get_Version_Number();
+     std::string version_number = this->Des_Reader.Get_Version_Number();
 
 
-      this->Place_String_Data(project_name,this->project_name);
+     this->Place_String_Data(project_name,this->project_name);
 
-      this->Place_String_Data(version_number,this->version_number);
+     this->Place_String_Data(version_number,this->version_number);
 }
 
 

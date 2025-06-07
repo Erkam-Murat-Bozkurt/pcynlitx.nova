@@ -42,6 +42,7 @@ private:
   std::string project_name;
   std::string version_number;
   std::string build_system;
+  std::vector<std::string> compiler_paths;
   std::vector<std::string> Include_Directories;
   std::vector<std::string> Source_File_Directories;
   std::vector<std::string> Library_Directories;

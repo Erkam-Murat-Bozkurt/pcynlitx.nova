@@ -1001,6 +1001,35 @@ void Descriptor_File_Reader::Read_Compiler_Paths(){
             this->Clear_String_Memory(&line);
         }
      }
+     else{
+
+          
+           if(this->Data_Record_Cond == false) {
+
+              std::cout << "\n\n";
+
+              std::cout << "\n Error:";
+
+              this->Clear_String_Memory(&this->error_message);
+
+              this->error_message = "\nThere is no any decleration about compiler path";
+
+              std::cout << this->error_message;
+
+              std::cout << "\n\n\n";
+
+              if(!this->gui_read_status){
+
+                 exit(0);
+              }
+              else{
+
+                    this->gui_read_success = false;
+
+                   this->lack_of_decleration_error = true;
+              }
+          }
+     }
 
      this->compiler_paths.shrink_to_fit();
 
