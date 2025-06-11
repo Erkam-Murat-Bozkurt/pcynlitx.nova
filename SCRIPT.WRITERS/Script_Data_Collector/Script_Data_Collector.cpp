@@ -41,6 +41,10 @@ void Script_Data_Collector::Receive_Compiler_Data(Compiler_Data * ptr){
      this->Cmp_Data_Ptr = ptr;
 }
 
+void Script_Data_Collector::Receive_Simple_Dependency_Search_Data(const Simple_Source_File_Dependency * ptr){
+
+      this->Simple_Data_Ptr = ptr;
+}
 
 
 void Script_Data_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
@@ -49,8 +53,6 @@ void Script_Data_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reade
 
      this->warehouse_path = this->Des_File_Reader->Get_Warehouse_Location();
 }
-
-
 
 
 void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script_Data * ptr,
@@ -145,13 +147,115 @@ void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script
 }
 
 
-void Script_Data_Collector::Determine_Header_Files_Inclusion_Number(Script_Data * ptr,
 
-     int src_num)
+
+void Script_Data_Collector::Determine_Source_File_Compilation_Information_For_Simple_Search(Script_Data * ptr,
+
+     std::string source_file_name){
+
+     ptr->warehouse_path = this->warehouse_path;
+
+     int record_index = 0;
+
+
+      
+
+     std::string git_record_dir = this->Simple_Data_Ptr->src_git_record_dir;
+
+     this->Place_String(&ptr->source_file_git_record_dir,git_record_dir);
+
+
+     std::string src_file_name = this->Simple_Data_Ptr->source_file_name;
+
+     this->Place_String(&ptr->source_file_name,src_file_name);
+
+
+     std::string src_dir = this->Simple_Data_Ptr->src_sys_dir;
+
+     this->Place_String(&ptr->source_file_dir,src_dir);
+
+
+
+     std::string src_name_without_ext = this->Simple_Data_Ptr->source_file_name_without_ext;
+     
+     this->Place_String(&ptr->src_name_without_ext,src_name_without_ext);
+     
+
+     size_t src_name_size = src_file_name.length();
+     
+     for(size_t k=0;k<src_name_size;k++){
+
+         ptr->object_file_name.push_back(src_file_name[k]);
+
+         if(src_file_name[k]=='.'){
+
+            break;
+         }
+     }
+
+     ptr->object_file_name.push_back('o');
+     ptr->object_file_name.shrink_to_fit();
+
+
+     size_t dir_size = src_dir.length();
+
+
+     for(size_t k=0;k<dir_size;k++){
+
+         ptr->object_file_path.push_back(src_dir[k]);
+     }
+
+     if(this->opr_sis == 'w'){
+
+        if( ptr->object_file_path.back() != '\\'){
+
+            ptr->object_file_path.push_back('\\');
+        }
+     }
+     else{
+     
+         if(this->opr_sis == 'l'){
+
+            if(ptr->object_file_path.back() != '/'){
+
+               ptr->object_file_path.push_back('/');
+            }
+         }
+     }
+        
+
+
+
+     for(size_t k=0;k<src_name_size;k++){
+
+        ptr->object_file_path.push_back(src_file_name[k]);
+
+        if(src_file_name[k]=='.'){
+
+          break;
+        }
+     }
+
+     ptr->object_file_path.push_back('o');     
+
+     ptr->object_file_path.shrink_to_fit();   
+}
+
+
+
+void Script_Data_Collector::Determine_Header_Files_Inclusion_Number(Script_Data * ptr)
 {
      // THIS MEMBER FUNCTION DETERMINES COMPLIATION PRIORITY OF THE SOURCE FILE
 
      ptr->dependency = this->Cmp_Data_Ptr->priority;
+}
+
+
+void Script_Data_Collector::Determine_Header_Files_Inclusion_Number_For_Simple_Construction(Script_Data * ptr)
+{
+     // THIS MEMBER FUNCTION DETERMINES COMPLIATION PRIORITY OF THE SOURCE FILE  
+
+     ptr->dependency =  this->Simple_Data_Ptr->included_file_hdr_num;
 }
 
 

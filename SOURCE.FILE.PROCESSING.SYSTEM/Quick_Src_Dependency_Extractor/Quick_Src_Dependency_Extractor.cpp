@@ -226,6 +226,10 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
      this->Dep_Data.Dependent_Header_Directories.shrink_to_fit();
 
      this->Dep_Data.Include_Declerations.shrink_to_fit();
+
+     this->Dep_Data.included_file_hdr_num += static_cast<int>(this->Dep_Data.Dependent_Header_Names.size());
+
+     this->Dep_Data.included_file_hdr_num += static_cast<int>(this->Dep_Data.External_Headers.size());
 }
 
 void Quick_Src_Dependency_Extractor::Extract_Directory_Short_Paths(std::string sys_dir, 

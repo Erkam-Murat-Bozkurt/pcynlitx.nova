@@ -26,6 +26,8 @@ Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_
     this->SysInt = nullptr;
 
     this->run_type = 'n';
+
+    this->Simple_Search_Status = false;
 }
 
 
@@ -212,6 +214,12 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
  void Source_File_Dependency_Determiner::Simple_Dependency_Determination_For_Single_Source_File(std::string path){
 
       this->Simple_Dep_Extractor.Extract_Dependency_Data(path);
+
+      this->Warehouse_Path = this->Simple_Dep_Extractor.Get_Warehouse_Path();
+
+      this->Warehouse_Objetcs_Dir = this->Simple_Dep_Extractor.Get_Warehouse_Objetcs_Dir();
+
+      this->Simple_Search_Status = true;
  }
 
 
@@ -566,7 +574,14 @@ std::string Source_File_Dependency_Determiner::Get_Warehouse_Path(){
 }
 
 
- const Simple_Source_File_Dependency * Source_File_Dependency_Determiner::Get_Simple_File_Dependencies(){
+const Simple_Source_File_Dependency * Source_File_Dependency_Determiner::Get_Simple_File_Dependencies(){
 
       return this->Simple_Dep_Extractor.Get_Simple_Source_File_Dependency();
- }
+}
+
+
+
+const bool Source_File_Dependency_Determiner::Get_Simple_Search_Status() const {
+
+     return this->Simple_Search_Status;
+}

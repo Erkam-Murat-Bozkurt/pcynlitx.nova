@@ -1187,6 +1187,8 @@ void Executable_MakeFile_ComConstructor::Determine_Dependency_Determination_Comm
 
          this->Dependency_Determination_Command += go_to_new_line;
      }
+
+     this->Dependency_Determination_Command.shrink_to_fit();
 }
 
 bool Executable_MakeFile_ComConstructor::Check_Include_Directory_Existance(std::vector<std::string> * hdr_dir_list, 

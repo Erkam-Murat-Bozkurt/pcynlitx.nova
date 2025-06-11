@@ -66,6 +66,7 @@ public:
  bool Is_Source_File(std::string spath);
  bool Is_Header_File(std::string hpath);
  int  Get_Compiler_Data_Size();
+ const bool Get_Simple_Search_Status() const ;
  std::string Get_Warehouse_Objetcs_Dir();
  std::string Get_Warehouse_Path();
  void Print_Dependency_List();
@@ -104,6 +105,7 @@ protected:
  size_t data_size;
  char run_type;
  bool Memory_Delete_Condition;
+ bool Simple_Search_Status;
 };
 
 #endif /* SOURCE_FILE_DEPENDENCY_DETERMINER_HPP */

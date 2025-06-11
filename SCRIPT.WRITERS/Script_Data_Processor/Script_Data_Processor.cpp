@@ -52,9 +52,16 @@ void Script_Data_Processor::Receive_Source_File_Dependency_Determiner(Source_Fil
 {
      this->Dep_Determiner = ptr;
 
-     std::vector<Compiler_Data> * data_ptr = this->Dep_Determiner->Get_Compiler_Data_Address();
+     if(!this->Dep_Determiner->Get_Simple_Search_Status()){
 
-     this->source_file_num = data_ptr->size();
+         std::vector<Compiler_Data> * data_ptr = this->Dep_Determiner->Get_Compiler_Data_Address();
+
+         this->source_file_num = data_ptr->size();
+     }
+     else{
+
+           this->source_file_num = 1;
+     }
 }
 
 
@@ -79,23 +86,46 @@ void Script_Data_Processor::Process_Script_Data(){
 
 void Script_Data_Processor::Determine_Script_Information(){
 
-     for(int i=0;i<this->source_file_num;i++){
+     if(!this->Dep_Determiner->Get_Simple_Search_Status()){
 
-        Compiler_Data Cmp_Dt = this->Dep_Determiner->Get_Compiler_Data(i);
+        for(int i=0;i<this->source_file_num;i++){
 
-        this->Data_Collector.Receive_Compiler_Data(&Cmp_Dt);
+            Compiler_Data Cmp_Dt = this->Dep_Determiner->Get_Compiler_Data(i);
+
+            this->Data_Collector.Receive_Compiler_Data(&Cmp_Dt);
         
-        this->Data_Collector.Determine_Source_File_Compilation_Information(&this->Temp_Data,Cmp_Dt.source_file_name);
+            this->Data_Collector.Determine_Source_File_Compilation_Information(&this->Temp_Data,Cmp_Dt.source_file_name);
 
-        this->Data_Collector.Determine_Header_Files_Inclusion_Number(&this->Temp_Data,i);
+            this->Data_Collector.Determine_Header_Files_Inclusion_Number(&this->Temp_Data);
 
-        this->Data_Collector.Determine_Make_File_Name(&this->Temp_Data);
+            this->Data_Collector.Determine_Make_File_Name(&this->Temp_Data);
 
-        this->Data.push_back(this->Temp_Data);
+            this->Data.push_back(this->Temp_Data);
 
-        this->Clear_Script_Data(&this->Temp_Data);
-
+            this->Clear_Script_Data(&this->Temp_Data);
+         }
      }
+     else{
+
+                const Simple_Source_File_Dependency * Cmp_Dt = this->Dep_Determiner->Get_Simple_File_Dependencies();
+
+                this->Data_Collector.Receive_Simple_Dependency_Search_Data(Cmp_Dt);
+        
+                this->Data_Collector.Determine_Source_File_Compilation_Information_For_Simple_Search(&this->Temp_Data,Cmp_Dt->source_file_name);
+
+                this->Data_Collector.Determine_Header_Files_Inclusion_Number_For_Simple_Construction(&this->Temp_Data);
+
+                this->Data_Collector.Determine_Make_File_Name(&this->Temp_Data);
+
+                this->Data.push_back(this->Temp_Data);
+
+                this->Clear_Script_Data(&this->Temp_Data);
+     }
+}
+
+
+void Script_Data_Processor::Determine_Script_Information_For_Simple_Search(){
+
 }
 
 

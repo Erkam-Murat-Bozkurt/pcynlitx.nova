@@ -377,6 +377,7 @@ void Executable_MakeFile_Script_Builder::Write_The_Executable_Make_File_Update_S
 
      this->FileManager.WriteToFile("mingw32-make -f ");
 
+
      this->FileManager.WriteToFile(this->script_builder_make_file_name);
 
      this->FileManager.WriteToFile(" 2>&1 > ");
@@ -1118,7 +1119,7 @@ void Executable_MakeFile_Script_Builder::Determine_Compiler_Output_Path(std::str
          this->compiler_output_location.push_back(compiler_output_location_add[i]);
      }
 
-     this->compiler_output_location.shrink_to_fit();        
+     this->compiler_output_location.shrink_to_fit();   
 }
 
 

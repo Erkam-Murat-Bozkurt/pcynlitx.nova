@@ -37,6 +37,7 @@ public:
  void Clear_Object_Memory();
 protected:
  void Determine_Script_Information();
+ void Determine_Script_Information_For_Simple_Search();
  void Determine_Script_Order();
  void Clear_Script_Data(std::vector<Script_Data> * ptr);
  void Clear_String_Memory(std::string * ptr);

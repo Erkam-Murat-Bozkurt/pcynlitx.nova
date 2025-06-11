@@ -91,7 +91,7 @@ add_executable(CMAKE_Build_Executable
         ${CMAKE_CURRENT_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor_Main_File.cpp)
 
 
-add_executable(Pcynlitx_Gui
+add_executable(Pcynlitx
 
         ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/wxLauncher.cpp )
 
@@ -133,7 +133,7 @@ target_link_libraries(CMAKE_Build_Executable PUBLIC proj_bld_tools  make_fbld_sy
 
                    src_proc_sys git_data_processing_system src_dat_col des_reader basic_tools)
 
-target_link_libraries(Pcynlitx_Gui PUBLIC BuildSystem_GUI pthread wxmsw32ud_core wxbase32ud  
+target_link_libraries(Pcynlitx PUBLIC BuildSystem_GUI pthread wxmsw32ud_core wxbase32ud  
                       
                       wxmsw32ud_aui wxmsw32ud_stc wxscintillad wxmsw32ud_richtext
                           
