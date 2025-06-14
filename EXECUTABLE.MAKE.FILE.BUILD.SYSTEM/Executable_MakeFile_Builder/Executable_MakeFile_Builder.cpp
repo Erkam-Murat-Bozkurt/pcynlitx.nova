@@ -1247,9 +1247,17 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
 
           */
 
+
+
+     this->FileManager.WriteToFile(this->Compiler_System_Command);
+
+     this->FileManager.WriteToFile("\n\n");     
+
+     
+
      this->FileManager.WriteToFile(".PHONY dep_list: ");
 
-     this->FileManager.WriteToFile(this->source_file_name);
+     this->FileManager.WriteToFile(this->Simple_Data_Ptr->object_file_name);
 
      this->FileManager.WriteToFile(" \\");
 
@@ -1285,9 +1293,6 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
      this->FileManager.WriteToFile("\n\n");
 
 
-     this->FileManager.WriteToFile(this->Compiler_System_Command);
-
-     this->FileManager.WriteToFile("\n\n");     
 
      this->FileManager.FileClose();
 

@@ -15,7 +15,9 @@
 
 #include "Executable_MakeFile_ComConstructor.hpp"
 
-Executable_MakeFile_ComConstructor::Executable_MakeFile_ComConstructor(char opr_sis)
+Executable_MakeFile_ComConstructor::Executable_MakeFile_ComConstructor(char opr_sis) :
+
+   Information_Collector(opr_sis)
 
 {
        this->opr_sis = opr_sis;
@@ -49,19 +51,39 @@ void Executable_MakeFile_ComConstructor::Clear_Dynamic_Memory(){
      this->Clear_String_Memory(&this->Compiler_System_Command);
 
      this->Clear_String_Memory(&this->Dependency_Determination_Command);
+
+     this->Clear_String_Memory(&this->include_directory_list_for_compiler_command);
+
+     this->Clear_String_Memory(&this->source_file_directory_list_for_compiler_command);
+
+     this->Clear_String_Memory(&this->library_directory_list_for_compiler_command);
+
+     this->Clear_String_Memory(&this->include_file_list_for_compiler_command);
+
+     this->Clear_String_Memory(&this->library_path_list_for_compiler_command);
+
+     this->Clear_String_Memory(&this->external_include_directory_list_for_compiler_command);
+
+     this->Clear_String_Memory(&this->compiler_options_list_for_compiler_command);
+
+     this->Clear_String_Memory(&this->linker_options_list_for_compiler_command);
 }
 
 
 
 void Executable_MakeFile_ComConstructor::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
-
+     
      this->Des_Reader = ptr;
+
+     this->Information_Collector.Receive_Descriptor_File_Reader(ptr);
 }
 
 
 void Executable_MakeFile_ComConstructor::Receive_Dependency_Determiner(Source_File_Dependency_Determiner * ptr){
 
      this->Dep_Determiner = ptr;
+
+     this->Information_Collector.Receive_Dependency_Determiner(this->Dep_Determiner);
 }
 
 
@@ -75,6 +97,8 @@ void Executable_MakeFile_ComConstructor::Receive_ExeFileName(std::string name){
 void Executable_MakeFile_ComConstructor::Receive_Construction_Strategy(char strategy){
 
      this->constraction_strategy = strategy;
+
+     this->Information_Collector.Receive_Construction_Strategy(strategy);
 }
 
 
@@ -87,19 +111,26 @@ void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(std::string
      this->warehouse_path     = this->Dep_Determiner->Get_Warehouse_Path();
 
 
-     this->Determine_Src_File_Dir(main_file_path,'w');
+     this->Information_Collector.Determine_Src_File_Dir(main_file_path,this->src_file_dir);
 
-     this->Determine_Git_Src_Dir();
+     this->Information_Collector.Determine_Git_Src_Dir(this->git_src_dir,this->src_file_dir);
 
-     this->Determine_Make_File_Name(main_file_path);
+     this->Information_Collector.Determine_Make_File_Name(this->make_file_name,main_file_path,this->src_file_dir);
 
-     this->Determine_Source_File_Name(main_file_path);
+     this->Information_Collector.Determine_Source_File_Name(this->source_file_name,main_file_path,this->src_file_dir);
 
-     this->Construct_Library_Directories_List();
+     this->Information_Collector.Construct_Library_Directory_List_For_Compiler_Command(this->library_directory_list_for_compiler_command);
 
-     this->Construct_Library_List();
+     this->Information_Collector.Determine_Project_Library_Name(this->project_library_name);
 
-     this->Determine_Project_Library_Name();
+     this->Information_Collector.Determine_Library_File_Path_List_For_Compiler_Command(this->library_path_list_for_compiler_command);
+
+     this->Information_Collector.Determine_External_Include_Directory_List_For_Compiler_Command(this->external_include_directory_list_for_compiler_command);
+    
+     this->Information_Collector.Determine_Compiler_Options_For_Compiler_Command(this->compiler_options_list_for_compiler_command);
+
+     this->Information_Collector.Determine_Linker_Options_For_Compiler_Command(this->linker_options_list_for_compiler_command);
+
 
 
      if(this->constraction_strategy == 'a'){
@@ -119,6 +150,14 @@ void Executable_MakeFile_ComConstructor::Construct_Compiler_Commands(std::string
           this->Simple_Data_Ptr = this->Dep_Determiner->Get_Simple_File_Dependencies();
 
           this->Construct_Header_File_List_For_Simple_Construction();
+
+          this->Information_Collector.Determine_Include_Directory_List_For_Simple_Construction(this->include_directory_list_for_compiler_command,
+            
+               this->header_file_dirs);
+
+          this->Information_Collector.Determine_Source_File_Directory_List_For_Simple_Construction(this->source_file_directory_list_for_compiler_command);
+
+          this->Information_Collector.Determine_Include_File_List_For_Simple_Construction(this->include_file_list_for_compiler_command,this->header_file_paths);
 
           this->Determine_Dependency_Determination_Command_For_Simple_Construction();
 
@@ -229,8 +268,6 @@ void Executable_MakeFile_ComConstructor::Construct_Header_File_List(){
 }
 
 
-
-
 void Executable_MakeFile_ComConstructor::Construct_Object_File_List(){
 
      size_t list_size = this->Comp_Data_ptr->size();
@@ -251,182 +288,8 @@ void Executable_MakeFile_ComConstructor::Construct_Object_File_List(){
 }
 
 
-
-
-void Executable_MakeFile_ComConstructor::Construct_Library_Directories_List(){
-
-    int lib_dir_num = this->Des_Reader->Get_Library_Directory_Number();
-    
-    if(lib_dir_num > 0){
-
-       for(int i=0;i<lib_dir_num;i++){
-
-           this->library_directory_list.push_back(this->Des_Reader->Get_Library_Directory(i));
-       }
-    }
-
-    this->library_directory_list.shrink_to_fit();
-}
-
-
-
-
-
-void Executable_MakeFile_ComConstructor::Construct_Library_List(){
-
-    int lib_files_num = this->Des_Reader->Get_Library_Files_Number();
-
-    if(lib_files_num > 0){
-
-       for(int i=0;i<lib_files_num;i++){
-
-           this->library_name_list.push_back(this->Des_Reader->Get_Library_File(i));
-       }
-    }
-
-    this->library_name_list.shrink_to_fit();
-}
-
-
-
-
-void Executable_MakeFile_ComConstructor::Determine_Git_Src_Dir(){
-
-     size_t warehouse_path_size = this->warehouse_path.length();
-
-     size_t src_dir_size = this->src_file_dir.length();
-
-     for(size_t i=warehouse_path_size+1;i<src_dir_size;i++){
-
-        this->git_src_dir.push_back(this->src_file_dir[i]);
-     }
-}
-
-
-
-
-void Executable_MakeFile_ComConstructor::Determine_Src_File_Dir(std::string file_path, 
-
-     char opr_sis){
-
-     size_t path_size = file_path.length();
-
-     size_t dir_size = path_size;
-
-     for(int i=path_size;i>0;i--){
-
-         if(opr_sis == 'w'){
-
-              if(file_path[i] == '\\'){
-
-                 break;
-              }
-              else{
-
-                 dir_size--;
-              }
-         }
-
-         if(opr_sis == 'l'){
-
-              if(file_path[i] == '/'){
-
-                 break;
-              }
-              else{
-
-                 dir_size--;
-              }
-         }
-     }
-
-     for(int i=0;i<dir_size;i++){
-
-         this->src_file_dir.push_back(file_path[i]);
-     }
-}
-
-
-
-
-
-void Executable_MakeFile_ComConstructor::Determine_Make_File_Name(std::string file_path)
-{
-     char file_ext [] = "_exe_builder.make";
-
-     size_t ext_size  = strlen(file_ext);
-
-     size_t path_size = file_path.length();
-
-     size_t dir_size  = this->src_file_dir.length();
-
-
-     for(size_t i=dir_size+1;i<path_size;i++){
-
-        if(file_path[i] == '.'){
-
-           break;
-        }
-        else{
-
-            this->make_file_name.push_back(file_path[i]);
-        }
-     }
-
-     for(size_t i=0;i<ext_size;i++){
-
-         this->make_file_name.push_back(file_ext[i]);
-     }
-}
-
-
-
-
-void Executable_MakeFile_ComConstructor::Determine_Source_File_Name(std::string file_path){
-
-     this->Clear_String_Memory(&this->source_file_name_without_ext);
-
-     this->Clear_String_Memory(&this->source_file_name);
-
-     char file_ext [] = ".cpp";
-
-     size_t ext_size  = strlen(file_ext);
-
-     size_t path_size = file_path.length();
-
-     size_t dir_size  = this->src_file_dir.length();
-
-
-     for(size_t i=dir_size+1;i<path_size;i++){
-
-        if(file_path[i] == '.'){
-
-           break;
-        }
-        else{
-
-            this->source_file_name_without_ext.push_back(file_path[i]);
-        }
-     }
-
-     this->source_file_name_without_ext.shrink_to_fit();    
-
-     this->source_file_name = this->source_file_name_without_ext;
-
-     for(size_t i=0;i<ext_size;i++){
-
-         this->source_file_name.push_back(file_ext[i]);
-     }
-
-     this->source_file_name.shrink_to_fit();
-}
-
-
-
-
 void Executable_MakeFile_ComConstructor::Dependency_Determination_Command_Construction()
 {
-
      this->Clear_String_Memory(&this->Dependency_Determination_Command);
 
      const std::vector<std::string> & compiler_options = this->Des_Reader->Get_Compiler_Options();
@@ -486,54 +349,12 @@ void Executable_MakeFile_ComConstructor::Dependency_Determination_Command_Constr
 
      this->Place_Information(&this->Dependency_Determination_Command,tab);
 
-     if(!compiler_options.empty()){
 
-        for(size_t i=0;i<compiler_options.size();i++){
+     this->Dependency_Determination_Command += this->compiler_options_list_for_compiler_command;
 
-            std::string option = compiler_options.at(i);
+     this->Dependency_Determination_Command += this->linker_options_list_for_compiler_command;
 
-            if(option.back()!= '\\'){
-
-                 option.push_back('\\');
-            }
-
-            this->Place_Information(&this->Dependency_Determination_Command,option);
-
-            this->Place_Information(&this->Dependency_Determination_Command,Space_Character);
-
-            this->Place_Information(&this->Dependency_Determination_Command,slash);
-
-            this->Place_Information(&this->Dependency_Determination_Command,new_line);
-
-            this->Place_Information(&this->Dependency_Determination_Command,tab);
-        }
-     }
-
-
-     if(!linker_options.empty()){
-
-        for(size_t i=0;i<linker_options.size();i++){
-
-            std::string option = linker_options.at(i);
-
-            if(option.back()!= '\\'){
-
-                 option.push_back('\\');
-            }
-
-            this->Place_Information(&this->Dependency_Determination_Command,option);
-
-            this->Place_Information(&this->Dependency_Determination_Command,Space_Character);
-
-            this->Place_Information(&this->Dependency_Determination_Command,slash);
-
-            this->Place_Information(&this->Dependency_Determination_Command,new_line);
-
-            this->Place_Information(&this->Dependency_Determination_Command,tab);
-        }
-     }
-
-
+     
      std::vector<std::string> dir_buffer;
 
      // THE ADDITION OF INCLUDE DIRECTORIES PATHS
@@ -769,19 +590,62 @@ void Executable_MakeFile_ComConstructor::Dependency_Determination_Command_Constr
      this->Dependency_Determination_Command += "\n\n\t";
 }
 
+
+
+
+
 void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_Simple_Construction(){
      
-     std::string object_file_name = this->Simple_Data_Ptr->object_file_name;
+     char Include_Character [] = "-I";
 
-     std::string dependency_file_name = this->Simple_Data_Ptr->source_file_name_without_ext + "_depends.d" ;
+     char Link_Character [] = "-L";
 
-     std::string make_target_name = object_file_name + ": $(" +  dependency_file_name + ")";
+     char include_word [] = "-include";
 
-     this->Compiler_System_Command = make_target_name;
+     char Space_Character [] = {' ','\0'};
+
+     char Headers_Location [] = "$(PROJECT_HEADERS_LOCATION)";
+
+     char Objects_Location [] = "$(PROJECT_OBJECTS_LOCATION)";
+
+     char Library_Location [] = "$(PROJECT_LIBRARY_LOCATION)";
+
+     char Source_Location  [] = "$(SOURCE_LOCATION)";
+
+
+     char slash [] = "\\";
+
+     char new_line [] = "\n";
+
+     char tab [] = "\t";
 
      std::string go_to_new_line = "\\\n\t";
 
+
+
+     std::string object_file_name = this->Simple_Data_Ptr->object_file_name;
+
+     std::string dependency_file_name = this->Simple_Data_Ptr->source_file_name_without_ext + "_depends.d " ;
+
+     std::string make_target_name = this->Exe_Name + ": dep_list ";
+
+     make_target_name += go_to_new_line;
+
+     make_target_name += dependency_file_name;
+
+     this->Compiler_System_Command = make_target_name;
+
+
+
      this->Compiler_System_Command += go_to_new_line;
+
+
+     this->Compiler_System_Command += object_file_name;
+
+     this->Compiler_System_Command += " ";
+
+     this->Compiler_System_Command += go_to_new_line;
+
 
 
      const std::vector<Library_Data> & data_list = this->Des_Reader->Get_Library_File_Data_List();
@@ -802,100 +666,104 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
 
 
      
-     std::string compiler_input_command = "g++ -Wall -c -std=c++17"; 
-
-     const std::vector<std::string> & compiler_options = this->Des_Reader->Get_Compiler_Options();
-
-     std::string Space_Character = " ";
+     std::string compiler_input_command = "g++ -Wall -std=c++17 -o ";
+     
 
 
      this->Place_String(&this->Compiler_System_Command,compiler_input_command);
 
+     this->Compiler_System_Command += this->Exe_Name;
+
+     this->Compiler_System_Command += " ";
+
      this->Place_String(&this->Compiler_System_Command,go_to_new_line);
 
-     if(!compiler_options.empty()){
-
-        for(size_t i=0;i<compiler_options.size();i++){
-
-            this->Place_String(&this->Compiler_System_Command,compiler_options.at(i));
-
-            this->Place_String(&this->Compiler_System_Command,Space_Character);
-
-            this->Place_String(&this->Compiler_System_Command,go_to_new_line);
-        }
-     }     
-
-     this->Compiler_System_Command += go_to_new_line;
-
-     const std::vector<std::string> & inc_dirs = this->Des_Reader->Get_Include_Directories();
-
-     const std::vector<std::string> & lib_dirs = this->Des_Reader->Get_Library_Directories();
-
-
-     std::string include_directive = "-I";
-
-     std::string linker_directive  = "-L";
-
-
-     for(size_t i=0;i<inc_dirs.size();i++){
-
-         this->Compiler_System_Command += include_directive;
-
-         this->Compiler_System_Command += inc_dirs.at(i);
-
-         this->Compiler_System_Command += " ";
-
-         this->Compiler_System_Command += go_to_new_line;
-     }
-
-     
-     for(size_t i=0;i<lib_dirs.size();i++){
-
-         this->Compiler_System_Command += linker_directive;
-
-         this->Compiler_System_Command += lib_dirs.at(i);
-
-         this->Compiler_System_Command += " ";
-
-         this->Compiler_System_Command += go_to_new_line;
-     }
-
-     this->Compiler_System_Command +=  " $@ ";
-
-     const std::vector<std::string> & linker_options = this->Des_Reader->Get_Linker_Options();
+     this->Compiler_System_Command += this->compiler_options_list_for_compiler_command;
 
 
      this->Compiler_System_Command += go_to_new_line;
 
-     for(size_t i=0;i<linker_options.size();i++){
+     this->Compiler_System_Command += this->include_directory_list_for_compiler_command;
 
-         this->Compiler_System_Command += linker_options.at(i);
 
-         this->Compiler_System_Command += " ";
+     this->Place_Information(&this->Compiler_System_Command,Include_Character);
 
-         this->Compiler_System_Command += go_to_new_line;
-     }
+     this->Place_Information(&this->Compiler_System_Command,Source_Location);
+
+     this->Place_Information(&this->Compiler_System_Command,Space_Character);
+
+     this->Place_Information(&this->Compiler_System_Command,slash);
+
+     this->Place_Information(&this->Compiler_System_Command,new_line);
+
+     this->Place_Information(&this->Compiler_System_Command,tab);
+
+
+     // THE ADDITION OF EXTERNAL INCLUDE DIRECTORIES PATHS
+
+     this->Compiler_System_Command += this->external_include_directory_list_for_compiler_command;
+
+     this->Compiler_System_Command += this->library_directory_list_for_compiler_command;
+
+
+
+     // THE ADDITION OF PROJECT LIBRARY LOCATION TO THE DIRECTORY PATHS
+
+     this->Place_Information(&this->Compiler_System_Command,Link_Character);
+
+     this->Place_Information(&this->Compiler_System_Command,Library_Location);
+
+     this->Place_Information(&this->Compiler_System_Command,Space_Character);
+
+     this->Place_Information(&this->Compiler_System_Command,slash);
+
+     this->Place_Information(&this->Compiler_System_Command,new_line);
+
+     this->Place_Information(&this->Compiler_System_Command,tab);
+
+
+     // THE ADDITION OF THE TARGET SOURCE FILE LOCATION TO THE DIRECTORY PATHS
+
+     this->Place_Information(&this->Compiler_System_Command,Link_Character);
+
+     this->Place_Information(&this->Compiler_System_Command,Source_Location);
+
+     this->Place_Information(&this->Compiler_System_Command,Space_Character);
+
+     this->Place_Information(&this->Compiler_System_Command,slash);
+
+     this->Place_Information(&this->Compiler_System_Command,new_line);
+
+     this->Place_Information(&this->Compiler_System_Command,tab);
+
+
+
+
+
+     this->Compiler_System_Command += object_file_name;
+
+     this->Compiler_System_Command += " ";
 
      this->Compiler_System_Command += go_to_new_line;
 
-     for(size_t i=0;i<data_list.size();i++){
 
-         this->Compiler_System_Command += "-l";
+     this->Compiler_System_Command += this->linker_options_list_for_compiler_command;
 
-         this->Compiler_System_Command += data_list.at(i).library_name_with_ext;
+     this->Compiler_System_Command += go_to_new_line;
 
-         this->Compiler_System_Command += " ";
+     this->Compiler_System_Command += this->include_file_list_for_compiler_command;
 
-         this->Compiler_System_Command += go_to_new_line;
-     }
-     
-     this->Compiler_System_Command += "-l";
+     this->Compiler_System_Command += go_to_new_line;
+
+     this->Compiler_System_Command += "$(PROJECT_LIBRARY_LOCATION)\\";
 
      this->Compiler_System_Command += this->project_library_name;
 
      this->Compiler_System_Command += " ";
 
-     this->Compiler_System_Command += "\n\n\t";
+     this->Compiler_System_Command += go_to_new_line;
+
+     this->Compiler_System_Command += this->library_path_list_for_compiler_command;
 
      this->Compiler_System_Command.shrink_to_fit();
 }
@@ -906,9 +774,6 @@ void Executable_MakeFile_ComConstructor::Determine_Dependency_Determination_Comm
 
      this->Clear_String_Memory(&this->Dependency_Determination_Command);
 
-     const std::vector<std::string> & compiler_options = this->Des_Reader->Get_Compiler_Options();
-
-     const std::vector<std::string> & linker_options   = this->Des_Reader->Get_Linker_Options();
 
      char Include_Character [] = "-I";
 
@@ -927,8 +792,6 @@ void Executable_MakeFile_ComConstructor::Determine_Dependency_Determination_Comm
      char Source_Location  [] = "$(SOURCE_LOCATION)";
 
 
-
-
      char slash [] = "\\";
 
      char new_line [] = "\n";
@@ -940,22 +803,20 @@ void Executable_MakeFile_ComConstructor::Determine_Dependency_Determination_Comm
      
      std::string compiler_input_command = "g++ -Wall -std=c++17 ";
 
-     std::string file_name_ = this->source_file_name_without_ext + "_depends.d " ;
+     std::string file_name_ = this->Simple_Data_Ptr->source_file_name_without_ext + "_depends.d " ;
 
      compiler_input_command += "-c -MD -MF ";
      
      compiler_input_command += file_name_;
 
-     compiler_input_command += "-o";
+
 
 
      this->Place_Information(&this->Dependency_Determination_Command,compiler_input_command);
 
      this->Place_Information(&this->Dependency_Determination_Command,Space_Character);
 
-     this->Place_Information(&this->Dependency_Determination_Command,this->Exe_Name);
 
-     this->Place_Information(&this->Dependency_Determination_Command,Space_Character);
 
      this->Place_Information(&this->Dependency_Determination_Command,slash);
 
@@ -964,61 +825,14 @@ void Executable_MakeFile_ComConstructor::Determine_Dependency_Determination_Comm
      this->Place_Information(&this->Dependency_Determination_Command,tab);
 
 
-     if(!compiler_options.empty()){
+     this->Dependency_Determination_Command += this->compiler_options_list_for_compiler_command;
 
-        for(size_t i=0;i<compiler_options.size();i++){
-
-            std::string option = compiler_options.at(i);
-
-            this->Place_Information(&this->Dependency_Determination_Command,option);
-
-            this->Place_Information(&this->Dependency_Determination_Command,Space_Character);
-
-            this->Place_Information(&this->Dependency_Determination_Command,slash);
-
-            this->Place_Information(&this->Dependency_Determination_Command,new_line);
-
-            this->Place_Information(&this->Dependency_Determination_Command,tab);
-        }
-     }
-
-
-     if(!linker_options.empty()){
-
-        for(size_t i=0;i<linker_options.size();i++){
-
-            std::string option = linker_options.at(i);
-
-            this->Place_Information(&this->Dependency_Determination_Command,option);
-
-            this->Place_Information(&this->Dependency_Determination_Command,Space_Character);
-
-            this->Place_Information(&this->Dependency_Determination_Command,slash);
-
-            this->Place_Information(&this->Dependency_Determination_Command,new_line);
-
-            this->Place_Information(&this->Dependency_Determination_Command,tab);
-        }
-     }
-
+     this->Dependency_Determination_Command += this->linker_options_list_for_compiler_command;
 
 
      // THE ADDITION OF INCLUDE DIRECTORIES PATHS
 
-     for(size_t i=0;i<this->header_file_dirs.size();i++){
-
-         this->Place_Information(&this->Dependency_Determination_Command,Include_Character);
-
-         this->Place_Information(&this->Dependency_Determination_Command,this->header_file_dirs[i]);
-
-         this->Place_Information(&this->Dependency_Determination_Command,Space_Character);
-
-         this->Place_Information(&this->Dependency_Determination_Command,slash);
-
-         this->Place_Information(&this->Dependency_Determination_Command,new_line);
-
-         this->Place_Information(&this->Dependency_Determination_Command,tab);
-     }
+     this->Dependency_Determination_Command += this->include_directory_list_for_compiler_command;
 
 
      this->Place_Information(&this->Dependency_Determination_Command,Include_Character);
@@ -1034,47 +848,13 @@ void Executable_MakeFile_ComConstructor::Determine_Dependency_Determination_Comm
      this->Place_Information(&this->Dependency_Determination_Command,tab);
 
 
-     int  included_dir_num = this->Des_Reader->Get_Include_Directory_Number();
+     // THE ADDITION OF EXTERNAL INCLUDE DIRECTORIES PATHS
 
+     this->Dependency_Determination_Command += this->external_include_directory_list_for_compiler_command;
 
-     char include_dir_symbol [] = "$(EXTERNAL_INCLUDE_DIR_";
+  
 
-     char makro_end [] = ")";
-
-     int  sizer = 0;
-
-     for(int i=0;i<included_dir_num;i++){
-
-         std::string included_dir = this->Des_Reader->Get_Include_Directory(i);
-
-         std::string dir_index = this->Translater.Translate(i);
-
-         this->Place_Information(&this->Dependency_Determination_Command,Include_Character);
-
-         this->Place_Information(&this->Dependency_Determination_Command,include_dir_symbol);
-
-         this->Place_Information(&this->Dependency_Determination_Command,dir_index);
-
-         this->Place_Information(&this->Dependency_Determination_Command,makro_end);
-
-         this->Place_Information(&this->Dependency_Determination_Command,Space_Character);
-
-         sizer++;
-
-         if(sizer >= 1){
-
-            this->Place_Information(&this->Dependency_Determination_Command,Space_Character);
-
-            this->Place_Information(&this->Dependency_Determination_Command,slash);
-
-            this->Place_Information(&this->Dependency_Determination_Command,new_line);
-
-            this->Place_Information(&this->Dependency_Determination_Command,tab);
-
-            sizer = 0;
-          }
-     }
-
+     // THE ADDITION OF PROJECT LIBRARY LOCATION TO THE DIRECTORY PATHS
 
      this->Place_Information(&this->Dependency_Determination_Command,Link_Character);
 
@@ -1089,6 +869,7 @@ void Executable_MakeFile_ComConstructor::Determine_Dependency_Determination_Comm
      this->Place_Information(&this->Dependency_Determination_Command,tab);
 
 
+     // THE ADDITION OF THE TARGET SOURCE FILE LOCATION TO THE DIRECTORY PATHS
 
      this->Place_Information(&this->Dependency_Determination_Command,Link_Character);
 
@@ -1103,43 +884,16 @@ void Executable_MakeFile_ComConstructor::Determine_Dependency_Determination_Comm
      this->Place_Information(&this->Dependency_Determination_Command,tab);
 
 
-     int  library_dir_num = this->Des_Reader->Get_Library_Directory_Number();
+     // THE ADDITION OF THE LIST OF LIBRARY DIRECTORIES TO THE DIRECTORY PATHS
 
-     sizer = 0;
-
-     for(int i=0;i<library_dir_num;i++){
-
-         std::string library_dir = this->Des_Reader->Get_Library_Directory(i);
-
-         char * dir_index = this->Translater.Translate(i);
-
-         this->Place_Information(&this->Dependency_Determination_Command,Link_Character);
-
-         this->Place_Information(&this->Dependency_Determination_Command,library_dir);
-
-         this->Place_Information(&this->Dependency_Determination_Command,Space_Character);
-
-         sizer++;
-
-         if(sizer >= 1){
-
-            this->Place_Information(&this->Dependency_Determination_Command,Space_Character);
-
-            this->Place_Information(&this->Dependency_Determination_Command,slash);
-
-            this->Place_Information(&this->Dependency_Determination_Command,new_line);
-
-            this->Place_Information(&this->Dependency_Determination_Command,tab);
-
-            sizer = 0;
-          }
-     }
-
-
+     this->Dependency_Determination_Command += this->library_directory_list_for_compiler_command;
 
 
      std::string go_to_new_line = "\\\n\t";
 
+
+
+     // THE ADDITION OF THE SOURCE FILE TO THE COMPILER COMMAND
 
      this->Place_Information(&this->Dependency_Determination_Command,Source_Location);
 
@@ -1152,44 +906,15 @@ void Executable_MakeFile_ComConstructor::Determine_Dependency_Determination_Comm
      this->Place_Information(&this->Dependency_Determination_Command,go_to_new_line);
 
 
-     size_t hdr_list_size = this->header_file_paths.size();
+     this->Dependency_Determination_Command += this->include_file_list_for_compiler_command;
 
-     for(size_t i=0;i<hdr_list_size;i++){
-
-         this->Place_Information(&this->Dependency_Determination_Command,include_word);
-
-         this->Place_Information(&this->Dependency_Determination_Command,Space_Character);
-
-         this->Place_Information(&this->Dependency_Determination_Command,this->header_file_paths[i]);
-
-         this->Place_Information(&this->Dependency_Determination_Command,Space_Character);
-
-         if(i<(hdr_list_size-1)){
-         
-            this->Place_Information(&this->Dependency_Determination_Command,go_to_new_line);            
-         }
-     }
-
-     this->Place_Information(&this->Dependency_Determination_Command,go_to_new_line);            
-
-
-     const std::vector<Library_Data> & data_list = this->Des_Reader->Get_Library_File_Data_List();
-
-
-
-     for(size_t i=0;i<data_list.size();i++){
-
-         this->Dependency_Determination_Command += "-l";
-
-         this->Dependency_Determination_Command += data_list.at(i).library_name_with_ext;
-
-         this->Dependency_Determination_Command += " ";
-
-         this->Dependency_Determination_Command += go_to_new_line;
-     }
+     this->Dependency_Determination_Command += go_to_new_line;
 
      this->Dependency_Determination_Command.shrink_to_fit();
 }
+
+
+
 
 bool Executable_MakeFile_ComConstructor::Check_Include_Directory_Existance(std::vector<std::string> * hdr_dir_list, 
 
@@ -1216,19 +941,6 @@ bool Executable_MakeFile_ComConstructor::Check_Include_Directory_Existance(std::
 }
 
 
-void Executable_MakeFile_ComConstructor::Determine_Project_Library_Name(){
-
-    std::string repo_dir_path = this->Des_Reader->Get_Repo_Directory_Location();
-
-    std::string repo_dir_name;
-
-    this->Extract_Repo_Directory_Name(repo_dir_name,repo_dir_path);
-
-    this->project_library_name = repo_dir_name;     
-}
-
-
-
 void Executable_MakeFile_ComConstructor::Construct_Header_File_List_For_Simple_Construction(){
 
      size_t list_size = this->Simple_Data_Ptr->Dependent_Header_Names.size();
@@ -1251,35 +963,6 @@ void Executable_MakeFile_ComConstructor::Construct_Header_File_List_For_Simple_C
          }
      }
 }
-
-
-
-void Executable_MakeFile_ComConstructor::Extract_Repo_Directory_Name(std::string & name, 
-
-     std::string root_dir){
-
-     size_t root_dir_size = root_dir.size();
-
-     size_t start_point = root_dir_size;
-
-     for(size_t i=root_dir_size;i>0;i--){
-
-         if((root_dir[i] == '\\') || (root_dir[i] == '/') ){
-
-             start_point = i+1;
-             break;
-         }   
-     }    
-
-     for(size_t i=start_point;i<root_dir_size;i++){
-
-         name.push_back(tolower(root_dir[i]));
-     }
-
-     name.shrink_to_fit();
-}
-
-
 
 
 void Executable_MakeFile_ComConstructor::Add_String(std::string * list, std::string string){

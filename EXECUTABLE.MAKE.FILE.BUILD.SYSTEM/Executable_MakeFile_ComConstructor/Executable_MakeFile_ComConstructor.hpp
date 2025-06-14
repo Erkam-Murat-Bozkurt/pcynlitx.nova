@@ -19,6 +19,7 @@
 #include <string>
 #include <fcntl.h>
 #include <windows.h>
+#include "Executable_MakeFile_Information_Collector.hpp"
 #include "Source_File_Dependency_Determiner.hpp"
 #include "Git_File_List_Receiver.hpp"
 #include "Descriptor_File_Reader.hpp"
@@ -33,7 +34,7 @@ public:
  virtual ~Executable_MakeFile_ComConstructor();
  void Receive_Construction_Strategy(char strategy);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
- void Receive_Dependency_Determiner(Source_File_Dependency_Determiner * ptr);
+ void Receive_Dependency_Determiner(Source_File_Dependency_Determiner * ptr); 
  void Receive_ExeFileName(std::string name);
  void Construct_Compiler_Commands(std::string main_file_path);
  void Clear_Dynamic_Memory();
@@ -53,10 +54,11 @@ protected:
  void Construct_Object_File_List();
  void Construct_Header_File_List();
  void Construct_Library_Directories_List();
- void Construct_Library_List();
  void Determine_Git_Src_Dir();
  void Determine_Compiler_System_Command_For_Simple_Construction();
  void Determine_Dependency_Determination_Command_For_Simple_Construction();
+ void Determine_Include_Directory_List_For_Simple_Construction();
+ void Determine_Source_File_Directory_List_For_Simple_Construction();
  void Construct_Header_File_List_For_Simple_Construction();
  void Determine_Src_File_Dir(std::string file_path, char opr_sis);
  void Determine_Make_File_Name(std::string file_path);
@@ -68,6 +70,7 @@ protected:
  void Place_Information(std::string * ptr, char * in);
  bool Check_Include_Directory_Existance(std::vector<std::string> * hdr_dir, std::string dir);
  void Determine_Project_Library_Name();
+ Executable_MakeFile_Information_Collector Information_Collector;
  Descriptor_File_Reader * Des_Reader;
  Source_File_Dependency_Determiner * Dep_Determiner;
  IntToCharTranslater Translater;
@@ -78,7 +81,6 @@ protected:
  std::vector<std::string> header_file_dirs;
  std::vector<std::string> header_file_upper_dirs;
  std::vector<std::string> object_file_list;
- std::vector<std::string> library_directory_list;
  std::vector<std::string> library_name_list;
  std::string Exe_Name;
  std::string options;
@@ -92,6 +94,14 @@ protected:
  std::string Compiler_System_Command;
  std::string Dependency_Determination_Command;
  std::string project_library_name;
+ std::string include_directory_list_for_compiler_command;
+ std::string source_file_directory_list_for_compiler_command;
+ std::string library_directory_list_for_compiler_command;
+ std::string include_file_list_for_compiler_command;
+ std::string library_path_list_for_compiler_command;
+ std::string external_include_directory_list_for_compiler_command;
+ std::string compiler_options_list_for_compiler_command;
+ std::string linker_options_list_for_compiler_command;
  int  header_file_number;
  int  Data_Size;
  char opr_sis;

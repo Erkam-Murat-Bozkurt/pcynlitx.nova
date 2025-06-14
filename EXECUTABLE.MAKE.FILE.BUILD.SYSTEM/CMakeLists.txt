@@ -10,6 +10,9 @@ add_library(exec_make_bld
     ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_ComConstructor/Executable_MakeFile_ComConstructor.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_ComConstructor/Executable_MakeFile_ComConstructor.hpp
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_Information_Collector/Executable_MakeFile_Information_Collector.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_Information_Collector/Executable_MakeFile_Information_Collector.hpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_Script_Builder/Executable_MakeFile_Script_Builder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_Script_Builder/Executable_MakeFile_Script_Builder.hpp
     
@@ -20,7 +23,11 @@ target_include_directories(exec_make_bld PUBLIC
 
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_Builder
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_ComConstructor
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_Information_Collector
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_Script_Builder
 
 
@@ -142,7 +149,10 @@ target_link_directories(exec_make_bld PUBLIC
 
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_Builder
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_ComConstructor
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Executable_MakeFile_Information_Collector
 
 
 
