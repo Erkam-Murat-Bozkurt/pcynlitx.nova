@@ -99,7 +99,7 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path,
 
 
 
-     char git_data_collection [] = "\n\nGit version control data collected";
+     char git_data_collection [] = "\n\n Git version control data collected";
 
      std::cout << git_data_collection;
 
@@ -111,30 +111,12 @@ void Executable_MakeFile_Builder::Build_MakeFile(char * mn_src_path,
 
      if(strategy == 'a'){
 
-        char strategy_selection [] = "\n\nAdvance construction strategy selected";
-
-        std::cout << strategy_selection;
-
-        if(this->build_type  == 'g'){
-
-           this->SysInt->WriteTo_NamedPipe_FromChild(strategy_selection);
-        }
-
         this->Advanced_MakeFile_Construction(mn_src_path,Exe_Name,strategy);
      }
      else{
 
           if(strategy == 's'){
-            
-             char strategy_selection [] = "\n\nSimple construction strategy selected";
-
-             std::cout << strategy_selection;
-
-             if(this->build_type  == 'g'){
-
-                this->SysInt->WriteTo_NamedPipe_FromChild(strategy_selection);
-             }
-
+          
              this->Simple_MakeFile_Construction(mn_src_path,Exe_Name,strategy);
           }
           else{
@@ -167,7 +149,7 @@ void Executable_MakeFile_Builder::Advanced_MakeFile_Construction(char * mn_src_p
 
 
 
-     char dependency_determination [] =  "\n\nThe source file dependencies determined";
+     char dependency_determination [] =  "\n\n The source file dependencies determined";
 
      std::cout << dependency_determination;
 
@@ -199,7 +181,7 @@ void Executable_MakeFile_Builder::Advanced_MakeFile_Construction(char * mn_src_p
      this->Script_Builder.Build_Compiler_Script_For_Executable_File(mn_src_path);
 
 
-     char script_writing [] =  "\nThe construction script writed";
+     char script_writing [] =  "\n The construction script writed";
 
      std::cout << script_writing;
 
@@ -264,16 +246,6 @@ void Executable_MakeFile_Builder::Simple_MakeFile_Construction(char * mn_src_pat
      this->warehouse_path     = this->Dep_Determiner.Get_Warehouse_Path();
 
 
-     char dependency_determination [] = "\n\nDependencies determined";
-
-     std::cout << dependency_determination;
-
-     if(this->build_type  == 'g'){
-
-        this->SysInt->WriteTo_NamedPipe_FromChild(dependency_determination);
-     }
-
-
      this->Receive_Exe_File_Name(Exe_Name);
 
      this->Determine_New_Directory_Path();
@@ -281,40 +253,14 @@ void Executable_MakeFile_Builder::Simple_MakeFile_Construction(char * mn_src_pat
      this->Construct_New_Directory_For_Build_Files();
 
 
+     char new_directory_construction [] = "\n\n The new directory constructed..";
 
+     std::cout << new_directory_construction;
 
-     /*
+     if(this->build_type  == 'g'){
 
-     this->Project_Rebuild_Script_Writer.Receive_Descriptor_File_Reader(&this->Des_Reader);
-
-     this->Project_Rebuild_Script_Writer.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
-
-
-
-
-     
-
-
-     std::string script_path = this->new_dir_path;
-
-     std::cout << "\n script_path" << script_path;
-
-     std::cin.get();
-     
-     this->Script_Path_Determination(script_path,mn_src_path);
-
-
-     std::cout << "\n The script path is determined";
-
-     std::cin.get();
-
-     this->Project_Rebuild_Script_Writer.Set_Script_Path_Directly(script_path);
-     
-     this->Project_Rebuild_Script_Writer.Build_Update_Script();
-
-     this->Project_Rebuild_Script_Writer.Clear_Dynamic_Memory();
-
-     */
+        this->SysInt->WriteTo_NamedPipe_FromChild(new_directory_construction);
+     }
 
 
      this->Script_Builder.Receive_File_System_Path(mn_src_path);
@@ -331,7 +277,7 @@ void Executable_MakeFile_Builder::Simple_MakeFile_Construction(char * mn_src_pat
 
      
 
-     char script_construction [] = "\n\nThe project compiler script has been constructed";
+     char script_construction [] = "\n\n The project compiler script has been constructed";
 
      std::cout << script_construction;
 
@@ -340,13 +286,10 @@ void Executable_MakeFile_Builder::Simple_MakeFile_Construction(char * mn_src_pat
         this->SysInt->WriteTo_NamedPipe_FromChild(script_construction);
      }
 
-     //this->Dep_Determiner.Clear_Dynamic_Memory();
-
-     //this->Dep_Determiner.Simple_Dependency_Determination_For_Single_Source_File(mn_src_path);
 
      this->Simple_Data_Ptr = this->Dep_Determiner.Get_Simple_File_Dependencies();
 
-     char dependencies_determined [] = "\n\nThe project dependencies determined";
+     char dependencies_determined [] = "\n\n The project dependencies determined";
 
      std::cout << dependencies_determined;
 
@@ -369,16 +312,6 @@ void Executable_MakeFile_Builder::Simple_MakeFile_Construction(char * mn_src_pat
 
      this->source_file_name = this->Simple_Data_Ptr->source_file_name;
 
-
-     char src_file_name [] = "\n\nThe project source file name determined..";
-
-     std::cout << src_file_name;
-
-     if(this->build_type  == 'g'){
-
-        this->SysInt->WriteTo_NamedPipe_FromChild(src_file_name);
-     }
-
      this->Src_File_Dir       = this->ComConstructor.Get_Src_File_Dr();
 
      this->git_src_dir        = this->ComConstructor.Get_Git_Src_Dr();
@@ -390,7 +323,10 @@ void Executable_MakeFile_Builder::Simple_MakeFile_Construction(char * mn_src_pat
      this->Compiler_System_Command = this->ComConstructor.Get_Compiler_System_Command();
 
 
-     char make_constr_status [] = "\n\nMake file construction will start..";
+     this->Write_MakeFile_For_Simple_Construction(Exe_Name);
+
+
+     char make_constr_status [] = "\n\n Make file constructed.. ";
 
      std::cout << make_constr_status;
 
@@ -399,9 +335,7 @@ void Executable_MakeFile_Builder::Simple_MakeFile_Construction(char * mn_src_pat
         this->SysInt->WriteTo_NamedPipe_FromChild(make_constr_status);
      }
 
-
-     this->Write_MakeFile_For_Simple_Construction(Exe_Name);
-      
+     Sleep(10);
 }
 
 

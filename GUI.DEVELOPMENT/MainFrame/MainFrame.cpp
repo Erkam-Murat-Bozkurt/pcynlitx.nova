@@ -1080,6 +1080,9 @@ void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath,
 
                 this->Determine_Executable_File_Script_Construction_Point(FileName);
 
+
+
+
                 wxString Construction_Point(this->Executable_File_Script_Construction_Point);
  
                 open_dir = Construction_Point;
@@ -1093,7 +1096,7 @@ void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath,
 
             wxString label = wxT("BUILD SYSTEM CONSTRUCTION FOR A SOURCE FILE");
 
-            wxString start_text = wxT("\n\n   EXECUTABLE MAKEFILE CONSTRUCTION STARTED");
+            wxString start_text = wxT("\n\n EXECUTABLE MAKEFILE CONSTRUCTION STARTED");
 
             this->Start_Construction_Process(label,open_dir,start_text);
          }
@@ -1212,6 +1215,7 @@ void MainFrame::Start_Construction_Process(wxString label,
      int max=20;
      
      this->Process_Output->Construct_Output(max);
+
 
      this->Process_Output->cmd = this->Process_Ptr->Get_Process_Command();
 

@@ -37,8 +37,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
-     inkscape:cx="269.96327"
-     inkscape:cy="124.5013"
+     inkscape:cx="270.46834"
+     inkscape:cy="60.861691"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -89,90 +89,59 @@
          y="246.43961"
          style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:4.23333px;line-height:1.45;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI Light';fill:#64646e;fill-opacity:1;stroke-width:0.264583"
          id="tspan3" /></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.76111px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#fcaf3b;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-85.315018"
+       y="242.67276"
+       id="text825-9"><tspan
+         sodipodi:role="line"
+         x="-85.315018"
+         y="242.67276"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';fill:#73737d;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+         id="tspan5">IDE &amp; Automatic C++ Build System </tspan><tspan
+         sodipodi:role="line"
+         x="-85.315018"
+         y="252.64482"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';fill:#73737d;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+         id="tspan6">Generator</tspan></text>
     <rect
-       width="67.73333"
-       height="67.73333"
-       fill="none"
-       id="rect1"
-       x="-81.511429"
-       y="251.3394"
-       style="stroke-width:0.264583" />
-    <rect
-       width="46.377674"
-       height="49.02351"
-       fill="none"
-       id="rect1-3"
-       x="-78.894554"
-       y="246.47903"
-       style="stroke-width:0.186259" />
+       style="fill:#fcaf3b;fill-opacity:1;stroke:#fcaf3b;stroke-width:0.14544;stroke-dasharray:none;stroke-opacity:1"
+       id="rect5"
+       width="4.7125969"
+       height="15.167192"
+       x="-84.528717"
+       y="212.74504"
+       ry="0.42579758" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.92536px;line-height:4.78544px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold';text-align:center;text-anchor:middle;fill:none;fill-opacity:1;stroke:#32323c;stroke-width:0.602891;stroke-dasharray:none;stroke-opacity:1"
+       x="15.00205"
+       y="222.71552"
+       id="text7"
+       transform="scale(0.9949841,1.0050412)"><tspan
+         sodipodi:role="line"
+         id="tspan7"
+         style="font-size:9.92536px;line-height:4.78544px;fill:#32323c;fill-opacity:1;stroke:none;stroke-width:0.60289"
+         x="15.00205"
+         y="222.71552">R</tspan></text>
+    <ellipse
+       style="fill:none;fill-opacity:1;stroke:#32323c;stroke-width:0.60289;stroke-dasharray:none;stroke-opacity:1"
+       id="path6"
+       cx="14.749479"
+       cy="220.63779"
+       rx="6.4798408"
+       ry="6.6802931" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:19.7556px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808b96;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="-85.653984"
-       y="222.48851"
+       x="-76.009026"
+       y="227.56612"
        id="text824-3"><tspan
          sodipodi:role="line"
          id="tspan822-0"
-         x="-85.653984"
-         y="222.48851"
+         x="-76.009026"
+         y="227.56612"
          style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.7556px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold';opacity:0.85;fill:#32323c;fill-opacity:1;stroke-width:0.264583">PCYNLITX</tspan></text>
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:11.2889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#fcaf3b;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="-85.545921"
-       y="239.80388"
-       id="text825-9"><tspan
-         sodipodi:role="line"
-         x="-85.545921"
-         y="239.80388"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:11.2889px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Light';fill:#73737d;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
-         id="tspan5">IDE &amp; C++ Build System </tspan><tspan
-         sodipodi:role="line"
-         x="-85.545921"
-         y="254.3087"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:11.2889px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Light';fill:#73737d;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
-         id="tspan6">Generator</tspan></text>
-    <rect
-       style="fill:none;stroke:#fcaf3b;stroke-width:0"
-       id="rect2"
-       width="100.09244"
-       height="49.444862"
-       x="-90.221779"
-       y="202.52184"
-       ry="0.85950327" />
-    <rect
-       style="fill:none;stroke:#fcaf3b;stroke-width:0"
-       id="rect3"
-       width="96.35067"
-       height="49.712132"
-       x="-86.212738"
-       y="202.65547"
-       ry="0.85950327" />
-    <rect
-       style="fill:none;stroke:#fcaf3b;stroke-width:0"
-       id="rect4"
-       width="97.687012"
-       height="50.513939"
-       x="-85.945465"
-       y="202.78911"
-       ry="0.85950327" />
-    <ellipse
-       style="fill:none;fill-opacity:1;stroke:#32323c;stroke-width:0.6;stroke-dasharray:none;stroke-opacity:1"
-       id="path6"
-       cx="6.0620728"
-       cy="216.08577"
-       rx="6.481286"
-       ry="6.6149206" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.87778px;line-height:4.7625px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold';text-align:center;text-anchor:middle;fill:none;fill-opacity:1;stroke:#32323c;stroke-width:0.600001;stroke-dasharray:none;stroke-opacity:1"
-       x="6.2625246"
-       y="219.35982"
-       id="text7"><tspan
-         sodipodi:role="line"
-         id="tspan7"
-         style="font-size:9.87778px;line-height:4.7625px;fill:#32323c;fill-opacity:1;stroke:none;stroke-width:0.6"
-         x="6.2625246"
-         y="219.35982">R</tspan></text>
   </g>
 </svg>

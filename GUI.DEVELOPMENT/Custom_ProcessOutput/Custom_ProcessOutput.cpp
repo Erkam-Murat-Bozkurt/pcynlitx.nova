@@ -449,7 +449,9 @@ void Custom_ProcessOutput::ReadProcessOutput(wxString start_text){
 
      for(;;)
      {
-        std::string pipeStr = this->SysInt.ReadNamedPipe_From_Parent();
+        std::string pipeStr = " ";
+        
+        pipeStr += this->SysInt.ReadNamedPipe_From_Parent();
 
         total_text = total_text + pipeStr;
 
@@ -468,7 +470,7 @@ void Custom_ProcessOutput::ReadProcessOutput(wxString start_text){
 
         wxString text(pipeStr);
 
-        std::string space = "  ";
+        std::string space = " ";
 
         wxString space_text(space);
 
