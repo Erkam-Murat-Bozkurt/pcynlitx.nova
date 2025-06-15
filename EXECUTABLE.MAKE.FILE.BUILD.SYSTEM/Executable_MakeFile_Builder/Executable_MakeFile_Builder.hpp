@@ -28,6 +28,7 @@
 #include "Descriptor_File_Reader.hpp"
 #include "Header_File_Determiner.h"
 #include "Repo_Warehouse_Initializer.h"
+#include "Custom_System_Interface.h"
 #include "CharOperator.h"
 #include "IntToCharTranslater.h"
 
@@ -47,6 +48,7 @@ protected:
  void Advanced_MakeFile_Construction(char * mn_src_path, char * Exe_Name, char strategy);
  void Simple_MakeFile_Construction(char * mn_src_path, char * Exe_Name, char strategy);
  void Write_MakeFile(char * Exe_Name);
+ void Write_Paths_File_For_Simple_Construction();
  void Write_MakeFile_For_Simple_Construction(char * Exe_Name);
  void Determine_New_Directory_Path();
  void Receive_Exe_File_Name(char * Exe_Name);
@@ -77,6 +79,7 @@ protected:
  std::string Exe_File_Name;
  std::string new_dir_path;
  std::string project_library_name;
+ std::string file_paths_name;
  Custom_System_Interface * SysInt;
  char build_type;
  char opr_sis;

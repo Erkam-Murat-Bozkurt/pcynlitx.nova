@@ -856,13 +856,20 @@ void Executable_MakeFile_Builder::Script_Name_Determination(std::string & name, 
      name.shrink_to_fit();
 }
 
-void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * Exe_Name){
 
 
-     this->DirectoryManager.ChangeDirectory(this->new_dir_path.c_str());
 
-     this->FileManager.SetFilePath(this->make_file_name);
 
+
+void Executable_MakeFile_Builder::Write_Paths_File_For_Simple_Construction(){
+
+     this->file_paths_name = this->Simple_Data_Ptr->source_file_name_without_ext;
+
+     this->file_paths_name += "_File_Paths.txt";
+
+     this->FileManager.SetFilePath(this->file_paths_name);
+
+     
      this->FileManager.FileOpen(RWCf);
 
 
@@ -1160,30 +1167,25 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
 
      this->FileManager.WriteToFile("\n");
 
-     /*
-
-     this->FileManager.WriteToFile("$(TARGET_LOCATION)");
-
-     if(this->opr_sis == 'w'){
-
-        this->FileManager.WriteToFile("\\");
-     }
-
-     if(this->opr_sis == 'l'){
-
-        this->FileManager.WriteToFile("/");
-     }
-      
-     
-     this->FileManager.WriteToFile(Exe_Name);
-
-     this->FileManager.WriteToFile(": ");
-
-          */
+     this->FileManager.FileClose();
+}
 
 
+void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * Exe_Name){
 
-     this->FileManager.WriteToFile(this->Compiler_System_Command);
+
+     this->DirectoryManager.ChangeDirectory(this->new_dir_path.c_str());
+
+     this->Write_Paths_File_For_Simple_Construction();
+
+
+     this->FileManager.SetFilePath(this->make_file_name);
+
+     this->FileManager.FileOpen(RWCf);
+
+     this->FileManager.WriteToFile("include ");
+
+     this->FileManager.WriteToFile(this->file_paths_name);
 
      this->FileManager.WriteToFile("\n\n");     
 
