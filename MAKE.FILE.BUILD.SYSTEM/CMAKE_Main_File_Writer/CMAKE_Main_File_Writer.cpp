@@ -315,7 +315,11 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
         for(size_t i=0;i<Libs.size();i++){
 
-            this->FileManager.WriteToFile(Libs.at(i));
+            std::string library_path = Libs.at(i);
+
+            this->Convert_CMAKE_Format(library_path);
+
+            this->FileManager.WriteToFile(library_path);
 
             this->FileManager.WriteToFile("  ");
 

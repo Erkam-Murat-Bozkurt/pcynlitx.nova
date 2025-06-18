@@ -97,7 +97,7 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
      this->Des_Reader.Read_Descriptor_File();
 
 
-     char read_opr [] = "\n\nThe project descriptor file read\n\n";
+     char read_opr [] = "\n\nThe project descriptor file read\n";
 
      std::cout << read_opr;
 
@@ -114,7 +114,7 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
      this->Data_Processor.Determine_Git_Repo_Info();  
 
 
-     char git_data [] = "\nThe data for git version controller has been collected\n\n";
+     char git_data [] = "\nThe data for git version controller has been collected\n";
 
      std::cout << git_data;
 
@@ -132,7 +132,7 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
      this->Dep_Determiner.Collect_Dependency_Information();
 
 
-     char dependency_data [] = "\n\nSource file dependencies has been determined\n\n";
+     char dependency_data [] = "\n\nSource file dependencies has been determined\n";
 
      std::cout << dependency_data;
 
@@ -289,6 +289,8 @@ void CMAKE_System_Constructor::Perform_MakeFile_Construction(){
 
 }
 
+
+
 size_t CMAKE_System_Constructor::Split_Range(size_t range_size, size_t partition, size_t & remaining_job){
 
     if(range_size ==0){
@@ -315,6 +317,7 @@ size_t CMAKE_System_Constructor::Split_Range(size_t range_size, size_t partition
 
 
 
+
 void CMAKE_System_Constructor::Perform_Data_Map_Construction(){
 
      size_t data_size = this->Compiler_Data_Pointer->size();
@@ -326,6 +329,8 @@ void CMAKE_System_Constructor::Perform_Data_Map_Construction(){
          this->DataMap.insert(std::make_pair(source_file_path,this->Compiler_Data_Pointer->at(i)));
      }
 }
+
+
 
 
 void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
@@ -350,8 +355,6 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
 
      
      for(size_t i=start;i<end;i++){
-
-
 
          std::string source_file_path = this->Compiler_Data_Pointer->at(i).source_file_path;
 
@@ -434,6 +437,7 @@ void CMAKE_System_Constructor::Clear_Vector_Memory(std::vector<std::string> & ve
 
     vec.clear();
 }
+
 
 void CMAKE_System_Constructor::Clear_String_Memory(std::string & str)
 {
