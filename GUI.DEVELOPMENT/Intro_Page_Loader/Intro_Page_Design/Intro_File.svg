@@ -36,12 +36,12 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1.979899"
-     inkscape:cx="270.46834"
-     inkscape:cy="60.861691"
+     inkscape:zoom="1.4"
+     inkscape:cx="287.5"
+     inkscape:cy="175.35714"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
-     showgrid="true"
+     showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1111"
      inkscape:window-x="-9"
@@ -60,7 +60,7 @@
        spacingy="1"
        spacingx="1"
        units="mm"
-       visible="true" />
+       visible="false" />
   </sodipodi:namedview>
   <metadata
      id="metadata5">
@@ -92,56 +92,40 @@
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:7.76111px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#fcaf3b;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="-85.315018"
+       x="-80.504173"
        y="242.67276"
        id="text825-9"><tspan
          sodipodi:role="line"
-         x="-85.315018"
+         x="-80.504173"
          y="242.67276"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';fill:#73737d;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
          id="tspan5">IDE &amp; Automatic C++ Build System </tspan><tspan
          sodipodi:role="line"
-         x="-85.315018"
+         x="-80.504173"
          y="252.64482"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';fill:#73737d;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
          id="tspan6">Generator</tspan></text>
-    <rect
-       style="fill:#fcaf3b;fill-opacity:1;stroke:#fcaf3b;stroke-width:0.14544;stroke-dasharray:none;stroke-opacity:1"
-       id="rect5"
-       width="4.7125969"
-       height="15.167192"
-       x="-84.528717"
-       y="212.74504"
-       ry="0.42579758" />
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:9.92536px;line-height:4.78544px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold';text-align:center;text-anchor:middle;fill:none;fill-opacity:1;stroke:#32323c;stroke-width:0.602891;stroke-dasharray:none;stroke-opacity:1"
-       x="15.00205"
-       y="222.71552"
-       id="text7"
-       transform="scale(0.9949841,1.0050412)"><tspan
-         sodipodi:role="line"
-         id="tspan7"
-         style="font-size:9.92536px;line-height:4.78544px;fill:#32323c;fill-opacity:1;stroke:none;stroke-width:0.60289"
-         x="15.00205"
-         y="222.71552">R</tspan></text>
-    <ellipse
-       style="fill:none;fill-opacity:1;stroke:#32323c;stroke-width:0.60289;stroke-dasharray:none;stroke-opacity:1"
-       id="path6"
-       cx="14.749479"
-       cy="220.63779"
-       rx="6.4798408"
-       ry="6.6802931" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:19.7556px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#808b96;fill-opacity:1;stroke:none;stroke-width:0.264583"
-       x="-76.009026"
-       y="227.56612"
+       x="-80.953514"
+       y="226.89795"
        id="text824-3"><tspan
          sodipodi:role="line"
          id="tspan822-0"
-         x="-76.009026"
-         y="227.56612"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.7556px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold';opacity:0.85;fill:#32323c;fill-opacity:1;stroke-width:0.264583">PCYNLITX</tspan></text>
+         x="-80.953514"
+         y="226.89795"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.7556px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold';opacity:0.85;fill:#32323c;fill-opacity:1;stroke-width:0.264583">PCYNLI</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:19.7556px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#fcaf3b;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="-20.55444"
+       y="226.94513"
+       id="text824-3-6"><tspan
+         sodipodi:role="line"
+         id="tspan822-0-1"
+         x="-20.55444"
+         y="226.94513"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.7556px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold';opacity:0.85;fill:#fcaf3b;fill-opacity:1;stroke-width:0.264583">TX</tspan></text>
   </g>
 </svg>

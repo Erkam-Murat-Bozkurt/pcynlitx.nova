@@ -65,6 +65,7 @@ protected:
  void Determine_Version_Number();
  void Determine_Compiler_Paths_Record_Area();
  void Delete_Spaces_on_String(std::string * pointer);
+ void Delete_Spaces_on_String_Start(std::string * str);
  void Clear_String_Memory(std::string * pointer);
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  StringOperator StringManager;

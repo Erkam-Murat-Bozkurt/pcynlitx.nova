@@ -327,16 +327,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
             this->FileManager.WriteToFile(libs);
 
-            this->FileManager.WriteToFile("  ");
-
-            lib_counter++;
-
-            if(lib_counter>3){
-
-               this->FileManager.WriteToFile("\n\n    ");
-
-               lib_counter = 0;
-            }
+            this->FileManager.WriteToFile("\n\t");
         }
 
         this->FileManager.WriteToFile("\n )");

@@ -97,7 +97,7 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
      this->Des_Reader.Read_Descriptor_File();
 
 
-     char read_opr [] = "\n\nThe project descriptor file read\n";
+     char read_opr [] = "\n The project descriptor file read\n";
 
      std::cout << read_opr;
 
@@ -114,7 +114,7 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
      this->Data_Processor.Determine_Git_Repo_Info();  
 
 
-     char git_data [] = "\nThe data for git version controller has been collected\n";
+     char git_data [] = "\n The data for git version controller has been collected\n";
 
      std::cout << git_data;
 
@@ -132,7 +132,7 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
      this->Dep_Determiner.Collect_Dependency_Information();
 
 
-     char dependency_data [] = "\n\nSource file dependencies has been determined\n";
+     char dependency_data [] = "\n Source file dependencies has been determined\n";
 
      std::cout << dependency_data;
 
@@ -163,7 +163,7 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
 
      this->Perform_MakeFile_Construction();
 
-     char construction_result [] = "\nThe new makefiles have been constructed..\n";
+     char construction_result [] = "\n The new makefiles have been constructed..\n";
 
      std::cout << "\n";
      std::cout << construction_result;

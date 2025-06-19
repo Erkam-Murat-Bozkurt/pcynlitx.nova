@@ -1094,7 +1094,7 @@ void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath,
 
             this->Process_Ptr->Exec_Cmd_For_Single_Src_File(src_path,exe_name,strategy);
 
-            wxString label = wxT("BUILD SYSTEM CONSTRUCTION FOR A SOURCE FILE");
+            wxString label = wxT(" BUILD SYSTEM CONSTRUCTION FOR A SOURCE FILE");
 
             wxString start_text = wxT("\n\n EXECUTABLE MAKEFILE CONSTRUCTION STARTED");
 
@@ -1138,13 +1138,13 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
            if(this->Des_Reader->Get_Gui_Read_Success_Status()){
 
-              wxString label = wxT("BUILD SYSTEM CONSTRUCTION PROCESS");
+              wxString label = wxT(" BUILD SYSTEM CONSTRUCTION PROCESS");
 
               wxString start_text = wxT("\n\n  BUILD SYSTEM CONSTRUCTION STARTED\n\n");
 
-              wxString CMAKE_label = wxT("CMAKE BUILD SYSTEM CONSTRUCTION PROCESS");
+              wxString CMAKE_label = wxT(" CMAKE BUILD SYSTEM CONSTRUCTION PROCESS");
 
-              wxString CMAKE_start_text = wxT("\n\nCMAKE BUILD SYSTEM CONSTRUCTION STARTED\n\n");
+              wxString CMAKE_start_text = wxT("\n\n CMAKE BUILD SYSTEM CONSTRUCTION STARTED\n\n");
 
               std::string build_system_type = this->Des_Reader->Get_Build_System_Type();
 

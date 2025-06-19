@@ -224,8 +224,6 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
          this->FileManager.WriteToFile("\n )");
      }
 
-
-
      const std::vector<std::string> &  libs =  this->Des_Reader->Get_Library_Files();
 
      if(libs.size()>0){
@@ -236,7 +234,7 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
         for(size_t i=0;i<libs.size();i++){
 
-            this->FileManager.WriteToFile("\n    ");
+            this->FileManager.WriteToFile("\n\n\t");
 
             std::string link_lib = libs.at(i);
 
@@ -299,42 +297,6 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
      this->FileManager.WriteToFile(")");
 
      this->FileManager.WriteToFile("\n\n");
-
-
-     const std::vector<std::string> & Libs =  this->Des_Reader->Get_Library_Files();
-
-     if(Libs.size()>0){
-
-        this->FileManager.WriteToFile("\n\n ");
-
-        this->FileManager.WriteToFile("link_libraries(");
-
-        this->FileManager.WriteToFile("\n\n    ");
-
-        int lib_counter = 0;
-
-        for(size_t i=0;i<Libs.size();i++){
-
-            std::string library_path = Libs.at(i);
-
-            this->Convert_CMAKE_Format(library_path);
-
-            this->FileManager.WriteToFile(library_path);
-
-            this->FileManager.WriteToFile("  ");
-
-            lib_counter++;
-
-            if(lib_counter>3){
-
-               this->FileManager.WriteToFile("\n\n    ");
-
-               lib_counter = 0;
-            }
-        }
-
-        this->FileManager.WriteToFile("\n )");
-     }  
 
      this->FileManager.FileClose();
 }
