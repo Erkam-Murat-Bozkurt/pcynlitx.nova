@@ -1187,9 +1187,16 @@ void Executable_MakeFile_Builder::Write_MakeFile_For_Simple_Construction(char * 
 
      this->FileManager.WriteToFile(this->file_paths_name);
 
-     this->FileManager.WriteToFile("\n\n");     
+     this->FileManager.WriteToFile("\n\n");
 
-     
+     std::string commmand = this->ComConstructor.Get_Compiler_System_Command();
+
+
+
+     this->FileManager.WriteToFile(commmand);
+
+     this->FileManager.WriteToFile("\n\n");
+
 
      this->FileManager.WriteToFile(".PHONY dep_list: ");
 
