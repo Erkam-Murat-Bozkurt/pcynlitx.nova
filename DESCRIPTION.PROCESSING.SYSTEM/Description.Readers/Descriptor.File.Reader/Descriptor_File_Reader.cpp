@@ -366,8 +366,6 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
 
                     if(this->Is_Include_Character(line)){
 
-                       //this->Delete_Spaces_on_String(&line);
-
                        this->root_dir = line;
 
                        break;
@@ -390,8 +388,6 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
                if(this->StringManager.CheckStringLine(line)){
 
                   if(this->Is_Include_Character(line)){
-
-                     //this->Delete_Spaces_on_String(&line);
 
                      this->root_dir = line;
 
@@ -1544,10 +1540,13 @@ void Descriptor_File_Reader::Clear_String_Memory(std::string * pointer)
 
 void Descriptor_File_Reader::Delete_Spaces_on_String_Start(std::string * str)
 {
-     while(str->at(0) == ' '){
+    if(str->size()>0){
 
-           str->erase(0,1);
-     }
+       while(str->at(0) == ' '){
+
+         str->erase(0,1);
+       }
+    }
 }
 
 
