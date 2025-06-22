@@ -594,16 +594,6 @@ void Descriptor_File_Data_Collector::Delete_Spaces_on_String(std::string * str)
 }
 
 
-void Descriptor_File_Data_Collector::Delete_Spaces_on_String_Start(std::string * str)
-{
-     while(str->at(0) == ' '){
-
-           str->erase(0,1);
-     }
-}
-
-
-
 void Descriptor_File_Data_Collector::Clear_Vector_Memory(std::vector<std::string> * pointer){
 
      std::vector<std::string>::iterator it;
