@@ -1200,31 +1200,103 @@ void MainFrame::Start_Construction_Process(wxString label,
 
      wxString dir_open, wxString start_text){
       
-     this->Progress_Bar_Start_status = false;
+     wxString message;
 
-     this->Process_Output = new Custom_ProcessOutput(this,wxID_ANY,label);
+     this->Descriptor_File_Validity_Control(message);
 
-     this->Process_Output->SetSize(this->FromDIP(wxSize(750,600)));
+     if(this->lack_of_description_status){
+        
+        this->Print_Lack_of_Description_Message(message);
+     }
+     else{
 
-     this->Process_Output->Directory_List_Show_Cond(true);
+          if(this->invalid_descriptor_file_status){
 
-     this->Process_Output->Receive_Directory_Open_Location(dir_open);
+             this->Print_Invalid_Descriptor_File_Message(message);
+          }
+          else{
+            
+                this->Progress_Bar_Start_status = false;
 
-     this->Process_Output->Receive_Tree_View_Panel(this->Dir_List_Manager);
+                this->Process_Output = new Custom_ProcessOutput(this,wxID_ANY,label);
 
-     int max=20;
+                this->Process_Output->SetSize(this->FromDIP(wxSize(750,600)));
+
+                this->Process_Output->Directory_List_Show_Cond(true);
+
+                this->Process_Output->Receive_Directory_Open_Location(dir_open);
+
+                this->Process_Output->Receive_Tree_View_Panel(this->Dir_List_Manager);
+
+                int max=20;
      
-     this->Process_Output->Construct_Output(max);
+                this->Process_Output->Construct_Output(max);
 
 
-     this->Process_Output->cmd = this->Process_Ptr->Get_Process_Command();
+                this->Process_Output->cmd = this->Process_Ptr->Get_Process_Command();
 
-     this->read_process_output = std::thread(&this->Process_Output->ReadProcessOutput,
+                this->read_process_output = std::thread(&this->Process_Output->ReadProcessOutput,
      
                                  this->Process_Output,start_text);
 
-     this->read_process_output.detach();
+                this->read_process_output.detach();
+          }
+     }
 }
+
+
+
+void MainFrame::Print_Invalid_Descriptor_File_Message(wxString er_message){
+
+
+       wxString Message = "\nThere is an error in descriptor file";
+
+              Message += "\nor descriptor file is invalid!";
+
+              Message += "\n\nPlease control descriptor file";
+
+              Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
+            
+                         wxT("ERROR REPORT:"),wxID_ANY,
+                         
+                         wxT("PCYNLITX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
+
+              dial->SetSize(this->FromDIP(wxSize(600,420)));
+
+              dial->Centre(wxBOTH);
+
+              dial->ShowModal();
+
+}
+
+
+
+void MainFrame::Print_Lack_of_Description_Message(wxString er_mesage){
+    
+     wxString Message = "\nLACK OF INFORMATION ON THE PROJECT FILE!";
+
+              Message += "\n\nPlease control descriptor file before";
+
+              Message += "\nbuild system construction process";
+
+              Message += "\n\nThe problem detected:";
+
+              Message += er_mesage;
+
+              Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
+            
+                    wxT("ERROR REPORT:"),wxID_ANY,
+                         
+                    wxT("PCYNLITX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
+
+              dial->SetSize(this->FromDIP(wxSize(620,420)));
+
+              dial->Centre(wxBOTH);
+
+              dial->ShowModal();
+
+}
+
 
 void MainFrame::PrintDescriptions(wxCommandEvent & event){
 
@@ -2150,4 +2222,61 @@ void MainFrame::Print_Project_File_Syntax_Error(){
          *this->exclamation_mark_bmp, wxDefaultPosition);
 
          dial->ShowModal();
+}
+
+
+void MainFrame::Descriptor_File_Validity_Control(wxString & message){
+     
+     this->invalid_descriptor_file_status = false;
+
+     this->lack_of_description_status = false;
+
+     Descriptor_File_Reader Des_Reader('w','g'); 
+
+     size_t path_size = 5*this->Descriptor_File_Path.size();
+
+     std::unique_ptr<char[]> path_ptr (new char [path_size] );
+
+     size_t index = 0;
+
+     for(size_t i=0;i<this->Descriptor_File_Path.size();i++){
+
+         path_ptr[index] = static_cast<char>(this->Descriptor_File_Path[i]);
+         
+         index++;
+     }
+
+     path_ptr[index] = '\0';
+ 
+     Des_Reader.Receive_Descriptor_File_Path(path_ptr.get());
+
+     Des_Reader.Read_Descriptor_File();
+
+     bool syntax_error_status = Des_Reader.Get_Syntax_Error_Status();
+
+     bool inv_descriptor_file_status = Des_Reader.Get_Invalid_Descriptor_File_Status();
+
+     bool gui_read_success_status = Des_Reader.Get_Gui_Read_Success_Status();
+
+     if(syntax_error_status || inv_descriptor_file_status){
+
+        this->invalid_descriptor_file_status = true;
+
+        //this->is_project_file_selected = false;
+
+        message += Des_Reader.Get_Error_Message();
+     }
+     else{
+
+      
+          if(!gui_read_success_status){
+
+             this->lack_of_description_status = true;
+
+             //this->is_project_file_selected = false;
+
+             message += Des_Reader.Get_Error_Message();
+         }      
+     }
+
 }

@@ -10,6 +10,8 @@
 #include <cstdlib>
 #include <cstdio>
 #include <iostream>
+#include "Record_Number_Determiner.hpp"
+#include "Descriptor_File_Line_Reader.hpp"
 #include "Descriptor_File_Data_Collector.hpp"
 #include "Descriptor_File_Syntax_Controller.hpp"
 #include "StringOperator.h"
@@ -96,8 +98,10 @@ protected:
  void Divide_Options(std::string & options);
  void Clear_String_Memory(std::string * ptr);
  void Clear_Vectory_Memory(std::vector<std::string> * ptr);
+ Descriptor_File_Line_Reader Line_Reader;
  Descriptor_File_Data_Collector Data_Collector;
  Descriptor_File_Syntax_Controller Syntax_Controller;
+ Record_Number_Determiner Number_Determiner;
  StringOperator StringManager;
  int include_dir_num;
  int source_file_dir_num;

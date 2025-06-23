@@ -136,6 +136,9 @@ private:
   bool Control_Build_Script_Existance();
   bool Control_Project_File_Syntax();
   void Print_Project_File_Syntax_Error();
+  void Descriptor_File_Validity_Control(wxString & message);
+  void Print_Lack_of_Description_Message(wxString er_message);
+  void Print_Invalid_Descriptor_File_Message(wxString er_message);
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;
@@ -189,6 +192,8 @@ private:
   wxBitmap * exclamation_mark_bmp;
   wxBitmap * logo_bmp;
   std::condition_variable cv_fork;
+  bool invalid_descriptor_file_status;
+  bool lack_of_description_status;
   bool is_pipe_ready;
   int process_end_counter;
   int Toolbar_ID;

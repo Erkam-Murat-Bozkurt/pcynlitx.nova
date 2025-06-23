@@ -205,6 +205,12 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
 
           this->Data_Collector.Collect_Descriptor_File_Data();
 
+          this->Line_Reader.Receive_Descriptor_File_Data_Collector(&this->Data_Collector);
+
+          this->Number_Determiner.Receive_Descriptor_File_Data_Collector(&this->Data_Collector);
+
+          this->Number_Determiner.Determine_Record_Numbers();
+
           if(!this->gui_read_status){
 
               this->Read_Root_Directory_Location();
@@ -277,50 +283,35 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
 
 void Descriptor_File_Reader::Read_Root_Directory_Location(){
 
-     int start_line = this->Data_Collector.Get_Root_Directory_Record_Area(0);
+     
+     int record_num = this->Number_Determiner.Get_Root_Directory_Location_Record_Number();
 
-     int end_line   = this->Data_Collector.Get_Root_Directory_Record_Area(1);
+     if((record_num > 1) && (this->Data_Record_Cond == false)){
 
-     int record_num = 0;
+         std::cout << "\n\n";
 
-     for(int i=start_line+1;i<end_line-1;i++){
+         std::cout << "\n Error:";
 
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
+         this->Clear_String_Memory(&this->error_message);
 
-         this->Delete_Spaces_on_String_Start(&line);
+         this->error_message =  "\nThere are multiple project root directory declerations";
 
+         std::cout << this->error_message;
 
-         if(this->StringManager.CheckStringLine(line)){
+         std::cout << "\n\n";
 
-            record_num++;
+         if(!this->gui_read_status){
+
+            exit(0);
          }
+         else{
 
-         if((record_num > 1) && (this->Data_Record_Cond == false)){
+            this->lack_of_decleration_error = true;
 
-            std::cout << "\n\n";
-
-            std::cout << "\n Error:";
-
-            this->Clear_String_Memory(&this->error_message);
-
-            this->error_message =  "\nThere are multiple project root directory declerations";
-
-            std::cout << this->error_message;
-
-            std::cout << "\n\n";
-
-            if(!this->gui_read_status){
-
-               exit(0);
-            }
-            else{
-
-                this->lack_of_decleration_error = true;
-
-                this->gui_read_success = false;
-            }
+            this->gui_read_success = false;
          }
-     }
+      }
+
 
 
      if((record_num == 0) && (this->Data_Record_Cond == false)){
@@ -357,22 +348,7 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
 
            if(record_num >0){
 
-              for(int i=start_line+1;i<end_line-1;i++){
-
-                  std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-                  this->Delete_Spaces_on_String_Start(&line);
-
-                  if(this->StringManager.CheckStringLine(line)){
-
-                    if(this->Is_Include_Character(line)){
-
-                       this->root_dir = line;
-
-                       break;
-                    }
-                  }
-              }
+              this->Line_Reader.Read_Root_Directory_Location(this->root_dir);
             }
         }
      }
@@ -380,74 +356,46 @@ void Descriptor_File_Reader::Read_Root_Directory_Location(){
 
          if(record_num >0){
 
-           for(int i=start_line+1;i<end_line-1;i++){
-
-               std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-               this->Delete_Spaces_on_String_Start(&line);
-
-               if(this->StringManager.CheckStringLine(line)){
-
-                  if(this->Is_Include_Character(line)){
-
-                     this->root_dir = line;
-
-                     break;
-                  }
-               }
-           }
+            this->Line_Reader.Read_Root_Directory_Location(this->root_dir);           
          }
      }
-
 }
 
 
 void Descriptor_File_Reader::Read_Warehouse_Location(){
 
-     int start_line = this->Data_Collector.Get_Warehouse_Location_Record_Area(0);
+     int record_num = this->Number_Determiner.Get_Warehouse_Location_Record_Number();
 
-     int end_line   = this->Data_Collector.Get_Warehouse_Location_Record_Area(1);
+     std::cout << "\n record_num:" << record_num;
 
-     int record_num = 0;
+     if((record_num > 1)  && (this->Data_Record_Cond == false)){
 
-     for(int i=start_line+1;i<end_line-1;i++){
+         std::cout << "\n\n";
 
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
+         std::cout << "\n Error:";
 
-         this->Delete_Spaces_on_String_Start(&line);
+         this->Clear_String_Memory(&this->error_message);
 
-         if(this->StringManager.CheckStringLine(line)){
+         this->error_message = "\n There are multiple project warehouse declerations";
 
-            record_num++;
+         std::cout << this->error_message;
+
+         std::cout << "\n\n";
+
+
+         if(!this->gui_read_status){
+
+            exit(0);
          }
+         else{
 
-         if((record_num > 1)  && (this->Data_Record_Cond == false)){
+               this->lack_of_decleration_error = true;
 
-            std::cout << "\n\n";
-
-            std::cout << "\n Error:";
-
-            this->Clear_String_Memory(&this->error_message);
-
-            this->error_message = "\n There are multiple project warehouse declerations";
-
-            std::cout << this->error_message;
-
-            std::cout << "\n\n";
-
-
-            if(!this->gui_read_status){
-
-               exit(0);
-            }
-            else{
-
-                this->lack_of_decleration_error = true;
-
-                this->gui_read_success = false;
-            }
+               this->gui_read_success = false;
          }
-     }
+      }
+
+
 
      if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
@@ -472,7 +420,6 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
             this->gui_read_success = false;
 
             this->lack_of_decleration_error = true;
-
         }
      }
 
@@ -480,42 +427,12 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
 
         if(this->gui_read_success){
 
-            for(int i=start_line+1;i<end_line-1;i++){
-
-                std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-                this->Delete_Spaces_on_String_Start(&line);
-
-                if(this->StringManager.CheckStringLine(line)){
-
-                   if(this->Is_Include_Character(line)){
-
-                      this->warehouse_location = line;
-
-                      break;
-                   }
-                }
-            }
+           this->Line_Reader.Read_Warehouse_Location(this->warehouse_location);
         }
      }
      else{
            
-            for(int i=start_line+1;i<end_line-1;i++){
-
-                std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-                this->Delete_Spaces_on_String_Start(&line);
-
-                if(this->StringManager.CheckStringLine(line)){
-
-                   if(this->Is_Include_Character(line)){
-
-                       this->warehouse_location = line;
-
-                       break;
-                   }
-                }
-            }
+          this->Line_Reader.Read_Warehouse_Location(this->warehouse_location);
      }
 
 }
@@ -524,30 +441,15 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
 
 void Descriptor_File_Reader::Read_Standard(){
 
-     int start_line = this->Data_Collector.Get_Standard_Record_Area(0);
+     int record_num = this->Number_Determiner.Get_Standard_Record_Number();
 
-     int end_line   = this->Data_Collector.Get_Standard_Record_Area(1);
+     if((record_num > 1) && (this->Data_Record_Cond == false)) {
 
-     int record_num = 0;
+         std::cout << "\n\n";
 
-     for(int i=start_line+1;i<end_line-1;i++){
+         std::cout << "\n Error:";
 
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
-
-         this->Delete_Spaces_on_String_Start(&line);
-
-         if(this->StringManager.CheckStringLine(line)){
-
-            record_num++;
-         }
-
-         if((record_num > 1) && (this->Data_Record_Cond == false)) {
-
-            std::cout << "\n\n";
-
-            std::cout << "\n Error:";
-
-            this->Clear_String_Memory(&this->error_message);
+         this->Clear_String_Memory(&this->error_message);
 
             this->error_message =  "\nThere are multiple C++ standart declerations";
 
@@ -567,42 +469,18 @@ void Descriptor_File_Reader::Read_Standard(){
 
             }
          }
-     }
 
+     
      if(this->gui_read_status){
 
         if(this->gui_read_success){
           
-          for(int i=start_line+1;i<end_line-1;i++){
-
-              std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
-
-              if(this->StringManager.CheckStringLine(line)){
-
-                 this->Delete_Spaces_on_String(&line);
-
-                 this->standard = line;
-
-                 break;
-              }
-           }
+           this->Line_Reader.Read_Standard(this->standard);         
         }
      }
      else{
 
-            for(int i=start_line+1;i<end_line-1;i++){
-
-                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
-
-                if(this->StringManager.CheckStringLine(line)){
-
-                   this->Delete_Spaces_on_String(&line);
-
-                   this->standard = line;
-
-                   break;
-                }
-            }      
+           this->Line_Reader.Read_Standard(this->standard);         
      }
 }
 
@@ -612,23 +490,7 @@ void Descriptor_File_Reader::Read_Standard(){
 
 void Descriptor_File_Reader::Read_Build_System_Type(){
 
-     int start_line = this->Data_Collector.Get_Build_System_Type_Record_Area(0);
-
-     int end_line   = this->Data_Collector.Get_Build_System_Type_Record_Area(1);
-
-     int record_num = 0;
-
-     for(int i=start_line+1;i<end_line-1;i++){
-
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
-
-         this->Delete_Spaces_on_String_Start(&line);
-
-         if(this->StringManager.CheckStringLine(line)){
-
-            record_num++;
-         }
-     }
+     int record_num = this->Number_Determiner.Get_Build_System_Type_Record_Number();
 
      if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
@@ -656,40 +518,17 @@ void Descriptor_File_Reader::Read_Build_System_Type(){
         }
      }
 
+
      if(this->gui_read_status){
 
         if(this->gui_read_success){
 
-            for(int i=start_line+1;i<end_line-1;i++){
-
-                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
-
-                if(this->StringManager.CheckStringLine(line)){
-
-                   this->Delete_Spaces_on_String(&line);
-
-                   this->build_system = line;
-
-                   break;
-                }
-            }
+           this->Line_Reader.Read_Build_System_Type(this->build_system);
         }
      }
      else{
            
-            for(int i=start_line+1;i<end_line-1;i++){
-
-                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
-
-                if(this->StringManager.CheckStringLine(line)){
-
-                   this->Delete_Spaces_on_String(&line);
-
-                   this->build_system = line;
-
-                   break;
-                }
-            }
+         this->Line_Reader.Read_Build_System_Type(this->build_system);
      }
 
 }
@@ -701,24 +540,7 @@ void Descriptor_File_Reader::Read_Project_Name(){
 
      this->Clear_String_Memory(&this->project_name);
 
-     int start_line = this->Data_Collector.Get_Project_Name_Record_Area(0);
-
-     int end_line   = this->Data_Collector.Get_Project_Name_Record_Area(1);
-
-     int record_num = 0;
-
-     for(int i=start_line+1;i<end_line-1;i++){
-
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
-         
-         this->Delete_Spaces_on_String_Start(&line);
-
-         if(this->StringManager.CheckStringLine(line)){
-
-            record_num++;
-         }
-     }
-
+     int record_num = this->Number_Determiner.Get_Project_Name_Record_Number();
 
      if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
@@ -750,38 +572,13 @@ void Descriptor_File_Reader::Read_Project_Name(){
 
         if(this->gui_read_success){
 
-            for(int i=start_line+1;i<end_line-1;i++){
-
-                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
-
-                if(this->StringManager.CheckStringLine(line)){
-
-                   this->Delete_Spaces_on_String(&line);
-
-                   this->project_name = line;
-
-                   break;
-                }
-            }
+            this->Line_Reader.Read_Project_Name(this->project_name);
         }
      }
      else{
            
-            for(int i=start_line+1;i<end_line-1;i++){
-
-                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
-
-                if(this->StringManager.CheckStringLine(line)){
-
-                   this->Delete_Spaces_on_String(&line);
-
-                   this->project_name = line;
-
-                   break;
-                }
-            }
+            this->Line_Reader.Read_Project_Name(this->project_name);
      }
-
 }
 
 
@@ -790,23 +587,7 @@ void Descriptor_File_Reader::Read_Version_Number(){
 
      this->Clear_String_Memory(&this->version_number);
 
-     int start_line = this->Data_Collector.Get_Version_Number_Record_Area(0);
-
-     int end_line   = this->Data_Collector.Get_Version_Number_Record_Area(1);
-
-     int record_num = 0;
-
-     for(int i=start_line+1;i<end_line-1;i++){
-
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
-
-         this->Delete_Spaces_on_String_Start(&line);
-
-         if(this->StringManager.CheckStringLine(line)){
-
-            record_num++;
-         }
-     }
+     int record_num = this->Number_Determiner.Get_Version_Number_Record_Number();
 
      if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
@@ -838,84 +619,26 @@ void Descriptor_File_Reader::Read_Version_Number(){
 
         if(this->gui_read_success){
 
-            for(int i=start_line+1;i<end_line-1;i++){
-
-                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
-
-                 this->Delete_Spaces_on_String_Start(&line);
-
-                if(this->StringManager.CheckStringLine(line)){
-
-                   this->Delete_Spaces_on_String(&line);
-
-                   this->version_number = line;
-
-                   break;
-                }
-            }
+           this->Line_Reader.Read_Version_Number(this->version_number);
         }
      }
      else{
-           
-            for(int i=start_line+1;i<end_line-1;i++){
-
-                std::string line = this->Data_Collector.Get_Descriptor_File_Line(i);
-
-                this->Delete_Spaces_on_String_Start(&line);
-
-                if(this->StringManager.CheckStringLine(line)){
-
-                   this->version_number = line;
-
-                   break;
-                }
-            }
+           this->Line_Reader.Read_Version_Number(this->version_number);
      }
-
 }
+
+
 
 
 void Descriptor_File_Reader::Read_Include_Directories(){
 
-     int start_line = this->Data_Collector.Get_Include_Directories_Record_Area(0);
-
-     int end_line   = this->Data_Collector.Get_Include_Directories_Record_Area(1);
-
-     this->include_dir_num = 0;
-
-     for(int i=start_line+1;i<end_line-1;i++){
-
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-         this->Delete_Spaces_on_String_Start(&line);
-
-         if(this->StringManager.CheckStringLine(line)){
-
-            if(this->Is_Include_Character(line)){
-
-               this->include_dir_num++;
-            }
-         }
-      }
+     this->include_dir_num = this->Number_Determiner.Get_Include_Directories_Record_Number();
 
       if(this->include_dir_num > 0){
 
          this->Memory_Delete_Condition = false;
 
-         for(int i=start_line+1;i<end_line-1;i++){
-
-             std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-             this->Delete_Spaces_on_String_Start(&line);
-
-             if(this->StringManager.CheckStringLine(line)){
-
-                if(this->Is_Include_Character(line)){
-
-                   this->Include_Directories.push_back(line);
-                }
-             }
-          }
+         this->Line_Reader.Read_Include_Directories(this->Include_Directories);
       }
 
       this->Include_Directories.shrink_to_fit();
@@ -927,50 +650,13 @@ void Descriptor_File_Reader::Read_Include_Directories(){
 
 void Descriptor_File_Reader::Read_Source_File_Directories(){
 
-     int start_line = this->Data_Collector.Get_Source_File_Directories_Record_Area(0);
-
-     int end_line   = this->Data_Collector.Get_Source_File_Directories_Record_Area(1);
-
-     this->source_file_dir_num = 0;
-
-     for(int i=start_line+1;i<end_line-1;i++){
-
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-         this->Delete_Spaces_on_String_Start(&line);
-
-         if(this->StringManager.CheckStringLine(line)){
-
-            if(this->Is_Include_Character(line)){
-
-               this->source_file_dir_num++;
-            }
-         }
-
-         this->Clear_String_Memory(&line);
-     }
-
+     this->source_file_dir_num = this->Number_Determiner.Get_Source_File_Directories_Record_Number();
 
      if(this->source_file_dir_num > 0){
 
         this->Memory_Delete_Condition = false;
 
-        for(int i=start_line+1;i<end_line-1;i++){
-
-            std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-            this->Delete_Spaces_on_String_Start(&line);
-
-            if(this->StringManager.CheckStringLine(line)){
-
-               if(this->Is_Include_Character(line)){
-
-                  this->Source_File_Directories.push_back(line);
-               }
-            }
-
-            this->Clear_String_Memory(&line);
-        }
+        this->Line_Reader.Read_Source_File_Directories(this->Source_File_Directories);
      }
 
      this->Source_File_Directories.shrink_to_fit();
@@ -979,55 +665,19 @@ void Descriptor_File_Reader::Read_Source_File_Directories(){
 }
 
 
+
 void Descriptor_File_Reader::Read_Compiler_Paths(){
 
-     int start_line = this->Data_Collector.Get_Compiler_Paths_Record_Area(0);
+     this->compiler_path_number = this->Number_Determiner.Get_Compiler_Paths_Record_Number();
 
-     int end_line   = this->Data_Collector.Get_Compiler_Paths_Record_Area(1);
-
-     this->compiler_path_number = 0;
-
-     for(int i=start_line+1;i<end_line-1;i++){
-
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-         this->Delete_Spaces_on_String_Start(&line);
-
-         if(this->StringManager.CheckStringLine(line)){
-
-            if(this->Is_Include_Character(line)){
-
-               this->compiler_path_number++;
-            }
-         }
-
-         this->Clear_String_Memory(&line);
-     }
-     
      if(this->compiler_path_number > 0){
 
         this->Memory_Delete_Condition = false;
 
-        for(int i=start_line+1;i<end_line-1;i++){
-
-            std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-         
-            this->Delete_Spaces_on_String_Start(&line);
-
-            if(this->StringManager.CheckStringLine(line)){
-
-               if(this->Is_Include_Character(line)){
-
-                  this->compiler_paths.push_back(line);
-               }
-            }
-
-            this->Clear_String_Memory(&line);
-        }
+        this->Line_Reader.Read_Compiler_Paths(this->compiler_paths);
      }
      else{
 
-          
            if(this->Data_Record_Cond == false) {
 
               std::cout << "\n\n";
@@ -1066,49 +716,13 @@ void Descriptor_File_Reader::Read_Compiler_Paths(){
 
 void Descriptor_File_Reader::Read_Library_Directories(){
 
-     int start_line = this->Data_Collector.Get_Library_Directories_Record_Area(0);
-
-     int end_line  = this->Data_Collector.Get_Library_Directories_Record_Area(1);
-
-     this->lib_dir_num = 0;
-
-     for(int i=start_line+1;i<end_line-1;i++){
-
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-         this->Delete_Spaces_on_String_Start(&line);
-
-         if(this->StringManager.CheckStringLine(line)){
-
-            if(this->Is_Include_Character(line)){
-
-               this->lib_dir_num++;
-            }
-         }
-
-         this->Clear_String_Memory(&line);
-     }
+     this->lib_dir_num = this->Number_Determiner.Get_Library_Directories_Record_Number();
 
      if(this->lib_dir_num > 0){
 
         this->Memory_Delete_Condition = false;
 
-        for(int i=start_line+1;i<end_line-1;i++){
-
-            std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-            this->Delete_Spaces_on_String_Start(&line);
-
-            if(this->StringManager.CheckStringLine(line)){
-
-               if(this->Is_Include_Character(line)){
-
-                  this->Library_Directories.push_back(line);
-               }
-            }
-
-            this->Clear_String_Memory(&line);
-        }
+        this->Line_Reader.Read_Library_Directories(this->Library_Directories);
      }
 
      this->Library_Directories.shrink_to_fit();
@@ -1120,63 +734,13 @@ void Descriptor_File_Reader::Read_Library_Directories(){
 
 void Descriptor_File_Reader::Read_Library_Files(){
 
-     int start_line = this->Data_Collector.Get_Library_Files_Record_Area(0);
-
-     int end_line  = this->Data_Collector.Get_Library_Files_Record_Area(1);
-
-     this->lib_file_num = 0;
-
-     for(int i=start_line+1;i<end_line-1;i++){
-
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-         this->Delete_Spaces_on_String_Start(&line);
-
-         if(this->StringManager.CheckStringLine(line)){
-
-             if(this->Is_Include_Character(line)){
-
-                this->lib_file_num++;
-             }
-         }
-
-         this->Clear_String_Memory(&line);
-     }
+     this->lib_file_num = this->Number_Determiner.Get_Library_Files_Record_Number();
 
      if(this->lib_file_num > 0){
 
         this->Memory_Delete_Condition = false;
 
-        for(int i=start_line+1;i<end_line-1;i++){
-
-            std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-            this->Delete_Spaces_on_String_Start(&line);
-
-            if(this->StringManager.CheckStringLine(line)){
-
-               if(this->Is_Include_Character(line)){
-
-                  if(this->Is_There_Multiple_Decleration_on_Same_Line(line)){
-
-                     std::vector<std::string> multi_line;
-
-                     this->Extract_Declerations_Performing_on_Same_Line(line,multi_line);
-
-                     for(size_t k=0;k<multi_line.size();k++){
-
-                         this->Library_Files.push_back(multi_line.at(k));
-                     }
-                  }
-                  else{
-
-                       this->Library_Files.push_back(line);
-                  }
-               }
-            }
-
-            this->Clear_String_Memory(&line);
-        }
+        this->Line_Reader.Read_Library_Files(this->Library_Files);
      }
 
      this->Library_Files.shrink_to_fit();
@@ -1188,28 +752,7 @@ void Descriptor_File_Reader::Read_Library_Files(){
 
 void Descriptor_File_Reader::Read_Compiler_Options(){
 
-     int start_line = this->Data_Collector.Get_Compiler_Options_Record_Area(0);
-
-     int end_line   = this->Data_Collector.Get_Compiler_Options_Record_Area(1);
-
-     int record_num = 0;
-
-     for(int i=start_line+1;i<end_line-1;i++){
-
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-         this->Delete_Spaces_on_String_Start(&line);
-
-         if(this->StringManager.CheckStringLine(line)){
-
-            if(this->Is_Include_Character(line)){
-
-               record_num++;
-            }
-         }
-
-         this->Clear_String_Memory(&line);
-      }
+     int record_num = this->Number_Determiner.Get_Compiler_Options_Record_Number();
          
       if(record_num < 1){
 
@@ -1218,48 +761,8 @@ void Descriptor_File_Reader::Read_Compiler_Options(){
          this->compiler_options.shrink_to_fit();
       }
       else{
-
-           for(int i=start_line+1;i<end_line-1;i++){
-
-               std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-               this->Delete_Spaces_on_String_Start(&line);
-
-               if(this->StringManager.CheckStringLine(line)){
-
-                  if(this->Is_Include_Character(line)){
-
-                     for(size_t j=0;j<line.size();j++){
-
-                         if(line.at(j)=='\\'){
-
-                            line.erase(j,1);
-
-                            line.shrink_to_fit();
-                         }
-                     }
-
-                     
-                     if(this->Is_There_Multiple_Decleration_on_Same_Line(line)){
-
-                        std::vector<std::string> multi_line;
-
-                        this->Extract_Declerations_Performing_on_Same_Line(line,multi_line);
-
-                        for(size_t k=0;k<multi_line.size();k++){
-
-                            this->compiler_options.push_back(multi_line.at(k));
-                        }
-                     }
-                     else{
-
-                          this->compiler_options.push_back(line);
-                     }
-
-                     this->Clear_String_Memory(&line);
-                  }
-               }
-            }
+          
+          this->Line_Reader.Read_Compiler_Options(this->compiler_options);
       }
 
       this->compiler_options.shrink_to_fit();
@@ -1270,78 +773,20 @@ void Descriptor_File_Reader::Read_Compiler_Options(){
 
 void Descriptor_File_Reader::Read_Linker_Options(){
 
-     int start_line = this->Data_Collector.Get_Linker_Options_Record_Area(0);
-
-     int end_line   = this->Data_Collector.Get_Linker_Options_Record_Area(1);
-
-     int record_num = 0;
-
-     for(int i=start_line+1;i<end_line-1;i++){
-
-         std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-         this->Delete_Spaces_on_String_Start(&line);
-
-         if(this->StringManager.CheckStringLine(line)){
-
-            record_num++;
-         }
-
-         this->Clear_String_Memory(&line);
-      }
+     int record_num = this->Number_Determiner.Get_Linker_Options_Record_Number();
    
-      if(record_num < 1){
+     if(record_num < 1){
 
          this->linker_options.clear();   // There is no any decleration about the options
 
          this->linker_options.shrink_to_fit();
-      }
-      else{
+     }
+     else{
 
+         this->Line_Reader.Read_Linker_Options(this->linker_options);
+     }
 
-           for(int i=start_line+1;i<end_line-1;i++){
-
-               std::string line = this->Data_Collector.Get_Descriptor_File_Line_With_Spaces(i);
-
-               this->Delete_Spaces_on_String_Start(&line);
-
-               if(this->StringManager.CheckStringLine(line)){
-
-                  if(this->Is_Include_Character(line)){
-
-                    for(size_t j=0;j<line.size();j++){
-
-                      if(line.at(j)=='\\'){
-
-                         line.erase(j,1);
-
-                         line.shrink_to_fit();
-                       }
-                     }
-
-                     if(this->Is_There_Multiple_Decleration_on_Same_Line(line)){
-
-                        std::vector<std::string> multi_line;
-
-                        this->Extract_Declerations_Performing_on_Same_Line(line,multi_line);
-
-                        for(size_t k=0;k<multi_line.size();k++){
-
-                            this->linker_options.push_back(multi_line.at(k));
-                        }
-                     }
-                     else{
-
-                          this->linker_options.push_back(line);
-                     }
-
-                    this->Clear_String_Memory(&line);
-                  }
-               }
-            }
-      }
-
-      this->linker_options.shrink_to_fit();
+     this->linker_options.shrink_to_fit();
 }
 
 

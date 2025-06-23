@@ -486,6 +486,8 @@ void Project_File_Selection_Window::Select_File(){
 
          *this->Descriptor_File_Selection_Status = true;
 
+          /*
+
           Descriptor_File_Reader Des_Reader('w','g'); 
  
           Des_Reader.Receive_Descriptor_File_Path(openFileDialog->GetPath().ToStdString());
@@ -519,6 +521,7 @@ void Project_File_Selection_Window::Select_File(){
               dial->Centre(wxBOTH);
 
               dial->ShowModal();
+
 
               this->Destroy();
           }
@@ -554,6 +557,10 @@ void Project_File_Selection_Window::Select_File(){
 
                this->Destroy();
           }
+
+          */
+
+          this->Destroy();
      }
      else{
 

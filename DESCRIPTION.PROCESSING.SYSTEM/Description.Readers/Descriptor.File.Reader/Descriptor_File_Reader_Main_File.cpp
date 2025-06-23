@@ -309,8 +309,6 @@ void Print_Descriptor_File_Informations(Descriptor_File_Reader & Des_File_Reader
 
      const std::vector<Library_Data> & data_list = Des_File_Reader.Get_Library_File_Data_List();
 
-     std::cout << "\n data_list.size():" << data_list.size();
-
      for(size_t i=0;i<data_list.size();i++){
 
          std::string libdir = data_list.at(i).library_dir;

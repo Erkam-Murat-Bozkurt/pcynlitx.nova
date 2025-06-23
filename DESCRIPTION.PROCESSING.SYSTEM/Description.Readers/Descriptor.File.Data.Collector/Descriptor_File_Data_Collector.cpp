@@ -149,6 +149,8 @@ void Descriptor_File_Data_Collector::Receive_Descriptor_File_Index(){
      do{
           std::string string_line = this->FileManager.ReadLine();
 
+          this->Delete_Spaces_on_String_Start(&string_line);
+
           this->File_Index_With_Spaces.push_back(string_line);
 
           this->Delete_Spaces_on_String(&string_line);
@@ -592,6 +594,29 @@ void Descriptor_File_Data_Collector::Delete_Spaces_on_String(std::string * str)
 
   }while(search_cond);
 }
+
+
+
+void Descriptor_File_Data_Collector::Delete_Spaces_on_String_Start(std::string * str)
+{
+   if(!str->empty()){
+
+       while(!str->empty()){
+
+           if(str->at(0) == ' '){
+
+              str->erase(0,1);
+
+              str->shrink_to_fit();
+           }
+           else{
+
+               break;
+           }
+      }
+    }    
+}
+
 
 
 void Descriptor_File_Data_Collector::Clear_Vector_Memory(std::vector<std::string> * pointer){

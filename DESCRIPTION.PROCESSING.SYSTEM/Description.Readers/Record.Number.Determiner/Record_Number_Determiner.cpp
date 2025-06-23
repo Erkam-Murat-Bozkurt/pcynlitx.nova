@@ -1,0 +1,434 @@
+
+
+/*
+
+ * Copyright (C) { Erkam Murat Bozkurt } - All Rights Reserved
+ * 
+ * This source code is protected under international copyright law.  All rights
+ * reserved and protected by the copyright holders.
+ * 
+ * This file is confidential and only available to authorized individuals with the
+ * permission of the copyright holders.  If you encounter this file and do not have
+ * permission, please contact the copyright holders and delete this file.
+
+*/
+
+#include "Record_Number_Determiner.hpp"
+
+Record_Number_Determiner::Record_Number_Determiner()
+{
+   
+   this->opr_sis = opr_sis;
+
+   this->Memory_Delete_Condition = false; 
+
+   this->Root_Directory_Location_Record_Number = 0;
+
+   this->Warehouse_Location_Record_Number = 0;
+ 
+   this->Standard_Record_Number = 0;
+ 
+   this->Include_Directories_Record_Number = 0;
+ 
+   this->Source_File_Directories_Record_Number = 0;
+ 
+   this->Library_Directories_Record_Number = 0;
+ 
+   this->Compiler_Options_Record_Number = 0;
+ 
+   this->Linker_Options_Record_Number = 0;
+ 
+   this->Build_System_Type_Record_Number = 0;
+ 
+   this->Project_Name_Record_Number = 0;
+ 
+   this->Version_Number_Record_Number = 0;
+ 
+   this->Compiler_Paths_Record_Number = 0;
+}
+
+
+
+Record_Number_Determiner::~Record_Number_Determiner(){
+
+    if(!this->Memory_Delete_Condition){
+
+    }
+}
+
+
+void Record_Number_Determiner::Receive_Descriptor_File_Data_Collector(Descriptor_File_Data_Collector * ptr){
+
+     this->Data_Collector = ptr;
+}
+
+
+void Record_Number_Determiner::Determine_Record_Numbers(){
+
+     this->Determine_Root_Directory_Location_Record_Number();
+
+     this->Determine_Warehouse_Location_Record_Number();
+
+     this->Determine_Standard_Record_Number();
+
+     this->Determine_Version_Number_Record_Number();
+     
+     this->Determine_Include_Directories_Record_Number();
+
+     this->Determine_Source_File_Directories_Record_Number();
+
+     this->Determine_Library_Directories_Record_Number();
+
+     this->Determine_Library_Files_Record_Number();
+
+     this->Determine_Compiler_Options_Record_Number();
+
+     this->Determine_Linker_Options_Record_Number();
+
+     this->Determine_Build_System_Type_Record_Number();
+
+     this->Determine_Project_Name_Record_Number();
+
+     this->Determine_Compiler_Paths_Record_Number();
+}
+
+
+
+void Record_Number_Determiner::Determine_Root_Directory_Location_Record_Number(){
+   
+     int start_line = this->Data_Collector->Get_Root_Directory_Record_Area(0);
+
+     int end_line   = this->Data_Collector->Get_Root_Directory_Record_Area(1);
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector->Get_Descriptor_File_Line_With_Spaces(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            this->Root_Directory_Location_Record_Number++;
+         }
+     }
+}
+
+
+
+void Record_Number_Determiner::Determine_Warehouse_Location_Record_Number(){
+
+     int start_line = this->Data_Collector->Get_Warehouse_Location_Record_Area(0);
+
+     int end_line   = this->Data_Collector->Get_Warehouse_Location_Record_Area(1);
+
+     int record_num = 0;
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector->Get_Descriptor_File_Line_With_Spaces(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            this->Warehouse_Location_Record_Number++;
+         }
+     }
+}
+
+
+void Record_Number_Determiner::Determine_Standard_Record_Number(){
+
+     int start_line = this->Data_Collector->Get_Standard_Record_Area(0);
+
+     int end_line   = this->Data_Collector->Get_Standard_Record_Area(1);
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector->Get_Descriptor_File_Line(i);
+    
+         if(this->StringManager.CheckStringLine(line)){
+
+            this->Standard_Record_Number++;
+         }
+    }
+}
+
+void Record_Number_Determiner::Determine_Include_Directories_Record_Number(){
+    
+     int start_line = this->Data_Collector->Get_Include_Directories_Record_Area(0);
+
+     int end_line   = this->Data_Collector->Get_Include_Directories_Record_Area(1);
+
+     int record_num = 0;
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector->Get_Descriptor_File_Line_With_Spaces(i);         
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            this->Include_Directories_Record_Number++;
+         }
+    }
+}
+
+
+
+void Record_Number_Determiner::Determine_Source_File_Directories_Record_Number(){
+
+     int start_line = this->Data_Collector->Get_Source_File_Directories_Record_Area(0);
+
+     int end_line   = this->Data_Collector->Get_Source_File_Directories_Record_Area(1);
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector->Get_Descriptor_File_Line_With_Spaces(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            if(this->Is_Include_Character(line)){
+
+               this->Source_File_Directories_Record_Number++;
+            }
+         }
+     }
+}
+
+void Record_Number_Determiner::Determine_Library_Directories_Record_Number(){
+
+     int start_line = this->Data_Collector->Get_Library_Directories_Record_Area(0);
+
+     int end_line  = this->Data_Collector->Get_Library_Directories_Record_Area(1);
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector->Get_Descriptor_File_Line_With_Spaces(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            if(this->Is_Include_Character(line)){
+
+               this->Library_Directories_Record_Number++;
+            }
+         }
+     }
+}
+
+
+void Record_Number_Determiner::Determine_Library_Files_Record_Number(){
+
+     int start_line = this->Data_Collector->Get_Library_Files_Record_Area(0);
+
+     int end_line  = this->Data_Collector->Get_Library_Files_Record_Area(1);
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector->Get_Descriptor_File_Line_With_Spaces(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+             if(this->Is_Include_Character(line)){
+
+                this->Library_Files_Record_Number++;
+             }
+         }
+     }
+}
+
+
+
+void Record_Number_Determiner::Determine_Compiler_Options_Record_Number(){
+
+     int start_line = this->Data_Collector->Get_Compiler_Options_Record_Area(0);
+
+     int end_line   = this->Data_Collector->Get_Compiler_Options_Record_Area(1);
+
+     int record_num = 0;
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector->Get_Descriptor_File_Line_With_Spaces(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            if(this->Is_Include_Character(line)){
+
+               this->Compiler_Options_Record_Number++;
+            }
+         }
+     }
+}
+
+
+void Record_Number_Determiner::Determine_Linker_Options_Record_Number(){
+    
+     int start_line = this->Data_Collector->Get_Linker_Options_Record_Area(0);
+
+     int end_line   = this->Data_Collector->Get_Linker_Options_Record_Area(1);
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector->Get_Descriptor_File_Line_With_Spaces(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            this->Linker_Options_Record_Number++;
+         }
+    }
+}
+
+void Record_Number_Determiner::Determine_Build_System_Type_Record_Number(){
+
+     int start_line = this->Data_Collector->Get_Build_System_Type_Record_Area(0);
+
+     int end_line   = this->Data_Collector->Get_Build_System_Type_Record_Area(1);
+
+     int record_num = 0;
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector->Get_Descriptor_File_Line(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            this->Build_System_Type_Record_Number++;
+         }
+     }
+}
+
+void Record_Number_Determiner::Determine_Project_Name_Record_Number(){
+
+     int start_line = this->Data_Collector->Get_Project_Name_Record_Area(0);
+
+     int end_line   = this->Data_Collector->Get_Project_Name_Record_Area(1);
+
+     int record_num = 0;
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector->Get_Descriptor_File_Line(i);
+         
+         if(this->StringManager.CheckStringLine(line)){
+
+            this->Project_Name_Record_Number++;
+         }
+     }
+}
+
+void Record_Number_Determiner::Determine_Version_Number_Record_Number(){
+
+     int start_line = this->Data_Collector->Get_Version_Number_Record_Area(0);
+
+     int end_line   = this->Data_Collector->Get_Version_Number_Record_Area(1);
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector->Get_Descriptor_File_Line(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            this->Version_Number_Record_Number++;
+         }
+     }
+}
+
+void Record_Number_Determiner::Determine_Compiler_Paths_Record_Number(){
+
+     int start_line = this->Data_Collector->Get_Compiler_Paths_Record_Area(0);
+
+     int end_line   = this->Data_Collector->Get_Compiler_Paths_Record_Area(1);
+
+     for(int i=start_line+1;i<end_line-1;i++){
+
+         std::string line = this->Data_Collector->Get_Descriptor_File_Line_With_Spaces(i);
+
+         if(this->StringManager.CheckStringLine(line)){
+
+            if(this->Is_Include_Character(line)){
+
+               this->Compiler_Paths_Record_Number++;
+            }
+         }
+     }
+}
+
+bool Record_Number_Determiner::Is_Include_Character(std::string str){
+
+     bool is_include = false;
+
+     for(size_t i=0;i<str.length();i++){
+
+         if((str.at(i) != ' ') && (str.at(i) != '\n')){
+
+              is_include = true;
+
+              return is_include;
+         }
+     }
+
+     return is_include;
+}
+
+
+ int Record_Number_Determiner::Get_Root_Directory_Location_Record_Number(){
+
+     return this->Root_Directory_Location_Record_Number;
+ }
+
+ int Record_Number_Determiner::Get_Warehouse_Location_Record_Number(){
+
+     return this->Warehouse_Location_Record_Number;
+ }
+
+ int Record_Number_Determiner::Get_Standard_Record_Number(){
+
+     return this->Standard_Record_Number;
+ }
+
+ int Record_Number_Determiner::Get_Include_Directories_Record_Number(){
+
+     return this->Include_Directories_Record_Number;
+ }
+
+ int Record_Number_Determiner::Get_Source_File_Directories_Record_Number(){
+
+     return this->Source_File_Directories_Record_Number;
+ }
+
+
+ int Record_Number_Determiner::Get_Library_Directories_Record_Number(){
+
+     return this->Library_Directories_Record_Number;
+ }
+
+ int Record_Number_Determiner::Get_Library_Files_Record_Number(){
+
+     return this->Library_Directories_Record_Number;
+ }
+
+ int Record_Number_Determiner::Get_Compiler_Options_Record_Number(){
+
+     return this->Compiler_Options_Record_Number;
+ }
+
+ int Record_Number_Determiner::Get_Linker_Options_Record_Number(){
+
+     return this->Linker_Options_Record_Number;
+ }
+
+ int Record_Number_Determiner::Record_Number_Determiner::Get_Build_System_Type_Record_Number(){
+
+     return this->Build_System_Type_Record_Number;
+ }
+
+ int Record_Number_Determiner::Record_Number_Determiner::Get_Project_Name_Record_Number(){
+
+     return this->Project_Name_Record_Number;
+ }
+
+ int Record_Number_Determiner::Get_Version_Number_Record_Number(){
+
+     return this->Version_Number_Record_Number;
+ }
+
+ int Record_Number_Determiner::Get_Compiler_Paths_Record_Number(){
+
+     return this->Compiler_Paths_Record_Number;
+ }
