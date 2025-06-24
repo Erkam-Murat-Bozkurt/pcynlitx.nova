@@ -1,4 +1,5 @@
 
+
 /*
 
  * Copyright (C) { Erkam Murat Bozkurt } - All Rights Reserved
@@ -12,9 +13,9 @@
 
 */
 
-#include "Descriptor_File_Reader.hpp"
+#include "GUI_Descriptor_File_Reader.hpp"
 
-Descriptor_File_Reader::Descriptor_File_Reader(char opr_sis) :
+GUI_Descriptor_File_Reader::GUI_Descriptor_File_Reader(char opr_sis) :
 
    Data_Collector(opr_sis), Syntax_Controller(opr_sis)
 {
@@ -27,11 +28,17 @@ Descriptor_File_Reader::Descriptor_File_Reader(char opr_sis) :
 
    this->Data_Record_Cond = false;
 
-   this->syntax_error_status = false;
+   this->syntax_error = false;
+
+   this->gui_read_success = true;
+
+   this->lack_of_decleration_error = false;
+
+   this->is_project_file_invalid = false;
 }
 
 
-Descriptor_File_Reader::~Descriptor_File_Reader(){
+GUI_Descriptor_File_Reader::~GUI_Descriptor_File_Reader(){
 
     if(!this->Memory_Delete_Condition){
 
@@ -40,7 +47,7 @@ Descriptor_File_Reader::~Descriptor_File_Reader(){
 }
 
 
-void Descriptor_File_Reader::Receive_Descriptor_File_Path(char * DesPATH){
+void GUI_Descriptor_File_Reader::Receive_Descriptor_File_Path(char * DesPATH){
 
      this->Memory_Delete_Condition = false;
 
@@ -59,7 +66,7 @@ void Descriptor_File_Reader::Receive_Descriptor_File_Path(char * DesPATH){
 }
 
 
-void Descriptor_File_Reader::Receive_Descriptor_File_Path(std::string DesPATH){
+void GUI_Descriptor_File_Reader::Receive_Descriptor_File_Path(std::string DesPATH){
 
      this->Memory_Delete_Condition = false;
 
@@ -78,12 +85,12 @@ void Descriptor_File_Reader::Receive_Descriptor_File_Path(std::string DesPATH){
 }
 
 
-void Descriptor_File_Reader::Receive_Data_Record_Condition(bool cond){
+void GUI_Descriptor_File_Reader::Receive_Data_Record_Condition(bool cond){
 
      this->Data_Record_Cond = cond;
 }
 
-void Descriptor_File_Reader::Initialize_Members(){
+void GUI_Descriptor_File_Reader::Initialize_Members(){
 
      this->include_dir_num     = 0;
      this->source_file_dir_num = 0;
@@ -93,7 +100,7 @@ void Descriptor_File_Reader::Initialize_Members(){
 }
 
 
-void Descriptor_File_Reader::Clear_Dynamic_Memory(){
+void GUI_Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
      if(!this->Memory_Delete_Condition){
 
@@ -140,20 +147,28 @@ void Descriptor_File_Reader::Clear_Dynamic_Memory(){
 
          this->library_data_list.shrink_to_fit();
 
+
+
          this->Data_Collector.Clear_Dynamic_Memory();
 
          this->Syntax_Controller.Clear_Dynamic_Memory();
 
+         this->StringManager.Clear_Dynamic_Memory();
+
+
          this->is_project_file_invalid = false;
 
+         this->syntax_error = false;
      }
 }
 
 
 
-void Descriptor_File_Reader::Read_Descriptor_File(){
+void GUI_Descriptor_File_Reader::Read_Descriptor_File(){
      
      this->Memory_Delete_Condition = false;
+
+     this->syntax_error = false;
 
      this->is_project_file_invalid = false;
 
@@ -161,8 +176,8 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
 
      if(this->Syntax_Controller.GetSyntaxErrorStatus()){
 
-        this->syntax_error_status = false;
-        
+        this->syntax_error = true;
+
         if(this->Syntax_Controller.Get_Invalid_Descriptor_File_Status()){
 
            this->is_project_file_invalid = true;
@@ -182,9 +197,13 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
 
           this->Number_Determiner.Determine_Record_Numbers();
 
+
           if(!this->is_project_file_invalid){
 
-             this->Read_Descriptions();
+             if(!this->syntax_error){
+
+                 this->Read_Descriptions();
+             }
           }
      }
 
@@ -194,7 +213,7 @@ void Descriptor_File_Reader::Read_Descriptor_File(){
 }
 
 
-void Descriptor_File_Reader::Read_Descriptions(){
+void GUI_Descriptor_File_Reader::Read_Descriptions(){
     
      this->Read_Root_Directory_Location();
 
@@ -225,35 +244,32 @@ void Descriptor_File_Reader::Read_Descriptions(){
 
 
 
-void Descriptor_File_Reader::Read_Root_Directory_Location(){
+void GUI_Descriptor_File_Reader::Read_Root_Directory_Location(){
 
      int record_num = this->Number_Determiner.Get_Root_Directory_Location_Record_Number();
 
-     if(record_num > 1){
+     if((record_num > 1) && (this->Data_Record_Cond == false)){
 
          std::string message =  "\nThere are multiple project root directory declerations";
 
-         this->Exit_With_Error(message);
+         this->Set_Error_Message(message);
+      }
+
+     if((record_num == 0) && (this->Data_Record_Cond == false)){
+
+         std::string message = "\nThere is no any decleration about project root directory";
+
+         this->Set_Error_Message(message);
      }
 
-     if(record_num == 0){
+     if(this->gui_read_success){
 
-        std::string message = "\nThere is no any decleration about project root directory";
-
-        this->Exit_With_Error(message);
-     }
-
-
-     if(record_num >0){
-
-        this->Line_Reader.Read_Root_Directory_Location(this->root_dir);           
+        this->Line_Reader.Read_Root_Directory_Location(this->root_dir);
      }
 }
 
 
-
-
-void Descriptor_File_Reader::Read_Warehouse_Location(){
+void GUI_Descriptor_File_Reader::Read_Warehouse_Location(){
 
      int record_num = this->Number_Determiner.Get_Warehouse_Location_Record_Number();
 
@@ -261,55 +277,63 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
 
          std::string message = "\n There are multiple project warehouse declerations";
 
-         this->Exit_With_Error(message);
-      }
+         this->Set_Error_Message(message);
+     }
 
      if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
-         std::string message = "\n There is no any decleration about project warehouse location";
+        std::string message = "\nThere is no any decleration about project warehouse location";
 
-         this->Exit_With_Error(message);
+        this->Set_Error_Message(message);
      }
 
-     this->Line_Reader.Read_Warehouse_Location(this->warehouse_location);
+     if(this->gui_read_success){
+
+        this->Line_Reader.Read_Warehouse_Location(this->warehouse_location);
+     }
 }
 
 
 
-void Descriptor_File_Reader::Read_Standard(){
+void GUI_Descriptor_File_Reader::Read_Standard(){
 
      int record_num = this->Number_Determiner.Get_Standard_Record_Number();
 
-     if((record_num > 1) && (this->Data_Record_Cond == false)){
+     if((record_num > 1) && (this->Data_Record_Cond == false)) {
 
         std::string message = "\nThere are multiple C++ standart declerations";
 
-        this->Exit_With_Error(message);   
+        this->Set_Error_Message(message);
      }
 
-     this->Line_Reader.Read_Standard(this->standard);     
+     if(this->gui_read_success){
+          
+        this->Line_Reader.Read_Standard(this->standard);         
+     }
 }
 
 
 
-void Descriptor_File_Reader::Read_Build_System_Type(){
+void GUI_Descriptor_File_Reader::Read_Build_System_Type(){
 
      int record_num = this->Number_Determiner.Get_Build_System_Type_Record_Number();
-     
+
      if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
-         std::string message =  "\nThere is no any decleration about build system type selection";
+         std::string message = "\nThere is no any decleration about build system type selection";
 
-         this->Exit_With_Error(message);
+         this->Set_Error_Message(message);
      }
 
-     this->Line_Reader.Read_Build_System_Type(this->build_system);
+     if(this->gui_read_success){
+
+        this->Line_Reader.Read_Build_System_Type(this->build_system);
+     }
 }
 
 
 
-
-void Descriptor_File_Reader::Read_Project_Name(){
+void GUI_Descriptor_File_Reader::Read_Project_Name(){
 
      this->Clear_String_Memory(&this->project_name);
 
@@ -317,17 +341,20 @@ void Descriptor_File_Reader::Read_Project_Name(){
 
      if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
-        std::string message = "\nThere is no any decleration about project name";
+         std::string message = "\nThere is no any decleration about project name";
 
-        this->Exit_With_Error(message);
+         this->Set_Error_Message(message);
      }
 
-     this->Line_Reader.Read_Project_Name(this->project_name);
+     if(this->gui_read_success){
+
+        this->Line_Reader.Read_Project_Name(this->project_name);
+     }
 }
 
 
 
-void Descriptor_File_Reader::Read_Version_Number(){
+void GUI_Descriptor_File_Reader::Read_Version_Number(){
 
      this->Clear_String_Memory(&this->version_number);
 
@@ -335,18 +362,21 @@ void Descriptor_File_Reader::Read_Version_Number(){
 
      if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
-        std::string message = "\nThere is no any decleration about version number";
+         std::string message = "\nThere is no any decleration about version number";
 
-        this->Exit_With_Error(message);
+         this->Set_Error_Message(message);
      }
 
-     this->Line_Reader.Read_Version_Number(this->version_number);
+     if(this->gui_read_success){
+
+        this->Line_Reader.Read_Version_Number(this->version_number);
+     }
 }
 
 
 
 
-void Descriptor_File_Reader::Read_Include_Directories(){
+void GUI_Descriptor_File_Reader::Read_Include_Directories(){
 
      this->include_dir_num = this->Number_Determiner.Get_Include_Directories_Record_Number();
 
@@ -364,7 +394,7 @@ void Descriptor_File_Reader::Read_Include_Directories(){
 
 
 
-void Descriptor_File_Reader::Read_Source_File_Directories(){
+void GUI_Descriptor_File_Reader::Read_Source_File_Directories(){
 
      this->source_file_dir_num = this->Number_Determiner.Get_Source_File_Directories_Record_Number();
 
@@ -382,15 +412,19 @@ void Descriptor_File_Reader::Read_Source_File_Directories(){
 
 
 
-void Descriptor_File_Reader::Read_Compiler_Paths(){
+void GUI_Descriptor_File_Reader::Read_Compiler_Paths(){
 
      this->compiler_path_number = this->Number_Determiner.Get_Compiler_Paths_Record_Number();
 
-     if(this->compiler_path_number > 0){
+     if( (this->compiler_path_number > 0) && (this->Data_Record_Cond == false)){
 
         this->Memory_Delete_Condition = false;
 
         this->Line_Reader.Read_Compiler_Paths(this->compiler_paths);
+
+        this->compiler_paths.shrink_to_fit();
+
+        this->compiler_path_number = this->compiler_paths.size();
      }
      else{
 
@@ -398,20 +432,16 @@ void Descriptor_File_Reader::Read_Compiler_Paths(){
 
               std::string message = "\nThere is no any decleration about compiler path";
 
-              this->Exit_With_Error(message);
+              this->Set_Error_Message(message);
           }
      }
-
-     this->compiler_paths.shrink_to_fit();
-
-     this->compiler_path_number = this->compiler_paths.size();
 }
 
 
 
 
 
-void Descriptor_File_Reader::Read_Library_Directories(){
+void GUI_Descriptor_File_Reader::Read_Library_Directories(){
 
      this->lib_dir_num = this->Number_Determiner.Get_Library_Directories_Record_Number();
 
@@ -429,7 +459,7 @@ void Descriptor_File_Reader::Read_Library_Directories(){
 
 
 
-void Descriptor_File_Reader::Read_Library_Files(){
+void GUI_Descriptor_File_Reader::Read_Library_Files(){
 
      this->lib_file_num = this->Number_Determiner.Get_Library_Files_Record_Number();
 
@@ -447,7 +477,7 @@ void Descriptor_File_Reader::Read_Library_Files(){
 
 
 
-void Descriptor_File_Reader::Read_Compiler_Options(){
+void GUI_Descriptor_File_Reader::Read_Compiler_Options(){
 
      int record_num = this->Number_Determiner.Get_Compiler_Options_Record_Number();
          
@@ -468,7 +498,7 @@ void Descriptor_File_Reader::Read_Compiler_Options(){
 
 
 
-void Descriptor_File_Reader::Read_Linker_Options(){
+void GUI_Descriptor_File_Reader::Read_Linker_Options(){
 
      int record_num = this->Number_Determiner.Get_Linker_Options_Record_Number();
    
@@ -488,7 +518,7 @@ void Descriptor_File_Reader::Read_Linker_Options(){
 
 
 
-void Descriptor_File_Reader::Divide_Options(std::string & options){
+void GUI_Descriptor_File_Reader::Divide_Options(std::string & options){
 
      int space_car_num = 0, standard_char = 0;
 
@@ -624,7 +654,8 @@ void Descriptor_File_Reader::Divide_Options(std::string & options){
 
 
 
-void Descriptor_File_Reader::Clear_Vectory_Memory(std::vector<std::string> * pointer)
+
+void GUI_Descriptor_File_Reader::Clear_Vectory_Memory(std::vector<std::string> * pointer)
 {
      std::vector<std::string>::iterator it;
 
@@ -652,7 +683,7 @@ void Descriptor_File_Reader::Clear_Vectory_Memory(std::vector<std::string> * poi
 
 
 
-void Descriptor_File_Reader::Clear_String_Memory(std::string * pointer)
+void GUI_Descriptor_File_Reader::Clear_String_Memory(std::string * pointer)
 {
      if(!pointer->empty()){
 
@@ -664,7 +695,19 @@ void Descriptor_File_Reader::Clear_String_Memory(std::string * pointer)
 
 
 
- void Descriptor_File_Reader::Extract_Library_Names_From_Path()
+void GUI_Descriptor_File_Reader::Set_Error_Message(std::string message){
+
+     this->Clear_String_Memory(&this->error_message);
+
+     this->error_message = message;
+
+     this->lack_of_decleration_error = true;
+
+     this->gui_read_success = false;        
+}
+
+
+ void GUI_Descriptor_File_Reader::Extract_Library_Names_From_Path()
  {
       const std::vector<std::string> & lib_name_list = this->Get_Library_Files();
 
@@ -707,7 +750,7 @@ void Descriptor_File_Reader::Clear_String_Memory(std::string * pointer)
 }
 
 
-void Descriptor_File_Reader::Extract_Directory_From_Path(std::string path, std::string & dir)
+void GUI_Descriptor_File_Reader::Extract_Directory_From_Path(std::string path, std::string & dir)
 {
      size_t path_size = path.size();
 
@@ -749,7 +792,7 @@ void Descriptor_File_Reader::Extract_Directory_From_Path(std::string path, std::
 }
 
 
-void Descriptor_File_Reader::Determine_File_Name_Without_Ext(std::string path, std::string & file_name)
+void GUI_Descriptor_File_Reader::Determine_File_Name_Without_Ext(std::string path, std::string & file_name)
 {
      size_t file_path_size = path.length();
 
@@ -816,7 +859,7 @@ void Descriptor_File_Reader::Determine_File_Name_Without_Ext(std::string path, s
 }
 
 
-void Descriptor_File_Reader::Determine_File_Name_Without_Ext(char * path, std::string & name){
+void GUI_Descriptor_File_Reader::Determine_File_Name_Without_Ext(char * path, std::string & name){
 
      std::string file_path;
 
@@ -833,7 +876,7 @@ void Descriptor_File_Reader::Determine_File_Name_Without_Ext(char * path, std::s
 }
 
 
-void Descriptor_File_Reader::Extract_File_Name_From_Path(std::string string,  std::string & name){
+void GUI_Descriptor_File_Reader::Extract_File_Name_From_Path(std::string string,  std::string & name){
 
      size_t string_size = string.length();
 
@@ -858,7 +901,7 @@ void Descriptor_File_Reader::Extract_File_Name_From_Path(std::string string,  st
 }
 
 
-bool Descriptor_File_Reader::Is_This_String_A_File_Path(std::string str)
+bool GUI_Descriptor_File_Reader::Is_This_String_A_File_Path(std::string str)
 {
      bool path_cond = false;
 
@@ -893,158 +936,154 @@ bool Descriptor_File_Reader::Is_This_String_A_File_Path(std::string str)
 }
 
 
-
-void Descriptor_File_Reader::Exit_With_Error(std::string str){
-     
-     std::cout << "\n\n";
-
-     std::cout << "\n Error:";
-
-     this->Clear_String_Memory(&this->error_message);
-
-     this->error_message =  str;
-
-     std::cout << this->error_message;
-
-     std::cout << "\n\n";
-
-     exit(0);
-}
-
-const std::vector<Library_Data> & Descriptor_File_Reader::Get_Library_File_Data_List(){
+const std::vector<Library_Data> & GUI_Descriptor_File_Reader::Get_Library_File_Data_List(){
 
       return this->library_data_list;
 }
 
 
-const std::vector<std::string> & Descriptor_File_Reader::Get_Include_Directories(){
+const std::vector<std::string> & GUI_Descriptor_File_Reader::Get_Include_Directories(){
 
     return this->Include_Directories;
 }
 
-const std::vector<std::string> & Descriptor_File_Reader::Get_Library_Directories(){
+const std::vector<std::string> & GUI_Descriptor_File_Reader::Get_Library_Directories(){
 
      return this->Library_Directories;
 }
 
-const std::vector<std::string> & Descriptor_File_Reader::Get_Source_File_Directories(){
+const std::vector<std::string> & GUI_Descriptor_File_Reader::Get_Source_File_Directories(){
 
      return this->Source_File_Directories;
 }
 
-const std::vector<std::string> & Descriptor_File_Reader::Get_Library_Files(){
+const std::vector<std::string> & GUI_Descriptor_File_Reader::Get_Library_Files(){
 
      return this->Library_Files;
 }
 
-const std::vector<std::string> & Descriptor_File_Reader::Get_Compiler_Paths(){
+const std::vector<std::string> & GUI_Descriptor_File_Reader::Get_Compiler_Paths(){
 
       return this->compiler_paths;
 }
 
 
-std::string Descriptor_File_Reader::Get_Library_Directory(int i){
+std::string GUI_Descriptor_File_Reader::Get_Library_Directory(int i){
 
         return this->Library_Directories[i];
 }
 
-std::string Descriptor_File_Reader::Get_Library_File(int i){
+std::string GUI_Descriptor_File_Reader::Get_Library_File(int i){
 
         return this->Library_Files[i];
 }
 
-std::string Descriptor_File_Reader::Get_Source_File_Directory(int i){
+std::string GUI_Descriptor_File_Reader::Get_Source_File_Directory(int i){
 
         return this->Source_File_Directories[i];
 }
 
 
-std::string Descriptor_File_Reader::Get_Include_Directory(int i){
+std::string GUI_Descriptor_File_Reader::Get_Include_Directory(int i){
 
        return this->Include_Directories[i];
 }
 
-std::string Descriptor_File_Reader::Get_Standard(){
+std::string GUI_Descriptor_File_Reader::Get_Standard(){
 
       return this->standard;
 }
 
-const std::vector<std::string> & Descriptor_File_Reader::Get_Compiler_Options(){
+const std::vector<std::string> & GUI_Descriptor_File_Reader::Get_Compiler_Options(){
 
        return this->compiler_options;
 }
 
-const std::vector<std::string> & Descriptor_File_Reader::Get_Linker_Options(){
+const std::vector<std::string> & GUI_Descriptor_File_Reader::Get_Linker_Options(){
 
        return this->linker_options;
 }
 
-std::string Descriptor_File_Reader::Get_Warehouse_Location(){
+std::string GUI_Descriptor_File_Reader::Get_Warehouse_Location(){
 
        return this->warehouse_location;
 }
 
-std::string Descriptor_File_Reader::Get_Repo_Directory_Location(){
+std::string GUI_Descriptor_File_Reader::Get_Repo_Directory_Location(){
 
        return this->root_dir;
 }
 
-std::string Descriptor_File_Reader::Get_Descriptor_File_Path(){
+std::string GUI_Descriptor_File_Reader::Get_Descriptor_File_Path(){
 
      return this->descriptor_file_path;
 }
 
 
-std::string Descriptor_File_Reader::Get_Build_System_Type(){
+std::string GUI_Descriptor_File_Reader::Get_Build_System_Type(){
 
      return this->build_system;
 }
 
-std::string Descriptor_File_Reader::Get_Project_Name(){
+std::string GUI_Descriptor_File_Reader::Get_Project_Name(){
 
      return this->project_name;
 }
 
-std::string Descriptor_File_Reader::Get_Version_Number(){
+std::string GUI_Descriptor_File_Reader::Get_Version_Number(){
 
      return this->version_number;
 }
 
 
-int Descriptor_File_Reader::Get_Library_Directory_Number(){
+int GUI_Descriptor_File_Reader::Get_Library_Directory_Number(){
 
     return this->lib_dir_num;
 }
 
-int Descriptor_File_Reader::Get_Library_Files_Number(){
+int GUI_Descriptor_File_Reader::Get_Library_Files_Number(){
 
     return this->lib_file_num;
 }
 
-int Descriptor_File_Reader::Get_Source_File_Directory_Number(){
+int GUI_Descriptor_File_Reader::Get_Source_File_Directory_Number(){
 
     return this->source_file_dir_num;
 }
 
-int Descriptor_File_Reader::Get_Include_Directory_Number(){
+int GUI_Descriptor_File_Reader::Get_Include_Directory_Number(){
 
     return this->include_dir_num;
 }
 
 
-std::string Descriptor_File_Reader::Get_Error_Message(){
+bool GUI_Descriptor_File_Reader::Get_Gui_Read_Success_Status(){
+
+     return this->gui_read_success;
+}
+
+std::string GUI_Descriptor_File_Reader::Get_Error_Message(){
 
      return this->error_message;
 }
 
 
-bool Descriptor_File_Reader::Get_Invalid_Descriptor_File_Status(){
+bool GUI_Descriptor_File_Reader::Get_Gui_Read_Status(){
+
+     return this->gui_read_status;
+}
+
+bool GUI_Descriptor_File_Reader::Get_Syntax_Error_Status(){
+
+    return this->syntax_error;
+}
+
+bool GUI_Descriptor_File_Reader::Get_Invalid_Descriptor_File_Status(){
 
      return this->is_project_file_invalid;
 }
 
+bool GUI_Descriptor_File_Reader::Get_Lack_of_Decleration_Error_Status(){
 
-bool Descriptor_File_Reader::Get_Syntax_Error_Status(){
-
-     return this->syntax_error_status;
+     return this->lack_of_decleration_error;
 }

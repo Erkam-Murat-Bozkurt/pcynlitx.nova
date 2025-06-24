@@ -54,6 +54,7 @@
 #include "ToolBar_Initializer.h"
 #include "Project_File_Selection_Dialog.h"
 #include "Custom_Multi_DataPanel.hpp"
+#include "GUI_Descriptor_File_Reader.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Descriptions_Printer.hpp"
 #include "Custom_Message_Dialog.hpp"
@@ -167,7 +168,7 @@ private:
   wxAuiManager Interface_Manager;
   Project_Descriptions_Printer * Descriptions_Printer;
   Project_File_Selection_Dialog * Selection_Dialog;
-  Descriptor_File_Reader * Des_Reader;
+  GUI_Descriptor_File_Reader * Des_Reader;
   Custom_Tree_View_Panel * Dir_List_Manager;
   wxDataViewTreeCtrl * tree_control;
   ToolBar_Initializer * ToolBar_Widget;

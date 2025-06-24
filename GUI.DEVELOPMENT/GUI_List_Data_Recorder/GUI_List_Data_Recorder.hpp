@@ -14,7 +14,7 @@
 #include <wx\textdlg.h>
 #include <wx\msgdlg.h>
 #include <wx\dir.h>
-#include "Descriptor_File_Reader.hpp"
+#include "GUI_Descriptor_File_Reader.hpp"
 #include "StringOperator.h"
 #include "Cpp_FileOperations.h"
 #include <cstring>
@@ -57,7 +57,7 @@ public:
   void Clear_Object_Memory();
   void Clear_Dynamic_Memory();
 private:
-  Descriptor_File_Reader Des_Reader;
+  GUI_Descriptor_File_Reader Des_Reader;
   StringOperator StringOperations;
   Cpp_FileOperations File_Manager;
   void Receive_Decriptor_File();

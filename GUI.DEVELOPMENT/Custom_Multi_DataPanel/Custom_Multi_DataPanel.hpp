@@ -24,7 +24,7 @@
 #include "Process_Manager.hpp"
 #include "Custom_DataPanel.hpp"
 #include "Custom_Message_Dialog.hpp"
-
+#include "GUI_Descriptor_File_Reader.hpp"
 
 
 enum
@@ -235,7 +235,7 @@ protected:
 
     GUI_List_Data_Recorder Data_Recorder;
 
-    Descriptor_File_Reader Des_Reader;
+    GUI_Descriptor_File_Reader Des_Reader;
 
     Record_Data_For_Gui Record_Data;
 

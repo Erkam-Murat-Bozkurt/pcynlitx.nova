@@ -46,10 +46,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
       = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\logo.png"),wxBITMAP_TYPE_ANY);
 
 
-  this->Des_Reader = new Descriptor_File_Reader('w','g');
-
-  this->Des_Reader->Set_Gui_Read_Status(true);
-
+  this->Des_Reader = new GUI_Descriptor_File_Reader('w');
 
   this->Process_Ptr = new Process_Manager(this,wxID_ANY);
 
@@ -2189,8 +2186,6 @@ bool MainFrame::Control_Project_File_Syntax(){
 
      this->Des_Reader->Clear_Dynamic_Memory();
 
-     this->Des_Reader->Set_Gui_Read_Status(true);
-
      std::string des_path = this->Descriptor_File_Path.ToStdString();
 
      this->Des_Reader->Receive_Descriptor_File_Path(des_path.c_str());
@@ -2231,7 +2226,7 @@ void MainFrame::Descriptor_File_Validity_Control(wxString & message){
 
      this->lack_of_description_status = false;
 
-     Descriptor_File_Reader Des_Reader('w','g'); 
+     GUI_Descriptor_File_Reader Des_Reader('w'); 
 
      size_t path_size = 5*this->Descriptor_File_Path.size();
 

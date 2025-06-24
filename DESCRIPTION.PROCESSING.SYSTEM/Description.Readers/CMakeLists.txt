@@ -14,10 +14,13 @@ add_library(des_reader
     ${CMAKE_CURRENT_SOURCE_DIR}/Descriptor.File.Line.Reader/Descriptor_File_Line_Reader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Descriptor.File.Line.Reader/Descriptor_File_Line_Reader.hpp
 
+    
+    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.Descriptor.File.Reader/GUI_Descriptor_File_Reader.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.Descriptor.File.Reader/GUI_Descriptor_File_Reader.hpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Descriptor.File.Reader/Descriptor_File_Reader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Descriptor.File.Reader/Descriptor_File_Reader.hpp
 
-    
     ${CMAKE_CURRENT_SOURCE_DIR}/Descriptor.File.Syntax.Controller/Descriptor_File_Syntax_Controller.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Descriptor.File.Syntax.Controller/Descriptor_File_Syntax_Controller.hpp
     
@@ -30,6 +33,8 @@ target_link_libraries(des_reader PUBLIC basic_tools)
 target_include_directories(des_reader PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Descriptor.File.Data.Collector
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.Descriptor.File.Reader
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Descriptor.File.Reader
 
@@ -57,6 +62,7 @@ target_include_directories(des_reader PUBLIC
 
 target_link_directories(des_reader PUBLIC
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.Descriptor.File.Reader
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Descriptor.File.Data.Collector
 

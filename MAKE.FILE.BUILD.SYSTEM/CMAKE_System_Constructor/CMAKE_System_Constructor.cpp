@@ -19,9 +19,9 @@
 
 CMAKE_System_Constructor::CMAKE_System_Constructor(char * DesPath, char opr_sis, char build_type) :
 
-    Des_Reader(opr_sis,build_type),
+    Des_Reader(opr_sis),
     
-    Dep_Determiner(DesPath,opr_sis) , Data_Processor(opr_sis,build_type)
+    Dep_Determiner(DesPath,opr_sis) , Data_Processor(opr_sis)
 {
      this->Memory_Delete_Condition = false;
 
@@ -44,15 +44,6 @@ CMAKE_System_Constructor::CMAKE_System_Constructor(char * DesPath, char opr_sis,
      this->Memory_Delete_Condition = false;
 
      this->opr_sis = opr_sis;
-
-     
-     if(this->build_type == 'g'){
-
-        this->Des_Reader.Set_Gui_Read_Status(true);
-
-        this->Data_Processor.Set_Gui_Read_Status(true);
-     }
-
 }
 
 

@@ -16,11 +16,10 @@
 
 #include "Library_Updater.h"
 
-Library_Updater::Library_Updater(char opr_sis, char build_type):
+Library_Updater::Library_Updater(char opr_sis):
 
-    Des_Reader(opr_sis,build_type)
+    Des_Reader(opr_sis)
 {
-
     this->opr_sis = opr_sis;
 
     this->Memory_Delete_Condition = false;

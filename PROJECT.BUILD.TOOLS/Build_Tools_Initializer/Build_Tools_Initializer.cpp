@@ -24,7 +24,7 @@ Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis, c
 
  Mk_Builder(DesPATH,opr_sis), Script_Writer(opr_sis), 
  
- Git_Data_Proc(opr_sis,build_type), Des_Reader(opr_sis,build_type)
+ Git_Data_Proc(opr_sis), Des_Reader(opr_sis)
 {    
     this->Memory_Delete_Condition = false;
 
@@ -84,28 +84,15 @@ void Build_Tools_Initializer::Receive_Build_Type(char BuildType){
 
 void Build_Tools_Initializer::Setup_Build_Tools(){
 
-
-     if(this->build_type == 'g'){
-
-        this->Git_Data_Proc.Set_Gui_Read_Status(true);
-
-        this->Des_Reader.Set_Gui_Read_Status(true);
-     }
-
      this->Des_Reader.Read_Descriptor_File();
 
-
-    char read_opr [] = "The project descriptor file read\n\n";
+     char read_opr [] = "The project descriptor file read\n\n";
 
      std::cout << read_opr;
 
      if(this->build_type == 'g'){
 
         this->SysInt->WriteTo_NamedPipe_FromChild(read_opr);
-
-        this->Git_Data_Proc.Set_Gui_Read_Status(true);
-
-        this->Des_Reader.Set_Gui_Read_Status(true);
      }
  
 

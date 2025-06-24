@@ -25,9 +25,9 @@ CMAKE_Executable_Target_Constructor::CMAKE_Executable_Target_Constructor(char * 
 
     char build_type) : 
   
-    Des_Reader(opr_sis,build_type),
+    Des_Reader(opr_sis),
     
-    Dep_Determiner(DesPath,opr_sis) , Data_Processor(opr_sis,build_type)
+    Dep_Determiner(DesPath,opr_sis) , Data_Processor(opr_sis)
 {
     this->Memory_Delete_Condition = false;
 
@@ -44,12 +44,6 @@ CMAKE_Executable_Target_Constructor::CMAKE_Executable_Target_Constructor(char * 
 
     this->DesPATH.shrink_to_fit();
      
-    if(this->build_type == 'g'){
-
-       this->Des_Reader.Set_Gui_Read_Status(true);
-
-       this->Data_Processor.Set_Gui_Read_Status(true);
-    }
 }
 
 
@@ -159,27 +153,6 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
      this->dep_ptr->source_file_name_without_ext + "_" + str_encode + ">";
 
      target_dep_list = target_dep_list + target_name + space_string + "\n\t";   
-
-
-     /*
-
-     for(size_t i=1;i<this->Comp_Data_Ptr->size();i++){
-
-         std::string str_encode;
-
-         this->Directory_Path_Encoder(this->dep_ptr->src_git_record_dir,str_encode);
-
-         std::string target_name = "$<TARGET_OBJECTS:" +
-         
-         this->dep_ptr->source_file_name_without_ext + "_" + str_encode + ">";
-
-         target_dep_list = target_dep_list + target_name + space_string + "\n\t";   
-     }
-
-     */
-
-     //this->Data_Ptr = &this->Comp_Data_Ptr->at(0);
-
 
 
      std::string file_dir = this->dep_ptr->src_sys_dir;

@@ -28,6 +28,7 @@
 #include "Custom_DockArt.h"
 #include "Custom_System_Interface.h"
 #include "Custom_Tree_View_Panel.h"
+#include "GUI_Descriptor_File_Reader.hpp"
 #include "Descriptor_File_Reader.hpp"
 
 enum
@@ -51,7 +52,7 @@ Project_Descriptions_Printer(wxFrame *parent, wxWindowID id=wxID_ANY, const wxSt
 
   void Receive_Descriptor_File_Path(wxString DesPATH);
 
-  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+  void Receive_Descriptor_File_Reader(GUI_Descriptor_File_Reader * ptr);
 
   void Read_Descriptions();
 
@@ -87,7 +88,7 @@ private:
 
   void OnPaint(wxPaintEvent & event);
 
-  Descriptor_File_Reader * Des_Reader;
+  GUI_Descriptor_File_Reader * Des_Reader;
 
   wxString Descriptor_File_Path;
 

@@ -31,7 +31,7 @@ struct Git_Sub_Directory_Data
 class Git_Data_Processor
 {
 public:
- Git_Data_Processor(char opr_sis, char build_type);
+ Git_Data_Processor(char opr_sis);
  virtual ~Git_Data_Processor();
  void Receive_Descriptor_File_Path(char * DesPath);
  void Receive_Descriptor_File_Path(std::string DesPath);
@@ -39,7 +39,6 @@ public:
  void Determine_Git_Repo_Info();
  void Write_Git_Modification_File();
  void Receive_Git_Modifications();
- void Set_Gui_Read_Status(bool status);
  void Extract_Directory_Tree();
  size_t  Get_Git_File_Index_Size();
  std::string Get_Git_File_Index(int num);

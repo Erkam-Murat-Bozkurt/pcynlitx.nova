@@ -153,13 +153,19 @@ target_include_directories(BuildSystem_GUI PUBLIC
 
 
 
-    ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
 
-    ${CMAKE_SOURCE_DIR}/Descriptor.File.Reader
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Reader
 
-    ${CMAKE_SOURCE_DIR}/Descriptor.File.Syntax.Controller
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/GUI.Descriptor.File.Reader
 
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
     
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Record.Number.Determiner
+
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Line.Reader
+
+
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Cpp_FileOperations
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
@@ -240,11 +246,18 @@ target_link_directories(BuildSystem_GUI PUBLIC
 
 
     
-    ${CMAKE_SOURCE_DIR}/Descriptor.File.Data.Collector
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
 
-    ${CMAKE_SOURCE_DIR}/Descriptor.File.Reader
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Reader
 
-    ${CMAKE_SOURCE_DIR}/Descriptor.File.Syntax.Controller
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/GUI.Descriptor.File.Reader
+
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
+    
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Record.Number.Determiner
+
+    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Line.Reader
+
 
     
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Cpp_FileOperations

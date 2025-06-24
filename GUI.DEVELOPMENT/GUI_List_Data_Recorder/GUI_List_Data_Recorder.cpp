@@ -17,11 +17,9 @@
 
 GUI_List_Data_Recorder::GUI_List_Data_Recorder(char opr_sis) 
 
-   : Des_Reader (opr_sis,'g') , File_Manager(opr_sis)
+   : Des_Reader (opr_sis) , File_Manager(opr_sis)
 {
     this->opr_sis = opr_sis;
-
-    this->Des_Reader.Set_Gui_Read_Status(true);
 
     bool Data_Receive_Cond = true;
 

@@ -20,14 +20,14 @@ int main(int argc, char ** argv){
 
 
 
-    Descriptor_File_Reader Des_File_Reader('w','n');    
+    Descriptor_File_Reader Des_File_Reader('w');    
 
     Des_File_Reader.Receive_Descriptor_File_Path(argv[1]);
 
     Des_File_Reader.Read_Descriptor_File();
 
 
-    Git_Data_Processor Data_Processor('w','n');
+    Git_Data_Processor Data_Processor('w');
 
     Data_Processor.Receive_Descriptor_File_Path(argv[1]);
 

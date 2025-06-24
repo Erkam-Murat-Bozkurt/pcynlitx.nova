@@ -126,11 +126,9 @@ Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, 
 
    const wxPoint & pos, const wxSize & size, long style, char opr_sis) : 
    
-   wxDialog(parent,id,title,pos,size, style), Data_Recorder(opr_sis), Des_Reader(opr_sis,'g')
+   wxDialog(parent,id,title,pos,size, style), Data_Recorder(opr_sis), Des_Reader(opr_sis)
 {
      this->Parent_Frame = parent;
-
-     this->Des_Reader.Set_Gui_Read_Status(true);
 
      wxIcon Frame_Icon(wxT("C:\\Program Files\\Pcynlitx\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
 

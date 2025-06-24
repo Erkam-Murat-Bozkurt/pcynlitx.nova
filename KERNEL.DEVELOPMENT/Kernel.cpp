@@ -19,23 +19,17 @@ Kernel::Kernel(char * DesPATH, char opr_sis, char build_type) : Bld_Init(DesPATH
 
      CMAKE_Builder(DesPATH,opr_sis,build_type),
      
-     Exe_Bld(DesPATH,opr_sis,build_type), Des_Reader(opr_sis,build_type),
+     Exe_Bld(DesPATH,opr_sis,build_type), Des_Reader(opr_sis),
      
-     Git_Prog(opr_sis,build_type), 
+     Git_Prog(opr_sis), 
      
-     Dep_Determiner(DesPATH,opr_sis), Lib_Up(opr_sis,build_type)
+     Dep_Determiner(DesPATH,opr_sis), Lib_Up(opr_sis)
 {     
 
      this->Receive_Build_Type(build_type); 
      
      // Build type is the selection between GUI application or Command line operation
 
-     if(build_type == 'g'){
-
-        this->Des_Reader.Set_Gui_Read_Status(true);
-
-        this->Git_Prog.Set_Gui_Read_Status(true);
-     }
 
      this->Des_Reader.Receive_Descriptor_File_Path(DesPATH);
 

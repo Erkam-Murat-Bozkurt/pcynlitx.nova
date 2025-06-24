@@ -1,15 +1,15 @@
 
 
-
 // Header decleraiton
 
-#ifndef DESCRIPTOR_FILE_READER_HPP
-#define DESCRIPTOR_FILE_READER_HPP
+#ifndef GUI_DESCRIPTOR_FILE_READER_HPP
+#define GUI_DESCRIPTOR_FILE_READER_HPP
 
 #include <cstring>
 #include <cstdlib>
 #include <cstdio>
 #include <iostream>
+#include "Descriptor_File_Reader.hpp"
 #include "Record_Number_Determiner.hpp"
 #include "Descriptor_File_Line_Reader.hpp"
 #include "Descriptor_File_Data_Collector.hpp"
@@ -17,23 +17,18 @@
 #include "StringOperator.h"
 #include "Cpp_FileOperations.h"
 
-struct Library_Data
-{
-    std::string library_dir;
-    std::string library_name_with_ext;
-    std::string library_name_without_ext;
-};
 
-class Descriptor_File_Reader
+class GUI_Descriptor_File_Reader
 {
 public:
- Descriptor_File_Reader(char opr_sis);
- virtual ~Descriptor_File_Reader();
+ GUI_Descriptor_File_Reader(char opr_sis);
+ virtual ~GUI_Descriptor_File_Reader();
  void Read_Descriptor_File();
  void Clear_Dynamic_Memory();
  void Receive_Descriptor_File_Path(char * DesPATH);
  void Receive_Descriptor_File_Path(std::string DesPATH);
  void Receive_Data_Record_Condition(bool cond);
+ void Set_Gui_Read_Status(bool status);
  std::string Get_Library_Directory(int i);
  std::string Get_Library_File(int i);
  std::string Get_Source_File_Directory(int i);
@@ -60,8 +55,11 @@ public:
  int Get_Library_Files_Number();
  int Get_Source_File_Directory_Number();
  int Get_Include_Directory_Number();
- bool Get_Invalid_Descriptor_File_Status();
+ bool Get_Gui_Read_Success_Status();
+ bool Get_Gui_Read_Status();
  bool Get_Syntax_Error_Status();
+ bool Get_Invalid_Descriptor_File_Status();
+ bool Get_Lack_of_Decleration_Error_Status();
 protected:
  void Initialize_Members();
  void Read_Root_Directory_Location();
@@ -82,22 +80,22 @@ protected:
  void Determine_File_Name_Without_Ext(char * path, std::string & name);
  void Extract_Directory_From_Path(std::string path, std::string & dir);
  void Extract_File_Name_From_Path(std::string string, std::string & name);
-
+ void Set_Error_Message(std::string message);
  
  bool Is_This_String_A_File_Path(std::string str);
  bool Is_There_Multiple_Decleration_on_Same_Line(std::string & str_line);
  void Extract_Declerations_Performing_on_Same_Line(std::string str_line, std::vector<std::string> & mt_line);
+ bool Is_Include_Character(std::string str);
+ void Delete_Spaces_on_String(std::string * str);
+ void Delete_Spaces_on_String_Start(std::string * str);
  void Divide_Options(std::string & options);
  void Clear_String_Memory(std::string * ptr);
  void Clear_Vectory_Memory(std::vector<std::string> * ptr);
-
-
- void Exit_With_Error(std::string error);
-
  Descriptor_File_Line_Reader Line_Reader;
  Descriptor_File_Data_Collector Data_Collector;
  Descriptor_File_Syntax_Controller Syntax_Controller;
  Record_Number_Determiner Number_Determiner;
+ StringOperator StringManager;
  int include_dir_num;
  int source_file_dir_num;
  int compiler_path_number;
@@ -121,7 +119,9 @@ protected:
  std::vector<std::string> linker_options;
  std::vector<std::string> compiler_paths;
  std::vector<Library_Data> library_data_list;
- bool syntax_error_status;
+ bool gui_read_status;
+ bool gui_read_success;
+ bool syntax_error;
  bool lack_of_decleration_error;
  bool is_project_file_invalid;
  bool Memory_Delete_Condition;
@@ -129,4 +129,4 @@ protected:
  char opr_sis;
 };
 
-#endif /* DESCRIPTOR_FILE_READER */
+#endif /* GUI_DESCRIPTOR_FILE_READER */

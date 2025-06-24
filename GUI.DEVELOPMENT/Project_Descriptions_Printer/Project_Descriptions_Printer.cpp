@@ -103,7 +103,7 @@ void Project_Descriptions_Printer::Receive_Descriptor_File_Path(wxString DesPATH
 }
 
 
-void Project_Descriptions_Printer::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void Project_Descriptions_Printer::Receive_Descriptor_File_Reader(GUI_Descriptor_File_Reader * ptr){
 
      this->Des_Reader = ptr;
 }

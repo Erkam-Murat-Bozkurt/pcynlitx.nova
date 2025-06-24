@@ -23,17 +23,18 @@ int main(int argc, char ** argv){
        exit(0);
     }
 
-    Descriptor_File_Reader Des_File_Reader('w','g');    
+    Descriptor_File_Reader Des_File_Reader('w');    
 
     Des_File_Reader.Receive_Descriptor_File_Path(argv[1]);
 
-    Des_File_Reader.Set_Gui_Read_Status(true);
-
     Des_File_Reader.Read_Descriptor_File();
 
-    if(Des_File_Reader.Get_Gui_Read_Success_Status()){
+
+
+
+    if(!Des_File_Reader.Get_Invalid_Descriptor_File_Status()){
       
-        Print_Descriptor_File_Informations(Des_File_Reader);
+       Print_Descriptor_File_Informations(Des_File_Reader);
     }
     else{
 
