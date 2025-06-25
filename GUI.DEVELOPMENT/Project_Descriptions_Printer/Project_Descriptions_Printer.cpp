@@ -85,6 +85,8 @@ Project_Descriptions_Printer::Project_Descriptions_Printer(wxFrame *parent, wxWi
 
      this->SetCanFocus(false);
 
+     this->Des_Reader = new GUI_Descriptor_File_Reader('w');     
+
      DestroyCaret(); 
 
 }
@@ -100,13 +102,13 @@ Project_Descriptions_Printer::~Project_Descriptions_Printer(){
 void Project_Descriptions_Printer::Receive_Descriptor_File_Path(wxString DesPATH){
 
      this->Descriptor_File_Path = DesPATH; 
+
+     std::string des_path = this->Descriptor_File_Path.ToStdString();
+
+     this->Des_Reader->Receive_Descriptor_File_Path(des_path.c_str());
 }
 
 
-void Project_Descriptions_Printer::Receive_Descriptor_File_Reader(GUI_Descriptor_File_Reader * ptr){
-
-     this->Des_Reader = ptr;
-}
 
 void Project_Descriptions_Printer::Construct_Text_Panel(){
 
@@ -257,12 +259,6 @@ void Project_Descriptions_Printer::Read_Descriptions(){
      this->invalid_descriptor_file_status = false;
 
      this->syntax_error_status = false;
-
-     this->Des_Reader->Clear_Dynamic_Memory();
-
-     std::string des_path = this->Descriptor_File_Path.ToStdString();
-
-     this->Des_Reader->Receive_Descriptor_File_Path(des_path.c_str());
 
      this->Des_Reader->Read_Descriptor_File();
 
@@ -740,7 +736,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
     this->textctrl->SetDefaultStyle(AttrLigth);
 
-    this->textctrl->AppendText(wxT("\n\n "));
+    this->textctrl->AppendText(wxT("\n\n"));
 
 
     if(!this->Des_Reader->Get_Compiler_Options().empty()){
@@ -758,6 +754,8 @@ void Project_Descriptions_Printer::Print_Descriptions(){
            std::string str_line = com_options.at(i);
 
            this->textctrl->AppendText(wxString(str_line));
+
+           this->textctrl->AppendText(wxT("\n"));
        }
     }
 
@@ -769,7 +767,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
     this->textctrl->SetDefaultStyle(AttrLigth);
 
-    this->textctrl->AppendText(wxT("\n\n "));
+    this->textctrl->AppendText(wxT("\n\n"));
 
 
 
@@ -888,6 +886,8 @@ void Project_Descriptions_Printer::CloseWindow(wxCommandEvent & event){
      if(event.GetId() == ID_CLOSE_DESCRIPTION_WINDOW){
 
         this->Destroy();
+
+        delete [] this->Des_Reader;
      }
 }
 

@@ -1312,8 +1312,6 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
 
                this->Descriptions_Printer->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
                
-               this->Descriptions_Printer->Receive_Descriptor_File_Reader(this->Des_Reader);
-
                this->Descriptions_Printer->Read_Descriptions();
 
                this->Descriptions_Printer->Print_Descriptions();

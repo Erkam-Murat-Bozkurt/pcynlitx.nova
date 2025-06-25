@@ -52,8 +52,6 @@ Project_Descriptions_Printer(wxFrame *parent, wxWindowID id=wxID_ANY, const wxSt
 
   void Receive_Descriptor_File_Path(wxString DesPATH);
 
-  void Receive_Descriptor_File_Reader(GUI_Descriptor_File_Reader * ptr);
-
   void Read_Descriptions();
 
   void Print_Descriptions();

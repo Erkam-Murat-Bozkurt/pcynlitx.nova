@@ -22,6 +22,58 @@ VPATH = $(DES_RED) \
 		$(LIN_RED) \
 		$(GUI_DES_RED)
 
+
+
+GUI_Descriptor_File_Reader.exe : GUI_Descriptor_File_Reader_Main_File.cpp \
+	GUI_Descriptor_File_Reader.o \
+	Record_Number_Determiner.o \
+	Descriptor_File_Line_Reader.o \
+	Descriptor_File_Data_Collector.o \
+	Descriptor_File_Syntax_Controller.o \
+	StringOperator.o \
+	CharOperator.o \
+	Cpp_FileOperations.o \
+	GUI_Descriptor_File_Reader.hpp \
+    Descriptor_File_Reader.hpp \
+	Record_Number_Determiner.hpp \
+	Descriptor_File_Line_Reader.hpp \
+	Descriptor_File_Data_Collector.hpp \
+	Descriptor_File_Syntax_Controller.hpp \
+	StringOperator.h CharOperator.h Cpp_FileOperations.h
+
+	g++ -std=c++17 \
+	  -o GUI_Descriptor_File_Reader.exe \
+	  -I$(GUI_DES_RED) \
+	  -I$(DES_RED) \
+	  -I$(DES_COL) -I$(CPP_OPS) -I$(STRING_OPS) \
+		-I$(SYN_CON) -I$(CHAR_OPS) \
+		-I$(NUM_DET) -I$(LIN_RED) \
+		-L$(CPP_OPS) -L$(STRING_OPS) \
+		-L$(NUM_DET) -L$(LIN_RED) \
+		-L$(CHAR_OPS) -L$(DES_COL) -L$(SYN_CON) \
+		-L$(GUI_DES_RED) \
+		GUI_Descriptor_File_Reader_Main_File.cpp \
+		$(DES_RED)\GUI_Descriptor_File_Reader.o \
+		$(DES_RED)\Descriptor_File_Data_Collector.o \
+		$(DES_RED)\Descriptor_File_Syntax_Controller.o \
+		$(DES_RED)\Record_Number_Determiner.o \
+		$(DES_RED)\Descriptor_File_Line_Reader.o \
+	    $(DES_RED)\StringOperator.o \
+		$(DES_RED)\CharOperator.o \
+		$(DES_RED)\Cpp_FileOperations.o \
+		-include $(GUI_DES_RED)\GUI_Descriptor_File_Reader.hpp \
+		-include $(DES_RED)\Descriptor_File_Reader.hpp \
+		-include $(NUM_DET)\Record_Number_Determiner.hpp \
+		-include $(LIN_RED)\Descriptor_File_Line_Reader.hpp \
+		-include $(DES_COL)\Descriptor_File_Data_Collector.hpp \
+		-include $(SYN_CON)\Descriptor_File_Syntax_Controller.hpp \
+		-include $(STRING_OPS)\StringOperator.h \
+		-include $(CHAR_OPS)\CharOperator.h \
+		-include $(CPP_OPS)\Cpp_FileOperations.h
+
+
+
+
 Descriptor_File_Reader.exe : Descriptor_File_Reader_Main_File.cpp \
 	Descriptor_File_Reader.o \
 	Record_Number_Determiner.o \
@@ -46,7 +98,7 @@ Descriptor_File_Reader.exe : Descriptor_File_Reader_Main_File.cpp \
 		-L$(CPP_OPS) -L$(STRING_OPS) \
 		-L$(NUM_DET) -L$(LIN_RED) \
 		-L$(CHAR_OPS) -L$(DES_COL) -L$(SYN_CON) \
-		Descriptor_File_Reader_Main_File.cpp \
+		GUI_Descriptor_File_Reader_Main_File.cpp \
 		$(DES_RED)\Descriptor_File_Reader.o \
 		$(DES_RED)\Descriptor_File_Data_Collector.o \
 		$(DES_RED)\Descriptor_File_Syntax_Controller.o \
@@ -77,8 +129,8 @@ GUI_Descriptor_File_Reader.o : GUI_Descriptor_File_Reader.cpp \
 	Cpp_FileOperations.h
 
 	g++ -std=c++17 -c \
-	  -I$(DES_COL) -I$(CPP_OPS) -I$(STRING_OPS) \
-		-I$(SYN_CON) -I$(CHAR_OPS) \
+	    -I$(DES_COL) -I$(CPP_OPS) -I$(STRING_OPS) \
+		-I$(SYN_CON) -I$(CHAR_OPS) -I$(DES_RED) \
 		-I$(NUM_DET) -I$(LIN_RED) \
 		-I$(GUI_DES_RED) \
 		-L$(CPP_OPS) -L$(STRING_OPS) \
@@ -87,6 +139,7 @@ GUI_Descriptor_File_Reader.o : GUI_Descriptor_File_Reader.cpp \
 		-L$(GUI_DES_RED) \
 		$(GUI_DES_RED)\GUI_Descriptor_File_Reader.cpp \
 		-include $(GUI_DES_RED)\GUI_Descriptor_File_Reader.hpp \
+		-include $(DES_RED)\Descriptor_File_Reader.hpp \
 		-include $(NUM_DET)\Record_Number_Determiner.hpp \
 		-include $(LIN_RED)\Descriptor_File_Line_Reader.hpp \
 		-include $(DES_COL)\Descriptor_File_Data_Collector.hpp \

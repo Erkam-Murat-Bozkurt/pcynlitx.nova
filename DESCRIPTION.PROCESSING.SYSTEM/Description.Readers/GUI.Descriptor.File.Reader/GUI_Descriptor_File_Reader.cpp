@@ -159,6 +159,8 @@ void GUI_Descriptor_File_Reader::Clear_Dynamic_Memory(){
          this->is_project_file_invalid = false;
 
          this->syntax_error = false;
+
+         this->Data_Record_Cond = false;
      }
 }
 
@@ -382,14 +384,21 @@ void GUI_Descriptor_File_Reader::Read_Include_Directories(){
 
       if(this->include_dir_num > 0){
 
-         this->Memory_Delete_Condition = false;
+         if(this->gui_read_success){
 
-         this->Line_Reader.Read_Include_Directories(this->Include_Directories);
+            this->Memory_Delete_Condition = false;
+
+            this->Line_Reader.Read_Include_Directories(this->Include_Directories);
+
+            this->Include_Directories.shrink_to_fit();
+
+            this->include_dir_num = this->Include_Directories.size();
+         }      
       }
+      else{
 
-      this->Include_Directories.shrink_to_fit();
-
-      this->include_dir_num = this->Include_Directories.size();
+          this->include_dir_num = 0;
+      }
 }
 
 
@@ -400,31 +409,41 @@ void GUI_Descriptor_File_Reader::Read_Source_File_Directories(){
 
      if(this->source_file_dir_num > 0){
 
-        this->Memory_Delete_Condition = false;
+        if(this->gui_read_success){
 
-        this->Line_Reader.Read_Source_File_Directories(this->Source_File_Directories);
+           this->Memory_Delete_Condition = false;
+
+           this->Line_Reader.Read_Source_File_Directories(this->Source_File_Directories);
+
+           this->Source_File_Directories.shrink_to_fit();
+
+           this->source_file_dir_num = this->Source_File_Directories.size();
+        }
      }
+     else{
 
-     this->Source_File_Directories.shrink_to_fit();
-
-     this->source_file_dir_num = this->Source_File_Directories.size();
+         this->source_file_dir_num = 0;
+     }
 }
 
 
 
-void GUI_Descriptor_File_Reader::Read_Compiler_Paths(){
-
+void GUI_Descriptor_File_Reader::Read_Compiler_Paths()
+{
      this->compiler_path_number = this->Number_Determiner.Get_Compiler_Paths_Record_Number();
 
      if( (this->compiler_path_number > 0) && (this->Data_Record_Cond == false)){
 
-        this->Memory_Delete_Condition = false;
+         if(this->gui_read_success){
 
-        this->Line_Reader.Read_Compiler_Paths(this->compiler_paths);
+            this->Memory_Delete_Condition = false;
 
-        this->compiler_paths.shrink_to_fit();
+            this->Line_Reader.Read_Compiler_Paths(this->compiler_paths);
 
-        this->compiler_path_number = this->compiler_paths.size();
+            this->compiler_paths.shrink_to_fit();
+
+            this->compiler_path_number = this->compiler_paths.size();
+         }
      }
      else{
 
@@ -447,14 +466,21 @@ void GUI_Descriptor_File_Reader::Read_Library_Directories(){
 
      if(this->lib_dir_num > 0){
 
-        this->Memory_Delete_Condition = false;
+         if(this->gui_read_success){
 
-        this->Line_Reader.Read_Library_Directories(this->Library_Directories);
+            this->Memory_Delete_Condition = false;
+
+            this->Line_Reader.Read_Library_Directories(this->Library_Directories);
+
+            this->Library_Directories.shrink_to_fit();
+
+            this->lib_dir_num = this->Library_Directories.size();
+         }
      }
+     else{
 
-     this->Library_Directories.shrink_to_fit();
-
-     this->lib_dir_num = this->Library_Directories.size();
+         this->lib_dir_num = 0;
+     }
 }
 
 
@@ -465,14 +491,21 @@ void GUI_Descriptor_File_Reader::Read_Library_Files(){
 
      if(this->lib_file_num > 0){
 
-        this->Memory_Delete_Condition = false;
+        if(this->gui_read_success){
 
-        this->Line_Reader.Read_Library_Files(this->Library_Files);
+           this->Memory_Delete_Condition = false;
+
+           this->Line_Reader.Read_Library_Files(this->Library_Files);
+
+           this->Library_Files.shrink_to_fit();
+
+           this->lib_file_num = this->Library_Files.size();
+        }
      }
+     else{
 
-     this->Library_Files.shrink_to_fit();
-
-     this->lib_file_num = this->Library_Files.size();
+         this->lib_file_num = 0;
+     }
 }
 
 
@@ -488,11 +521,14 @@ void GUI_Descriptor_File_Reader::Read_Compiler_Options(){
          this->compiler_options.shrink_to_fit();
       }
       else{
-          
-          this->Line_Reader.Read_Compiler_Options(this->compiler_options);
-      }
 
-      this->compiler_options.shrink_to_fit();
+          if(this->gui_read_success){
+          
+             this->Line_Reader.Read_Compiler_Options(this->compiler_options);
+
+             this->compiler_options.shrink_to_fit();
+          }
+      }
 }
 
 
@@ -510,10 +546,13 @@ void GUI_Descriptor_File_Reader::Read_Linker_Options(){
      }
      else{
 
-         this->Line_Reader.Read_Linker_Options(this->linker_options);
-     }
+         if(this->gui_read_success){
 
-     this->linker_options.shrink_to_fit();
+           this->Line_Reader.Read_Linker_Options(this->linker_options);
+
+           this->linker_options.shrink_to_fit();
+         }
+     }
 }
 
 
