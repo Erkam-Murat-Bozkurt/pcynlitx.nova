@@ -170,14 +170,25 @@ void GUI_Descriptor_File_Reader::Read_Descriptor_File(){
      
      this->Memory_Delete_Condition = false;
 
-     this->syntax_error = false;
+
+     this->gui_read_success = true;
+
+     this->lack_of_decleration_error = false;
 
      this->is_project_file_invalid = false;
 
+     this->syntax_error = false;
+
+     this->error_message.clear();
+
+     this->error_message.shrink_to_fit();
+
+
+
      this->Syntax_Controller.Control_Descriptor_File_Syntax();
 
-     if(this->Syntax_Controller.GetSyntaxErrorStatus()){
-
+     if(this->Syntax_Controller.GetSyntaxErrorStatus())
+     {
         this->syntax_error = true;
 
         if(this->Syntax_Controller.Get_Invalid_Descriptor_File_Status()){
@@ -198,7 +209,6 @@ void GUI_Descriptor_File_Reader::Read_Descriptor_File(){
           this->Number_Determiner.Receive_Descriptor_File_Data_Collector(&this->Data_Collector);
 
           this->Number_Determiner.Determine_Record_Numbers();
-
 
           if(!this->is_project_file_invalid){
 
@@ -245,29 +255,28 @@ void GUI_Descriptor_File_Reader::Read_Descriptions(){
 }
 
 
-
 void GUI_Descriptor_File_Reader::Read_Root_Directory_Location(){
 
      int record_num = this->Number_Determiner.Get_Root_Directory_Location_Record_Number();
 
      if((record_num > 1) && (this->Data_Record_Cond == false)){
 
-         std::string message =  "\nThere are multiple project root directory declerations";
+         std::string message = "\nThere are multiple project root directory declerations";
 
          this->Set_Error_Message(message);
       }
+      else{
+            if((record_num == 0) && (this->Data_Record_Cond == false)){
 
-     if((record_num == 0) && (this->Data_Record_Cond == false)){
+               std::string message = "\nThere is no any decleration about project root directory";
 
-         std::string message = "\nThere is no any decleration about project root directory";
+               this->Set_Error_Message(message);
+            }
+            else{ 
 
-         this->Set_Error_Message(message);
-     }
-
-     if(this->gui_read_success){
-
-        this->Line_Reader.Read_Root_Directory_Location(this->root_dir);
-     }
+               this->Line_Reader.Read_Root_Directory_Location(this->root_dir);
+            }
+      }
 }
 
 
@@ -281,17 +290,18 @@ void GUI_Descriptor_File_Reader::Read_Warehouse_Location(){
 
          this->Set_Error_Message(message);
      }
+     else{
 
-     if((record_num == 0) && (this->Data_Record_Cond == false)) {
+           if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
-        std::string message = "\nThere is no any decleration about project warehouse location";
+               std::string message = "\nThere is no any decleration about project warehouse location";
 
-        this->Set_Error_Message(message);
-     }
+               this->Set_Error_Message(message);
+           }
+           else{
 
-     if(this->gui_read_success){
-
-        this->Line_Reader.Read_Warehouse_Location(this->warehouse_location);
+               this->Line_Reader.Read_Warehouse_Location(this->warehouse_location);
+           }
      }
 }
 
@@ -307,11 +317,19 @@ void GUI_Descriptor_File_Reader::Read_Standard(){
 
         this->Set_Error_Message(message);
      }
+     else{
 
-     if(this->gui_read_success){
-          
-        this->Line_Reader.Read_Standard(this->standard);         
-     }
+          if((record_num == 0) && (this->Data_Record_Cond == false)) {
+
+              std::string message = "\nThere is no any C++ standart declerations";
+
+              this->Set_Error_Message(message);
+          }
+          else{
+
+                this->Line_Reader.Read_Standard(this->standard);              
+          }
+     }          
 }
 
 
@@ -326,10 +344,9 @@ void GUI_Descriptor_File_Reader::Read_Build_System_Type(){
 
          this->Set_Error_Message(message);
      }
+     else{
 
-     if(this->gui_read_success){
-
-        this->Line_Reader.Read_Build_System_Type(this->build_system);
+         this->Line_Reader.Read_Build_System_Type(this->build_system);
      }
 }
 
@@ -347,10 +364,18 @@ void GUI_Descriptor_File_Reader::Read_Project_Name(){
 
          this->Set_Error_Message(message);
      }
+     else{
 
-     if(this->gui_read_success){
+            if((record_num > 1) && (this->Data_Record_Cond == false)) {
 
-        this->Line_Reader.Read_Project_Name(this->project_name);
+                std::string message = "\nThere are multiple declerations about project name";
+
+                this->Set_Error_Message(message);
+            }
+            else{
+
+               this->Line_Reader.Read_Project_Name(this->project_name);
+            }
      }
 }
 
@@ -368,10 +393,17 @@ void GUI_Descriptor_File_Reader::Read_Version_Number(){
 
          this->Set_Error_Message(message);
      }
+     else{
+            if((record_num > 1) && (this->Data_Record_Cond == false)) {
 
-     if(this->gui_read_success){
+                std::string message = "\nThere are multiple declerations about version number";
 
-        this->Line_Reader.Read_Version_Number(this->version_number);
+                this->Set_Error_Message(message);
+            }
+            else{
+
+                this->Line_Reader.Read_Version_Number(this->version_number);
+            }
      }
 }
 
@@ -384,16 +416,13 @@ void GUI_Descriptor_File_Reader::Read_Include_Directories(){
 
       if(this->include_dir_num > 0){
 
-         if(this->gui_read_success){
+         this->Memory_Delete_Condition = false;
 
-            this->Memory_Delete_Condition = false;
+         this->Line_Reader.Read_Include_Directories(this->Include_Directories);
 
-            this->Line_Reader.Read_Include_Directories(this->Include_Directories);
+         this->Include_Directories.shrink_to_fit();
 
-            this->Include_Directories.shrink_to_fit();
-
-            this->include_dir_num = this->Include_Directories.size();
-         }      
+         this->include_dir_num = this->Include_Directories.size(); 
       }
       else{
 
@@ -409,16 +438,13 @@ void GUI_Descriptor_File_Reader::Read_Source_File_Directories(){
 
      if(this->source_file_dir_num > 0){
 
-        if(this->gui_read_success){
+        this->Memory_Delete_Condition = false;
 
-           this->Memory_Delete_Condition = false;
+        this->Line_Reader.Read_Source_File_Directories(this->Source_File_Directories);
 
-           this->Line_Reader.Read_Source_File_Directories(this->Source_File_Directories);
+        this->Source_File_Directories.shrink_to_fit();
 
-           this->Source_File_Directories.shrink_to_fit();
-
-           this->source_file_dir_num = this->Source_File_Directories.size();
-        }
+        this->source_file_dir_num = this->Source_File_Directories.size();
      }
      else{
 
@@ -432,18 +458,15 @@ void GUI_Descriptor_File_Reader::Read_Compiler_Paths()
 {
      this->compiler_path_number = this->Number_Determiner.Get_Compiler_Paths_Record_Number();
 
-     if( (this->compiler_path_number > 0) && (this->Data_Record_Cond == false)){
+     if(this->compiler_path_number > 0){
 
-         if(this->gui_read_success){
+          this->Memory_Delete_Condition = false;
 
-            this->Memory_Delete_Condition = false;
+          this->Line_Reader.Read_Compiler_Paths(this->compiler_paths);
 
-            this->Line_Reader.Read_Compiler_Paths(this->compiler_paths);
+          this->compiler_paths.shrink_to_fit();
 
-            this->compiler_paths.shrink_to_fit();
-
-            this->compiler_path_number = this->compiler_paths.size();
-         }
+          this->compiler_path_number = this->compiler_paths.size();
      }
      else{
 
@@ -466,16 +489,13 @@ void GUI_Descriptor_File_Reader::Read_Library_Directories(){
 
      if(this->lib_dir_num > 0){
 
-         if(this->gui_read_success){
+        this->Memory_Delete_Condition = false;
 
-            this->Memory_Delete_Condition = false;
+        this->Line_Reader.Read_Library_Directories(this->Library_Directories);
 
-            this->Line_Reader.Read_Library_Directories(this->Library_Directories);
+        this->Library_Directories.shrink_to_fit();
 
-            this->Library_Directories.shrink_to_fit();
-
-            this->lib_dir_num = this->Library_Directories.size();
-         }
+        this->lib_dir_num = this->Library_Directories.size();
      }
      else{
 
@@ -485,22 +505,19 @@ void GUI_Descriptor_File_Reader::Read_Library_Directories(){
 
 
 
-void GUI_Descriptor_File_Reader::Read_Library_Files(){
-
+void GUI_Descriptor_File_Reader::Read_Library_Files()
+{
      this->lib_file_num = this->Number_Determiner.Get_Library_Files_Record_Number();
 
      if(this->lib_file_num > 0){
 
-        if(this->gui_read_success){
+        this->Memory_Delete_Condition = false;
 
-           this->Memory_Delete_Condition = false;
+        this->Line_Reader.Read_Library_Files(this->Library_Files);
 
-           this->Line_Reader.Read_Library_Files(this->Library_Files);
+        this->Library_Files.shrink_to_fit();
 
-           this->Library_Files.shrink_to_fit();
-
-           this->lib_file_num = this->Library_Files.size();
-        }
+        this->lib_file_num = this->Library_Files.size();
      }
      else{
 
@@ -514,20 +531,16 @@ void GUI_Descriptor_File_Reader::Read_Compiler_Options(){
 
      int record_num = this->Number_Determiner.Get_Compiler_Options_Record_Number();
          
-      if(record_num < 1){
+      if((record_num < 1) && (this->Data_Record_Cond == false)){
 
          this->compiler_options.clear();   // There is no any decleration about the options
 
          this->compiler_options.shrink_to_fit();
       }
       else{
-
-          if(this->gui_read_success){
-          
              this->Line_Reader.Read_Compiler_Options(this->compiler_options);
 
              this->compiler_options.shrink_to_fit();
-          }
       }
 }
 
@@ -538,20 +551,16 @@ void GUI_Descriptor_File_Reader::Read_Linker_Options(){
 
      int record_num = this->Number_Determiner.Get_Linker_Options_Record_Number();
    
-     if(record_num < 1){
+     if((record_num < 1) && (this->Data_Record_Cond == false)){
 
          this->linker_options.clear();   // There is no any decleration about the options
 
          this->linker_options.shrink_to_fit();
      }
      else{
-
-         if(this->gui_read_success){
-
            this->Line_Reader.Read_Linker_Options(this->linker_options);
 
            this->linker_options.shrink_to_fit();
-         }
      }
 }
 

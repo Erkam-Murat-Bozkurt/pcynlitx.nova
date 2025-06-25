@@ -257,14 +257,14 @@ void Descriptor_File_Reader::Read_Warehouse_Location(){
 
      int record_num = this->Number_Determiner.Get_Warehouse_Location_Record_Number();
 
-     if((record_num > 1)  && (this->Data_Record_Cond == false)){
+     if(record_num > 1){
 
          std::string message = "\n There are multiple project warehouse declerations";
 
          this->Exit_With_Error(message);
       }
 
-     if((record_num == 0) && (this->Data_Record_Cond == false)) {
+     if(record_num == 0) {
 
          std::string message = "\n There is no any decleration about project warehouse location";
 
@@ -280,7 +280,7 @@ void Descriptor_File_Reader::Read_Standard(){
 
      int record_num = this->Number_Determiner.Get_Standard_Record_Number();
 
-     if((record_num > 1) && (this->Data_Record_Cond == false)){
+     if(record_num > 1){
 
         std::string message = "\nThere are multiple C++ standart declerations";
 
@@ -296,7 +296,7 @@ void Descriptor_File_Reader::Read_Build_System_Type(){
 
      int record_num = this->Number_Determiner.Get_Build_System_Type_Record_Number();
      
-     if((record_num == 0) && (this->Data_Record_Cond == false)) {
+     if(record_num == 0) {
 
          std::string message =  "\nThere is no any decleration about build system type selection";
 
@@ -315,7 +315,7 @@ void Descriptor_File_Reader::Read_Project_Name(){
 
      int record_num = this->Number_Determiner.Get_Project_Name_Record_Number();
 
-     if((record_num == 0) && (this->Data_Record_Cond == false)) {
+     if(record_num == 0) {
 
         std::string message = "\nThere is no any decleration about project name";
 
@@ -333,7 +333,7 @@ void Descriptor_File_Reader::Read_Version_Number(){
 
      int record_num = this->Number_Determiner.Get_Version_Number_Record_Number();
 
-     if((record_num == 0) && (this->Data_Record_Cond == false)) {
+     if(record_num == 0) {
 
         std::string message = "\nThere is no any decleration about version number";
 

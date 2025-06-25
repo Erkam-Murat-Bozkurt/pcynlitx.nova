@@ -2257,8 +2257,6 @@ void MainFrame::Descriptor_File_Validity_Control(wxString & message){
 
         this->invalid_descriptor_file_status = true;
 
-        //this->is_project_file_selected = false;
-
         message += Des_Reader.Get_Error_Message();
      }
      else{
@@ -2268,10 +2266,7 @@ void MainFrame::Descriptor_File_Validity_Control(wxString & message){
 
              this->lack_of_description_status = true;
 
-             //this->is_project_file_selected = false;
-
              message += Des_Reader.Get_Error_Message();
          }      
      }
-
 }
