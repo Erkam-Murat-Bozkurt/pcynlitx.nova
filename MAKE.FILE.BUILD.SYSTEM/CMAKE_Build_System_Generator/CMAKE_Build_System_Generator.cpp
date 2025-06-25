@@ -71,7 +71,7 @@ void CMAKE_Build_System_Generator::Construct_Build_System(std::string project_na
 
      this->CMAKE_SysCon.Build_Make_Files(project_name,version_num);
      
-     char build_system_geration [] = "\n CMAKE Build System Generated..\n\n";
+     char build_system_geration [] = "\nCMAKE Build System Generated..\n\n";
 
      std::cout << build_system_geration;
 
@@ -88,7 +88,7 @@ void CMAKE_Build_System_Generator::Construct_Build_System(std::string project_na
 
       this->Executable_Target_Constructor.Build_MakeFile(target_main_file_path,exe_name);
      
-      char build_system_geration [] = "\n CMAKE Target Generated..\n\n";
+      char build_system_geration [] = "\nCMAKE Target Generated..\n\n";
 
       std::cout << build_system_geration;
 

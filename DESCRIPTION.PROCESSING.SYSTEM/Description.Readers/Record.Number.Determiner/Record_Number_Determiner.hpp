@@ -53,6 +53,7 @@ protected:
  void Determine_Project_Name_Record_Number();
  void Determine_Version_Number_Record_Number();
  void Determine_Compiler_Paths_Record_Number();
+ void Reset_Record_Numbers();
  bool Is_Include_Character(std::string str);
  Descriptor_File_Data_Collector * Data_Collector;
  StringOperator StringManager;

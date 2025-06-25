@@ -53,9 +53,37 @@ Record_Number_Determiner::~Record_Number_Determiner(){
 
     if(!this->Memory_Delete_Condition){
 
+        this->Reset_Record_Numbers();
     }
 }
 
+
+void Record_Number_Determiner::Reset_Record_Numbers(){
+
+     this->Root_Directory_Location_Record_Number = 0;
+
+     this->Warehouse_Location_Record_Number = 0;
+ 
+     this->Standard_Record_Number = 0;
+ 
+     this->Include_Directories_Record_Number = 0;
+ 
+     this->Source_File_Directories_Record_Number = 0;
+ 
+     this->Library_Directories_Record_Number = 0;
+ 
+     this->Compiler_Options_Record_Number = 0;
+ 
+     this->Linker_Options_Record_Number = 0;
+ 
+     this->Build_System_Type_Record_Number = 0;
+ 
+     this->Project_Name_Record_Number = 0;
+ 
+     this->Version_Number_Record_Number = 0;
+  
+     this->Compiler_Paths_Record_Number = 0;
+}
 
 void Record_Number_Determiner::Receive_Descriptor_File_Data_Collector(Descriptor_File_Data_Collector * ptr){
 
@@ -64,6 +92,8 @@ void Record_Number_Determiner::Receive_Descriptor_File_Data_Collector(Descriptor
 
 
 void Record_Number_Determiner::Determine_Record_Numbers(){
+
+     this->Reset_Record_Numbers();
 
      this->Determine_Root_Directory_Location_Record_Number();
 

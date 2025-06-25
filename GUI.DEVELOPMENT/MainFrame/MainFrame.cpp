@@ -1129,6 +1129,8 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
            this->Process_Ptr->Determine_Build_System_Initialization_Command();
 
+           this->Des_Reader->Clear_Dynamic_Memory();
+
            this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
            this->Des_Reader->Read_Descriptor_File();
