@@ -87,7 +87,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
      this->Des_Reader.Read_Descriptor_File();
 
 
-     char read_opr [] = "\n\nThe project descriptor file read\n\n";
+     char read_opr [] = "\n\n The project descriptor file read\n";
 
      std::cout << read_opr;
 
@@ -104,7 +104,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
      this->Data_Processor.Determine_Git_Repo_Info();  
 
 
-     char git_data [] = "\nThe data for git version controller has been collected\n\n";
+     char git_data [] = "\n The data for git version controller has been collected\n";
 
      std::cout << git_data;
 
@@ -124,7 +124,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
 
 
-     char dependency_data [] = "\nSource file dependencies has been determined\n\n";
+     char dependency_data [] = "\n Source file dependencies has been determined\n";
 
      std::cout << dependency_data;
 
@@ -208,7 +208,6 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      this->FileManager.WriteToFile("\n\t");  
 
-     //this->FileManager.WriteToFile(target_dep_list);
 
 
      
@@ -486,55 +485,8 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
            this->FileManager.FileClose();
      }
-
-
-     //this->Determine_Project_Library_Name();
 }
 
-/*
-void CMAKE_Executable_Target_Constructor::Determine_Project_Library_Name(){
-
-     std::string repo_dir_path = this->Des_Reader.Get_Project_Name();
-
-     std::string repo_dir_name;
-
-     this->Extract_Repo_Directory_Name(repo_dir_name,repo_dir_path);
-
-     this->project_library_name = repo_dir_name;     
-
-     std::cout << "\n this->project_library_name:" << this->project_library_name;
-}
-     */
-
-
-/*
-
-void CMAKE_Executable_Target_Constructor::Extract_Repo_Directory_Name(std::string & name, 
-
-     std::string root_dir){
-
-     size_t root_dir_size = root_dir.size();
-
-     size_t start_point = root_dir_size;
-
-     for(size_t i=root_dir_size;i>0;i--){
-
-         if((root_dir[i] == '\\') || (root_dir[i] == '/') ){
-
-             start_point = i+1;
-             break;
-         }   
-     }    
-
-     for(size_t i=start_point;i<root_dir_size;i++){
-
-         name.push_back(tolower(root_dir[i]));
-     }
-
-     name.shrink_to_fit();
-}
-
-*/
 
 void CMAKE_Executable_Target_Constructor::Directory_Path_Encoder(std::string sys_dir, std::string & str_encode){
     
