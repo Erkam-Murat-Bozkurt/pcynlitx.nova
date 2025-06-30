@@ -183,7 +183,7 @@ void GUI_Descriptor_File_Reader::Read_Descriptor_File(){
 
      this->error_message.shrink_to_fit();
 
-
+     this->Syntax_Controller.Set_Gui_Read_Status(true);
 
      this->Syntax_Controller.Control_Descriptor_File_Syntax();
 
