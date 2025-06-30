@@ -4,7 +4,7 @@
 set( CMAKE_CXX_COMPILER "C:/Development.Tools/Mingw64/bin/g++.exe" )
 set( CMAKE_C_COMPILER "C:/Development.Tools/Mingw64/bin/gcc.exe" )
 
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set( CMAKE_BUILD_TYPE "Debug")

@@ -429,7 +429,7 @@ void Custom_ProcessOutput::ReadProcessOutput(wxString start_text){
         }
         else{
 
-            sleep(0.05);
+            sleep(0.1);
         }
 
      }while(!this->SysInt.IsPipeReadytoRead());
@@ -455,36 +455,17 @@ void Custom_ProcessOutput::ReadProcessOutput(wxString start_text){
            
              !this->process_interrrupt_status){
 
-                std::string pipeStr = " ";
-        
-                pipeStr += this->SysInt.ReadNamedPipe_From_Parent();
+                std::string pipeStr = this->SysInt.ReadNamedPipe_From_Parent();
 
-                total_text = total_text + pipeStr;
-
-                total_text.shrink_to_fit();
-
-                size_t next_size = total_text.size();
-
-                if(next_size > text_size){
-
-                   this->progress_point += 2;
-                }
-
-                text_size = next_size;
-
-
+                this->progress_point += 2;
 
                 wxString text(pipeStr);
-
-                std::string space = " ";
-
-                wxString space_text(space);
-
-                this->PrintProcessOutput(space_text);
 
                 this->PrintProcessOutput(text);
 
                 this->GetDialogAddress()->SetValue(this->progress_point);
+
+
             }
         }
  

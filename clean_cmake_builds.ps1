@@ -1,2 +1,2 @@
 
-cmake --build C:\Development.Files\PCYNLITX_BUILD_CONFIGS --target clean 
+cmake --build C:\Development.Files\PCYNLITX_NOVA_CONFIGS --target clean 

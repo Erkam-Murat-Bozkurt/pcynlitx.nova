@@ -130,8 +130,6 @@ void Descriptor_File_Data_Collector::Collect_Descriptor_File_Data(){
 
      this->Determine_Compiler_Paths_Record_Area();
 
-     //this->Receive_Descriptor_File_Index_With_Spaces();
-
      this->StringManager.Clear_Dynamic_Memory();
 
      this->FileManager.Clear_Dynamic_Memory();
