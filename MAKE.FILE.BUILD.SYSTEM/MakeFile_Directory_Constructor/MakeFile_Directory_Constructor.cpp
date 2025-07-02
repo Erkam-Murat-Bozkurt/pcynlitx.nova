@@ -1,20 +1,27 @@
 
 
-
-
-
 /*
-
- * Copyright (C) { Erkam Murat Bozkurt } - All Rights Reserved
+ *
+ * Copyright ©  2025,  Erkam Murat Bozkurt
+ *
+ * This file is part of the research project which is carried by Erkam Murat Bozkurt.
  * 
- * This source code is protected under international copyright law.  All rights
- * reserved and protected by the copyright holders.
+ * This is a free software: you can redistribute it and/or modify it under the terms
+ * of the GNU General Public License as published by the Free Software Foundation
+ * either version 3 of the License, or any later version.
  * 
- * This file is confidential and only available to authorized individuals with the
- * permission of the copyright holders.  If you encounter this file and do not have
- * permission, please contact the copyright holders and delete this file.
+ * This software is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE.
+ *
+ * See the GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
 
-*/
+
 
 #include "MakeFile_Directory_Constructor.hpp"
 
