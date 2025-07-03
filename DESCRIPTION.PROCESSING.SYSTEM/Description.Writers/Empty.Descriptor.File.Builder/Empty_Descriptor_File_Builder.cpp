@@ -62,7 +62,7 @@ void Empty_Descriptor_File_Builder::Clear_Dynamic_Memory(){
 
 void Empty_Descriptor_File_Builder::Receive_File_Path(char * path){
 
-     char Descriptor_File_Name [] = "Pcb_Descriptor.txt";
+     char Descriptor_File_Name [] = "pcynlitx.project.txt";
 
      size_t path_size = strlen(path);
 

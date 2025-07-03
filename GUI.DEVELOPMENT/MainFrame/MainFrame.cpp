@@ -1371,7 +1371,7 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
 
         wxString construction_dir =dlg.GetPath();
 
-        this->Descriptor_File_Path = construction_dir + wxT("\\Pcb_Descriptor.txt");
+        this->Descriptor_File_Path = construction_dir + wxT("\\pcynlitx.project.txt");
 
         this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 

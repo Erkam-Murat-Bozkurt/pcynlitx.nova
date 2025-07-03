@@ -396,7 +396,7 @@ void Project_File_Selection_Window::Construct_Empty_Project_File(wxCommandEvent 
 
            wxString construction_dir =dlg.GetPath();
 
-           wxString DesPATH = construction_dir + wxT("\\Pcb_Descriptor.txt");
+           wxString DesPATH = construction_dir + wxT("\\pcynlitx.project.txt");
 
            wxString shell_command = "C:\\Program Files\\Pcynlitx\\Pcynlitx_Kernel.exe " 
         
