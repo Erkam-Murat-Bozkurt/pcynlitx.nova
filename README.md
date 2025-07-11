@@ -19,16 +19,19 @@ pcynlitx.help@gmail.com
 
 Pcynlitx nova platform has a nice graphical user interface. A simple screenshot from the pcynlitx nova has been given in below. <br /><br />
 
-
-![Pcynlitx Nova](Pcynlitx_Nova_Front.png)
+<img src="Pcynlitx_Nova_Front.png" width="600" height="500" />
 
 
 <br /><br />
 
 ## PCYNLITX NOVA PLATFORM DEPENDENCIES:
 
-Mingw-w64: Pcynlitx nova plaform installation software includes an optional mingw-w64 C++ compiler installer. You can install mingw-w64 compiler optionally if it is not installed on your computer.
+**Mingw-w64:** Pcynlitx nova plaform installation software includes an optional mingw-w64 C++ compiler installer. You can install mingw-w64 compiler optionally if it is not installed on your computer.
 
-Git Version Control System.
+**Git:** Pcynlitx nova platform uses Git Version Control System.
 
 CMAKE Software build system.
+
+<br /><br />
+
+
