@@ -1,17 +1,117 @@
 
 
 
-set( CMAKE_CXX_COMPILER "C:/Development.Tools/Mingw64/bin/g++.exe" )
-set( CMAKE_C_COMPILER "C:/Development.Tools/Mingw64/bin/gcc.exe" )
+
+cmake_minimum_required(VERSION 4.1.2)
+
+set(CMAKE_BUILD_PARALLEL_LEVEL 8)
+set(CMAKE_C_COMPILER "gcc")
+set(CMAKE_CXX_COMPILER "g++")
+
+set(wxWidgets_USE_STATIC 1)
+set(wxBUILD_SHARED OFF)
+set(wxWidgets_USE_STATIC ON)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-set( CMAKE_BUILD_TYPE "Debug")
+if(MINGW)
+   
+   message("The mingw compiler toolchain detected")
+
+else()
+
+   message("The mingw compiler toolchain can not be detected")
+   message("The mingw compiler will be installed")
+
+
+   execute_process(COMMAND cmd /c echo %USERPROFILE%
+
+     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+     OUTPUT_VARIABLE USER_PROFILE_PATH
+   )
+
+
+   string(REPLACE "\n" "" USER_PROFILE_PATH "${USER_PROFILE_PATH}")
+
+   string(REPLACE "/" "\\" USER_PROFILE_PATH "${USER_PROFILE_PATH}")
+
+
+   file(DOWNLOAD  https://github.com/brechtsanders/winlibs_mingw/releases/download/15.2.0posix-13.0.0-msvcrt-r3/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64msvcrt-13.0.0-r3.zip ${USER_PROFILE_PATH}/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64msvcrt-13.0.0-r3.zip SHOW_PROGRESS)
+
+   set(COMPILER_ZIP_PATH ${USER_PROFILE_PATH}/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64msvcrt-13.0.0-r3.zip)
+
+   string(REPLACE "/" "\\" COMPILER_ZIP_PATH "${COMPILER_ZIP_PATH}")
+
+   message("The directory ${COMPILER_ZIP_PATH}")
+
+
+   file(ARCHIVE_EXTRACT INPUT ${COMPILER_ZIP_PATH} DESTINATION ${USER_PROFILE_PATH} VERBOSE)
+
+   execute_process(COMMAND cmd /c echo %PATH% 
+
+      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+      OUTPUT_VARIABLE PATH_ENV
+   )
+
+   file(REMOVE ${USER_PROFILE_PATH}/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64msvcrt-13.0.0-r3.zip)
+
+   string(REPLACE "\n" "" PATH_ENV "${PATH_ENV}")
+
+   set(new_paths ";${USER_PROFILE_PATH}/mingw64")
+
+   string(APPEND new_paths ";${USER_PROFILE_PATH}/mingw64/bin")
+
+   string(APPEND new_paths ";${USER_PROFILE_PATH}/mingw64/include")
+
+   string(APPEND new_paths ";${USER_PROFILE_PATH}/mingw64/lib")
+
+   string(APPEND new_paths ";${USER_PROFILE_PATH}/mingw64/x86_64-w64-mingw32")
+
+   string(APPEND new_paths ";${USER_PROFILE_PATH}/mingw64/x86_64-w64-mingw32/include")
+
+   string(APPEND new_paths ";${USER_PROFILE_PATH}/mingw64/x86_64-w64-mingw32/lib")
+
+
+   string(REPLACE "\n" "" new_paths "${new_paths}")
+
+   string(REPLACE "/" "\\" new_paths "${new_paths}")
+
+
+   execute_process(
+
+       COMMAND cmd /c reg.exe add "HKEY_CURRENT_USER\\Environment" /v PATH /t REG_SZ /d "${PATH_ENV};${new_paths}" /f
+       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+       RESULT_VARIABLE REG_EXE_RETURN_VALUE
+       OUTPUT_QUIET
+   )
+
+   if(REG_EXE_RETURN_VALUE EQUAL 0)
+
+      message("The compiler paths are set")
+   
+   else()
+   
+      message("The compiler paths are not set successfuly")
+
+   endif()
+
+endif()
 
 
 
-cmake_minimum_required(VERSION 3.30.2)
+include(FetchContent)
+
+FetchContent_Declare(
+   wxWidgets
+   GIT_REPOSITORY https://github.com/wxWidgets/wxWidgets.git
+   GIT_TAG v3.3.1
+)
+
+FetchContent_GetProperties(wxwidgets)
+FetchContent_MakeAvailable(wxwidgets)
+
+
 
 project(Pcynlitx VERSION 1.0)
 
@@ -133,8 +233,8 @@ target_link_libraries(CMAKE_Build_Executable PUBLIC proj_bld_tools  make_fbld_sy
 
                    src_proc_sys git_data_processing_system src_dat_col des_reader basic_tools)
 
-target_link_libraries(Pcynlitx PUBLIC BuildSystem_GUI pthread wxmsw32ud_core wxbase32ud  
-                      
-                      wxmsw32ud_aui wxmsw32ud_stc wxscintillad wxmsw32ud_richtext
+target_link_libraries(Pcynlitx PUBLIC BuildSystem_GUI pthread 
+
+                      wxcore wxnet wxbase wxstc wxscintilla wxaui wxrichtext
                           
                       gcc stdc++)
