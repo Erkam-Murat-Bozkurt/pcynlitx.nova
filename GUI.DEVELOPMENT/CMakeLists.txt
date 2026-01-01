@@ -89,11 +89,10 @@ add_library(BuildSystem_GUI
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window/Project_File_Selection_Window.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window/Project_File_Selection_Window.cpp
-
 )
 
 
-target_include_directories(BuildSystem_GUI PUBLIC
+target_include_directories(BuildSystem_GUI PRIVATE
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Close_Button
 
@@ -178,15 +177,14 @@ target_include_directories(BuildSystem_GUI PUBLIC
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
 
+    ${wxWidgets_BINARY_DIR}/lib/gcc_x64_lib/mswud
 
-    C:/Development.Tools/wxWidgets-3.2.5/include
-
-    C:/Development.Tools/wxWidgets-3.2.5/lib/gcc810_x64_dll/mswu
-
+    ${wxWidgets_SOURCE_DIR}/include
 )
 
 
-target_link_directories(BuildSystem_GUI PUBLIC
+
+target_link_directories(BuildSystem_GUI PRIVATE
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Close_Button
 
@@ -272,41 +270,28 @@ target_link_directories(BuildSystem_GUI PUBLIC
 
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
 
-
-    C:/Development.Tools/wxWidgets-3.2.5/lib/gcc810_x64_dll
-
-    C:/Development.Tools/Mingw64/lib/gcc/x86_64-w64-mingw32/8.1.0
+    ${wxWidgets_BINARY_DIR}/lib/gcc_x64_lib/mswud
 
 )
+
+target_link_options(BuildSystem_GUI PUBLIC -Wl,--subsystem,windows -mwindows )
 
 
 target_link_libraries(BuildSystem_GUI PUBLIC des_reader pthread 
 
-                     wxmsw32u_core wxbase32u  
+                     wxbase33ud wxmsw33ud_core
                       
-                     wxmsw32u_aui
+                     wxmsw33ud_aui
                 
-                     wxmsw32u_stc wxscintillad  wxmsw32u_xrc wxmsw32u_richtext
+                     wxmsw33ud_stc wxscintillad  wxmsw33ud_xrc wxmsw33ud_richtext
         
-                     gcc stdc++ )
+                     gcc stdc++)
 
 
-link_libraries( pthread libwxmsw32u_core.a libwxbase32u.a libwxtiff.a 
-                      
-                libwxmsw32u_aui.a
-                
-                libwxmsw32u_stc.a libwxscintilla.a 
-        
-                libwxmsw32u_core.a 
-)
+target_compile_options(BuildSystem_GUI PUBLIC -std=c++17 -Wall -g -fexceptions 
 
-target_compile_options(BuildSystem_GUI PUBLIC -static-libgcc -static-libstdc++ 
+       -static-libgcc -static-libstdc++ 
 
-        -O0 -mthreads -D__WXMSW__ -D_UNICODE -W -Wall -Wl,
-        
-        -Bstatic )
+       -g -O0 -mthreads -D__WXMSW__ -D_UNICODE -DWIN32 )
 
-   
-
-target_link_options(BuildSystem_GUI PUBLIC -Wl,--subsystem,windows -mwindows )
 

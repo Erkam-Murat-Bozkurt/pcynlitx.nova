@@ -1,2 +1,2 @@
 
-cmake --build .\build -j 8
+cmake --build .\CMAKE_BUILD_CONFIGS -j 8

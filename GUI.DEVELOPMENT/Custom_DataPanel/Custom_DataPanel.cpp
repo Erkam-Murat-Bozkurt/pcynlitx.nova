@@ -252,8 +252,6 @@ void Custom_DataPanel::Save_Data(wxCommandEvent & event){
 
         this->Process_Ptr->Fork_Process(shell_command);
 
-        int status  = this->Process_Ptr->Get_Process_Exit_Status();
-
         delete this->Process_Ptr;
 
     }

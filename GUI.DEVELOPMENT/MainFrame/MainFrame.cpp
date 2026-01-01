@@ -60,7 +60,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->Process_Ptr = new Process_Manager(this,wxID_ANY);
 
-  wxString Builder_Path(wxT("C:\\Program Files\\Pcynlitx\\Pcynlitx_Kernel.exe"));
+  wxString Builder_Path(wxString("C:\\Program Files\\Pcynlitx\\Pcynlitx_Kernel.exe"));
 
   this->Process_Ptr->Receive_Builder_Path(Builder_Path);
 
@@ -338,13 +338,13 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->Book_Manager->OpenIntroPage();
 
-  wxString Help_Page_Path = wxT("C:\\Program Files\\Pcynlitx\\Introduction.txt");
+  wxString Help_Page_Path = wxString("C:\\Program Files\\Pcynlitx\\Introduction.txt");
 
   this->Book_Manager->Open_File(Help_Page_Path);
 
   size_t notebook_index = this->Book_Manager->GetIndex_FromPath(Help_Page_Path);
 
-  this->Book_Manager->Get_NoteBook_Pointer()->SetPageText(notebook_index,wxT("Introduction"));
+  this->Book_Manager->Get_NoteBook_Pointer()->SetPageText(notebook_index,wxString("Introduction"));
 
   this->Book_Manager->SelectIntroPage();
 
@@ -417,13 +417,13 @@ void MainFrame::File_Save(wxCommandEvent & event){
         }
         else{
 
-            wxString message =  wxT(" This is no any file currently open!");
+            wxString message =  wxString(" This is no any file currently open!");
             
             message += "\n A file must be openned.";
             
             Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
             
-            wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
+            wxString("ERROR MESSAGE:\n"),wxID_ANY,wxString("PCYNLITX OPERATION REPORT"),
                
             *this->exclamation_mark_bmp, wxDefaultPosition);
 
@@ -625,15 +625,15 @@ void MainFrame::Run_Project_Script_On_Terminal(wxCommandEvent & event){
 
               std::string project_script_path = project_construction_dir + "\\WAREHOUSE\\Project_Build_Script.ps1";
 
-              wxString run_cmd = wxT("powershell.exe ") + wxString(project_script_path);
+              wxString run_cmd = wxString("powershell.exe ") + wxString(project_script_path);
 
               wxExecute(run_cmd,wxEXEC_SYNC | wxEXEC_SHOW_CONSOLE);
 
-              wxString Warehouse_Dir_Path = project_construction_dir + wxT("\\WAREHOUSE");
+              wxString Warehouse_Dir_Path = project_construction_dir + wxString("\\WAREHOUSE");
 
-              wxString Library_Directory_Path = project_construction_dir + wxT("\\WAREHOUSE\\LIBRARY.FILES");
+              wxString Library_Directory_Path = project_construction_dir + wxString("\\WAREHOUSE\\LIBRARY.FILES");
 
-              wxString Object_Directory_Path = project_construction_dir + wxT("\\WAREHOUSE\\OBJECT.FILES");
+              wxString Object_Directory_Path = project_construction_dir + wxString("\\WAREHOUSE\\OBJECT.FILES");
 
               if(this->Dir_List_Manager->Get_Panel_Open_Status()){
 
@@ -669,7 +669,7 @@ void MainFrame::Run_Project_Script_On_Terminal(wxCommandEvent & event){
             
                   Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
             
-                  wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
+                  wxString("ERROR MESSAGE:\n"),wxID_ANY,wxString("PCYNLITX OPERATION REPORT"),
                
                   *this->exclamation_mark_bmp, wxDefaultPosition);
 
@@ -692,22 +692,22 @@ void MainFrame::Show_Help_Menu(wxCommandEvent & event)
 
         event.Skip(false);
 
-        wxString message = wxT("ERKAM MURAT BOZKURT\n\n");
+        wxString message = wxString("ERKAM MURAT BOZKURT\n\n");
 
-        message = message + wxT("PCYNLITX Software, Istanbul / TURKEY\n\n");
+        message = message + wxString("PCYNLITX Software, Istanbul / TURKEY\n\n");
 
-        message = message + wxT("M.Sc. Control Sysytem Engineering\n\n");
+        message = message + wxString("M.Sc. Control Sysytem Engineering\n\n");
 
-        message = message + wxT("http://www.pcynlitx.com\n\n");
+        message = message + wxString("http://www.pcynlitx.com\n\n");
 
-        message = message + wxT("help@pcynlitx.com\n\n");
+        message = message + wxString("help@pcynlitx.com\n\n");
 
 
         Help_Page_Constructor * dial = new Help_Page_Constructor(this,message,
             
-            wxT("DEVELOPER:\n"),wxID_ANY,
+            wxString("DEVELOPER:\n"),wxID_ANY,
                
-            wxT("THE HELP FOR PLATFORM"),
+            wxString("THE HELP FOR PLATFORM"),
                
             *this->logo_bmp, wxDefaultPosition,wxSize(600,750));
           

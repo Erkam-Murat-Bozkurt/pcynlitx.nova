@@ -124,9 +124,7 @@ void Custom_Close_Button::Update_Window_Data(){
 
      wxPoint Top_Right_Corner = Parent_Rect.GetTopRight();
 
-
-     wxRect rect(this->GetSize());
-
+     
      int new_point_x = Top_Right_Corner.x - Button_Size.x -10 ;
 
      int y_extend_for_button_window = (Parent_Size.y - Button_Size.y)/2;
