@@ -177,8 +177,6 @@ void Process_Manager::Fork_Process_With_Named_Pipe_Connection(char * cmd){
          process_cmd.push_back(cmd[i]);
      }
 
-     wxString pr_cmd(process_cmd);
-
 
      std::unique_lock<std::mutex> lck(this->mtx);
 
@@ -372,8 +370,6 @@ void Process_Manager::Print_Error_Stream(wxString title){
 
      std::string error_st = this->SysInt.GetAnonymousPipe_String();
 
-     wxString std_err(error_st);
-
      this->Construct_Text_Panel(title,20);
 }
 
@@ -383,8 +379,6 @@ void Process_Manager::Print_Output_Stream(wxString title){
 
      std::string out = this->SysInt.GetAnonymousPipe_String();
      
-     wxString std_out(out);
-
      this->Construct_Text_Panel(title,20);
 }
 

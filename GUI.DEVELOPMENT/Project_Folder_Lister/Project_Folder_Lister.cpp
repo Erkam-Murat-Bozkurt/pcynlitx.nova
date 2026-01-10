@@ -145,36 +145,40 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
 
                   setpoint_path = Folder + wxT("\\") + dirname;
 
-                  setpoint_item_number = this->Append_Directory_To_Tree(Item,dirname,setpoint_path);
+                  if(!this->Is_Item_Already_Exist(setpoint_path)){
 
-                  if(this->Does_it_have_SubDir(setpoint_path)){
+                     setpoint_item_number = this->Append_Directory_To_Tree(Item,dirname,setpoint_path);
 
-                     this->Append_Items(setpoint_path,setpoint_item_number);
-                  }
-                  else{
+                     if(this->Does_it_have_SubDir(setpoint_path)){
+
+                        this->Append_Items(setpoint_path,setpoint_item_number);
+                     }
+                     else{
 
                        this->Append_Files(setpoint_path,setpoint_item_number);
+                     }
                   }
-
+                  
                   while(dirCtrl.GetNext(&dirname)){
 
                     setpoint_path = Folder + wxT("\\") + dirname;
 
-                    setpoint_item_number = this->Append_Directory_To_Tree(Item,dirname,setpoint_path);
+                    if(!this->Is_Item_Already_Exist(setpoint_path)){
 
-                    if(this->Does_it_have_SubDir(setpoint_path)){
+                        setpoint_item_number = this->Append_Directory_To_Tree(Item,dirname,setpoint_path);
+                    
+                        if(this->Does_it_have_SubDir(setpoint_path)){
 
-                       this->Append_Items(setpoint_path,setpoint_item_number);
-                    }
-                    else{
+                           this->Append_Items(setpoint_path,setpoint_item_number);
+                        }
+                        else{
 
-                        this->Append_Files(setpoint_path,setpoint_item_number);
+                           this->Append_Files(setpoint_path,setpoint_item_number);
+                        }
                     }
                   }
-                }
 
-                this->Append_Files(Folder,Item);
-
+                  this->Append_Files(Folder,Item);
               }
               else{
 
@@ -192,17 +196,15 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
 
               wxMessageOutput::Get()->Printf("Folder: %s does not exist",Folder);
         }
+      }
  }
 
 
 
-
-
-
- wxDataViewItem Project_Folder_Lister::Append_Directory_To_Tree(wxDataViewItem Item, wxString Directory, wxString Path){
-
-      if(!this->Is_Item_Already_Exist(Path)){
-
+ wxDataViewItem Project_Folder_Lister::Append_Directory_To_Tree(wxDataViewItem Item, wxString Directory,
+     
+        wxString Path)
+{
          this->tree_item_list[this->item_counter+1].item_number =
 
               this->treeCtrl->AppendContainer(Item,Directory,-1,-1,NULL);
@@ -216,29 +218,25 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
          this->item_counter++;
 
          return this->appended_item;
-      }
+
  }
 
 
  wxDataViewItem Project_Folder_Lister::Append_File_To_Tree(wxDataViewItem Item, wxString File, wxString Path){
-
-      if(!this->Is_Item_Already_Exist(Path)){
           
-          this->tree_item_list[this->item_counter+1].item_number =
+     this->tree_item_list[this->item_counter+1].item_number =
 
-              this->treeCtrl->AppendItem(Item,File,-1,NULL);
+     this->treeCtrl->AppendItem(Item,File,-1,NULL);
 
-          this->appended_item = this->tree_item_list[this->item_counter+1].item_number;
+     this->appended_item = this->tree_item_list[this->item_counter+1].item_number;
 
-          this->tree_item_list[this->item_counter+1].Item_Path = Path;
+     this->tree_item_list[this->item_counter+1].Item_Path = Path;
 
-          this->treeCtrl->SetItemIcon(this->tree_item_list[this->item_counter+1].item_number,this->File_Icon);
+     this->treeCtrl->SetItemIcon(this->tree_item_list[this->item_counter+1].item_number,this->File_Icon);
 
-          this->item_counter++;
+     this->item_counter++;
 
-          return this->appended_item;
-
-      }
+     return this->appended_item;
  }
 
 
@@ -262,8 +260,11 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
 
            file_path = Folder + wxT("\\") + filename;
 
-            this->Append_File_To_Tree(Item,filename,file_path);
+             if(!this->Is_Item_Already_Exist(file_path)){
 
+                this->Append_File_To_Tree(Item,filename,file_path);
+             }
+               
              while(cond){
 
                    cond = File_dirCtrl.GetNext(&filename);
@@ -272,7 +273,10 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
 
                      file_path = Folder + wxT("\\") + filename;
 
-                      this->Append_File_To_Tree(Item,filename,file_path);
+                      if(!this->Is_Item_Already_Exist(file_path)){
+
+                        this->Append_File_To_Tree(Item,filename,file_path);
+                      }
                    }
              }
            }

@@ -633,8 +633,6 @@ void MainFrame::Run_Project_Script_On_Terminal(wxCommandEvent & event){
 
               wxString Library_Directory_Path = project_construction_dir + wxString("\\WAREHOUSE\\LIBRARY.FILES");
 
-              wxString Object_Directory_Path = project_construction_dir + wxString("\\WAREHOUSE\\OBJECT.FILES");
-
               if(this->Dir_List_Manager->Get_Panel_Open_Status()){
 
                  this->Dir_List_Manager->Close_Directory_Pane();

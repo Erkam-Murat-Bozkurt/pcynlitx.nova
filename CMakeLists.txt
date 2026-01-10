@@ -178,7 +178,7 @@ add_executable(CMAKE_Build_Executable
 
 add_executable(Pcynlitx WIN32
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/wxLauncher.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/wxLauncher.cpp pcynlitx_resource.rc
 )
 
 
@@ -286,7 +286,7 @@ target_link_directories(Pcynlitx PUBLIC
 )
 
 
-target_link_options(Pcynlitx PUBLIC  -Wl,--subsystem,windows -mwindows)
+target_link_options(Pcynlitx PUBLIC  -Wl, -static -mwindows)
 
 
 target_link_libraries(Pcynlitx PUBLIC BuildSystem_GUI des_reader pthread 
@@ -306,6 +306,8 @@ target_link_libraries(Pcynlitx PUBLIC BuildSystem_GUI des_reader pthread
                      wxscintillad 
                                           
                      wxmsw33ud_richtext
+
+                     wxmsw33ud_xrc
 
                      wxxrc
 

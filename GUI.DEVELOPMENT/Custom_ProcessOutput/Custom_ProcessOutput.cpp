@@ -336,7 +336,7 @@ bool Custom_ProcessOutput::ProcessTermination(){
 
           if(processHandle!=NULL){
 
-             UINT uExitCode;
+             UINT uExitCode = 1;
 
              BOOL success_status = TerminateProcess(processHandle,uExitCode);
 
@@ -452,9 +452,6 @@ void Custom_ProcessOutput::ReadProcessOutput(wxString start_text){
 
 
      std::string total_text;
-
-     size_t text_size = 0;
-
 
      for(;;)
      { 
