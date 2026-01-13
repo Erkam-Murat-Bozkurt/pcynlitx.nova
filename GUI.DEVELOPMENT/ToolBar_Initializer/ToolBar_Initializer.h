@@ -42,6 +42,39 @@ public:
     }
 };
 
+class Custom_wxAuiToolBar : public wxAuiToolBar
+{
+public:
+    Custom_wxAuiToolBar(wxWindow *parent, wxWindowID id=wxID_ANY, 
+      
+     const wxPoint &position=wxDefaultPosition,
+  
+     const wxSize &size=wxDefaultSize, long style=wxAUI_TB_DEFAULT_STYLE) 
+     
+     : wxAuiToolBar(parent,id,position,size,style)
+
+     {
+          this->GetEventHandler()->Bind(wxEVT_PAINT,&Custom_wxAuiToolBar::OnPaint,this,wxID_ANY);         
+     }
+
+    void OnPaint(wxPaintEvent& event )
+    {
+        event.Skip(true);
+
+        wxClientDC dc(this);
+
+        this->Art_Pointer->DrawPlainBackground(dc,this,this->GetRect());
+   }
+
+   void Receive_Toolbar_Art(MyAuiTBArt * ptr){
+
+        this->Art_Pointer = ptr;
+   }
+
+   MyAuiTBArt * Art_Pointer;
+};
+
+
 class ToolBar_Initializer
 {
 public:
@@ -50,8 +83,8 @@ public:
   void Initialize_ToolBar(wxFrame * Frame_Pointer, 
        wxAuiDockArt * Dock_Art_Pointer, wxAuiManager * Interface_Manager);
   wxAuiToolBar * Get_ToolBar_Pointer();
-  wxAuiToolBar * toolBar;
-  wxAuiToolBarArt * Art_Pointer;
+  Custom_wxAuiToolBar * toolBar;
+  MyAuiTBArt * Art_Pointer;
   wxWindowDC * WinDc;
   wxBitmap * construct_build_system;
   wxBitmap * build_executable_makefile;

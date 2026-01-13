@@ -64,9 +64,12 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
      this->close = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\close.png"),wxBITMAP_TYPE_PNG);
 
 
-     this->toolBar = new wxAuiToolBar(Frame_Pointer,wxID_ANY,wxDefaultPosition,wxDefaultSize,wxAUI_TB_PLAIN_BACKGROUND);
+     this->toolBar = new Custom_wxAuiToolBar(Frame_Pointer,wxID_ANY,wxDefaultPosition,wxDefaultSize);
+
 
      this->Art_Pointer = new MyAuiTBArt();
+
+     this->toolBar->Receive_Toolbar_Art(this->Art_Pointer);
 
      this->toolBar->SetBackgroundColour(wxColour(50,50,60,0xff));
 
@@ -113,11 +116,6 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
      this->toolBar->AddTool(ID_SELECT_PROJECT_FILE,wxT(""),*this->Select_Project_File,wxT(""));
 
 
-     //this->toolBar->AddSpacer(10);
-
-     //this->toolBar->AddTool(ID_PRINT_DESCRIPTIONS,wxT(""),*this->print_descriptions,wxT(""));
-
-
      this->toolBar->SetMargins(6,6,0,0);
 
      this->toolBar->SetOverflowVisible(false);
@@ -127,6 +125,8 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
      this->toolBar->SetThemeEnabled(false);
 
      this->toolBar->RefreshRect(this->toolBar->GetRect(),true);
+
+     this->toolBar->SetAutoLayout(true);
 
      this->toolBar->Realize();
 
