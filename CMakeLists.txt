@@ -119,163 +119,141 @@ FetchContent_MakeAvailable(wxwidgets)
 
 
 
-add_subdirectory(BASIC.TOOLS)
-
-add_subdirectory(DESCRIPTION.PROCESSING.SYSTEM)
-
-add_subdirectory(GIT.DATA.PROCESSING.SYSTEM)
-
-add_subdirectory(SOURCE.FILE.DATA.COLLECTORS)
-
-add_subdirectory(SOURCE.FILE.PROCESSING.SYSTEM)
-
-add_subdirectory(MAKE.FILE.BUILD.SYSTEM)
-
-add_subdirectory(SCRIPT.WRITERS)
-
-add_subdirectory(PROJECT.BUILD.TOOLS)
-
-add_subdirectory(EXECUTABLE.MAKE.FILE.BUILD.SYSTEM)
-
-add_subdirectory(KERNEL.DEVELOPMENT)
-
-add_subdirectory(GUI.DEVELOPMENT)
-
+add_subdirectory(SOURCE)
 
 
 add_executable(Project_Script_Writer 
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/SCRIPT.WRITERS/Project_Script_Writer/Project_Script_Writer_Main_File.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/SCRIPT.WRITERS/Project_Script_Writer/Project_Script_Writer_Main_File.cpp)
 
 
 add_executable(Build_Tools_Initializer 
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/PROJECT.BUILD.TOOLS/Build_Tools_Initializer/Build_Tools_Initializer_Main_File.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/PROJECT.BUILD.TOOLS/Build_Tools_Initializer/Build_Tools_Initializer_Main_File.cpp)
 
 
 add_executable(Executable_MakeFile_Builder 
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/EXECUTABLE.MAKE.FILE.BUILD.SYSTEM/Executable_MakeFile_Builder/Executable_MakeFile_Builder_Main_File.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/EXECUTABLE.MAKE.FILE.BUILD.SYSTEM/Executable_MakeFile_Builder/Executable_MakeFile_Builder_Main_File.cpp)
 
 
 add_executable(Auto_MakeFile_Builder  
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Auto_MakeFile_Builder/Auto_MakeFile_Builder_Main_File.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/MAKE.FILE.BUILD.SYSTEM/Auto_MakeFile_Builder/Auto_MakeFile_Builder_Main_File.cpp)
 
 
 add_executable(Pcynlitx_Kernel
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/KERNEL.DEVELOPMENT/Kernel_Main_File.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/KERNEL.DEVELOPMENT/Kernel_Main_File.cpp)
 
 add_executable(CMAKE_Build
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/CMAKE_Build_System_Generator/CMAKE_Build_System_Generator_Main_File.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/MAKE.FILE.BUILD.SYSTEM/CMAKE_Build_System_Generator/CMAKE_Build_System_Generator_Main_File.cpp)
 
 
 add_executable(CMAKE_Build_Executable
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor_Main_File.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/MAKE.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor_Main_File.cpp)
 
 
 add_executable(Pcynlitx WIN32
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/wxLauncher.cpp pcynlitx_resource.rc
+        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/wxLauncher.cpp pcynlitx_resource.rc
 )
 
 
 target_include_directories(Pcynlitx PUBLIC
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/MainFrame
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/MainFrame
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Custom_Close_Button
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Custom_Close_Button
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Custom_DataPanel
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Custom_DataPanel
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Custom_wxPanel
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Custom_wxPanel
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Custom_Notebook
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Custom_Notebook
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Custom_TabArt
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Custom_TabArt
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Custom_TextCtrl
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Custom_TextCtrl
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Custom_Tree_View_Panel
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Custom_Tree_View_Panel
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Custom_Window
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Custom_Window
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Custom_ProcessOutput
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Custom_ProcessOutput
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Custom_wxThread
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Custom_wxThread
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Custom_wxTreeCtrl
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Custom_wxTreeCtrl
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/GUI.Headers
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/GUI.Headers
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Intro_Page_Loader
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Intro_Page_Loader
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/MainFrame
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/MainFrame
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Process_Manager
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Process_Manager
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Project_File_Selection_Dialog
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Project_File_Selection_Dialog
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Project_Folder_Lister
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Project_Folder_Lister
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Style_Loader
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Style_Loader
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/ToolBar_Initializer
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/ToolBar_Initializer
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Custom_Multi_DataPanel
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Custom_Multi_DataPanel
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Project_Descriptions_Printer
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Project_Descriptions_Printer
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Custom_Message_Dialog
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Custom_Message_Dialog
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Help_Page_Constructor
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Help_Page_Constructor
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Dependency_Tree_Printer
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Dependency_Tree_Printer
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Custom_Progress_Dialog
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Custom_Progress_Dialog
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Custom_wxDataViewTreeCtrl
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Custom_wxDataViewTreeCtrl
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/GUI_List_Data_Recorder
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/GUI_List_Data_Recorder
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT/Project_File_Selection_Window
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Project_File_Selection_Window
 
 
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Reader
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Reader
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/GUI.Descriptor.File.Reader
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/GUI.Descriptor.File.Reader
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
     
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Record.Number.Determiner
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Record.Number.Determiner
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Line.Reader
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Line.Reader
 
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Cpp_FileOperations
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/BASIC.TOOLS/Cpp_FileOperations
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/BASIC.TOOLS/Custom_System_Interface
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/DirectoryOperations
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/BASIC.TOOLS/DirectoryOperations
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/IntToCharTranslater
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/BASIC.TOOLS/IntToCharTranslater
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/BASIC.TOOLS/StringOperator
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/BASIC.TOOLS/Custom_System_Interface
 
 
     ${wxWidgets_BINARY_DIR}/lib/gcc_x64_lib/mswud
 
     ${wxWidgets_SOURCE_DIR}/include
 )
-
 
 target_link_directories(Pcynlitx PUBLIC
 
@@ -319,7 +297,7 @@ target_link_libraries(Pcynlitx PUBLIC BuildSystem_GUI des_reader pthread
                      wxnet
 
                      gcc stdc++
- )
+)
 
 target_compile_options(Pcynlitx PUBLIC -std=c++17 -Wall -Bstatic
 
@@ -329,8 +307,6 @@ target_compile_options(Pcynlitx PUBLIC -std=c++17 -Wall -Bstatic
 target_link_libraries(Project_Script_Writer PUBLIC 
 
         src_dat_col src_proc_sys proj_bld_tools git_data_processing_system des_reader basic_tools )
-
-     
 
 target_link_libraries(Build_Tools_Initializer PUBLIC 
 

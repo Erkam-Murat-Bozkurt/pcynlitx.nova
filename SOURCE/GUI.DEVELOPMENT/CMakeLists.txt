@@ -152,30 +152,30 @@ target_include_directories(BuildSystem_GUI PRIVATE
 
 
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
+    ${CMAKE_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Reader
+    ${CMAKE_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Reader
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/GUI.Descriptor.File.Reader
+    ${CMAKE_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/GUI.Descriptor.File.Reader
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
+    ${CMAKE_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
     
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Record.Number.Determiner
+    ${CMAKE_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Record.Number.Determiner
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Line.Reader
+    ${CMAKE_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Line.Reader
 
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Cpp_FileOperations
+    ${CMAKE_SOURCE_DIR}/SOURCE/BASIC.TOOLS/Cpp_FileOperations
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+    ${CMAKE_SOURCE_DIR}/SOURCE/BASIC.TOOLS/Custom_System_Interface
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/DirectoryOperations
+    ${CMAKE_SOURCE_DIR}/SOURCE/BASIC.TOOLS/DirectoryOperations
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/IntToCharTranslater
+    ${CMAKE_SOURCE_DIR}/SOURCE/BASIC.TOOLS/IntToCharTranslater
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
+    ${CMAKE_SOURCE_DIR}/SOURCE/BASIC.TOOLS/StringOperator
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+    ${CMAKE_SOURCE_DIR}/SOURCE/BASIC.TOOLS/Custom_System_Interface
 
     ${wxWidgets_BINARY_DIR}/lib/gcc_x64_lib/mswud
 
@@ -244,31 +244,31 @@ target_link_directories(BuildSystem_GUI PRIVATE
 
 
     
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
+    ${CMAKE_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Reader
+    ${CMAKE_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Reader
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/GUI.Descriptor.File.Reader
+    ${CMAKE_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/GUI.Descriptor.File.Reader
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
+    ${CMAKE_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
     
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Record.Number.Determiner
+    ${CMAKE_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Record.Number.Determiner
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Line.Reader
+    ${CMAKE_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Line.Reader
 
 
     
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Cpp_FileOperations
+    ${CMAKE_SOURCE_DIR}/SOURCE/BASIC.TOOLS/Cpp_FileOperations
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+    ${CMAKE_SOURCE_DIR}/SOURCE/BASIC.TOOLS/Custom_System_Interface
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/DirectoryOperations
+    ${CMAKE_SOURCE_DIR}/SOURCE/BASIC.TOOLS/DirectoryOperations
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/IntToCharTranslater
+    ${CMAKE_SOURCE_DIR}/SOURCE/BASIC.TOOLS/IntToCharTranslater
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
+    ${CMAKE_SOURCE_DIR}/SOURCE/BASIC.TOOLS/StringOperator
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+    ${CMAKE_SOURCE_DIR}/SOURCE/BASIC.TOOLS/Custom_System_Interface
 
     ${wxWidgets_BINARY_DIR}/lib/gcc_x64_lib/mswud
 
