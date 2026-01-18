@@ -158,7 +158,11 @@ add_executable(CMAKE_Build_Executable
 
 add_executable(Pcynlitx WIN32
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/wxLauncher.cpp pcynlitx_resource.rc
+        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/wxLauncher.cpp pcynlitx_resource.rc 
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Icon_Designs/png_files/pcynlitx_png_resource.rc
+
+        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Icon_Designs/png_files/build_system_generator.png
 )
 
 

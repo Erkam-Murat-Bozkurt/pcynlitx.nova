@@ -89,6 +89,7 @@ add_library(BuildSystem_GUI
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window/Project_File_Selection_Window.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window/Project_File_Selection_Window.cpp
+
 )
 
 
@@ -149,6 +150,9 @@ target_include_directories(BuildSystem_GUI PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/GUI_List_Data_Recorder
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Icon_Designs/png_files
+
 
 
 
@@ -242,6 +246,7 @@ target_link_directories(BuildSystem_GUI PRIVATE
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Icon_Designs/png_files
 
     
     ${CMAKE_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector

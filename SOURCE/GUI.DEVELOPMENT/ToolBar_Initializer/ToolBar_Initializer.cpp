@@ -47,7 +47,13 @@ ToolBar_Initializer::~ToolBar_Initializer(){
 
 void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockArt * Dock_Art_Pointer, wxAuiManager * Interface_Manager){
 
-     this->construct_build_system = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\build_system_generator.png"),wxBITMAP_TYPE_PNG);
+     //this->construct_build_system = new wxBITMAP_PNG_FROM_DATA(build_system_generator);
+
+     this->construct_build_system = this->CreateBitmapFromPngResource(wxString("BLD_SYS_CON"));
+
+      //this->construct_build_system = new wxBITMAP_PNG_FROM_DATA(build_system_generator);
+
+     //this->construct_build_system = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\build_system_generator.png"),wxBITMAP_TYPE_PNG);
 
      this->open_tree_view = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\open_folder_icon.png"),wxBITMAP_TYPE_PNG);
 

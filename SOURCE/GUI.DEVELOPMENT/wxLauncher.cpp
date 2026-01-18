@@ -66,6 +66,9 @@ bool wxLauncher::OnInit(){
 
      wxInitAllImageHandlers();
 
+     wxImage::AddHandler(new wxPNGHandler);
+
+
      wxColour theme_colour(62, 180, 137);
 
 
