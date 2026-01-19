@@ -58,9 +58,7 @@ Custom_Close_Button::Custom_Close_Button(Custom_Window * parent, wxPoint positio
 
     this->GetEventHandler()->Bind(wxEVT_SIZE,&Custom_Close_Button::Size_Event,this,wxID_ANY);
 
-    this->page_close_icon = new
-
-                wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\pane_close_icon.png"),wxBITMAP_TYPE_ANY);
+    this->page_close_icon = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("PANE_CLOSE_ICON"));
 
     this->SetMinSize(this->page_close_icon->GetSize());
 

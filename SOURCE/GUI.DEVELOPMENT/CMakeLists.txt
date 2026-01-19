@@ -44,6 +44,9 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/Intro_Page_Loader/Intro_Page_Loader.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Intro_Page_Loader/Intro_Page_Loader.h
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.Headers/Resource_Loader.hpp
+
+
     ${CMAKE_CURRENT_SOURCE_DIR}/MainFrame/MainFrame.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MainFrame/MainFrame.h
 
@@ -89,6 +92,7 @@ add_library(BuildSystem_GUI
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window/Project_File_Selection_Window.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window/Project_File_Selection_Window.cpp
+
 
 )
 

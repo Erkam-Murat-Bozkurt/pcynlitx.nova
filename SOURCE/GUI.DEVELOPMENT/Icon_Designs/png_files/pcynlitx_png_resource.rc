@@ -1,3 +1,44 @@
 
 
 BLD_SYS_CON	RCDATA "build_system_generator.png"
+
+OPEN_FOLDER RCDATA "open_folder_icon.png"
+
+FILE_SELECT RCDATA "file_selection_icon.png"
+
+CLOSE_ICON RCDATA "close.png"
+
+DES_INTERFACE RCDATA "description_interface.png"
+
+INTRO_FILE RCDATA "Intro_File.png"
+
+CLOSE_TAB RCDATA "close_tab.png"
+
+DEP_ICON_SMALL RCDATA "dependency_icon_small.png"
+
+BUILD_ICON_SMALL RCDATA "build_icon_small.png"
+
+EXCLAMATION_ICON RCDATA "exclamation_icon.png"
+
+EXIT_ICON_SMALL RCDATA "exit_icon_small.png"
+
+FILE_SEL_ICON_SMALL RCDATA "file_selection_icon_small.png"
+
+TREE_VIEW_ICON RCDATA "Tree_View_Folder_Icon.png"
+
+SELECT_PROJECT_FILE RCDATA "select_project_file_icon.png"
+
+OPEN_NEW_PROJECT_FILE RCDATA "open_new_project_file.png"
+
+PANE_CLOSE_ICON RCDATA "pane_close_icon.png"
+
+SAVE_ICON_SMALL RCDATA "save_icon_small.png"
+
+SAVE_SUCCESS_ICON RCDATA "save_success_icon.png"
+
+LOGO RCDATA "logo.png"
+
+FRAME_ICON RCDATA "frame_icon.png"
+
+OPEN_TERMINAL_SMALL RCDATA "open_terminal_small.png"
+

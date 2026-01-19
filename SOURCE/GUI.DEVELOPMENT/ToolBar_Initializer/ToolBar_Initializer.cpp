@@ -47,31 +47,19 @@ ToolBar_Initializer::~ToolBar_Initializer(){
 
 void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockArt * Dock_Art_Pointer, wxAuiManager * Interface_Manager){
 
-     //this->construct_build_system = new wxBITMAP_PNG_FROM_DATA(build_system_generator);
+     this->construct_build_system = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("BLD_SYS_CON"));
 
-     this->construct_build_system = this->CreateBitmapFromPngResource(wxString("BLD_SYS_CON"));
+     this->open_tree_view = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("OPEN_FOLDER"));
 
-      //this->construct_build_system = new wxBITMAP_PNG_FROM_DATA(build_system_generator);
+     this->Select_Project_File = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("FILE_SELECT"));
 
-     //this->construct_build_system = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\build_system_generator.png"),wxBITMAP_TYPE_PNG);
+     this->open_settings =  this->Rsc_Loader.CreateBitmapFromPngResource(wxString("DES_INTERFACE"));
 
-     this->open_tree_view = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\open_folder_icon.png"),wxBITMAP_TYPE_PNG);
+     this->close = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("CLOSE_ICON"));
 
-     this->build_executable = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\build_executable.png"),wxBITMAP_TYPE_PNG);
-
-     this->Select_Project_File = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\file_selection_icon.png"),wxBITMAP_TYPE_PNG);
-
-     this->print_descriptions = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\zoom.png"),wxBITMAP_TYPE_PNG);
-
-     this->open_settings = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\description_enter.png"),wxBITMAP_TYPE_PNG);
-
-     this->open_help_menu = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\help.png"),wxBITMAP_TYPE_PNG);
-
-     this->close = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\close.png"),wxBITMAP_TYPE_PNG);
 
 
      this->toolBar = new Custom_wxAuiToolBar(Frame_Pointer,wxID_ANY,wxDefaultPosition,wxDefaultSize);
-
 
      this->Art_Pointer = new MyAuiTBArt();
 

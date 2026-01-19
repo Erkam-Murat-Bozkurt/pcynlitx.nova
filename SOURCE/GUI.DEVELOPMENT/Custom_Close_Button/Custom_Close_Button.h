@@ -10,6 +10,7 @@
 #include <wx\sizer.h>
 #include "Custom_Window.h"
 #include "Project_Folder_Lister.h"
+#include "Resource_Loader.hpp"
 
 class Custom_Close_Button : public wxWindow
 {
@@ -32,6 +33,7 @@ public:
     void mouseLeftWindow(wxMouseEvent& event);
     void keyPressed(wxKeyEvent& event);
     void keyReleased(wxKeyEvent& event);
+    Resource_Loader Rsc_Loader;
     bool pressedDown;
     bool pressedCloseButton;
     wxString text;

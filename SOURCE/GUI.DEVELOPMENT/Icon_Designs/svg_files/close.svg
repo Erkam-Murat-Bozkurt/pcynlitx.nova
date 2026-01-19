@@ -6,8 +6,8 @@
    id="svg2"
    version="1.1"
    sodipodi:docname="close.svg"
-   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
-   inkscape:export-filename="..\..\..\..\Project.Test.platform\icons\close.png"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   inkscape:export-filename="..\png_files\close.png"
    inkscape:export-xdpi="500"
    inkscape:export-ydpi="500"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -77,11 +77,11 @@
   <path
      id="path825-3-7-7"
      d="M 3.6298895,8.832348 2.7996583,8.0058977 7.9886008,2.840583 8.818832,3.6670332 Z"
-     style="fill:#2d2d2d;fill-opacity:1;stroke:none;stroke-width:0.20708463px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="fill:#414155;fill-opacity:1;stroke:none;stroke-width:0.20708463px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      inkscape:connector-curvature="0" />
   <path
      id="path825-3-7-5-5"
      d="M 3.6940022,2.840583 2.863771,3.6670332 8.0527135,8.832348 8.8829447,8.0058977 Z"
-     style="fill:#2d2d2d;fill-opacity:1;stroke:none;stroke-width:0.207085px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     style="fill:#414155;fill-opacity:1;stroke:none;stroke-width:0.207085px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      inkscape:connector-curvature="0" />
 </svg>

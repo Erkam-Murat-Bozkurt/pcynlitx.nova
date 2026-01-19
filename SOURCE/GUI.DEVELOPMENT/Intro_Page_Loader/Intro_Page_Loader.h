@@ -15,8 +15,10 @@
 #include <wx/button.h>
 #include <wx/frame.h>
 #include <wx/layout.h>
+#include <wx/mstream.h>
 #include <iostream>
 #include "Event_ID_Numbers.h"
+#include "Resource_Loader.hpp"
 
 class Intro_Page_Loader : public wxWindow
 {
@@ -30,6 +32,8 @@ public:
   void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& _rect);
 
   void Receive_Intro_Page_Open_Status(bool * is_Intro_Page_Open);
+
+  Resource_Loader Rsc_Loader;
 
   wxWindow * Parent_Window_Pointer;
   int tab_ctrl_height;
