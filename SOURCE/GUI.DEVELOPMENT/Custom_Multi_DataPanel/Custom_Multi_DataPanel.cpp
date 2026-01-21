@@ -148,11 +148,11 @@ Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, 
 
      this->save_bmp 
   
-      = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\save_success_icon.png"),wxBITMAP_TYPE_ANY);
+      = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("SAVE_SUCCESS_ICON"));
 
      this->exclamation_mark_bmp 
   
-      = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+      = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("EXCLAMATION_ICON"));
 
      this->SetBackgroundColour(wxColour(250,250,250));
 

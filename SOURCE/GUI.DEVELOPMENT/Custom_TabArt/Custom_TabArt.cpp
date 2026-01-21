@@ -27,9 +27,12 @@
 
  Custom_TabArt::Custom_TabArt(wxColour clr) : wxAuiDefaultTabArt()
  {
-    this->page_close_icon = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\close_tab.png"),
 
-                             wxBITMAP_TYPE_ANY);
+
+    this->page_close_icon =
+    
+    this->Rsc_Loader.CreateBitmapFromPngResource(wxString("CLOSE_TAB"));
+    
 
     std::string tabart_font = "Segoe UI";
 

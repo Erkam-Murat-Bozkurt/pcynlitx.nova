@@ -18,6 +18,7 @@
 #include <wx\fontdlg.h>
 #include <string>
 #include <wx/fontutil.h>
+#include "Resource_Loader.hpp"
 
 
 
@@ -53,6 +54,8 @@ public:
   void DrawButton(wxDC & dc,wxWindow* wnd,const wxRect & in_rect,
 
                     int bitmap_id,int button_state,int orientation, wxRect* out_rect);
+
+  Resource_Loader Rsc_Loader;
 
   wxBitmap * page_close_icon;
 

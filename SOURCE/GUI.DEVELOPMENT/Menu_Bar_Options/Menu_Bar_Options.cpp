@@ -187,9 +187,6 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
 
 
-  //this->Project_Management->Append(ID_DETERMINE_SOURCE_FILE_DEPENDENCIES, "&Determine dependencies"," ",wxITEM_NORMAL);
-
-
 
   this->Library_Description_Menu->Append(wxID_NONE,                     "&                 ","",wxITEM_NORMAL);
 

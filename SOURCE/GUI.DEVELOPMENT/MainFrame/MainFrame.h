@@ -55,6 +55,7 @@
 #include "Project_File_Selection_Dialog.h"
 #include "Custom_Multi_DataPanel.hpp"
 #include "GUI_Descriptor_File_Reader.hpp"
+#include "Resource_Loader.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Project_Descriptions_Printer.hpp"
 #include "Custom_Message_Dialog.hpp"
@@ -184,6 +185,7 @@ private:
   wxBoxSizer * setting_panel_box;
   wxFrame * Settting_Frame;
   Custom_Multi_DataPanel * Mt_Panel;
+  Resource_Loader Rsc_Loader;
   bool is_build_system_constructed;
   bool is_descriptor_file_open;
   wxFont * Default_Font;

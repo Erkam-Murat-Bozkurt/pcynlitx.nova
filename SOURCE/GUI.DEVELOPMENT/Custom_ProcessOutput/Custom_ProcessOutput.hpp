@@ -24,6 +24,7 @@
 #include "Custom_System_Interface.h"
 #include "Custom_Tree_View_Panel.h"
 #include "Custom_Message_Dialog.hpp"
+#include "Resource_Loader.hpp"
 
 
 enum
@@ -98,6 +99,8 @@ private:
   bool process_end_status;
 
   bool dir_list_show_cnd;
+
+  Resource_Loader Rsc_Loader;
 
   Custom_System_Interface * SysPtr;
 

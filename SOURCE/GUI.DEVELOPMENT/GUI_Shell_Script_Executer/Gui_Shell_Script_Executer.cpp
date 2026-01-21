@@ -72,7 +72,7 @@ Gui_Shell_Script_Executer::Gui_Shell_Script_Executer(wxFrame * parent, wxWindowI
 
      this->exclamation_mark_bmp 
   
-      = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+      = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("EXCLAMATION_ICON"));
 
 
 

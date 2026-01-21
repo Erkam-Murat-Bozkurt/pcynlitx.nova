@@ -25,6 +25,7 @@
 #include "Custom_DataPanel.hpp"
 #include "Custom_Message_Dialog.hpp"
 #include "GUI_Descriptor_File_Reader.hpp"
+#include "Resource_Loader.hpp"
 
 
 enum
@@ -232,6 +233,8 @@ protected:
     void Save_Report();
 
     void Clear_List_All_Ctrl_Contents();
+
+    Resource_Loader Rsc_Loader;
 
     GUI_List_Data_Recorder Data_Recorder;
 

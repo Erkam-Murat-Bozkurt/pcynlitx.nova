@@ -92,8 +92,6 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->panel_open_status = false;
 
 
-     //this->Interface_Manager_Pointer->SetDockSizeConstraint(0.35,1);
-
      this->File_List_Widget_Shape.TopDockable(false);
 
      this->File_List_Widget_Shape.LeftDockable(false);

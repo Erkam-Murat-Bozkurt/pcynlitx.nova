@@ -273,9 +273,7 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
 
            wxBitmap * exclamation_mark_bmp
   
-           = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\exclamation_icon.png"),
-           
-           wxBITMAP_TYPE_ANY);
+           = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("EXCLAMATION_ICON"));
 
     
            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,close_message,
@@ -387,9 +385,7 @@ void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
 
         wxBitmap * exclamation_mark_bmp
   
-           = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\exclamation_icon.png"),
-           
-           wxBITMAP_TYPE_ANY);
+           = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("EXCLAMATION_ICON"));
 
     
         Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,close_message,

@@ -31,14 +31,8 @@
 #include "Custom_ProcessOutput.hpp"
 #include "Custom_Message_Dialog.hpp"
 #include "StringOperator.h"
+#include "Resource_Loader.hpp"
 
-/*
-enum
-{
-  ID_CLOSE_PROCESS_OUTPUT_WINDOW = 71
-};
-
-*/
 
 class Gui_Shell_Script_Executer : public wxFrame
 {
@@ -73,6 +67,7 @@ private:
   Cpp_FileOperations FileManager;
   Custom_ProcessOutput * Process_Output;
   StringOperator StringManager;
+  Resource_Loader Rsc_Loader;
   bool script_end_status;
   std::thread * read_process_output;
   std::thread * execute_shell_script;

@@ -42,8 +42,6 @@ Custom_wxDataViewTreeCtrl::Custom_wxDataViewTreeCtrl(wxWindow *parent, wxWindowI
 
      this->GetEventHandler()->Bind(wxEVT_SIZE,&Custom_wxDataViewTreeCtrl::Size_Event,this,wxID_ANY);
 
-     //this->GetEventHandler()->Bind()
-
 
      this->SetThemeEnabled(false);
 
@@ -85,8 +83,6 @@ void Custom_wxDataViewTreeCtrl::SetScrollPosition(wxScrollEvent& event){
      wxMessageDialog * dial = new wxMessageDialog(this,wxT("scroll event"),wxT(""),wxOK);
 
      if(dial->ShowModal () == wxOK);
-
-     //this->ScrollLines(this->GetScrollPos(wxVERTICAL));
 }
 
  void Custom_wxDataViewTreeCtrl::OnPaint(wxPaintEvent & event){

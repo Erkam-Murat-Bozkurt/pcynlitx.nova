@@ -6,6 +6,7 @@
 #include <wx/sizer.h>
 #include <wx/event.h>
 #include <wx/gdicmn.h>
+#include "Resource_Loader.hpp"
 
 class Custom_Window : public wxWindow
 {
@@ -19,6 +20,7 @@ public:
     void Receive_Tab_ctrl_Hight(int hight);
     void paintNow();
     void render(wxDC& dc);
+    Resource_Loader Rsc_Loader;
     wxColour colour;
     wxPoint Position;
     wxPoint Button_Position;

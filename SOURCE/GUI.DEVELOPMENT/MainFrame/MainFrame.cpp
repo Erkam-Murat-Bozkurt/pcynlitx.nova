@@ -49,11 +49,11 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->exclamation_mark_bmp 
   
-      = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
+      = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("EXCLAMATION_ICON"));
 
   this->logo_bmp 
   
-      = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\logo.png"),wxBITMAP_TYPE_ANY);
+      = this->Rsc_Loader.CreateBitmapFromPngResource(wxString(("LOGO")));
 
 
   this->Des_Reader = new GUI_Descriptor_File_Reader('w');
