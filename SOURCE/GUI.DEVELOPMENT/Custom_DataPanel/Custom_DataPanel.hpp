@@ -15,6 +15,7 @@
 #include <wx\textdlg.h>
 #include <wx\msgdlg.h>
 #include "Process_Manager.hpp"
+#include "Resource_Loader.hpp"
 
 enum
 {
@@ -43,6 +44,8 @@ public:
     void OnPaint(wxPaintEvent & event);
     wxString GetDataInput();   
 protected:
+    Resource_Loader Rsc_Loader;
+    wxBitmap * Frame_Bitmap;
     wxDialog * dlg_ptr;
     wxFrame  * frame_ptr;
     wxDataViewListCtrl * listctrl;

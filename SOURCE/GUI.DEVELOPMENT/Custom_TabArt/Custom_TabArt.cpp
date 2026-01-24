@@ -118,10 +118,6 @@
        bld.SetFaceName(wxT("Segoe UI"));
 
 
-       
-
-       //bld.SetPixelSize(wxSize(0,14));
-
 
        wxFont normal = *this->Default_Font;
 

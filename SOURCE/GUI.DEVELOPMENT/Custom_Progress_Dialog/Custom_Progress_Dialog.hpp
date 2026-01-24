@@ -24,6 +24,7 @@
 #include "Custom_DockArt.h"
 #include "Custom_Window.h"
 #include "Custom_Close_Button.h"
+#include "Resource_Loader.hpp"
 
 enum
 {
@@ -84,7 +85,10 @@ protected:
 
   bool Memory_Delete_Condition;
 
-  
+  Resource_Loader Rsc_Loader;
+    
+  wxBitmap * Frame_Bitmap;
+
   wxPanel * text_ctrl_panel;
 
   wxPanel * text_ctrl_close_panel;

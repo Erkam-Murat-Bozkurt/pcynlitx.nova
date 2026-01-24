@@ -51,10 +51,16 @@ Custom_ProcessOutput::Custom_ProcessOutput(wxFrame *parent, wxWindowID id, const
 
      this->dir_list_show_cnd = false;
 
-     wxIcon Frame_Icon(wxT("C:\\Program Files\\Pcynlitx\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+
+     this->Frame_Bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("FRAME_ICON"));
+
+     wxIcon Frame_Icon;
+
+     Frame_Icon.CopyFromBitmap(*this->Frame_Bitmap);
 
      this->SetIcon(Frame_Icon);
 
+     
      this->SetBackgroundStyle(wxBG_STYLE_PAINT);
 
      this->SetExtraStyle(wxFULL_REPAINT_ON_RESIZE);

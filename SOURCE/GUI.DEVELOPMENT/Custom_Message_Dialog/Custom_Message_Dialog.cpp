@@ -189,8 +189,12 @@ Custom_Message_Dialog::Custom_Message_Dialog(wxWindow * parent, const wxString &
 
     this->SetMinSize(this->FromDIP(size));
 
-    wxIcon Frame_Icon(wxT("C:\\Program Files\\Pcynlitx\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+    this->Frame_Bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("FRAME_ICON"));
 
+    wxIcon Frame_Icon;
+
+    Frame_Icon.CopyFromBitmap(*this->Frame_Bitmap);
+    
     this->SetIcon(Frame_Icon);
 
 

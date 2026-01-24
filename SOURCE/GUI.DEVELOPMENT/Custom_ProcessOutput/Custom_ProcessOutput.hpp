@@ -101,6 +101,8 @@ private:
   bool dir_list_show_cnd;
 
   Resource_Loader Rsc_Loader;
+    
+  wxBitmap * Frame_Bitmap;
 
   Custom_System_Interface * SysPtr;
 

@@ -11,7 +11,7 @@
 #include <wx\fontdata.h>
 #include <wx\fontdlg.h>
 #include <wx\menuitem.h>
-
+#include "Resource_Loader.hpp"
 #include "Event_ID_Numbers.h"
 
 class Menu_Bar_Options
@@ -28,6 +28,7 @@ private:
   wxMenu  * Library_Description_Menu;
   wxMenu  * Edit_Menu;
   wxMenuBar * Menu_Bar;
+  Resource_Loader Rsc_Loader;
 };
 
 #endif /* MENU_BAR_OPTIONS_H */

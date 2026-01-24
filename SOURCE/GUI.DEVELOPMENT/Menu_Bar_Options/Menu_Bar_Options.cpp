@@ -49,18 +49,26 @@ Menu_Bar_Options::Menu_Bar_Options(){
   this->Help_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
 
-  //this->File_Menu->Append(ID_FILE_SAVE,"&Save","",wxITEM_NORMAL);
+  wxBitmap * save_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("SAVE_ICON_SMALL"));
+
+  wxIcon save_icon;
+
+  save_icon.CopyFromBitmap(*save_icon_bitmap);
+
+  wxMenuItem * save_item = new wxMenuItem(this->File_Menu,ID_FILE_SAVE,"&Save"," ",wxITEM_NORMAL);
+
+  save_item->SetBitmap(save_icon);
+
+  this->File_Menu->Append(save_item);
 
 
-   wxIcon * save_icon = new wxIcon(wxT("C:\\Program Files\\Pcynlitx\\icons\\save_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
-   wxMenuItem * save_item = new wxMenuItem(this->File_Menu,ID_FILE_SAVE,"&Save"," ",wxITEM_NORMAL);
 
-   save_item->SetBitmap(*save_icon);
+   wxBitmap * save_as_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("SAVE_ICON_SMALL"));
 
-   this->File_Menu->Append(save_item);
+   wxIcon save_as_icon;
 
-   wxIcon * save_as_icon = new wxIcon(wxT("C:\\Program Files\\Pcynlitx\\icons\\save_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+   save_as_icon.CopyFromBitmap(*save_as_icon_bitmap);
 
    wxMenuItem * save_as_item = new wxMenuItem(this->File_Menu,ID_SAVE_AS,"&Save as"," ",wxITEM_NORMAL);
 
@@ -68,19 +76,29 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
    this->File_Menu->Append(save_as_item);
 
+
+
+
   this->File_Menu->Append(ID_OPEN_FILE,"&Open file","",wxITEM_NORMAL);
 
   this->File_Menu->Append(ID_NEW_FILE,"&Create new file as","",wxITEM_NORMAL);
 
   this->File_Menu->Append(ID_OPEN_TREE_WIEW,"&Open Folder","",wxITEM_NORMAL);
 
-   wxIcon * exit_icon = new wxIcon(wxT("C:\\Program Files\\Pcynlitx\\icons\\exit_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
 
-   wxMenuItem * exit_item = new wxMenuItem(this->File_Menu,ID_EXIT,"&EXIT"," ",wxITEM_NORMAL);
 
-   exit_item->SetBitmap(*exit_icon);
 
-   this->File_Menu->Append(exit_item);
+  wxBitmap * exit_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("EXIT_ICON_SMALL"));
+
+  wxIcon exit_icon;
+
+  exit_icon.CopyFromBitmap(*exit_icon_bitmap);
+
+  wxMenuItem * exit_item = new wxMenuItem(this->File_Menu,ID_EXIT,"&EXIT"," ",wxITEM_NORMAL);
+
+  exit_item->SetBitmap(exit_icon);
+
+  this->File_Menu->Append(exit_item);
 
   this->File_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
@@ -129,11 +147,17 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Project_Management->Append(ID_SHOW_PROJECT_FILE,"Show Project File","",wxITEM_NORMAL);
 
-  wxIcon * project_file_selection_icon = new wxIcon(wxT("C:\\Program Files\\Pcynlitx\\icons\\file_selection_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+
+
+  wxBitmap * project_file_selection_icon_bitmap =  this->Rsc_Loader.CreateBitmapFromPngResource(wxString("FILE_SEL_ICON_SMALL"));
+
+  wxIcon project_file_selection_icon;
+
+  project_file_selection_icon.CopyFromBitmap(*project_file_selection_icon_bitmap);
 
   wxMenuItem * project_file_seletion_item = new wxMenuItem(this->Project_Management,ID_SELECT_PROJECT_FILE,"&Select project file"," ",wxITEM_NORMAL);
 
-  project_file_seletion_item->SetBitmap(*project_file_selection_icon);
+  project_file_seletion_item->SetBitmap(project_file_selection_icon);
 
   this->Project_Management->Append(project_file_seletion_item);
 
@@ -150,30 +174,48 @@ Menu_Bar_Options::Menu_Bar_Options(){
 
   this->Project_Management->Append(wxID_NONE,                "&BUILD SYSTEM OPERATIONS "," ",wxITEM_NORMAL);
 
-   wxIcon * frame_icon = new wxIcon(wxT("C:\\Program Files\\Pcynlitx\\icons\\build_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+  wxBitmap * build_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("BUILD_ICON_SMALL"));
 
-   wxMenuItem * build_item = new wxMenuItem(this->Project_Management,ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,"&Build system initializer"," ",wxITEM_NORMAL);
+  wxIcon build_icon;
 
-   build_item->SetBitmap(*frame_icon);
+  build_icon.CopyFromBitmap(*build_icon_bitmap);
 
-   this->Project_Management->Append(build_item);
+  wxMenuItem * build_item = new wxMenuItem(this->Project_Management,ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,"&Build system initializer"," ",wxITEM_NORMAL);
 
+  build_item->SetBitmap(build_icon);
 
-
-   wxIcon * run_build_script_icon = new wxIcon(wxT("C:\\Program Files\\Pcynlitx\\icons\\open_terminal_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
-
-   wxMenuItem * run_build_script_item = new wxMenuItem(this->Project_Management,ID_RUN_PROJECT_SCRIPT,"&Run project build script"," ",wxITEM_NORMAL);
-
-   run_build_script_item->SetBitmap(*run_build_script_icon);
-
-   this->Project_Management->Append(run_build_script_item);
+  this->Project_Management->Append(build_item);
 
 
-   wxIcon * dependency_icon = new wxIcon(wxT("C:\\Program Files\\Pcynlitx\\icons\\dependecy_icon_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+
+  wxBitmap * run_build_script_icon_bitmap =  this->Rsc_Loader.CreateBitmapFromPngResource(wxString("OPEN_TERMINAL_SMALL"));
+
+  wxIcon run_build_script_icon;
+
+  run_build_script_icon.CopyFromBitmap(*run_build_script_icon_bitmap);
+
+  wxMenuItem * run_build_script_item = new wxMenuItem(this->Project_Management,ID_RUN_PROJECT_SCRIPT,"&Run project build script"," ",wxITEM_NORMAL);
+
+  run_build_script_item->SetBitmap(run_build_script_icon);
+
+  this->Project_Management->Append(run_build_script_item);
+
+
+
+  
+
+
+   wxBitmap * dependency_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("DEP_ICON_SMALL"));
+
+   wxIcon dependency_icon;
+
+   dependency_icon.CopyFromBitmap(*dependency_icon_bitmap);
+
+
 
    wxMenuItem * dependency_item = new wxMenuItem(this->Project_Management,ID_DETERMINE_SOURCE_FILE_DEPENDENCIES,"&Determine dependencies"," ",wxITEM_NORMAL);
 
-   dependency_item->SetBitmap(*dependency_icon);
+   dependency_item->SetBitmap(dependency_icon);
 
    this->Project_Management->Append(dependency_item);
 

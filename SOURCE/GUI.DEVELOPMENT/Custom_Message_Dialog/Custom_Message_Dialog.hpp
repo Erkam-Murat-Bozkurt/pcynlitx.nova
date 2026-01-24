@@ -12,6 +12,7 @@
 #include <wx/statbmp.h>
 #include <wx/stattext.h>
 #include <wx/utils.h> 
+#include "Resource_Loader.hpp"
 
 
 
@@ -84,6 +85,10 @@ private:
     wxButton * Yes_Button;
 
     wxButton * No_Button;
+
+    Resource_Loader Rsc_Loader;
+
+    wxBitmap * Frame_Bitmap;
 
     bool Memory_Delete_Condition;
 

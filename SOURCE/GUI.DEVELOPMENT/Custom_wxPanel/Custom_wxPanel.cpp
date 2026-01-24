@@ -123,11 +123,17 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
 
-     wxIcon * Info_icon = new wxIcon(wxT("C:\\Program Files\\Pcynlitx\\icons\\logo_small.png"),wxBITMAP_TYPE_PNG,-1,-1);
+
+     this->Info_Icon_Bmp = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("LOGO_SMALL"));
+
+
+     wxIcon Info_icon;
+
+     Info_icon.CopyFromBitmap(*this->Info_Icon_Bmp);
 
      wxMenuItem * info_item = new wxMenuItem(this->Info_Menu,ID_SHOW_HELP_MENU,"&PCYNLITX VERSION 2.0"," ",wxITEM_NORMAL);
 
-     info_item->SetBitmap(*Info_icon);
+     info_item->SetBitmap(Info_icon);
 
      this->Main_Menu->Append(info_item);
 

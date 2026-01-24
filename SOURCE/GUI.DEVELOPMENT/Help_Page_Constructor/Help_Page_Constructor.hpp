@@ -15,7 +15,7 @@
 #include <wx/stattext.h>
 #include <wx/utils.h> 
 #include "Custom_Notebook.h"
-
+#include "Resource_Loader.hpp"
 
 
 enum
@@ -90,6 +90,10 @@ private:
     wxButton * IntroButton;
 
     bool Memory_Delete_Condition;
+
+    wxBitmap * Frame_Bitmap;
+
+    Resource_Loader Rsc_Loader;
 
     DECLARE_EVENT_TABLE()
 };

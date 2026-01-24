@@ -80,6 +80,8 @@ private:
   bool Memory_Delete_Condition;
   wxBitmap * exclamation_mark_bmp;
 
+  wxBitmap * Frame_Bitmap;
+
   int script_size;
 
   char * c_str;

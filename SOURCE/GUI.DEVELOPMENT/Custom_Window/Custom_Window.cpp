@@ -41,7 +41,7 @@ Custom_Window::Custom_Window(wxPanel * parent, wxPoint position, wxSize window_s
 
     this->SetMinSize(window_size);
 
-    this->page_close_icon = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\pane_close_icon.png"), wxBITMAP_TYPE_ANY);
+    this->page_close_icon = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("PANE_CLOSE_ICON"));
 
     this->Position = position;
 

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="0 0 6.385306 7.3431019"
+   height="7.343102"
+   width="6.3853059"
+   id="svg2"
+   version="1.1"
+   sodipodi:docname="logo_small.svg"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   inkscape:export-filename="..\png_files\logo_small.png"
+   inkscape:export-xdpi="500"
+   inkscape:export-ydpi="500"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1111"
+     id="namedview8"
+     showgrid="true"
+     inkscape:zoom="12.528765"
+     inkscape:cx="8.3408061"
+     inkscape:cy="6.5050306"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2"
+     inkscape:showpageshadow="2"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid10"
+       originx="5.6684775"
+       originy="-22.627586"
+       spacingy="1"
+       spacingx="1"
+       units="px"
+       visible="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata8">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs6" />
+  <rect
+     style="fill:none;fill-opacity:0.988152;stroke:none;stroke-width:0.189516;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+     id="rect5-8-9"
+     width="6.3590016"
+     height="1.4161475"
+     x="-0.62793404"
+     y="4.8949699" />
+  <text
+     xml:space="preserve"
+     style="font-size:1.42958px;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';fill:#d27d64;fill-opacity:0.5;stroke:#d27d64;stroke-width:0.178698;stroke-dasharray:none;stroke-opacity:1"
+     x="0.29956448"
+     y="6.9520493"
+     id="text1"
+     transform="scale(1.0162428,0.98401681)"><tspan
+       sodipodi:role="line"
+       id="tspan1"
+       x="0.29956448"
+       y="6.9520493"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:1.42958px;font-family:Oswald;-inkscape-font-specification:'Oswald Bold';fill:#50505a;fill-opacity:1;stroke:none;stroke-width:0.178698;stroke-opacity:1">PCYNLITX</tspan></text>
+  <rect
+     style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.167113;stroke-dasharray:none;stroke-opacity:1"
+     id="rect1"
+     width="4.9816022"
+     height="5.0913382"
+     x="0.78361708"
+     y="0.42945087"
+     ry="0" />
+  <rect
+     style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.217911;stroke-dasharray:none;stroke-opacity:1"
+     id="rect2"
+     width="7.6412282"
+     height="9.2655039"
+     x="-0.53018183"
+     y="-1.0408983"
+     ry="0" />
+  <rect
+     style="fill:#fcaf3b;stroke:none;stroke-width:0.0127316;stroke-dasharray:none;stroke-opacity:1"
+     id="rect1-3"
+     width="3.4370372"
+     height="2.9338894"
+     x="0.62223613"
+     y="0.36658865"
+     ry="0" />
+  <rect
+     style="fill:#fcaf3b;fill-opacity:1;stroke:none;stroke-width:0.00834861;stroke-dasharray:none;stroke-opacity:1"
+     id="rect1-3-2"
+     width="0.97235656"
+     height="4.4594183"
+     x="4.5568018"
+     y="0.35579377"
+     ry="0" />
+  <rect
+     style="fill:#fcaf3b;stroke:none;stroke-width:0.00843357;stroke-dasharray:none;stroke-opacity:1"
+     id="rect1-3-2-4"
+     width="1.0629698"
+     height="4.1730809"
+     x="3.755064"
+     y="-4.7813373"
+     transform="rotate(90)"
+     ry="0" />
+  <rect
+     style="fill:none;stroke:#fcaf3b;stroke-width:0;stroke-dasharray:none"
+     id="rect3"
+     width="6.3853059"
+     height="7.343102"
+     x="0"
+     y="0"
+     ry="0" />
+</svg>

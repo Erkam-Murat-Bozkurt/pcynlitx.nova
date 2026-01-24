@@ -12,6 +12,7 @@
 #include <wx/sizer.h>
 #include <wx/msgdlg.h>
 #include "Event_ID_Numbers.h"
+#include "Resource_Loader.hpp"
 
 
 
@@ -64,7 +65,8 @@ public:
 
   wxAuiPaneInfo * Pane_Pointer;
 
-
+  wxBitmap * Info_Icon_Bmp;
+  
   wxColour background;
 
   wxButton * Start_Button;
@@ -108,10 +110,7 @@ public:
 
   wxMenu  * Windows_Package_Generator;
 
-
-
-
-  //DECLARE_EVENT_TABLE()
+  Resource_Loader Rsc_Loader;
 
 };
 

@@ -42,3 +42,4 @@ FRAME_ICON RCDATA "frame_icon.png"
 
 OPEN_TERMINAL_SMALL RCDATA "open_terminal_small.png"
 
+LOGO_SMALL RCDATA "logo_small.png"

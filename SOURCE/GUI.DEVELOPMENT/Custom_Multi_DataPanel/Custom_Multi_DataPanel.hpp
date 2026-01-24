@@ -236,6 +236,8 @@ protected:
 
     Resource_Loader Rsc_Loader;
 
+    wxBitmap * Frame_Bitmap;
+
     GUI_List_Data_Recorder Data_Recorder;
 
     GUI_Descriptor_File_Reader Des_Reader;
