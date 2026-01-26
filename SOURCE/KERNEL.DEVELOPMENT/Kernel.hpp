@@ -15,6 +15,7 @@
 #include <fcntl.h>
 #include <string>
 #include <windows.h>
+#include "Custom_System_Interface.h"
 #include "Build_Tools_Initializer.h"
 #include "CMAKE_Build_System_Generator.hpp"
 #include "Executable_MakeFile_Builder.hpp"

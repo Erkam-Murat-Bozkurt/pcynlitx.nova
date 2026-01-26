@@ -24,6 +24,7 @@
 #include <condition_variable>
 #include "Event_ID_Numbers.h"
 #include "Custom_System_Interface.h"
+#include "Resource_Loader.hpp"
 
 enum
 {
@@ -74,6 +75,10 @@ private:
   std::thread * read_named_pipe;
   std::string std_out_put;
   std::string named_pipe_str;
+
+  wxBitmap * Frame_Bitmap;
+
+  Resource_Loader Rsc_Loader;
 
   wxFont * Default_Font;
 
