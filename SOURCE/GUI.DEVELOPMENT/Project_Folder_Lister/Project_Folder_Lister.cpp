@@ -63,7 +63,7 @@ void Project_Folder_Lister::Initialize_Properties(){
 
      wxSize size = this->treeCtrl->FromDIP(wxSize(16, 16));
 
-     this->Folder_Icon.LoadFile(wxT("C:\\Program Files\\Pcynlitx\\icons\\Folder.png"),wxBITMAP_TYPE_PNG);
+     this->Folder_Icon = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("TREE_VIEW_ICON"));
 
      this->File_Icon = wxArtProvider::GetBitmap(wxART_NORMAL_FILE, wxART_OTHER, size);
 }
@@ -99,7 +99,7 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
 
      this->item_counter++;
 
-     this->treeCtrl->SetItemIcon(this->tree_item_list[this->item_counter].item_number,this->Folder_Icon);
+     this->treeCtrl->SetItemIcon(this->tree_item_list[this->item_counter].item_number,*this->Folder_Icon);
 
      this->tree_item_list[this->item_counter].Item_Path = Folder;
 
@@ -213,7 +213,7 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
 
          this->tree_item_list[this->item_counter+1].Item_Path = Path;
 
-         this->treeCtrl->SetItemIcon(this->tree_item_list[this->item_counter+1].item_number,this->Folder_Icon);
+         this->treeCtrl->SetItemIcon(this->tree_item_list[this->item_counter+1].item_number,*this->Folder_Icon);
 
          this->item_counter++;
 

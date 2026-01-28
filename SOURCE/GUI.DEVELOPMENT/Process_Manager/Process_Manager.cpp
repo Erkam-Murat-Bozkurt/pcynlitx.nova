@@ -236,6 +236,31 @@ void Process_Manager::ReadFromNamedPipe(){
 
 }
 
+wxString Process_Manager::GetUserHomeDirectory()
+{
+    wxString dir;
+    HRESULT hr = E_FAIL;
+
+    hr = ::SHGetFolderPath
+            (
+            nullptr,               // parent window, not used
+            CSIDL_PROFILE,
+            nullptr,               // access token (current user)
+            SHGFP_TYPE_DEFAULT, // current path, not just default value
+            wxStringBuffer(dir, MAX_PATH)
+            );
+
+    if ( hr == E_FAIL )
+    {
+        // directory doesn't exist, maybe we can get its default value?
+
+        dir.clear();
+
+        dir.shrink_to_fit();
+    }
+
+    return dir;
+}
 
 void Process_Manager::Construct_Text_Panel(wxString title, int dialog_size){
 

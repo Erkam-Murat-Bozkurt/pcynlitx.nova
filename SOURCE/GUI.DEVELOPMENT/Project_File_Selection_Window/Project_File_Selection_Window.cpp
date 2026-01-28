@@ -50,27 +50,26 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
 
      this->Descriptor_File_Selection_Status = nullptr;
 
-     wxIcon Frame_Icon(wxT("C:\\Program Files\\Pcynlitx\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+     this->Frame_Bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("FRAME_ICON"));
+
+     wxIcon Frame_Icon;
+
+     Frame_Icon.CopyFromBitmap(*this->Frame_Bitmap);
 
      this->SetIcon(Frame_Icon);
 
 
-     this->exclamation_mark_bmp 
+     this->exclamation_mark_bmp = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("EXCLAMATION_ICON"));
   
-      = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\exclamation_icon.png"),wxBITMAP_TYPE_ANY);
-
 
      this->SetTitle(wxT("PROJECT FILE SELECTION PANEL"));
 
 
-     this->new_empty_file 
+     this->new_empty_file = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("OPEN_NEW_PROJECT_FILE"));
   
-      = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\open_new_project_file.png"),wxBITMAP_TYPE_ANY);
 
-
-     this->open_existing_file 
+     this->open_existing_file = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("SELECT_PROJECT_FILE"));
   
-      = new wxBitmap(wxT("C:\\Program Files\\Pcynlitx\\icons\\select_project_file_icon.png"),wxBITMAP_TYPE_ANY);
 
      this->SetBackgroundColour(wxColour(225,225,225));
 

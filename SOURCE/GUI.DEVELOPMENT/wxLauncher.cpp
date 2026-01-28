@@ -35,6 +35,8 @@
 #include "MainFrame.h"
 #include "Intro_Page_Loader.h"
 #include "Event_ID_Numbers.h"
+#include "Resource_Loader.hpp"
+
 
 class wxLauncher : public wxApp
 {
@@ -42,7 +44,9 @@ public:
   virtual bool OnInit();
   virtual ~wxLauncher();
   MainFrame * Frame;
-  wxIcon * Frame_Icon;
+  wxIcon Frame_Icon;
+  wxBitmap * Frame_Bitmap;
+  Resource_Loader Rsc_Loader;
 };
 
 DECLARE_APP(wxLauncher)
@@ -56,7 +60,7 @@ wxLauncher::~wxLauncher(){
        this->DeletePendingEvents();
     }
 
-    delete this->Frame_Icon;
+    delete this->Frame_Bitmap;
 }
 
 
@@ -76,9 +80,13 @@ bool wxLauncher::OnInit(){
 
      if(this->Frame)
      {
-        this->Frame_Icon = new wxIcon(wxT("C:\\Program Files\\Pcynlitx\\icons\\frame_icon.png"),wxBITMAP_TYPE_PNG,-1,-1);
+         this->Frame_Bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("FRAME_ICON"));
 
-         this->Frame->SetIcon(*this->Frame_Icon);
+         wxIcon Frame_Icon;
+
+         this->Frame_Icon.CopyFromBitmap(*this->Frame_Bitmap);
+
+         this->Frame->SetIcon(this->Frame_Icon);
 
          this->SetTopWindow(this->Frame);
 

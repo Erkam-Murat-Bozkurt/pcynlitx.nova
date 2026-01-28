@@ -25,6 +25,8 @@
 #include "Event_ID_Numbers.h"
 #include "Custom_System_Interface.h"
 #include "Resource_Loader.hpp"
+#include <wx/stdpaths.h>
+#include <shlobj.h>
 
 enum
 {
@@ -60,6 +62,7 @@ public:
   void ReadStdOut();
   void ReadFromNamedPipe();
   void Clear_String_Memory(char * ptr);
+  wxString GetUserHomeDirectory();
   wxGauge * GetDialogAddress();
   wxTextCtrl * GetTextControl();
   std::string Get_Std_Out();

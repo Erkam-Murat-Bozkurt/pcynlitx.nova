@@ -57,7 +57,7 @@ public:
 
   wxStaticText * start_text;
 
-
+  wxBitmap * project_file_selection_bitmap;
 
   int ToolBar_ID = 0;
 
@@ -66,6 +66,16 @@ public:
   wxAuiPaneInfo * Pane_Pointer;
 
   wxBitmap * Info_Icon_Bmp;
+
+  wxBitmap * Save_Icon_Small;
+
+  wxBitmap * exit_icon_bitmap;
+
+  wxBitmap * build_icon_bitmap;
+
+  wxBitmap * run_build_script_icon_bitmap;
+
+  wxBitmap * dependency_icon_bitmap;
   
   wxColour background;
 

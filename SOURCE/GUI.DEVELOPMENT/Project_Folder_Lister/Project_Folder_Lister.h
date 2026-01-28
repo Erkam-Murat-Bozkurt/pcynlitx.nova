@@ -16,6 +16,7 @@
 #include <wx/msgout.h>
 #include <wx/dataview.h>
 #include <string>
+#include "Resource_Loader.hpp"
 
 
 struct Tree_Item
@@ -75,6 +76,8 @@ private:
 
   void Count_Files(wxString Folder);
 
+  Resource_Loader Rsc_Loader;
+
   size_t Short_Path_Name_Size;
   int sub_directory_number;
   int total_item_number;
@@ -88,7 +91,7 @@ private:
   bool search_cond;
   bool does_it_have_sub_dir;
   wxDataViewItem appended_item;
-  wxBitmap Folder_Icon;
+  wxBitmap * Folder_Icon;
   wxBitmap File_Icon;
 
 };

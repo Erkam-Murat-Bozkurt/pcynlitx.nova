@@ -24,6 +24,7 @@
 #include "Custom_Message_Dialog.hpp"
 #include "Custom_System_Interface.h"
 #include "Cpp_FileOperations.h"
+#include "Resource_Loader.hpp"
 
 
 
@@ -69,6 +70,16 @@ protected:
 
     void Select_File();
 
+    Resource_Loader Rsc_Loader;
+
+    wxBitmap * exclamation_mark_bmp;
+
+    wxBitmap * new_empty_file;
+
+    wxBitmap * open_existing_file;
+
+    wxBitmap * Frame_Bitmap;
+
     Cpp_FileOperations FileManager;
 
     Process_Manager * Process_Ptr;
@@ -79,17 +90,9 @@ protected:
 
     wxString DataType;
 
-    wxBitmap * new_empty_file;
-
-    wxBitmap * open_existing_file;
-
-    wxBitmap * exclamation_mark_bmp;
-
-
     char opr_sis;
 
     bool * Descriptor_File_Selection_Status;
-
 
     wxWindow * Parent_Window;
 

@@ -338,13 +338,13 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->Book_Manager->OpenIntroPage();
 
-  wxString Help_Page_Path = wxString("C:\\Program Files\\Pcynlitx\\Introduction.txt");
+  //wxString Help_Page_Path = wxString("C:\\Program Files\\Pcynlitx\\Introduction.txt");
 
-  this->Book_Manager->Open_File(Help_Page_Path);
+  //this->Book_Manager->Open_File(Help_Page_Path);
 
-  size_t notebook_index = this->Book_Manager->GetIndex_FromPath(Help_Page_Path);
+  //size_t notebook_index = this->Book_Manager->GetIndex_FromPath(Help_Page_Path);
 
-  this->Book_Manager->Get_NoteBook_Pointer()->SetPageText(notebook_index,wxString("Introduction"));
+  //this->Book_Manager->Get_NoteBook_Pointer()->SetPageText(notebook_index,wxString("Introduction"));
 
   this->Book_Manager->SelectIntroPage();
 
@@ -1394,6 +1394,12 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
      if(event.GetId() == ID_SELECT_PROJECT_FILE ){
 
        event.Skip(false);
+
+       wxString home_dir = this->Process_Ptr->GetUserHomeDirectory();
+
+       wxMessageDialog * dial = new wxMessageDialog(this,home_dir,home_dir);
+
+       dial->ShowModal();
 
        this->Freeze();
 

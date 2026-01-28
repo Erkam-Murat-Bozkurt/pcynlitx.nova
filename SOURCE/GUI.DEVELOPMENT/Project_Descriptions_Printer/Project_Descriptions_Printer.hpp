@@ -30,6 +30,7 @@
 #include "Custom_Tree_View_Panel.h"
 #include "GUI_Descriptor_File_Reader.hpp"
 #include "Descriptor_File_Reader.hpp"
+#include "Resource_Loader.hpp"
 
 enum
 {
@@ -85,6 +86,10 @@ private:
   void CloseWindow(wxCommandEvent & event);
 
   void OnPaint(wxPaintEvent & event);
+
+  Resource_Loader Rsc_Loader;
+
+  wxBitmap * Frame_Bitmap;
 
   GUI_Descriptor_File_Reader * Des_Reader;
 

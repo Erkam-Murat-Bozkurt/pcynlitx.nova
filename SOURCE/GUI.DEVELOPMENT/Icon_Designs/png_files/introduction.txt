@@ -1,0 +1,17 @@
+
+
+
+#include <iostream>
+
+int main(){
+
+   std::cout << "\n Welcome to pcynlitx nova platform.. ";
+
+   std::cout << "\n You can find more information about ";
+
+   std::cout << "\n pcynlitx Project from its offical web ";
+
+   std::cout << "\n site www.pcynlitx.com. ";
+
+   return 0;
+}

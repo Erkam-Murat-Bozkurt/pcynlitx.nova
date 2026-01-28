@@ -18,6 +18,22 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 
+execute_process(COMMAND cmd /c echo %USERPROFILE%
+
+   WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+   OUTPUT_VARIABLE USER_PROFILE_PATH
+)
+
+
+string(REPLACE "\n" "" USER_PROFILE_PATH "${USER_PROFILE_PATH}")
+
+string(REPLACE "/" "\\" USER_PROFILE_PATH "${USER_PROFILE_PATH}")
+
+execute_process(
+    COMMAND ${CMAKE_COMMAND} -E make_directory "${USER_PROFILE_PATH}/Pcynlitx"
+    RESULT_VARIABLE directory_creation_result
+)
+
 
 if(MINGW)
    
@@ -27,18 +43,6 @@ else()
 
    message("The mingw compiler toolchain can not be detected")
    message("The mingw compiler will be installed")
-
-
-   execute_process(COMMAND cmd /c echo %USERPROFILE%
-
-     WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-     OUTPUT_VARIABLE USER_PROFILE_PATH
-   )
-
-
-   string(REPLACE "\n" "" USER_PROFILE_PATH "${USER_PROFILE_PATH}")
-
-   string(REPLACE "/" "\\" USER_PROFILE_PATH "${USER_PROFILE_PATH}")
 
 
    file(DOWNLOAD  https://github.com/brechtsanders/winlibs_mingw/releases/download/15.2.0posix-13.0.0-msvcrt-r3/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64msvcrt-13.0.0-r3.zip ${USER_PROFILE_PATH}/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64msvcrt-13.0.0-r3.zip SHOW_PROGRESS)
@@ -324,7 +328,7 @@ target_link_libraries(Auto_MakeFile_Builder PUBLIC make_fbld_sys proj_bld_tools
 
                    git_data_processing_system des_reader basic_tools)
 
-                   
+
 target_link_libraries(Pcynlitx_Kernel PUBLIC kernel proj_bld_tools exec_make_bld script_writers make_fbld_sys 
 
                    src_proc_sys git_data_processing_system src_dat_col des_reader basic_tools)
@@ -342,3 +346,13 @@ target_link_libraries(CMAKE_Build_Executable PUBLIC proj_bld_tools make_fbld_sys
 add_dependencies(BuildSystem_GUI wxbase wxcore wxaui wxadv wxstc wxrc wxrichtext wxgl wxnet)
 
 add_dependencies(Pcynlitx BuildSystem_GUI)
+
+
+add_custom_command(
+       TARGET Pcynlitx_Kernel
+       POST_BUILD 
+       COMMAND ${CMAKE_COMMAND}
+       ARGS -E copy $<TARGET_FILE:Pcynlitx_Kernel> "${USER_PROFILE_PATH}/Pcynlitx"
+       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
