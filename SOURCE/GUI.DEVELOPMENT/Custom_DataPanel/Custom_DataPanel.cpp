@@ -245,7 +245,9 @@ void Custom_DataPanel::Save_Data(wxCommandEvent & event){
          
         this->Process_Ptr = new Process_Manager(this->frame_ptr);
 
-        shell_command = "C:\\Program Files\\Pcynlitx\\Pcynlitx_Kernel.exe " +
+        wxString user_home_dir = this->GetUserHomeDirectory();
+
+        shell_command = user_home_dir + wxString("\\Pcynlitx\\Pcynlitx_Kernel.exe ") +
 
         this->Descriptor_File_Path + wxT(" -ar ") + this->DataType;
 
@@ -260,6 +262,36 @@ void Custom_DataPanel::Save_Data(wxCommandEvent & event){
 
     }
 }
+
+
+
+wxString Custom_DataPanel::GetUserHomeDirectory()
+{
+    wxString dir;
+    HRESULT hr = E_FAIL;
+
+    hr = ::SHGetFolderPath
+            (
+            nullptr,               // parent window, not used
+            CSIDL_PROFILE,
+            nullptr,               // access token (current user)
+            SHGFP_TYPE_DEFAULT, // current path, not just default value
+            wxStringBuffer(dir, MAX_PATH)
+            );
+
+    if ( hr == E_FAIL )
+    {
+        // directory doesn't exist, maybe we can get its default value?
+
+        dir.clear();
+
+        dir.shrink_to_fit();
+    }
+
+    return dir;
+}
+
+
 
 wxDataViewListCtrl * Custom_DataPanel::GetDataViewListCtrl(){
 

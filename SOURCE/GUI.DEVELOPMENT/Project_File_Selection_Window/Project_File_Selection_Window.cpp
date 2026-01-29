@@ -378,6 +378,33 @@ void Project_File_Selection_Window::OnPaint(wxPaintEvent & event)
 
 
 
+wxString Project_File_Selection_Window::GetUserHomeDirectory()
+{
+    wxString dir;
+    HRESULT hr = E_FAIL;
+
+    hr = ::SHGetFolderPath
+            (
+            nullptr,               // parent window, not used
+            CSIDL_PROFILE,
+            nullptr,               // access token (current user)
+            SHGFP_TYPE_DEFAULT, // current path, not just default value
+            wxStringBuffer(dir, MAX_PATH)
+            );
+
+    if ( hr == E_FAIL )
+    {
+        // directory doesn't exist, maybe we can get its default value?
+
+        dir.clear();
+
+        dir.shrink_to_fit();
+    }
+
+    return dir;
+}
+
+
 void Project_File_Selection_Window::Construct_Empty_Project_File(wxCommandEvent & event){
 
      if(event.GetId() == ID_CONSTRUCT_EMPTY_PROJECT_FILE ){
@@ -397,9 +424,13 @@ void Project_File_Selection_Window::Construct_Empty_Project_File(wxCommandEvent 
 
            wxString DesPATH = construction_dir + wxT("\\pcynlitx.project.txt");
 
-           wxString shell_command = "C:\\Program Files\\Pcynlitx\\Pcynlitx_Kernel.exe " 
+
+           wxString home_dir = this->GetUserHomeDirectory();
+
+           wxString shell_command = home_dir + wxString("\\Pcynlitx\\Pcynlitx_Kernel.exe ")
         
            + construction_dir + " -ed";
+
 
            this->SysInt.Create_Process(shell_command.ToStdString());
 

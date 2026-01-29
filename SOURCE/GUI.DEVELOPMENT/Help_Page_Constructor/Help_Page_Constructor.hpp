@@ -16,6 +16,8 @@
 #include <wx/utils.h> 
 #include "Custom_Notebook.h"
 #include "Resource_Loader.hpp"
+#include <wx/stdpaths.h>
+#include <shlobj.h>
 
 
 enum
@@ -60,6 +62,8 @@ private:
     void Open_Intro_Page(wxCommandEvent & event);
 
     void launch_link();
+
+    wxString GetUserHomeDirectory();
 
     bool yes_no_condition;
 

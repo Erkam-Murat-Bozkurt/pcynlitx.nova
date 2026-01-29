@@ -60,7 +60,11 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->Process_Ptr = new Process_Manager(this,wxID_ANY);
 
-  wxString Builder_Path(wxString("C:\\Program Files\\Pcynlitx\\Pcynlitx_Kernel.exe"));
+  wxString user_home_dir = this->GetUserHomeDirectory();
+
+
+
+  wxString Builder_Path = user_home_dir + wxString("\\Pcynlitx\\Pcynlitx_Kernel.exe");
 
   this->Process_Ptr->Receive_Builder_Path(Builder_Path);
 
@@ -368,6 +372,31 @@ MainFrame::~MainFrame()
    this->Close(true);
 }
 
+wxString MainFrame::GetUserHomeDirectory()
+{
+    wxString dir;
+    HRESULT hr = E_FAIL;
+
+    hr = ::SHGetFolderPath
+            (
+            nullptr,               // parent window, not used
+            CSIDL_PROFILE,
+            nullptr,               // access token (current user)
+            SHGFP_TYPE_DEFAULT, // current path, not just default value
+            wxStringBuffer(dir, MAX_PATH)
+            );
+
+    if ( hr == E_FAIL )
+    {
+        // directory doesn't exist, maybe we can get its default value?
+
+        dir.clear();
+
+        dir.shrink_to_fit();
+    }
+
+    return dir;
+}
 
 
 void MainFrame::Open_PopUp_Menu(wxCommandEvent & event){
@@ -1369,13 +1398,19 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
 
         wxString construction_dir =dlg.GetPath();
 
+        wxString home_dir = this->Process_Ptr->GetUserHomeDirectory();
+
+
+
         this->Descriptor_File_Path = construction_dir + wxT("\\pcynlitx.project.txt");
 
         this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
-        wxString shell_command = "C:\\Program Files\\Pcynlitx\\Pcynlitx_Kernel.exe " 
+        wxString shell_command = home_dir + wxString("\\Pcynlitx\\Pcynlitx_Kernel.exe ")
         
         + construction_dir + " -ed";
+
+
 
         this->Process_Ptr->Fork_Process(shell_command);
 
@@ -1395,11 +1430,11 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
 
        event.Skip(false);
 
-       wxString home_dir = this->Process_Ptr->GetUserHomeDirectory();
+       //wxString home_dir = this->Process_Ptr->GetUserHomeDirectory();
 
-       wxMessageDialog * dial = new wxMessageDialog(this,home_dir,home_dir);
+       //wxMessageDialog * dial = new wxMessageDialog(this,home_dir,home_dir);
 
-       dial->ShowModal();
+       //dial->ShowModal();
 
        this->Freeze();
 

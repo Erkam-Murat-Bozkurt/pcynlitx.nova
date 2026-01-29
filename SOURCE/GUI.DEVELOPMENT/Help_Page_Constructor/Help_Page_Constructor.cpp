@@ -330,7 +330,9 @@ void Help_Page_Constructor::Open_Welcome_Page(wxCommandEvent & event){
 
 void Help_Page_Constructor::Open_Intro_Page(wxCommandEvent & event){
 
-     wxString Help_Page_Path = wxT("C:\\Program Files\\Pcynlitx\\introduction.txt");
+     wxString user_home_dir = this->GetUserHomeDirectory();
+
+     wxString Help_Page_Path = user_home_dir +  wxString("\\Pcynlitx\\introduction.txt");
 
      this->NoteBook_Ptr->Open_File(Help_Page_Path);
 
@@ -350,4 +352,30 @@ void Help_Page_Constructor::launch_link(){
 
      wxLaunchDefaultBrowser(url,0);
 
+}
+
+wxString Help_Page_Constructor::GetUserHomeDirectory()
+{
+    wxString dir;
+    HRESULT hr = E_FAIL;
+
+    hr = ::SHGetFolderPath
+            (
+            nullptr,               // parent window, not used
+            CSIDL_PROFILE,
+            nullptr,               // access token (current user)
+            SHGFP_TYPE_DEFAULT, // current path, not just default value
+            wxStringBuffer(dir, MAX_PATH)
+            );
+
+    if ( hr == E_FAIL )
+    {
+        // directory doesn't exist, maybe we can get its default value?
+
+        dir.clear();
+
+        dir.shrink_to_fit();
+    }
+
+    return dir;
 }

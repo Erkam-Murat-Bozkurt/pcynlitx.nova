@@ -25,7 +25,8 @@
 #include "Custom_System_Interface.h"
 #include "Cpp_FileOperations.h"
 #include "Resource_Loader.hpp"
-
+#include <wx/stdpaths.h>
+#include <shlobj.h>
 
 
 enum
@@ -53,6 +54,8 @@ public:
     void Receive_Project_File_Selection_Status(bool * status);
 
     bool get_Descriptor_File_Selection_Status() const;
+
+    wxString GetUserHomeDirectory();
 
     wxString ExeFileName;
 

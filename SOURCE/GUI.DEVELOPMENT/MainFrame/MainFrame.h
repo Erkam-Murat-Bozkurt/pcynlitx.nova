@@ -65,7 +65,8 @@
 #include "Dependency_Tree_Printer.hpp"
 #include "Custom_System_Interface.h"
 #include "Cpp_FileOperations.h"
-
+#include <wx/stdpaths.h>
+#include <shlobj.h>
 
 class MainFrame : public wxFrame
 {
@@ -141,6 +142,7 @@ private:
   void Descriptor_File_Validity_Control(wxString & message);
   void Print_Lack_of_Description_Message(wxString er_message);
   void Print_Invalid_Descriptor_File_Message(wxString er_message);
+  wxString GetUserHomeDirectory();
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;

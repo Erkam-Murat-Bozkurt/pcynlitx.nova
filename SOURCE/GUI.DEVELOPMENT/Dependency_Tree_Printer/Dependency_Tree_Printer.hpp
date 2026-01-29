@@ -21,6 +21,7 @@
 #include "Custom_DockArt.h"
 #include "Custom_Window.h"
 #include "Custom_Close_Button.h"
+#include "Resource_Loader.hpp"
 
 enum
 {
@@ -86,6 +87,8 @@ protected:
   void Close_Process_Window(wxCommandEvent & event);
 
   bool Memory_Delete_Condition;
+
+  Resource_Loader Rsc_Loader;
 
   Project_Folder_Lister * Folder_Lister;
 

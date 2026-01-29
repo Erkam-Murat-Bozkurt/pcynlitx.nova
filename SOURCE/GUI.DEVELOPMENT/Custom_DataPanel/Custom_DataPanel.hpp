@@ -16,6 +16,8 @@
 #include <wx\msgdlg.h>
 #include "Process_Manager.hpp"
 #include "Resource_Loader.hpp"
+#include <wx/stdpaths.h>
+#include <shlobj.h>
 
 enum
 {
@@ -43,6 +45,7 @@ public:
     void DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect& rect);
     void OnPaint(wxPaintEvent & event);
     wxString GetDataInput();   
+    wxString GetUserHomeDirectory();
 protected:
     Resource_Loader Rsc_Loader;
     wxBitmap * Frame_Bitmap;
