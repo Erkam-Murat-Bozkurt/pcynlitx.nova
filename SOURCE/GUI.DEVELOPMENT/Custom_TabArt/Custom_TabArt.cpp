@@ -214,11 +214,11 @@
 
          if(page.active){
 
-            dc.SetTextForeground(wxColour(0,0,10));
+            dc.SetTextForeground(wxColour(50,50,100));
          }
          else{
 
-            dc.SetTextForeground(wxColour(25,25,25));
+            dc.SetTextForeground(wxColour(50,50,100));
          }
 
 

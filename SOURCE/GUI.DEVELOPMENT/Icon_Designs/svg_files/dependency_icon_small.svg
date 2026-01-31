@@ -9,7 +9,7 @@
    id="svg8"
    inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
    sodipodi:docname="dependency_icon_small.svg"
-   inkscape:export-filename="..\png_files\dependecy_icon_small.png"
+   inkscape:export-filename="..\png_files\dependency_icon_small.png"
    inkscape:export-xdpi="500"
    inkscape:export-ydpi="500"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -59,9 +59,9 @@
      showgrid="true"
      inkscape:window-width="1920"
      inkscape:window-height="1111"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
-     inkscape:window-maximized="1"
+     inkscape:window-x="-32000"
+     inkscape:window-y="-32000"
+     inkscape:window-maximized="0"
      showguides="false"
      inkscape:showpageshadow="2"
      inkscape:pagecheckerboard="0"
@@ -99,7 +99,7 @@
        y="72.104164"
        id="text16" />
     <rect
-       style="fill:#32323c;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#b9b9b9;fill-opacity:1;stroke:none;stroke-width:0;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
        id="rect1"
        width="1.5913626"
        height="1.6408311"
@@ -107,13 +107,13 @@
        y="86.74086"
        ry="0.092436917" />
     <path
-       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.274635px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#323264;fill-opacity:1;fill-rule:evenodd;stroke:#323264;stroke-width:0.274635px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 75.356686,87.803199 h 0.849855"
        id="path2-5-3"
        inkscape:connector-type="polyline"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#ffffff;stroke-width:0.274299;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#323264;stroke-width:0.274299;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
        d="m 75.362698,87.300959 h 0.849854"
        id="path2-5"
        inkscape:connector-type="polyline"

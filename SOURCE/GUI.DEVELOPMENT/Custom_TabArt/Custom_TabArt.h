@@ -24,7 +24,7 @@
 
 // Custom TabArt decleration .........
 
-class Custom_TabArt : public wxAuiDefaultTabArt
+class Custom_TabArt : public 	wxAuiFlatTabArt
 {
 public:
 

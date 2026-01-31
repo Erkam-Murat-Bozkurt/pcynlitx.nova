@@ -37,11 +37,11 @@ public:
 
       rect.height++;
 
-      dc.SetPen(wxPen(wxColour(65,65,75,0xff)));
+      dc.SetPen(wxPen(wxColour(60,60,75,0xff)));
 
-      dc.SetBrush(wxColour(65,65,75,0xff));
+      dc.SetBrush(wxColour(60,60,75,0xff));
 
-      dc.DrawRectangle(rect.GetX()-1, rect.GetY() - 2, rect.GetWidth() + 5, rect.GetHeight() + 5);
+      dc.DrawRectangle(rect.GetX()-2, rect.GetY() - 3, rect.GetWidth() + 7, rect.GetHeight() + 7);
     }
 };
 

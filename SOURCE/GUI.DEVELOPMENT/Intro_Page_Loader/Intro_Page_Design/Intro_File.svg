@@ -91,20 +91,15 @@
          id="tspan3" /></text>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:7.76111px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#fcaf3b;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       style="font-style:normal;font-weight:normal;font-size:7.05556px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#fcaf3b;fill-opacity:1;stroke:none;stroke-width:0.264583"
        x="-80.504173"
        y="249.66531"
        id="text825-9"><tspan
          sodipodi:role="line"
          x="-80.504173"
          y="249.66531"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';fill:#73737d;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
-         id="tspan5">IDE &amp; Automatic C++ Build System </tspan><tspan
-         sodipodi:role="line"
-         x="-80.504173"
-         y="259.63736"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.76111px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';fill:#73737d;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
-         id="tspan6">Generator</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed, ';fill:#73737d;fill-opacity:1;stroke:none;stroke-width:0.264583;stroke-opacity:1"
+         id="tspan6">C++ Build System Generator &amp; Configurator</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:19.7556px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#fcaf3b;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -135,7 +130,7 @@
          id="tspan822-0"
          x="-80.953514"
          y="226.89795"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.7556px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold';opacity:0.85;fill:#414155;fill-opacity:1;stroke-width:0.264583">PCYNLITX</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.7556px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold';opacity:0.85;fill:#3c3c5f;fill-opacity:1;stroke-width:0.264583">PCYNLITX</tspan></text>
     <text
        xml:space="preserve"
        style="font-style:normal;font-weight:normal;font-size:19.7556px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#fcaf3b;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -146,6 +141,6 @@
          id="tspan822-0-1-2"
          x="8.3949223"
          y="226.85315"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.7556px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold';opacity:0.85;fill:#f0a531;fill-opacity:1;stroke-width:0.264583">NOVA</tspan></text>
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19.7556px;font-family:'Roboto Condensed';-inkscape-font-specification:'Roboto Condensed,  Bold';opacity:0.85;fill:#3c3c5f;fill-opacity:1;stroke-width:0.264583">NOVA</tspan></text>
   </g>
 </svg>
