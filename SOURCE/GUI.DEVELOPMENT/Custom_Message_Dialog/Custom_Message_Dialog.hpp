@@ -35,7 +35,7 @@ public:
     
     const wxPoint &pos=wxDefaultPosition, const wxString & dial_style=wxT("Close"), 
     
-    const wxSize &size=wxSize(620,400),
+    const wxSize &size=wxSize(470,310),
     
     long style=wxDEFAULT_DIALOG_STYLE, const wxString &name=wxDialogNameStr);
     

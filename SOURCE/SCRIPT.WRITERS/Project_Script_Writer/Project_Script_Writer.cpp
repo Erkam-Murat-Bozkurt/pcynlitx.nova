@@ -586,7 +586,13 @@ void Project_Script_Writer::Write_Project_Build_Script(){
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("\nPcynlitx_Kernel.exe ");
+     std::string user_home_dir = this->GetUserHomeDirectory();
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile(user_home_dir);
+
+     this->FileManager.WriteToFile("\\Pcynlitx\\Pcynlitx_Kernel.exe ");
 
      std::string des_path = this->Des_Reader->Get_Descriptor_File_Path();
 
@@ -732,6 +738,54 @@ void Project_Script_Writer::Determine_Compiler_Output_File_Name(std::string & na
 
      name.shrink_to_fit();    
 }
+
+
+std::string Project_Script_Writer::GetUserHomeDirectory(){
+
+
+     char Buffer[MAX_PATH];
+
+     for(size_t i=0;i < MAX_PATH;i++){
+
+         Buffer[i] = '\0';
+     }
+
+
+     std::string dir;
+     HRESULT hr = E_FAIL;
+
+     hr = ::SHGetFolderPath
+            (
+            nullptr,               // parent, not used
+            CSIDL_PROFILE,
+            nullptr,               // access token (current user)
+            SHGFP_TYPE_DEFAULT, // current path, not just default value
+            Buffer
+            );
+
+     if ( hr == E_FAIL )
+     {
+        // directory doesn't exist, maybe we can get its default value?
+
+        dir.clear();
+
+        dir.shrink_to_fit();
+     }
+     else{
+
+             for(size_t i=0;i<strlen(Buffer);i++){
+
+                 dir.push_back(Buffer[i]);
+             }
+   
+             dir.shrink_to_fit();
+
+     }
+
+     return dir;
+}
+
+
 
 
 

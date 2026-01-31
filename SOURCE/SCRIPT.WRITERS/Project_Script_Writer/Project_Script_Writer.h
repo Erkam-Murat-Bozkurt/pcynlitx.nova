@@ -10,6 +10,7 @@
 #include <string>
 #include <thread>
 #include <mutex>
+#include <shlobj.h>
 #include "Descriptor_File_Reader.hpp"
 #include "DirectoryOperations.h"
 #include "Cpp_FileOperations.h"
@@ -51,6 +52,7 @@ protected:
  void Construct_For_Large_Data_Set(int data_size);
  void Construct_For_Middle_Data_Set(int data_size);
  void Construct_For_Small_Data_Set(int data_size);
+ std::string GetUserHomeDirectory();
  Descriptor_File_Reader * Des_Reader;
  Script_Data_Processor Src_Data_Processor;
  DirectoryOperations DirectoryManager;
