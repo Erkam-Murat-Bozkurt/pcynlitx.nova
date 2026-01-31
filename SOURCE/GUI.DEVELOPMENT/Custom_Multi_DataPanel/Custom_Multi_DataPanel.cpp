@@ -284,7 +284,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->scroll_win = new wxScrolledWindow(this,wxID_ANY,wxDefaultPosition,wxSize(1000,-1));
 
-     this->scroll_win->SetBackgroundColour(wxColour(240, 240, 240));
+     this->scroll_win->SetBackgroundColour(wxColour(240, 240, 245));
 
 
      wxString title = wxT("PCYNLITX DEPENDENCY MANAGEMENT PANEL");
@@ -750,7 +750,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->close_panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(220,1000));
 
-     this->close_panel->SetBackgroundColour(wxColour(200,200,200,0xff));
+     this->close_panel->SetBackgroundColour(wxColour(110,110,125,0xff));
 
      this->close_panel->SetMinSize(wxSize(220,1000));
 
@@ -1101,7 +1101,6 @@ void Custom_Multi_DataPanel::Create_Exe_Script_Panel(){
 
      this->Frame_Sizer->SetSizeHints(this);
 
-      
      this->listctrl_for_path->Show();
 
      this->listctrl_for_name->Show();
