@@ -270,14 +270,14 @@ void GUI_Descriptor_File_Reader::Read_Root_Directory_Location(){
 
      if((record_num > 1) && (this->Data_Record_Cond == false)){
 
-         std::string message = "\nThere are multiple project root directory declerations";
+         std::string message = "\nThere are multiple project root \ndirectory declerations!";
 
          this->Set_Error_Message(message);
       }
       else{
             if((record_num == 0) && (this->Data_Record_Cond == false)){
 
-               std::string message = "\nThere is no any decleration about project root directory";
+               std::string message = "\nThere is no any decleration \nabout project root directory!";
 
                this->Set_Error_Message(message);
             }
@@ -295,7 +295,7 @@ void GUI_Descriptor_File_Reader::Read_Warehouse_Location(){
 
      if((record_num > 1)  && (this->Data_Record_Cond == false)){
 
-         std::string message = "\n There are multiple project warehouse declerations";
+         std::string message = "\n There are multiple project \nwarehouse declerations!";
 
          this->Set_Error_Message(message);
      }
@@ -303,7 +303,7 @@ void GUI_Descriptor_File_Reader::Read_Warehouse_Location(){
 
            if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
-               std::string message = "\nThere is no any decleration about project warehouse location";
+               std::string message = "\nThere is no any decleration \nabout project warehouse location!";
 
                this->Set_Error_Message(message);
            }
@@ -322,7 +322,7 @@ void GUI_Descriptor_File_Reader::Read_Standard(){
 
      if((record_num > 1) && (this->Data_Record_Cond == false)) {
 
-        std::string message = "\nThere are multiple C++ standart declerations";
+        std::string message = "\nThere are multiple C++ \nstandart declerations!";
 
         this->Set_Error_Message(message);
      }
@@ -330,7 +330,7 @@ void GUI_Descriptor_File_Reader::Read_Standard(){
 
           if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
-              std::string message = "\nThere is no any C++ standart declerations";
+              std::string message = "\nThere is no any C++ \nstandart declerations!";
 
               this->Set_Error_Message(message);
           }
@@ -349,7 +349,7 @@ void GUI_Descriptor_File_Reader::Read_Build_System_Type(){
 
      if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
-         std::string message = "\nThere is no any decleration about build system type selection";
+         std::string message = "\nThere is no any decleration about \nbuild system type selection!";
 
          this->Set_Error_Message(message);
      }
@@ -369,7 +369,7 @@ void GUI_Descriptor_File_Reader::Read_Project_Name(){
 
      if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
-         std::string message = "\nThere is no any decleration about project name";
+         std::string message = "\nThere is no any decleration \nabout project name!";
 
          this->Set_Error_Message(message);
      }
@@ -377,7 +377,7 @@ void GUI_Descriptor_File_Reader::Read_Project_Name(){
 
             if((record_num > 1) && (this->Data_Record_Cond == false)) {
 
-                std::string message = "\nThere are multiple declerations about project name";
+                std::string message = "\nThere are multiple declerations \nabout project name!";
 
                 this->Set_Error_Message(message);
             }
@@ -398,14 +398,14 @@ void GUI_Descriptor_File_Reader::Read_Version_Number(){
 
      if((record_num == 0) && (this->Data_Record_Cond == false)) {
 
-         std::string message = "\nThere is no any decleration about version number";
+         std::string message = "\nThere is no any decleration \nabout version number!";
 
          this->Set_Error_Message(message);
      }
      else{
             if((record_num > 1) && (this->Data_Record_Cond == false)) {
 
-                std::string message = "\nThere are multiple declerations about version number";
+                std::string message = "\nThere are multiple declerations \nabout version number!";
 
                 this->Set_Error_Message(message);
             }
@@ -481,7 +481,7 @@ void GUI_Descriptor_File_Reader::Read_Compiler_Paths()
 
            if(this->Data_Record_Cond == false) {
 
-              std::string message = "\nThere is no any decleration about compiler path";
+              std::string message = "\nThere is no any decleration \nabout compiler path!";
 
               this->Set_Error_Message(message);
           }
