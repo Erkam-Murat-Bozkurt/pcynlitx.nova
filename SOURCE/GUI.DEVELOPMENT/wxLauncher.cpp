@@ -73,7 +73,7 @@ bool wxLauncher::OnInit(){
      wxImage::AddHandler(new wxPNGHandler);
 
 
-     wxColour theme_colour(62, 180, 137);
+     wxColour theme_colour(62,180,137);
 
 
      this->Frame = new MainFrame(theme_colour);

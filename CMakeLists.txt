@@ -356,3 +356,10 @@ add_custom_command(
        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
 )
 
+add_custom_command(
+       TARGET Pcynlitx
+       POST_BUILD 
+       COMMAND ${CMAKE_COMMAND}
+       ARGS -E copy $<TARGET_FILE:Pcynlitx> "${USER_PROFILE_PATH}/Pcynlitx"
+       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
