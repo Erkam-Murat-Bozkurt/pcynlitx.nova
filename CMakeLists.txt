@@ -354,6 +354,8 @@ add_custom_command(
        COMMAND ${CMAKE_COMMAND}
        ARGS -E copy $<TARGET_FILE:Pcynlitx_Kernel> "${USER_PROFILE_PATH}/Pcynlitx"
        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+       VERBATIM
+       BYPRODUCTS
 )
 
 add_custom_command(
@@ -362,4 +364,6 @@ add_custom_command(
        COMMAND ${CMAKE_COMMAND}
        ARGS -E copy $<TARGET_FILE:Pcynlitx> "${USER_PROFILE_PATH}/Pcynlitx"
        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+       VERBATIM
+       BYPRODUCTS
 )
