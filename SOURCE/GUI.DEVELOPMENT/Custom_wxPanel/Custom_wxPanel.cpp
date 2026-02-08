@@ -72,7 +72,7 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      wxPoint position = this->Start_Button->GetPosition() ;
 
-     this->Start_Button->SetPosition(wxPoint(position.x+15,position.y));
+     this->Start_Button->SetPosition(wxPoint(position.x+10,position.y));
 
 
 

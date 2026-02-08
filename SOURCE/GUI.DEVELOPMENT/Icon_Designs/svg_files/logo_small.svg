@@ -30,9 +30,9 @@
      inkscape:window-height="1111"
      id="namedview8"
      showgrid="true"
-     inkscape:zoom="12.528765"
-     inkscape:cx="7.6224592"
-     inkscape:cy="9.1389694"
+     inkscape:zoom="50.11506"
+     inkscape:cx="7.5925281"
+     inkscape:cy="2.7436862"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
      inkscape:window-maximized="1"
@@ -64,21 +64,6 @@
   <defs
      id="defs6" />
   <rect
-     style="fill:none;fill-opacity:0.988152;stroke:none;stroke-width:0.189516;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
-     id="rect5-8-9"
-     width="6.3590016"
-     height="1.4161475"
-     x="-1.3160067"
-     y="7.4923801" />
-  <rect
-     style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.167113;stroke-dasharray:none;stroke-opacity:1"
-     id="rect1"
-     width="4.9816022"
-     height="5.0913382"
-     x="0.095544398"
-     y="3.0268612"
-     ry="0" />
-  <rect
      style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.217911;stroke-dasharray:none;stroke-opacity:1"
      id="rect2"
      width="7.6412282"
@@ -87,7 +72,7 @@
      y="1.5565119"
      ry="0" />
   <rect
-     style="fill:#3c3c5f;fill-opacity:1;stroke:none;stroke-width:0.0162115;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#5f5f69;fill-opacity:1;stroke:#000000;stroke-width:0.0162115;stroke-dasharray:none;stroke-opacity:1"
      id="rect1-3"
      width="4.2732611"
      height="3.8260262"
@@ -95,20 +80,20 @@
      y="0.014077187"
      ry="0" />
   <rect
-     style="fill:#3c3c5f;fill-opacity:1;stroke:none;stroke-width:0.0106305;stroke-dasharray:none;stroke-opacity:1"
-     id="rect1-3-2"
-     width="1.2089288"
-     height="5.8154378"
-     x="4.9092183"
-     y="0"
-     ry="0" />
-  <rect
-     style="fill:#3c3c5f;fill-opacity:1;stroke:none;stroke-width:0.0107387;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#5f5f69;fill-opacity:1;stroke:#000000;stroke-width:0.0107387;stroke-dasharray:none;stroke-opacity:1"
      id="rect1-3-2-4"
      width="1.3861976"
      height="5.1883826"
      x="4.43292"
      y="-5.1883826"
      transform="rotate(90)"
+     ry="0" />
+  <rect
+     style="fill:#5f5f69;fill-opacity:1;stroke:#000000;stroke-width:0.0106305;stroke-dasharray:none;stroke-opacity:1"
+     id="rect1-3-2"
+     width="1.2089288"
+     height="5.8154378"
+     x="4.8901825"
+     y="0.025269328"
      ry="0" />
 </svg>

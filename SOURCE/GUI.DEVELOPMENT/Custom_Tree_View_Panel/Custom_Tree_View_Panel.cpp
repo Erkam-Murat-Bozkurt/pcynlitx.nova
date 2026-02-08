@@ -189,7 +189,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      text->SetFont(textFont);
 
-     text->SetForegroundColour(wxColour(60,60,95));
+     text->SetForegroundColour(wxColour(60,60,60));
 
      // TITLE WINDOW SETTINGS END
 

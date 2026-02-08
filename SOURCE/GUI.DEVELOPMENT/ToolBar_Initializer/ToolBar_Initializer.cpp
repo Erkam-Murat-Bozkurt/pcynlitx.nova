@@ -65,7 +65,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->toolBar->Receive_Toolbar_Art(this->Art_Pointer);
 
-     this->toolBar->SetBackgroundColour(wxColour(60,60,75,0xff));
+     this->toolBar->SetBackgroundColour(wxColour(50,50,60,0xff));
 
      this->toolBar->SetArtProvider(this->Art_Pointer);
 

@@ -37,9 +37,9 @@ public:
 
       rect.height++;
 
-      dc.SetPen(wxPen(wxColour(60,60,75,0xff)));
+      dc.SetPen(wxPen(wxColour(50,50,60,0xff)));
 
-      dc.SetBrush(wxColour(60,60,75,0xff));
+      dc.SetBrush(wxColour(50,50,60,0xff));
 
       dc.DrawRectangle(rect.GetX()-2, rect.GetY() - 3, rect.GetWidth() + 7, rect.GetHeight() + 7);
     }
