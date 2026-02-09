@@ -24,6 +24,14 @@
 #include "Custom_DockArt.h"
 #include "Custom_Window.h"
 #include "Custom_Close_Button.h"
+#include "Event_ID_Numbers.h"
+#include "Resource_Loader.hpp"
+#include "Custom_Tree_View_Panel.h"
+
+enum
+{
+  ID_OPEN_POPUP_MENU = 100,
+};
 
 
 class Custom_Tree_View_Panel : public wxPanel
@@ -55,7 +63,21 @@ public:
 
   bool Get_Panel_Open_Status();
 
+
+  void Receive_Main_Menu_Address(wxMenu * menu){
+
+       this->Menu_Ptr = menu;
+  }
+
+
+
+  wxButton * Start_Button;
+
+  wxStaticText * start_text;
+
   Custom_Close_Button * close_button;
+
+  wxWindow * button_window;
 
   Custom_Window * Top_Bar_Window;
 
@@ -63,6 +85,7 @@ public:
 
   Custom_Window * Bottom_Window;
 
+  Custom_Notebook * trew_View_notebook;
 
   wxFrame * Frame_Pointer;
 
@@ -122,8 +145,6 @@ public:
 
   wxBoxSizer * close_button_window_sizer;
 
-  wxColour background;
-
   wxSize Topbar_MinSize;
 
   wxWindow * close_button_window;
@@ -133,6 +154,74 @@ public:
   bool windows_detach_condition;
 
   wxSize start_menu_window_size;
+
+
+
+  wxColour background;
+  
+  wxMenu * Menu_Ptr;
+
+  //void Update(){};
+
+
+  void Open_PopUp_Menu(wxCommandEvent & event);
+
+  void Load_Menu_Items();
+
+  wxBitmap * project_file_selection_bitmap;
+
+  int ToolBar_ID = 0;
+
+  wxAuiToolBar * toolBar_pointer;
+
+  wxAuiPaneInfo * Pane_Pointer;
+
+  wxBitmap * Info_Icon_Bmp;
+
+  wxBitmap * Save_Icon_Small;
+
+  wxBitmap * exit_icon_bitmap;
+
+  wxBitmap * build_icon_bitmap;
+
+  wxBitmap * run_build_script_icon_bitmap;
+
+  wxBitmap * dependency_icon_bitmap;
+  
+  wxWindow * book_manager;
+
+  wxWindow * text_window;
+
+  wxBoxSizer * bottom_win_sizer;
+
+
+  wxEvtHandler Event_Handler;
+
+
+  wxMenu  * CMAKE_Menu;
+
+  wxMenu  * Help_Menu;
+
+  wxMenu  * File_Menu;
+
+  wxMenu  * Project_Management;
+
+  wxMenu  * Main_Menu;
+
+  wxMenu  * Edit_Menu;
+
+  wxMenu  * Info_Menu;
+
+  wxMenu  * Linux_Debian_Package_Generator;
+
+  wxMenu  * Linux_RPM_Package_Generator;
+
+  wxMenu  * Windows_Package_Generator;
+
+  Resource_Loader Rsc_Loader;
+
+
+
 
 protected:
   bool Memory_Delete_Condition;

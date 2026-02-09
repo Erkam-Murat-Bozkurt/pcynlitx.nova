@@ -2,12 +2,12 @@
 <svg
    data-name="Layer 1"
    id="Layer_1"
-   viewBox="0 0 60.169882 59.675676"
+   viewBox="0 0 44.807051 44.743039"
    version="1.1"
    sodipodi:docname="build_system_generator_circular.svg"
    inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
-   width="60.169884"
-   height="59.675674"
+   width="44.807053"
+   height="44.743038"
    inkscape:export-filename="..\png_files\build_system_generator.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
@@ -25,9 +25,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="true"
-     inkscape:zoom="5.7231455"
-     inkscape:cx="49.011509"
-     inkscape:cy="39.925597"
+     inkscape:zoom="11.446291"
+     inkscape:cx="33.766396"
+     inkscape:cy="25.903587"
      inkscape:window-width="1920"
      inkscape:window-height="1111"
      inkscape:window-x="-9"
@@ -38,8 +38,8 @@
     <inkscape:grid
        id="grid5"
        units="px"
-       originx="44.973702"
-       originy="44.832039"
+       originx="44.6791"
+       originy="44.76199"
        spacingx="1"
        spacingy="1"
        empcolor="#0099e5"
@@ -56,10 +56,10 @@
      id="defs1">
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="57.353498 : 19.104267 : 1"
-       inkscape:vp_y="0 : 683.89809 : 0"
-       inkscape:vp_z="57.803189 : 18.980715 : 1"
-       inkscape:persp3d-origin="75.740505 : 12.893732 : 1"
+       inkscape:vp_x="57.353498 : 4.1716306 : 1"
+       inkscape:vp_y="0 : 683.89808 : 0"
+       inkscape:vp_z="57.803189 : 4.0480786 : 1"
+       inkscape:persp3d-origin="75.740504 : -2.0389046 : 1"
        id="perspective1" />
     <style
        id="style1">.cls-1{fill:#757575;}.cls-2{fill:#bdbdbd;}.cls-3{fill:#f5f5f5;}</style>
@@ -67,16 +67,16 @@
   <title
      id="title1" />
   <path
-     d="m 49.227535,10.89169 c -10.5594,-10.21873338 -27.6816,-10.21873338 -38.241003,0 -10.56030467,10.220474 -10.56030467,26.787632 0,37.008102 10.559403,10.218735 27.681603,10.218735 38.241003,0 10.5603,-10.22047 10.5603,-26.787628 0,-37.008102 m -6.50149,36.820564 -3.47924,-3.698452 c -2.778,1.741066 -5.96968,2.693591 -9.31193,2.693591 -9.844622,0 -17.854996,-8.270057 -17.854996,-18.184359 h 7.06935 c 0,6.310052 4.838493,10.973245 10.785646,10.973245 1.47823,0 2.90869,-0.308784 4.22827,-0.886229 l -3.55315,-3.776964 h 12.11605 v 12.879168 m -1.65129,-19.18922 c 0,-5.97772 -4.83127,-10.451629 -10.76942,-10.451629 -1.53772,0 -3.03398,0.311401 -4.41215,0.908039 l 3.79201,3.56587 H 17.488027 v -11.46783 l 3.115096,2.928234 c 2.890654,-1.817827 6.235592,-2.765117 9.702212,-2.765117 9.83021,0 17.82885,7.886257 17.82885,17.281557 h -7.05943 z"
+     d="m 37.969621,6.9748508 c -8.592455,-8.5099027 -22.525228,-8.5099027 -31.1176844,0 -8.5931904,8.5113522 -8.5931904,22.3080622 0,30.8194122 8.5924564,8.509904 22.5252294,8.509904 31.1176844,0 8.593186,-8.51135 8.593186,-22.30806 0,-30.8194122 m -5.29043,30.6632352 -2.831147,-3.079977 c -2.260529,1.449915 -4.85768,2.243154 -7.577355,2.243154 -8.010822,0 -14.5290679,-6.887095 -14.5290679,-15.143475 h 5.7525119 c 0,5.254853 3.937205,9.138242 8.776556,9.138242 1.202874,0 2.366875,-0.257148 3.440652,-0.73803 l -2.89129,-3.145359 h 9.85914 V 37.638086 M 31.335494,21.657788 c 0,-4.978094 -3.931328,-8.703851 -8.763353,-8.703851 -1.251281,0 -2.468827,0.259327 -3.590279,0.756191 l 3.085656,2.969566 H 12.14237 V 7.1295754 l 2.534833,2.4385599 c 2.3522,-1.5138411 5.074061,-2.3027204 7.894938,-2.3027204 7.999094,0 14.507793,6.5674761 14.507793,14.3916441 h -5.74444 z"
      fill="#43a047"
      id="path1-7"
-     style="fill:#78788c;fill-opacity:1;stroke:#78788c;stroke-width:0.961764;stroke-dasharray:none;stroke-opacity:1" />
+     style="fill:#555569;fill-opacity:1;stroke:#555569;stroke-width:0.791719;stroke-dasharray:none;stroke-opacity:1" />
   <path
-     style="fill:#78788c;fill-opacity:1;stroke:#78788c;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
-     d="M 27.858522,2.7444803 2.3039875,28.76216 V 2.5162547 Z"
+     style="fill:#555569;fill-opacity:1;stroke:#78788c;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
+     d="M 20.581107,0.19006051 0,21.856927 V 0 Z"
      id="path1" />
   <path
-     style="fill:#78788c;fill-opacity:1;stroke:#fcaf3b;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
-     d="M 33.894587,56.024766 57.490421,31.041247 v 25.20267 z"
+     style="fill:#555569;fill-opacity:1;stroke:#fcaf3b;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
+     d="M 23.570788,44.560536 44.693342,23.754893 v 20.988146 z"
      id="path1-6" />
 </svg>

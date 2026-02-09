@@ -98,7 +98,7 @@ Custom_Notebook::Custom_Notebook(wxFrame * frame, wxPanel * parent, wxAuiManager
 
    this->Refresh();
 
-   this->SetTabCtrlHeight(48);
+   this->SetTabCtrlHeight(32);
 
 
 

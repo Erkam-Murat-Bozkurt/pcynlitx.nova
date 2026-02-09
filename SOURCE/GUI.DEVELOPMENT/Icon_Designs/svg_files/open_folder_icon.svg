@@ -2,12 +2,12 @@
 <svg
    data-name="Layer 1"
    id="Layer_1"
-   viewBox="0 0 60.409808 60.759268"
+   viewBox="0 0 44.569335 45.076536"
    version="1.1"
    sodipodi:docname="open_folder_icon.svg"
    inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
-   width="60.409809"
-   height="60.759266"
+   width="44.569336"
+   height="45.076534"
    inkscape:export-filename="..\png_files\open_folder_icon.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
@@ -26,8 +26,8 @@
      inkscape:deskcolor="#d1d1d1"
      showgrid="true"
      inkscape:zoom="5.7231455"
-     inkscape:cx="37.654119"
-     inkscape:cy="39.051951"
+     inkscape:cx="36.955202"
+     inkscape:cy="38.702493"
      inkscape:window-width="1920"
      inkscape:window-height="1111"
      inkscape:window-x="-9"
@@ -37,8 +37,8 @@
     <inkscape:grid
        id="grid5"
        units="px"
-       originx="50.213814"
-       originy="50.033084"
+       originx="49.547001"
+       originy="49.715729"
        spacingx="1"
        spacingy="1"
        empcolor="#0099e5"
@@ -59,7 +59,7 @@
   <title
      id="title1" />
   <path
-     d="M 55.195709,17.920415 V 56.052364 H 5.3844999 V 5.2097712 H 19.784088 C 23.544831,13.314079 24.518232,17.920415 32.23689,17.920415 Z M 32.591793,12.836159 H 55.195709 V 5.2097712 H 24.885584 c 2.884899,6.5434418 3.383012,7.6263878 7.706209,7.6263878 z"
+     d="M 44.569337,11.269129 V 45.076533 H 0 V 0 h 12.884251 c 3.364982,7.185198 4.235947,11.269129 11.142334,11.269129 z M 24.34414,6.7614789 H 44.569337 V 0 H 17.448892 c 2.581307,5.8013499 3.027002,6.7614789 6.895248,6.7614789 z"
      id="path1"
-     style="fill:#78788c;fill-opacity:1;stroke:none;stroke-width:1.5;stroke-dasharray:none;stroke-opacity:1" />
+     style="fill:#555569;fill-opacity:1;stroke:none;stroke-width:1.336;stroke-dasharray:none;stroke-opacity:1" />
 </svg>

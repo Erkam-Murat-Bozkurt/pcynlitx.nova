@@ -65,7 +65,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->toolBar->Receive_Toolbar_Art(this->Art_Pointer);
 
-     this->toolBar->SetBackgroundColour(wxColour(50,50,60,0xff));
+     this->toolBar->SetBackgroundColour(wxColour(60,60,75,0xff));
 
      this->toolBar->SetArtProvider(this->Art_Pointer);
 
@@ -95,6 +95,8 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      ToolBar_Widget_Shape.Show(true);
 
+     ToolBar_Widget_Shape.Row(0);
+
      this->WinDc = new wxWindowDC(this->toolBar);
 
      this->Art_Pointer->DrawPlainBackground(*this->WinDc,this->toolBar,this->toolBar->GetRect());
@@ -110,7 +112,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
      this->toolBar->AddTool(ID_SELECT_PROJECT_FILE,wxT(""),*this->Select_Project_File,wxT(""));
 
 
-     this->toolBar->SetMargins(6,6,0,0);
+     this->toolBar->SetMargins(6,6,5,5);
 
      this->toolBar->SetOverflowVisible(false);
 

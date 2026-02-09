@@ -13,13 +13,14 @@
 #include <wx/msgdlg.h>
 #include "Event_ID_Numbers.h"
 #include "Resource_Loader.hpp"
+#include "Custom_Tree_View_Panel.h"
 
-
-
+/*
 enum
 {
   ID_OPEN_POPUP_MENU = 100,
 };
+*/
 
 class Custom_wxPanel : public wxPanel
 {

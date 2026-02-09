@@ -56,13 +56,14 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
      this->panel_sizer = new wxBoxSizer(wxVERTICAL);
 
 
-     this->bottom_window = new wxWindow(this, wxID_ANY,wxDefaultPosition,wxSize(this->GetSize().GetX(),60));
+     this->bottom_window = new wxWindow(this, wxID_ANY,wxDefaultPosition,wxSize(this->GetSize().GetX(),70));
 
-     this->Start_Button  = new wxButton(this->bottom_window,ID_OPEN_POPUP_MENU,wxT("START"),wxDefaultPosition, wxSize(120,50));
+     //this->Start_Button  = new wxButton(this->bottom_window,ID_OPEN_POPUP_MENU,wxT("START"),wxDefaultPosition, wxSize(120,50));
      
      this->bottom_window->SetBackgroundColour(wxColour(240,240,240));
 
 
+     /*
 
      wxFont button_font = this->Start_Button->GetFont();
 
@@ -90,13 +91,14 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->start_text->SetFont(button_font);
 
-
+     */
 
      this->bottom_window->Show(true);
 
-     this->Start_Button->Show(true);
+     //this->Start_Button->Show(true);
 
 
+     /*
 
      this->Main_Menu = new wxMenu();
 
@@ -360,7 +362,7 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->Help_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
-
+     */
 
      this->Centre(wxBOTH);
 
@@ -408,14 +410,14 @@ void Custom_wxPanel::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rec
 {
      dc.SetBrush(wxColour(240,240,240));
 
-     dc.DrawRectangle(rect.GetX()-2, rect.GetY()-2, rect.GetWidth()+2,rect.GetHeight()+2);
+     dc.DrawRectangle(rect.GetX()-2, rect.GetY()-2, rect.GetWidth()+2,rect.GetHeight());
 }
 
 void Custom_wxPanel::PaintNow(wxWindow * wnd)
 {
      wxClientDC dc(wnd);
 
-     wxSize Rect_Size = wxSize(wnd->GetSize().x+1,wnd->GetSize().y+1);
+     wxSize Rect_Size = wxSize(wnd->GetSize().x+1,wnd->GetSize().y);
 
      wxRect rect(Rect_Size);
 
