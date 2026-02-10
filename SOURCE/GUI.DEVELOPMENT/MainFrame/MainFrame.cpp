@@ -354,14 +354,14 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->Update();
 
-  if(!this->Dir_List_Manager->Get_Panel_Open_Status()){
+  //if(!this->Dir_List_Manager->Get_Panel_Open_Status()){
 
       wxString defaultDir;
 
       defaultDir = this->GetUserHomeDirectory() + wxString("\\Pcynlitx\\Defaults");
 
       this->Dir_List_Manager->Load_Project_Directory(defaultDir);
-   }
+   //}
 
   this->Interface_Manager.Update();
 
@@ -788,19 +788,23 @@ void MainFrame::DirectoryOpen(wxCommandEvent & event)
 
            wxString DirectoryPath = dir_dialog.GetPath();
 
-           if(!this->Dir_List_Manager->Get_Panel_Open_Status()){
+           //if(!this->Dir_List_Manager->Get_Panel_Open_Status()){
 
               this->Dir_List_Manager->Load_Project_Directory(DirectoryPath);
-           }
+           //}
+           //else{
 
-           this->Interface_Manager.Update();
+            //   this->Dir_List_Manager->
+           //}
+
+           //this->Interface_Manager.Update();
         }
 
-        this->tree_control->Update();
+        //this->tree_control->Update();
 
-        this->PaintNow(this);
+        //this->PaintNow(this);
 
-        this->Update();
+        //this->Update();
      }
 }
 

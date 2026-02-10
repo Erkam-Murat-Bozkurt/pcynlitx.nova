@@ -26,7 +26,8 @@
 #include "Custom_Close_Button.h"
 #include "Event_ID_Numbers.h"
 #include "Resource_Loader.hpp"
-#include "Custom_Tree_View_Panel.h"
+#include "Custom_Message_Dialog.hpp"
+
 
 enum
 {

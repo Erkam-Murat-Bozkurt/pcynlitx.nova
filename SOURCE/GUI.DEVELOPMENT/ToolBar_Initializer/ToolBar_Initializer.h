@@ -35,19 +35,6 @@ public:
 
       wxRect rect = _rect;
 
-      rect.height--;
-
-      rect.height--;
-
-      rect.height--;
-
-      rect.height--;
-
-      rect.height--;
-
-      rect.height--;
-
-
       dc.SetPen(wxPen(wxColour(60,60,75,0xff)));
 
       dc.SetBrush(wxColour(60,60,75,0xff));

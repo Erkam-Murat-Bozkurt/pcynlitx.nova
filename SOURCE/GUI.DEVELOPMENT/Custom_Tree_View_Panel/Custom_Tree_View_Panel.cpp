@@ -320,6 +320,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->windows_detach_condition = false;
 
+     this->Interface_Manager_Pointer->AddPane(this,this->File_List_Widget_Shape);
 
 
      //this->Top_Bar_Window->Show(true);
@@ -766,14 +767,14 @@ void Custom_Tree_View_Panel::OnPaint(wxPaintEvent & event)
      }
      */
 
-     if(this->Get_Panel_Open_Status()){
+     //if(this->Get_Panel_Open_Status()){
 
         //this->Top_Bar_Window->paintNow();
 
         this->Title_Window->paintNow();
 
         this->Bottom_Window->paintNow();
-     }
+     //}
 };
 
 void Custom_Tree_View_Panel::Clear_Dynamic_Memory()
@@ -792,6 +793,20 @@ void Custom_Tree_View_Panel::Clear_Dynamic_Memory()
 
 void Custom_Tree_View_Panel::Load_Project_Directory(wxString Folder){
 
+     /*
+     wxBitmap * save_bmp
+
+      = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("SAVE_SUCCESS_ICON"));
+
+
+     Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,wxString("Message"),
+            
+     wxT("STATUS:\n"),wxID_ANY,wxT("status"),*save_bmp);
+
+     dial->ShowModal();
+
+     */
+
      this->Folder_Lister->RemoveProjectDirectory();
 
      this->Folder_Lister->Load_Project_Directory(Folder);
@@ -801,16 +816,15 @@ void Custom_Tree_View_Panel::Load_Project_Directory(wxString Folder){
 
      //this->Top_Bar_Window->Update();
 
-     this->Title_Window->Update();
+     //this->Title_Window->Update();
 
      //this->close_button->Update();
 
-     this->Bottom_Window->Update();
+     //this->Bottom_Window->Update();
 
 
-     this->Interface_Manager_Pointer->AddPane(this,this->File_List_Widget_Shape);
 
-
+     /*
      for(int i=0;i<5;i++){
 
          wxYield();
@@ -827,17 +841,21 @@ void Custom_Tree_View_Panel::Load_Project_Directory(wxString Folder){
 
      }
 
+     */
 
-     this->Show(true);
+     //this->Show(true);
 
      //this->close_button->pressedCloseButton = false;
 
+     /*
      if(!this->panel_open_status)
      {
         this->panel_open_status = true;
      }
+     
+     */
 
-     this->Interface_Manager_Pointer->Update();
+     //this->Interface_Manager_Pointer->Update();
 
 }
 
