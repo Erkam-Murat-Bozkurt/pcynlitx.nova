@@ -426,6 +426,8 @@ void Custom_ProcessOutput::OnClose(wxCloseEvent & event){
 
 void Custom_ProcessOutput::ReadProcessOutput(wxString start_text){
 
+     this->process_complation_status = false;
+
      this->SysInt.CreateProcessWith_NamedPipe_From_Parent(this->cmd);
 
      this->progress_point = 0;
@@ -506,6 +508,10 @@ void Custom_ProcessOutput::ReadProcessOutput(wxString start_text){
      }
 
      this->SysInt.Close_Parent_Handles_For_Named_Pipe_Connection();
+
+     this->process_complation_status = true;
+     
+     this->dir_list_ptr->Workspace_Text_Ctrl->AddText("\n Build system construction complated");
 }
 
 

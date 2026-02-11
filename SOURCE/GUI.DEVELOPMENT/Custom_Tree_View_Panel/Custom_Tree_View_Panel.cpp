@@ -209,14 +209,17 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->trew_View_notebook->SetAutoLayout(true);
 
-     Custom_TextCtrl * Text_Ctrl = new Custom_TextCtrl(this->trew_View_notebook,wxID_ANY,wxDefaultPosition,
 
-                                                       wxSize(Tab_Bar_size.x,250),wxString(""));
+     
+     this->Workspace_Text_Ctrl = new Custom_TextCtrl(this->trew_View_notebook,wxID_ANY,wxDefaultPosition,
+
+                                                    wxSize(Tab_Bar_size.x,250),wxString(""));
  
 
-     this->trew_View_notebook->AddPage(Text_Ctrl,wxT(" Start  "),true);
+     this->trew_View_notebook->AddPage(this->Workspace_Text_Ctrl,wxT(" Workspace  "),true);
 
 
+     /**
      Custom_TextCtrl * Text_Ctrl_Next = new Custom_TextCtrl(this->trew_View_notebook,wxID_ANY,wxDefaultPosition,
 
                                                        wxSize(Tab_Bar_size.x,250),wxString(""));
@@ -226,6 +229,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      //this->trew_View_notebook->OpenIntroPage();
 
+     */
 
      int bottom_win_y = this->Tree_Control_Position.y + this->tree_control->GetSize().GetY();
 
@@ -279,35 +283,6 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->Load_Menu_Items();
 
-
-     // Default wxPanel position is TopLeft corner of the panel
-
-     /*
-
-     wxPoint Panel_Top_Right_Position = this->GetRect().GetTopLeft();
-
-     int close_button_x = Panel_Top_Right_Position.x -35;
-
-     int close_button_y = (this->tab_ctrl_hight - 20) / 2 -3;
-
-     this->close_button_position = wxPoint(close_button_x,close_button_y);
-
-
-
-     //this->close_button = new Custom_Close_Button(this->Top_Bar_Window,
-
-                          this->close_button_position,wxSize(25,25));
-
- 
-
-     this->close_button->Show(false);
-
-     */
-
-     //this->close_button_construction_status = true;
-
-     //this->Top_Bar_Window->Receive_Button_ID(this->close_button->GetId());
-
      this->tree_control->Fit();
 
      this->tree_control->SetAutoLayout(true);
@@ -322,12 +297,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->Interface_Manager_Pointer->AddPane(this,this->File_List_Widget_Shape);
 
-
-     //this->Top_Bar_Window->Show(true);
-
      this->Title_Window->Show(true);
-
-     //this->close_button->Show(true);
 
      this->tree_control->Show(true);
 
@@ -638,17 +608,6 @@ void Custom_Tree_View_Panel::mouseReleased(wxMouseEvent & event)
      event.Skip(false);
 
      event.StopPropagation();
-
-     /*
-
-     if(this->close_button->pressedCloseButton){
-
-        this->Close_Directory_Pane();
-
-        this->close_button->pressedCloseButton = false;
-     }
-
-     */
 }
 
 void Custom_Tree_View_Panel::Initialize_Sizer()
@@ -680,8 +639,6 @@ void Custom_Tree_View_Panel::Initialize_Sizer()
 
 void Custom_Tree_View_Panel::Detach_Windows_From_Sizer()
 {
-     //this->panel_sizer->Detach(this->Top_Bar_Window);
-
      this->panel_sizer->Detach(this->Title_Window);
 
      this->panel_sizer->Detach(this->tree_control);
@@ -737,6 +694,11 @@ void Custom_Tree_View_Panel::FileNameEdit(wxDataViewEvent & event)
 
 }
 
+void Custom_Tree_View_Panel::Update_Workspace(){
+
+
+
+}
 
 
 
@@ -759,22 +721,9 @@ void Custom_Tree_View_Panel::OnPaint(wxPaintEvent & event)
 
      this->DrawBackground(dc,this,rect);
 
-     /*
+     this->Title_Window->paintNow();
 
-     if(this->close_button_construction_status){
-
-        this->close_button->paintNow();
-     }
-     */
-
-     //if(this->Get_Panel_Open_Status()){
-
-        //this->Top_Bar_Window->paintNow();
-
-        this->Title_Window->paintNow();
-
-        this->Bottom_Window->paintNow();
-     //}
+     this->Bottom_Window->paintNow();
 };
 
 void Custom_Tree_View_Panel::Clear_Dynamic_Memory()
@@ -785,78 +734,17 @@ void Custom_Tree_View_Panel::Clear_Dynamic_Memory()
 
          delete this->Folder_Lister;
 
-         //delete this->Top_Bar_Window;
-
          this->tree_control->Destroy();
      }
 }
 
 void Custom_Tree_View_Panel::Load_Project_Directory(wxString Folder){
 
-     /*
-     wxBitmap * save_bmp
-
-      = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("SAVE_SUCCESS_ICON"));
-
-
-     Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,wxString("Message"),
-            
-     wxT("STATUS:\n"),wxID_ANY,wxT("status"),*save_bmp);
-
-     dial->ShowModal();
-
-     */
-
      this->Folder_Lister->RemoveProjectDirectory();
 
      this->Folder_Lister->Load_Project_Directory(Folder);
 
      this->Folder_Lister->Expand_Root();
-
-
-     //this->Top_Bar_Window->Update();
-
-     //this->Title_Window->Update();
-
-     //this->close_button->Update();
-
-     //this->Bottom_Window->Update();
-
-
-
-     /*
-     for(int i=0;i<5;i++){
-
-         wxYield();
-
-         //this->Top_Bar_Window->Update();
-
-         this->Title_Window->Update();
-
-         //this->close_button->Update();
-
-         this->Bottom_Window->Update();
-
-         this->PostSizeEvent();
-
-     }
-
-     */
-
-     //this->Show(true);
-
-     //this->close_button->pressedCloseButton = false;
-
-     /*
-     if(!this->panel_open_status)
-     {
-        this->panel_open_status = true;
-     }
-     
-     */
-
-     //this->Interface_Manager_Pointer->Update();
-
 }
 
 

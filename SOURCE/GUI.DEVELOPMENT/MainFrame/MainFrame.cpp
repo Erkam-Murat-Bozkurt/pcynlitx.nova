@@ -354,14 +354,11 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->Update();
 
-  //if(!this->Dir_List_Manager->Get_Panel_Open_Status()){
+  wxString defaultDir;
 
-      wxString defaultDir;
+  defaultDir = this->GetUserHomeDirectory() + wxString("\\Pcynlitx\\Workspace");
 
-      defaultDir = this->GetUserHomeDirectory() + wxString("\\Pcynlitx\\Defaults");
-
-      this->Dir_List_Manager->Load_Project_Directory(defaultDir);
-   //}
+  this->Dir_List_Manager->Load_Project_Directory(defaultDir);
 
   this->Interface_Manager.Update();
 
@@ -1282,6 +1279,9 @@ void MainFrame::Start_Construction_Process(wxString label,
      
                 this->Process_Output->Construct_Output(max);
 
+                this->Dir_List_Manager->Status_Data_Holder.build_system_construction_status 
+                
+                = &this->Process_Output->process_complation_status;
 
                 this->Process_Output->cmd = this->Process_Ptr->Get_Process_Command();
 
@@ -1433,6 +1433,8 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
        if(!this->Descriptor_File_Path.empty()){
 
            this->is_project_file_selected = true;
+
+           this->Wrk_Data_Holder.project_file_receive_status = true;
         }
      }
    }
@@ -1443,12 +1445,6 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
      if(event.GetId() == ID_SELECT_PROJECT_FILE ){
 
        event.Skip(false);
-
-       //wxString home_dir = this->Process_Ptr->GetUserHomeDirectory();
-
-       //wxMessageDialog * dial = new wxMessageDialog(this,home_dir,home_dir);
-
-       //dial->ShowModal();
 
        this->Freeze();
 
@@ -1467,6 +1463,9 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
        this->Des_Reader->Receive_Descriptor_File_Path(this->Descriptor_File_Path.ToStdString());
 
        this->Process_Ptr->Receive_Descriptor_File_Path(this->Descriptor_File_Path);
+
+       this->Wrk_Data_Holder.project_file_receive_status = true;
+
    }
 }
 

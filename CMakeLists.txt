@@ -230,6 +230,8 @@ target_include_directories(Pcynlitx PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Project_File_Selection_Window
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Workspace_Data_Holder
+
 
 
     ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector

@@ -63,6 +63,7 @@
 #include "Project_File_Selection_Window.hpp"
 #include "Custom_Progress_Dialog.hpp"
 #include "Dependency_Tree_Printer.hpp"
+#include "Workspace_Data_Holder.hpp"
 #include "Custom_System_Interface.h"
 #include "Cpp_FileOperations.h"
 #include <wx/stdpaths.h>
@@ -146,6 +147,7 @@ private:
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
   Custom_System_Interface SysInt;
+  Workspace_Data_Holder Wrk_Data_Holder;
   std::thread fork_process;
   std::thread read_process_output;
   std::thread * print_file_dependency;

@@ -51,6 +51,10 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/MainFrame/MainFrame.h
 
 
+    
+    ${CMAKE_CURRENT_SOURCE_DIR}/Workspace_Data_Holder/Workspace_Data_Holder.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Workspace_Data_Holder/Workspace_Data_Holder.hpp
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Process_Manager/Process_Manager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Process_Manager/Process_Manager.hpp
 
@@ -157,8 +161,8 @@ target_include_directories(BuildSystem_GUI PRIVATE
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Icon_Designs/png_files
 
-
-
+    ${CMAKE_CURRENT_SOURCE_DIR}/Workspace_Data_Holder
+    
 
     ${CMAKE_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
 
@@ -251,6 +255,8 @@ target_link_directories(BuildSystem_GUI PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Icon_Designs/png_files
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Workspace_Data_Holder
 
     
     ${CMAKE_SOURCE_DIR}/SOURCE/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector

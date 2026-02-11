@@ -27,7 +27,7 @@
 #include "Event_ID_Numbers.h"
 #include "Resource_Loader.hpp"
 #include "Custom_Message_Dialog.hpp"
-
+#include "Workspace_Data_Holder.hpp"
 
 enum
 {
@@ -70,7 +70,7 @@ public:
        this->Menu_Ptr = menu;
   }
 
-
+  Workspace_Data_Holder Status_Data_Holder;
 
   wxButton * Start_Button;
 
@@ -156,7 +156,7 @@ public:
 
   wxSize start_menu_window_size;
 
-
+  Custom_TextCtrl * Workspace_Text_Ctrl;
 
   wxColour background;
   
@@ -164,6 +164,7 @@ public:
 
   //void Update(){};
 
+  void Update_Workspace();
 
   void Open_PopUp_Menu(wxCommandEvent & event);
 

@@ -25,6 +25,7 @@
 #include "Custom_Tree_View_Panel.h"
 #include "Custom_Message_Dialog.hpp"
 #include "Resource_Loader.hpp"
+#include "Workspace_Data_Holder.hpp"
 
 
 enum
@@ -78,6 +79,8 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
 
   bool GetWindowsOpenStatus();
 
+  bool process_complation_status;
+
   bool process_interrrupt_status;
 
   int progress_point;
@@ -85,6 +88,8 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
   char * cmd;
 
   Custom_System_Interface SysInt;
+
+  Workspace_Data_Holder * Wrk_Data_Holder_Ptr;
 
 private:
   
