@@ -25,7 +25,7 @@
 #include "Custom_TabArt.h"
 
 
- Custom_TabArt::Custom_TabArt(wxColour clr) : wxAuiDefaultTabArt()
+ Custom_TabArt::Custom_TabArt(wxColour clr) : wxAuiFlatTabArt()
  {
 
 
@@ -38,11 +38,15 @@
 
     this->Default_Font = new wxFont(9,wxFONTFAMILY_DEFAULT,wxFONTSTYLE_NORMAL,
 
-                     wxFONTWEIGHT_NORMAL,false,wxString(tabart_font));
+                     wxFONTWEIGHT_LIGHT ,false,wxString(tabart_font));
 
     this->m_tabCtrlHeight = 48;
 
     this->theme_clr = clr;
+
+    this->SetNormalFont(*this->Default_Font);
+
+    this->SetSelectedFont(*this->Default_Font);
  }
 
  wxAuiTabArt * Custom_TabArt::Clone() {
@@ -99,8 +103,6 @@
 
        wxCoord tab_height = tab_size.y+14;
 
-       //wxCoord tab_width  = tab_size.x;
-
        wxCoord tab_x = in_rect.x+1;
 
        wxCoord tab_y = in_rect.y+14;
@@ -113,10 +115,11 @@
 
 
 
-       wxFont bld = *this->Default_Font;
+       wxFont active_font = *this->Default_Font;
        
-       bld.SetFaceName(wxT("Segoe UI"));
+       active_font.SetFaceName(wxT("Segoe UI"));
 
+       active_font.SetWeight(wxFONTWEIGHT_LIGHT);
 
 
        wxFont normal = *this->Default_Font;
@@ -126,8 +129,7 @@
 
        if (page.active)
        {
-
-           dc.SetFont(bld);
+           dc.SetFont(active_font);
 
            texty = selected_texty;
        }

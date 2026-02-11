@@ -200,7 +200,9 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
                        nullptr,this,this->Interface_Manager_Pointer,
 
-                       textFont,wxSize(Tab_Bar_size.x,250),theme_clr);
+                       textFont,wxSize(Tab_Bar_size.x,250),theme_clr,wxAUI_NB_TOP | wxAUI_NB_TAB_SPLIT | wxAUI_NB_TAB_MOVE 
+                       
+                       | wxAUI_NB_SCROLL_BUTTONS | wxAUI_NB_MIDDLE_CLICK_CLOSE);
 
      
      this->trew_View_notebook->SetSize(this->trew_View_notebook->FromDIP(wxSize(Tab_Bar_size.x,250)));

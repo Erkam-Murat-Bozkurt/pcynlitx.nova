@@ -26,9 +26,9 @@
 
 Custom_Notebook::Custom_Notebook(wxFrame * frame, wxPanel * parent, wxAuiManager * Interface_Manager,
 
-       wxFont Default_Font,wxSize size, wxColour theme_clr)
+       wxFont Default_Font,wxSize size, wxColour theme_clr,long style)
 
-      : wxAuiNotebook(parent,wxID_ANY,wxDefaultPosition,size,wxAUI_NB_DEFAULT_STYLE )
+      : wxAuiNotebook(parent,wxID_ANY,wxDefaultPosition,size,style)
 {
    this->frame_ptr = frame;
 
