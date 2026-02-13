@@ -44,7 +44,6 @@ public:
 
                int * x_extent);
 
-
   static void DrawButtons(wxDC& dc,const wxSize & offset,const wxRect & _rect,
 
                           const wxBitmap & bmp,const wxColour & bkcolour, int button_state);

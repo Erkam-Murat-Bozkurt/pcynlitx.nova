@@ -159,8 +159,6 @@ Project_File_Selection_Window::Project_File_Selection_Window( wxWindow * parent,
      buton_font.SetPointSize(11);
 
 
-     //bld_font.SetFaceName(wxT("Noto Sans"));
-
 
      this->Empty_Project_File_Button->SetFont(buton_font);
 
@@ -441,10 +439,13 @@ void Project_File_Selection_Window::Construct_Empty_Project_File(wxCommandEvent 
 
                *this->Descriptor_File_Selection_Status = true;
 
+               this->Dir_List_Manager->Workspace_Text_Ctrl->AddText(wxString("\n [+] A new project file constructed."));
+
+               this->Dir_List_Manager->Workspace_Text_Ctrl->AddText(wxString("\n [+] The file costructed has been selected."));
+
                this->Destroy();
            }
            else{
-
 
                this->Descriptor_File_Path_Pointer->clear();
 
@@ -524,6 +525,8 @@ void Project_File_Selection_Window::Select_File(){
          *this->Descriptor_File_Path_Pointer = openFileDialog->GetPath();
 
          *this->Descriptor_File_Selection_Status = true;
+
+         this->Dir_List_Manager->Workspace_Text_Ctrl->AddText(wxString("\n [+] The project file has been selected."));
 
           /*
 

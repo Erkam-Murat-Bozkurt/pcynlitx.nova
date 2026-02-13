@@ -927,7 +927,6 @@ void MainFrame::Run_Source_File_Dependency_Determination_Process(wxString FilePA
      this->print_file_dependency = new std::thread(MainFrame::Print_File_Dependency_Output,this);
 
      this->print_file_dependency->join();
-
 }
 
 void MainFrame::Print_File_Dependency_Output(){
@@ -974,8 +973,6 @@ void MainFrame::Print_File_Dependency_Output(){
          }
      }
 }
-
-
 
 void MainFrame::Print_File_Dependency_to_tree_control(){
 
@@ -1067,6 +1064,8 @@ void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
               this->Multi_DataPanel->ShowModal();
 
               std::string build_system_type = this->Des_Reader->Get_Build_System_Type();
+
+              this->Dir_List_Manager->Status_Data_Holder.build_type = wxString(build_system_type);
 
               char strategy = '\0';
 
@@ -1195,6 +1194,13 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
               std::string build_system_type = this->Des_Reader->Get_Build_System_Type();
 
+              this->Dir_List_Manager->Status_Data_Holder.build_type = wxString(build_system_type);
+
+              wxString build_type_text = wxString("\n [+] Build system construction type: ") + wxString(build_system_type);
+
+              this->Dir_List_Manager->Workspace_Text_Ctrl->AddText(build_type_text);
+
+
               if(build_system_type == "CMAKE"){
 
                   std::string repo_dir = this->Des_Reader->Get_Repo_Directory_Location();
@@ -1287,7 +1293,7 @@ void MainFrame::Start_Construction_Process(wxString label,
 
                 this->read_process_output = std::thread(&this->Process_Output->ReadProcessOutput,
      
-                                 this->Process_Output,start_text);
+                                 this->Process_Output,start_text,wxString("\n [+] Build system construction complated"));
 
                 this->read_process_output.detach();
           }
@@ -1435,6 +1441,8 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
            this->is_project_file_selected = true;
 
            this->Wrk_Data_Holder.project_file_receive_status = true;
+
+           this->Dir_List_Manager->Workspace_Text_Ctrl->AddText(wxString("\n A new project file constructed."));
         }
      }
    }
@@ -1449,6 +1457,8 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
        this->Freeze();
 
        Project_File_Selection_Window * window = new Project_File_Selection_Window(this,wxID_ANY);
+
+       window->Receive_Tree_View_Panel(this->Dir_List_Manager);
 
        window->Receive_Descriptor_File_Path(&this->Descriptor_File_Path);
 

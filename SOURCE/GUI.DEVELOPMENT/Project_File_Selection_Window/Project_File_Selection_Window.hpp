@@ -19,6 +19,7 @@
 #include <wx\msgdlg.h>
 #include <wx\dir.h>
 #include <wx/dialog.h>
+#include "Custom_Tree_View_Panel.h"
 #include "Descriptor_File_Reader.hpp"
 #include "Process_Manager.hpp"
 #include "Custom_Message_Dialog.hpp"
@@ -47,6 +48,11 @@ public:
 
     virtual ~Project_File_Selection_Window();
 
+    void Receive_Tree_View_Panel(Custom_Tree_View_Panel * ptr){
+
+         this->Dir_List_Manager = ptr;
+    }
+
     void Receive_Process_Manager(Process_Manager * Process_Ptr);
 
     void Receive_Descriptor_File_Path(wxString * DesPATH);
@@ -72,6 +78,8 @@ protected:
     void Select_Project_File(wxCommandEvent & event);
 
     void Select_File();
+
+    Custom_Tree_View_Panel * Dir_List_Manager;
 
     Resource_Loader Rsc_Loader;
 

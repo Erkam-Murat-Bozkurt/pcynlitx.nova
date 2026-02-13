@@ -73,9 +73,9 @@ Custom_ProcessOutput(wxFrame *parent, wxWindowID id=wxID_ANY, const wxString & t
 
   void PrintProcessOutput(wxString text);
 
-  void ReadProcessOutput(wxString start_text);
+  void ReadProcessOutput(wxString start_text, wxString process_end_message);
 
-  int GetLogNumber();
+  int  GetLogNumber();
 
   bool GetWindowsOpenStatus();
 
