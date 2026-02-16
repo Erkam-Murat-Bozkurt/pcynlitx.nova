@@ -474,8 +474,6 @@ void Custom_ProcessOutput::ReadProcessOutput(wxString start_text, wxString proce
                 this->PrintProcessOutput(text);
 
                 this->GetDialogAddress()->SetValue(this->progress_point);
-
-
             }
         }
  

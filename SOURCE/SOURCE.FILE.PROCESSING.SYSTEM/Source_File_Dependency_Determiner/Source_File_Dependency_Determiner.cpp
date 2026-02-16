@@ -127,7 +127,7 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Clear_Dynamic_Memory();
 
-     char start_operation [] = "\n\nThe source file data construction started ";
+     char start_operation [] = "\n\n The source file data construction started ";
 
      std::cout << start_operation;
 
@@ -140,7 +140,7 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->DepSelector_For_Single_File.Determine_Source_File_Dependencies(path);
 
-     char data_construction [] = "\n\nThe source file data construction complated";
+     char data_construction [] = "\n\n The source file data construction complated";
      
 
      std::cout << data_construction;
@@ -157,7 +157,7 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Warehouse_Path = this->DepSelector_For_Single_File.Get_Warehouse_Path();
 
-     char dependency_serach_start [] = "\n\nThe interpretation of dependency data started";
+     char dependency_serach_start [] = "\n\n The interpretation of dependency data started";
 
      std::cout << dependency_serach_start;
 
@@ -171,7 +171,7 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Com_Data_Extractor.Extract_Compiler_Data();
 
-     char dependency_search_end [] = "\n\nThe interpretation of dependency data complated";
+     char dependency_search_end [] = "\n\n The interpretation of dependency data complated";
 
      std::cout << dependency_search_end;
 

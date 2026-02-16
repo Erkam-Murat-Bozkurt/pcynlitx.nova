@@ -41,7 +41,7 @@ public:
     
     const wxPoint &pos=wxDefaultPosition,
     
-    const wxSize &size=wxSize(800,600),
+    const wxSize &size=wxSize(650,500),
     
     long style=wxDEFAULT_DIALOG_STYLE, const wxString &name=wxDialogNameStr);
 

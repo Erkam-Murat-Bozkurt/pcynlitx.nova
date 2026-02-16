@@ -342,13 +342,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->Book_Manager->OpenIntroPage();
 
-  //wxString Help_Page_Path = wxString("C:\\Program Files\\Pcynlitx\\Introduction.txt");
-
-  //this->Book_Manager->Open_File(Help_Page_Path);
-
-  //size_t notebook_index = this->Book_Manager->GetIndex_FromPath(Help_Page_Path);
-
-  //this->Book_Manager->Get_NoteBook_Pointer()->SetPageText(notebook_index,wxString("Introduction"));
 
   this->Book_Manager->SelectIntroPage();
 
@@ -465,7 +458,7 @@ void MainFrame::File_Save(wxCommandEvent & event){
 
             dial->ShowModal();
 
-            delete dial;            
+            delete dial;
         }      
      }
 }
@@ -785,23 +778,8 @@ void MainFrame::DirectoryOpen(wxCommandEvent & event)
 
            wxString DirectoryPath = dir_dialog.GetPath();
 
-           //if(!this->Dir_List_Manager->Get_Panel_Open_Status()){
-
-              this->Dir_List_Manager->Load_Project_Directory(DirectoryPath);
-           //}
-           //else{
-
-            //   this->Dir_List_Manager->
-           //}
-
-           //this->Interface_Manager.Update();
+           this->Dir_List_Manager->Load_Project_Directory(DirectoryPath);
         }
-
-        //this->tree_control->Update();
-
-        //this->PaintNow(this);
-
-        //this->Update();
      }
 }
 
@@ -863,13 +841,13 @@ void MainFrame::Determine_Source_File_Dependencies(wxCommandEvent & event){
 
                   this->Progress_Dialog = new Custom_Progress_Dialog(this,wxID_ANY,wxT("PROCESS REPORT"),wxDefaultPosition);
 
-                  this->Progress_Dialog->SetSize(this->FromDIP(wxSize(800,600)));
+                  this->Progress_Dialog->SetSize(this->FromDIP(wxSize(650,400)));
 
                   this->Progress_Dialog->Construct_Text_Panel(wxT("Process Output"),20);
 
                   this->Progress_Dialog->SetBoldFont();
 
-                  this->Progress_Dialog->AppendText_To_TextCtrl(wxT("\n\n    SOURCE FILE DEPENDENCY DETERMINATION STARTED:"));
+                  this->Progress_Dialog->AppendText_To_TextCtrl(wxT("\n\n SOURCE FILE DEPENDENCY DETERMINATION STARTED:"));
 
                   this->Progress_Dialog->SetLightFont();
 

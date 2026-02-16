@@ -100,11 +100,11 @@ void Custom_Progress_Dialog::Size_Event(wxSizeEvent & event)
 
 void Custom_Progress_Dialog::Construct_Text_Panel(wxString title, int dialog_size){
 
-     this->text_ctrl_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,-1));
+     this->text_ctrl_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(650,-1));
 
-     this->text_ctrl_close_panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,70));
+     this->text_ctrl_close_panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(650,70));
 
-     this->text_ctrl_dialog_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(900,30));
+     this->text_ctrl_dialog_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(650,30));
 
 
 
@@ -196,7 +196,7 @@ void Custom_Progress_Dialog::Construct_Text_Panel(wxString title, int dialog_siz
 
 void Custom_Progress_Dialog::SetBoldFont(){
 
-     wxTextAttr AttrBold(wxColor(100, 100, 120));
+     wxTextAttr AttrBold(wxColor(70, 70, 75));
 
      AttrBold.SetFontWeight(wxFONTWEIGHT_BOLD);
 

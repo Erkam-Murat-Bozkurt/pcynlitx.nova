@@ -189,7 +189,10 @@ void Project_Folder_Lister::Load_Project_Directory(wxString Folder){
             }
             else{
 
-                   wxMessageOutput::Get()->Printf("Folder %s can not be openned",Folder);
+                  // wxMessageOutput::Get()->Printf("Folder %s can not be openned",Folder);
+
+                  this->Append_Files(setpoint_path,Item);
+
             }
         }
         else{

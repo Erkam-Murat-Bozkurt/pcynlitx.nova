@@ -197,7 +197,7 @@ void Custom_Notebook::OpenIntroPage()
 
          // Load Intro Page
 
-         this->AddPage(this->NoteBook_Page_Data[Index_Number].Intro_Page_Pointer,wxT(" Welcome  "),true);
+         this->AddPage(this->NoteBook_Page_Data[Index_Number].Intro_Page_Pointer,wxT(" PCYNLITX-NOVA  "),true);
 
          this->NoteBook_Page_Data[Index_Number].Intro_Page_Pointer->Show(true);
 

@@ -302,7 +302,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
 
      this->textctrl->Clear();     
 
-     wxTextAttr AttrBold(wxColor(100, 100, 110));
+     wxTextAttr AttrBold(wxColor(70,70,75));
 
      AttrBold.SetFontWeight(wxFONTWEIGHT_BOLD);
 
@@ -311,7 +311,7 @@ void Project_Descriptions_Printer::Print_Descriptions(){
      AttrBold.SetFontFaceName(wxT("Calibri"));
 
 
-     wxTextAttr AttrLigth(wxColor(70,70,70));
+     wxTextAttr AttrLigth(wxColor(60,60,65));
 
      AttrLigth.SetFontWeight(wxFONTWEIGHT_LIGHT);
 
