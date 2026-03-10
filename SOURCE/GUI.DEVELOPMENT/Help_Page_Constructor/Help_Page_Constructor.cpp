@@ -29,7 +29,6 @@ BEGIN_EVENT_TABLE(Help_Page_Constructor,wxDialog)
     EVT_BUTTON(ID_CLOSE_HELP_PAGE_WINDOW,Help_Page_Constructor::CloseWindow)
     EVT_BUTTON(ID_SELECTION_INTRO_PAGE,Help_Page_Constructor::Open_Intro_Page)
     EVT_BUTTON(ID_SELECTION_WELCOME,Help_Page_Constructor::Open_Welcome_Page)
-
 END_EVENT_TABLE()
 
 Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString & message, 

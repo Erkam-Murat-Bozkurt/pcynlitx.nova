@@ -25,10 +25,8 @@ BEGIN_EVENT_TABLE(MainFrame,wxFrame)
   EVT_MENU(ID_SELECT_PROJECT_FILE,MainFrame::Select_Project_File)
   EVT_MENU(ID_OPEN_INTROPAGE,MainFrame::Open_Intro_Page)
   EVT_MENU(ID_SHOW_HELP_MENU,MainFrame::Show_Help_Menu)
-
   EVT_MENU(ID_OPEN_TREE_WIEW,MainFrame::DirectoryOpen)
   EVT_MENU(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR,MainFrame::Single_File_Script_Construction)
-  EVT_AUI_PANE_CLOSE(MainFrame::Close_Directory_Pane)
   EVT_MENU(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,MainFrame::Start_Build_System_Construction)
   EVT_MENU(ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR,MainFrame::Advance_Single_File_Script_Construction)
   EVT_MENU(ID_PRINT_DESCRIPTIONS,MainFrame::PrintDescriptions)
@@ -36,7 +34,7 @@ BEGIN_EVENT_TABLE(MainFrame,wxFrame)
   EVT_MENU(ID_RUN_PROJECT_SCRIPT,MainFrame::Run_Project_Script_On_Terminal)
   EVT_MENU(ID_OPEN_SETTINGS,MainFrame::OpenSettings)
   EVT_PAINT(MainFrame::OnPaint)
-
+  EVT_AUI_PANE_CLOSE(MainFrame::Close_Directory_Pane)
 END_EVENT_TABLE()
 
 #endif /* EVENT_TABLE_HEADER_H */
