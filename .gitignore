@@ -7,6 +7,7 @@
 node_modules/
 dist/
 BUILD/*
+SOURCE/INSTALLER.DEVELOPMENT/*.exe
 !BUILD/README.md
 
 # Compiled Java class files

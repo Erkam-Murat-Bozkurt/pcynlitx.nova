@@ -9,7 +9,8 @@
 #define AppExeName "Pcynlitx.exe"
 
 [Setup]
-; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
+; NOTE: The value of AppId uniquely identifies this application. 
+; Do not use the same AppId value in installers for other applications.
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{4A8B47E0-9ECF-43FB-B9CF-182533C62FB3}}
 AppName={#AppName}
@@ -21,10 +22,10 @@ AppUpdatesURL={#AppURL}
 DefaultDirName={autopf}\{#AppName}
 DisableDirPage=yes
 DisableProgramGroupPage=yes
-LicenseFile=C:\Development.Files\Project.Test.platform\LICENSE.txt
-OutputDir=C:\Development.Files\Project.Test.platform
+LicenseFile=LICENSE.txt
+OutputDir=.\
 OutputBaseFilename=Pcynlitx.Nova.Setup
-SetupIconFile=C:\Development.Files\Project.Test.platform\Pcynlitx_Logo.ico
+SetupIconFile=Pcynlitx.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -36,16 +37,16 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "C:\Development.Files\Project.Test.platform\Pcynlitx.ico"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion 
-Source: "C:\Development.Files\Project.Test.platform\Pcynlitx.exe"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion 
-Source: "C:\Development.Files\Project.Test.platform\Pcynlitx_Kernel.exe"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Development.Files\Project.Test.platform\Intro_File.png"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion
-Source: "C:\Development.Files\Project.Test.platform\LICENSE.txt"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion
-Source: "C:\Development.Files\Project.Test.platform\setup_fonts.exe"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion 
-Source: "C:\Development.Files\pcynlitx.nova\SOURCE\GUI.DEVELOPMENT\GUI_Fonts\FiraCode_Standard\*"; DestDir: "C:\Program Files\Pcynlitx\FiraCode_Standard";  Flags: ignoreversion 
-Source: "C:\Development.Files\pcynlitx.nova\SOURCE\GUI.DEVELOPMENT\GUI_Fonts\Oswald\*"; DestDir: "C:\Program Files\Pcynlitx\Oswald";  Flags: ignoreversion
-Source: "C:\Development.Files\Project.Test.platform\Mingw64.Setup.exe"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion deleteafterinstall
-Source: "C:\Development.Files\Project.Test.platform\pcynlitx_path_set.exe"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion deleteafterinstall
+Source: "Pcynlitx.ico"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion 
+Source: "Pcynlitx.exe"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion 
+Source: "Pcynlitx_Kernel.exe"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "pcynlitx_path_set.exe"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion deleteafterinstall
+Source: "setup_fonts.exe"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion 
+Source: "Intro_File.png"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion
+Source: "LICENSE.txt"; DestDir: "C:\Program Files\Pcynlitx"; Flags: ignoreversion
+Source: "GUI_Fonts\FiraCode_Standard\*"; DestDir: "C:\Program Files\Pcynlitx\FiraCode_Standard";  Flags: ignoreversion 
+Source: "GUI_Fonts\Oswald\*"; DestDir: "C:\Program Files\Pcynlitx\Oswald";  Flags: ignoreversion
+Source: "Mingw64.Setup.exe"; DestDir: "C:\Program Files\Pcynlitx";  Flags: ignoreversion deleteafterinstall
 
 
 [Icons]

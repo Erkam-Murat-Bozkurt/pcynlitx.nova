@@ -369,3 +369,28 @@ add_custom_command(
        VERBATIM
        BYPRODUCTS
 )
+
+
+set(INSTALLER_DIR "${CMAKE_SOURCE_DIR}/SOURCE/INSTALLER.DEVELOPMENT")
+
+add_custom_command(
+       TARGET Pcynlitx_Kernel
+       POST_BUILD 
+       COMMAND ${CMAKE_COMMAND}
+       ARGS -E copy $<TARGET_FILE:Pcynlitx_Kernel> "${INSTALLER_DIR}"
+       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+       VERBATIM
+       BYPRODUCTS
+)
+
+add_custom_command(
+       TARGET Pcynlitx
+       POST_BUILD 
+       COMMAND ${CMAKE_COMMAND}
+       ARGS -E copy $<TARGET_FILE:Pcynlitx> "${INSTALLER_DIR}"
+       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+       VERBATIM
+       BYPRODUCTS
+)
+
+
