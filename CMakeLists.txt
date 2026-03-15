@@ -10,8 +10,6 @@ set(wxWidgets_USE_STATIC 1)
 set(wxBUILD_SHARED OFF)
 set(wxBUILD_MONOLITHIC OFF)
 set(wxBUILD_PRECOMP ON)
-
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
@@ -26,10 +24,29 @@ string(REPLACE "\n" "" USER_PROFILE_PATH "${USER_PROFILE_PATH}")
 
 string(REPLACE "/" "\\" USER_PROFILE_PATH "${USER_PROFILE_PATH}")
 
-execute_process(
-    COMMAND ${CMAKE_COMMAND} -E make_directory "${USER_PROFILE_PATH}/Pcynlitx"
-    RESULT_VARIABLE directory_creation_result
-)
+
+if(NOT EXISTS "${USER_PROFILE_PATH}/Pcynlitx")
+
+   execute_process(
+        
+        COMMAND ${CMAKE_COMMAND} -E make_directory 
+   
+        "${USER_PROFILE_PATH}/Pcynlitx"
+    
+        RESULT_VARIABLE directory_creation_result
+   )
+
+   execute_process(
+        
+        COMMAND ${CMAKE_COMMAND} -E make_directory 
+   
+        "${USER_PROFILE_PATH}/Pcynlitx/Workspace"
+    
+        RESULT_VARIABLE directory_creation_result
+   )
+
+endif()
+
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -65,11 +82,9 @@ add_executable(Executable_MakeFile_Builder
 
         ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/EXECUTABLE.MAKE.FILE.BUILD.SYSTEM/Executable_MakeFile_Builder/Executable_MakeFile_Builder_Main_File.cpp)
 
-
 add_executable(Auto_MakeFile_Builder  
 
         ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/MAKE.FILE.BUILD.SYSTEM/Auto_MakeFile_Builder/Auto_MakeFile_Builder_Main_File.cpp)
-
 
 add_executable(Pcynlitx_Kernel
 
@@ -79,11 +94,9 @@ add_executable(CMAKE_Build
 
         ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/MAKE.FILE.BUILD.SYSTEM/CMAKE_Build_System_Generator/CMAKE_Build_System_Generator_Main_File.cpp)
 
-
 add_executable(CMAKE_Build_Executable
 
         ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/MAKE.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor_Main_File.cpp)
-
 
 add_executable(Pcynlitx WIN32
 

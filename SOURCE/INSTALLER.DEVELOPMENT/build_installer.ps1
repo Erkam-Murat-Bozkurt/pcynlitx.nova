@@ -10,6 +10,15 @@ Copy-Item Pcynlitx.exe ..\SOURCE\INSTALLER.DEVELOPMENT
 
 Set-Location ..\SOURCE\INSTALLER.DEVELOPMENT
 
+$Current_Dir=Get-Location
+
+$IS_INSTALLER_EXIST=Test-Path -Path "$Current_Dir\Mingw64.Setup.exe"
+
+if(-Not $IS_INSTALLER_EXIST){
+
+    ISCC.exe .\mingw64_installer_script.iss
+}
+
 g++ -o mingw64_path_set.exe mingw64_path_set.cpp -static-libstdc++ -static-libgcc
 
 g++ -o pcynlitx_path_set.exe pcynlitx_path_set.cpp -static-libstdc++ -static-libgcc
