@@ -9,6 +9,8 @@ dist/
 BUILD/*
 SOURCE/INSTALLER.DEVELOPMENT/*.exe
 !BUILD/README.md
+TESTS/*
+!TESTS/test_script.ps1
 
 # Compiled Java class files
 *.class
