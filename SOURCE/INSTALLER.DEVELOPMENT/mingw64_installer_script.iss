@@ -8,7 +8,6 @@
 #define TargetDir "C:\Program Files\Pcynlitx"
 
 [Setup]
-
 AppId={{FFD8A5A8-BDC7-4A18-B763-EEEECD5732F6}}
 AppName=Mingw64
 AppVersion={#MyAppVersion}
@@ -16,10 +15,10 @@ AppVersion={#MyAppVersion}
 DefaultDirName=C:\Program Files\Mingw64
 DisableDirPage=yes
 DisableProgramGroupPage=yes
-LicenseFile=C:\Development.Files\Mingw64_Installer\LICENSE.txt
-OutputDir=C:\Development.Files\Mingw64_Installer
+LicenseFile=LICENSE.txt
+OutputDir=.\
 OutputBaseFilename=Mingw64.Setup
-SetupIconFile=C:\Development.Files\Mingw64_Installer\Mingw64_Logo.ico
+SetupIconFile=Mingw64_Logo.ico
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -28,10 +27,9 @@ WizardStyle=modern
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Files]
-Source: "C:\Development.Files\Mingw64_Installer\mingw64\*"; DestDir: "C:\Program Files\Mingw64"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Development.Files\Mingw64_Installer\LICENSE.txt"; DestDir: "C:\Program Files\Mingw64"; Flags: ignoreversion
-Source: "C:\Development.Files\Mingw64_Installer\mingw64_path_set.exe"; DestDir: "C:\Program Files\Mingw64";  Flags: ignoreversion deleteafterinstall
-Source: "C:\Development.Files\Mingw64_Installer\libwinpthread-1.dll"; DestDir: "C:\Program Files\Mingw64";  Flags: ignoreversion 
+Source: "C:\Development.Files\pcynlitx.nova\BUILD\mingw64\*"; DestDir: "C:\Program Files\Mingw64"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "LICENSE.txt"; DestDir: "C:\Program Files\Mingw64"; Flags: ignoreversion
+Source: "mingw64_path_set.exe"; DestDir: "C:\Program Files\Mingw64";  Flags: ignoreversion deleteafterinstall
 
 
 [UninstallDelete]
