@@ -1,7 +1,5 @@
 
 
-
-
 cmake_minimum_required(VERSION 4.1.2)
 
 project(Pcynlitx VERSION 1.0)
@@ -24,7 +22,6 @@ execute_process(COMMAND cmd /c echo %USERPROFILE%
    OUTPUT_VARIABLE USER_PROFILE_PATH
 )
 
-
 string(REPLACE "\n" "" USER_PROFILE_PATH "${USER_PROFILE_PATH}")
 
 string(REPLACE "/" "\\" USER_PROFILE_PATH "${USER_PROFILE_PATH}")
@@ -33,78 +30,6 @@ execute_process(
     COMMAND ${CMAKE_COMMAND} -E make_directory "${USER_PROFILE_PATH}/Pcynlitx"
     RESULT_VARIABLE directory_creation_result
 )
-
-
-if(MINGW)
-   
-   message("The mingw compiler toolchain detected")
-
-else()
-
-   message("The mingw compiler toolchain can not be detected")
-   message("The mingw compiler will be installed")
-
-
-   file(DOWNLOAD  https://github.com/brechtsanders/winlibs_mingw/releases/download/15.2.0posix-13.0.0-msvcrt-r3/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64msvcrt-13.0.0-r3.zip ${USER_PROFILE_PATH}/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64msvcrt-13.0.0-r3.zip SHOW_PROGRESS)
-
-   set(COMPILER_ZIP_PATH ${USER_PROFILE_PATH}/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64msvcrt-13.0.0-r3.zip)
-
-   string(REPLACE "/" "\\" COMPILER_ZIP_PATH "${COMPILER_ZIP_PATH}")
-
-   message("The directory ${COMPILER_ZIP_PATH}")
-
-
-   file(ARCHIVE_EXTRACT INPUT ${COMPILER_ZIP_PATH} DESTINATION ${USER_PROFILE_PATH} VERBOSE)
-
-   execute_process(COMMAND cmd /c echo %PATH% 
-
-      WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-      OUTPUT_VARIABLE PATH_ENV
-   )
-
-   file(REMOVE ${USER_PROFILE_PATH}/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64msvcrt-13.0.0-r3.zip)
-
-   string(REPLACE "\n" "" PATH_ENV "${PATH_ENV}")
-
-   set(new_paths ";${USER_PROFILE_PATH}/mingw64")
-
-   string(APPEND new_paths ";${USER_PROFILE_PATH}/mingw64/bin")
-
-   string(APPEND new_paths ";${USER_PROFILE_PATH}/mingw64/include")
-
-   string(APPEND new_paths ";${USER_PROFILE_PATH}/mingw64/lib")
-
-   string(APPEND new_paths ";${USER_PROFILE_PATH}/mingw64/x86_64-w64-mingw32")
-
-   string(APPEND new_paths ";${USER_PROFILE_PATH}/mingw64/x86_64-w64-mingw32/include")
-
-   string(APPEND new_paths ";${USER_PROFILE_PATH}/mingw64/x86_64-w64-mingw32/lib")
-
-
-   string(REPLACE "\n" "" new_paths "${new_paths}")
-
-   string(REPLACE "/" "\\" new_paths "${new_paths}")
-
-
-   execute_process(
-
-       COMMAND cmd /c reg.exe add "HKEY_CURRENT_USER\\Environment" /v PATH /t REG_SZ /d "${PATH_ENV};${new_paths}" /f
-       WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-       RESULT_VARIABLE REG_EXE_RETURN_VALUE
-       OUTPUT_QUIET
-   )
-
-   if(REG_EXE_RETURN_VALUE EQUAL 0)
-
-      message("The compiler paths are set")
-   
-   else()
-   
-      message("The compiler paths are not set successfuly")
-
-   endif()
-
-endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -275,7 +200,7 @@ target_link_directories(Pcynlitx PUBLIC
 )
 
 
-target_link_options(Pcynlitx PUBLIC  -Wl, -static -mwindows)
+target_link_options(Pcynlitx PUBLIC -static -mwindows)
 
 
 target_link_libraries(Pcynlitx PUBLIC BuildSystem_GUI des_reader pthread 
