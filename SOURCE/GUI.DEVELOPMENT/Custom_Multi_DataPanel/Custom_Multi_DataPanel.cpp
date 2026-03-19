@@ -299,7 +299,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      text->SetFont(Title_Font);
 
-     text->SetForegroundColour(wxColour(65, 65, 75,0xff));
+     text->SetForegroundColour(wxColour(65,65,75,0xff));
      
 
 
@@ -750,7 +750,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->close_panel  = new wxPanel(this,wxID_ANY,wxDefaultPosition,wxSize(220,1000));
 
-     this->close_panel->SetBackgroundColour(wxColour(110,110,125,0xff));
+     this->close_panel->SetBackgroundColour(wxColour(200,200,210,0xff));
 
      this->close_panel->SetMinSize(wxSize(220,1000));
 

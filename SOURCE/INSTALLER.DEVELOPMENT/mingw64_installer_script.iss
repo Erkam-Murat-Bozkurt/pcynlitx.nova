@@ -5,7 +5,6 @@
 #define MyAppVersion "1.0"
 #define MyAppPublisher "Erkam Murat Bozkurt M.Sc Control Systems Engineering"
 #define MyAppURL "https://www.pcynlitx.com/"
-#define TargetDir "C:\Program Files\Pcynlitx"
 
 [Setup]
 AppId={{FFD8A5A8-BDC7-4A18-B763-EEEECD5732F6}}
@@ -15,7 +14,7 @@ AppVersion={#MyAppVersion}
 DefaultDirName=C:\Program Files\Mingw64
 DisableDirPage=yes
 DisableProgramGroupPage=yes
-LicenseFile=LICENSE.txt
+LicenseFile=Mingw64_License.txt
 OutputDir=.\
 OutputBaseFilename=Mingw64.Setup
 SetupIconFile=Mingw64_Logo.ico

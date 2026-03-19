@@ -30,6 +30,11 @@ public:
 
       this->m_gradientType = wxAUI_GRADIENT_NONE;
 
+      //this->m_gradientType = wxAUI_GRADIENT_VERTICAL;
+
+      //this->m_gradientType = wxAUI_GRADIENT_HORIZONTAL;
+
+
       this->m_borderSize = 0;
 
       this->m_captionSize = 2;

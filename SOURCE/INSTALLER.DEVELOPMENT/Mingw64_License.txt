@@ -1,0 +1,25 @@
+
+
+Mingw64 License:
+----------------
+
+Version: MinGW-w64 13.0.0
+
+Mingw64 copiler can be used with following open source software licenses. 
+
+The Public Domain, GNU Library or Lesser General Public License 
+version 2.0 (LGPLv2), Zope Public License 
+
+You can find more information about the licenses which are used by 
+mingw64 project, you can look the links given in below.
+
+https://www.gnu.org/
+
+https://opensource.org/licenses/ZPL-2.0
+
+The official web site and code repository are given in below links.
+
+http://mingw-w64.org/
+
+https://sourceforge.net/projects/mingw-w64/
+

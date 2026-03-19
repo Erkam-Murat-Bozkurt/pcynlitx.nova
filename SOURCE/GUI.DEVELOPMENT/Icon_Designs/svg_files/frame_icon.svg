@@ -134,13 +134,5 @@
        fill="#43a047"
        id="path1-7"
        style="fill:#fcaf3b;fill-opacity:1;stroke:#fcaf3b;stroke-width:0.0279479;stroke-dasharray:none;stroke-opacity:1" />
-    <path
-       style="fill:#fcaf3b;fill-opacity:1;stroke:#78788c;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
-       d="m 73.497122,85.085627 -0.728816,0.770338 v -0.777096 z"
-       id="path1" />
-    <path
-       style="fill:#fcaf3b;fill-opacity:1;stroke:#fcaf3b;stroke-width:0;stroke-dasharray:none;stroke-opacity:1"
-       d="m 73.669271,86.663165 0.672953,-0.73972 v 0.746208 z"
-       id="path1-6" />
   </g>
 </svg>

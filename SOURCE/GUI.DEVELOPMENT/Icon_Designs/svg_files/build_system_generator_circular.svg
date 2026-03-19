@@ -24,7 +24,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
-     showgrid="false"
+     showgrid="true"
      inkscape:zoom="5.7231455"
      inkscape:cx="64.21294"
      inkscape:cy="24.898895"
@@ -50,7 +50,7 @@
        dotted="false"
        gridanglex="30"
        gridanglez="30"
-       visible="false" />
+       visible="true" />
   </sodipodi:namedview>
   <defs
      id="defs1">
@@ -71,13 +71,13 @@
      transform="matrix(0.55270238,0,0,0.50861234,145.34983,82.722123)"
      id="g3">
     <rect
-       style="fill:#878791;fill-opacity:1;stroke:none;stroke-width:6.78948;stroke-opacity:1"
+       style="fill:#868299;fill-opacity:1;stroke:none;stroke-width:6.78948;stroke-opacity:1"
        id="rect3"
        width="82.094109"
        height="87.69413"
        x="-262.98029"
        y="-162.64278"
-       ry="0.2428568" />
+       ry="4.3653483" />
     <g
        id="g2-1"
        transform="matrix(0.30626886,0,0,0.35960957,-244.95886,-145.71129)"

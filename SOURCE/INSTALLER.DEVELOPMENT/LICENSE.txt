@@ -43,8 +43,7 @@ thread library. Therefore, if you already use a version of a mingw64 compiler,
 removing the current version is offered in order to be avoid version conflicts. 
 The pcynlitx platform uses the mingw64 version given in below.
 
-MinGW-W64 GCC-8.1.0, x86_64-posix-seh
-
+Version: MinGW-w64 13.0.0
 
 Mingw64 License:
 ----------------
