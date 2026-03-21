@@ -43,6 +43,7 @@ public:
  void Clear_Dynamic_Memory();
 protected:
  void Write_MakeFiles(int start, int end);
+ void Write_Main_CMakeLists_File(std::string project_name, std::string version_num);
  void Clear_Vector_Memory(std::vector<std::string> & vec);
  void Clear_String_Memory(std::string & str);
  void Construct_Path(std::string * ptr, std::string str, std::string wrd);

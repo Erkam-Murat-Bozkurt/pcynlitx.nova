@@ -36,7 +36,7 @@ CMAKE_System_Constructor::CMAKE_System_Constructor(char * DesPath, char opr_sis,
 
      this->Des_Path = DesPath;
      
-    this->build_type = build_type;
+     this->build_type = build_type;
 
      size_t des_path_size = strlen(DesPath);
 
@@ -48,6 +48,12 @@ CMAKE_System_Constructor::CMAKE_System_Constructor(char * DesPath, char opr_sis,
      this->DesPATH.shrink_to_fit();
 
 
+     this->Des_Reader.Receive_Descriptor_File_Path(this->DesPATH);
+
+     this->Des_Reader.Read_Descriptor_File();
+
+
+ 
      this->Memory_Delete_Condition = false;
 
      this->opr_sis = opr_sis;
@@ -83,16 +89,12 @@ void CMAKE_System_Constructor::Clear_Dynamic_Memory(){
 void CMAKE_System_Constructor::Receive_System_Interface(Custom_System_Interface * sysInt){
 
      this->SysInt = sysInt;
+
 }
 
 
-void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::string version_num){
-
-     // Determination of the directories recorded on the git repo
-          
-     this->Des_Reader.Receive_Descriptor_File_Path(this->DesPATH);
-
-     this->Des_Reader.Read_Descriptor_File();
+void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::string version_num)
+{
 
 
      char read_opr [] = "\nThe project descriptor file read\n";
@@ -103,14 +105,15 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
 
         this->SysInt->WriteTo_NamedPipe_FromChild(read_opr);
      }
- 
+     
 
+     // Determination of the directories recorded on the git repo
+          
      this->Data_Processor.Receive_Descriptor_File_Path(this->DesPATH);
 
      this->Data_Processor.Write_Git_Repo_List_File();
 
      this->Data_Processor.Determine_Git_Repo_Info();  
-
 
      char git_data [] = "\nThe data for git version controller has been collected\n";
 
@@ -123,11 +126,17 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
      }
 
 
+
+     
      this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
 
      this->Dep_Determiner.Receive_Git_Data_Processor(&this->Data_Processor);
 
      this->Dep_Determiner.Collect_Dependency_Information();
+
+     this->Compiler_Data_Pointer = this->Dep_Determiner.Get_Compiler_Data_Address();
+
+     this->Compiler_Data_Pointer->shrink_to_fit();
 
 
      char dependency_data [] = "\nSource file dependencies has been determined\n";
@@ -139,40 +148,30 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
         this->SysInt->WriteTo_NamedPipe_FromChild(dependency_data);
      }
 
+     this->Write_Main_CMakeLists_File(project_name,version_num);
 
-     this->CMK_MF_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
+     this->Perform_Data_Map_Construction();
 
-     this->CMK_MF_Builder.Receive_Git_Data_Processor(&Data_Processor);
+     this->Perform_MakeFile_Construction();
+}
 
-     this->CMK_MF_Builder.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
+
+
+
+
+void CMAKE_System_Constructor::Write_Main_CMakeLists_File(std::string project_name, std::string version_num){
+
+     this->CMK_MF_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
+
+     this->CMK_MF_Builder.Receive_Git_Data_Processor(&this->Data_Processor);
+
+     this->CMK_MF_Builder.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
 
      this->CMK_MF_Builder.Receive_Operating_System(this->opr_sis);
     
      this->CMK_MF_Builder.Build_Main_CMAKE_File(project_name,version_num);
-
-
-     this->Compiler_Data_Pointer = this->Dep_Determiner.Get_Compiler_Data_Address();
-
-     this->Compiler_Data_Pointer->shrink_to_fit();
-
-
-     this->Perform_Data_Map_Construction();
-
-
-     this->Perform_MakeFile_Construction();
-
-     char construction_result [] = "\nThe new makefiles have been constructed..\n";
-
-     std::cout << "\n";
-     std::cout << construction_result;
-     std::cout << "\n";
-     std::cout << "\n";
-
-     if(this->build_type == 'g'){
-
-        this->SysInt->WriteTo_NamedPipe_FromChild(construction_result);
-     }
 }
+
 
 
 void CMAKE_System_Constructor::Construct_For_Large_Data_Set(size_t data_size){
@@ -227,6 +226,8 @@ void CMAKE_System_Constructor::Construct_For_Large_Data_Set(size_t data_size){
      }
 }
 
+
+
 void CMAKE_System_Constructor::Construct_For_Middle_Data_Set(size_t data_size){
 
      int division = data_size/16;
@@ -250,6 +251,8 @@ void CMAKE_System_Constructor::Construct_For_Middle_Data_Set(size_t data_size){
          this->threadPool[i].join();
      }
 }
+
+
 
 void CMAKE_System_Constructor::Construct_For_Small_Data_Set(size_t data_size){
 
@@ -278,13 +281,24 @@ void CMAKE_System_Constructor::Perform_MakeFile_Construction(){
          }
      }
 
-    if(!this->threadPool.empty()){
+     char construction_result [] = "\nThe new makefiles have been constructed..\n";
+
+     std::cout << "\n";
+     std::cout << construction_result;
+     std::cout << "\n";
+     std::cout << "\n";
+
+     if(this->build_type == 'g'){
+
+       this->SysInt->WriteTo_NamedPipe_FromChild(construction_result);
+     }
+
+     if(!this->threadPool.empty()){
 
         this->threadPool.clear();
 
         this->threadPool.shrink_to_fit();
-    }
-
+     }
 }
 
 
@@ -422,6 +436,8 @@ void CMAKE_System_Constructor::Construct_Path(std::string * pointer, std::string
 
 
 
+
+
 void CMAKE_System_Constructor::Clear_Vector_Memory(std::vector<std::string> & vec){
 
     vec.shrink_to_fit();
@@ -435,6 +451,8 @@ void CMAKE_System_Constructor::Clear_Vector_Memory(std::vector<std::string> & ve
 
     vec.clear();
 }
+
+
 
 
 void CMAKE_System_Constructor::Clear_String_Memory(std::string & str)

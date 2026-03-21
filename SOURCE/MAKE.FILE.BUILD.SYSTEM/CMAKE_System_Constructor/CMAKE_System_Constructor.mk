@@ -1,63 +1,66 @@
 
-
-STRING_OPS=D:\pcynlitx.build\BASIC.TOOLS\StringOperator
-DIR_OPS=D:\pcynlitx.build\BASIC.TOOLS\DirectoryOperations
-CHAR_OPS=D:\pcynlitx.build\BASIC.TOOLS\CharOperator
-FILE_OPRS=D:\pcynlitx.build\BASIC.TOOLS\Cpp_FileOperations
-INT_TO_CHAR=D:\pcynlitx.build\BASIC.TOOLS\IntToCharTranslater
-SYS_INT=D:\pcynlitx.build\BASIC.TOOLS\Custom_System_Interface
+REPO_PATH=C:\Development.Files\pcynlitx.nova\SOURCE
 
 
-
-DES_READER=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
-DES_DATA_COL=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
-DES_SYN_CON=D:\pcynlitx.build\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
-DIR_ENUM=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Directory_Enumerator
-MAKE_DATA_COL=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\MakeFile_Data_Collector
-MAKE_BLD=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\CMAKE_Target_Library_Builder
-MK_FILE_CLNR=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\Make_File_Cleaner
-SRC_DT_COL=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
-SOURCE_DETR=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
-HEAD_DETER=D:\pcynlitx.build\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
+STRING_OPS=$(REPO_PATH)\BASIC.TOOLS\StringOperator
+DIR_OPS=$(REPO_PATH)\BASIC.TOOLS\DirectoryOperations
+CHAR_OPS=$(REPO_PATH)\BASIC.TOOLS\CharOperator
+FILE_OPRS=$(REPO_PATH)\BASIC.TOOLS\Cpp_FileOperations
+INT_TO_CHAR=$(REPO_PATH)\BASIC.TOOLS\IntToCharTranslater
+SYS_INT=$(REPO_PATH)\BASIC.TOOLS\Custom_System_Interface
 
 
 
-SRC_INF_CL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector
-SRC_DEP_SL=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector
-SRC_DEP_DT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Determiner
-HDR_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
-SRC_READER=D:\pcynlitx.build\PROJECT.BUILD.TOOLS\Project_Src_Code_Rdr
-SRC_COM_DT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Compiler_Data_Extractor
-SRC_DER_RORD=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_ReOrderer
-DEP_DAT_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Extractor
-SRC_PROCESSOR=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Processor
-SRC_INF_CL_SF=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector_For_Single_File
-SRC_DEP_SL_SF=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector_For_Single_File
-SRC_DATA_SETTER=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Data_Setter
-QUICK_SRC_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Quick_Src_Dependency_Extractor
-DEP_DAT_PROC=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Processor
-
-
-MAKE_FILE_PATH=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\MakeFile_Path_Determiner
-
-
-GIT_PROC=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Data_Processor
-GIT_REC=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Receiver
-GIT_IGN=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Ignoring_Files_Lister
-GIT_MOD_LST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Lister
-GIT_MOD_RCV=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiver
-GIT_LIST=D:\pcynlitx.build\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Writer
+DES_READER=$(REPO_PATH)\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Reader
+DES_DATA_COL=$(REPO_PATH)\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Data.Collector
+DES_SYN_CON=$(REPO_PATH)\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Syntax.Controller
+DES_READER_LINE_DET=$(REPO_PATH)\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Descriptor.File.Line.Reader
+DIR_ENUM=$(REPO_PATH)\PROJECT.BUILD.TOOLS\Directory_Enumerator
+MAKE_DATA_COL=$(REPO_PATH)\MAKE.FILE.BUILD.SYSTEM\MakeFile_Data_Collector
+MAKE_BLD=$(REPO_PATH)\MAKE.FILE.BUILD.SYSTEM\CMAKE_Target_Library_Builder
+MK_FILE_CLNR=$(REPO_PATH)\MAKE.FILE.BUILD.SYSTEM\Make_File_Cleaner
+SRC_DT_COL=$(REPO_PATH)\SOURCE.FILE.DATA.COLLECTORS\Source_File_Data_Collector
+SOURCE_DETR=$(REPO_PATH)\SOURCE.FILE.DATA.COLLECTORS\Source_File_Determiner
+HEAD_DETER=$(REPO_PATH)\SOURCE.FILE.DATA.COLLECTORS\Header_File_Determiner
 
 
 
-DEP_DAT_STCK=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Stack_Container
-HDR_DEP_EXT=D:\pcynlitx.build\SOURCE.FILE.PROCESSING.SYSTEM\Header_Dependency_Data_Extractor
+SRC_INF_CL=$(REPO_PATH)\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector
+SRC_DEP_SL=$(REPO_PATH)\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector
+SRC_DEP_DT=$(REPO_PATH)\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Determiner
+HDR_PROC=$(REPO_PATH)\SOURCE.FILE.PROCESSING.SYSTEM\Header_File_Processor
+SRC_READER=$(REPO_PATH)\PROJECT.BUILD.TOOLS\Project_Src_Code_Rdr
+SRC_COM_DT_EXT=$(REPO_PATH)\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Compiler_Data_Extractor
+SRC_DER_RORD=$(REPO_PATH)\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_ReOrderer
+DEP_DAT_EXT=$(REPO_PATH)\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Extractor
+SRC_PROCESSOR=$(REPO_PATH)\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Processor
+SRC_INF_CL_SF=$(REPO_PATH)\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Information_Collector_For_Single_File
+SRC_DEP_SL_SF=$(REPO_PATH)\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Dependency_Selector_For_Single_File
+SRC_DATA_SETTER=$(REPO_PATH)\SOURCE.FILE.PROCESSING.SYSTEM\Source_File_Data_Setter
+QUICK_SRC_EXT=$(REPO_PATH)\SOURCE.FILE.PROCESSING.SYSTEM\Quick_Src_Dependency_Extractor
+DEP_DAT_PROC=$(REPO_PATH)\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Processor
 
 
-MAKE_FILE_DIR_CON=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\MakeFile_Directory_Constructor
+MAKE_FILE_PATH=$(REPO_PATH)\MAKE.FILE.BUILD.SYSTEM\MakeFile_Path_Determiner
 
 
-CMAKE_MAIN_FILE_WRT=D:\pcynlitx.build\MAKE.FILE.BUILD.SYSTEM\CMAKE_Main_File_Writer
+GIT_PROC=$(REPO_PATH)\GIT.DATA.PROCESSING.SYSTEM\Git_Data_Processor
+GIT_REC=$(REPO_PATH)\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Receiver
+GIT_IGN=$(REPO_PATH)\GIT.DATA.PROCESSING.SYSTEM\Git_Ignoring_Files_Lister
+GIT_MOD_LST=$(REPO_PATH)\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Lister
+GIT_MOD_RCV=$(REPO_PATH)\GIT.DATA.PROCESSING.SYSTEM\Git_Modification_Receiver
+GIT_LIST=$(REPO_PATH)\GIT.DATA.PROCESSING.SYSTEM\Git_File_List_Writer
+
+
+
+DEP_DAT_STCK=$(REPO_PATH)\SOURCE.FILE.PROCESSING.SYSTEM\Dependency_Data_Stack_Container
+HDR_DEP_EXT=$(REPO_PATH)\SOURCE.FILE.PROCESSING.SYSTEM\Header_Dependency_Data_Extractor
+
+MAKE_FILE_DIR_CON=$(REPO_PATH)\MAKE.FILE.BUILD.SYSTEM\MakeFile_Directory_Constructor
+CMAKE_MAIN_FILE_WRT=$(REPO_PATH)\MAKE.FILE.BUILD.SYSTEM\CMAKE_Main_File_Writer
+
+RECORD_NUM_DET=$(REPO_PATH)\DESCRIPTION.PROCESSING.SYSTEM\Description.Readers\Record.Number.Determiner
+
 
 VPATH = $(INT_TO_CHAR)    $(FILE_OPRS)    $(DIR_OPS)   \
 	    $(STRING_OPS)     $(CHAR_OPS)     $(MAKE_BLD)   \
@@ -82,7 +85,9 @@ VPATH = $(INT_TO_CHAR)    $(FILE_OPRS)    $(DIR_OPS)   \
 		$(HDR_DEP_EXT) \
 		$(SYS_INT) \
 		$(MAKE_FILE_DIR_CON) \
-		$(CMAKE_MAIN_FILE_WRT)
+		$(CMAKE_MAIN_FILE_WRT) \
+		$(RECORD_NUM_DET) \
+		$(DES_READER_LINE_DET)
 	    
 
 CMAKE_System_Constructor.exe: CMAKE_System_Constructor_Main_File.cpp \
@@ -111,6 +116,7 @@ CMAKE_System_Constructor.exe: CMAKE_System_Constructor_Main_File.cpp \
 	Descriptor_File_Reader.cpp \
 	Descriptor_File_Data_Collector.cpp \
 	Descriptor_File_Syntax_Controller.cpp \
+	Record_Number_Determiner.hpp \
 	Header_File_Determiner.cpp \
 	Directory_Enumerator.cpp \
 	DirectoryOperations.cpp \
@@ -152,8 +158,10 @@ CMAKE_System_Constructor.exe: CMAKE_System_Constructor_Main_File.cpp \
 
 	g++ -std=c++17 -o CMAKE_System_Constructor.exe \
 	-I$(DES_READER) \
+	-I$(DES_READER_LINE_DET) \
 	-I$(DES_DATA_COL) \
 	-I$(DES_SYN_CON) \
+	-I$(RECORD_NUM_DET) \
 	-I$(MAKE_BLD) \
 	-I$(MAKE_DATA_COL) \
 	-I$(MK_FILE_CLNR) \
@@ -204,8 +212,10 @@ CMAKE_System_Constructor.exe: CMAKE_System_Constructor_Main_File.cpp \
 	-L$(GIT_IGN) \
 	-L$(INT_TO_CHAR) \
 	-L$(DES_READER) \
+	-L$(DES_READER_LINE_DET) \
 	-L$(DES_DATA_COL) \
 	-L$(DES_SYN_CON) \
+	-L$(RECORD_NUM_DET) \
 	-L$(DIR_ENUM) \
 	-L$(DIR_OPS) \
 	-L$(STRING_OPS) \
@@ -251,8 +261,10 @@ CMAKE_System_Constructor.exe: CMAKE_System_Constructor_Main_File.cpp \
 	$(SRC_READER)\Project_Src_Code_Rdr.cpp \
 	$(MK_FILE_CLNR)\Make_File_Cleaner.cpp \
 	$(DES_READER)\Descriptor_File_Reader.cpp \
+	$(RECORD_NUM_DET)\Record_Number_Determiner.cpp \
 	$(DES_DATA_COL)\Descriptor_File_Data_Collector.cpp \
 	$(DES_SYN_CON)\Descriptor_File_Syntax_Controller.cpp \
+	$(DES_READER_LINE_DET)\Descriptor_File_Line_Reader.cpp \
 	$(SOURCE_DETR)\Source_File_Determiner.cpp \
 	$(SRC_DT_COL)\Source_File_Data_Collector.cpp \
 	$(SRC_DEP_SL_SF)\Source_File_Dependency_Selector_For_Single_File.cpp \
@@ -307,6 +319,8 @@ CMAKE_System_Constructor.exe: CMAKE_System_Constructor_Main_File.cpp \
 	-include $(DES_READER)\Descriptor_File_Reader.hpp \
 	-include $(DES_DATA_COL)\Descriptor_File_Data_Collector.hpp \
 	-include $(DES_SYN_CON)\Descriptor_File_Syntax_Controller.hpp \
+	-include $(DES_READER_LINE_DET)\Descriptor_File_Line_Reader.hpp \
+	-include $(RECORD_NUM_DET)\Record_Number_Determiner.hpp \
 	-include $(HEAD_DETER)\Header_File_Determiner.h \
 	-include $(DIR_ENUM)\Directory_Enumerator.h \
 	-include $(STRING_OPS)\StringOperator.h \
