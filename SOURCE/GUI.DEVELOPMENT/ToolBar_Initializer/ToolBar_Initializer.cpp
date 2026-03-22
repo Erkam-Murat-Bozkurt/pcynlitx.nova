@@ -65,7 +65,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->toolBar->Receive_Toolbar_Art(this->Art_Pointer);
 
-     this->toolBar->SetBackgroundColour(wxColour(145,145,200,0xff));
+     this->toolBar->SetBackgroundColour(wxColour(70,70,95,0xff));
 
      this->toolBar->SetArtProvider(this->Art_Pointer);
 
@@ -105,14 +105,15 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->toolBar->AddTool(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,wxT(""),*this->construct_build_system,wxT(""));
 
+     this->toolBar->AddTool(ID_SELECT_PROJECT_FILE,wxT(""),*this->Select_Project_File,wxT(""));
+
      this->toolBar->AddTool(ID_OPEN_SETTINGS,wxT(""),*this->open_settings,wxT(""));
 
      this->toolBar->AddTool(ID_OPEN_TREE_WIEW,wxT(""),*this->open_tree_view,wxT(""));
 
-     this->toolBar->AddTool(ID_SELECT_PROJECT_FILE,wxT(""),*this->Select_Project_File,wxT(""));
 
 
-     this->toolBar->SetMargins(6,6,5,5);
+     this->toolBar->SetMargins(6,6,3,3);
 
      this->toolBar->SetOverflowVisible(false);
 

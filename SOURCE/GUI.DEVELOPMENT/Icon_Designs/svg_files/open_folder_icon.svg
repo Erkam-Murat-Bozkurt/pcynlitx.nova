@@ -58,8 +58,15 @@
   </defs>
   <title
      id="title1" />
+  <ellipse
+     style="fill:#b9b9c3;fill-opacity:1;stroke:#b9b9c3;stroke-width:4.50023;stroke-linejoin:round;stroke-opacity:1"
+     id="path1-5"
+     cx="22.269104"
+     cy="22.47813"
+     rx="20.346775"
+     ry="20.303093" />
   <path
-     d="M 44.569337,11.269129 V 45.076533 H 0 V 0 h 12.884251 c 3.364982,7.185198 4.235947,11.269129 11.142334,11.269129 z M 24.34414,6.7614789 H 44.569337 V 0 H 17.448892 c 2.581307,5.8013499 3.027002,6.7614789 6.895248,6.7614789 z"
+     d="M 35.389584,15.844597 V 34.974755 H 9.5162547 V 9.4678801 h 7.4795463 c 1.95343,4.0657949 2.459043,6.3767169 6.468336,6.3767169 z M 23.64848,13.293911 H 35.389584 V 9.4678801 H 19.645655 c 1.498502,3.2827349 1.757229,3.8260309 4.002825,3.8260309 z"
      id="path1"
-     style="fill:#b9b9c3;fill-opacity:1;stroke:none;stroke-width:1.336;stroke-dasharray:none;stroke-opacity:1" />
+     style="fill:#46465f;fill-opacity:1;stroke:none;stroke-width:0.765717;stroke-dasharray:none;stroke-opacity:1" />
 </svg>

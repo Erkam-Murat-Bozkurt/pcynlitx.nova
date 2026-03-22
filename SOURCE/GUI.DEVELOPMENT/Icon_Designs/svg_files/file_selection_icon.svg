@@ -2,12 +2,12 @@
 <svg
    data-name="Layer 1"
    id="Layer_1"
-   viewBox="0 0 44.692104 44.509313"
+   viewBox="0 0 44.624508 44.449777"
    version="1.1"
    sodipodi:docname="file_selection_icon.svg"
    inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
-   width="44.692104"
-   height="44.509312"
+   width="44.624508"
+   height="44.449776"
    inkscape:export-filename="..\png_files\file_selection_icon.png"
    inkscape:export-xdpi="96"
    inkscape:export-ydpi="96"
@@ -25,9 +25,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="true"
-     inkscape:zoom="5.7231455"
-     inkscape:cx="32.412246"
-     inkscape:cy="29.616581"
+     inkscape:zoom="16.1875"
+     inkscape:cx="9.2355213"
+     inkscape:cy="19.552124"
      inkscape:window-width="1920"
      inkscape:window-height="1111"
      inkscape:window-x="-9"
@@ -37,8 +37,8 @@
     <inkscape:grid
        id="grid5"
        units="px"
-       originx="44.735741"
-       originy="44.891911"
+       originx="44.726351"
+       originy="44.795156"
        spacingx="1"
        spacingy="1"
        empcolor="#0099e5"
@@ -58,30 +58,16 @@
   </defs>
   <title
      id="title1" />
-  <rect
-     style="fill:#b9b9c3;fill-opacity:1;stroke:none;stroke-width:1.3353;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
-     id="rect2"
-     width="44.692104"
-     height="44.509312"
-     x="0"
-     y="0"
-     ry="1.3395708" />
-  <rect
-     style="fill:#505069;fill-opacity:1;stroke:#fcaf3b;stroke-width:0"
-     id="rect1"
-     width="7.4671717"
-     height="26.757788"
-     x="31.275541"
-     y="-15.590069"
-     ry="0"
-     transform="matrix(0.71561956,0.69849027,-0.71606246,0.69803621,0,0)" />
-  <rect
-     style="fill:#505069;fill-opacity:1;stroke:#fcaf3b;stroke-width:0"
-     id="rect1-2"
-     width="7.4793224"
-     height="16.962358"
-     x="-8.5785236"
-     y="21.738976"
-     ry="0"
-     transform="matrix(0.76138689,-0.64829777,0.65698137,0.75390681,0,0)" />
+  <ellipse
+     style="fill:#fcaf3b;fill-opacity:1;stroke:#fcaf3b;stroke-width:5.01569;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     id="path14"
+     cx="22.312254"
+     cy="22.224888"
+     rx="19.804409"
+     ry="19.717043" />
+  <path
+     style="fill:#46465f;fill-opacity:1;stroke:#46465f;stroke-width:5.3284;stroke-linejoin:round;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     d="m 30.440699,13.561692 -10.007904,17.77224 -8.292204,-5.648448 7.933597,2.552012 z"
+     id="path13"
+     sodipodi:nodetypes="ccccc" />
 </svg>

@@ -25,9 +25,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="true"
-     inkscape:zoom="5.7231455"
-     inkscape:cx="64.21294"
-     inkscape:cy="24.898895"
+     inkscape:zoom="11.446291"
+     inkscape:cx="35.863146"
+     inkscape:cy="19.875434"
      inkscape:window-width="1920"
      inkscape:window-height="1111"
      inkscape:window-x="-9"
@@ -70,26 +70,10 @@
      style="fill:none;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none"
      transform="matrix(0.55270238,0,0,0.50861234,145.34983,82.722123)"
      id="g3">
-    <rect
-       style="fill:#b9b9c3;fill-opacity:1;stroke:none;stroke-width:6.78948;stroke-opacity:1"
-       id="rect3"
-       width="82.094109"
-       height="87.69413"
-       x="-262.98029"
-       y="-162.64278"
-       ry="4.3653483" />
-    <g
-       id="g2-1"
-       transform="matrix(0.30626886,0,0,0.35960957,-244.95886,-145.71129)"
-       style="fill:#505069;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none">
-      <g
-         id="g1-2"
-         style="fill:#505069;fill-opacity:1">
-        <polygon
-           style="fill:#505069;fill-opacity:1"
-           points="0,45.978 0,109.155 79.18,109.155 79.18,153.542 155.139,77.566 79.18,1.596 79.18,45.978 "
-           id="polygon1-3" />
-      </g>
-    </g>
+    <path
+       d="m -193.1501,-149.60634 c -15.94918,-17.02988 -41.81096,-17.02988 -57.76015,0 -15.95054,17.03278 -15.95054,44.64256 0,61.67534 15.94919,17.029877 41.81097,17.029877 57.76015,0 15.95054,-17.03278 15.95054,-44.64256 0,-61.67534 m -9.82002,61.3628 -5.25513,-6.163608 c -4.19593,2.901544 -9.01678,4.48896 -14.06497,4.48896 -14.86956,0 -26.96861,-13.782342 -26.96861,-30.304892 h 10.67771 c 0,10.51593 7.30817,18.28732 16.2909,18.28732 2.23277,0 4.39334,-0.51462 6.38649,-1.47694 l -5.36676,-6.29445 h 18.30037 v 21.46361 m -2.49414,-31.97954 c 0,-9.96207 -7.29728,-17.41801 -16.26641,-17.41801 -2.3226,0 -4.58258,0.51897 -6.66421,1.5133 l 5.72755,5.94264 h -18.4229 v -19.11156 l 4.70511,4.88001 c 4.36612,-3.02947 9.41839,-4.60817 14.65445,-4.60817 14.8478,0 26.92914,13.14273 26.92914,28.80033 h -10.66273 z"
+       fill="#fdd835"
+       id="path1"
+       style="fill:#b9b9c3;fill-opacity:1;stroke-width:0" />
   </g>
 </svg>
