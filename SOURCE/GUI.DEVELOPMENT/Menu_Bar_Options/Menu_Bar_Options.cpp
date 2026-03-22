@@ -49,30 +49,30 @@ Menu_Bar_Options::Menu_Bar_Options(){
   this->Help_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
 
-  wxBitmap * save_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("SAVE_ICON_SMALL"));
+  //wxBitmap * save_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("SAVE_ICON_SMALL"));
 
-  wxIcon save_icon;
+  //wxIcon save_icon;
 
-  save_icon.CopyFromBitmap(*save_icon_bitmap);
+  //save_icon.CopyFromBitmap(save_icon_bitmap);
 
   wxMenuItem * save_item = new wxMenuItem(this->File_Menu,ID_FILE_SAVE,"&Save"," ",wxITEM_NORMAL);
 
-  save_item->SetBitmap(save_icon);
+  //save_item->SetBitmap(save_icon);
 
   this->File_Menu->Append(save_item);
 
 
 
 
-   wxBitmap * save_as_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("SAVE_ICON_SMALL"));
+   //wxBitmap * save_as_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("SAVE_ICON_SMALL"));
 
-   wxIcon save_as_icon;
+   //wxIcon save_as_icon;
 
-   save_as_icon.CopyFromBitmap(*save_as_icon_bitmap);
+   //save_as_icon.CopyFromBitmap(*save_as_icon_bitmap);
 
    wxMenuItem * save_as_item = new wxMenuItem(this->File_Menu,ID_SAVE_AS,"&Save as"," ",wxITEM_NORMAL);
 
-   save_as_item->SetBitmap(*save_as_icon);
+   //save_as_item->SetBitmap(*save_as_icon);
 
    this->File_Menu->Append(save_as_item);
 

@@ -46,11 +46,11 @@ add_library(BuildSystem_GUI
 
     ${CMAKE_CURRENT_SOURCE_DIR}/GUI.Headers/Resource_Loader.hpp
 
-
     ${CMAKE_CURRENT_SOURCE_DIR}/MainFrame/MainFrame.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/MainFrame/MainFrame.h
 
-
+    ${CMAKE_CURRENT_SOURCE_DIR}/Menu_Bar_Options/Menu_Bar_Options.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Menu_Bar_Options/Menu_Bar_Options.h
     
     ${CMAKE_CURRENT_SOURCE_DIR}/Workspace_Data_Holder/Workspace_Data_Holder.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Workspace_Data_Holder/Workspace_Data_Holder.hpp
@@ -96,8 +96,6 @@ add_library(BuildSystem_GUI
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window/Project_File_Selection_Window.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Window/Project_File_Selection_Window.cpp
-
-
 )
 
 
@@ -130,6 +128,8 @@ target_include_directories(BuildSystem_GUI PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Intro_Page_Loader
 
     ${CMAKE_CURRENT_SOURCE_DIR}/MainFrame
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Menu_Bar_Options
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Process_Manager
 
@@ -226,6 +226,8 @@ target_link_directories(BuildSystem_GUI PRIVATE
 
     ${CMAKE_CURRENT_SOURCE_DIR}/MainFrame
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Menu_Bar_Options
+
     ${CMAKE_CURRENT_SOURCE_DIR}/Process_Manager
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Project_File_Selection_Dialog
@@ -302,7 +304,6 @@ target_link_libraries(BuildSystem_GUI PUBLIC des_reader pthread
                 
                      wxmsw33ud_stc wxscintillad  wxmsw33ud_xrc wxmsw33ud_richtext
 
-        
                      gcc stdc++)
 
 

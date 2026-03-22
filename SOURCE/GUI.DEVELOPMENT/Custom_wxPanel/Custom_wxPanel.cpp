@@ -30,13 +30,11 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
               const wxPoint &pos, const wxSize &size,
 
-              wxColour background_colour, wxAuiPaneInfo * Pane)
+              wxColour background_colour)
 
   : wxPanel(parent,id,pos,size)
 {
      this->background = background_colour;
-
-     this->Pane_Pointer = Pane;
 
      this->Memory_Delete_Condition = false;
 
@@ -57,312 +55,11 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
 
      this->bottom_window = new wxWindow(this, wxID_ANY,wxDefaultPosition,wxSize(this->GetSize().GetX(),70));
-
-     //this->Start_Button  = new wxButton(this->bottom_window,ID_OPEN_POPUP_MENU,wxT("START"),wxDefaultPosition, wxSize(120,50));
      
      this->bottom_window->SetBackgroundColour(wxColour(240,240,240));
 
-
-     /*
-
-     wxFont button_font = this->Start_Button->GetFont();
-
-     button_font.SetFaceName(wxT("Segoe UI"));
-
-     this->Start_Button->SetFont(button_font);
-
-     wxPoint position = this->Start_Button->GetPosition() ;
-
-     this->Start_Button->SetPosition(wxPoint(position.x+10,position.y));
-
-
-
-     int text_x = position.x + 155;
-
-     int text_y = position.y + 14;
-
-     this->start_text   = new wxStaticText(this->bottom_window ,
-     
-                    wxID_ANY,wxT("PCYNLITX START MENU"),wxPoint(text_x,text_y),wxSize(200,50));
-
-     this->start_text->Show(true);
-
-     this->start_text->SetForegroundColour(wxColour(25,25,35));
-
-     this->start_text->SetFont(button_font);
-
-     */
-
      this->bottom_window->Show(true);
 
-     //this->Start_Button->Show(true);
-
-
-     /*
-
-     this->Main_Menu = new wxMenu();
-
-     this->File_Menu = new wxMenu();
-
-     this->Project_Management = new wxMenu();
-
-     this->Edit_Menu  = new wxMenu();
-
-     this->Help_Menu  = new wxMenu();
-
-     this->CMAKE_Menu = new wxMenu();
-
-     this->Info_Menu = new wxMenu();
-
-
-     this->Linux_Debian_Package_Generator = new wxMenu();
-
-     this->Linux_RPM_Package_Generator = new wxMenu();
-
-     this->Windows_Package_Generator = new wxMenu();
-
-
-
-     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
-
-
-     this->Info_Icon_Bmp = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("LOGO_SMALL"));
-
-
-     wxIcon Info_icon;
-
-     Info_icon.CopyFromBitmap(*this->Info_Icon_Bmp);
-
-     wxMenuItem * info_item = new wxMenuItem(this->Info_Menu,ID_SHOW_HELP_MENU,"&PCYNLITX VERSION 2.0"," ",wxITEM_NORMAL);
-
-     info_item->SetBitmap(Info_icon);
-
-     this->Main_Menu->Append(info_item);
-
-
-     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
-
-     this->Main_Menu->Append(wxID_NONE,"&                           "," ",wxITEM_SEPARATOR);
-
-     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
-
-     this->Main_Menu->Append(wxID_NONE,"&EDITOR SETTINGS","",wxITEM_NORMAL);
-
-     this->Main_Menu->AppendSubMenu(this->File_Menu ,"&File Menu                   ","");
-
-     this->Main_Menu->AppendSubMenu(this->Edit_Menu,"&Editor Menu (Editor Options)"," ");
-
-     this->Main_Menu->AppendSubMenu(this->Help_Menu,"&Help Menu                   ","");
-
-     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
-
-
-     this->Main_Menu->Append(wxID_NONE,"&BUILD SYSTEM GENERATORS","",wxITEM_NORMAL);
-
-     this->Main_Menu->AppendSubMenu(this->Project_Management,"&Project Management          ","");
-
-     this->Main_Menu->AppendSubMenu(this->CMAKE_Menu ,"&CMAKE list file generator         ","");
-
-     this->Main_Menu->Append(wxID_NONE,"&                           ","",wxITEM_NORMAL);
-
-
-
-     this->Main_Menu->Append(wxID_NONE,"&PACKAGE GENERATORS","",wxITEM_NORMAL);
-
-     this->Main_Menu->AppendSubMenu(this->Linux_Debian_Package_Generator ,"&Linux Debian Package Generator     ","");
-
-     this->Main_Menu->AppendSubMenu(this->Linux_RPM_Package_Generator ,   "&Linux RPM Package Generator        ","");
-
-     this->Main_Menu->AppendSubMenu(this->Windows_Package_Generator ,     "&Windows Package Generator          ","");
-
-     this->Main_Menu->Append(wxID_NONE,"&                           ","");
-
-
-
-     this->Save_Icon_Small = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("SAVE_ICON_SMALL"));
-
-     wxIcon save_icon;
-
-     save_icon.CopyFromBitmap(*this->Save_Icon_Small);
-
-
-     wxMenuItem * save_item = new wxMenuItem(this->File_Menu,ID_FILE_SAVE,"&Save"," ",wxITEM_NORMAL);
-
-     save_item->SetBitmap(save_icon);
-
-     this->File_Menu->Append(save_item);
-
-     
-
-     wxMenuItem * save_as_item = new wxMenuItem(this->File_Menu,ID_SAVE_AS,"&Save as"," ",wxITEM_NORMAL);
-
-     save_as_item->SetBitmap(save_icon);
-
-     this->File_Menu->Append(save_as_item);
-
-     this->File_Menu->Append(ID_OPEN_FILE,"&Open file","",wxITEM_NORMAL);
-
-     this->File_Menu->Append(ID_NEW_FILE,"&Create new file as","",wxITEM_NORMAL);
-
-     this->File_Menu->Append(ID_OPEN_TREE_WIEW,"&Open Folder","",wxITEM_NORMAL);
-
-     this->exit_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("EXIT_ICON_SMALL"));
-
-     wxIcon exit_icon;
-
-     exit_icon.CopyFromBitmap(*this->exit_icon_bitmap);
-
-     wxMenuItem * exit_item = new wxMenuItem(this->File_Menu,ID_EXIT,"&EXIT"," ",wxITEM_NORMAL);
-
-     exit_item->SetBitmap(exit_icon);
-
-     this->File_Menu->Append(exit_item);
-
-     this->File_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
-
-
-
-
-
-     this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
-
-     this->Project_Management->Append(wxID_NONE,"&PROJECT FILE OPERATIONS "," ",wxITEM_NORMAL);
-
-     this->Project_Management->Append(ID_OPEN_EMPTY_PROJECT_FILE,"Construct empty project file","",wxITEM_NORMAL);
-
-     this->Project_Management->Append(ID_SHOW_PROJECT_FILE,"Show Project File","",wxITEM_NORMAL);
-
-     this->project_file_selection_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("FILE_SEL_ICON_SMALL"));
-
-     wxIcon project_file_selection_icon;
-
-     project_file_selection_icon.CopyFromBitmap(*this->project_file_selection_bitmap);
-
-     wxMenuItem * project_file_seletion_item = new wxMenuItem(this->Project_Management,ID_SELECT_PROJECT_FILE,"&Select project file"," ",wxITEM_NORMAL);
-
-     project_file_seletion_item->SetBitmap(project_file_selection_icon);
-
-     this->Project_Management->Append(project_file_seletion_item);
-
-
-
-     this->Project_Management->Append(ID_PRINT_DESCRIPTIONS, "&Print project descriptions"," ",wxITEM_NORMAL);
-
-     this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
-
-     this->Project_Management->Append(wxID_NONE,"&              "," ",wxITEM_SEPARATOR);
-
-
-     this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
-
-     this->Project_Management->Append(wxID_NONE,                "&BUILD SYSTEM OPERATIONS "," ",wxITEM_NORMAL);
-
-
-     this->build_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("BUILD_ICON_SMALL"));
-
-     wxIcon build_icon;
-
-     build_icon.CopyFromBitmap(*this->build_icon_bitmap);
-
-
-     wxMenuItem * build_item = new wxMenuItem(this->Project_Management,ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,"&Build system initializer"," ",wxITEM_NORMAL);
-
-     build_item->SetBitmap(build_icon);
-
-     this->Project_Management->Append(build_item);
-
-
-     this->run_build_script_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("OPEN_TERMINAL_SMALL"));
-
-     
-
-     wxIcon run_build_script_icon;
-
-     run_build_script_icon.CopyFromBitmap(*this->run_build_script_icon_bitmap);
-
-
-
-     wxMenuItem * run_build_script_item = new wxMenuItem(this->Project_Management,ID_RUN_PROJECT_SCRIPT,"&Run project build script"," ",wxITEM_NORMAL);
-
-     run_build_script_item->SetBitmap(run_build_script_icon);
-
-     this->Project_Management->Append(run_build_script_item);
-
-
-     
-     this->dependency_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("DEP_ICON_SMALL"));
-
-     wxIcon dependency_icon;
-
-     dependency_icon.CopyFromBitmap(*this->dependency_icon_bitmap);
-
-
-
-     wxMenuItem * dependency_item = new wxMenuItem(this->Project_Management,ID_DETERMINE_SOURCE_FILE_DEPENDENCIES,"&Determine dependencies"," ",wxITEM_NORMAL);
-
-     dependency_item->SetBitmap(dependency_icon);
-
-     this->Project_Management->Append(dependency_item);
-
-
-     this->Project_Management->Append(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Make file constructor"," ",wxITEM_NORMAL);
-
-     this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
-
-
-
-
-
-     this->Edit_Menu->Append(ID_INCREASE_FONT_SIZE,"&Increase Font Size","",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_DECREASE_FONT_SIZE,"Decrease Font Size",wxT(""),wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_UNDO_CHANGES,"&Undo   Ctrl+Z","",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_REDO_CHANGES,"&Redo   Ctrl+Y","",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_CLEAR_TEXT,"&Clear Text"," ",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_SET_CURSOR_TYPE_DEFAULT,"&Use Default Cursor","",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_CHANGE_CURSOR_TYPE,"&Use System Cursor","",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_SET_CARET_LINE_VISIBLE,"&Set Caret Line Visible","",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_SET_CARET_LINE_INVISIBLE,"&Set Caret Line Invisible","",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_USE_BLOCK_CARET,"&Use Block Caret","",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_USE_DEFAULT_CARET,"&Use Default Caret","",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_CLEAR_STYLE,"&Clear Styling","",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_RELOAD_STYLE,"&Reload Default Style","",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_BOLD_STYLE,"&Use Bold Styling","",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(ID_FONT_CHANGE,"&Change Font","",wxITEM_NORMAL);
-
-     this->Edit_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
-
-
-
-     this->CMAKE_Menu->Append(ID_RUN_BUILD_SYSTEM_CONSTRUCTOR,"&Construct CMAKE Build System");
-
-     this->CMAKE_Menu->Append(ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR,"&Construct CMAKE Target");
-
-
-     this->Help_Menu->Append(ID_OPEN_INTROPAGE,"&Intro Page","",wxITEM_NORMAL);
-
-     this->Help_Menu->Append(ID_SHOW_HELP_MENU,"&Developer","",wxITEM_NORMAL);
-
-     this->Help_Menu->Append(ID_SHOW_DOCUMENTS,"&Documents","",wxITEM_NORMAL);
-
-     this->Help_Menu->Append(wxID_ABOUT,"&Version 1.0","",wxITEM_NORMAL);
-
-     this->Help_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
-
-     */
 
      this->Centre(wxBOTH);
 
@@ -379,6 +76,7 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
      this->Show(true);
 }
 
+
 Custom_wxPanel::~Custom_wxPanel()
 {
     if(!this->Memory_Delete_Condition)
@@ -387,6 +85,23 @@ Custom_wxPanel::~Custom_wxPanel()
 
         this->panel_sizer->Detach(this->book_manager);
     }
+}
+
+void Custom_wxPanel::Set_Pane_Properties(){
+
+     this->Central_Pane_Info.CloseButton(false);
+
+     this->Central_Pane_Info.Centre();
+
+     this->Central_Pane_Info.Dock();
+
+     this->Central_Pane_Info.Show(true);
+
+     this->Central_Pane_Info.Resizable(true);
+
+     this->Central_Pane_Info.MinSize(this->FromDIP(wxSize(800,925)));
+
+     this->Interface_Manager_Ptr->AddPane(this,this->Central_Pane_Info);
 }
 
 void Custom_wxPanel::Initialize_Sizer()

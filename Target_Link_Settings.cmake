@@ -1,5 +1,9 @@
 
 
+add_dependencies(BuildSystem_GUI wxbase wxcore wxaui wxadv wxstc wxrc wxrichtext wxgl wxnet)
+
+add_dependencies(Pcynlitx BuildSystem_GUI)
+
 target_link_libraries(Pcynlitx PUBLIC BuildSystem_GUI des_reader pthread 
 
                      wxbase33ud
@@ -63,6 +67,3 @@ target_link_libraries(CMAKE_Build_Executable PUBLIC proj_bld_tools make_fbld_sys
 
                       src_proc_sys git_data_processing_system src_dat_col des_reader basic_tools)
 
-add_dependencies(BuildSystem_GUI wxbase wxcore wxaui wxadv wxstc wxrc wxrichtext wxgl wxnet)
-
-add_dependencies(Pcynlitx BuildSystem_GUI)

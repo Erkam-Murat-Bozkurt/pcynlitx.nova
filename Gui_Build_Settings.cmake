@@ -31,6 +31,8 @@ target_include_directories(Pcynlitx PUBLIC
 
     ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/MainFrame
 
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Menu_Bar_Options
+
     ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Process_Manager
 
     ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT/Project_File_Selection_Dialog
@@ -96,7 +98,7 @@ target_include_directories(Pcynlitx PUBLIC
 
 target_link_directories(Pcynlitx PUBLIC
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/GUI.DEVELOPMENT
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/GUI.DEVELOPMENT
 
     ${wxWidgets_BINARY_DIR}/lib/gcc_x64_lib
 

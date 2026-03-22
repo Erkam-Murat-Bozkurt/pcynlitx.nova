@@ -27,9 +27,7 @@ class Custom_wxPanel : public wxPanel
 public:
   Custom_wxPanel(wxWindow * parent, wxWindowID id, const wxPoint &pos,
 
-                 const wxSize &size, wxColour background,
-
-                 wxAuiPaneInfo * Pane);
+                 const wxSize &size, wxColour background);
 
   virtual ~Custom_wxPanel();
 
@@ -42,6 +40,12 @@ public:
 
        this->Menu_Ptr = menu;
   }
+
+  void Set_Pane_Properties();
+
+  wxAuiManager * Interface_Manager_Ptr;
+
+  wxAuiPaneInfo Central_Pane_Info;
 
   wxMenu * Menu_Ptr;
 

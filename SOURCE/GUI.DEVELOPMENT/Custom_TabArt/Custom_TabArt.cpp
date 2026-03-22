@@ -40,7 +40,7 @@
 
                      wxFONTWEIGHT_LIGHT ,false,wxString(tabart_font));
 
-    this->m_tabCtrlHeight = 48;
+    //this->m_tabCtrlHeight = 48;
 
     this->theme_clr = clr;
 
@@ -70,6 +70,147 @@
       dc.DrawRectangle(rect.GetX(), rect.GetY(),rect.GetWidth(),rect.GetHeight());
  }
 
+
+int Custom_TabArt::DrawPageTab(wxDC& dc, wxWindow* wnd, wxAuiNotebookPage& page,
+                             
+    const wxRect& rect)
+{
+    static const int MARGIN = 3;
+    static const int PADDING_X = 8;
+    
+    wxColour m_fgActive = wxSystemSettings::GetColour(wxSYS_COLOUR_WINDOWTEXT);
+
+    wxColour m_fgNormal = m_fgActive;    
+        
+    // Clip everything we do here to the provided rectangle.
+    wxDCClipper clip(dc, rect);
+
+    // Compute the size of the tab.
+    int xExtent = 0;
+    const wxSize size = GetPageTabSize(dc, wnd, page, &xExtent);
+
+    wxPoint TabPosition = rect.GetPosition();
+
+    int difference = 45 - size.GetHeight();
+
+    TabPosition = wxPoint(TabPosition.x, TabPosition.y+difference);
+
+    page.rect = wxRect(TabPosition,size);
+
+    // Draw the tab background and highlight it if it's active.
+    if ( page.active )
+    {
+        const wxColour bg = wxColour(255,255,255,0xff);
+        dc.SetBrush(bg);
+        dc.SetPen(*wxTRANSPARENT_PEN);
+        dc.DrawRectangle(page.rect);
+    }
+    else{
+
+        const wxColour bg = wxColour(225,225,225,0xff);
+        dc.SetBrush(bg);
+        dc.SetPen(*wxTRANSPARENT_PEN);
+        dc.DrawRectangle(page.rect);
+    }
+    // Draw the outline only on the left/top sides to avoid double borders.
+    dc.SetPen(wxPen(wxColour(240,240,240,0xff)));
+    dc.DrawLine(page.rect.GetLeft(), page.rect.GetTop(),
+                page.rect.GetLeft(), page.rect.GetBottom());
+    dc.DrawLine(page.rect.GetLeft(), page.rect.GetTop(),
+                page.rect.GetRight(), page.rect.GetTop());
+
+    if ( page.active )
+    {
+        dc.SetBrush(wxColour(242,165,49,0xff));
+        dc.SetPen(*wxTRANSPARENT_PEN);
+
+        // 1px border is too thin to be noticeable, so make it thicker.
+        const int THICKNESS = wnd->FromDIP(2);
+
+        const int y = m_flags & wxAUI_NB_BOTTOM
+                        ? page.rect.GetBottom() - THICKNESS
+                        : page.rect.GetTop();
+
+        dc.DrawRectangle(page.rect.GetLeft() + 1, y,
+                         page.rect.GetWidth() - 1, THICKNESS);
+    }
+
+    // Draw the icon, if any.
+    int xStart = rect.x + wnd->FromDIP(PADDING_X);
+    if ( page.bitmap.IsOk() )
+    {
+        const wxBitmap bmp = page.bitmap.GetBitmapFor(wnd);
+        const wxSize bitmapSize = bmp.GetLogicalSize();
+
+        dc.DrawBitmap(bmp,
+                      xStart,
+                      rect.y + (size.y - bitmapSize.y - 1)/2+ difference,
+                      true /* use mask */);
+
+        xStart += bitmapSize.x + wnd->FromDIP(MARGIN);
+    }
+
+    // Draw buttons: start by computing their total width (note that we don't
+    // use any margin between them currently because the bitmaps we use don't
+    // need it as they have sufficient padding already).
+    int buttonsWidth = 0;
+    for ( const auto& button : page.buttons )
+    {
+        const wxBitmapBundle* const bb = GetButtonBitmapBundle(button);
+        if ( !bb )
+            continue;
+
+        buttonsWidth += bb->GetBitmapFor(wnd).GetLogicalWidth();
+    }
+
+    // Now draw them and update their rectangles.
+    int xEnd = rect.x + size.x - wnd->FromDIP(PADDING_X);
+    if ( buttonsWidth )
+    {
+        xEnd -= buttonsWidth;
+
+        int buttonX = xEnd;
+        for ( auto& button : page.buttons )
+        {
+            const wxBitmapBundle* const bb = GetButtonBitmapBundle(button);
+            if ( !bb )
+                continue;
+
+            const wxBitmap bmp = bb->GetBitmapFor(wnd);
+
+            const wxSize buttonSize = bmp.GetLogicalSize();
+
+            button.rect.x = buttonX;
+            button.rect.y = rect.y + (size.y - buttonSize.y - 1)/2+ difference;
+            button.rect.width = buttonSize.x;
+            button.rect.height = buttonSize.y;
+
+            IndentPressedBitmap(wnd, &button.rect, button.curState);
+            dc.DrawBitmap(bmp, button.rect.GetPosition(), true);
+
+            buttonX += buttonSize.x;
+        }
+
+        xEnd -= wnd->FromDIP(MARGIN);
+    }
+
+    // Finally draw tab text.
+    dc.SetFont(page.active ? m_selectedFont : m_normalFont);
+    dc.SetTextForeground(page.active ? m_fgActive : m_fgNormal);
+
+    const wxString& text = wxControl::Ellipsize(page.caption,
+                                                dc,
+                                                wxELLIPSIZE_END,
+                                                xEnd - xStart);
+
+    const int textHeight = dc.GetTextExtent(text).y;
+    dc.DrawText(text, xStart, rect.y + (size.y - textHeight - 1)/2 + difference);
+
+    return xExtent;
+}
+
+
+ /*
  void Custom_TabArt::DrawTab(wxDC & dc, wxWindow *wnd, const wxAuiNotebookPage &page,
 
                  const wxRect & in_rect, int close_button_state,
@@ -105,7 +246,7 @@
 
        wxCoord tab_x = in_rect.x+1;
 
-       wxCoord tab_y = in_rect.y+14;
+       wxCoord tab_y = in_rect.y+25;
 
        wxCoord tab_width  = normal_textx+40;
 
@@ -149,9 +290,9 @@
 
            wxRect r(tab_x, tab_y, tab_width, tab_height-3);
 
-           dc.SetPen(wxPen(wxColour(155,155,165,0xff)));
+           dc.SetPen(wxPen(wxColour(200,200,165,0xff)));
             
-           dc.SetBrush(wxColour(175,175,185,0xff));
+           dc.SetBrush(wxColour(200,200,185,0xff));
 
            
 
@@ -242,11 +383,11 @@
                  (tab_y + tab_height)/2 - (texty/2) + 1);
 
 
-         *out_tab_rect = wxRect(tab_x, tab_y, tab_width, tab_height+14);
+         *out_tab_rect = wxRect(tab_x, tab_y+15, tab_width, tab_height+25);
 
  }
 
-
+ */
 
  void Custom_TabArt::DrawButtons(wxDC& dc, const wxSize& offset,const wxRect& _rect,
 
@@ -344,3 +485,6 @@
 
       *out_rect = rect;
  };
+
+
+ 

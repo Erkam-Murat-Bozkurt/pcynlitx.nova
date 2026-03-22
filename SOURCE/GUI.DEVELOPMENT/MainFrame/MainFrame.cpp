@@ -126,23 +126,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   // THE CONSTRUCTION OF THE CUSTOM PANEL FOR NOTEBOOK
 
-  this->Central_Pane_Info.CloseButton(false);
-
-  this->Central_Pane_Info.Centre();
-
-  this->Central_Pane_Info.Dock();
-
-  this->Central_Pane_Info.Show(true);
-
-  this->Central_Pane_Info.Resizable(true);
-
-  this->Central_Pane_Info.MinSize(this->FromDIP(wxSize(800,925)));
-
-
-
   this->Custom_Main_Panel = new Custom_wxPanel(this,wxID_ANY,wxDefaultPosition,
 
-                            wxDefaultSize,wxColour(200,200,215),&this->Central_Pane_Info);
+                            wxDefaultSize,wxColour(200,200,215));
   
 
   this->Custom_Main_Panel->SetSize(this->Custom_Main_Panel->FromDIP(this->GetClientSize()));
@@ -152,6 +138,10 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
   this->Custom_Main_Panel->Fit();
 
   this->Custom_Main_Panel->SetAutoLayout(true);
+
+  this->Custom_Main_Panel->Interface_Manager_Ptr = &this->Interface_Manager;
+
+  this->Custom_Main_Panel->Set_Pane_Properties();
 
 
 
@@ -172,8 +162,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
   this->Custom_Main_Panel->Receive_Book_Manager_Window(this->Book_Manager);
 
   this->Custom_Main_Panel->Initialize_Sizer();
-
-  this->Interface_Manager.AddPane(this->Custom_Main_Panel,this->Central_Pane_Info);
 
   this->Interface_Manager.Update();
 
@@ -251,6 +239,49 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
   this->Custom_Main_Panel->Update();
 
 
+
+  this->BIND_TREE_VIEW_EVENTS();
+
+
+
+  wxRect Book_Manager_Rect(this->Custom_Main_Panel->GetSize());
+
+  this->Book_Manager->Refresh(true,&Book_Manager_Rect);
+
+  this->Book_Manager->Update();
+
+  this->Book_Manager->OpenIntroPage();
+
+  this->Book_Manager->SelectIntroPage();
+
+  this->Update();
+
+  wxString defaultDir;
+
+  defaultDir = this->GetUserHomeDirectory() + wxString("\\Pcynlitx\\Workspace");
+
+  this->Dir_List_Manager->Load_Project_Directory(defaultDir);
+
+  this->Interface_Manager.Update();
+
+
+  //this->Menu = new Menu_Bar_Options();
+
+  //this->SetMenuBar(this->Menu->Get_MenuBar()); 
+
+  this->Raise();
+
+  this->PostSizeEvent();
+
+  this->Interface_Manager.Update();
+
+  this->opr_sis = 'w';
+}
+
+
+
+void MainFrame::BIND_TREE_VIEW_EVENTS(){
+
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_BUTTON,&MainFrame::Open_PopUp_Menu,this,wxID_ANY);
 
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Select_Project_File,this,ID_SELECT_PROJECT_FILE);
@@ -267,13 +298,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Determine_Source_File_Dependencies,this,ID_DETERMINE_SOURCE_FILE_DEPENDENCIES);
 
-
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Single_File_Script_Construction,this,ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR);
 
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Advance_Single_File_Script_Construction,this,ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR);
-
-
-
 
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Increase_Font_Size,this,ID_INCREASE_FONT_SIZE);
 
@@ -288,7 +315,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Load_Default_Cursor,this,ID_SET_CURSOR_TYPE_DEFAULT);
 
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Change_Cursor_Type,this,ID_CHANGE_CURSOR_TYPE);
-
 
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Set_Caret_Line_Visible,this,ID_SET_CARET_LINE_VISIBLE);
 
@@ -306,14 +332,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Change_Font,this,ID_FONT_CHANGE);
 
-
-
-
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Show_Help_Menu,this,ID_SHOW_HELP_MENU);
 
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Use_Default_Caret,this,wxID_ABOUT);
-
-
 
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::File_Save,this,ID_FILE_SAVE);
 
@@ -326,43 +347,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::DirectoryOpen,this,ID_OPEN_TREE_WIEW);
 
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Exit,this,ID_EXIT);
-
-
-
-
-
-  wxRect Book_Manager_Rect(this->Custom_Main_Panel->GetSize());
-
-  this->Book_Manager->Refresh(true,&Book_Manager_Rect);
-
-  
-
-  this->Book_Manager->Update();
-
-
-  this->Book_Manager->OpenIntroPage();
-
-
-  this->Book_Manager->SelectIntroPage();
-
-  this->Update();
-
-  wxString defaultDir;
-
-  defaultDir = this->GetUserHomeDirectory() + wxString("\\Pcynlitx\\Workspace");
-
-  this->Dir_List_Manager->Load_Project_Directory(defaultDir);
-
-  this->Interface_Manager.Update();
-
-
-  this->Raise();
-
-  this->PostSizeEvent();
-
-  this->Interface_Manager.Update();
-
-  this->opr_sis = 'w';
 }
 
 MainFrame::~MainFrame()
@@ -507,12 +491,9 @@ void MainFrame::OnPaint(wxPaintEvent & event)
      }
 }
 
-
-
 void MainFrame::Exit(wxCommandEvent & event){
 
      if(event.GetId() == ID_EXIT){
-
 
        this->Custom_Main_Panel->GetEventHandler()->Unbind(wxEVT_BUTTON,&MainFrame::Open_PopUp_Menu,this,wxID_ANY);
 
@@ -530,13 +511,9 @@ void MainFrame::Exit(wxCommandEvent & event){
 
        this->Custom_Main_Panel->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Determine_Source_File_Dependencies,this,ID_DETERMINE_SOURCE_FILE_DEPENDENCIES);
 
-
        this->Custom_Main_Panel->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Single_File_Script_Construction,this,ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR);
 
        this->Custom_Main_Panel->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Advance_Single_File_Script_Construction,this,ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR);
-
-
-
 
        this->Custom_Main_Panel->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Increase_Font_Size,this,ID_INCREASE_FONT_SIZE);
 
@@ -551,7 +528,6 @@ void MainFrame::Exit(wxCommandEvent & event){
        this->Custom_Main_Panel->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Load_Default_Cursor,this,ID_SET_CURSOR_TYPE_DEFAULT);
 
        this->Custom_Main_Panel->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Change_Cursor_Type,this,ID_CHANGE_CURSOR_TYPE);  
-
 
        this->Custom_Main_Panel->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Set_Caret_Line_Visible,this,ID_SET_CARET_LINE_VISIBLE);
 
@@ -569,14 +545,9 @@ void MainFrame::Exit(wxCommandEvent & event){
 
        this->Custom_Main_Panel->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Change_Font,this,ID_FONT_CHANGE);
 
-
-
-
        this->Custom_Main_Panel->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Show_Help_Menu,this,ID_SHOW_HELP_MENU);
 
        this->Custom_Main_Panel->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Use_Default_Caret,this,wxID_ABOUT);
-
-
 
        this->Custom_Main_Panel->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::File_Save,this,ID_FILE_SAVE);
 
@@ -590,9 +561,7 @@ void MainFrame::Exit(wxCommandEvent & event){
 
        this->Custom_Main_Panel->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Exit,this,ID_EXIT);
 
-
-
-        this->Destroy();
+       this->Destroy();
      }
 }
 

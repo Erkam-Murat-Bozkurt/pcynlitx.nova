@@ -36,6 +36,17 @@ public:
 
   void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect & _rect);
 
+  static void IndentPressedBitmap(wxWindow* wnd, wxRect* rect, int button_state)
+  {
+    if (button_state & wxAUI_BUTTON_STATE_PRESSED)
+    {
+        rect->Offset(wnd->FromDIP(wxPoint(1, 1)));
+    }
+  }
+  
+  int DrawPageTab(wxDC& dc, wxWindow* wnd, wxAuiNotebookPage& page, const wxRect& rect);
+
+  /*
   void DrawTab(wxDC & dc, wxWindow *wnd, const wxAuiNotebookPage & page,
 
                const wxRect & in_rect, int close_button_state,
@@ -43,6 +54,7 @@ public:
                wxRect *out_tab_rect, wxRect * out_button_rect,
 
                int * x_extent);
+  */
 
   static void DrawButtons(wxDC& dc,const wxSize & offset,const wxRect & _rect,
 

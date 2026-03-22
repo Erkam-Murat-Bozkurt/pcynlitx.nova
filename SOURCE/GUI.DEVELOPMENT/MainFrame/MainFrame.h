@@ -39,6 +39,7 @@
 #include <condition_variable>
 #include <thread>
 #include <wx/dataview.h>
+#include "Menu_Bar_Options.h"
 #include "Custom_wxPanel.h"
 #include "Custom_Tree_View_Panel.h"
 #include "Custom_wxDataViewTreeCtrl.hpp"
@@ -83,8 +84,9 @@ public:
   void Show_Project_File(wxCommandEvent&);
   void DirectoryOpen(wxCommandEvent & event);
   void Open_PopUp_Menu(wxCommandEvent & event);
-  wxAuiPaneInfo Central_Pane_Info;
-private:
+
+  private:
+  void BIND_TREE_VIEW_EVENTS();
   void OpenSettings(wxCommandEvent & event);
   void Open_Empty_Project_File(wxCommandEvent & event);
   void Enter_Header_File_Location(wxCommandEvent & event);
@@ -154,6 +156,7 @@ private:
   std::thread * print_to_tree_ctrl;
   std::thread * project_file_selector;
   Custom_DataPanel * data_panel_ptr;
+  Menu_Bar_Options * Menu;
   Custom_Multi_DataPanel * Multi_DataPanel;
   bool is_custom_panel_constructed;
   bool Memory_Delete_Condition;
