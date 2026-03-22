@@ -71,7 +71,7 @@
      transform="matrix(0.55270238,0,0,0.50861234,145.34983,82.722123)"
      id="g3">
     <rect
-       style="fill:#868299;fill-opacity:1;stroke:none;stroke-width:6.78948;stroke-opacity:1"
+       style="fill:#b9b9c3;fill-opacity:1;stroke:none;stroke-width:6.78948;stroke-opacity:1"
        id="rect3"
        width="82.094109"
        height="87.69413"
@@ -81,12 +81,12 @@
     <g
        id="g2-1"
        transform="matrix(0.30626886,0,0,0.35960957,-244.95886,-145.71129)"
-       style="fill:#3c3c4b;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none">
+       style="fill:#505069;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10;stroke-dasharray:none">
       <g
          id="g1-2"
-         style="fill:#3c3c4b;fill-opacity:1">
+         style="fill:#505069;fill-opacity:1">
         <polygon
-           style="fill:#3c3c4b;fill-opacity:1"
+           style="fill:#505069;fill-opacity:1"
            points="0,45.978 0,109.155 79.18,109.155 79.18,153.542 155.139,77.566 79.18,1.596 79.18,45.978 "
            id="polygon1-3" />
       </g>

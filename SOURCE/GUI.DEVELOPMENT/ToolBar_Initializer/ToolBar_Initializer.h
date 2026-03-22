@@ -35,9 +35,9 @@ public:
 
       wxRect rect = _rect;
 
-      dc.SetPen(wxPen(wxColour(60,60,75,0xff)));
+      dc.SetPen(wxPen(wxColour(80,80,105,0xff)));
 
-      dc.SetBrush(wxColour(60,60,75,0xff));
+      dc.SetBrush(wxColour(80,80,105,0xff));
 
       dc.DrawRectangle(rect.GetX()-2, rect.GetY() - 3, rect.GetWidth() + 7, rect.GetHeight() + 7);
     }

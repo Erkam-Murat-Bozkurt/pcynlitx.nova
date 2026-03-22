@@ -59,7 +59,7 @@
   <title
      id="title1" />
   <rect
-     style="fill:#868299;fill-opacity:1;stroke:none;stroke-width:1.3353;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#b9b9c3;fill-opacity:1;stroke:none;stroke-width:1.3353;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
      id="rect2"
      width="44.692104"
      height="44.509312"
@@ -67,7 +67,7 @@
      y="0"
      ry="1.3395708" />
   <rect
-     style="fill:#3c3c4b;fill-opacity:1;stroke:#fcaf3b;stroke-width:0"
+     style="fill:#505069;fill-opacity:1;stroke:#fcaf3b;stroke-width:0"
      id="rect1"
      width="7.4671717"
      height="26.757788"
@@ -76,7 +76,7 @@
      ry="0"
      transform="matrix(0.71561956,0.69849027,-0.71606246,0.69803621,0,0)" />
   <rect
-     style="fill:#3c3c4b;fill-opacity:1;stroke:#fcaf3b;stroke-width:0"
+     style="fill:#505069;fill-opacity:1;stroke:#fcaf3b;stroke-width:0"
      id="rect1-2"
      width="7.4793224"
      height="16.962358"
