@@ -28,6 +28,8 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
         wxDefaultPosition, wxSize(1400,950),wxDEFAULT_FRAME_STYLE )
 {
 
+  this->opr_sis = 'w';
+
   this->is_custom_panel_constructed = false;
 
   this->Interface_Manager.SetManagedWindow(this);
@@ -68,10 +70,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->Process_Ptr->Receive_Builder_Path(Builder_Path);
 
-
-  std::string tabart_font = "Segoe UI";
-
-  std::string face_name = "Segoe UI"; 
+  std::string face_name   = "Segoe UI"; 
 
 
 
@@ -118,10 +117,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
   this->Interface_Manager.Update();
 
   this->Toolbar_ID = this->ToolBar_Widget->Get_ToolBar_Pointer()->GetId();
-
-
-
-  this->Interface_Manager.Update();
 
 
   // THE CONSTRUCTION OF THE CUSTOM PANEL FOR NOTEBOOK
@@ -175,9 +170,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
   this->GetEventHandler()->Bind(wxEVT_PAINT,&MainFrame::OnPaint,this,wxID_ANY);
 
 
-  this->Interface_Manager.Update();
-
-
   this->is_project_file_selected = false;
 
   this->Descriptor_File_Path = wxT("");
@@ -206,11 +198,8 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->Dir_List_Manager->start_menu_window_size = this->Custom_Main_Panel->bottom_window->GetSize();
 
-
-  this->tree_control = this->Dir_List_Manager->GetTreeCtrl();
-
-
   this->Dir_List_Manager->Notebook_Ptr = this->Book_Manager;
+
 
   wxRect Main_Rect(this->GetSize());
 
@@ -256,18 +245,18 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->Update();
 
-  wxString defaultDir;
-
-  defaultDir = this->GetUserHomeDirectory() + wxString("\\Pcynlitx\\Workspace");
+  wxString defaultDir 
+  
+           = this->GetUserHomeDirectory() + wxString("\\Pcynlitx\\Workspace");
 
   this->Dir_List_Manager->Load_Project_Directory(defaultDir);
 
   this->Interface_Manager.Update();
 
 
-  //this->Menu = new Menu_Bar_Options();
+  this->Menu = new Menu_Bar_Options();
 
-  //this->SetMenuBar(this->Menu->Get_MenuBar()); 
+  this->SetMenuBar(this->Menu->Get_MenuBar()); 
 
   this->Raise();
 
@@ -275,7 +264,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->Interface_Manager.Update();
 
-  this->opr_sis = 'w';
 }
 
 
@@ -430,19 +418,11 @@ void MainFrame::File_Save(wxCommandEvent & event){
         }
         else{
 
-            wxString message =  wxString(" This is no any file currently open!");
+            wxString Message =  wxString(" This is no any file currently open!");
             
-            message += "\n A file must be openned.";
-            
-            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
-            
-            wxString("ERROR MESSAGE:\n"),wxID_ANY,wxString("PCYNLITX OPERATION REPORT"),
-               
-            *this->exclamation_mark_bmp, wxDefaultPosition);
+            Message += "\n A file must be openned.";
 
-            dial->ShowModal();
-
-            delete dial;
+            this->Print_Message(Message);
         }      
      }
 }
@@ -663,15 +643,7 @@ void MainFrame::Run_Project_Script_On_Terminal(wxCommandEvent & event){
                   Message = Message + "\noperation";
 
             
-                  Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
-            
-                  wxString("ERROR MESSAGE:\n"),wxID_ANY,wxString("PCYNLITX OPERATION REPORT"),
-               
-                  *this->exclamation_mark_bmp, wxDefaultPosition);
-
-                  dial->ShowModal();
-
-                  delete dial;
+                  this->Print_Message(Message);
            }
         }
         else{
@@ -688,7 +660,7 @@ void MainFrame::Show_Help_Menu(wxCommandEvent & event)
 
         event.Skip(false);
 
-        wxString message = wxString("ERKAM MURAT BOZKURT\n\n");
+        wxString  message = wxString("ERKAM MURAT BOZKURT\n\n");
 
         message = message + wxString("PCYNLITX Software, Istanbul / TURKEY\n\n");
 
@@ -807,7 +779,6 @@ void MainFrame::Determine_Source_File_Dependencies(wxCommandEvent & event){
           
                    = std::thread(MainFrame::Run_Source_File_Dependency_Determination_Process,this,FilePATH);
 
-
                   this->Progress_Dialog = new Custom_Progress_Dialog(this,wxID_ANY,wxT("PROCESS REPORT"),wxDefaultPosition);
 
                   this->Progress_Dialog->SetSize(this->FromDIP(wxSize(650,400)));
@@ -875,6 +846,7 @@ void MainFrame::Run_Source_File_Dependency_Determination_Process(wxString FilePA
 
      this->print_file_dependency->join();
 }
+
 
 void MainFrame::Print_File_Dependency_Output(){
 
@@ -950,8 +922,6 @@ void MainFrame::Print_File_Dependency_to_tree_control(){
            break;
          }
       }
-
-         
 
       while(((pipe_string[data_start_point] == '\n') 
       
@@ -1071,9 +1041,6 @@ void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath,
 
                 this->Determine_Executable_File_Script_Construction_Point(FileName);
 
-
-
-
                 wxString Construction_Point(this->Executable_File_Script_Construction_Point);
  
                 open_dir = Construction_Point;
@@ -1095,17 +1062,9 @@ void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath,
 
             std::string error_message = this->Des_Reader->Get_Error_Message();
 
-            wxString message(error_message);
+            wxString Message(error_message);
             
-            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
-            
-            wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX BUILD SYSTEM COSTRUCTION REPORT"),
-               
-            *this->exclamation_mark_bmp, wxDefaultPosition);
-
-            dial->ShowModal();
-
-            delete dial;
+            this->Print_Message(Message);
          }
       }
 }
@@ -1143,7 +1102,9 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
               this->Dir_List_Manager->Status_Data_Holder.build_type = wxString(build_system_type);
 
-              wxString build_type_text = wxString("\n [+] Build system construction type: ") + wxString(build_system_type);
+              wxString build_type_text = wxString("\n [+] Build system construction type: ") 
+              
+                                        + wxString(build_system_type);
 
               this->Dir_List_Manager->Workspace_Text_Ctrl->AddText(build_type_text);
 
@@ -1170,17 +1131,9 @@ void MainFrame::Start_Build_System_Construction(wxCommandEvent & event){
 
               std::string error_message = this->Des_Reader->Get_Error_Message();
 
-              wxString message(error_message);
+              wxString Message(error_message);
             
-              Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
-            
-              wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX BUILD SYSTEM COSTRUCTION REPORT"),
-               
-              *this->exclamation_mark_bmp, wxDefaultPosition);
-
-              dial->ShowModal();
-
-              delete dial;
+              this->Print_Message(Message);
             }
        }
        else{
@@ -1216,8 +1169,6 @@ void MainFrame::Start_Construction_Process(wxString label,
           }
           else{
             
-                this->Progress_Bar_Start_status = false;
-
                 this->Process_Output = new Custom_ProcessOutput(this,wxID_ANY,label);
 
                 this->Process_Output->SetSize(this->FromDIP(wxSize(750,600)));
@@ -1251,25 +1202,13 @@ void MainFrame::Start_Construction_Process(wxString label,
 
 void MainFrame::Print_Invalid_Descriptor_File_Message(wxString er_message){
 
-
-       wxString Message = "\nThere is an error in descriptor file";
+     wxString Message = "\nThere is an error in descriptor file";
 
               Message += "\nor descriptor file is invalid!";
 
               Message += "\n\nPlease control descriptor file";
 
-              Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
-            
-                         wxT("ERROR REPORT:"),wxID_ANY,
-                         
-                         wxT("PCYNLITX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
-
-              dial->SetSize(this->FromDIP(wxSize(600,420)));
-
-              dial->Centre(wxBOTH);
-
-              dial->ShowModal();
-
+     this->Print_Message(Message);
 }
 
 
@@ -1286,19 +1225,9 @@ void MainFrame::Print_Lack_of_Description_Message(wxString er_mesage){
 
               Message += er_mesage;
 
-              Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
-            
-                    wxT("ERROR REPORT:"),wxID_ANY,
-                         
-                    wxT("PCYNLITX PLATFORM OPERATION REPORT"),*this->exclamation_mark_bmp);
-
-              dial->SetSize(this->FromDIP(wxSize(620,420)));
-
-              dial->Centre(wxBOTH);
-
-              dial->ShowModal();
-
+     this->Print_Message(Message);
 }
+
 
 
 void MainFrame::PrintDescriptions(wxCommandEvent & event){
@@ -1335,16 +1264,12 @@ void MainFrame::PrintDescriptions(wxCommandEvent & event){
 
             Message = Message + "\nconstruct an empty descriptor file";
             
-            Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
-            
-               wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
-               
-               *this->exclamation_mark_bmp, wxDefaultPosition);
-
-            dial->ShowModal();
+            this->Print_Message(Message);
         }
      }      
 }
+
+
 
 
 void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
@@ -1395,6 +1320,8 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
    }
 }
 
+
+
 void MainFrame::Select_Project_File(wxCommandEvent & event)
 {
      if(event.GetId() == ID_SELECT_PROJECT_FILE ){
@@ -1427,6 +1354,7 @@ void MainFrame::Select_Project_File(wxCommandEvent & event)
 }
 
 
+
 void MainFrame::Select_File(wxString & FilePATH, wxString Title){
 
      wxFileDialog * openFileDialog
@@ -1451,13 +1379,7 @@ void MainFrame::Select_File(wxString & FilePATH, wxString Title){
 
                Message = Message + "\nA file must be selected .";
             
-               Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
-            
-               wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
-               
-               *this->exclamation_mark_bmp, wxDefaultPosition);
-
-               dial->ShowModal();
+               this->Print_Message(Message);
             }
          }
      }
@@ -1492,6 +1414,8 @@ void MainFrame::Open_File(wxCommandEvent & event){
      }
 }
 
+
+
 void MainFrame::Open_Intro_Page(wxCommandEvent & event)
 {
      if(event.GetId() == ID_OPEN_INTROPAGE)
@@ -1499,6 +1423,8 @@ void MainFrame::Open_Intro_Page(wxCommandEvent & event)
         this->Book_Manager->OpenIntroPage();
      }
 }
+
+
 
 void MainFrame::Enter_Git_Repo_Location(wxCommandEvent & event)
 {
@@ -1545,6 +1471,8 @@ void MainFrame::Enter_Header_File_Location(wxCommandEvent & event)
      }
 }
 
+
+
 void MainFrame::Enter_Source_File_Location(wxCommandEvent & event)
 {
      if(event.GetId() == ID_INPUT_SOURCE_FILE_LOCATION){
@@ -1566,6 +1494,8 @@ void MainFrame::Enter_Source_File_Location(wxCommandEvent & event)
      }
 }
 
+
+
 void MainFrame::Enter_Library_Location(wxCommandEvent & event)
 {
      if(event.GetId() == ID_INPUT_LIBRARY_LOCATION){
@@ -1586,6 +1516,8 @@ void MainFrame::Enter_Library_Location(wxCommandEvent & event)
        }
      }
 }
+
+
 
 void MainFrame::OpenTerminal(wxCommandEvent & event)
 {
@@ -1629,6 +1561,8 @@ void MainFrame::Enter_Library_Name(wxCommandEvent & event)
      }
 }
 
+
+
 void MainFrame::Enter_Warehouse_Location(wxCommandEvent & event)
 {
      if(event.GetId() == ID_INPUT_CONSTRUCTION_POINT){
@@ -1649,6 +1583,8 @@ void MainFrame::Enter_Warehouse_Location(wxCommandEvent & event)
        }
      }
 }
+
+
 
 void MainFrame::Enter_Exe_File_Name(wxCommandEvent & event)
 {
@@ -1671,6 +1607,8 @@ void MainFrame::Enter_Exe_File_Name(wxCommandEvent & event)
      }
 }
 
+
+
 void MainFrame::Enter_Main_File_Name(wxCommandEvent & event)
 {
      if(event.GetId() == ID_INPUT_MAIN_FILE_NAME){
@@ -1691,6 +1629,8 @@ void MainFrame::Enter_Main_File_Name(wxCommandEvent & event)
        }
      }
 }
+
+
 
 void MainFrame::Enter_Standard(wxCommandEvent & event)
 {
@@ -1713,6 +1653,8 @@ void MainFrame::Enter_Standard(wxCommandEvent & event)
      }
 }
 
+
+
 void MainFrame::Enter_Options(wxCommandEvent & event)
 {
      if(event.GetId() == ID_INPUT_OPTIONS){
@@ -1734,6 +1676,8 @@ void MainFrame::Enter_Options(wxCommandEvent & event)
      }
 }
 
+
+
 void MainFrame::Descriptor_File_Selection_Check(){
       
      wxString Message = "Descriptor file was not selected";
@@ -1741,16 +1685,8 @@ void MainFrame::Descriptor_File_Selection_Check(){
      Message = Message + "\nPlease select a descriptor file or";
 
      Message = Message + "\nconstruct an empty descriptor file";
-            
-     Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
-            
-         wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
-               
-         *this->exclamation_mark_bmp, wxDefaultPosition);
 
-         dial->ShowModal();
-
-     delete dial;
+     this->Print_Message(Message);
 }
 
 
@@ -1779,6 +1715,8 @@ void MainFrame::Increase_Font_Size(wxCommandEvent & event)
      }
 }
 
+
+
 void MainFrame::Decrease_Font_Size(wxCommandEvent & event)
 {
      if(event.GetId() == ID_DECREASE_FONT_SIZE){
@@ -1805,8 +1743,6 @@ void MainFrame::Decrease_Font_Size(wxCommandEvent & event)
 
 
 
-
-
 void MainFrame::Undo_Changes(wxCommandEvent & event)
 {
      if(event.GetId() == ID_UNDO_CHANGES){
@@ -1826,6 +1762,8 @@ void MainFrame::Undo_Changes(wxCommandEvent & event)
      }
 }
 
+
+
 void MainFrame::Redo_Changes(wxCommandEvent & event)
 {
      if(event.GetId() == ID_REDO_CHANGES){
@@ -1841,6 +1779,8 @@ void MainFrame::Redo_Changes(wxCommandEvent & event)
      }
 }
 
+
+
 void MainFrame::Clear_Style(wxCommandEvent & event)
 {
      if(event.GetId() ==  ID_CLEAR_STYLE){
@@ -1853,6 +1793,7 @@ void MainFrame::Clear_Style(wxCommandEvent & event)
      }
 }
 
+
 void MainFrame::Reload_Default_Style(wxCommandEvent & event)
 {
      if(event.GetId() == ID_RELOAD_STYLE){
@@ -1864,6 +1805,7 @@ void MainFrame::Reload_Default_Style(wxCommandEvent & event)
         this->Book_Manager->Reload_Style();
      }
 }
+
 
 void MainFrame::Clear_Text(wxCommandEvent & event)
 {
@@ -1880,6 +1822,7 @@ void MainFrame::Clear_Text(wxCommandEvent & event)
      }
 }
 
+
 void MainFrame::Change_Cursor_Type(wxCommandEvent & event)
 {
      if(event.GetId() == ID_CHANGE_CURSOR_TYPE){
@@ -1889,6 +1832,7 @@ void MainFrame::Change_Cursor_Type(wxCommandEvent & event)
        this->Book_Manager->Change_Cursor_Type();
      }
 }
+
 
 void MainFrame::Load_Default_Cursor(wxCommandEvent & event)
 {
@@ -1900,6 +1844,7 @@ void MainFrame::Load_Default_Cursor(wxCommandEvent & event)
      }
 }
 
+
 void MainFrame::Set_Caret_Line_Visible(wxCommandEvent & event)
 {
      if(event.GetId() == ID_SET_CARET_LINE_VISIBLE){
@@ -1909,6 +1854,7 @@ void MainFrame::Set_Caret_Line_Visible(wxCommandEvent & event)
        this->Book_Manager->Set_Caret_Line_Visible();
      }
 }
+
 
 void MainFrame::Set_Caret_Line_InVisible(wxCommandEvent & event)
 {
@@ -1920,6 +1866,7 @@ void MainFrame::Set_Caret_Line_InVisible(wxCommandEvent & event)
      }
 }
 
+
 void MainFrame::Use_Block_Caret(wxCommandEvent & event)
 {
      if(event.GetId() == ID_USE_BLOCK_CARET){
@@ -1930,6 +1877,7 @@ void MainFrame::Use_Block_Caret(wxCommandEvent & event)
      }
 }
 
+
 void MainFrame::Use_Default_Caret(wxCommandEvent & event)
 {
      if(event.GetId() == ID_USE_DEFAULT_CARET){
@@ -1937,6 +1885,7 @@ void MainFrame::Use_Default_Caret(wxCommandEvent & event)
         this->Book_Manager->Use_Default_Caret();
      }
 }
+
 
 void MainFrame::Use_Bold_Styling(wxCommandEvent & event)
 {
@@ -1949,6 +1898,7 @@ void MainFrame::Use_Bold_Styling(wxCommandEvent & event)
        this->Book_Manager->Use_Bold_Styling();
      }
 }
+
 
 void MainFrame::Save_File_As(wxCommandEvent & event)
 {
@@ -1979,6 +1929,7 @@ void MainFrame::Save_File_As(wxCommandEvent & event)
         }
      }
 }
+
 
 
 void MainFrame::New_File(wxCommandEvent & event)
@@ -2048,8 +1999,6 @@ void MainFrame::OpenFile(wxCommandEvent & event)
 }
 
 
-
-
 void MainFrame::Change_Font(wxCommandEvent & event){
 
      if(event.GetId() == ID_FONT_CHANGE){
@@ -2072,10 +2021,6 @@ void MainFrame::Change_Font(wxCommandEvent & event){
         }
      }
 }
-
-
-
-
 
 
 void MainFrame::Determine_Executable_File_Script_Construction_Point(wxString FileName){
@@ -2219,6 +2164,7 @@ bool MainFrame::Control_Project_File_Syntax(){
      return syntax_error_status;
 }
 
+
 void MainFrame::Print_Project_File_Syntax_Error(){
 
      wxString Message = "The project file is invalid or ";
@@ -2229,13 +2175,7 @@ void MainFrame::Print_Project_File_Syntax_Error(){
 
      Message = Message + "\ndeclerations ";
             
-     Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,Message,
-            
-     wxT("ERROR MESSAGE:\n"),wxID_ANY,wxT("PCYNLITX OPERATION REPORT"),
-               
-         *this->exclamation_mark_bmp, wxDefaultPosition);
-
-         dial->ShowModal();
+     this->Print_Message(Message);
 }
 
 
@@ -2288,4 +2228,19 @@ void MainFrame::Descriptor_File_Validity_Control(wxString & message){
              message += Des_Reader.Get_Error_Message();
          }      
      }
+}
+
+void MainFrame::Print_Message(wxString message){
+
+     Custom_Message_Dialog * dial = new Custom_Message_Dialog(this,message,
+            
+     wxString("ERROR MESSAGE:\n"),wxID_ANY,wxString("PCYNLITX OPERATION REPORT"),
+               
+     *this->exclamation_mark_bmp, wxDefaultPosition);
+
+     dial->Centre(wxBOTH);
+
+     dial->ShowModal();
+
+     delete dial;
 }

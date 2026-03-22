@@ -87,6 +87,7 @@ public:
 
   private:
   void BIND_TREE_VIEW_EVENTS();
+  void Print_Message(wxString message);
   void OpenSettings(wxCommandEvent & event);
   void Open_Empty_Project_File(wxCommandEvent & event);
   void Enter_Header_File_Location(wxCommandEvent & event);
@@ -163,52 +164,39 @@ public:
   bool is_project_file_selected;
   Process_Manager * Process_Ptr;
   Custom_wxThread * Thread_Ptr;
-  wxStaticBitmap * background_figure;
   wxString Descriptor_File_Path;
   wxString Warehouse_Location;
   wxString Construction_Point;
-  wxString DataType;
   std::string Executable_File_Script_Construction_Point;
-  wxString Exe_File_Name;
-  wxString Directory_Open_Point;
-  wxString Build_Script_Path;
+
   wxAuiDockArt * Dock_Art_Pointer;
   wxAuiManager Interface_Manager;
   Project_Descriptions_Printer * Descriptions_Printer;
   Project_File_Selection_Dialog * Selection_Dialog;
   GUI_Descriptor_File_Reader * Des_Reader;
   Custom_Tree_View_Panel * Dir_List_Manager;
-  wxDataViewTreeCtrl * tree_control;
   ToolBar_Initializer * ToolBar_Widget;
   Custom_wxPanel * Custom_Main_Panel;
   Custom_Notebook * Book_Manager;
-  Intro_Page_Loader * Intro_Page_Pointer;
   Custom_ProcessOutput * Process_Output;
   Custom_DataPanel * DataPanel_Pointer;
   Dependency_Tree_Printer * depPrinter;
   Dependency_Tree_Printer * dep_process_printer;
   Custom_Progress_Dialog * Progress_Dialog;
-  wxBoxSizer * setting_frame_box;
-  wxBoxSizer * setting_panel_box;
-  wxFrame * Settting_Frame;
-  Custom_Multi_DataPanel * Mt_Panel;
+
   Resource_Loader Rsc_Loader;
   bool is_build_system_constructed;
   bool is_descriptor_file_open;
   wxFont * Default_Font;
-  int Process_Event_Counter;
-  bool Progress_Bar_Start_status;
-  wxDir    * dir_control;
   wxBitmap * exclamation_mark_bmp;
   wxBitmap * logo_bmp;
   std::condition_variable cv_fork;
   bool invalid_descriptor_file_status;
   bool lack_of_description_status;
   bool is_pipe_ready;
-  int process_end_counter;
-  int Toolbar_ID;
+  int  process_end_counter;
+  int  Toolbar_ID;
   bool is_bold_style_selected;
-  std::mutex mtx;
   char opr_sis;
   DECLARE_EVENT_TABLE()
 };
