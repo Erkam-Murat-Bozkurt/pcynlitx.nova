@@ -254,9 +254,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
   this->Interface_Manager.Update();
 
 
-  this->Menu = new Menu_Bar_Options();
+  //this->Menu = new Menu_Bar_Options();
 
-  this->SetMenuBar(this->Menu->Get_MenuBar()); 
+  //this->SetMenuBar(this->Menu->Get_MenuBar()); 
 
   this->Raise();
 

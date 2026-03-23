@@ -94,8 +94,6 @@ void GUI_List_Data_Recorder::Receive_Descriptions_Record_Data(Record_Data_For_Gu
 
      this->Place_Vector_Data(Data->compiler_paths,this->Compiler_Paths);
 
-
-
      this->Place_String_Data(Data->warehouse_location,this->warehouse_location);
 
      this->Place_String_Data(Data->root_dir,this->root_dir);
@@ -255,6 +253,8 @@ void GUI_List_Data_Recorder::Record_Data(std::string Data_Type,
 
      this->Update_Descriptor_File();     
 }
+
+
 
 void GUI_List_Data_Recorder::Update_Descriptor_File(){
      

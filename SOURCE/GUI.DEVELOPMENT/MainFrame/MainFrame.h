@@ -187,16 +187,16 @@ public:
   Resource_Loader Rsc_Loader;
   bool is_build_system_constructed;
   bool is_descriptor_file_open;
+  bool invalid_descriptor_file_status;
+  bool lack_of_description_status;
+  bool is_bold_style_selected;
+  bool is_pipe_ready;
   wxFont * Default_Font;
   wxBitmap * exclamation_mark_bmp;
   wxBitmap * logo_bmp;
   std::condition_variable cv_fork;
-  bool invalid_descriptor_file_status;
-  bool lack_of_description_status;
-  bool is_pipe_ready;
   int  process_end_counter;
   int  Toolbar_ID;
-  bool is_bold_style_selected;
   char opr_sis;
   DECLARE_EVENT_TABLE()
 };

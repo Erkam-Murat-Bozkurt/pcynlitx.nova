@@ -195,7 +195,6 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      // TITLE WINDOW SETTINGS END
 
-
      this->trew_View_notebook = new Custom_Notebook(
 
                        nullptr,this,this->Interface_Manager_Pointer,
@@ -211,8 +210,11 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->trew_View_notebook->SetAutoLayout(true);
 
+     //this->trew_View_notebook->SetTabCtrlHeight(30);
 
      
+
+
      this->Workspace_Text_Ctrl = new Custom_TextCtrl(this->trew_View_notebook,wxID_ANY,wxDefaultPosition,
 
                                                     wxSize(Tab_Bar_size.x,250),wxString(""));
@@ -221,31 +223,18 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->trew_View_notebook->AddPage(this->Workspace_Text_Ctrl,wxT(" Workspace  "),true);
 
 
-     /**
-     Custom_TextCtrl * Text_Ctrl_Next = new Custom_TextCtrl(this->trew_View_notebook,wxID_ANY,wxDefaultPosition,
-
-                                                       wxSize(Tab_Bar_size.x,250),wxString(""));
- 
-
-     this->trew_View_notebook->AddPage(Text_Ctrl_Next,wxT(" Next  "),false);
-
-     //this->trew_View_notebook->OpenIntroPage();
-
-     */
 
      int bottom_win_y = this->Tree_Control_Position.y + this->tree_control->GetSize().GetY();
 
 
      this->Bottom_Window =  new Custom_Window(this,wxPoint(0,bottom_win_y+3),
      
-                           wxSize(Tab_Bar_size.x,65),wxColour(240,240,240,0xff));
+                           wxSize(Tab_Bar_size.x,-1),wxColour(240,240,240,0xff));
 
-
-     //this->bottom_window = new wxWindow(this, wxID_ANY,wxDefaultPosition,wxSize(this->GetSize().GetX(),60));
-
-     this->Start_Button  = new wxButton(this->Bottom_Window,ID_OPEN_POPUP_MENU,wxT("START"),wxDefaultPosition, wxSize(120,50));
+     this->Start_Button  = new wxButton(this->Bottom_Window,ID_OPEN_POPUP_MENU,wxT("START"),
+                              
+                              wxDefaultPosition, wxSize(120,50));
      
-     //this->bottom_window->SetBackgroundColour(wxColour(240,240,240));
 
 
 
@@ -616,11 +605,12 @@ void Custom_Tree_View_Panel::Initialize_Sizer()
 {
      this->panel_sizer = new wxBoxSizer(wxVERTICAL);
 
-     this->panel_sizer->Add(this->trew_View_notebook,0,  wxEXPAND  | wxLEFT | wxRIGHT | wxBOTTOM,16);
 
      this->panel_sizer->Add(this->Title_Window,0,  wxEXPAND  | wxLEFT | wxRIGHT,16);
 
      this->panel_sizer->Add(this->tree_control,1,  wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM,16);
+
+     this->panel_sizer->Add(this->trew_View_notebook,0,  wxEXPAND  | wxLEFT | wxRIGHT | wxBOTTOM,16);
 
      this->panel_sizer->Add(this->Bottom_Window,0, wxEXPAND | wxALL,0);
 

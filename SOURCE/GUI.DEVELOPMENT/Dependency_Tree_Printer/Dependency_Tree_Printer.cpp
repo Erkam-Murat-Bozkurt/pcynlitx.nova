@@ -65,9 +65,6 @@ Dependency_Tree_Printer::Dependency_Tree_Printer(wxFrame * parent, wxWindowID id
 
      this->Show(false);
 
-
-
-
      wxIcon Frame_Icon;
 
      wxBitmap * frame_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("FRAME_ICON"));

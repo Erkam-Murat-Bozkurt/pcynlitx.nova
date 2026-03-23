@@ -93,9 +93,9 @@ int Custom_TabArt::DrawPageTab(wxDC& dc, wxWindow* wnd, wxAuiNotebookPage& page,
 
     int difference = 45 - size.GetHeight();
 
-    TabPosition = wxPoint(TabPosition.x, TabPosition.y+difference);
+    TabPosition = wxPoint(TabPosition.x, TabPosition.y);
 
-    page.rect = wxRect(TabPosition,size);
+    page.rect = wxRect(TabPosition,wxSize(size.x,size.y+difference));
 
     // Draw the tab background and highlight it if it's active.
     if ( page.active )
@@ -113,11 +113,12 @@ int Custom_TabArt::DrawPageTab(wxDC& dc, wxWindow* wnd, wxAuiNotebookPage& page,
         dc.DrawRectangle(page.rect);
     }
     // Draw the outline only on the left/top sides to avoid double borders.
+
     dc.SetPen(wxPen(wxColour(240,240,240,0xff)));
-    dc.DrawLine(page.rect.GetLeft(), page.rect.GetTop(),
-                page.rect.GetLeft(), page.rect.GetBottom());
-    dc.DrawLine(page.rect.GetLeft(), page.rect.GetTop(),
-                page.rect.GetRight(), page.rect.GetTop());
+    dc.DrawLine(page.rect.GetRight(), page.rect.GetTop(),
+                page.rect.GetRight(), page.rect.GetBottom());
+    dc.DrawLine(page.rect.GetRight()+1, page.rect.GetTop(),
+                page.rect.GetRight()+1, page.rect.GetBottom());
 
     if ( page.active )
     {
@@ -131,7 +132,22 @@ int Custom_TabArt::DrawPageTab(wxDC& dc, wxWindow* wnd, wxAuiNotebookPage& page,
                         ? page.rect.GetBottom() - THICKNESS
                         : page.rect.GetTop();
 
-        dc.DrawRectangle(page.rect.GetLeft() + 1, y,
+        dc.DrawRectangle(page.rect.GetLeft() , y,
+                         page.rect.GetWidth() - 1, THICKNESS);
+    }
+    else{
+
+        dc.SetBrush(wxColour(100,100,100,0xff));
+        dc.SetPen(*wxTRANSPARENT_PEN);
+
+        // 1px border is too thin to be noticeable, so make it thicker.
+        const int THICKNESS = wnd->FromDIP(2);
+
+        const int y = m_flags & wxAUI_NB_BOTTOM
+                        ? page.rect.GetBottom() - THICKNESS
+                        : page.rect.GetTop();
+
+        dc.DrawRectangle(page.rect.GetLeft(), y,
                          page.rect.GetWidth() - 1, THICKNESS);
     }
 
@@ -144,7 +160,7 @@ int Custom_TabArt::DrawPageTab(wxDC& dc, wxWindow* wnd, wxAuiNotebookPage& page,
 
         dc.DrawBitmap(bmp,
                       xStart,
-                      rect.y + (size.y - bitmapSize.y - 1)/2+ difference,
+                      rect.y + (size.y - bitmapSize.y - 1+ difference)/2,
                       true /* use mask */);
 
         xStart += bitmapSize.x + wnd->FromDIP(MARGIN);
@@ -181,7 +197,7 @@ int Custom_TabArt::DrawPageTab(wxDC& dc, wxWindow* wnd, wxAuiNotebookPage& page,
             const wxSize buttonSize = bmp.GetLogicalSize();
 
             button.rect.x = buttonX;
-            button.rect.y = rect.y + (size.y - buttonSize.y - 1)/2+ difference;
+            button.rect.y = rect.y + (size.y - buttonSize.y - 1+ difference)/2;
             button.rect.width = buttonSize.x;
             button.rect.height = buttonSize.y;
 
@@ -204,7 +220,7 @@ int Custom_TabArt::DrawPageTab(wxDC& dc, wxWindow* wnd, wxAuiNotebookPage& page,
                                                 xEnd - xStart);
 
     const int textHeight = dc.GetTextExtent(text).y;
-    dc.DrawText(text, xStart, rect.y + (size.y - textHeight - 1)/2 + difference);
+    dc.DrawText(text, xStart, rect.y + (size.y - textHeight - 1+ difference)/2 );
 
     return xExtent;
 }
