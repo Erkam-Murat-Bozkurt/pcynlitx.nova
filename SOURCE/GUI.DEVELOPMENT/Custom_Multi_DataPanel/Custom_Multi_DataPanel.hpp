@@ -20,6 +20,7 @@
 #include <wx\dialog.h>
 #include <wx\choicdlg.h>
 #include <wx\choice.h>
+#include <wx/itemattr.h>
 #include "GUI_List_Data_Recorder.hpp"
 #include "Process_Manager.hpp"
 #include "Custom_DataPanel.hpp"

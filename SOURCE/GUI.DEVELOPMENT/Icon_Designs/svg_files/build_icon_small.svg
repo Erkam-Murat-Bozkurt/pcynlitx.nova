@@ -2,9 +2,9 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="1.5814961mm"
-   height="1.6622909mm"
-   viewBox="0 0 1.581496 1.662291"
+   width="1.7890354mm"
+   height="1.6428723mm"
+   viewBox="0 0 1.7890353 1.6428724"
    version="1.1"
    id="svg8"
    inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
@@ -52,8 +52,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="45.254834"
-     inkscape:cx="5.3806407"
-     inkscape:cy="3.94433"
+     inkscape:cx="6.2424271"
+     inkscape:cy="3.9001358"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -69,8 +69,8 @@
     <inkscape:grid
        type="xygrid"
        id="grid10"
-       originx="-69.995766"
-       originy="-211.98683"
+       originx="-69.767754"
+       originy="-211.99853"
        spacingy="1"
        spacingx="1"
        units="mm"
@@ -91,7 +91,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-69.995758,-86.711861)">
+     transform="translate(-69.767746,-86.723557)">
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:2.82222px;line-height:1.25;font-family:'Segoe UI';-inkscape-font-specification:'Segoe UI';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-feature-settings:normal;text-align:justify;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
@@ -103,20 +103,28 @@
        id="rect1"
        width="1.5772618"
        height="1.6491226"
-       x="70.003723"
-       y="86.718445"
+       x="73.447327"
+       y="86.952309"
        ry="0.20670573" />
     <ellipse
        style="fill:#f0f0f5;fill-opacity:1;stroke:none;stroke-width:0.0189173;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1"
        id="path2"
-       cx="70.786499"
-       cy="87.543007"
+       cx="70.839119"
+       cy="87.560547"
        rx="0.71587706"
        ry="0.76226896" />
     <path
-       d="m 71.337168,86.985814 c -0.303143,-0.314475 -0.794694,-0.314475 -1.097838,0 -0.303169,0.314529 -0.303169,0.824375 0,1.138905 0.303144,0.314475 0.794695,0.314475 1.097838,0 0.30317,-0.31453 0.30317,-0.824376 0,-1.138905 m -0.186646,1.133132 -0.09988,-0.113816 c -0.07975,0.05358 -0.17138,0.0829 -0.267331,0.0829 -0.282623,0 -0.512589,-0.254505 -0.512589,-0.559613 h 0.202951 c 0,0.194188 0.138905,0.337696 0.309638,0.337696 0.04244,0 0.0835,-0.0095 0.121387,-0.02727 l -0.102009,-0.116236 h 0.347833 v 0.396349 m -0.04741,-0.590538 c 0,-0.183961 -0.138699,-0.321643 -0.309173,-0.321643 -0.04415,0 -0.0871,0.0096 -0.126666,0.02794 l 0.108862,0.109738 h -0.35016 v -0.35292 l 0.08943,0.09011 c 0.08299,-0.05595 0.179014,-0.08509 0.278535,-0.08509 0.282209,0 0.511838,0.242696 0.511838,0.53183 h -0.202665 z"
+       d="m 71.340886,87.02131 c -0.282595,-0.291645 -0.740828,-0.291645 -1.023424,0 -0.28262,0.291694 -0.28262,0.764525 0,1.05622 0.282596,0.291645 0.740829,0.291645 1.023424,0 0.282621,-0.291695 0.282621,-0.764526 0,-1.05622 m -0.173994,1.050866 -0.09311,-0.105552 c -0.07435,0.0497 -0.159764,0.07688 -0.249211,0.07688 -0.263466,0 -0.477844,-0.236026 -0.477844,-0.518985 h 0.189194 c 0,0.18009 0.12949,0.31318 0.28865,0.31318 0.03956,0 0.07784,-0.0088 0.11316,-0.02529 l -0.0951,-0.107802 h 0.324257 v 0.367574 m -0.0442,-0.547665 c 0,-0.170605 -0.129298,-0.298291 -0.288217,-0.298291 -0.04115,0 -0.08119,0.0089 -0.118079,0.02592 l 0.101482,0.101772 h -0.326419 v -0.3273 l 0.08337,0.08358 c 0.07737,-0.05188 0.16688,-0.07891 0.259656,-0.07891 0.263081,0 0.477144,0.225076 0.477144,0.49322 h -0.188927 z"
        fill="#43a047"
        id="path1-7"
-       style="fill:#868299;fill-opacity:1;stroke:none;stroke-width:0.0285902;stroke-dasharray:none;stroke-opacity:1" />
+       style="fill:#fcaf3b;fill-opacity:1;stroke:none;stroke-width:0.0265834;stroke-dasharray:none;stroke-opacity:1" />
+    <rect
+       style="fill:none;fill-opacity:1;stroke:none;stroke-width:0.0396875;stroke-linejoin:round"
+       id="rect2"
+       width="1.7890354"
+       height="1.6428723"
+       x="69.767746"
+       y="86.723557"
+       ry="0.032500263" />
   </g>
 </svg>

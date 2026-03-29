@@ -310,6 +310,23 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
 
 
+     wxItemAttr attr;
+
+     //wxColour List_Title_Colour(207, 36, 14);
+
+     wxColour List_Title_Colour(202, 53, 25);
+
+     //attr.SetTextColour(wxColour(0, 0, 139,0xff));
+
+     attr.SetTextColour(List_Title_Colour);
+
+     wxFont List_Title_Font = Title_Font;
+
+     List_Title_Font.SetPointSize(11);
+
+     attr.SetFont(List_Title_Font);
+
+
 
      // SETTINGS FOR GIT REPO DATA PANEL
 
@@ -333,6 +350,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->listctrl_git_repo_path->AppendTextColumn(wxT("GIT REPO DIRECTORY"));
 
+     this->listctrl_git_repo_path->SetHeaderAttr(attr);
 
 
 
@@ -358,6 +376,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->listctrl_warehouse_location->AppendTextColumn(wxT("TARGET DIRECTORY FOR BUILD SYSTEM "));
 
+     this->listctrl_warehouse_location->SetHeaderAttr(attr);
 
 
 
@@ -387,6 +406,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->listctrl_standard->AppendTextColumn(wxT("TARGET C++ STANDARD"));
 
+     this->listctrl_standard->SetHeaderAttr(attr);
 
 
 
@@ -418,6 +438,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->listctrl_build_system_type->AppendTextColumn(wxT("BUILD SYSTEM TYPE"));
 
+     this->listctrl_build_system_type->SetHeaderAttr(attr);
 
 
 
@@ -451,6 +472,22 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->DataPanel_Sizers[4]->Add(this->List_Ctrl_Sizers[4],1, wxEXPAND | wxTOP | wxALL,10);
 
      this->DataPanel_Sizers[4]->Add(this->Buton_Sizers[4],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
+
+
+     //wxFont font_bold(wxFontInfo(12).Bold());
+
+
+     //wxColour text_col = wxColour(225,225,225,0xff);
+
+     //wxColour background_col = wxColour(125,125,135,0xff);
+
+     //wxItemAttr text_attr(wxColour(225,225,225,0xff),background_col,Title_Font);
+
+
+
+     
+
+     this->listctrl_for_header_dir->SetHeaderAttr(attr);
 
      this->listctrl_for_header_dir->AppendTextColumn(wxT("TARGET HEADER FILE DIRECTORIES "));
 
@@ -493,6 +530,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->listctrl_src_file_location->AppendTextColumn(wxT("TARGET SOURCE FILE DIRECTORIES "));
 
+     this->listctrl_src_file_location->SetHeaderAttr(attr);
 
 
 
@@ -530,6 +568,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->listctrl_library_dir->AppendTextColumn(wxT("TARGET LIBRARY DIRECTORIES "));
 
+     this->listctrl_library_dir->SetHeaderAttr(attr);
 
 
 
@@ -569,6 +608,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->listctrl_library_name->AppendTextColumn(wxT("TARGET LIBRARIES FOR LINKING"));
 
+     this->listctrl_library_name->SetHeaderAttr(attr);
 
 
 
@@ -612,6 +652,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->listctrl_compiler_options->AppendTextColumn(wxT("TARGET COMPILER OPTIONS"));
 
+     this->listctrl_compiler_options->SetHeaderAttr(attr);
 
 
 
@@ -651,6 +692,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->listctrl_linker_options->AppendTextColumn(wxT("TARGET LINKER OPTIONS"));
 
+     this->listctrl_linker_options->SetHeaderAttr(attr);
 
 
      // SETTINGS FOR PROJECT NAME DATA PANEL
@@ -678,6 +720,8 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->DataPanel_Sizers[10]->Add(this->Buton_Sizers[10],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
 
      this->listctrl_project_name->AppendTextColumn(wxT("PROJECT NAME"));
+
+     this->listctrl_project_name->SetHeaderAttr(attr);
 
 
 
@@ -708,6 +752,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->listctrl_version_number->AppendTextColumn(wxT("VERSION MUNBER"));
 
+     this->listctrl_version_number->SetHeaderAttr(attr);
 
 
 
@@ -743,6 +788,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      this->listctrl_compiler_path->AppendTextColumn(wxT("COMPILER PATHS"));
 
+     this->listctrl_compiler_path->SetHeaderAttr(attr);
 
 
 

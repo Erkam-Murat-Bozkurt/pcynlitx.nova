@@ -108,6 +108,8 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->File_List_Widget_Shape.Dock();
 
+     this->File_List_Widget_Shape.DockFixed (false);
+
      this->File_List_Widget_Shape.Row(1);
 
      this->File_List_Widget_Shape.dock_proportion = 0.3;
@@ -234,7 +236,14 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->Start_Button  = new wxButton(this->Bottom_Window,ID_OPEN_POPUP_MENU,wxT("START"),
                               
                               wxDefaultPosition, wxSize(120,50));
-     
+
+     wxBitmap * bld_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("BUILD_ICON_SMALL"));
+
+     wxIcon build_icon;
+
+     build_icon.CopyFromBitmap(*bld_icon_bitmap);
+
+     this->Start_Button->SetBitmap(build_icon,wxLEFT);
 
 
 
