@@ -65,8 +65,6 @@ private:
 
     wxString GetUserHomeDirectory();
 
-    bool yes_no_condition;
-
     wxStaticText * text;
 
     wxStaticText * text_title;
@@ -83,15 +81,11 @@ private:
 
     wxPanel *  welcome_page_button_panel;
 
-    wxPanel *  intro_page_button_panel;
-
     wxFont * Default_Font;
 
     wxButton * CloseButton;
 
     wxButton * WelcomeButton;
-
-    wxButton * IntroButton;
 
     bool Memory_Delete_Condition;
 

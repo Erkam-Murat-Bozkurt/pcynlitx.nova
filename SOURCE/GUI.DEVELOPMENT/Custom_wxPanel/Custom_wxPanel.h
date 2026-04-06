@@ -15,12 +15,6 @@
 #include "Resource_Loader.hpp"
 #include "Custom_Tree_View_Panel.h"
 
-/*
-enum
-{
-  ID_OPEN_POPUP_MENU = 100,
-};
-*/
 
 class Custom_wxPanel : public wxPanel
 {
@@ -59,38 +53,13 @@ public:
 
   void PaintNow(wxWindow * wnd);
 
-
   wxStaticText * start_text;
-
-  wxBitmap * project_file_selection_bitmap;
-
-  int ToolBar_ID = 0;
-
-  wxAuiToolBar * toolBar_pointer;
-
-  wxAuiPaneInfo * Pane_Pointer;
-
-  wxBitmap * Info_Icon_Bmp;
-
-  wxBitmap * Save_Icon_Small;
-
-  wxBitmap * exit_icon_bitmap;
-
-  wxBitmap * build_icon_bitmap;
-
-  wxBitmap * run_build_script_icon_bitmap;
-
-  wxBitmap * dependency_icon_bitmap;
   
-  wxColour background;
-
   wxButton * Start_Button;
 
   wxWindow * book_manager;
 
   wxWindow * bottom_window;
-
-  wxWindow * button_window;
 
   wxWindow * text_window;
 
@@ -99,31 +68,7 @@ public:
 
   wxBoxSizer * bottom_win_sizer;
 
-
-  wxEvtHandler Event_Handler;
-
   bool Memory_Delete_Condition;
-
-
-  wxMenu  * CMAKE_Menu;
-
-  wxMenu  * Help_Menu;
-
-  wxMenu  * File_Menu;
-
-  wxMenu  * Project_Management;
-
-  wxMenu  * Main_Menu;
-
-  wxMenu  * Edit_Menu;
-
-  wxMenu  * Info_Menu;
-
-  wxMenu  * Linux_Debian_Package_Generator;
-
-  wxMenu  * Linux_RPM_Package_Generator;
-
-  wxMenu  * Windows_Package_Generator;
 
   Resource_Loader Rsc_Loader;
 

@@ -49,8 +49,6 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->tab_ctrl_hight = tabctrl_hight;
 
-     //this->close_button_construction_status = false;
-
      this->Topbar_MinSize = wxSize(size.GetWidth(),this->tab_ctrl_hight);
 
      this->SetDoubleBuffered(true);
@@ -120,7 +118,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->SetMinSize(size);
 
 
-     int tree_size_y = size.y - 2*this->tab_ctrl_hight -60;
+     int tree_size_y = size.y - 2*this->tab_ctrl_hight -this->FromDIP(60);
 
      this->Tree_Control_Size = wxSize(size.x,tree_size_y);
 
@@ -153,12 +151,6 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
 
      wxSize Tab_Bar_size = wxSize(this->GetSize().x,this->tab_ctrl_hight);
-
-     //this->Top_Bar_Window = new Custom_Window(this,wxPoint(0,0),Tab_Bar_size,wxColour(240,240,240));
-
-     //this->Top_Bar_Window->Receive_Tab_ctrl_Hight(this->tab_ctrl_hight);
-
-     //this->Top_Bar_Window->Show(false);
 
 
 
@@ -198,6 +190,8 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      text->SetForegroundColour(wxColour(60,60,60));
 
+
+
      // TITLE WINDOW SETTINGS END
 
      this->trew_View_notebook = new Custom_Notebook(
@@ -215,7 +209,6 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->trew_View_notebook->SetAutoLayout(true);
 
-     //this->trew_View_notebook->SetTabCtrlHeight(30);
 
      
 
@@ -231,7 +224,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      int bottom_win_y = this->Tree_Control_Position.y + this->tree_control->GetSize().GetY();
 
-     int bottom_window_y_extent = size.GetHeight()/8 + 16;
+     int bottom_window_y_extent = size.GetHeight()/8 + this->FromDIP(16);
 
 
 
@@ -243,14 +236,11 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->Bottom_Window->SetSize(this->Bottom_Window->FromDIP(bottom_win_size));
 
-     wxPoint bottom_Win_position = this->Bottom_Window->GetPosition();
 
 
-     //- this->Bottom_Window->FromDIP(8)
+     int button_y_extent = bottom_win_size.GetHeight() - this->Bottom_Window->FromDIP(20);
 
-     int button_y_extent = bottom_win_size.GetHeight() - this->Bottom_Window->FromDIP(16);
-
-     int button_x_extent = 3*bottom_win_size.GetWidth()/6;
+     int button_x_extent = 3*bottom_win_size.GetWidth()/7 +  this->Bottom_Window->FromDIP(10);
 
      wxSize button_size = wxSize(button_x_extent,button_y_extent);
 
@@ -260,7 +250,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      wxFont button_font = this->Start_Button->GetFont(); 
 
-     button_font.SetPixelSize( wxSize(0,17) );
+     button_font.SetPixelSize(wxSize(0,17));
 
      this->Start_Button->SetFont(button_font);
 
@@ -278,8 +268,6 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
 
 
-     //wxFont button_font = this->Start_Button->GetFont();
-
      button_font.SetFaceName(wxT("Segoe UI"));
 
      this->Start_Button->SetFont(button_font);
@@ -293,13 +281,17 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
 
 
-     int text_x = position.x + button_x_extent + 25;
+     int text_x = position.x + button_x_extent + this->FromDIP(27);
 
-     int text_y = position.y + 24;
+     int text_y = position.y +  this->FromDIP(21);
 
      this->start_text   = new wxStaticText(this->Bottom_Window ,
      
-                    wxID_ANY,wxT("PCYNLITX START MENU"),wxPoint(text_x,text_y),this->start_text->FromDIP(wxSize(250,50)));
+                    wxID_ANY,wxT("PCYNLITX MENU"),wxPoint(text_x,text_y),
+                    
+                    this->start_text->FromDIP(wxSize(250,50)));
+
+
 
      this->start_text->Show(true);
 

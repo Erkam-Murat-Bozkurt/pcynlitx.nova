@@ -43,8 +43,6 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
 {
     this->Memory_Delete_Condition = false;
 
-    this->yes_no_condition = false;
-
     this->SetDoubleBuffered(true);
 
     this->SetBackgroundStyle(wxBG_STYLE_PAINT);
@@ -84,8 +82,6 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
     this->close_button_panel        = new wxPanel(this,wxID_ANY,wxDefaultPosition,button_panel_size);
 
     this->welcome_page_button_panel = new wxPanel(this,wxID_ANY,wxDefaultPosition,button_panel_size);
-
-    this->intro_page_button_panel   = new wxPanel(this,wxID_ANY,wxDefaultPosition,button_panel_size); 
     
 
     this->figure_panel->SetBackgroundColour(wxColour(240,240,240));
@@ -133,20 +129,13 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
     
                          wxT("WEB PAGE"),wxDefaultPosition, wxSize(button_size_x,70));
 
-    this->IntroButton    = new wxButton(this->intro_page_button_panel,ID_SELECTION_INTRO_PAGE,
-    
-                         wxT("INTRODUCTION"),wxDefaultPosition, wxSize(button_size_x,70));
-
-
     this->CloseButton    = new wxButton(this->close_button_panel,ID_CLOSE_HELP_PAGE_WINDOW,
      
-                         wxT("CLOSE PAGE"),wxDefaultPosition, wxSize(button_size_x,70));
+                         wxT("CLOSE"),wxDefaultPosition, wxSize(button_size_x,70));
    
     
 
     this->WelcomeButton->CentreOnParent(wxBOTH);
-
-    this->IntroButton->CentreOnParent(wxBOTH);
 
     this->CloseButton->CentreOnParent(wxBOTH);
    
@@ -157,8 +146,6 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
 
 
     this->CloseButton->SetFont(buttonFont);
-
-    this->IntroButton->SetFont(buttonFont);
 
     this->WelcomeButton->SetFont(buttonFont);
 
@@ -185,9 +172,6 @@ Help_Page_Constructor::Help_Page_Constructor(wxWindow * parent, const wxString &
 
     button_sizer->AddSpacer(10);
 
-    button_sizer->Add(this->intro_page_button_panel,0,wxALIGN_CENTER_HORIZONTAL  | wxFIXED_MINSIZE | wxLEFT | wxRIGHT ,50);
-
-    button_sizer->AddSpacer(10);
 
     button_sizer->Add(this->close_button_panel,0,wxALIGN_CENTER_HORIZONTAL  | wxFIXED_MINSIZE |  wxLEFT | wxRIGHT,50);
    
@@ -258,13 +242,8 @@ Help_Page_Constructor::~Help_Page_Constructor()
      if(!this->Memory_Delete_Condition)
      {
          this->Memory_Delete_Condition = true;
-
      }
 }
-
-
-
-
 
 
 void Help_Page_Constructor::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)

@@ -51,27 +51,11 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   wxRect frame_rec = resolution_determiner.GetGeometry();
 
-  wxSize screen_size = resolution_determiner.GetPPI();
-
   int x_extend = frame_rec.GetWidth()/2;
 
   int y_extend = frame_rec. GetHeight()/2;
 
 
-  /*
-  wxMessageDialog * dial = new wxMessageDialog (this,wxString(std::to_string(x_extend)),wxT("x_extend"),wxOK|wxCENTRE,wxDefaultPosition);
-
-  dial->ShowModal();
-
-  dial = new wxMessageDialog (this,wxString(std::to_string(y_extend)),wxT("y_extend"),wxOK|wxCENTRE,wxDefaultPosition);
-
-  dial->ShowModal();
-
-  //wxMessageDialog * dial = new wxMessageDialog (this,wxString(std::to_string(frame_rec.GetWidth())),wxT(""),wxOK|wxCENTRE,wxDefaultPosition);
-
-  //dial->ShowModal();
-
-  */
 
   this->SetSize(this->FromDIP(wxSize(x_extend,y_extend)));
 
@@ -154,20 +138,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   int centre_panel_x_extent = 7*(x_extend/10);
 
-  //int centre_panel_y_extent = 9*(y_extend/10);
-
   int centre_panel_y_extent = y_extend;
 
-  /*
-  dial = new wxMessageDialog (this,wxString(std::to_string(centre_panel_x_extent)),wxT("centre_panel_x_extent"),wxOK|wxCENTRE,wxDefaultPosition);
 
-  dial->ShowModal();
-
-  dial = new wxMessageDialog (this,wxString(std::to_string(centre_panel_y_extent)),wxT("centre_panel_y_extent"),wxOK|wxCENTRE,wxDefaultPosition);
-
-  dial->ShowModal();
-
-  */
 
   wxSize centre_size = wxSize(centre_panel_x_extent,centre_panel_y_extent);
 
@@ -205,21 +178,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
   wxSize nbook_size = wxSize(nbook_x_extent,nbook_y_extent);
 
 
-  /*
-  wxMessageDialog * dial = new wxMessageDialog (this,wxString(std::to_string(bottom_window_y_extent)),wxT("bottom_window_y_extent"),wxOK|wxCENTRE,wxDefaultPosition);
-
-  dial->ShowModal();
-
-  dial = new wxMessageDialog (this,wxString(std::to_string(nbook_x_extent)),wxT("nbook_x_extent"),wxOK|wxCENTRE,wxDefaultPosition);
-
-  dial->ShowModal();
-
-  dial = new wxMessageDialog (this,wxString(std::to_string(nbook_y_extent)),wxT("nbook_y_extent"),wxOK|wxCENTRE,wxDefaultPosition);
-
-  dial->ShowModal();
-
-  */
-  
 
 
 
@@ -273,17 +231,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   wxSize dir_list_size = wxSize(dir_list_x_extent,dir_list_y_extent);
 
-  /*
-  dial = new wxMessageDialog (this,wxString(std::to_string(dir_list_x_extent)),wxT("dir_list_x_extent"),wxOK|wxCENTRE,wxDefaultPosition);
-
-  dial->ShowModal();
-
-  dial = new wxMessageDialog (this,wxString(std::to_string(dir_list_y_extent)),wxT("dir_list_y_extent"),wxOK|wxCENTRE,wxDefaultPosition);
-
-  dial->ShowModal();
-
-  */
-
   this->Dir_List_Manager = new Custom_Tree_View_Panel(this,wxID_ANY,wxDefaultPosition,
 
                             dir_list_size,&this->Interface_Manager,
@@ -293,8 +240,6 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
   this->Dir_List_Manager->SetSize(this->Dir_List_Manager->FromDIP(dir_list_size));
 
   this->Dir_List_Manager->SetMinSize(this->Dir_List_Manager->FromDIP(dir_list_size));
-
-  this->Dir_List_Manager->start_menu_window_size = this->Custom_Main_Panel->bottom_window->GetSize();
 
   this->Dir_List_Manager->Notebook_Ptr = this->Book_Manager;
 
@@ -771,8 +716,6 @@ void MainFrame::Show_Help_Menu(wxCommandEvent & event)
 
         message = message + wxString("http://www.pcynlitx.com\n\n");
 
-        message = message + wxString("help@pcynlitx.com\n\n");
-
 
         Help_Page_Constructor * dial = new Help_Page_Constructor(this,message,
             
@@ -780,7 +723,7 @@ void MainFrame::Show_Help_Menu(wxCommandEvent & event)
                
             wxString("THE HELP FOR PLATFORM"),
                
-            *this->logo_bmp, wxDefaultPosition,wxSize(600,750));
+            *this->logo_bmp, wxDefaultPosition,this->FromDIP(wxSize(450,570)));
           
         dial->NoteBook_Ptr = this->Book_Manager;
 

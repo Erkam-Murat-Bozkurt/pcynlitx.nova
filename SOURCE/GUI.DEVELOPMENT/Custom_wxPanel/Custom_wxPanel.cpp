@@ -34,7 +34,7 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
   : wxPanel(parent,id,pos,size)
 {
-     this->background = background_colour;
+     //this->background = background_colour;
 
      this->Memory_Delete_Condition = false;
 
