@@ -41,7 +41,7 @@ public:
        this->Menu_Ptr = menu;
   }
 
-  void Set_Pane_Properties();
+  void Set_Pane_Properties(wxSize pane_dpi_size);
 
   wxAuiManager * Interface_Manager_Ptr;
 

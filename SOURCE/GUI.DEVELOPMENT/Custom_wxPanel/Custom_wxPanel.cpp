@@ -53,8 +53,10 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
      this->panel_sizer = new wxBoxSizer(wxVERTICAL);
 
+     int bottom_window_y_extent = size.GetHeight()/8;
 
-     this->bottom_window = new wxWindow(this, wxID_ANY,wxDefaultPosition,wxSize(this->GetSize().GetX(),70));
+
+     this->bottom_window = new wxWindow(this, wxID_ANY,wxDefaultPosition,this->FromDIP(wxSize(this->GetSize().GetX(),bottom_window_y_extent)));
      
      this->bottom_window->SetBackgroundColour(wxColour(240,240,240));
 
@@ -87,7 +89,7 @@ Custom_wxPanel::~Custom_wxPanel()
     }
 }
 
-void Custom_wxPanel::Set_Pane_Properties(){
+void Custom_wxPanel::Set_Pane_Properties(wxSize pane_dpi_size){
 
      this->Central_Pane_Info.CloseButton(false);
 
@@ -99,16 +101,16 @@ void Custom_wxPanel::Set_Pane_Properties(){
 
      this->Central_Pane_Info.Resizable(true);
 
-     this->Central_Pane_Info.MinSize(this->FromDIP(wxSize(800,925)));
+     this->Central_Pane_Info.MinSize(this->FromDIP(pane_dpi_size));
 
      this->Interface_Manager_Ptr->AddPane(this,this->Central_Pane_Info);
 }
 
 void Custom_wxPanel::Initialize_Sizer()
 {
-     this->panel_sizer->Add(this->book_manager, 1, wxEXPAND | wxLEFT | wxRIGHT,15);
+     this->panel_sizer->Add(this->book_manager, 1, wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM,13);
 
-     this->panel_sizer->Add(this->bottom_window,0, wxALIGN_LEFT | wxFIXED_MINSIZE | wxEXPAND | wxTOP | wxLEFT,5);
+     this->panel_sizer->Add(this->bottom_window,0, wxALIGN_LEFT | wxFIXED_MINSIZE | wxEXPAND | wxTOP | wxLEFT,0);
 
      this->SetSizer(this->panel_sizer);
 

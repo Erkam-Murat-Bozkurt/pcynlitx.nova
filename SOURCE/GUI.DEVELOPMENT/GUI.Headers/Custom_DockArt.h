@@ -45,9 +45,11 @@ public:
 
       this->m_backgroundBrush.SetColour(this->m_baseColour);
 
-      this->m_sashBrush.SetColour(this->m_baseColour);
+      this->m_sashBrush.SetColour(wxColour(180,180,200));
 
       this->m_sashSize = 5;
+
+      this->SetColour(wxAUI_DOCKART_SASH_COLOUR,wxColour(180,180,200));
   }
 
 

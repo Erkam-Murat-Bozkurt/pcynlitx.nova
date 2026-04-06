@@ -176,8 +176,6 @@ public:
 
   wxAuiToolBar * toolBar_pointer;
 
-  wxAuiPaneInfo * Pane_Pointer;
-
   wxBitmap * Info_Icon_Bmp;
 
   wxBitmap * Save_Icon_Small;

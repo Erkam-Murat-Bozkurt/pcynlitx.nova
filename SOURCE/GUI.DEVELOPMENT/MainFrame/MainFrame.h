@@ -69,6 +69,8 @@
 #include "Cpp_FileOperations.h"
 #include <wx/stdpaths.h>
 #include <shlobj.h>
+#include <wx/gdicmn.h> 
+
 
 class MainFrame : public wxFrame
 {

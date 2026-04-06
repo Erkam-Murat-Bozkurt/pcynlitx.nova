@@ -51,7 +51,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      //this->close_button_construction_status = false;
 
-     this->Topbar_MinSize = wxSize(400,this->tab_ctrl_hight);
+     this->Topbar_MinSize = wxSize(size.GetWidth(),this->tab_ctrl_hight);
 
      this->SetDoubleBuffered(true);
 
@@ -68,6 +68,9 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->GetEventHandler()->Bind(wxEVT_SIZE,&Custom_Tree_View_Panel::Size_Event,this,wxID_ANY);
 
      this->SetSize(size);
+
+     this->SetMinSize(size);
+
 
      this->Centre(wxBOTH);
 
@@ -228,26 +231,54 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      int bottom_win_y = this->Tree_Control_Position.y + this->tree_control->GetSize().GetY();
 
+     int bottom_window_y_extent = size.GetHeight()/8 + 16;
+
+
+
+     wxSize bottom_win_size =  wxSize(Tab_Bar_size.x,bottom_window_y_extent);
 
      this->Bottom_Window =  new Custom_Window(this,wxPoint(0,bottom_win_y+3),
      
-                           wxSize(Tab_Bar_size.x,-1),wxColour(240,240,240,0xff));
+                            bottom_win_size,wxColour(240,240,240,0xff));
+
+     this->Bottom_Window->SetSize(this->Bottom_Window->FromDIP(bottom_win_size));
+
+     wxPoint bottom_Win_position = this->Bottom_Window->GetPosition();
+
+
+     //- this->Bottom_Window->FromDIP(8)
+
+     int button_y_extent = bottom_win_size.GetHeight() - this->Bottom_Window->FromDIP(16);
+
+     int button_x_extent = 3*bottom_win_size.GetWidth()/6;
+
+     wxSize button_size = wxSize(button_x_extent,button_y_extent);
 
      this->Start_Button  = new wxButton(this->Bottom_Window,ID_OPEN_POPUP_MENU,wxT("START"),
                               
-                              wxDefaultPosition, wxSize(120,50));
+                              wxDefaultPosition,button_size);
+
+     wxFont button_font = this->Start_Button->GetFont(); 
+
+     button_font.SetPixelSize( wxSize(0,17) );
+
+     this->Start_Button->SetFont(button_font);
+
 
      wxBitmap * bld_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("BUILD_ICON_SMALL"));
+
 
      wxIcon build_icon;
 
      build_icon.CopyFromBitmap(*bld_icon_bitmap);
 
+
+
      this->Start_Button->SetBitmap(build_icon,wxLEFT);
 
 
 
-     wxFont button_font = this->Start_Button->GetFont();
+     //wxFont button_font = this->Start_Button->GetFont();
 
      button_font.SetFaceName(wxT("Segoe UI"));
 
@@ -255,17 +286,20 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      wxPoint position = this->Start_Button->GetPosition() ;
 
-     this->Start_Button->SetPosition(wxPoint(position.x+16,position.y));
+     int button_position_y = position.y +  this->Bottom_Window->FromDIP(1);
+
+
+     this->Start_Button->SetPosition(wxPoint(position.x+16,button_position_y));
 
 
 
-     int text_x = position.x + 155;
+     int text_x = position.x + button_x_extent + 25;
 
-     int text_y = position.y + 14;
+     int text_y = position.y + 24;
 
      this->start_text   = new wxStaticText(this->Bottom_Window ,
      
-                    wxID_ANY,wxT("PCYNLITX START MENU"),wxPoint(text_x,text_y),wxSize(200,50));
+                    wxID_ANY,wxT("PCYNLITX START MENU"),wxPoint(text_x,text_y),this->start_text->FromDIP(wxSize(250,50)));
 
      this->start_text->Show(true);
 

@@ -53,7 +53,7 @@ class Resource_Loader {
   wxBitmap* GetBitmapFromMemory(const char* t_data, const DWORD t_size)
   {
      wxMemoryInputStream a_is(t_data, t_size);
-     return new wxBitmap(wxImage(a_is, wxBITMAP_TYPE_PNG, -1), -1);
+     return new wxBitmap(wxImage(a_is, wxBITMAP_TYPE_PNG, -1),wxBITMAP_SCREEN_DEPTH);
   }
 
 };

@@ -47,6 +47,37 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
   this->ClearBackground();
 
 
+  wxDisplay resolution_determiner;
+
+  wxRect frame_rec = resolution_determiner.GetGeometry();
+
+  wxSize screen_size = resolution_determiner.GetPPI();
+
+  int x_extend = frame_rec.GetWidth()/2;
+
+  int y_extend = frame_rec. GetHeight()/2;
+
+
+  /*
+  wxMessageDialog * dial = new wxMessageDialog (this,wxString(std::to_string(x_extend)),wxT("x_extend"),wxOK|wxCENTRE,wxDefaultPosition);
+
+  dial->ShowModal();
+
+  dial = new wxMessageDialog (this,wxString(std::to_string(y_extend)),wxT("y_extend"),wxOK|wxCENTRE,wxDefaultPosition);
+
+  dial->ShowModal();
+
+  //wxMessageDialog * dial = new wxMessageDialog (this,wxString(std::to_string(frame_rec.GetWidth())),wxT(""),wxOK|wxCENTRE,wxDefaultPosition);
+
+  //dial->ShowModal();
+
+  */
+
+  this->SetSize(this->FromDIP(wxSize(x_extend,y_extend)));
+
+  this->SetMinSize(this->FromDIP(wxSize(x_extend,y_extend)));
+
+
   SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
 
   this->exclamation_mark_bmp 
@@ -121,14 +152,35 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   // THE CONSTRUCTION OF THE CUSTOM PANEL FOR NOTEBOOK
 
+  int centre_panel_x_extent = 7*(x_extend/10);
+
+  //int centre_panel_y_extent = 9*(y_extend/10);
+
+  int centre_panel_y_extent = y_extend;
+
+  /*
+  dial = new wxMessageDialog (this,wxString(std::to_string(centre_panel_x_extent)),wxT("centre_panel_x_extent"),wxOK|wxCENTRE,wxDefaultPosition);
+
+  dial->ShowModal();
+
+  dial = new wxMessageDialog (this,wxString(std::to_string(centre_panel_y_extent)),wxT("centre_panel_y_extent"),wxOK|wxCENTRE,wxDefaultPosition);
+
+  dial->ShowModal();
+
+  */
+
+  wxSize centre_size = wxSize(centre_panel_x_extent,centre_panel_y_extent);
+
+
   this->Custom_Main_Panel = new Custom_wxPanel(this,wxID_ANY,wxDefaultPosition,
 
-                            wxDefaultSize,wxColour(200,200,215));
+                            centre_size,wxColour(200,200,215));
+
+
   
+  this->Custom_Main_Panel->SetSize(this->Custom_Main_Panel->FromDIP(centre_size));
 
-  this->Custom_Main_Panel->SetSize(this->Custom_Main_Panel->FromDIP(this->GetClientSize()));
-
-  this->Custom_Main_Panel->SetMinSize(this->Custom_Main_Panel->FromDIP(wxSize(800,900)));
+  this->Custom_Main_Panel->SetMinSize(this->Custom_Main_Panel->FromDIP(centre_size));
 
   this->Custom_Main_Panel->Fit();
 
@@ -136,21 +188,50 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->Custom_Main_Panel->Interface_Manager_Ptr = &this->Interface_Manager;
 
-  this->Custom_Main_Panel->Set_Pane_Properties();
+  this->Custom_Main_Panel->Set_Pane_Properties(this->Custom_Main_Panel->FromDIP(centre_size));
 
+  this->Interface_Manager.Update();
 
 
 
   // THE CONSTRUCTION OF THE NOTEBOOK
 
+  int nbook_x_extent = centre_panel_x_extent - 5 ;
+
+  int bottom_window_y_extent = centre_panel_y_extent/10;
+
+  int nbook_y_extent = centre_panel_y_extent - bottom_window_y_extent -5;
+
+  wxSize nbook_size = wxSize(nbook_x_extent,nbook_y_extent);
+
+
+  /*
+  wxMessageDialog * dial = new wxMessageDialog (this,wxString(std::to_string(bottom_window_y_extent)),wxT("bottom_window_y_extent"),wxOK|wxCENTRE,wxDefaultPosition);
+
+  dial->ShowModal();
+
+  dial = new wxMessageDialog (this,wxString(std::to_string(nbook_x_extent)),wxT("nbook_x_extent"),wxOK|wxCENTRE,wxDefaultPosition);
+
+  dial->ShowModal();
+
+  dial = new wxMessageDialog (this,wxString(std::to_string(nbook_y_extent)),wxT("nbook_y_extent"),wxOK|wxCENTRE,wxDefaultPosition);
+
+  dial->ShowModal();
+
+  */
+  
+
+
+
   this->Book_Manager = new Custom_Notebook(this,this->Custom_Main_Panel,&this->Interface_Manager,
 
-                       *(this->Default_Font),wxSize(700,750),theme_clr);
+                       *(this->Default_Font),nbook_size,theme_clr);
 
-  this->Book_Manager->SetSize(this->Book_Manager->FromDIP(wxSize(700,750)));
 
-  this->Book_Manager->SetMinSize(this->Book_Manager->FromDIP(wxSize(700,750)));
 
+  this->Book_Manager->SetSize(this->Book_Manager->FromDIP(nbook_size));
+
+  this->Book_Manager->SetMinSize(this->Book_Manager->FromDIP(nbook_size));
 
   this->Book_Manager->SetAutoLayout(true);
 
@@ -186,15 +267,32 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   // THE CONSTRUCTION OF THE DIRECTORY TREE VIEW
 
+  int dir_list_x_extent = x_extend - centre_panel_x_extent;
+
+  int dir_list_y_extent = y_extend;
+
+  wxSize dir_list_size = wxSize(dir_list_x_extent,dir_list_y_extent);
+
+  /*
+  dial = new wxMessageDialog (this,wxString(std::to_string(dir_list_x_extent)),wxT("dir_list_x_extent"),wxOK|wxCENTRE,wxDefaultPosition);
+
+  dial->ShowModal();
+
+  dial = new wxMessageDialog (this,wxString(std::to_string(dir_list_y_extent)),wxT("dir_list_y_extent"),wxOK|wxCENTRE,wxDefaultPosition);
+
+  dial->ShowModal();
+
+  */
+
   this->Dir_List_Manager = new Custom_Tree_View_Panel(this,wxID_ANY,wxDefaultPosition,
 
-                            wxSize(400,950),&this->Interface_Manager,
+                            dir_list_size,&this->Interface_Manager,
 
                             *(this->Default_Font),this->Book_Manager->GetTabCtrlHeight()+1,theme_clr);
 
-  this->Dir_List_Manager->SetSize(this->Dir_List_Manager->FromDIP(wxSize(400,950)));
+  this->Dir_List_Manager->SetSize(this->Dir_List_Manager->FromDIP(dir_list_size));
 
-  this->Dir_List_Manager->SetMinSize(this->Dir_List_Manager->FromDIP(wxSize(400,950)));
+  this->Dir_List_Manager->SetMinSize(this->Dir_List_Manager->FromDIP(dir_list_size));
 
   this->Dir_List_Manager->start_menu_window_size = this->Custom_Main_Panel->bottom_window->GetSize();
 
@@ -258,12 +356,17 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   //this->SetMenuBar(this->Menu->Get_MenuBar()); 
 
+  this->Fit();
+
   this->Raise();
+
+  this->Centre(wxBOTH);
 
   this->PostSizeEvent();
 
   this->Interface_Manager.Update();
 
+  this->Centre(wxBOTH);
 }
 
 
