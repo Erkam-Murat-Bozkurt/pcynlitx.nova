@@ -148,6 +148,7 @@ public:
   void Descriptor_File_Validity_Control(wxString & message);
   void Print_Lack_of_Description_Message(wxString er_message);
   void Print_Invalid_Descriptor_File_Message(wxString er_message);
+  void Clear_Workspace(wxCommandEvent & event);
   wxString GetUserHomeDirectory();
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
@@ -158,7 +159,6 @@ public:
   std::thread * print_file_dependency;
   std::thread * print_to_tree_ctrl;
   std::thread * project_file_selector;
-  Custom_DataPanel * data_panel_ptr;
   Menu_Bar_Options * Menu;
   Custom_Multi_DataPanel * Multi_DataPanel;
   bool is_custom_panel_constructed;
@@ -187,17 +187,14 @@ public:
   Custom_Progress_Dialog * Progress_Dialog;
 
   Resource_Loader Rsc_Loader;
-  bool is_build_system_constructed;
   bool is_descriptor_file_open;
   bool invalid_descriptor_file_status;
   bool lack_of_description_status;
   bool is_bold_style_selected;
-  bool is_pipe_ready;
+
   wxFont * Default_Font;
   wxBitmap * exclamation_mark_bmp;
   wxBitmap * logo_bmp;
-  std::condition_variable cv_fork;
-  int  process_end_counter;
   int  Toolbar_ID;
   char opr_sis;
   DECLARE_EVENT_TABLE()

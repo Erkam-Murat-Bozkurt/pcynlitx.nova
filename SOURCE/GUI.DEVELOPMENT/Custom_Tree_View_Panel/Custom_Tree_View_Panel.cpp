@@ -210,8 +210,6 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
      this->trew_View_notebook->SetAutoLayout(true);
 
 
-     
-
 
      this->Workspace_Text_Ctrl = new Custom_TextCtrl(this->trew_View_notebook,wxID_ANY,wxDefaultPosition,
 
@@ -566,6 +564,9 @@ void Custom_Tree_View_Panel::Load_Menu_Items(){
      this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
 
+     this->Project_Management->Append(ID_CLEAR_WORKSPACE, "&Clear workspace history"," ",wxITEM_NORMAL);
+
+     this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
 
 
