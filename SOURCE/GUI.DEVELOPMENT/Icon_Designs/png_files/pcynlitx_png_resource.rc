@@ -18,6 +18,8 @@ DEP_ICON_SMALL RCDATA "dependency_icon_small.png"
 
 BUILD_ICON_SMALL RCDATA "build_icon_small.png"
 
+BUILD_MENU_ICON_SMALL RCDATA "build_icon_menu_small.png"
+
 EXCLAMATION_ICON RCDATA "exclamation_icon.png"
 
 EXIT_ICON_SMALL RCDATA "exit_icon_small.png"
@@ -43,5 +45,9 @@ FRAME_ICON RCDATA "frame_icon.png"
 OPEN_TERMINAL_SMALL RCDATA "open_terminal_small.png"
 
 LOGO_SMALL RCDATA "logo_small.png"
+
+TRASH_ICON_SMALL RCDATA "trash_icon_small.png"
+
+TRASH_ICON RCDATA "trash_icon.png"
 
 INTRO_FILE_TXT RCDATA "introduction.txt"

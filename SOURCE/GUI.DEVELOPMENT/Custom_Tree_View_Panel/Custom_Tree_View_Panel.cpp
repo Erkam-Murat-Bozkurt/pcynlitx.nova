@@ -512,7 +512,7 @@ void Custom_Tree_View_Panel::Load_Menu_Items(){
      this->Project_Management->Append(wxID_NONE,                "&BUILD SYSTEM OPERATIONS "," ",wxITEM_NORMAL);
 
 
-     this->build_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("BUILD_ICON_SMALL"));
+     this->build_icon_bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("BUILD_MENU_ICON_SMALL"));
 
      wxIcon build_icon;
 
@@ -561,12 +561,7 @@ void Custom_Tree_View_Panel::Load_Menu_Items(){
 
      this->Project_Management->Append(ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR, "&Make file constructor"," ",wxITEM_NORMAL);
 
-     this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
-
-
      this->Project_Management->Append(ID_CLEAR_WORKSPACE, "&Clear workspace history"," ",wxITEM_NORMAL);
-
-     this->Project_Management->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
 
 
 

@@ -92,17 +92,10 @@ public:
   MyAuiTBArt * Art_Pointer;
   wxWindowDC * WinDc;
   wxBitmap * construct_build_system;
-  wxBitmap * build_executable_makefile;
+  wxBitmap * clear_workspace_icon;
   wxBitmap * Select_Project_File;
-  wxBitmap * Empty_Project_File;
-  wxBitmap * Show_Help_Document;
-  wxBitmap * open_terminal;
-  wxBitmap * build_executable;
   wxBitmap * open_settings;
-  wxBitmap * file_save;
   wxBitmap * open_tree_view;
-  wxBitmap * print_descriptions;
-  wxBitmap * open_help_menu;
   wxBitmap * close;
 };
 

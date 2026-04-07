@@ -32,10 +32,6 @@ ToolBar_Initializer::~ToolBar_Initializer(){
 
       delete this->construct_build_system;
 
-      delete this->open_terminal;
-
-      delete this->file_save;
-
       delete this->WinDc;
 
       this->toolBar->Clear();
@@ -56,6 +52,9 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
      this->open_settings =  this->Rsc_Loader.CreateBitmapFromPngResource(wxString("DES_INTERFACE"));
 
      this->close = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("CLOSE_ICON"));
+
+     this->clear_workspace_icon = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("TRASH_ICON"));
+
 
 
 
@@ -111,6 +110,7 @@ void ToolBar_Initializer::Initialize_ToolBar(wxFrame * Frame_Pointer, wxAuiDockA
 
      this->toolBar->AddTool(ID_OPEN_TREE_WIEW,wxT(""),*this->open_tree_view,wxT(""));
 
+     this->toolBar->AddTool(ID_CLEAR_WORKSPACE,wxT(""),*this->clear_workspace_icon,wxT(""));
 
 
      this->toolBar->SetMargins(6,6,1,1);
