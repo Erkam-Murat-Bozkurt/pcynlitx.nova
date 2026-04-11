@@ -287,7 +287,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->scroll_win->SetBackgroundColour(wxColour(240, 240, 245));
 
 
-     wxString title = wxT("PCYNLITX DEPENDENCY MANAGEMENT PANEL");
+     wxString title = wxT("PCYNLITX PROJECT MANAGEMENT PANEL");
      
      wxStaticText * text   = new wxStaticText(this->scroll_win ,wxID_ANY,title);
 
@@ -299,7 +299,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      text->SetFont(Title_Font);
 
-     text->SetForegroundColour(wxColour(65,65,75,0xff));
+     text->SetForegroundColour(wxColour(121, 85, 72,0xff));
      
 
 
@@ -312,11 +312,7 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
      wxItemAttr attr;
 
-     //wxColour List_Title_Colour(207, 36, 14);
-
-     wxColour List_Title_Colour(202, 53, 25);
-
-     //attr.SetTextColour(wxColour(0, 0, 139,0xff));
+     wxColour List_Title_Colour(50,50,65);
 
      attr.SetTextColour(List_Title_Colour);
 
@@ -474,18 +470,6 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
      this->DataPanel_Sizers[4]->Add(this->Buton_Sizers[4],0, wxALIGN_RIGHT | wxFIXED_MINSIZE | wxBOTTOM | wxALL,10);
 
 
-     //wxFont font_bold(wxFontInfo(12).Bold());
-
-
-     //wxColour text_col = wxColour(225,225,225,0xff);
-
-     //wxColour background_col = wxColour(125,125,135,0xff);
-
-     //wxItemAttr text_attr(wxColour(225,225,225,0xff),background_col,Title_Font);
-
-
-
-     
 
      this->listctrl_for_header_dir->SetHeaderAttr(attr);
 

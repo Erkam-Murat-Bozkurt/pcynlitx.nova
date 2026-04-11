@@ -94,13 +94,6 @@ bool wxLauncher::OnInit(){
 
          this->Frame->Centre(wxBOTH);
 
-         for(int i=0;i<5;i++){
-
-            wxYield();
-
-            this->Frame->Refresh();
-         }
-
          this->Frame->Show(true);
 
          this->Frame->Centre(wxBOTH);

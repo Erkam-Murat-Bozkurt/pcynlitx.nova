@@ -64,7 +64,6 @@ public:
 
   bool Get_Panel_Open_Status();
 
-
   void Receive_Main_Menu_Address(wxMenu * menu){
 
        this->Menu_Ptr = menu;
@@ -76,31 +75,17 @@ public:
 
   wxStaticText * start_text;
 
-  Custom_Close_Button * close_button;
-
-  wxWindow * button_window;
-
-  Custom_Window * Top_Bar_Window;
-
   Custom_Window * Title_Window;
 
   Custom_Window * Bottom_Window;
 
   Custom_Notebook * trew_View_notebook;
 
-  wxFrame * Frame_Pointer;
-
   wxAuiPaneInfo File_List_Widget_Shape;
 
   wxSize Tree_Control_Size;
 
   wxPoint Tree_Control_Position;
-
-  wxPoint Top_Bar_Position;
-
-  wxPoint close_button_position;
-
-  wxBoxSizer * Tree_Control_Sizer;
 
   wxDir * dir_ctrl;
 
@@ -134,35 +119,15 @@ public:
 
   Custom_Notebook * Notebook_Ptr;
 
-  wxBoxSizer * topBar_Sizer;
-
-  wxBoxSizer * title_win_Sizer; 
-
-  wxBoxSizer * tree_Sizer;
-
   wxBoxSizer * panel_sizer;
-
-  wxBoxSizer * tree_control_sizer;
-
-  wxBoxSizer * close_button_window_sizer;
-
-  wxSize Topbar_MinSize;
-
-  wxWindow * close_button_window;
 
   bool close_button_construction_status;
 
   bool windows_detach_condition;
 
-  wxSize start_menu_window_size;
-
   Custom_TextCtrl * Workspace_Text_Ctrl;
 
-  wxColour background;
-  
   wxMenu * Menu_Ptr;
-
-  //void Update(){};
 
   void Update_Workspace();
 
@@ -171,10 +136,6 @@ public:
   void Load_Menu_Items();
 
   wxBitmap * project_file_selection_bitmap;
-
-  int ToolBar_ID = 0;
-
-  wxAuiToolBar * toolBar_pointer;
 
   wxBitmap * Info_Icon_Bmp;
 
@@ -188,16 +149,6 @@ public:
 
   wxBitmap * dependency_icon_bitmap;
   
-  wxWindow * book_manager;
-
-  wxWindow * text_window;
-
-  wxBoxSizer * bottom_win_sizer;
-
-
-  wxEvtHandler Event_Handler;
-
-
   wxMenu  * CMAKE_Menu;
 
   wxMenu  * Help_Menu;
@@ -220,13 +171,8 @@ public:
 
   Resource_Loader Rsc_Loader;
 
-
-
-
 protected:
   bool Memory_Delete_Condition;
-
-  wxAuiDockArt * File_List_Dock_Art_Pointer;
 
   Project_Folder_Lister * Folder_Lister;
 

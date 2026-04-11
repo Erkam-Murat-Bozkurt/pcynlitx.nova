@@ -84,6 +84,7 @@ enum
 };
 
 
+
 class Custom_Multi_DataPanel : public wxDialog 
 {
 public:
@@ -285,6 +286,8 @@ protected:
 
     wxPanel ** Data_Panels;
 
+
+    wxItemAttr * attr;
 
 
 

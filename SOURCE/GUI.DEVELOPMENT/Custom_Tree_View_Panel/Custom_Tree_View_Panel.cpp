@@ -41,15 +41,11 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
   : wxPanel(frame,id,pos,size)
 
 {
-     this->background = wxColour(240,240,240);
-
      this->Interface_Manager_Pointer = Interface_Manager;
 
      this->windows_detach_condition = true;
 
      this->tab_ctrl_hight = tabctrl_hight;
-
-     this->Topbar_MinSize = wxSize(size.GetWidth(),this->tab_ctrl_hight);
 
      this->SetDoubleBuffered(true);
 
@@ -85,8 +81,6 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
 
      this->tab_ctrl_hight = tabctrl_hight +1;
-
-     this->Frame_Pointer = frame;
 
      this->Memory_Delete_Condition = false;
 
@@ -155,7 +149,6 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
 
      // TITLE WINDOW SETTINGS START
-
 
      this->Title_Window =  new Custom_Window(this,wxPoint(0,this->tab_ctrl_hight),
      
@@ -613,8 +606,6 @@ void Custom_Tree_View_Panel::Load_Menu_Items(){
      this->Help_Menu->Append(wxID_ABOUT,"&Version 1.0","",wxITEM_NORMAL);
 
      this->Help_Menu->Append(wxID_NONE,"& "," ",wxITEM_NORMAL);
-
-
 }
 
 
@@ -667,11 +658,6 @@ void Custom_Tree_View_Panel::Detach_Windows_From_Sizer()
      this->panel_sizer->Detach(this->tree_control);
 
      this->windows_detach_condition = true;
-}
-
-void Custom_Tree_View_Panel::Receive_Topbar_MinSize(wxSize size)
-{
-     this->Topbar_MinSize = size;
 }
 
 void Custom_Tree_View_Panel::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect)
