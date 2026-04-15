@@ -35,7 +35,6 @@ BEGIN_EVENT_TABLE(MainFrame,wxFrame)
   EVT_MENU(ID_OPEN_SETTINGS,MainFrame::OpenSettings)
   EVT_MENU(ID_CLEAR_WORKSPACE,MainFrame::Clear_Workspace)
   EVT_PAINT(MainFrame::OnPaint)
-  EVT_AUI_PANE_CLOSE(MainFrame::Close_Directory_Pane)
 END_EVENT_TABLE()
 
 #endif /* EVENT_TABLE_HEADER_H */

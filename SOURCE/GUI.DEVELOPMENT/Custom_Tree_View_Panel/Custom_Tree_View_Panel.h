@@ -62,8 +62,6 @@ public:
 
   void FileNameEdit(wxDataViewEvent & event);
 
-  bool Get_Panel_Open_Status();
-
   void Receive_Main_Menu_Address(wxMenu * menu){
 
        this->Menu_Ptr = menu;
@@ -88,8 +86,6 @@ public:
   wxPoint Tree_Control_Position;
 
   wxDir * dir_ctrl;
-
-  bool panel_open_status;
 
   int tab_ctrl_hight;
 

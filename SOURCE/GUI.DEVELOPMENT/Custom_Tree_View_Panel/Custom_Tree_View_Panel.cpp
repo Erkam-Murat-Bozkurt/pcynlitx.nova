@@ -84,8 +84,6 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      this->Memory_Delete_Condition = false;
 
-     this->panel_open_status = false;
-
 
      this->File_List_Widget_Shape.TopDockable(false);
 
@@ -705,10 +703,7 @@ void Custom_Tree_View_Panel::FileNameEdit(wxDataViewEvent & event)
 
 void Custom_Tree_View_Panel::Update_Workspace(){
 
-
-
 }
-
 
 
 void Custom_Tree_View_Panel::PaintNow()
@@ -763,26 +758,6 @@ void Custom_Tree_View_Panel::Expand_Path(wxString path){
 }
 
 
-
-void Custom_Tree_View_Panel::Close_Directory_Pane()
-{
-     this->Folder_Lister->RemoveProjectDirectory();
-
-     if(this->panel_open_status)
-     {
-        this->tree_control->DeleteAllItems();
-
-        this->Show(false);  // Directory_List_Panel
-
-        this->Interface_Manager_Pointer->DetachPane(this);
-
-        this->Interface_Manager_Pointer->Update();
-
-        this->panel_open_status = false;
-    }
-}
-
-
 void Custom_Tree_View_Panel::Expand_Selected_Item(){
 
      this->Folder_Lister->Expand_Selected_Item();
@@ -812,9 +787,4 @@ wxString Custom_Tree_View_Panel::GetItemPath(wxDataViewItem item_number){
 void Custom_Tree_View_Panel::RemoveProjectDirectory(){
 
      this->Folder_Lister->RemoveProjectDirectory();
-}
-
-bool Custom_Tree_View_Panel::Get_Panel_Open_Status(){
-
-     return this->panel_open_status;
 }

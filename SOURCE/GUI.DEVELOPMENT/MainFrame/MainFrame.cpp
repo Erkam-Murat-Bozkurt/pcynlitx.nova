@@ -473,8 +473,6 @@ void MainFrame::Exit(wxCommandEvent & event){
 
 
 
-
-
 wxString MainFrame::GetUserHomeDirectory()
 {
     wxString dir;
@@ -669,26 +667,11 @@ void MainFrame::Run_Project_Script_On_Terminal(wxCommandEvent & event){
 
               wxString Library_Directory_Path = project_construction_dir + wxString("\\WAREHOUSE\\LIBRARY.FILES");
 
-              if(this->Dir_List_Manager->Get_Panel_Open_Status()){
+              this->Dir_List_Manager->Load_Project_Directory(wxString(project_construction_dir));
 
-                 this->Dir_List_Manager->Close_Directory_Pane();
+              this->Dir_List_Manager->Expand_Path(Warehouse_Dir_Path);
 
-                 this->Dir_List_Manager->Load_Project_Directory(wxString(project_construction_dir));
-
-                 this->Dir_List_Manager->Expand_Path(Warehouse_Dir_Path);
-
-                 this->Dir_List_Manager->Expand_Path(Library_Directory_Path);
-              }
-              else{
-
-                 this->Dir_List_Manager->Load_Project_Directory(wxString(project_construction_dir));
-
-                 this->Dir_List_Manager->Expand_Path(Warehouse_Dir_Path);
-
-                 this->Dir_List_Manager->Expand_Path(Library_Directory_Path);
-              }
-
-              this->Interface_Manager.Update();
+              this->Dir_List_Manager->Expand_Path(Library_Directory_Path);
            }
            else{
 
@@ -743,22 +726,6 @@ void MainFrame::Show_Help_Menu(wxCommandEvent & event)
         };
      }
 }
-
-
-
-void MainFrame::Close_Directory_Pane(wxAuiManagerEvent & event)
-{
-     event.Veto(true);
-
-     event.StopPropagation();
-
-     this->Dir_List_Manager->RemoveProjectDirectory();
-
-     this->Dir_List_Manager->Close_Directory_Pane();
-
-     this->Interface_Manager.Update();
-}
-
 
 
 void MainFrame::DirectoryOpen(wxCommandEvent & event)
@@ -1229,8 +1196,6 @@ void MainFrame::Start_Construction_Process(wxString label,
 
                 this->Process_Output->SetSize(this->FromDIP(wxSize(750,600)));
 
-                this->Process_Output->Directory_List_Show_Cond(true);
-
                 this->Process_Output->Receive_Directory_Open_Location(dir_open);
 
                 this->Process_Output->Receive_Tree_View_Panel(this->Dir_List_Manager);
@@ -1358,8 +1323,6 @@ void MainFrame::Open_Empty_Project_File(wxCommandEvent & event)
         wxString construction_dir =dlg.GetPath();
 
         wxString home_dir = this->Process_Ptr->GetUserHomeDirectory();
-
-
 
         this->Descriptor_File_Path = construction_dir + wxT("\\pcynlitx.project.txt");
 

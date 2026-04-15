@@ -49,9 +49,6 @@ Custom_ProcessOutput::Custom_ProcessOutput(wxFrame *parent, wxWindowID id, const
 
      this->Memory_Delete_Condition = false;
 
-     this->dir_list_show_cnd = false;
-
-
      this->Frame_Bitmap = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("FRAME_ICON"));
 
      wxIcon Frame_Icon;
@@ -100,17 +97,7 @@ Custom_ProcessOutput::Custom_ProcessOutput(wxFrame *parent, wxWindowID id, const
 
 
 
-Custom_ProcessOutput::~Custom_ProcessOutput(){
-
-
-}
-
-
-
-void Custom_ProcessOutput::Directory_List_Show_Cond(bool cond){
-
-     this->dir_list_show_cnd = cond;
-}
+Custom_ProcessOutput::~Custom_ProcessOutput(){ }
 
 void Custom_ProcessOutput::Construct_Output(int size){
 
@@ -255,12 +242,10 @@ void Custom_ProcessOutput::OnSize(wxSizeEvent & event){
 }
 
 
-
 void Custom_ProcessOutput::Receive_System_Interface(Custom_System_Interface * Sys){
 
      this->SysPtr = Sys;
 }
-
 
 void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
 
@@ -301,21 +286,14 @@ void Custom_ProcessOutput::CloseWindow(wxCommandEvent & event){
                  this->ProcessTermination();
               }
            }
-
      }
      else{
 
           this->Destroy();
 
-          if(this->dir_list_show_cnd){
+          wxMilliSleep(100);
 
-             wxMilliSleep(100);
-
-             if(!this->dir_list_ptr->Get_Panel_Open_Status()){
-
-                 this->dir_list_ptr->Load_Project_Directory(wxString(this->directory_open_location));
-             }   
-          }
+          this->dir_list_ptr->Load_Project_Directory(wxString(this->directory_open_location));
      }
    }
 }

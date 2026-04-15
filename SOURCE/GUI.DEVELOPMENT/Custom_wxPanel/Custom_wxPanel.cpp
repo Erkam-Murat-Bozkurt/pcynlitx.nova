@@ -56,7 +56,9 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
      int bottom_window_y_extent = size.GetHeight()/8;
 
 
-     this->bottom_window = new wxWindow(this, wxID_ANY,wxDefaultPosition,this->FromDIP(wxSize(this->GetSize().GetX(),bottom_window_y_extent)));
+     this->bottom_window = new wxWindow(this, wxID_ANY,wxDefaultPosition,
+          
+                           this->FromDIP(wxSize(this->GetSize().GetX(),bottom_window_y_extent)));
      
      this->bottom_window->SetBackgroundColour(wxColour(240,240,240));
 
