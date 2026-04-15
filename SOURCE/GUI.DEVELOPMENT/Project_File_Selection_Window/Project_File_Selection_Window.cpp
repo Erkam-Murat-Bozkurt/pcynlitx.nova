@@ -493,9 +493,7 @@ void Project_File_Selection_Window::Select_File(){
 
          this->Dir_List_Manager->Workspace_Text_Ctrl->AddText(wxString("\n [+] The project file has been selected."));
 
-          /*
-
-          Descriptor_File_Reader Des_Reader('w','g'); 
+          GUI_Descriptor_File_Reader Des_Reader('w'); 
  
           Des_Reader.Receive_Descriptor_File_Path(openFileDialog->GetPath().ToStdString());
 
@@ -565,7 +563,6 @@ void Project_File_Selection_Window::Select_File(){
                this->Destroy();
           }
 
-          */
 
           this->Destroy();
      }

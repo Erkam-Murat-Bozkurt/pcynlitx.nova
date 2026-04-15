@@ -150,8 +150,7 @@ public:
   void Print_Invalid_Descriptor_File_Message(wxString er_message);
   void Clear_Workspace(wxCommandEvent & event);
   wxString GetUserHomeDirectory();
-  bool Child_Process_End_Status;
-  bool Child_Process_Started_to_Execution;
+
   Custom_System_Interface SysInt;
   Workspace_Data_Holder Wrk_Data_Holder;
   std::thread fork_process;
@@ -164,13 +163,14 @@ public:
   bool is_custom_panel_constructed;
   bool Memory_Delete_Condition;
   bool is_project_file_selected;
+  bool Child_Process_End_Status;
+  bool Child_Process_Started_to_Execution;
   Process_Manager * Process_Ptr;
   Custom_wxThread * Thread_Ptr;
   wxString Descriptor_File_Path;
   wxString Warehouse_Location;
   wxString Construction_Point;
   std::string Executable_File_Script_Construction_Point;
-
   wxAuiDockArt * Dock_Art_Pointer;
   wxAuiManager Interface_Manager;
   Project_Descriptions_Printer * Descriptions_Printer;
@@ -183,9 +183,7 @@ public:
   Custom_ProcessOutput * Process_Output;
   Custom_DataPanel * DataPanel_Pointer;
   Dependency_Tree_Printer * depPrinter;
-  Dependency_Tree_Printer * dep_process_printer;
   Custom_Progress_Dialog * Progress_Dialog;
-
   Resource_Loader Rsc_Loader;
   bool is_descriptor_file_open;
   bool invalid_descriptor_file_status;

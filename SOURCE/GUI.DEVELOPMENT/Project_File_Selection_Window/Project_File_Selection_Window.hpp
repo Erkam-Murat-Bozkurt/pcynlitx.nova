@@ -19,6 +19,7 @@
 #include <wx\msgdlg.h>
 #include <wx\dir.h>
 #include <wx/dialog.h>
+#include "GUI_Descriptor_File_Reader.hpp"
 #include "Custom_Tree_View_Panel.h"
 #include "Descriptor_File_Reader.hpp"
 #include "Process_Manager.hpp"
