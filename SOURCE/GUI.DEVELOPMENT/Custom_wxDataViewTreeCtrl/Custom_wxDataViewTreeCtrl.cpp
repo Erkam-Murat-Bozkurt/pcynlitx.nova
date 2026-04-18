@@ -24,10 +24,6 @@
 
 #include "Custom_wxDataViewTreeCtrl.hpp"
 
-BEGIN_EVENT_TABLE(Custom_wxDataViewTreeCtrl,wxDataViewTreeCtrl)
-   EVT_SCROLL(Custom_wxDataViewTreeCtrl::SetScrollPosition)
-END_EVENT_TABLE()
-
 Custom_wxDataViewTreeCtrl::Custom_wxDataViewTreeCtrl(wxWindow *parent, wxWindowID id,
 
   const wxPoint & pos,
@@ -35,8 +31,6 @@ Custom_wxDataViewTreeCtrl::Custom_wxDataViewTreeCtrl(wxWindow *parent, wxWindowI
   const wxSize & size, long style) : wxDataViewTreeCtrl(parent,id,pos,size,style)
   {
      this->SetBackgroundStyle(wxBG_STYLE_PAINT);
-
-     this->Parent_Window_Pointer = parent;
 
      this->GetEventHandler()->Bind(wxEVT_PAINT,&Custom_wxDataViewTreeCtrl::OnPaint,this,wxID_ANY);
 
@@ -57,10 +51,6 @@ Custom_wxDataViewTreeCtrl::Custom_wxDataViewTreeCtrl(wxWindow *parent, wxWindowI
 
      this->ClearBackground();
 
-     this->SetMinSize(this->Parent_Window_Pointer->GetClientSize());
-
-     this->SetSize(this->Parent_Window_Pointer->GetClientSize());
-
      this->Fit();
 
      this->Layout();
@@ -72,20 +62,18 @@ Custom_wxDataViewTreeCtrl::Custom_wxDataViewTreeCtrl(wxWindow *parent, wxWindowI
 
  Custom_wxDataViewTreeCtrl::~Custom_wxDataViewTreeCtrl()
  {
+    //this->DeleteAllItems();
+
+    //this->Destroy();
+
+     this->GetEventHandler()->Unbind(wxEVT_PAINT,&Custom_wxDataViewTreeCtrl::OnPaint,this,wxID_ANY);
+
+     this->GetEventHandler()->Unbind(wxEVT_SIZE,&Custom_wxDataViewTreeCtrl::Size_Event,this,wxID_ANY);
 
  }
 
  
-void Custom_wxDataViewTreeCtrl::SetScrollPosition(wxScrollEvent& event){
-
-     event.Skip(true);
-
-     wxMessageDialog * dial = new wxMessageDialog(this,wxT("scroll event"),wxT(""),wxOK);
-
-     if(dial->ShowModal () == wxOK);
-}
-
- void Custom_wxDataViewTreeCtrl::OnPaint(wxPaintEvent & event){
+void Custom_wxDataViewTreeCtrl::OnPaint(wxPaintEvent & event){
 
       event.Skip(true);
 
@@ -105,28 +93,20 @@ void Custom_wxDataViewTreeCtrl::PaintNow(){
      this->DrawBackground(dc,this,rect);
 }
 
-
-
 void Custom_wxDataViewTreeCtrl::Size_Event(wxSizeEvent & event)
 {
-      event.Skip(true);
+     event.Skip(true);
 
-      wxWindow * parent = this->GetParent();
+     //wxWindow * parent = this->GetParent();
 
-      this->SetSize(parent->GetClientSize());
+     //this->SetSize(parent->GetClientSize());
 
-      this->PaintNow();
+     this->PaintNow();
 }
-
 
 void Custom_wxDataViewTreeCtrl::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect){
 
      dc.SetBrush(wxColour(230,230,230));
 
      dc.DrawRectangle(rect.GetX(), rect.GetY(), rect.GetWidth(),rect.GetHeight());
-}
-
-void Custom_wxDataViewTreeCtrl::Receive_Position(wxPoint control_position){
-
-     this->Position = control_position;
 }

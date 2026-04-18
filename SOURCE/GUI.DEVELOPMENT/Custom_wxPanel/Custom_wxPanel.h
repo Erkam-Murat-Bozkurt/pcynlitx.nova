@@ -35,6 +35,11 @@ public:
        this->Menu_Ptr = menu;
   }
 
+  void Update(){
+
+      
+  }
+  
   void Set_Pane_Properties(wxSize pane_dpi_size);
 
   wxAuiManager * Interface_Manager_Ptr;
@@ -43,30 +48,17 @@ public:
 
   wxMenu * Menu_Ptr;
 
-  //void Update(){};
-
   void Initialize_Sizer();
-
-  void Open_PopUp_Menu(wxCommandEvent & event);
 
   void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rect);
 
   void PaintNow(wxWindow * wnd);
 
-  wxStaticText * start_text;
-  
-  wxButton * Start_Button;
-
   wxWindow * book_manager;
 
   wxWindow * bottom_window;
 
-  wxWindow * text_window;
-
-
   wxBoxSizer * panel_sizer;
-
-  wxBoxSizer * bottom_win_sizer;
 
   bool Memory_Delete_Condition;
 

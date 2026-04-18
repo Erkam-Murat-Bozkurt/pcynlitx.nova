@@ -30,44 +30,39 @@ public:
 
       this->m_gradientType = wxAUI_GRADIENT_NONE;
 
-      //this->m_gradientType = wxAUI_GRADIENT_VERTICAL;
-
-      //this->m_gradientType = wxAUI_GRADIENT_HORIZONTAL;
-
-
-      this->m_borderSize = 0;
+      this->m_borderSize  = 0;
 
       this->m_captionSize = 2;
 
-      this->m_buttonSize = 2;
+      this->m_buttonSize  = 2;
 
-      this->m_baseColour = wxColour(200,200,200);
+      this->m_baseColour = wxColour(240,240,240);
 
       this->m_backgroundBrush.SetColour(this->m_baseColour);
 
-      this->m_sashBrush.SetColour(wxColour(180,180,200));
+      this->m_sashBrush.SetColour(wxColour(240,240,240));
 
       this->m_sashSize = 5;
 
-      this->SetColour(wxAUI_DOCKART_SASH_COLOUR,wxColour(180,180,200));
+      this->SetColour(wxAUI_DOCKART_SASH_COLOUR,wxColour(240,240,240));
   }
 
 
   void DrawSash(wxDC& dc, wxWindow *window, int orientation, const wxRect& rect)
   {
-       dc.SetPen(wxColour(200,200,200));
+       dc.SetPen(wxColour(240,240,240));
 
-       dc.SetBrush(wxColour(200,200,200));
+       dc.SetBrush(wxColour(240,240,240));
 
-       dc.DrawRectangle(rect.x, rect.y, rect.width+5, rect.height+2);
+       dc.DrawRectangle(rect.x, rect.y, rect.width+10, rect.height+10);
   }
 
   void DrawBorder(wxDC& dc, wxWindow* window, const wxRect& _rect,
                                     wxAuiPaneInfo& pane)
   {
-      dc.SetPen(wxColour(200,200,200));
+      dc.SetPen(wxColour(240,240,240));
 
-      dc.SetBrush(wxColour(200,200,200));
+      dc.SetBrush(wxColour(240,240,240));
 
       wxRect rect = _rect;
 
@@ -77,7 +72,7 @@ public:
       {
           for (i = 0; i < border_width+5; ++i)
           {
-              dc.SetPen(wxColour(200,200,200));
+              dc.SetPen(wxColour(240,240,240));
               dc.DrawLine(rect.x, rect.y, rect.x+rect.width, rect.y);
               dc.DrawLine(rect.x, rect.y, rect.x, rect.y+rect.height);
               dc.SetPen(m_borderPen);
@@ -115,7 +110,7 @@ public:
   void SetColour(int id, const wxColor& colour)
   {
 
-    wxColor custom_colour = wxColour(200,200,200);
+    wxColor custom_colour = wxColour(240,240,240);
 
     switch (id)
     {
@@ -137,21 +132,19 @@ public:
     }
 
     wxAuiDefaultDockArt::InitBitmaps();
-
-    //InitBitmaps();
 }
 
-  void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& _rect) {
+  using wxAuiDefaultDockArt::DrawBackground;
+
+  virtual void DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& _rect) {
 
     wxRect rect = _rect;
 
     rect.height = rect.height;
 
-    //dc.SetBrush(wxColour(174, 182, 191));
+    dc.SetBrush(wxColour(240,240,240));
 
-    dc.SetBrush(wxColour(200,200,200));
-
-    dc.DrawRectangle(rect.GetX()-2, rect.GetY()-2, rect.GetWidth()+5, rect.GetHeight()+5);
+    dc.DrawRectangle(rect.GetX()-2, rect.GetY()-2, rect.GetWidth()+15, rect.GetHeight()+15);
   }
 
   virtual ~Custom_DockArt(){
@@ -162,8 +155,6 @@ public:
 
       return new Custom_DockArt(*this);
   }
-
-  wxBrush * brush_pointer;
 };
 
 #endif /* CUSTOM_DOCKART_H */

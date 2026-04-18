@@ -34,8 +34,6 @@ Custom_wxPanel::Custom_wxPanel(wxWindow * parent, wxWindowID id,
 
   : wxPanel(parent,id,pos,size)
 {
-     //this->background = background_colour;
-
      this->Memory_Delete_Condition = false;
 
      this->SetThemeEnabled(false);
@@ -93,11 +91,21 @@ Custom_wxPanel::~Custom_wxPanel()
 
 void Custom_wxPanel::Set_Pane_Properties(wxSize pane_dpi_size){
 
+     this->SetMinSize(this->FromDIP(pane_dpi_size));
+
+     this->Update();
+
      this->Central_Pane_Info.CloseButton(false);
+
+     this->Central_Pane_Info.TopDockable(false);
+
+     this->Central_Pane_Info.LeftDockable(false);
 
      this->Central_Pane_Info.Centre();
 
      this->Central_Pane_Info.Dock();
+
+     this->Central_Pane_Info.DockFixed (true);
 
      this->Central_Pane_Info.Show(true);
 
@@ -114,6 +122,8 @@ void Custom_wxPanel::Initialize_Sizer()
 
      this->panel_sizer->Add(this->bottom_window,0, wxALIGN_LEFT | wxFIXED_MINSIZE | wxEXPAND | wxTOP | wxLEFT,0);
 
+     this->panel_sizer->Layout();
+
      this->SetSizer(this->panel_sizer);
 
      this->panel_sizer->SetSizeHints(this);
@@ -129,7 +139,7 @@ void Custom_wxPanel::DrawBackground(wxDC& dc, wxWindow *  wnd, const wxRect& rec
 {
      dc.SetBrush(wxColour(240,240,240));
 
-     dc.DrawRectangle(rect.GetX()-2, rect.GetY()-2, rect.GetWidth()+2,rect.GetHeight());
+     dc.DrawRectangle(rect.GetX()-2, rect.GetY()-2, rect.GetWidth()+5,rect.GetHeight()+5);
 }
 
 void Custom_wxPanel::PaintNow(wxWindow * wnd)

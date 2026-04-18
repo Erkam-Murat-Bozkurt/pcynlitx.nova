@@ -34,20 +34,9 @@ public:
 
   void OnPaint(wxPaintEvent & event);
 
-  void SetScrollPosition(wxScrollEvent& event);
-
   void DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect & rect);
 
   void PaintNow();
-
-  void Receive_Position(wxPoint control_position);
-
-  wxWindow * Parent_Window_Pointer;
-
-  wxPoint Position;
-
-  DECLARE_EVENT_TABLE()
-
 };
 
 #endif /* CUSTOM_WXDATAVIEWTREECTRL_HPP */

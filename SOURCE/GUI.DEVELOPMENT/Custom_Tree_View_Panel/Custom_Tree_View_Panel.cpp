@@ -137,7 +137,7 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
                                    tree_control_current_position.y + this->tab_ctrl_hight );
 
 
-     this->tree_control->SetPosition(this->Tree_Control_Position);
+     //this->tree_control->SetPosition(this->Tree_Control_Position);
 
      this->tree_control->SetBackgroundColour(wxColour(250,250,250));
 
@@ -334,12 +334,13 @@ Custom_Tree_View_Panel::~Custom_Tree_View_Panel()
         this->Detach_Windows_From_Sizer();
     }
 
-    if(!this->Memory_Delete_Condition)
-    {
-       this->Memory_Delete_Condition = true;
+    this->GetEventHandler()->Unbind(wxEVT_PAINT,&Custom_Tree_View_Panel::OnPaint,this,wxID_ANY);
 
-       delete this->Folder_Lister;
-    }
+    this->GetEventHandler()->Unbind(wxEVT_LEFT_UP,&Custom_Tree_View_Panel::mouseReleased,this,wxID_ANY);
+
+    this->GetEventHandler()->Unbind(wxEVT_SIZE,&Custom_Tree_View_Panel::Size_Event,this,wxID_ANY);
+
+    this->Clear_Dynamic_Memory();
 }
 
 
@@ -625,7 +626,6 @@ void Custom_Tree_View_Panel::Initialize_Sizer()
 {
      this->panel_sizer = new wxBoxSizer(wxVERTICAL);
 
-
      this->panel_sizer->Add(this->Title_Window,0,  wxEXPAND  | wxLEFT | wxRIGHT,16);
 
      this->panel_sizer->Add(this->tree_control,1,  wxEXPAND | wxLEFT | wxRIGHT | wxBOTTOM,16);
@@ -633,7 +633,6 @@ void Custom_Tree_View_Panel::Initialize_Sizer()
      this->panel_sizer->Add(this->trew_View_notebook,0,  wxEXPAND  | wxLEFT | wxRIGHT | wxBOTTOM,16);
 
      this->panel_sizer->Add(this->Bottom_Window,0, wxEXPAND | wxALL,0);
-
 
      this->panel_sizer->Layout();
 
@@ -654,6 +653,10 @@ void Custom_Tree_View_Panel::Detach_Windows_From_Sizer()
      this->panel_sizer->Detach(this->Title_Window);
 
      this->panel_sizer->Detach(this->tree_control);
+
+     this->panel_sizer->Detach(this->trew_View_notebook);
+
+     this->panel_sizer->Detach(this->Bottom_Window);
 
      this->windows_detach_condition = true;
 }
@@ -737,6 +740,8 @@ void Custom_Tree_View_Panel::Clear_Dynamic_Memory()
          this->Memory_Delete_Condition = true;
 
          delete this->Folder_Lister;
+
+         delete this->dir_ctrl;
 
          this->tree_control->Destroy();
      }

@@ -89,6 +89,7 @@ public:
 
   private:
   void BIND_TREE_VIEW_EVENTS();
+  void UNBIND_TREE_VIEW_EVENTS();
   void Print_Message(wxString message);
   void OpenSettings(wxCommandEvent & event);
   void Open_Empty_Project_File(wxCommandEvent & event);

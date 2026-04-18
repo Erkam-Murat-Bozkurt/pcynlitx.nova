@@ -27,7 +27,6 @@ public:
   wxString build_type;
   bool project_file_receive_status;
   bool * build_system_construction_status;
-  bool git_repository_detection_status;
 };
 
 #endif /* WORKSPACE_DATA_HOLDER_HPP */

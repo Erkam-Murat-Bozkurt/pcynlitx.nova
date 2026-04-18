@@ -225,190 +225,10 @@ int Custom_TabArt::DrawPageTab(wxDC& dc, wxWindow* wnd, wxAuiNotebookPage& page,
     return xExtent;
 }
 
-
- /*
- void Custom_TabArt::DrawTab(wxDC & dc, wxWindow *wnd, const wxAuiNotebookPage &page,
-
-                 const wxRect & in_rect, int close_button_state,
-
-                 wxRect * out_tab_rect, wxRect * out_button_rect, int * x_extent)
- {
-
-       wxCoord normal_textx,   normal_texty;
-
-       wxCoord selected_textx, selected_texty;
-
-       wxCoord texty;
-
-       wxString caption = page.caption;
-
-
-
-       dc.SetFont(*this->Default_Font);
-
-       dc.GetTextExtent(caption, &selected_textx, &selected_texty);
-
-       dc.GetTextExtent(caption, &normal_textx, &normal_texty);
- 
-       //caption = caption + " "; // more area for the string must be allocted
-       
-
-       // figure out the size of the tab
-       wxSize tab_size = this->GetTabSize(dc,wnd,caption,page.bitmap,
-
-                                    page.active,close_button_state,x_extent);
-
-       wxCoord tab_height = tab_size.y+14;
-
-       wxCoord tab_x = in_rect.x+1;
-
-       wxCoord tab_y = in_rect.y+25;
-
-       wxCoord tab_width  = normal_textx+40;
-
-
-       *x_extent = tab_width+1;
-
-
-
-
-       wxFont active_font = *this->Default_Font;
-       
-       active_font.SetFaceName(wxT("Segoe UI"));
-
-       active_font.SetWeight(wxFONTWEIGHT_LIGHT);
-
-
-       wxFont normal = *this->Default_Font;
-
-       normal.SetFaceName(wxT("Segoe UI"));
-
-
-       if (page.active)
-       {
-           dc.SetFont(active_font);
-
-           texty = selected_texty;
-       }
-       else
-       {
-           dc.SetFont(normal);
-
-           texty = normal_texty;
-       }
-
-
-       if (page.active)
-       {
-           // draw active tab
-
-           // draw base background color
-
-           wxRect r(tab_x, tab_y, tab_width, tab_height-3);
-
-           dc.SetPen(wxPen(wxColour(200,200,165,0xff)));
-            
-           dc.SetBrush(wxColour(200,200,185,0xff));
-
-           
-
-
-           // DrawRectangle member function: The first two parameters indicate the coordinates
-           // of the top left corner of the rectangle
-
-           dc.DrawRectangle(r.x, r.y, r.width, r.height);
-
-        }
-        else{
-
-                // draw inactive tab
-
-                wxRect r(tab_x, tab_y,tab_width, tab_height-3);
-
-                dc.SetPen(wxPen(wxColour(180, 180, 180)));
-
-                dc.SetBrush(wxBrush(wxColour(210, 210, 210)));
-
-                // DrawRectangle member function: The first two parameters indicate the coordinates
-                // of the top left corner of the rectangle
-
-                dc.DrawRectangle(r.x, r.y, r.width, r.height);
-        }
-
-
-        // draw close button 
-        if (close_button_state != wxAUI_BUTTON_STATE_HIDDEN)
-         {
-             wxBitmap bmp;
-
-             if (page.active){
-
-                 bmp = *this->page_close_icon;
-             }
-             else{
-
-                 wxSize bmp_size = this->page_close_icon->GetScaledSize();
-                 bmp = m_disabledCloseBmp.GetBitmap(bmp_size);
-            }
-
-             wxRect rect(tab_x + tab_width - bmp.GetScaledWidth() - 10,
-                         tab_y + (tab_height/2) - (bmp.GetScaledHeight()/2)-10,
-                         bmp.GetScaledWidth()-3,
-                         tab_height - 1);
-
-             DrawButtons(dc,wxSize(1, 1), rect, bmp, *wxWHITE, close_button_state);
-
-             *out_button_rect = rect;
-         }
-
-
-
-         wxString draw_text = page.caption;
-
-         wxSize Text_Extend = dc.GetTextExtent(draw_text);
-
-         int text_offset = tab_x + (tab_width-Text_Extend.x)/2;
-
-
-
-         if(page.active){
-
-            dc.SetTextForeground(wxColour(50,50,100));
-         }
-         else{
-
-            dc.SetTextForeground(wxColour(50,50,100));
-         }
-
-
-         Text_Extend = dc.GetTextExtent(page.caption);
-
-         if(page.active){
-
-            text_offset = text_offset - 10;
-         }
-         else{
-
-            text_offset = text_offset - 3;
-         }
-
-
-
-         dc.DrawText(draw_text,text_offset,
-
-                 (tab_y + tab_height)/2 - (texty/2) + 1);
-
-
-         *out_tab_rect = wxRect(tab_x, tab_y+15, tab_width, tab_height+25);
-
- }
-
- */
-
- void Custom_TabArt::DrawButtons(wxDC& dc, const wxSize& offset,const wxRect& _rect,
+void Custom_TabArt::DrawButtons(wxDC& dc, const wxSize& offset,const wxRect& _rect,
 
                             const wxBitmap& bmp, const wxColour& bkcolour, int button_state)
-  {
+{
         wxRect rect = _rect;
 
         if (button_state == wxAUI_BUTTON_STATE_PRESSED)
@@ -431,12 +251,12 @@ int Custom_TabArt::DrawPageTab(wxDC& dc, wxWindow* wnd, wxAuiNotebookPage& page,
 
         // draw the button itself
         dc.DrawBitmap(bmp, rect.x, rect.y+6, true);
- }
+}
 
- void Custom_TabArt::DrawButton(wxDC& dc,wxWindow* wnd,const wxRect& in_rect,
+void Custom_TabArt::DrawButton(wxDC& dc,wxWindow* wnd,const wxRect& in_rect,
 
                     int bitmap_id,int button_state,int orientation, wxRect* out_rect)
- {
+{
 
       wxBitmapBundle bb;
       wxRect rect;
@@ -500,7 +320,7 @@ int Custom_TabArt::DrawPageTab(wxDC& dc, wxWindow* wnd, wxAuiNotebookPage& page,
       this->DrawButtons(dc,wxSize(1,1), rect, bmp, *wxWHITE, button_state);
 
       *out_rect = rect;
- };
+};
 
 
  

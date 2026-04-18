@@ -313,13 +313,10 @@ MainFrame::~MainFrame()
 {
    this->Interface_Manager.UnInit();
 
+   this->UNBIND_TREE_VIEW_EVENTS();
+
    this->Close(true);
 }
-
-
-
-
-
 
 
 void MainFrame::BIND_TREE_VIEW_EVENTS(){
@@ -391,83 +388,86 @@ void MainFrame::BIND_TREE_VIEW_EVENTS(){
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Clear_Workspace,this,ID_CLEAR_WORKSPACE);
 
   this->Dir_List_Manager->GetEventHandler()->Bind(wxEVT_MENU,&MainFrame::Exit,this,ID_EXIT);
-
 }
 
+void MainFrame::UNBIND_TREE_VIEW_EVENTS(){
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_BUTTON,&MainFrame::Open_PopUp_Menu,this,wxID_ANY);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Select_Project_File,this,ID_SELECT_PROJECT_FILE);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Show_Project_File,this,ID_SHOW_PROJECT_FILE);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::PrintDescriptions,this,ID_PRINT_DESCRIPTIONS);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Open_Empty_Project_File,this,ID_OPEN_EMPTY_PROJECT_FILE);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Start_Build_System_Construction,this,ID_RUN_BUILD_SYSTEM_CONSTRUCTOR);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Run_Project_Script_On_Terminal,this,ID_RUN_PROJECT_SCRIPT);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Determine_Source_File_Dependencies,this,ID_DETERMINE_SOURCE_FILE_DEPENDENCIES);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Single_File_Script_Construction,this,ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Advance_Single_File_Script_Construction,this,ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Increase_Font_Size,this,ID_INCREASE_FONT_SIZE);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Decrease_Font_Size,this,ID_DECREASE_FONT_SIZE);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Undo_Changes,this,ID_UNDO_CHANGES);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Redo_Changes,this,ID_REDO_CHANGES);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Clear_Text,this,ID_CLEAR_TEXT);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Load_Default_Cursor,this,ID_SET_CURSOR_TYPE_DEFAULT);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Change_Cursor_Type,this,ID_CHANGE_CURSOR_TYPE);  
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Set_Caret_Line_Visible,this,ID_SET_CARET_LINE_VISIBLE);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Set_Caret_Line_InVisible,this,ID_SET_CARET_LINE_INVISIBLE);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Use_Block_Caret,this,ID_USE_BLOCK_CARET);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Use_Default_Caret,this,ID_USE_DEFAULT_CARET);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Clear_Style,this,ID_CLEAR_STYLE);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Reload_Default_Style,this,ID_RELOAD_STYLE);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Use_Bold_Styling,this,ID_BOLD_STYLE);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Change_Font,this,ID_FONT_CHANGE);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Show_Help_Menu,this,ID_SHOW_HELP_MENU);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Use_Default_Caret,this,wxID_ABOUT);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::File_Save,this,ID_FILE_SAVE);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Save_File_As,this,ID_SAVE_AS);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Open_File,this,ID_OPEN_FILE);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::New_File,this,ID_NEW_FILE);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::DirectoryOpen,this,ID_OPEN_TREE_WIEW);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Exit,this,ID_CLEAR_WORKSPACE);
+
+     this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Exit,this,ID_EXIT);
+}
 
 void MainFrame::Exit(wxCommandEvent & event){
 
      if(event.GetId() == ID_EXIT){
 
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_BUTTON,&MainFrame::Open_PopUp_Menu,this,wxID_ANY);
+        this->UNBIND_TREE_VIEW_EVENTS();
 
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Select_Project_File,this,ID_SELECT_PROJECT_FILE);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Show_Project_File,this,ID_SHOW_PROJECT_FILE);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::PrintDescriptions,this,ID_PRINT_DESCRIPTIONS);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Open_Empty_Project_File,this,ID_OPEN_EMPTY_PROJECT_FILE);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Start_Build_System_Construction,this,ID_RUN_BUILD_SYSTEM_CONSTRUCTOR);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Run_Project_Script_On_Terminal,this,ID_RUN_PROJECT_SCRIPT);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Determine_Source_File_Dependencies,this,ID_DETERMINE_SOURCE_FILE_DEPENDENCIES);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Single_File_Script_Construction,this,ID_RUN_SINGLE_FILE_SCRIPT_CONSTRUCTOR);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Advance_Single_File_Script_Construction,this,ID_RUN_ADVANCE_SINGLE_FILE_SCRIPT_CONSTRUCTOR);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Increase_Font_Size,this,ID_INCREASE_FONT_SIZE);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Decrease_Font_Size,this,ID_DECREASE_FONT_SIZE);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Undo_Changes,this,ID_UNDO_CHANGES);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Redo_Changes,this,ID_REDO_CHANGES);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Clear_Text,this,ID_CLEAR_TEXT);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Load_Default_Cursor,this,ID_SET_CURSOR_TYPE_DEFAULT);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Change_Cursor_Type,this,ID_CHANGE_CURSOR_TYPE);  
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Set_Caret_Line_Visible,this,ID_SET_CARET_LINE_VISIBLE);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Set_Caret_Line_InVisible,this,ID_SET_CARET_LINE_INVISIBLE);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Use_Block_Caret,this,ID_USE_BLOCK_CARET);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Use_Default_Caret,this,ID_USE_DEFAULT_CARET);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Clear_Style,this,ID_CLEAR_STYLE);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Reload_Default_Style,this,ID_RELOAD_STYLE);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Use_Bold_Styling,this,ID_BOLD_STYLE);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Change_Font,this,ID_FONT_CHANGE);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Show_Help_Menu,this,ID_SHOW_HELP_MENU);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Use_Default_Caret,this,wxID_ABOUT);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::File_Save,this,ID_FILE_SAVE);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Save_File_As,this,ID_SAVE_AS);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Open_File,this,ID_OPEN_FILE);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::New_File,this,ID_NEW_FILE);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::DirectoryOpen,this,ID_OPEN_TREE_WIEW);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Exit,this,ID_CLEAR_WORKSPACE);
-
-       this->Dir_List_Manager->GetEventHandler()->Unbind(wxEVT_MENU,&MainFrame::Exit,this,ID_EXIT);
-
-       this->Destroy();
+        this->Destroy();
      }
 }
 
@@ -596,7 +596,7 @@ void MainFrame::OnPaint(wxPaintEvent & event)
      {
         this->Custom_Main_Panel->PaintNow(this->Custom_Main_Panel);
 
-        this->Book_Manager->PaintNow(this->Book_Manager);
+        this->Book_Manager->PaintNow(this->Book_Manager);        
      }
 }
 
