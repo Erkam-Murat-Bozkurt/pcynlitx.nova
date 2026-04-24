@@ -67,6 +67,11 @@ public:
        this->Menu_Ptr = menu;
   }
 
+  void Update(){
+
+
+  }
+
   Workspace_Data_Holder Status_Data_Holder;
 
   wxButton * Start_Button;

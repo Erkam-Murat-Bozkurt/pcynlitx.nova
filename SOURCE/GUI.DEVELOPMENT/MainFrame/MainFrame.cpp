@@ -103,7 +103,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->SetBackgroundColour(wxColour(240,240,240,0xff));
 
-  this->Interface_Manager.SetFlags(wxAUI_MGR_LIVE_RESIZE);
+  this->Interface_Manager.SetFlags(wxAUI_MGR_ALLOW_ACTIVE_PANE);
 
 
   this->Refresh();
