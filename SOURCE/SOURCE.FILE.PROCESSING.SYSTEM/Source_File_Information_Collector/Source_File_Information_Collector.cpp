@@ -41,9 +41,9 @@ Source_File_Information_Collector::~Source_File_Information_Collector()
 /* THE CLASS INPUT FUNCTIONS ****************************************************************************/
 
 
-void Source_File_Information_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void Source_File_Information_Collector::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ref){
 
-     this->Des_Reader = ptr;
+     this->Des_Reader = ref;
 
      this->warehouse_path = this->Des_Reader->Get_Warehouse_Location();
 
@@ -51,16 +51,17 @@ void Source_File_Information_Collector::Receive_Descriptor_File_Reader(Descripto
 }
 
 
-void Source_File_Information_Collector::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
+void Source_File_Information_Collector::Receive_Source_Code_Reader(const Project_Src_Code_Rdr * ref){
 
-     this->Code_Rdr = ptr;
+     this->Code_Rdr = ref;
 }
 
+/*
+void Source_File_Information_Collector::Receive_Git_Data_Processor(const Git_Data_Processor * ref){
 
-void Source_File_Information_Collector::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
-
-     this->Git_Data_Proc = ptr;
+     this->Git_Data_Proc = ref;
 }
+     */
 
 
 
@@ -264,15 +265,12 @@ void Source_File_Information_Collector::Clear_String_Memory(std::string & str){
 
 
 
-  /* GETTER FUNCTIONS OF THE CLASS *******************************************************/
-
+/* GETTER FUNCTIONS OF THE CLASS *******************************************************/
 
 Source_File_Data Source_File_Information_Collector::Get_Dependency_Data(int num)
 {
    return this->Src_Data_Holder[num];
 }
-
-
 
 std::vector<Source_File_Data> * Source_File_Information_Collector::Get_Source_File_Data_Address()
 {
@@ -284,13 +282,10 @@ std::string Source_File_Information_Collector::Get_Warehouse_Objetcs_Dir(){
      return this->warehouse_obj_dir;
 }
 
-
-
 std::string Source_File_Information_Collector::Get_Warehouse_Path(){
 
      return this->warehouse_path;
 }
-
 
 size_t Source_File_Information_Collector::Get_Dependency_Data_Size(){
 

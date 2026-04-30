@@ -63,7 +63,7 @@ void Header_File_Processor::Receive_Operating_System(char opr_sis){
 
 
 
-void Header_File_Processor::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
+void Header_File_Processor::Receive_Source_Code_Reader(const Project_Src_Code_Rdr * ptr){
 
      this->Code_Rdr = ptr;
 }

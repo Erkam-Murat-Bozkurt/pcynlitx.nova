@@ -47,7 +47,7 @@ Source_File_Dependency_Selector::~Source_File_Dependency_Selector()
 
 void Source_File_Dependency_Selector::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
 
-     this->Info_Collector.Receive_Git_Data_Processor(ptr);
+     //this->Info_Collector.Receive_Git_Data_Processor(ptr);
 
      this->Data_Setter.Receive_Git_Data_Processor(ptr);
 }
@@ -65,7 +65,7 @@ void Source_File_Dependency_Selector::Receive_Source_Code_Reader(Project_Src_Cod
 }
 
 
-void Source_File_Dependency_Selector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void Source_File_Dependency_Selector::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
 
      this->Info_Collector.Receive_Descriptor_File_Reader(ptr);
 
@@ -596,13 +596,13 @@ std::string Source_File_Dependency_Selector::Get_Header_System_Path(std::string 
 
 
 
-std::vector<std::vector<Source_File_Dependency>> * Source_File_Dependency_Selector::Get_Dependency_List_Adress()
+const std::vector<std::vector<Source_File_Dependency>> * Source_File_Dependency_Selector::Get_Dependency_List_Adress() const
 {
       return &this->Dependency_Data;
 }
 
 
-std::vector<Source_File_Dependency> * Source_File_Dependency_Selector::Get_Dependency_List_Element_Adress(int i)
+const std::vector<Source_File_Dependency> * Source_File_Dependency_Selector::Get_Dependency_List_Element_Adress(int i) const 
 {
       return &this->Dependency_Data[i];
 }

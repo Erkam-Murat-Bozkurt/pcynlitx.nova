@@ -90,18 +90,18 @@ void CMAKE_Build_System_Generator::Construct_Build_System(std::string project_na
 }
 
 
- void CMAKE_Build_System_Generator::Construct_Exe_Build_System(std::string target_main_file_path, 
+void CMAKE_Build_System_Generator::Construct_Exe_Build_System(std::string target_main_file_path, 
  
-      std::string exe_name){
+     std::string exe_name){
 
-      this->Executable_Target_Constructor.Build_MakeFile(target_main_file_path,exe_name);
+     this->Executable_Target_Constructor.Build_MakeFile(target_main_file_path,exe_name);
      
-      char build_system_geration [] = "\n CMAKE Target Generated..\n\n";
+     char build_system_geration [] = "\n CMAKE Target Generated..\n\n";
 
-      std::cout << build_system_geration;
+     std::cout << build_system_geration;
 
-      if(this->build_type == 'g'){
+     if(this->build_type == 'g'){
 
-         this->SysInt->WriteTo_NamedPipe_FromChild(build_system_geration);
-      }
+        this->SysInt->WriteTo_NamedPipe_FromChild(build_system_geration);
+     }
  }

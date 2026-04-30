@@ -65,7 +65,7 @@ int main(int argc, char ** argv){
        System_Interface.WriteTo_NamedPipe_FromChild(read_seperator);
 
 
-       std::vector<Compiler_Data> * ptr = Build_System.Get_Src_Dependency_List();
+       const std::vector<Compiler_Data> * ptr = Build_System.Get_Src_Dependency_List();
 
        for(size_t i=0;i<ptr->size();i++){
 

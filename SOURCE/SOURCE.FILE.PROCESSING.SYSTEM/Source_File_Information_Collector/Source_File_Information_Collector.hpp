@@ -42,9 +42,9 @@ class Source_File_Information_Collector
 public:
  Source_File_Information_Collector(char opr_sis);
  virtual ~Source_File_Information_Collector();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
- void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
- void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
+ //void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
+ void Receive_Source_Code_Reader(const Project_Src_Code_Rdr * ptr);
  void Extract_Dependency_Data();
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
@@ -61,9 +61,9 @@ protected:
  void Clear_Buffer_Memory(Source_File_Data & data);
  void Clear_String_Memory(std::string & str);
  void Clear_Headers_Data();
- Project_Src_Code_Rdr   * Code_Rdr;
- Descriptor_File_Reader * Des_Reader;
- Git_Data_Processor * Git_Data_Proc;
+ const Project_Src_Code_Rdr   * Code_Rdr;
+ const Descriptor_File_Reader * Des_Reader;
+ //const Git_Data_Processor * Git_Data_Proc;
  std::vector<Source_File_Data> Src_Data_Holder;
  std::string warehouse_obj_dir;
  std::string warehouse_path;

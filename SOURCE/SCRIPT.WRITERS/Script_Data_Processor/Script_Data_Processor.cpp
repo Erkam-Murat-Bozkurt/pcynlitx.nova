@@ -63,7 +63,7 @@ void Script_Data_Processor::Receive_Source_File_Dependency_Determiner(Source_Fil
 
      if(!this->Dep_Determiner->Get_Simple_Search_Status()){
 
-         std::vector<Compiler_Data> * data_ptr = this->Dep_Determiner->Get_Compiler_Data_Address();
+         const std::vector<Compiler_Data> * data_ptr = this->Dep_Determiner->Get_Compiler_Data_Address();
 
          this->source_file_num = data_ptr->size();
      }

@@ -67,17 +67,17 @@ int main(int argc, char ** argv){
 
     std::string version = "1.0";
 
-    CMAKE_Main_File_Writer CMK_MF_Builder;
+    CMAKE_Main_File_Writer CMK_MF_Builder('w');
 
     CMK_MF_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
-
-    CMK_MF_Builder.Receive_Git_Data_Processor(&Data_Processor);
 
     CMK_MF_Builder.Receive_Source_File_Dependency_Determiner(&Dep_Determiner);
 
     CMK_MF_Builder.Receive_Operating_System('w');
+
+    CMK_MF_Builder.Receive_Project_Titles(project_name,version);
     
-    CMK_MF_Builder.Build_Main_CMAKE_File(project_name,version);
+    CMK_MF_Builder.Build_Main_CMAKE_File();
 
 
     /*

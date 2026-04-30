@@ -43,7 +43,7 @@ Header_Dependency_Data_Extractor::~Header_Dependency_Data_Extractor()
 }
 
 
-void Header_Dependency_Data_Extractor::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void Header_Dependency_Data_Extractor::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
 
      this->Info_Collector.Receive_Descriptor_File_Reader(ptr);
 }
@@ -58,8 +58,6 @@ void Header_Dependency_Data_Extractor::Receive_Source_Code_Reader(Project_Src_Co
 
      this->Code_Rdr = ptr;
 }
-
-
 
 void Header_Dependency_Data_Extractor::Find_Header_Files(){
 

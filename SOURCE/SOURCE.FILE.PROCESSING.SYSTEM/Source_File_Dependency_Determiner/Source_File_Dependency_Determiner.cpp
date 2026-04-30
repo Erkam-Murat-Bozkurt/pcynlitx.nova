@@ -37,6 +37,8 @@ Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_
     this->run_type = 'n';
 
     this->Simple_Search_Status = false;
+
+    this->Git_Data_Proc = nullptr;
 }
 
 
@@ -84,7 +86,7 @@ void Source_File_Dependency_Determiner::Receive_System_Interface(Custom_System_I
 }
 
 
-void Source_File_Dependency_Determiner::Receive_Descriptor_File_Reader(Descriptor_File_Reader *ptr){
+void Source_File_Dependency_Determiner::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
      
      this->DepSelector.Receive_Descriptor_File_Reader(ptr);
 
@@ -97,11 +99,11 @@ void Source_File_Dependency_Determiner::Receive_Descriptor_File_Reader(Descripto
 
 
 
-void Source_File_Dependency_Determiner::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
+void Source_File_Dependency_Determiner::Receive_Git_Data_Processor(Git_Data_Processor * Proc){
 
-     this->Git_Data_Proc = ptr;
+     this->Git_Data_Proc = Proc;
 
-     this->Code_Rd.Receive_Git_Data_Processor(this->Git_Data_Proc);
+     this->Code_Rd.Receive_Git_Data_Processor(Proc);
 
      this->Code_Rd.Read_Project_Source_Code_Files();
 
@@ -111,15 +113,15 @@ void Source_File_Dependency_Determiner::Receive_Git_Data_Processor(Git_Data_Proc
 
      this->Src_Processor.Receive_Source_Code_Reader(&this->Code_Rd); 
 
-     this->DepSelector.Receive_Git_Data_Processor(ptr);
+     this->DepSelector.Receive_Git_Data_Processor(Proc);
 
-     this->DepSelector_For_Single_File.Receive_Git_Data_Processor(ptr);
+     this->DepSelector_For_Single_File.Receive_Git_Data_Processor(Proc);
 
-     this->Simple_Dep_Extractor.Receive_Git_Data_Processor(ptr);
+     this->Simple_Dep_Extractor.Receive_Git_Data_Processor(Proc);
 
      this->Simple_Dep_Extractor.Receive_Source_Code_Reader(&this->Code_Rd);
 
-     this->Com_Data_Extractor.Receive_Git_Data_Processor(ptr);
+     this->Com_Data_Extractor.Receive_Git_Data_Processor(Proc);
 }
 
 
@@ -182,6 +184,8 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
+     this->Compiler_Data_Ptr->shrink_to_fit();
+
      this->Construct_Dependency_Map();
 
      this->Re_Arrange_Priorities();
@@ -190,6 +194,7 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(std::stri
 
      this->Clear_Dynamic_Memory();
 
+     this->Compiler_Data_Ptr->shrink_to_fit();
 }
 
 
@@ -209,6 +214,8 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
       this->Compiler_Data_Ptr = this->Com_Data_Extractor.Get_Compiler_Data_Address();
 
+      this->Compiler_Data_Ptr->shrink_to_fit();
+
       this->Construct_Dependency_Map();
 
       this->Re_Arrange_Priorities();
@@ -217,6 +224,7 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
       this->Clear_Dynamic_Memory();
 
+      this->Compiler_Data_Ptr->shrink_to_fit();
 }
 
 
@@ -556,41 +564,41 @@ void Source_File_Dependency_Determiner::Print_Dependency_List(){
      this->DepSelector.Print_Dependency_List();
 }
 
-Compiler_Data Source_File_Dependency_Determiner::Get_Compiler_Data(int i){
+Compiler_Data Source_File_Dependency_Determiner::Get_Compiler_Data(int i) const {
 
       return this->Compiler_Data_Ptr->at(i);
 }
 
-std::vector<Compiler_Data> * Source_File_Dependency_Determiner::Get_Compiler_Data_Address()
+const std::vector<Compiler_Data> * Source_File_Dependency_Determiner::Get_Compiler_Data_Address() const
 {
       return this->Compiler_Data_Ptr;
 }
 
-int Source_File_Dependency_Determiner::Get_Compiler_Data_Size(){
+int Source_File_Dependency_Determiner::Get_Compiler_Data_Size() const {
 
     return this->data_size;
 }
 
 
-std::string Source_File_Dependency_Determiner::Get_Warehouse_Objetcs_Dir(){
+std::string Source_File_Dependency_Determiner::Get_Warehouse_Objetcs_Dir() const {
 
        return this->Warehouse_Objetcs_Dir;
 }
 
-std::string Source_File_Dependency_Determiner::Get_Warehouse_Path(){
+std::string Source_File_Dependency_Determiner::Get_Warehouse_Path() const {
 
        return this->Warehouse_Path;
 }
 
 
-const Simple_Source_File_Dependency * Source_File_Dependency_Determiner::Get_Simple_File_Dependencies(){
+const Simple_Source_File_Dependency * Source_File_Dependency_Determiner::Get_Simple_File_Dependencies() const {
 
       return this->Simple_Dep_Extractor.Get_Simple_Source_File_Dependency();
 }
 
 
 
-const bool Source_File_Dependency_Determiner::Get_Simple_Search_Status() const {
+bool Source_File_Dependency_Determiner::Get_Simple_Search_Status() const {
 
      return this->Simple_Search_Status;
 }

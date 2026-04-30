@@ -44,21 +44,21 @@ class Source_File_Information_Collector_For_Single_File
 public:
  Source_File_Information_Collector_For_Single_File(char opr_sis);
  virtual ~Source_File_Information_Collector_For_Single_File();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
- void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
+ //void Receive_Git_Data_Processor(const Git_Data_Processor * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
- void Receive_Stack_Container(Dependency_Data_Stack_Container * ptr);
+ //void Receive_Stack_Container(const Dependency_Data_Stack_Container * ptr);
  void Extract_Dependency_Data(std::string src_file_path); // Dependency data extraction for a single file
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();
  bool Is_Header_File(std::string hpath);
- Source_File_Data Get_Dependency_Data(int num);
- std::vector<Source_File_Data>  * Get_Source_File_Data_Address();
+ Source_File_Data Get_Dependency_Data(int num) const;
+ const std::vector<Source_File_Data>  * Get_Source_File_Data_Address() const;
  const std::vector<std::string> * Get_Root_File_External_Headers() const;
  const std::vector<std::string> * Get_Dependenct_Source_Files() const;
  size_t       Get_Dependency_Data_Size();
- std::string  Get_Warehouse_Objetcs_Dir();
- std::string  Get_Warehouse_Path();
+ std::string  Get_Warehouse_Objetcs_Dir() const;
+ std::string  Get_Warehouse_Path() const;
 protected:
  void Determine_Root_Source_File_Header_Dependencies(std::string src_file_path);
  void Determine_Related_Source_Files_From_Header_Dependencies();
@@ -74,15 +74,15 @@ protected:
  void Clear_Search_Data();
  void Clear_External_Headers_Memory();
  void Clear_Dependent_Source_File_Names();
- Dependency_Data_Stack_Container * Stack_Container;
  Dependency_Data_Extractor Dep_Extractor;
  std::vector<Search_Data> Dep_Search_Data;
  std::vector<std::string> Dependent_Source_File_Names;
  std::vector<std::string> Root_File_External_Headers;
  std::vector<Source_File_Data> Src_Data_Holder;
- Project_Src_Code_Rdr   * Code_Rdr;
- Descriptor_File_Reader * Des_Reader;
- Git_Data_Processor     * Git_Data_Proc;
+ Project_Src_Code_Rdr * Code_Rdr;
+ const Descriptor_File_Reader * Des_Reader;
+ //const Git_Data_Processor     * Git_Data_Proc;
+ const Dependency_Data_Stack_Container * Stack_Container;
  std::string warehouse_obj_dir;
  std::string warehouse_path;
  char opr_sis;

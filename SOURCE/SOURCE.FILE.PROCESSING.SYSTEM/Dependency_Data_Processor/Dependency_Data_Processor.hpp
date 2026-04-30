@@ -53,7 +53,7 @@ class Dependency_Data_Processor
 public:
  Dependency_Data_Processor(char opr_sis);
  virtual ~Dependency_Data_Processor();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Perform_Dependency_Search();
  const Search_Data_Records * Find_Search_Data_From_Path(std::string path) const;

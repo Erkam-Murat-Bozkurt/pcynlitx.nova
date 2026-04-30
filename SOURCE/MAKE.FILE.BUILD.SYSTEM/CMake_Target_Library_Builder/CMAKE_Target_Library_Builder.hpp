@@ -37,9 +37,9 @@ public:
  void Build_MakeFile(std::string file_name);
  void Add_Target_Path_To_Directory_List();
  void Construct_SubDirectory_List_File();
- void Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr);
+ void Receive_Compiler_Data_Pointer(const std::vector<Compiler_Data> * ptr);
  void Receive_Simple_Dependency_Data(const Simple_Source_File_Dependency * data);
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
  void Receive_Operating_System(char opr_sis);
  void Receive_DataMap(std::unordered_map<std::string, Compiler_Data> * ptr);
  std::string Get_Construction_Dir();
@@ -58,12 +58,12 @@ private:
  std::string Search_For_New_Upper_Directory(std::vector<std::string> & dir_list,std::string dir);
  const Simple_Source_File_Dependency * dep_data_ptr;
  MakeFile_Path_Determiner Path_Determiner;
- Descriptor_File_Reader * Des_Reader;
+ const Descriptor_File_Reader * Des_Reader;
  StringOperator StrOpr;
  Cpp_FileOperations FileManager;
  IntToCharTranslater Translater;
  std::unordered_map<std::string, Compiler_Data> * DataMap_Pointer;
- std::vector<Compiler_Data> * Comp_Data_Ptr;
+ const std::vector<Compiler_Data> * Comp_Data_Ptr;
  Compiler_Data * Data_Ptr;
  char opr_sis;
  bool Include_Line_Condition;

@@ -69,7 +69,7 @@ void MakeFile_Data_Collector::Receive_Operating_System(char opr_sis){
 }
 
 
-void MakeFile_Data_Collector::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void MakeFile_Data_Collector::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
 
      this->Des_Reader = ptr;
 

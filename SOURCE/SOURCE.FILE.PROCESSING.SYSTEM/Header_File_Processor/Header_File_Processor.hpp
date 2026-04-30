@@ -27,7 +27,7 @@ public:
  Header_File_Processor();
  virtual ~Header_File_Processor();
  void Receive_Operating_System(char opr_sis);
- void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
+ void Receive_Source_Code_Reader(const Project_Src_Code_Rdr * ptr);
  bool Is_Header(std::string file_path);
  bool Include_Decleration_Test(std::string string);
  bool Is_this_file_included_on_anywhere(std::string file_path);
@@ -45,7 +45,7 @@ public:
  void Clear_Object_Memory();
 protected:
  void Clear_String_Memory(std::string * pointer);
- Project_Src_Code_Rdr * Code_Rdr;
+ const Project_Src_Code_Rdr * Code_Rdr;
  StringOperator StringManager;
  std::string  Header_File_Directory;
  std::string  Header_File_Name;

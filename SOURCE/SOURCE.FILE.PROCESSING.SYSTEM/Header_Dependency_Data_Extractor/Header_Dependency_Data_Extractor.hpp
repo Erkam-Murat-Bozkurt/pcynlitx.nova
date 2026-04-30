@@ -60,7 +60,7 @@ class Header_Dependency_Data_Extractor
 public:
  Header_Dependency_Data_Extractor(char opr_sis);
  virtual ~Header_Dependency_Data_Extractor();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Receive_Dependency_Data_Stack_Container(Dependency_Data_Stack_Container * ptr);
  void Perform_Dependency_Search();
@@ -78,9 +78,9 @@ protected:
  void Search_Dependency_Data_For_Path(std::string path);
  int  Split_Range(int range_size, int partition, int & ramaining_job);
  Dependency_Data_Stack_Container * Stack_Container;
+ Project_Src_Code_Rdr * Code_Rdr;
  Source_File_Information_Collector Info_Collector; 
  Header_File_Processor Hdr_Processor;
- Project_Src_Code_Rdr * Code_Rdr;
  std::vector<Header_File_Data> Header_Files;
  std::mutex mtx;
  std::vector<std::thread> threadPool;

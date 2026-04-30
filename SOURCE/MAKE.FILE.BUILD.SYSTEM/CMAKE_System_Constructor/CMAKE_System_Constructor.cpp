@@ -26,9 +26,7 @@
 
 CMAKE_System_Constructor::CMAKE_System_Constructor(char * DesPath, char opr_sis, char build_type) :
 
-    Des_Reader(opr_sis),
-    
-    Dep_Determiner(DesPath,opr_sis) , Data_Processor(opr_sis)
+     Meta_Data_Collector(DesPath,opr_sis,build_type), CMK_MF_Builder(opr_sis)
 {
      this->Memory_Delete_Condition = false;
 
@@ -37,26 +35,6 @@ CMAKE_System_Constructor::CMAKE_System_Constructor(char * DesPath, char opr_sis,
      this->Des_Path = DesPath;
      
      this->build_type = build_type;
-
-     size_t des_path_size = strlen(DesPath);
-
-     for(size_t i=0;i<des_path_size;i++){
-
-         this->DesPATH.push_back(DesPath[i]);
-     }
-
-     this->DesPATH.shrink_to_fit();
-
-
-     this->Des_Reader.Receive_Descriptor_File_Path(this->DesPATH);
-
-     this->Des_Reader.Read_Descriptor_File();
-
-
- 
-     this->Memory_Delete_Condition = false;
-
-     this->opr_sis = opr_sis;
 }
 
 
@@ -80,8 +58,6 @@ void CMAKE_System_Constructor::Clear_Dynamic_Memory(){
          this->Clear_String_Memory(this->Warehouse_Path);
 
          this->Clear_String_Memory(this->Repo_Dir);
-
-         this->DataMap.clear();
      }
 }
 
@@ -90,67 +66,18 @@ void CMAKE_System_Constructor::Receive_System_Interface(Custom_System_Interface 
 
      this->SysInt = sysInt;
 
+     this->Meta_Data_Collector.Receive_System_Interface(sysInt);
+
 }
 
 
 void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::string version_num)
 {
+     this->Meta_Data_Collector.Collect_Meta_Data();
 
-
-     char read_opr [] = "\nThe project descriptor file read\n";
-
-     std::cout << read_opr;
-
-     if(this->build_type == 'g'){
-
-        this->SysInt->WriteTo_NamedPipe_FromChild(read_opr);
-     }
-     
-
-     // Determination of the directories recorded on the git repo
-          
-     this->Data_Processor.Receive_Descriptor_File_Path(this->DesPATH);
-
-     this->Data_Processor.Write_Git_Repo_List_File();
-
-     this->Data_Processor.Determine_Git_Repo_Info();  
-
-     char git_data [] = "\nThe data for git version controller has been collected\n";
-
-     std::cout << git_data;
-
-
-     if(this->build_type == 'g'){
-
-        this->SysInt->WriteTo_NamedPipe_FromChild(git_data);
-     }
-
-
-
-     
-     this->Dep_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
-
-     this->Dep_Determiner.Receive_Git_Data_Processor(&this->Data_Processor);
-
-     this->Dep_Determiner.Collect_Dependency_Information();
-
-     this->Compiler_Data_Pointer = this->Dep_Determiner.Get_Compiler_Data_Address();
-
-     this->Compiler_Data_Pointer->shrink_to_fit();
-
-
-     char dependency_data [] = "\nSource file dependencies has been determined\n";
-
-     std::cout << dependency_data;
-
-     if(this->build_type == 'g'){
-
-        this->SysInt->WriteTo_NamedPipe_FromChild(dependency_data);
-     }
+     this->Compiler_Data_Pointer = this->Meta_Data_Collector.Get_Compiler_Data();
 
      this->Write_Main_CMakeLists_File(project_name,version_num);
-
-     this->Perform_Data_Map_Construction();
 
      this->Perform_MakeFile_Construction();
 }
@@ -161,15 +88,25 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
 
 void CMAKE_System_Constructor::Write_Main_CMakeLists_File(std::string project_name, std::string version_num){
 
-     this->CMK_MF_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
+     /*
+     const Descriptor_File_Reader & Des_Reader = 
+     
+          this->Meta_Data_Collector.Get_Descriptor_File_Reader();
+  
+     const Source_File_Dependency_Determiner & Dep_Determiner = 
+     
+          this->Meta_Data_Collector.Get_Source_File_Dependency_Determiner();
+     */
 
-     this->CMK_MF_Builder.Receive_Git_Data_Processor(&this->Data_Processor);
+     this->CMK_MF_Builder.Receive_Project_Titles(project_name,version_num);
 
-     this->CMK_MF_Builder.Receive_Source_File_Dependency_Determiner(&this->Dep_Determiner);
+     this->CMK_MF_Builder.Receive_Descriptor_File_Reader(this->Meta_Data_Collector.Get_Descriptor_File_Reader());
 
-     this->CMK_MF_Builder.Receive_Operating_System(this->opr_sis);
+     this->CMK_MF_Builder.Receive_Source_File_Dependency_Determiner(this->Meta_Data_Collector.Get_Source_File_Dependency_Determiner());
     
-     this->CMK_MF_Builder.Build_Main_CMAKE_File(project_name,version_num);
+     this->CMK_MF_Builder.Build_Main_CMAKE_File();
+
+     std::cout << "CMAKE main file writed..";
 }
 
 
@@ -263,6 +200,8 @@ void CMAKE_System_Constructor::Construct_For_Small_Data_Set(size_t data_size){
 
 void CMAKE_System_Constructor::Perform_MakeFile_Construction(){
 
+    
+
      size_t data_size = this->Compiler_Data_Pointer->size();
 
      if(data_size > 50){
@@ -328,7 +267,7 @@ size_t CMAKE_System_Constructor::Split_Range(size_t range_size, size_t partition
 }
 
 
-
+/*
 
 void CMAKE_System_Constructor::Perform_Data_Map_Construction(){
 
@@ -341,7 +280,7 @@ void CMAKE_System_Constructor::Perform_Data_Map_Construction(){
          this->DataMap.insert(std::make_pair(source_file_path,this->Compiler_Data_Pointer->at(i)));
      }
 }
-
+*/
 
 
 
@@ -352,20 +291,23 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
      mt.unlock();
 
 
+     const Descriptor_File_Reader * Des_Reader = this->Meta_Data_Collector.Get_Descriptor_File_Reader();
+ 
+     Git_Data_Processor * Data_Processor = this->Meta_Data_Collector.Get_Git_Data_Processor();
+ 
      CMAKE_Target_Library_Builder Target_Builder;
 
      Target_Builder.Receive_Operating_System(this->opr_sis);
 
-     Target_Builder.Receive_Descriptor_File_Reader(&this->Des_Reader);
-
+     Target_Builder.Receive_Descriptor_File_Reader(Des_Reader);
 
      Source_File_Dependency_Determiner Dp_Determiner(this->Des_Path,this->opr_sis);
 
-     Dp_Determiner.Receive_Descriptor_File_Reader(&this->Des_Reader);
+     Dp_Determiner.Receive_Descriptor_File_Reader(Des_Reader);
 
-     Dp_Determiner.Receive_Git_Data_Processor(&this->Data_Processor);
+     Dp_Determiner.Receive_Git_Data_Processor(Data_Processor);
 
-     
+    
      for(size_t i=start;i<end;i++){
 
          std::string source_file_path = this->Compiler_Data_Pointer->at(i).source_file_path;

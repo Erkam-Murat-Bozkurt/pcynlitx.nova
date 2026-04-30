@@ -55,7 +55,7 @@ int main(int argc, char ** argv){
     Dep_Determiner.Collect_Dependency_Information();
 
 
-    std::vector<Compiler_Data> * Compiler_Data_Pointer = Dep_Determiner.Get_Compiler_Data_Address();
+    const std::vector<Compiler_Data> * Compiler_Data_Pointer = Dep_Determiner.Get_Compiler_Data_Address();
 
     std::unordered_map<std::string, Compiler_Data> DataMap;
 

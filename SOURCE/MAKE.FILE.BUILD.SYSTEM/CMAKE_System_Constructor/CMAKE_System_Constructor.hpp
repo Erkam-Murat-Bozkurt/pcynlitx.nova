@@ -17,7 +17,7 @@
 #include <stdlib.h>     //for using the function sleep
 #include <thread>
 #include <mutex>
-#include "Descriptor_File_Reader.hpp"
+#include "Build_System_Meta_Data_Collector.hpp"
 #include "CMAKE_Main_File_Writer.hpp"
 #include "CMAKE_Target_Library_Builder.hpp"
 #include "Make_File_Cleaner.hpp"
@@ -47,21 +47,19 @@ protected:
  void Clear_Vector_Memory(std::vector<std::string> & vec);
  void Clear_String_Memory(std::string & str);
  void Construct_Path(std::string * ptr, std::string str, std::string wrd);
- void Perform_Data_Map_Construction();
+ //void Perform_Data_Map_Construction();
  void Perform_MakeFile_Construction();
  size_t Split_Range(size_t range_size, size_t partition, size_t & remaining_job);
  void Construct_For_Large_Data_Set(size_t data_size);
  void Construct_For_Middle_Data_Set(size_t data_size);
  void Construct_For_Small_Data_Set(size_t data_size);
+ Build_System_Meta_Data_Collector Meta_Data_Collector;
  CMAKE_Main_File_Writer CMK_MF_Builder;
- Descriptor_File_Reader Des_Reader;
- Git_Data_Processor Data_Processor;
- Source_File_Dependency_Determiner Dep_Determiner;
- std::vector<Compiler_Data> * Compiler_Data_Pointer;
+ const std::vector<Compiler_Data> * Compiler_Data_Pointer;
  Custom_System_Interface * SysInt;
  char * Des_Path;
  std::vector<std::thread> threadPool;
- std::unordered_map<std::string, Compiler_Data> DataMap;
+ //std::unordered_map<std::string, Compiler_Data> DataMap;
  std::mutex mtx;
  std::string Warehouse_Path;
  std::string Repo_Dir;

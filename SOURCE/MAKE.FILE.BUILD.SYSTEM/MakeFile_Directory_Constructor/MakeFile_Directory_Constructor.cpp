@@ -56,7 +56,7 @@ void MakeFile_Directory_Constructor::Receive_Operating_System(char opr_sis){
 }
 
 
-void MakeFile_Directory_Constructor::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void MakeFile_Directory_Constructor::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
 
      this->Des_Reader = ptr;
 
@@ -66,7 +66,7 @@ void MakeFile_Directory_Constructor::Receive_Descriptor_File_Reader(Descriptor_F
 
 }
 
-void MakeFile_Directory_Constructor::Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr){
+void MakeFile_Directory_Constructor::Receive_Compiler_Data_Pointer(const std::vector<Compiler_Data> * ptr){
 
       this->Compiler_Data_Ptr = ptr;
 }

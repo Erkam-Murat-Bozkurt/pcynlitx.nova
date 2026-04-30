@@ -79,7 +79,7 @@ void Git_File_List_Receiver::Clear_Dynamic_Memory()
 }
 
 
-void Git_File_List_Receiver::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void Git_File_List_Receiver::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
 
      this->Des_Reader = ptr;    
 }
@@ -462,13 +462,13 @@ void Git_File_List_Receiver::Clear_String_Memory(std::string * pointer){
 }
 
 
-std::string Git_File_List_Receiver::Get_File_System_Path(int num){
+std::string Git_File_List_Receiver::Get_File_System_Path(int num) const {
 
      return this->File_System_Paths[num];
 }
 
 
-std::string Git_File_List_Receiver::Get_Git_File_Index(int num)
+std::string Git_File_List_Receiver::Get_Git_File_Index(int num) const
 {
       return this->File_List_Content[num];
 }
@@ -484,17 +484,17 @@ size_t Git_File_List_Receiver::Get_Git_File_Index_Size(){
 }
 
 
-std::string Git_File_List_Receiver::Get_Git_Record_Directory(int num){
+std::string Git_File_List_Receiver::Get_Git_Record_Directory(int num) const {
  
       return this->Git_Record_Directories[num];
 }
 
-std::string Git_File_List_Receiver::Get_Git_Record_Path(int num){
+std::string Git_File_List_Receiver::Get_Git_Record_Path(int num) const {
  
       return this->Git_Record_Paths[num];
 }
 
-std::string Git_File_List_Receiver::Get_File_Name(int num){
+std::string Git_File_List_Receiver::Get_File_Name(int num) const{
  
       return this->File_Names[num];    
 }

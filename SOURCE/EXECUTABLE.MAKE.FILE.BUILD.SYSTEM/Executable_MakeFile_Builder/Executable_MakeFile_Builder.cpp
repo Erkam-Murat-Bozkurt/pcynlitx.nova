@@ -539,8 +539,6 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      size_t compiler_data_size = this->Com_Data_ptr->size();
      
-     this->Com_Data_ptr->shrink_to_fit();
-
      size_t dep_header_size = this->Com_Data_ptr->at(0).dependent_headers.size();
 
      for(size_t i=0;i<dep_header_size;i++){

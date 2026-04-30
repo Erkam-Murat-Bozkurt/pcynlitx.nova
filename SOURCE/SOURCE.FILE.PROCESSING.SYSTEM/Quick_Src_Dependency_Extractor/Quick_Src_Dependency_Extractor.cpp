@@ -44,7 +44,7 @@ Quick_Src_Dependency_Extractor::~Quick_Src_Dependency_Extractor()
 /* THE CLASS INPUT FUNCTIONS ****************************************************************************/
 
 
-void Quick_Src_Dependency_Extractor::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void Quick_Src_Dependency_Extractor::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
 
      this->Des_Reader = ptr;
 
@@ -623,7 +623,6 @@ void Quick_Src_Dependency_Extractor::Clear_Dependency_Data(){
      this->Clear_String_Memory(this->Dep_Data.dir);
      
      this->Clear_String_Memory(this->Dep_Data.object_file_name);
-
 
      this->Clear_Vector_Memory(this->Dep_Data.External_Headers);
      

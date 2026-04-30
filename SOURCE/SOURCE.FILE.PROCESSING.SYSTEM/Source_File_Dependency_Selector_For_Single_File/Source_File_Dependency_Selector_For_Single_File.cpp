@@ -52,11 +52,9 @@ Source_File_Dependency_Selector_For_Single_File::~Source_File_Dependency_Selecto
 
 void Source_File_Dependency_Selector_For_Single_File::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
 
-     this->Info_Collector.Receive_Git_Data_Processor(ptr);
+     //this->Info_Collector.Receive_Git_Data_Processor(ptr);
 
      this->Data_Setter.Receive_Git_Data_Processor(ptr);
-
-     this->Git_Data_Proc = ptr;
 }
 
 
@@ -70,7 +68,7 @@ void Source_File_Dependency_Selector_For_Single_File::Receive_Source_Code_Reader
 }
 
 
-void Source_File_Dependency_Selector_For_Single_File::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void Source_File_Dependency_Selector_For_Single_File::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
 
      this->Info_Collector.Receive_Descriptor_File_Reader(ptr);
 }
@@ -571,13 +569,13 @@ std::string Source_File_Dependency_Selector_For_Single_File::Get_Header_System_P
 
 
 
-std::vector<std::vector<Source_File_Dependency>> * Source_File_Dependency_Selector_For_Single_File::Get_Dependency_List_Adress()
+const std::vector<std::vector<Source_File_Dependency>> * Source_File_Dependency_Selector_For_Single_File::Get_Dependency_List_Adress() const
 {
       return &this->Dependency_Data;
 }
 
 
-std::vector<Source_File_Dependency> * Source_File_Dependency_Selector_For_Single_File::Get_Dependency_List_Element_Adress(int i)
+const std::vector<Source_File_Dependency> * Source_File_Dependency_Selector_For_Single_File::Get_Dependency_List_Element_Adress(int i) const
 {
       return &this->Dependency_Data[i];
 }
@@ -594,7 +592,7 @@ std::string Source_File_Dependency_Selector_For_Single_File::Get_Warehouse_Objet
      return this->Info_Collector.Get_Warehouse_Objetcs_Dir();
 }
 
-std::string Source_File_Dependency_Selector_For_Single_File::Get_Warehouse_Path(){
+std::string Source_File_Dependency_Selector_For_Single_File::Get_Warehouse_Path() {
 
      return this->Info_Collector.Get_Warehouse_Path();
 }

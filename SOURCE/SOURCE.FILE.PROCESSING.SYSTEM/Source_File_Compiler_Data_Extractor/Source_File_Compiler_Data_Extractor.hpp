@@ -60,10 +60,10 @@ class Source_File_Compiler_Data_Extractor
 public:
  Source_File_Compiler_Data_Extractor(char opr_sis);
  virtual ~Source_File_Compiler_Data_Extractor();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * Des_Reader);
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * Des_Reader);
+ void Receive_Git_Data_Processor(Git_Data_Processor * Proc);
  void Receive_Single_File_Dependency_Data(Source_File_Dependency_Selector_For_Single_File * ptr);
  void Receive_Dependency_Data(Source_File_Dependency_Selector * ptr);
- void Receive_Git_Data_Processor(Git_Data_Processor * Proc);
  void Extract_Directory_Short_Path(std::string sys_dir, std::vector<std::string> & sort_dir_path);
  void Extract_Compiler_Data();
  void Clear_Dynamic_Memory();
@@ -84,15 +84,15 @@ protected:
  void Search_For_Small_Data_Set(size_t data_size);
  void Construct_Compiler_Data_List();
  bool Is_There_File_Name_Similarity(std::string fileName);
- Source_File_Dependency_Selector_For_Single_File * Dep_Selector_For_Single_File_Ptr;
- Source_File_Dependency_Selector * Dep_Selector_Ptr;
- Source_File_Information_Collector * Info_Collector;
- std::vector<std::vector<Source_File_Dependency>> * dep_data_ptr;
+ const Source_File_Dependency_Selector_For_Single_File * Dep_Selector_For_Single_File_Ptr;
+ const Source_File_Dependency_Selector * Dep_Selector_Ptr;
+ const Source_File_Information_Collector * Info_Collector;
+ const std::vector<std::vector<Source_File_Dependency>> * dep_data_ptr;
  std::vector<std::vector<Compiler_Data>> Compiler_Data_Vectors;
  std::vector<Compiler_Data> compiler_data;
  std::vector<std::thread> threadPool;
  Git_Data_Processor * Git_Data_Proc;
- Descriptor_File_Reader * Des_Reader;
+ const Descriptor_File_Reader * Des_Reader;
  Compiler_Data buffer;
  std::string warehouse_obj_dir;
  std::string warehouse_path;

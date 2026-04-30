@@ -28,7 +28,7 @@ class MakeFile_Data_Collector
 public:
  MakeFile_Data_Collector();
  virtual ~MakeFile_Data_Collector();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
  void Collect_Make_File_Data(std::string fileName);
  void Receive_Git_Record_Data(std::string file_name);
  void Receive_Compiler_Data_Pointer(Compiler_Data * ptr); 
@@ -66,7 +66,7 @@ private:
  void Determine_Include_Directive(std::string * directive, int index);
  DirectoryOperations DirectoryManager;
  IntToCharTranslater Translater;
- Descriptor_File_Reader * Des_Reader;
+ const Descriptor_File_Reader * Des_Reader;
  Compiler_Data * Compiler_Data_Ptr;
 
  std::vector<std::string> * Determined_Upper_Directories;

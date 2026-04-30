@@ -35,8 +35,8 @@ class MakeFile_Directory_Constructor
 public:
  MakeFile_Directory_Constructor();
  virtual ~MakeFile_Directory_Constructor();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
- void Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr); 
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
+ void Receive_Compiler_Data_Pointer(const std::vector<Compiler_Data> * ptr); 
  void Receive_Operating_System(char opr_sis);
  void Construct_MakeFile_Directories();
  void Collect_Directory_Info();
@@ -61,8 +61,8 @@ private:
  void Replace_MakeFile_Directories();
  std::string Search_For_New_Upper_Directory(std::vector<std::string> & dir_list, std::string dir);
  DirectoryOperations DirectoryManager;
- Descriptor_File_Reader * Des_Reader;
- std::vector<Compiler_Data> * Compiler_Data_Ptr;
+ const Descriptor_File_Reader * Des_Reader;
+ const std::vector<Compiler_Data> * Compiler_Data_Ptr;
  std::vector<MakeFile_Directory_Data> Dir_Data;
  std::vector<std::string> MakeFile_Directories;
  std::string warehouse_path;

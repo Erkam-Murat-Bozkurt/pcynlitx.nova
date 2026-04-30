@@ -40,7 +40,7 @@ public:
  void Build_MakeFile(char * mn_src_path, char * Exe_Name, char strategy);
  void Determine_Source_File_Dependency_List(char * src_path);
  void Update_Library();
- std::vector<Compiler_Data> * Get_Src_Dependency_List();
+ const std::vector<Compiler_Data> * Get_Src_Dependency_List();
  void Clear_Dynamic_Memory();
 protected:
  Build_Tools_Initializer Bld_Init;

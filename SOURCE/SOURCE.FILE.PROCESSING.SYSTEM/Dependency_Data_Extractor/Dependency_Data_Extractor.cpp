@@ -30,6 +30,10 @@ Dependency_Data_Extractor::Dependency_Data_Extractor()
    this->Memory_Delete_Condition = false;
 
    this->search_counter = 0;
+
+   this->Code_Rd = nullptr;
+
+   this->Stack_Ref = nullptr;
 }
 
 
@@ -50,17 +54,17 @@ void Dependency_Data_Extractor::Receive_Operating_System(char opr_sis){
 }
 
 
-void Dependency_Data_Extractor::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
+void Dependency_Data_Extractor::Receive_Source_Code_Reader(Project_Src_Code_Rdr * Rdr){
 
-     this->Header_Processor.Receive_Source_Code_Reader(ptr);
+     this->Header_Processor.Receive_Source_Code_Reader(Rdr);
 
-     this->Code_Rd = ptr;
+     this->Code_Rd = Rdr;
 }
 
 
-void Dependency_Data_Extractor::Receive_Stack_Container(Dependency_Data_Stack_Container * ptr){
+void Dependency_Data_Extractor::Receive_Stack_Container(Dependency_Data_Stack_Container * Ref){
 
-     this->Stack_Ptr = ptr;
+     this->Stack_Ref = Ref;
 }
 
 
@@ -102,13 +106,13 @@ void Dependency_Data_Extractor::Recursive_Source_File_Dependency_Determination(s
 
             std::string filePath = this->Dependent_Headers.at(i).path;
 
-            if(!this->Stack_Ptr->Is_Exist_OnSearchStack(filePath)){
+            if(!this->Stack_Ref->Is_Exist_OnSearchStack(filePath)){
 
                 this->Search_Dependencies(this->Dependent_Headers.at(i));                
             }
             else{
 
-                 const Search_Data_Records * Record = this->Stack_Ptr->Find_Search_Data_From_Path(filePath);
+                 const Search_Data_Records * Record = this->Stack_Ref->Find_Search_Data_From_Path(filePath);
 
                  this->Add_Search_Data_Vector(Record->Dependent_Headers);
             }
@@ -186,11 +190,6 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data)
 
 
    
-
-
-
-
-
     // THE START OF THE DEPENDENCY SEACRH
 
     if(inclusion_number>0){

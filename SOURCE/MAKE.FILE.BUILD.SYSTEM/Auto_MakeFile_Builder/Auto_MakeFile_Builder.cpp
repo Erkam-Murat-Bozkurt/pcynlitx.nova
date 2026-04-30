@@ -97,8 +97,6 @@ void Auto_MakeFile_Builder::Build_Make_Files(){
 
      this->Compiler_Data_Pointer = this->Dep_Determiner->Get_Compiler_Data_Address();
 
-     this->Compiler_Data_Pointer->shrink_to_fit();
-
      this->Perform_Data_Map_Construction();
 
      this->Perform_MakeFile_Construction();

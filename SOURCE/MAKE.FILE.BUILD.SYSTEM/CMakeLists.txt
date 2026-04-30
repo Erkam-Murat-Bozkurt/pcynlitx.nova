@@ -54,10 +54,15 @@ add_library(make_fbld_sys
 
     ${CMAKE_CURRENT_SOURCE_DIR}/CMake_Target_Library_Builder/CMAKE_Target_Library_Builder.hpp
 
+
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor.hpp
 
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Build_System_Meta_Data_Collector/Build_System_Meta_Data_Collector.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Build_System_Meta_Data_Collector/Build_System_Meta_Data_Collector.hpp
 )
 
 
@@ -85,6 +90,8 @@ target_include_directories(make_fbld_sys PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/CMake_Target_Library_Builder    
 
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Executable_Target_Constructor
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Build_System_Meta_Data_Collector
 
 
     ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Build_Tools_Initializer
@@ -190,6 +197,9 @@ target_link_directories(make_fbld_sys PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Main_File_Writer
 
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Executable_Target_Constructor
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/Build_System_Meta_Data_Collector
+
 
 
     ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Build_Tools_Initializer

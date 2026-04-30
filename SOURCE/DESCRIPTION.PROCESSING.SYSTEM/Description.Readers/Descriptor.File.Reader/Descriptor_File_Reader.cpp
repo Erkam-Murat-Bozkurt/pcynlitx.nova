@@ -964,140 +964,140 @@ void Descriptor_File_Reader::Exit_With_Error(std::string str){
      exit(0);
 }
 
-const std::vector<Library_Data> & Descriptor_File_Reader::Get_Library_File_Data_List(){
+const std::vector<Library_Data> & Descriptor_File_Reader::Get_Library_File_Data_List() const{
 
       return this->library_data_list;
 }
 
 
-const std::vector<std::string> & Descriptor_File_Reader::Get_Include_Directories(){
+const std::vector<std::string> & Descriptor_File_Reader::Get_Include_Directories() const {
 
     return this->Include_Directories;
 }
 
-const std::vector<std::string> & Descriptor_File_Reader::Get_Library_Directories(){
+const std::vector<std::string> & Descriptor_File_Reader::Get_Library_Directories() const {
 
      return this->Library_Directories;
 }
 
-const std::vector<std::string> & Descriptor_File_Reader::Get_Source_File_Directories(){
+const std::vector<std::string> & Descriptor_File_Reader::Get_Source_File_Directories() const {
 
      return this->Source_File_Directories;
 }
 
-const std::vector<std::string> & Descriptor_File_Reader::Get_Library_Files(){
+const std::vector<std::string> & Descriptor_File_Reader::Get_Library_Files() const {
 
      return this->Library_Files;
 }
 
-const std::vector<std::string> & Descriptor_File_Reader::Get_Compiler_Paths(){
+const std::vector<std::string> & Descriptor_File_Reader::Get_Compiler_Paths()const {
 
       return this->compiler_paths;
 }
 
 
-std::string Descriptor_File_Reader::Get_Library_Directory(int i){
+std::string Descriptor_File_Reader::Get_Library_Directory(int i) const {
 
         return this->Library_Directories[i];
 }
 
-std::string Descriptor_File_Reader::Get_Library_File(int i){
+std::string Descriptor_File_Reader::Get_Library_File(int i) const {
 
         return this->Library_Files[i];
 }
 
-std::string Descriptor_File_Reader::Get_Source_File_Directory(int i){
+std::string Descriptor_File_Reader::Get_Source_File_Directory(int i) const {
 
         return this->Source_File_Directories[i];
 }
 
 
-std::string Descriptor_File_Reader::Get_Include_Directory(int i){
+std::string Descriptor_File_Reader::Get_Include_Directory(int i) const {
 
        return this->Include_Directories[i];
 }
 
-std::string Descriptor_File_Reader::Get_Standard(){
+std::string Descriptor_File_Reader::Get_Standard() const {
 
       return this->standard;
 }
 
-const std::vector<std::string> & Descriptor_File_Reader::Get_Compiler_Options(){
+const std::vector<std::string> & Descriptor_File_Reader::Get_Compiler_Options() const {
 
        return this->compiler_options;
 }
 
-const std::vector<std::string> & Descriptor_File_Reader::Get_Linker_Options(){
+const std::vector<std::string> & Descriptor_File_Reader::Get_Linker_Options() const {
 
        return this->linker_options;
 }
 
-std::string Descriptor_File_Reader::Get_Warehouse_Location(){
+std::string Descriptor_File_Reader::Get_Warehouse_Location() const {
 
        return this->warehouse_location;
 }
 
-std::string Descriptor_File_Reader::Get_Repo_Directory_Location(){
+std::string Descriptor_File_Reader::Get_Repo_Directory_Location() const {
 
        return this->root_dir;
 }
 
-std::string Descriptor_File_Reader::Get_Descriptor_File_Path(){
+std::string Descriptor_File_Reader::Get_Descriptor_File_Path() const {
 
      return this->descriptor_file_path;
 }
 
 
-std::string Descriptor_File_Reader::Get_Build_System_Type(){
+std::string Descriptor_File_Reader::Get_Build_System_Type() const {
 
      return this->build_system;
 }
 
-std::string Descriptor_File_Reader::Get_Project_Name(){
+std::string Descriptor_File_Reader::Get_Project_Name() const {
 
      return this->project_name;
 }
 
-std::string Descriptor_File_Reader::Get_Version_Number(){
+std::string Descriptor_File_Reader::Get_Version_Number() const {
 
-     return this->version_number;
+     return this->version_number; 
 }
 
 
-int Descriptor_File_Reader::Get_Library_Directory_Number(){
+int Descriptor_File_Reader::Get_Library_Directory_Number() const {
 
     return this->lib_dir_num;
 }
 
-int Descriptor_File_Reader::Get_Library_Files_Number(){
+int Descriptor_File_Reader::Get_Library_Files_Number() const {
 
     return this->lib_file_num;
 }
 
-int Descriptor_File_Reader::Get_Source_File_Directory_Number(){
+int Descriptor_File_Reader::Get_Source_File_Directory_Number() const {
 
     return this->source_file_dir_num;
 }
 
-int Descriptor_File_Reader::Get_Include_Directory_Number(){
+int Descriptor_File_Reader::Get_Include_Directory_Number() const {
 
     return this->include_dir_num;
 }
 
 
-std::string Descriptor_File_Reader::Get_Error_Message(){
+std::string Descriptor_File_Reader::Get_Error_Message() const {
 
      return this->error_message;
 }
 
 
-bool Descriptor_File_Reader::Get_Invalid_Descriptor_File_Status(){
+bool Descriptor_File_Reader::Get_Invalid_Descriptor_File_Status() const {
 
      return this->is_project_file_invalid;
 }
 
 
-bool Descriptor_File_Reader::Get_Syntax_Error_Status(){
+bool Descriptor_File_Reader::Get_Syntax_Error_Status() const {
 
      return this->syntax_error_status;
 }

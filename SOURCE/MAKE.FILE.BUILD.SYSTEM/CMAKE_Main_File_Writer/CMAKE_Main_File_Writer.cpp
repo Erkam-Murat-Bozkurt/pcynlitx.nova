@@ -25,8 +25,10 @@
 
 #include "CMAKE_Main_File_Writer.hpp"
 
-CMAKE_Main_File_Writer::CMAKE_Main_File_Writer()
+CMAKE_Main_File_Writer::CMAKE_Main_File_Writer(char opr_sis)
 {
+   this->opr_sis = opr_sis;
+   
    this->Memory_Delete_Condition = false;
 }
 
@@ -57,19 +59,7 @@ void CMAKE_Main_File_Writer::Receive_Operating_System(char opr_sis){
 
 }
 
-
-void CMAKE_Main_File_Writer::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
-
-     this->Des_Reader = ptr;
-}
-
-void CMAKE_Main_File_Writer::Receive_Git_Data_Processor(Git_Data_Processor * Git_Proc){
-
-      this->Git_Processor = Git_Proc;
-}
-
-
-void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std::string version_num){
+void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
      this->Memory_Delete_Condition = false;
 
@@ -163,7 +153,7 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
      this->FileManager.WriteToFile("\n");
 
-     const std::vector<std::string> & Inc_Dirs =  this->Des_Reader->Get_Include_Directories();
+     const std::vector<std::string> & Inc_Dirs = this->Des_Reader->Get_Include_Directories();
 
      if(Inc_Dirs.size()>0){
 
@@ -264,8 +254,6 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
 
      this->Compiler_Data_Pointer = this->Dep_Determiner->Get_Compiler_Data_Address();
 
-     int target_counter = 0;
-
      std::vector<std::string> project_target_list;
 
      std::string space_string = " ";
@@ -306,15 +294,6 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(std::string project_name, std
      this->FileManager.WriteToFile("\n\n");
 
      this->FileManager.FileClose();
-}
-
-
-
-void CMAKE_Main_File_Writer::Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner 
-
-     * dep_ptr){
-
-     this->Dep_Determiner = dep_ptr;
 }
 
 

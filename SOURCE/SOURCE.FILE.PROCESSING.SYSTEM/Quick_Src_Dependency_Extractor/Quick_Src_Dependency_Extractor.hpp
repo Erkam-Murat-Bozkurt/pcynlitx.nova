@@ -79,7 +79,7 @@ class Quick_Src_Dependency_Extractor
 public:
  Quick_Src_Dependency_Extractor(char opr_sis);
  virtual ~Quick_Src_Dependency_Extractor();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Extract_Dependency_Data(std::string src_file_path);
@@ -113,8 +113,8 @@ protected:
  std::vector<Search_Data> Dep_Search_Data;
  std::vector<std::string> Root_File_External_Headers;
  Project_Src_Code_Rdr   * Code_Rdr;
- Descriptor_File_Reader * Des_Reader;
- Git_Data_Processor     * Git_Data_Proc;
+ const Descriptor_File_Reader * Des_Reader;
+ Git_Data_Processor * Git_Data_Proc;
  std::string warehouse_obj_dir;
  std::string warehouse_path;
  char opr_sis;

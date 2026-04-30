@@ -47,7 +47,7 @@ Dependency_Data_Processor::~Dependency_Data_Processor()
 
 
 
-void Dependency_Data_Processor::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void Dependency_Data_Processor::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
 
      this->Info_Collector.Receive_Descriptor_File_Reader(ptr);
 

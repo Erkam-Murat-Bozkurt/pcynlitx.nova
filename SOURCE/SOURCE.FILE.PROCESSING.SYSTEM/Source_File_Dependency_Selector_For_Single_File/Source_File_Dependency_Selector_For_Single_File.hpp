@@ -49,7 +49,7 @@ class Source_File_Dependency_Selector_For_Single_File
 public:
  Source_File_Dependency_Selector_For_Single_File(char opr_sis);
  virtual ~Source_File_Dependency_Selector_For_Single_File();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Determine_Source_File_Dependencies(std::string path);
@@ -59,8 +59,8 @@ public:
  void Clear_Object_Memory();
  std::string Get_Warehouse_Objetcs_Dir();
  std::string Get_Warehouse_Path();
- std::vector<std::vector<Source_File_Dependency>> * Get_Dependency_List_Adress();
- std::vector<Source_File_Dependency> * Get_Dependency_List_Element_Adress(int num);
+ const std::vector<std::vector<Source_File_Dependency>> * Get_Dependency_List_Adress() const;
+ const std::vector<Source_File_Dependency> * Get_Dependency_List_Element_Adress(int num) const;
  size_t  Get_Dependency_List_Size();
 protected:
  void Construct_Dependency_Data_Vector(std::string path, std::vector<Source_File_Dependency> & vec);
@@ -78,8 +78,7 @@ protected:
  Dependency_Data_Stack_Container Stack_Container;
  Source_File_Data_Setter Data_Setter;
  Project_Src_Code_Rdr * Code_Rd;
- Git_Data_Processor * Git_Data_Proc;
- std::vector<Source_File_Data> * Source_File_Data_Ptr;
+ const std::vector<Source_File_Data> * Source_File_Data_Ptr;
  std::vector<std::vector<Source_File_Dependency>> Dependency_Data;
  std::mutex mtx;
  std::vector<std::thread> threadPool;

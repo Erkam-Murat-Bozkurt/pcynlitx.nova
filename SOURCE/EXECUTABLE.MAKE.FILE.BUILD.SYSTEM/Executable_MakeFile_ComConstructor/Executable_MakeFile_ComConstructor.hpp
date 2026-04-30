@@ -74,7 +74,7 @@ protected:
  Descriptor_File_Reader * Des_Reader;
  Source_File_Dependency_Determiner * Dep_Determiner;
  IntToCharTranslater Translater;
- std::vector<Compiler_Data> * Comp_Data_ptr;
+ const std::vector<Compiler_Data> * Comp_Data_ptr;
  const Simple_Source_File_Dependency * Simple_Data_Ptr;
  std::vector<std::string> header_file_list;
  std::vector<std::string> header_file_paths;

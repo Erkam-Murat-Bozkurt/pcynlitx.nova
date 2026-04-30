@@ -81,14 +81,14 @@ void MakeFile_Path_Determiner::Receive_Operating_System(char opr_sis){
 }
 
 
-void MakeFile_Path_Determiner::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void MakeFile_Path_Determiner::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
 
      this->Des_Reader = ptr;
 
      this->Data_Collector.Receive_Descriptor_File_Reader(ptr);
 }
 
-void MakeFile_Path_Determiner::Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr)
+void MakeFile_Path_Determiner::Receive_Compiler_Data_Pointer(const std::vector<Compiler_Data> * ptr)
 {
      this->Comp_Data_Ptr = ptr;
 }

@@ -52,7 +52,7 @@ protected:
  void Construct_For_Middle_Data_Set(size_t data_size);
  void Construct_For_Small_Data_Set(size_t data_size);
  Source_File_Dependency_Determiner * Dep_Determiner;
- std::vector<Compiler_Data> * Compiler_Data_Pointer;
+ const std::vector<Compiler_Data> * Compiler_Data_Pointer;
  MakeFile_Directory_Constructor Mk_Dir_Constructor;
  Descriptor_File_Reader * Des_Reader;
  std::vector<std::thread> threadPool;

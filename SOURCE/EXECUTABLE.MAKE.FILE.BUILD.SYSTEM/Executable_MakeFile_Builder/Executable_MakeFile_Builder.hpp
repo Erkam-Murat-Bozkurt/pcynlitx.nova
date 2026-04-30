@@ -64,7 +64,7 @@ protected:
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
  IntToCharTranslater Translater;
- std::vector<Compiler_Data> * Com_Data_ptr;
+ const std::vector<Compiler_Data> * Com_Data_ptr;
  const Simple_Source_File_Dependency * Simple_Data_Ptr;
  std::string Src_File_Dir;
  std::string git_src_dir;

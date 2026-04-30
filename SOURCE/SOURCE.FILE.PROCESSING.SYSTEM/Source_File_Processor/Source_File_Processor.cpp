@@ -46,7 +46,7 @@ void Source_File_Processor::Clear_Dynamic_Memory()
 }
 
 
-void Source_File_Processor::Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr){
+void Source_File_Processor::Receive_Source_Code_Reader(const Project_Src_Code_Rdr * ptr){
 
      this->Code_Rdr = ptr;
 }

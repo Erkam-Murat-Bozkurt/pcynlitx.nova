@@ -32,7 +32,7 @@ public:
  Make_File_Builder();
  virtual ~Make_File_Builder();
  void Build_MakeFile(std::string file_name);
- void Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr);
+ void Receive_Compiler_Data_Pointer(const std::vector<Compiler_Data> * ptr);
  void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
  void Receive_Operating_System(char opr_sis);
  void Receive_DataMap(std::unordered_map<std::string, Compiler_Data> * ptr);
@@ -51,7 +51,7 @@ private:
  Cpp_FileOperations FileManager;
  IntToCharTranslater Translater;
  std::unordered_map<std::string, Compiler_Data> * DataMap_Pointer;
- std::vector<Compiler_Data> * Comp_Data_Ptr;
+ const std::vector<Compiler_Data> * Comp_Data_Ptr;
  Compiler_Data * Data_Ptr;
  char opr_sis;
  bool Include_Line_Condition;

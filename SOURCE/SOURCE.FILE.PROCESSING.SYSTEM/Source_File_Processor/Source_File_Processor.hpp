@@ -24,7 +24,7 @@ class Source_File_Processor
 public:
  Source_File_Processor();
  virtual ~Source_File_Processor();
- void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
+ void Receive_Source_Code_Reader(const Project_Src_Code_Rdr * ptr);
  void Determine_Source_File_Name(std::string path);
  void Determine_File_Name_Without_Ext(std::string path);
  void Determine_File_Name_Without_Ext(char * path);
@@ -40,7 +40,7 @@ protected:
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_String_Memory(std::string * pointer);
  void Extract_File_Extention(std::string & ext, std::string file_path, bool & is_there_ext);
- Project_Src_Code_Rdr * Code_Rdr;
+ const Project_Src_Code_Rdr * Code_Rdr;
  StringOperator StringManager;
  std::string Source_File_Name;
  std::string Class_Function_Patern;

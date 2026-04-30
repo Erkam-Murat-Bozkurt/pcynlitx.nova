@@ -69,7 +69,7 @@ class Source_File_Dependency_Selector
 public:
  Source_File_Dependency_Selector(char opr_sis);
  virtual ~Source_File_Dependency_Selector();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
  void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Determine_Source_File_Dependencies();
@@ -79,9 +79,9 @@ public:
  void Clear_Object_Memory();
  std::string Get_Warehouse_Objetcs_Dir();
  std::string Get_Warehouse_Path();
- std::vector<std::vector<Source_File_Dependency>> * Get_Dependency_List_Adress();
- std::vector<Source_File_Dependency> * Get_Dependency_List_Element_Adress(int num);
- size_t  Get_Dependency_List_Size();
+ const std::vector<std::vector<Source_File_Dependency>> * Get_Dependency_List_Adress() const;
+ const std::vector<Source_File_Dependency> * Get_Dependency_List_Element_Adress(int num) const;
+ size_t Get_Dependency_List_Size();
 protected:
  void Construct_Dependency_Data_Vector(size_t index, std::vector<Source_File_Dependency> & vec);
  void Arrange_Dependency_Data(int start, int end);

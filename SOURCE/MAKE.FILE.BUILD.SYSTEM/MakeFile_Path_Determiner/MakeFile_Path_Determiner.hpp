@@ -32,8 +32,8 @@ public:
  MakeFile_Path_Determiner();
  virtual ~MakeFile_Path_Determiner();
  void Determine_MakeFile_Data(std::string file_name);
- void Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr);
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Compiler_Data_Pointer(const std::vector<Compiler_Data> * ptr);
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
  void Receive_Operating_System(char opr_sis);
  void Receive_DataMap(std::unordered_map<std::string, Compiler_Data> * ptr);
  void Set_CMAKE_Construction_Status(bool is_cmake);
@@ -71,14 +71,14 @@ private:
  void Clear_String_Vector(std::vector<std::string> & str); 
  void Clear_String_Memory(std::string & pointer);
  MakeFile_Data_Collector Data_Collector;
- Descriptor_File_Reader * Des_Reader;
+ const Descriptor_File_Reader * Des_Reader;
  std::vector<std::string> headers_vpaths;
  std::vector<std::string> headers_vpath_alias;
  std::vector<std::string> upper_directory_vpaths;
  std::vector<std::string> upper_dir_vpaths_alias;
  std::vector<std::string> new_upper_directories;
  std::unordered_map<std::string, Compiler_Data> * DataMap_Pointer;
- std::vector<Compiler_Data> * Comp_Data_Ptr;
+ const std::vector<Compiler_Data> * Comp_Data_Ptr;
  Compiler_Data * Data_Ptr;
  std::string source_file_git_record_dir;
  std::string make_file_path;

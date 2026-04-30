@@ -62,14 +62,14 @@ void CMAKE_Target_Library_Builder::Receive_Operating_System(char opr_sis){
 }
 
 
-void CMAKE_Target_Library_Builder::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void CMAKE_Target_Library_Builder::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
 
      this->Des_Reader = ptr;
 
      this->Path_Determiner.Receive_Descriptor_File_Reader(ptr);
 }
 
-void CMAKE_Target_Library_Builder::Receive_Compiler_Data_Pointer(std::vector<Compiler_Data> * ptr)
+void CMAKE_Target_Library_Builder::Receive_Compiler_Data_Pointer(const std::vector<Compiler_Data> * ptr)
 {
      this->Comp_Data_Ptr = ptr;
 

@@ -32,29 +32,64 @@
 #include "DirectoryOperations.h"
 #include "IntToCharTranslater.h"
 
+
+
 class CMAKE_Main_File_Writer
 {
 public:
- CMAKE_Main_File_Writer();
+
+ CMAKE_Main_File_Writer(char opr_sis);
+
  virtual ~CMAKE_Main_File_Writer();
- void Build_Main_CMAKE_File(std::string project_name, std::string version_num);
- void Receive_Source_File_Dependency_Determiner(Source_File_Dependency_Determiner * dep_ptr);
- void Receive_Git_Data_Processor(Git_Data_Processor * Git_Proc);
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+
+
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
+
+      this->Des_Reader = ptr;
+ }
+
+ void Receive_Source_File_Dependency_Determiner(const Source_File_Dependency_Determiner * ptr){
+
+      this->Dep_Determiner = ptr;
+ }
+
+ void Build_Main_CMAKE_File();
+
+ void Receive_Project_Titles(std::string project_name, std::string version_num){
+     
+      this->project_name = project_name;
+
+      this->version_num = version_num;
+ };
+
  void Receive_Operating_System(char opr_sis);
+
  void Clear_Dynamic_Memory();
+
  void Clear_Object_Memory();
+
 private:
+
  void Convert_CMAKE_Format(std::string & str);
+
  bool Check_String_Existance(std::vector<std::string> & list, std::string str);
- Source_File_Dependency_Determiner * Dep_Determiner;
- std::vector<Compiler_Data> * Compiler_Data_Pointer;
- Descriptor_File_Reader * Des_Reader;
+
+ const std::vector<Compiler_Data> * Compiler_Data_Pointer;
+
+ const Descriptor_File_Reader * Des_Reader;
+
+ const Source_File_Dependency_Determiner * Dep_Determiner;
+
  Cpp_FileOperations FileManager;
- Git_Data_Processor * Git_Processor;
+
  char opr_sis;
- bool Include_Line_Condition;
+
+ std::string project_name;
+
+ std::string version_num; 
+
  bool Memory_Delete_Condition;
+
 };
 
 #endif /* CMAKE_MAIN_FILE_WRITER_HPP */

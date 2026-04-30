@@ -85,7 +85,7 @@ protected:
  const std::vector<std::string> * Include_Declerations;
  Header_File_Processor Header_Processor;  
  Project_Src_Code_Rdr * Code_Rd;
- Dependency_Data_Stack_Container * Stack_Ptr;
+ Dependency_Data_Stack_Container * Stack_Ref;
  Search_Data_Records Search_Record;
  std::vector<Search_Data> Dependent_Headers;
  std::vector<std::string> External_Header_Files;

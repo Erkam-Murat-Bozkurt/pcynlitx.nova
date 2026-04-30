@@ -69,7 +69,7 @@ void Kernel::Determine_Source_File_Dependency_List(char * src_path){
      this->Dep_Determiner.Collect_Dependency_Information(src_path);
 }
 
-std::vector<Compiler_Data> * Kernel::Get_Src_Dependency_List(){
+const std::vector<Compiler_Data> * Kernel::Get_Src_Dependency_List(){
 
       return this->Dep_Determiner.Get_Compiler_Data_Address();
 }

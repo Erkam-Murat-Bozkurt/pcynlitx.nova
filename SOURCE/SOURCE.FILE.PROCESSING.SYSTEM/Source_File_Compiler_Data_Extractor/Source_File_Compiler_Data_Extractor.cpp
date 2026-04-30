@@ -56,7 +56,7 @@ void Source_File_Compiler_Data_Extractor::Receive_Git_Data_Processor(Git_Data_Pr
     this->Git_Data_Proc = Proc;
 }
 
-void Source_File_Compiler_Data_Extractor::Receive_Descriptor_File_Reader(Descriptor_File_Reader * Reader){
+void Source_File_Compiler_Data_Extractor::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * Reader){
 
      this->Des_Reader = Reader;
 }
@@ -122,8 +122,6 @@ void Source_File_Compiler_Data_Extractor::Extract_Compiler_Data(){
 
      std::size_t data_size = this->dep_data_ptr->size();
      
-     this->dep_data_ptr->shrink_to_fit();
-
      if(data_size>50){
 
         this->Search_For_Large_Data_Set(data_size);
@@ -294,9 +292,7 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int start, int e
 
      for(std::size_t i=start;i<end;i++){
 
-         std::vector<Source_File_Dependency> * src_ptr = &this->dep_data_ptr->at(i);
-
-         src_ptr->shrink_to_fit();
+         const std::vector<Source_File_Dependency> * src_ptr = &this->dep_data_ptr->at(i);
 
          size_t data_size = src_ptr->size();
 

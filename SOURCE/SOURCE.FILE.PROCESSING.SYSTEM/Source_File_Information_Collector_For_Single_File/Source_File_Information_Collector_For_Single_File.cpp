@@ -44,9 +44,9 @@ Source_File_Information_Collector_For_Single_File::~Source_File_Information_Coll
 /* THE CLASS INPUT FUNCTIONS ****************************************************************************/
 
 
-void Source_File_Information_Collector_For_Single_File::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void Source_File_Information_Collector_For_Single_File::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ref){
 
-     this->Des_Reader = ptr;
+     this->Des_Reader = ref;
 
      this->warehouse_path = this->Des_Reader->Get_Warehouse_Location();
 
@@ -61,17 +61,19 @@ void Source_File_Information_Collector_For_Single_File::Receive_Source_Code_Read
      this->Dep_Extractor.Receive_Source_Code_Reader(ptr);
 }
 
-
-void Source_File_Information_Collector_For_Single_File::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
+/*
+void Source_File_Information_Collector_For_Single_File::Receive_Git_Data_Processor(const Git_Data_Processor & ptr){
 
      this->Git_Data_Proc = ptr;
 }
+     */
 
-
-void Source_File_Information_Collector_For_Single_File::Receive_Stack_Container(Dependency_Data_Stack_Container * ptr){
+/*
+void Source_File_Information_Collector_For_Single_File::Receive_Stack_Container(const Dependency_Data_Stack_Container & ptr){
 
      this->Stack_Container = ptr;
 }
+     */
 
 
 
@@ -295,8 +297,6 @@ void Source_File_Information_Collector_For_Single_File::Find_File_Name_Without_E
 }
 
 
-
-
 bool  Source_File_Information_Collector_For_Single_File::Is_Header_File(std::string path){
 
       const FileData * ptr = this->Code_Rdr->Find_File_Data_From_Path(path);
@@ -378,8 +378,6 @@ void Source_File_Information_Collector_For_Single_File::Determine_Warehouse_Obje
          this->warehouse_obj_dir.push_back(object_directory[i]);
      }
 }
-
-
 
 void Source_File_Information_Collector_For_Single_File::Receive_String_Vector(std::vector<std::string> & target_vec,
 
@@ -539,27 +537,27 @@ void Source_File_Information_Collector_For_Single_File::Clear_String_Memory(std:
 /* THE GETTER FUNCTIONS */
 
 
-Source_File_Data Source_File_Information_Collector_For_Single_File::Get_Dependency_Data(int num)
+Source_File_Data Source_File_Information_Collector_For_Single_File::Get_Dependency_Data(int num) const
 {
    return this->Src_Data_Holder[num];
 }
 
 
 
-std::vector<Source_File_Data> * Source_File_Information_Collector_For_Single_File::Get_Source_File_Data_Address()
+const std::vector<Source_File_Data> * Source_File_Information_Collector_For_Single_File::Get_Source_File_Data_Address() const
 {
      return &this->Src_Data_Holder;
 }
 
 
-std::string Source_File_Information_Collector_For_Single_File::Get_Warehouse_Objetcs_Dir(){
+std::string Source_File_Information_Collector_For_Single_File::Get_Warehouse_Objetcs_Dir() const {
 
      return this->warehouse_obj_dir;
 }
 
 
 
-std::string Source_File_Information_Collector_For_Single_File::Get_Warehouse_Path(){
+std::string Source_File_Information_Collector_For_Single_File::Get_Warehouse_Path() const {
 
      return this->warehouse_path;
 }
