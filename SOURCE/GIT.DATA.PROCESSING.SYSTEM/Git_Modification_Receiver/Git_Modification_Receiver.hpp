@@ -27,9 +27,9 @@ public:
  void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
  void Receive_Git_List_Receiver(Git_File_List_Receiver * ptr);
  void Receive_Git_Modifications();
- std::vector<std::string> * Get_File_System_Path_Address();
- std::vector<std::string> * Get_Updated_Header_Files();
- std::vector<std::string> * Get_Updated_Source_Files();
+ const std::vector<std::string> * Get_File_System_Path_Address() const;
+ const std::vector<std::string> * Get_Updated_Header_Files() const;
+ const std::vector<std::string> * Get_Updated_Source_Files() const;
  void Clear_Dynamic_Memory();
 protected:
  void Determine_Warehouse_Path();

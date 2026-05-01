@@ -462,69 +462,69 @@ void Git_File_List_Receiver::Clear_String_Memory(std::string * pointer){
 }
 
 
-std::string Git_File_List_Receiver::Get_File_System_Path(int num) const {
+const std::string Git_File_List_Receiver::Get_File_System_Path(int num) const {
 
      return this->File_System_Paths[num];
 }
 
 
-std::string Git_File_List_Receiver::Get_Git_File_Index(int num) const
+const std::string Git_File_List_Receiver::Get_Git_File_Index(int num) const
 {
       return this->File_List_Content[num];
 }
 
-std::string Git_File_List_Receiver::Get_Git_Repo_Directory(){
+const std::string Git_File_List_Receiver::Get_Git_Repo_Directory() const {
 
        return this->Repo_Dir;
 }
 
-size_t Git_File_List_Receiver::Get_Git_File_Index_Size(){
+size_t Git_File_List_Receiver::Get_Git_File_Index_Size() const{
 
     return this->File_System_Paths.size();
 }
 
 
-std::string Git_File_List_Receiver::Get_Git_Record_Directory(int num) const {
+const std::string Git_File_List_Receiver::Get_Git_Record_Directory(int num) const {
  
       return this->Git_Record_Directories[num];
 }
 
-std::string Git_File_List_Receiver::Get_Git_Record_Path(int num) const {
+const std::string Git_File_List_Receiver::Get_Git_Record_Path(int num) const {
  
       return this->Git_Record_Paths[num];
 }
 
-std::string Git_File_List_Receiver::Get_File_Name(int num) const{
+const std::string Git_File_List_Receiver::Get_File_Name(int num) const{
  
       return this->File_Names[num];    
 }
 
 
- std::vector<std::string> * Git_File_List_Receiver::Get_Git_File_Index_Address(){
+ const std::vector<std::string> * Git_File_List_Receiver::Get_Git_File_Index_Address() const {
  
       return &this->File_List_Content;
  }
  
  
- std::vector<std::string> * Git_File_List_Receiver::Get_File_System_Path_Address(){
+ const std::vector<std::string> * Git_File_List_Receiver::Get_File_System_Path_Address() const{
  
       return &this->File_System_Paths;
  }
  
  
- std::vector<std::string> * Git_File_List_Receiver::Get_Git_Record_Directory_Address(){
+ const std::vector<std::string> * Git_File_List_Receiver::Get_Git_Record_Directory_Address() const{
  
       return &this->Git_Record_Directories;
  }
  
  
- std::vector<std::string> * Git_File_List_Receiver::Get_Git_Record_Path_Address(){
+ const std::vector<std::string> * Git_File_List_Receiver::Get_Git_Record_Path_Address() const {
  
       return &this->Git_Record_Paths;
  }
  
  
- std::vector<std::string> * Git_File_List_Receiver::Get_File_Name_Address(){
+ const std::vector<std::string> * Git_File_List_Receiver::Get_File_Name_Address() const{
  
       return &this->File_Names;    
  }

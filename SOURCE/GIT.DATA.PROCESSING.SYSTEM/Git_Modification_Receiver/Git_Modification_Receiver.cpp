@@ -871,19 +871,19 @@ void Git_Modification_Receiver::Clear_String_Memory(std::string * pointer){
 }
 
 
-std::vector<std::string> * Git_Modification_Receiver::Get_File_System_Path_Address()  
+const std::vector<std::string> * Git_Modification_Receiver::Get_File_System_Path_Address() const
 {
      return &this->File_System_Paths;
     
 }
 
-std::vector<std::string> * Git_Modification_Receiver::Get_Updated_Header_Files()  
+const std::vector<std::string> * Git_Modification_Receiver::Get_Updated_Header_Files() const
 {
      return &this->Updated_Header_Files;
     
 }
 
-std::vector<std::string> * Git_Modification_Receiver::Get_Updated_Source_Files()  
+const std::vector<std::string> * Git_Modification_Receiver::Get_Updated_Source_Files() const 
 {
      return &this->Updated_Source_Files;
 }

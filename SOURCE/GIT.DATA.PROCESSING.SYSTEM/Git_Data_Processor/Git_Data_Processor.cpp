@@ -73,7 +73,7 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
 
       // ON THE FOÇLOWING LINES THE DIRECTORY REPUTATION ELEMINATED
 
-      std::vector<std::string> *  dir_list =  this->Get_Git_Record_Directory_Address();
+      const std::vector<std::string> *  dir_list =  this->Get_Git_Record_Directory_Address();
       
       for(size_t i=0;i<dir_list->size();i++)
       {
@@ -446,99 +446,99 @@ void Git_Data_Processor::Receive_Git_Modifications(){
 }
 
 
-std::string Git_Data_Processor::Get_File_System_Path(int num){
+const std::string Git_Data_Processor::Get_File_System_Path(int num) const {
 
      return this->List_Receiver.Get_File_System_Path(num);
 }
 
-std::string Git_Data_Processor::Get_Git_File_Index(int num)
+const std::string Git_Data_Processor::Get_Git_File_Index(int num) const
 {
       return this->List_Receiver.Get_Git_File_Index(num);
 }
 
 
-std::string Git_Data_Processor::Get_Git_Repo_Directory(){
+const std::string Git_Data_Processor::Get_Git_Repo_Directory() const{
 
        return this->List_Receiver.Get_Git_Repo_Directory();
 }
 
 
-size_t Git_Data_Processor::Get_Git_File_Index_Size(){
+size_t Git_Data_Processor::Get_Git_File_Index_Size() const {
 
     return this->List_Receiver.Get_Git_File_Index_Size();
 }
 
 
-std::string Git_Data_Processor::Get_Git_Record_Directory(int num){
+const std::string Git_Data_Processor::Get_Git_Record_Directory(int num) const {
  
       return this->List_Receiver.Get_Git_Record_Directory(num);
 }
 
 
-std::string Git_Data_Processor::Get_Git_Record_Path(int num){
+const std::string Git_Data_Processor::Get_Git_Record_Path(int num) const {
  
       return this->List_Receiver.Get_Git_Record_Path(num);
 }
 
-std::string Git_Data_Processor::Get_File_Name(int num){
+const std::string Git_Data_Processor::Get_File_Name(int num) const {
  
       return this->List_Receiver.Get_File_Name(num);    
 }
 
-std::vector<std::string> * Git_Data_Processor::Get_Git_File_Index_Address(){
+const std::vector<std::string> * Git_Data_Processor::Get_Git_File_Index_Address() const {
  
      return this->List_Receiver.Get_Git_File_Index_Address();
 }
   
-std::vector<std::string> * Git_Data_Processor::Get_File_System_Path_Address(){
+const std::vector<std::string> * Git_Data_Processor::Get_File_System_Path_Address() const {
  
      return this->List_Receiver.Get_File_System_Path_Address();
 }
  
  
-std::vector<std::string> * Git_Data_Processor::Get_Git_Record_Directory_Address(){
+const std::vector<std::string> * Git_Data_Processor::Get_Git_Record_Directory_Address() const {
  
      return this->List_Receiver.Get_Git_Record_Directory_Address();
 }
  
  
-std::vector<std::string> * Git_Data_Processor::Get_Git_Record_Path_Address(){
+const std::vector<std::string> * Git_Data_Processor::Get_Git_Record_Path_Address() const {
  
       return this->List_Receiver.Get_Git_Record_Path_Address();
 }
  
  
-std::vector<std::string> * Git_Data_Processor::Get_File_Name_Address(){
+const std::vector<std::string> * Git_Data_Processor::Get_File_Name_Address() const{
  
       return this->List_Receiver.Get_File_Name_Address();    
 }
 
 
-std::vector<std::string> * Git_Data_Processor::Get_Updated_Header_Files()  
+const std::vector<std::string> * Git_Data_Processor::Get_Updated_Header_Files() const 
 {
      return this->Modf_Receiver.Get_Updated_Header_Files();
     
 }
 
-std::vector<std::string> * Git_Data_Processor::Get_Updated_Source_Files()  
+const std::vector<std::string> * Git_Data_Processor::Get_Updated_Source_Files() const  
 {
      return  this->Modf_Receiver.Get_Updated_Source_Files();
 }
 
 
-std::vector<std::string> * Git_Data_Processor::Get_Directory_Tree(){
+const std::vector<std::string> * Git_Data_Processor::Get_Directory_Tree() const {
 
       return &this->Directory_Tree;
 }
 
 
-std::vector<Git_Sub_Directory_Data> * Git_Data_Processor::Get_Directory_Tree_Data(){
+const std::vector<Git_Sub_Directory_Data> * Git_Data_Processor::Get_Directory_Tree_Data() const {
 
      return &this->Sub_Dir_Data;
 }
 
 
- std::vector<Git_Sub_Directory_Data> * Git_Data_Processor::Get_Git_Root_Dirs(){
+ const std::vector<Git_Sub_Directory_Data> * Git_Data_Processor::Get_Git_Root_Dirs() const {
 
      return &this->Root_Dirs;
  }

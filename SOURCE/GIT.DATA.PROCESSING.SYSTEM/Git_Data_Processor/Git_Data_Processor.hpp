@@ -33,6 +33,7 @@ class Git_Data_Processor
 public:
  Git_Data_Processor(char opr_sis);
  virtual ~Git_Data_Processor();
+
  void Receive_Descriptor_File_Path(char * DesPath);
  void Receive_Descriptor_File_Path(std::string DesPath);
  void Write_Git_Repo_List_File();
@@ -40,23 +41,25 @@ public:
  void Write_Git_Modification_File();
  void Receive_Git_Modifications();
  void Extract_Directory_Tree();
- size_t  Get_Git_File_Index_Size();
- std::string Get_Git_File_Index(int num);
- std::string Get_File_System_Path(int num);
- std::string Get_Git_Record_Directory(int num);
- std::string Get_Git_Record_Path(int num);
- std::string Get_File_Name(int num);
- std::vector<std::string> * Get_Git_File_Index_Address();
- std::vector<std::string> * Get_File_System_Path_Address();
- std::vector<std::string> * Get_Git_Record_Directory_Address();
- std::vector<std::string> * Get_Git_Record_Path_Address();
- std::vector<std::string> * Get_File_Name_Address();
- std::string Get_Git_Repo_Directory();
- std::vector<std::string> * Get_Updated_Header_Files();
- std::vector<std::string> * Get_Updated_Source_Files();
- std::vector<std::string> * Get_Directory_Tree();
- std::vector<Git_Sub_Directory_Data> * Get_Directory_Tree_Data();
- std::vector<Git_Sub_Directory_Data> * Get_Git_Root_Dirs();
+
+
+ size_t  Get_Git_File_Index_Size() const;
+ const std::string Get_Git_File_Index(int num) const;
+ const std::string Get_File_System_Path(int num) const;
+ const std::string Get_Git_Record_Directory(int num) const;
+ const std::string Get_Git_Record_Path(int num) const;
+ const std::string Get_File_Name(int num) const;
+ const std::vector<std::string> * Get_Git_File_Index_Address() const ;
+ const std::vector<std::string> * Get_File_System_Path_Address() const;
+ const std::vector<std::string> * Get_Git_Record_Directory_Address() const;
+ const std::vector<std::string> * Get_Git_Record_Path_Address() const;
+ const std::vector<std::string> * Get_File_Name_Address() const;
+ const std::string Get_Git_Repo_Directory() const;
+ const std::vector<std::string> * Get_Updated_Header_Files() const;
+ const std::vector<std::string> * Get_Updated_Source_Files() const;
+ const std::vector<std::string> * Get_Directory_Tree() const;
+ const std::vector<Git_Sub_Directory_Data> * Get_Directory_Tree_Data() const;
+ const std::vector<Git_Sub_Directory_Data> * Get_Git_Root_Dirs() const;
  void Clear_Dynamic_Memory();
 protected:
  void Construct_SubDirectory_Data();

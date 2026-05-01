@@ -419,7 +419,7 @@ bool Source_File_Compiler_Data_Extractor::Is_There_File_Name_Similarity(std::str
 
      bool similarity_status = false;
 
-     std::vector<std::string> * repoFileNames = this->Git_Data_Proc->Get_File_Name_Address();
+     const std::vector<std::string> * repoFileNames = this->Git_Data_Proc->Get_File_Name_Address();
 
      for(size_t i=0;i<repoFileNames->size();i++){
 
