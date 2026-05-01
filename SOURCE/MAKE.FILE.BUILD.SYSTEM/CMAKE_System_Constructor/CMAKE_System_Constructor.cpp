@@ -86,23 +86,24 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
 
 
 
-void CMAKE_System_Constructor::Write_Main_CMakeLists_File(std::string project_name, std::string version_num){
+void CMAKE_System_Constructor::Write_Main_CMakeLists_File(std::string project_name,
+    
+     std::string version_num){
 
-     /*
-     const Descriptor_File_Reader & Des_Reader = 
+     const Descriptor_File_Reader * Des_Reader = 
      
           this->Meta_Data_Collector.Get_Descriptor_File_Reader();
   
-     const Source_File_Dependency_Determiner & Dep_Determiner = 
+     const Source_File_Dependency_Determiner * Dep_Determiner = 
      
           this->Meta_Data_Collector.Get_Source_File_Dependency_Determiner();
-     */
+
 
      this->CMK_MF_Builder.Receive_Project_Titles(project_name,version_num);
 
-     this->CMK_MF_Builder.Receive_Descriptor_File_Reader(this->Meta_Data_Collector.Get_Descriptor_File_Reader());
+     this->CMK_MF_Builder.Receive_Descriptor_File_Reader(Des_Reader);
 
-     this->CMK_MF_Builder.Receive_Source_File_Dependency_Determiner(this->Meta_Data_Collector.Get_Source_File_Dependency_Determiner());
+     this->CMK_MF_Builder.Receive_Source_File_Dependency_Determiner(Dep_Determiner);
     
      this->CMK_MF_Builder.Build_Main_CMAKE_File();
 
@@ -265,24 +266,6 @@ size_t CMAKE_System_Constructor::Split_Range(size_t range_size, size_t partition
 
     return range;    
 }
-
-
-/*
-
-void CMAKE_System_Constructor::Perform_Data_Map_Construction(){
-
-     size_t data_size = this->Compiler_Data_Pointer->size();
-
-     for(size_t i=0;i<data_size;i++){
-
-         std::string source_file_path= this->Compiler_Data_Pointer->at(i).source_file_path;
-
-         this->DataMap.insert(std::make_pair(source_file_path,this->Compiler_Data_Pointer->at(i)));
-     }
-}
-*/
-
-
 
 void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
 

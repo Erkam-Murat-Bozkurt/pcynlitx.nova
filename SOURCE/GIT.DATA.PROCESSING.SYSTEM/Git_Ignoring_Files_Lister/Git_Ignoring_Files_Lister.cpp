@@ -49,7 +49,7 @@ void Git_Ignoring_Files_Lister::Initialize_Mermbers(){
 }
 
 
- void Git_Ignoring_Files_Lister::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+ void Git_Ignoring_Files_Lister::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
 
       this->Des_Reader = ptr;
  }

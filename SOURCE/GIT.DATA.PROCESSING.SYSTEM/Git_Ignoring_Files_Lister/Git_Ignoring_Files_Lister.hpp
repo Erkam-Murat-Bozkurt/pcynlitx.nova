@@ -24,7 +24,7 @@ class Git_Ignoring_Files_Lister
 public:
  Git_Ignoring_Files_Lister( char opr_sis);
  virtual ~Git_Ignoring_Files_Lister();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
  void Write_Ignoring_File_List();
  void Clear_Dynamic_Memory();
 protected:
@@ -32,7 +32,7 @@ protected:
  void Initialize_Mermbers();
  void Determine_Git_Ignoring_Files_List_Path();
  void Clear_String_Memory(std::string * pointer);
- Descriptor_File_Reader * Des_Reader;
+ const Descriptor_File_Reader * Des_Reader;
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
  std::string Warehouse;

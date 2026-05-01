@@ -210,8 +210,6 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
       }
 
       this->Construct_SubDirectory_Data();
-
-      //this->Filtering_Root_Directories();
 }
 
 

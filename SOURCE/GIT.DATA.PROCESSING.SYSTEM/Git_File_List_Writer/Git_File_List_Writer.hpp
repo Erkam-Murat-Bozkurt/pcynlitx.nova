@@ -22,7 +22,7 @@ class Git_File_List_Writer
 public:
  Git_File_List_Writer(char opr_sis);
  virtual ~Git_File_List_Writer();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
  void Write_Git_Repo_List_File();
  void Clear_Dynamic_Memory();
 protected:
@@ -37,7 +37,7 @@ protected:
  void Clear_String_Memory(std::string * pointer);
  void Clear_CString_Buffer();
  void Determine_Current_Directory();
- Descriptor_File_Reader * Des_Reader;
+ const Descriptor_File_Reader * Des_Reader;
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
  Custom_System_Interface System_Interface;

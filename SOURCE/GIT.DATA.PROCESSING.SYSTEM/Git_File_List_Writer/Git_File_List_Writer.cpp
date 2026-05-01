@@ -51,7 +51,7 @@ void Git_File_List_Writer::Initialize_Mermbers(){
 }
 
 
-void Git_File_List_Writer::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void Git_File_List_Writer::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
 
      this->Des_Reader = ptr;
 }

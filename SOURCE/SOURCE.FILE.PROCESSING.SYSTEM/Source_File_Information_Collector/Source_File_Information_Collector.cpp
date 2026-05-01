@@ -56,14 +56,6 @@ void Source_File_Information_Collector::Receive_Source_Code_Reader(const Project
      this->Code_Rdr = ref;
 }
 
-/*
-void Source_File_Information_Collector::Receive_Git_Data_Processor(const Git_Data_Processor * ref){
-
-     this->Git_Data_Proc = ref;
-}
-     */
-
-
 
 
 
@@ -229,7 +221,6 @@ void Source_File_Information_Collector::Clear_Headers_Data()
              this->Clear_String_Memory(ith->source_file_name);
 
              this->Clear_String_Memory(ith->system_path);
-
          }
 
          this->Src_Data_Holder.clear();

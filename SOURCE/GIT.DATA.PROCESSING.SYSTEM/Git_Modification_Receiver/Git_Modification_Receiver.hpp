@@ -24,7 +24,7 @@ class Git_Modification_Receiver
 public:
  Git_Modification_Receiver(char opr_sis);
  virtual ~Git_Modification_Receiver();
- void Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr);
+ void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
  void Receive_Git_List_Receiver(Git_File_List_Receiver * ptr);
  void Receive_Git_Modifications();
  std::vector<std::string> * Get_File_System_Path_Address();
@@ -58,7 +58,7 @@ protected:
       bool & is_there_ext);
  Git_File_List_Receiver * Git_List_Receiver;
  Source_File_Determiner Src_Determiner;
- Descriptor_File_Reader * Des_Reader;
+ const Descriptor_File_Reader * Des_Reader;
  Cpp_FileOperations FileManager;
  StringOperator StringManager;
  int  File_Line_Number;

@@ -52,8 +52,6 @@ Source_File_Dependency_Selector_For_Single_File::~Source_File_Dependency_Selecto
 
 void Source_File_Dependency_Selector_For_Single_File::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
 
-     //this->Info_Collector.Receive_Git_Data_Processor(ptr);
-
      this->Data_Setter.Receive_Git_Data_Processor(ptr);
 }
 

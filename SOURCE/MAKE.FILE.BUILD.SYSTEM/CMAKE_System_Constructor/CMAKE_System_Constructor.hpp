@@ -47,7 +47,6 @@ protected:
  void Clear_Vector_Memory(std::vector<std::string> & vec);
  void Clear_String_Memory(std::string & str);
  void Construct_Path(std::string * ptr, std::string str, std::string wrd);
- //void Perform_Data_Map_Construction();
  void Perform_MakeFile_Construction();
  size_t Split_Range(size_t range_size, size_t partition, size_t & remaining_job);
  void Construct_For_Large_Data_Set(size_t data_size);
@@ -59,7 +58,6 @@ protected:
  Custom_System_Interface * SysInt;
  char * Des_Path;
  std::vector<std::thread> threadPool;
- //std::unordered_map<std::string, Compiler_Data> DataMap;
  std::mutex mtx;
  std::string Warehouse_Path;
  std::string Repo_Dir;

@@ -81,7 +81,7 @@ void Git_Modification_Lister::Clear_Dynamic_Memory()
 }
 
 
-void Git_Modification_Lister::Receive_Descriptor_File_Reader(Descriptor_File_Reader * ptr){
+void Git_Modification_Lister::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
 
      this->Des_Reader = ptr;
 }

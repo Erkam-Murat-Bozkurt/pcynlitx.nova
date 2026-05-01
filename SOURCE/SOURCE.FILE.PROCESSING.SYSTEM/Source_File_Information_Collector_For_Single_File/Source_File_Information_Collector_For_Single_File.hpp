@@ -81,7 +81,6 @@ protected:
  std::vector<Source_File_Data> Src_Data_Holder;
  Project_Src_Code_Rdr * Code_Rdr;
  const Descriptor_File_Reader * Des_Reader;
- //const Git_Data_Processor     * Git_Data_Proc;
  const Dependency_Data_Stack_Container * Stack_Container;
  std::string warehouse_obj_dir;
  std::string warehouse_path;
