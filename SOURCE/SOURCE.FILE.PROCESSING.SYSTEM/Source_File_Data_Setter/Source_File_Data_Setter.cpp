@@ -35,7 +35,7 @@ Source_File_Data_Setter::~Source_File_Data_Setter()
 
 }
 
-void Source_File_Data_Setter::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
+void Source_File_Data_Setter::Receive_Git_Data_Processor(const Git_Data_Processor * ptr){
 
      this->Git_Data_Proc = ptr;
 }

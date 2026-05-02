@@ -45,9 +45,7 @@ public:
  Source_File_Information_Collector_For_Single_File(char opr_sis);
  virtual ~Source_File_Information_Collector_For_Single_File();
  void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
- //void Receive_Git_Data_Processor(const Git_Data_Processor * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
- //void Receive_Stack_Container(const Dependency_Data_Stack_Container * ptr);
  void Extract_Dependency_Data(std::string src_file_path); // Dependency data extraction for a single file
  void Clear_Dynamic_Memory();
  void Clear_Object_Memory();

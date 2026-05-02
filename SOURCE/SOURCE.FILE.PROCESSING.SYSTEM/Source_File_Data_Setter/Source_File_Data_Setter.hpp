@@ -50,7 +50,7 @@ class Source_File_Data_Setter
 public:
  Source_File_Data_Setter(char opr_sis);
  virtual ~Source_File_Data_Setter();
- void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
+ void Receive_Git_Data_Processor(const Git_Data_Processor * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Extract_Directory_From_Path(std::string path, std::string & dir);
  void Determine_Object_File_Name(std::string & obj_name, std::string src_name);
@@ -61,7 +61,7 @@ public:
  std::string & record_dir);
  void Determine_File_Name_Without_Ext(std::string path, std::string & file_name);
  Project_Src_Code_Rdr * Code_Rd;  
- Git_Data_Processor * Git_Data_Proc;
+ const Git_Data_Processor * Git_Data_Proc;
  std::string descriptor_file_path;
  char opr_sis;
 };

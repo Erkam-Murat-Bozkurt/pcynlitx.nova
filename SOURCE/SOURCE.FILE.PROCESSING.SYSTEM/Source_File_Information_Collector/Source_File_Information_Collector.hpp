@@ -43,7 +43,6 @@ public:
  Source_File_Information_Collector(char opr_sis);
  virtual ~Source_File_Information_Collector();
  void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
- //void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
  void Receive_Source_Code_Reader(const Project_Src_Code_Rdr * ptr);
  void Extract_Dependency_Data();
  void Clear_Dynamic_Memory();

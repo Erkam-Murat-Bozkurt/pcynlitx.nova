@@ -57,7 +57,7 @@ class Source_File_Data_Collector
 public:
  Source_File_Data_Collector(char operating_sis);
  virtual ~Source_File_Data_Collector();
- void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
+ void Receive_Git_Data_Processor(const Git_Data_Processor * ptr);
  void Process_Source_File_Data(Build_System_Data * Ptr, std::string path);
  void Clear_Dynamic_Memory();
  int  Get_Included_File_Number();
@@ -102,7 +102,7 @@ protected:
  void Clear_Vector_Memory(std::vector<std::string> * pointer);
  void Clear_Include_File_Data(Include_File_Data * pointer);
  void Clear_String_Memory(std::string * pointer);
- Git_Data_Processor * Git_Data_Proc;
+ const Git_Data_Processor * Git_Data_Proc;
  StringOperator StringManager;
  Cpp_FileOperations FileManager;
  char operating_sis;

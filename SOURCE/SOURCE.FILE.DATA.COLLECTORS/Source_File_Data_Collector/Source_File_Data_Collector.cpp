@@ -42,7 +42,7 @@ Source_File_Data_Collector::~Source_File_Data_Collector()
 
 
 
-void Source_File_Data_Collector::Receive_Git_Data_Processor(Git_Data_Processor * ptr){
+void Source_File_Data_Collector::Receive_Git_Data_Processor(const Git_Data_Processor * ptr){
 
      this->Git_Data_Proc = ptr;
 

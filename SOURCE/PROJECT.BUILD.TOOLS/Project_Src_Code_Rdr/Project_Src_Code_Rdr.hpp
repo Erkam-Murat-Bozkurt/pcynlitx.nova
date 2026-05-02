@@ -58,7 +58,7 @@ class Project_Src_Code_Rdr
 public:
  Project_Src_Code_Rdr(char opr_sis);
  virtual ~Project_Src_Code_Rdr();
- void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
+ void Receive_Git_Data_Processor(const Git_Data_Processor * ptr);
  void Read_Project_Source_Code_Files();
  const std::vector<std::string> * Get_Include_Declerations(int i) const;
  const std::vector<std::string> * Get_Included_Headers_From_Path(std::string path) const;
@@ -98,7 +98,7 @@ protected:
  void Read_For_Middle_Data_Set(size_t data_size);
  void Read_For_Small_Data_Set(size_t data_size);
  size_t Split_Range(size_t range_size, size_t partition, size_t & remaining_job);
- Git_Data_Processor * Git_Data_Proc;
+ const Git_Data_Processor * Git_Data_Proc;
  std::mutex  mtx;
  std::vector<FileData> Code_Dt;
  std::vector<std::string> FilePaths;

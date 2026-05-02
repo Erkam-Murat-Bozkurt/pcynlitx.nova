@@ -28,7 +28,7 @@ class Header_File_Determiner
 public:
  Header_File_Determiner(char opr_sis);
  virtual ~Header_File_Determiner();
- void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
+ void Receive_Git_Data_Processor(const Git_Data_Processor * ptr);
  bool Is_Header(std::string file_path);
  bool Is_Config_File(std::string file_path);
  bool Is_This_Repo_Header(std::string file_path);
@@ -50,7 +50,7 @@ public:
  void Clear_Object_Memory();
 protected:
  void Clear_String_Memory(std::string * pointer);
- Git_Data_Processor *  Git_Data_Proc;
+ const Git_Data_Processor *  Git_Data_Proc;
  StringOperator StringManager;
  std::string  Header_File_Directory;
  std::string  Header_File_Name;

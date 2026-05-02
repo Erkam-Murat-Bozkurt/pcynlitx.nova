@@ -50,7 +50,7 @@ public:
  Source_File_Dependency_Selector_For_Single_File(char opr_sis);
  virtual ~Source_File_Dependency_Selector_For_Single_File();
  void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
- void Receive_Git_Data_Processor(Git_Data_Processor * ptr);
+ void Receive_Git_Data_Processor(const Git_Data_Processor * ptr);
  void Receive_Source_Code_Reader(Project_Src_Code_Rdr * ptr);
  void Determine_Source_File_Dependencies(std::string path);
  bool Is_Header_File(std::string hpath);

@@ -99,7 +99,7 @@ void Source_File_Dependency_Determiner::Receive_Descriptor_File_Reader(const Des
 
 
 
-void Source_File_Dependency_Determiner::Receive_Git_Data_Processor(Git_Data_Processor * Proc){
+void Source_File_Dependency_Determiner::Receive_Git_Data_Processor(const Git_Data_Processor * Proc){
 
      this->Git_Data_Proc = Proc;
 

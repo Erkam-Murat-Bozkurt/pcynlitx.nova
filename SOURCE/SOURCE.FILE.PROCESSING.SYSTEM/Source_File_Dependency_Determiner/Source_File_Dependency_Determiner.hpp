@@ -58,7 +58,7 @@ public:
  virtual ~Source_File_Dependency_Determiner();
  void Receive_System_Interface(Custom_System_Interface * sysInt);
  void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ref);
- void Receive_Git_Data_Processor(Git_Data_Processor * ref);
+ void Receive_Git_Data_Processor(const Git_Data_Processor * ref);
  void Collect_Dependency_Information();
  void Collect_Dependency_Information(std::string path);
  void Simple_Dependency_Determination_For_Single_Source_File(std::string path);
@@ -87,7 +87,7 @@ protected:
  void Clear_Vector_Memory(std::vector<std::string> & vec);
  void Clear_String_Memory(std::string & str);
  void Clear_Compiler_Data_Vector(std::vector<Compiler_Data> * Data);
- Git_Data_Processor * Git_Data_Proc;
+ const Git_Data_Processor * Git_Data_Proc;
  Custom_System_Interface * SysInt;
  Project_Src_Code_Rdr Code_Rd;
  Source_File_Dependency_Selector DepSelector;

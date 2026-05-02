@@ -51,7 +51,7 @@ void Source_File_Compiler_Data_Extractor::Clear_Dynamic_Memory(){
 }
 
 
-void Source_File_Compiler_Data_Extractor::Receive_Git_Data_Processor(Git_Data_Processor * Proc){
+void Source_File_Compiler_Data_Extractor::Receive_Git_Data_Processor(const Git_Data_Processor * Proc){
 
     this->Git_Data_Proc = Proc;
 }

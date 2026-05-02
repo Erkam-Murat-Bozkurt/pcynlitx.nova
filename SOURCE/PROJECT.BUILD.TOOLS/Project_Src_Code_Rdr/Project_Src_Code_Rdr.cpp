@@ -46,7 +46,7 @@ Project_Src_Code_Rdr::~Project_Src_Code_Rdr(){
 
 
 
-void Project_Src_Code_Rdr::Receive_Git_Data_Processor(Git_Data_Processor * ptr)
+void Project_Src_Code_Rdr::Receive_Git_Data_Processor(const Git_Data_Processor * ptr)
 {
      this->Git_Data_Proc = ptr;
 

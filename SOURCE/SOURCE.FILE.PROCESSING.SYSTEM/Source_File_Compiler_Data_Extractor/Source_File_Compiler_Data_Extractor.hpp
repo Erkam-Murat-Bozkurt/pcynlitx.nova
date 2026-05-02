@@ -61,7 +61,7 @@ public:
  Source_File_Compiler_Data_Extractor(char opr_sis);
  virtual ~Source_File_Compiler_Data_Extractor();
  void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * Des_Reader);
- void Receive_Git_Data_Processor(Git_Data_Processor * Proc);
+ void Receive_Git_Data_Processor(const Git_Data_Processor * Proc);
  void Receive_Single_File_Dependency_Data(Source_File_Dependency_Selector_For_Single_File * ptr);
  void Receive_Dependency_Data(Source_File_Dependency_Selector * ptr);
  void Extract_Directory_Short_Path(std::string sys_dir, std::vector<std::string> & sort_dir_path);
@@ -91,7 +91,7 @@ protected:
  std::vector<std::vector<Compiler_Data>> Compiler_Data_Vectors;
  std::vector<Compiler_Data> compiler_data;
  std::vector<std::thread> threadPool;
- Git_Data_Processor * Git_Data_Proc;
+ const Git_Data_Processor * Git_Data_Proc;
  const Descriptor_File_Reader * Des_Reader;
  Compiler_Data buffer;
  std::string warehouse_obj_dir;
