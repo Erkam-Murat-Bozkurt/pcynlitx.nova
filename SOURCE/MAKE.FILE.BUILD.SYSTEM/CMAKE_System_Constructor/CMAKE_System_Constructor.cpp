@@ -68,6 +68,8 @@ void CMAKE_System_Constructor::Receive_System_Interface(Custom_System_Interface 
 
      this->Meta_Data_Collector.Receive_System_Interface(sysInt);
 
+     this->Target_List_Determiner.Receive_System_Interface(sysInt);
+
 }
 
 
@@ -77,9 +79,22 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
 
      this->Compiler_Data_Pointer = this->Meta_Data_Collector.Get_Compiler_Data();
 
+     this->Target_List_Determiner.Receive_Compiler_Dependency_Data(this->Compiler_Data_Pointer);
+
      this->Write_Main_CMakeLists_File(project_name,version_num);
 
      this->Perform_MakeFile_Construction();
+
+     this->Target_List_Determiner.Determine_Target_Lists();
+
+     const std::vector<cmake_build::target_data> * DATA_PTR 
+     
+           = this->Target_List_Determiner. Get_CMAKE_Target_List();
+
+     for(size_t i=0;i<DATA_PTR->size();i++){
+
+         std::cout << "\n Target[" << i << "]:" << DATA_PTR->at(i).target_name;
+     }
 }
 
 

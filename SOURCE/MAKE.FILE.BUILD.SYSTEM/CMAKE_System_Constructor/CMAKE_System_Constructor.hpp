@@ -19,6 +19,7 @@
 #include <mutex>
 #include "Build_System_Meta_Data_Collector.hpp"
 #include "CMAKE_Main_File_Writer.hpp"
+#include "CMAKE_Target_List_Determiner.hpp"
 #include "CMAKE_Target_Library_Builder.hpp"
 #include "Make_File_Cleaner.hpp"
 #include "MakeFile_Data_Collector.hpp"
@@ -54,6 +55,7 @@ protected:
  void Construct_For_Small_Data_Set(size_t data_size);
  Build_System_Meta_Data_Collector Meta_Data_Collector;
  CMAKE_Main_File_Writer CMK_MF_Builder;
+ CMAKE_Target_List_Determiner Target_List_Determiner;
  const std::vector<Compiler_Data> * Compiler_Data_Pointer;
  Custom_System_Interface * SysInt;
  char * Des_Path;

@@ -392,7 +392,6 @@ int Source_File_Dependency_Determiner::Find_File_Priority(std::string name){
 
 void Source_File_Dependency_Determiner::Order_Priorities(){
 
-
      for(size_t i=0;i < this->Compiler_Data_Ptr->size();i++){
 
          for(size_t j=i; j < this->Compiler_Data_Ptr->size();j++){

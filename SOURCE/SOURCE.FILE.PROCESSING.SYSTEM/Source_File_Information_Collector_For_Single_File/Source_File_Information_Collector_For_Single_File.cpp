@@ -61,21 +61,6 @@ void Source_File_Information_Collector_For_Single_File::Receive_Source_Code_Read
      this->Dep_Extractor.Receive_Source_Code_Reader(ptr);
 }
 
-/*
-void Source_File_Information_Collector_For_Single_File::Receive_Git_Data_Processor(const Git_Data_Processor & ptr){
-
-     this->Git_Data_Proc = ptr;
-}
-     */
-
-/*
-void Source_File_Information_Collector_For_Single_File::Receive_Stack_Container(const Dependency_Data_Stack_Container & ptr){
-
-     this->Stack_Container = ptr;
-}
-     */
-
-
 
 /* THE MEMBER FUNCTIONS PERFORMING THE MAIN OPERATIONS ******************************************/
 
