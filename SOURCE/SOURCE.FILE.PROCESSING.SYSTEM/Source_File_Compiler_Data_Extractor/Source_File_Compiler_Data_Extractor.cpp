@@ -366,6 +366,9 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int start, int e
             
                 buffer.source_file_name);
 
+            std::vector<std::string> hdr_dep_control;
+
+            std::unordered_map<std::string,std::string> REPETITION_CONTROL_MAP;
 
             for(size_t k=0;k<data_size;k++){
             
@@ -375,18 +378,54 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int start, int e
 
                 std::string hdr_dir =  src_ptr->at(k).dir;
 
-                std::string dep_obj =  src_ptr->at(k).object_file_name;           
+                std::string dep_obj =  src_ptr->at(k).object_file_name;        
+                
+                // The header files are added repetitively. Thus, it must be checked !
+                // Currently, I can not determined the reason of this repetition.
+                // This is a temporary and inefficient solution
 
-                buffer.dependent_headers.push_back(hdr_name);
 
-                buffer.dependent_headers_dir.push_back(hdr_dir);     
 
-                std::string upper_dir;
+                if(k>0){
 
-                this->Find_Upper_Directory(upper_dir,hdr_dir);
+                   if(!(REPETITION_CONTROL_MAP.find(hdr_path)!=REPETITION_CONTROL_MAP.end())){
 
-                buffer.upper_directories.push_back(upper_dir);                                         
+                       buffer.dependent_headers.push_back(hdr_name);
+
+                       buffer.dependent_headers_dir.push_back(hdr_dir);     
+
+                       std::string upper_dir;
+
+                       this->Find_Upper_Directory(upper_dir,hdr_dir);
+
+                       buffer.upper_directories.push_back(upper_dir);   
+                   }
+                }
+                else{
+
+                       buffer.dependent_headers.push_back(hdr_name);
+
+                       buffer.dependent_headers_dir.push_back(hdr_dir);     
+
+                       std::string upper_dir;
+
+                       this->Find_Upper_Directory(upper_dir,hdr_dir);
+
+                       buffer.upper_directories.push_back(upper_dir);  
+                }  
+                
+
+                REPETITION_CONTROL_MAP.insert(std::make_pair(hdr_path,buffer.dependent_headers.back()));
             }
+
+            if(!REPETITION_CONTROL_MAP.empty()){
+
+                REPETITION_CONTROL_MAP.clear();
+            }
+
+            hdr_dep_control.clear();
+
+            hdr_dep_control.shrink_to_fit();
 
 
             buffer.dependent_headers.shrink_to_fit();
@@ -407,13 +446,12 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int start, int e
 
 
       std::unique_lock<std::mutex> mt(this->mtx);
-
+    
       this->Compiler_Data_Vectors.push_back(Com_Dt);
 
       mt.unlock();
 
 }
-
 
 bool Source_File_Compiler_Data_Extractor::Is_There_File_Name_Similarity(std::string fileName){
 

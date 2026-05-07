@@ -26,7 +26,13 @@
 
 CMAKE_System_Constructor::CMAKE_System_Constructor(char * DesPath, char opr_sis, char build_type) :
 
-     Meta_Data_Collector(DesPath,opr_sis,build_type), CMK_MF_Builder(opr_sis)
+     Meta_Data_Collector(DesPath,opr_sis,build_type), 
+
+     CMK_MF_Builder(opr_sis), 
+
+     Target_List_Determiner(build_type),
+
+     Target_List_Data_Processor(build_type)
 {
      this->Memory_Delete_Condition = false;
 
@@ -58,6 +64,10 @@ void CMAKE_System_Constructor::Clear_Dynamic_Memory(){
          this->Clear_String_Memory(this->Warehouse_Path);
 
          this->Clear_String_Memory(this->Repo_Dir);
+
+         this->Target_List_Determiner.Clear_Dynamic_Memory();
+
+         this->Target_List_Data_Processor.Clear_Dynamic_Memory();
      }
 }
 
@@ -69,7 +79,6 @@ void CMAKE_System_Constructor::Receive_System_Interface(Custom_System_Interface 
      this->Meta_Data_Collector.Receive_System_Interface(sysInt);
 
      this->Target_List_Determiner.Receive_System_Interface(sysInt);
-
 }
 
 
@@ -95,6 +104,15 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
 
          std::cout << "\n Target[" << i << "]:" << DATA_PTR->at(i).target_name;
      }
+
+
+     //this->Target_List_Data_Processor.Receive_Target_List_Data(DATA_PTR);
+
+     //this->Target_List_Data_Processor.Receive_Compiler_Dependency_Data(this->Compiler_Data_Pointer);
+
+     //this->Target_List_Data_Processor.Process_Target_List_Data();
+
+     //this->Target_List_Data_Processor.Print_Processed_Data();
 }
 
 

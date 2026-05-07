@@ -25,11 +25,11 @@
 
 #include "CMAKE_Target_List_Determiner.hpp"
 
-CMAKE_Target_List_Determiner::CMAKE_Target_List_Determiner()
+CMAKE_Target_List_Determiner::CMAKE_Target_List_Determiner(char build_type)
 {
      this->Memory_Delete_Condition = false;
 
-
+     this->build_type = build_type;
 }
 
 

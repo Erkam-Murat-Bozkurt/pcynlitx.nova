@@ -613,37 +613,6 @@ void MakeFile_Data_Collector::Determine_Construction_Code_Line(){
 
      this->Construction_Code_Line +=  "-o $@ ";
 
-     /*
-
-     this->Construction_Code_Line += go_to_new_line;
-
-     const std::vector<std::string> & linker_options = this->Des_Reader->Get_Linker_Options();
-
-     for(size_t i=0;i<linker_options.size();i++){
-
-         this->Construction_Code_Line += linker_options.at(i);
-
-         this->Construction_Code_Line += " ";
-
-         this->Construction_Code_Line += go_to_new_line;
-     }
-
-
-     const std::vector<std::string> & lib_file_names = this->Des_Reader->Get_Library_Files();
-
-     for(size_t i=0;i<lib_file_names.size();i++){
-
-         this->Construction_Code_Line += "-l";
-
-         this->Construction_Code_Line += lib_file_names.at(i);
-
-         this->Construction_Code_Line += " ";
-
-         this->Construction_Code_Line += go_to_new_line;
-     }
-
-     */
-
      this->Construction_Code_Line.shrink_to_fit();
 }
 

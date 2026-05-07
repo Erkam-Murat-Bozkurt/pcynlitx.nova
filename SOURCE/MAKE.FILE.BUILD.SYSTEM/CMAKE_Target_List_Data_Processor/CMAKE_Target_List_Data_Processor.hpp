@@ -4,8 +4,9 @@
 
 
 
-#ifndef CMAKE_TARGET_LIST_DETERMINER_HPP
-#define CMAKE_TARGET_LIST_DETERMINER_HPP
+
+#ifndef CMAKE_TARGET_LIST_DATA_PROCESSOR_HPP
+#define CMAKE_TARGET_LIST_DATA_PROCESSOR_HPP
 
 #include <cstring>
 #include <cstdlib>
@@ -17,7 +18,9 @@
 #include <fcntl.h>
 #include <stdlib.h>     //for using the function sleep
 #include <thread>
-#include <mutex>
+#include <unordered_map>
+#include <vector>
+#include "CMAKE_Target_List_Determiner.hpp"
 #include "Build_System_Meta_Data_Collector.hpp"
 #include "CMAKE_Main_File_Writer.hpp"
 #include "CMAKE_Target_Library_Builder.hpp"
@@ -34,44 +37,48 @@
 #include "DirectoryOperations.h"
 #include "IntToCharTranslater.h"
 
-
 namespace cmake_build {
 
-     struct target_data
+     struct target_dependency_data
      {
-           std::string target_name;
-           int data_index; // this is the index for Compiler_Data vector
+           std::string dep_name;
 
-           const Compiler_Data * DATA_PTR; // this is the pointer for Compiler_Data holding 
-                                     // related target dependency information
+           const Compiler_Data * dep_data; // this is the pointer for Compiler_Data holding 
+                                           // related target dependency information
      };
-};
+}
 
-
-class CMAKE_Target_List_Determiner
+class CMAKE_Target_List_Data_Processor
 {
 public:
- CMAKE_Target_List_Determiner(char build_type);
+
+ CMAKE_Target_List_Data_Processor(char build_type);
  
- virtual ~CMAKE_Target_List_Determiner();
+ virtual ~CMAKE_Target_List_Data_Processor();
+
+ void Receive_Target_List_Data(const std::vector<cmake_build::target_data> * ptr){
+
+      this->Target_List_Data_Ptr = ptr;
+ } 
 
  void Receive_Compiler_Dependency_Data(const std::vector<Compiler_Data> * ptr){
 
       this->Compiler_Data_Pointer = ptr;
  } 
+
  void Receive_System_Interface(Custom_System_Interface * sysInt){
      
       this->SysInt = sysInt;
  }
+ 
+ const std::vector<std::vector<cmake_build::target_dependency_data>> * Get_Target_List_Elements_Dependency_Data(){
 
- void Determine_Target_Lists();
-
- bool Control_Dependency_For_Any_Previous_Target(int index);
-
- const std::vector<cmake_build::target_data> * Get_CMAKE_Target_List() const {
-
-       return &this->target_list;
+      return &this->Target_List_Dependeny_Data;
  }
+
+ void Process_Target_List_Data();
+
+ void Print_Processed_Data();
 
  void Clear_Dynamic_Memory();
 
@@ -80,12 +87,16 @@ protected:
  void Find_File_Name_Without_Extension(std::string hdr_name, 
 
       std::string & file_name_with_ext);
+      
+ const Compiler_Data * Find_Compiler_Data_From_File_Name(std::string file_name);
 
+ std::unordered_map<std::string,std::vector<Compiler_Data>> CMAKE_Target_List_DataMap;
+ const std::vector<cmake_build::target_data> * Target_List_Data_Ptr;
  const std::vector<Compiler_Data> * Compiler_Data_Pointer;
- std::vector<cmake_build::target_data> target_list;
+ std::vector<std::vector<cmake_build::target_dependency_data>> Target_List_Dependeny_Data;
  Custom_System_Interface * SysInt;
  bool Memory_Delete_Condition;
  char build_type;
 };
 
-#endif /* CMAKE_TARGET_LIST_DETERMINER_HPP */
+#endif /* CMAKE_TARGET_LIST_DATA_PROCESSOR_HPP */

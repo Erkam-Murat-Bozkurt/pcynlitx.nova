@@ -68,6 +68,11 @@ add_library(make_fbld_sys
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Target_List_Determiner/CMAKE_Target_List_Determiner.cpp
 
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Target_List_Determiner/CMAKE_Target_List_Determiner.hpp
+
+    
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Target_List_Data_Processor/CMAKE_Target_List_Data_Processor.cpp
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Target_List_Data_Processor/CMAKE_Target_List_Data_Processor.hpp
 )
 
 
@@ -99,6 +104,8 @@ target_include_directories(make_fbld_sys PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/Build_System_Meta_Data_Collector
 
     ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Target_List_Determiner
+
+    ${CMAKE_CURRENT_SOURCE_DIR}/CMAKE_Target_List_Data_Processor
 
 
     ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Build_Tools_Initializer

@@ -23,6 +23,7 @@
 #include <mutex>
 #include <thread>
 #include <chrono>
+#include <unordered_map>
 #include "Source_File_Dependency_Selector_For_Single_File.hpp"
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector_For_Single_File.hpp"
@@ -37,6 +38,12 @@
 #include "DirectoryOperations.h"
 #include "IntToCharTranslater.h"
 
+// This control structure checks the repetatively adding header data to the compiler data
+struct Dependend_Header_Control_Data
+{
+  std::string hdr_name;
+  std::string hdr_path;
+};
 
 struct Compiler_Data
 {
@@ -91,6 +98,7 @@ protected:
  std::vector<std::vector<Compiler_Data>> Compiler_Data_Vectors;
  std::vector<Compiler_Data> compiler_data;
  std::vector<std::thread> threadPool;
+ std::vector<Dependend_Header_Control_Data> header_dependency_repetition_control_vector;
  const Git_Data_Processor * Git_Data_Proc;
  const Descriptor_File_Reader * Des_Reader;
  Compiler_Data buffer;
