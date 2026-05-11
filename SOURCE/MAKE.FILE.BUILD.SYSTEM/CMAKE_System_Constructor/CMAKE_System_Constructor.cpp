@@ -105,14 +105,13 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
          std::cout << "\n Target[" << i << "]:" << DATA_PTR->at(i).target_name;
      }
 
+     this->Target_List_Data_Processor.Receive_Target_List_Data(DATA_PTR);
 
-     //this->Target_List_Data_Processor.Receive_Target_List_Data(DATA_PTR);
+     this->Target_List_Data_Processor.Receive_Compiler_Dependency_Data(this->Compiler_Data_Pointer);
 
-     //this->Target_List_Data_Processor.Receive_Compiler_Dependency_Data(this->Compiler_Data_Pointer);
+     this->Target_List_Data_Processor.Process_Target_List_Data();
 
-     //this->Target_List_Data_Processor.Process_Target_List_Data();
-
-     //this->Target_List_Data_Processor.Print_Processed_Data();
+     this->Target_List_Data_Processor.Print_Processed_Data();
 }
 
 

@@ -41,7 +41,11 @@ namespace cmake_build {
 
      struct target_dependency_data
      {
+           std::string target_name;
+           
            std::string dep_name;
+
+           std::string dep_hdr_dir;
 
            const Compiler_Data * dep_data; // this is the pointer for Compiler_Data holding 
                                            // related target dependency information
@@ -79,18 +83,20 @@ public:
  void Process_Target_List_Data();
 
  void Print_Processed_Data();
-
+ 
  void Clear_Dynamic_Memory();
 
 protected:
+
+ void Construct_Compiler_Data_Map();
 
  void Find_File_Name_Without_Extension(std::string hdr_name, 
 
       std::string & file_name_with_ext);
       
- const Compiler_Data * Find_Compiler_Data_From_File_Name(std::string file_name);
+ const Compiler_Data * Find_Compiler_Data_From_File_Name(std::string hdr_name) const;
 
- std::unordered_map<std::string,std::vector<Compiler_Data>> CMAKE_Target_List_DataMap;
+ std::unordered_map<std::string,const Compiler_Data *> Compiler_DataMap;
  const std::vector<cmake_build::target_data> * Target_List_Data_Ptr;
  const std::vector<Compiler_Data> * Compiler_Data_Pointer;
  std::vector<std::vector<cmake_build::target_dependency_data>> Target_List_Dependeny_Data;

@@ -49,26 +49,48 @@ void CMAKE_Target_List_Data_Processor::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
+         if(!this->Compiler_DataMap.empty()){
+
+             this->Compiler_DataMap.clear();
+         }
+
+         if(!this->Target_List_Dependeny_Data.empty()){
+
+             for(size_t i=0;i<this->Target_List_Dependeny_Data.size();i++){
+
+                 if(!this->Target_List_Dependeny_Data.at(i).empty()){
+
+                     this->Target_List_Dependeny_Data.at(i).clear();
+
+                     this->Target_List_Dependeny_Data.at(i).shrink_to_fit();
+                 }
+             }
+
+             this->Target_List_Dependeny_Data.clear();
+
+             this->Target_List_Dependeny_Data.shrink_to_fit();
+         }
      }
 }
 
 
 void CMAKE_Target_List_Data_Processor::Process_Target_List_Data(){
-
       
+     this->Construct_Compiler_Data_Map();
 
      for(size_t i=0;i<this->Target_List_Data_Ptr->size();i++){
 
          cmake_build::target_data target_dt = this->Target_List_Data_Ptr->at(i);
 
          const std::vector<std::string> * dep_headers = &(target_dt.DATA_PTR->dependent_headers);
-
+         
+         const std::vector<std::string> * dep_headers_dirs = &(target_dt.DATA_PTR->dependent_headers_dir);
 
          std::vector<cmake_build::target_dependency_data> vec_data;
         
          for(size_t k=0;k<dep_headers->size();k++){
 
-             cmake_build::target_dependency_data target_;
+             cmake_build::target_dependency_data target_dep;
 
              std::string file_name_without_ext;
 
@@ -78,24 +100,63 @@ void CMAKE_Target_List_Data_Processor::Process_Target_List_Data(){
 
              if(COM_PTR != nullptr){
 
-                 target_.dep_data = COM_PTR;
+                 target_dep.target_name = target_dt.target_name;
 
-                 target_.dep_name = file_name_without_ext;
+                 target_dep.dep_data = COM_PTR;
+
+                 target_dep.dep_name = dep_headers->at(k);
+
+                 target_dep.dep_hdr_dir = dep_headers_dirs->at(k);
+             }
+             else{
+
+                 target_dep.target_name = target_dt.target_name;
+
+                 target_dep.dep_data = nullptr;
+
+                 target_dep.dep_name = dep_headers->at(k);
+
+                 target_dep.dep_hdr_dir = dep_headers_dirs->at(k);
              }
 
-             vec_data.push_back(target_);
+             vec_data.push_back(target_dep);
+
+             vec_data.shrink_to_fit();
          }
 
-         vec_data.shrink_to_fit();
-
          this->Target_List_Dependeny_Data.push_back(vec_data);
+
+         vec_data.clear();
+
+         vec_data.shrink_to_fit();
      }
 
      this->Target_List_Dependeny_Data.shrink_to_fit();
 }
 
 
+void CMAKE_Target_List_Data_Processor::Construct_Compiler_Data_Map(){
+    
+      for(size_t i=0;i<this->Compiler_Data_Pointer->size();i++){
 
+          std::string name_without_ext = this->Compiler_Data_Pointer->at(i).source_file_name_witout_ext;
+
+          this->Compiler_DataMap.insert(std::make_pair(name_without_ext,&this->Compiler_Data_Pointer->at(i)));
+      }
+}
+
+
+const Compiler_Data * CMAKE_Target_List_Data_Processor::Find_Compiler_Data_From_File_Name(std::string hdr_name) const
+{
+    try {        
+
+         return this->Compiler_DataMap.at(hdr_name);
+    }
+    catch (const std::out_of_range & oor) {
+        
+         return nullptr;
+    }     
+}
 
 
 void CMAKE_Target_List_Data_Processor::Find_File_Name_Without_Extension(std::string hdr_name, 
@@ -120,20 +181,6 @@ void CMAKE_Target_List_Data_Processor::Find_File_Name_Without_Extension(std::str
      file_name_with_ext.shrink_to_fit();
 }
 
-const Compiler_Data * CMAKE_Target_List_Data_Processor::Find_Compiler_Data_From_File_Name(std::string file_name){
-
-      for(size_t i=0;i<this->Compiler_Data_Pointer->size();i++){
-
-          std::string name_without_ext  = this->Compiler_Data_Pointer->at(i).source_file_name_witout_ext;
-
-          if(name_without_ext == file_name){
-
-             return &this->Compiler_Data_Pointer->at(i);
-          }
-      }
-
-      return nullptr;
-}
 
 void CMAKE_Target_List_Data_Processor::Print_Processed_Data(){
 
@@ -143,11 +190,28 @@ void CMAKE_Target_List_Data_Processor::Print_Processed_Data(){
 
          &this->Target_List_Dependeny_Data.at(i);
 
+         std::cout << "\n\n";
+
+         std::cout << "\n TARGET NAME:" << Dep_Data_Ptr->at(0).target_name;
+
+         std::cout << "\n ----------------------------------------------------------------------";
+
          for(size_t k=0;k<Dep_Data_Ptr->size();k++){
 
-             std::cout << "\n Name:" << Dep_Data_Ptr->at(i).dep_name;
+             std::cout << "\n Target Name:" << Dep_Data_Ptr->at(k).target_name;
 
-             std::cout << "\n Name:" << Dep_Data_Ptr->at(i).dep_data->source_file_name_witout_ext;
+             std::cout << "\n Dependent Header Name:"      << Dep_Data_Ptr->at(k).dep_name;
+
+             std::cout << "\n Dependent Header Directory:" << Dep_Data_Ptr->at(k).dep_hdr_dir;
+
+             if(Dep_Data_Ptr->at(k).dep_data!=nullptr){
+
+                std::cout << "\n Name:" << Dep_Data_Ptr->at(k).dep_data->source_file_name_witout_ext;
+             }
+
+             std::cout << "\n\n";
          }
+
+         std::cout << "\n\n";
      }
 }
