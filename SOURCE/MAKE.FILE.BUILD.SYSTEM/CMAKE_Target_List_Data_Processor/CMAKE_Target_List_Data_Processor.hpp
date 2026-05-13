@@ -23,7 +23,6 @@
 #include "CMAKE_Target_List_Determiner.hpp"
 #include "Build_System_Meta_Data_Collector.hpp"
 #include "CMAKE_Main_File_Writer.hpp"
-#include "CMAKE_Target_Library_Builder.hpp"
 #include "Make_File_Cleaner.hpp"
 #include "MakeFile_Data_Collector.hpp"
 #include "MakeFile_Directory_Constructor.hpp"
@@ -41,7 +40,15 @@ namespace cmake_build {
 
      struct target_dependency_data
      {
-           std::string target_name;
+           std::string target_name;  // The target file name without file extention 
+
+           std::string target_name_with_file_extention; // The target file name with file extention such as ".cpp"
+
+           std::string target_file_path;
+
+           std::string target_sys_dir;
+
+           std::string target_git_record_dir;
            
            std::string dep_name;
 
@@ -50,7 +57,7 @@ namespace cmake_build {
            const Compiler_Data * dep_data; // this is the pointer for Compiler_Data holding 
                                            // related target dependency information
      };
-}
+};
 
 class CMAKE_Target_List_Data_Processor
 {

@@ -92,8 +92,6 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
 
      this->Write_Main_CMakeLists_File(project_name,version_num);
 
-     this->Perform_MakeFile_Construction();
-
      this->Target_List_Determiner.Determine_Target_Lists();
 
      const std::vector<cmake_build::target_data> * DATA_PTR 
@@ -111,7 +109,10 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
 
      this->Target_List_Data_Processor.Process_Target_List_Data();
 
-     this->Target_List_Data_Processor.Print_Processed_Data();
+     //this->Target_List_Data_Processor.Print_Processed_Data();
+
+     this->Perform_MakeFile_Construction();
+
 }
 
 
@@ -144,11 +145,11 @@ void CMAKE_System_Constructor::Write_Main_CMakeLists_File(std::string project_na
 
 
 
-void CMAKE_System_Constructor::Construct_For_Large_Data_Set(size_t data_size){
+void CMAKE_System_Constructor::Construct_For_Large_Data_Set(size_t target_number){
 
      size_t str=0, end=0;
 
-     size_t thread_num = data_size/50;
+     size_t thread_num = target_number/50;
 
      if(thread_num > 64){
 
@@ -157,7 +158,7 @@ void CMAKE_System_Constructor::Construct_For_Large_Data_Set(size_t data_size){
 
      size_t remaining_job = 0;
 
-     size_t range = this->Split_Range(data_size,thread_num,remaining_job);
+     size_t range = this->Split_Range(target_number,thread_num,remaining_job);
 
 
      for(int i=0;i<thread_num;i++){
@@ -184,7 +185,7 @@ void CMAKE_System_Constructor::Construct_For_Large_Data_Set(size_t data_size){
 
          if(i==(thread_num-1)){
             
-               end = data_size;
+               end = target_number;
          }
 
          this->threadPool.push_back(std::thread(&CMAKE_System_Constructor::Write_MakeFiles,this,str,end));
@@ -198,9 +199,9 @@ void CMAKE_System_Constructor::Construct_For_Large_Data_Set(size_t data_size){
 
 
 
-void CMAKE_System_Constructor::Construct_For_Middle_Data_Set(size_t data_size){
+void CMAKE_System_Constructor::Construct_For_Middle_Data_Set(size_t target_number){
 
-     int division = data_size/16;
+     int division = target_number/16;
 
      for(int i=0;i<16;i++){
 
@@ -210,7 +211,7 @@ void CMAKE_System_Constructor::Construct_For_Middle_Data_Set(size_t data_size){
 
          if(i==15){
 
-            end = data_size;
+            end = target_number;
          }
 
          this->threadPool.push_back(std::thread(&CMAKE_System_Constructor::Write_MakeFiles,this,str,end));
@@ -222,34 +223,36 @@ void CMAKE_System_Constructor::Construct_For_Middle_Data_Set(size_t data_size){
      }
 }
 
+void CMAKE_System_Constructor::Construct_For_Small_Data_Set(size_t target_number){
 
-
-void CMAKE_System_Constructor::Construct_For_Small_Data_Set(size_t data_size){
-
-     this->Write_MakeFiles(0,data_size);    
+     this->Write_MakeFiles(0,target_number);    
 }
 
 
 
 void CMAKE_System_Constructor::Perform_MakeFile_Construction(){
 
-    
+      const std::vector<std::vector<cmake_build::target_dependency_data>> *  target_dep_ptr =
+      
+      this->Target_List_Data_Processor.Get_Target_List_Elements_Dependency_Data();
 
-     size_t data_size = this->Compiler_Data_Pointer->size();
 
-     if(data_size > 50){
 
-        this->Construct_For_Large_Data_Set(data_size);        
+     size_t target_number = target_dep_ptr->size();
+
+     if(target_number > 50){
+
+        this->Construct_For_Large_Data_Set(target_number);        
      }
      else{
 
-         if(data_size>16){
+         if(target_number>16){
 
-             this->Construct_For_Middle_Data_Set(data_size);
+             this->Construct_For_Middle_Data_Set(target_number);
          }
          else{
 
-             this->Construct_For_Small_Data_Set(data_size);
+             this->Construct_For_Small_Data_Set(target_number);
          }
      }
 
@@ -309,21 +312,28 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
      const Descriptor_File_Reader * Des_Reader = this->Meta_Data_Collector.Get_Descriptor_File_Reader();
  
      Git_Data_Processor * Data_Processor = this->Meta_Data_Collector.Get_Git_Data_Processor();
- 
-     CMAKE_Target_Library_Builder Target_Builder;
+     
 
-     Target_Builder.Receive_Operating_System(this->opr_sis);
-
-     Target_Builder.Receive_Descriptor_File_Reader(Des_Reader);
-
-     Source_File_Dependency_Determiner Dp_Determiner(this->Des_Path,this->opr_sis);
-
-     Dp_Determiner.Receive_Descriptor_File_Reader(Des_Reader);
-
-     Dp_Determiner.Receive_Git_Data_Processor(Data_Processor);
-
-    
      for(size_t i=start;i<end;i++){
+
+
+         CMAKE_Target_Library_Builder Target_Builder;
+
+         const std::vector<cmake_build::target_dependency_data> * dep_data_ptr = 
+            
+            &this->Target_List_Data_Processor.Get_Target_List_Elements_Dependency_Data()->at(i);
+
+         Target_Builder.Receive_Target_Dependency_Data(dep_data_ptr);
+
+         Target_Builder.Receive_Operating_System(this->opr_sis);
+
+         Target_Builder.Receive_Descriptor_File_Reader(Des_Reader);
+
+         Source_File_Dependency_Determiner Dp_Determiner(this->Des_Path,this->opr_sis);
+
+         Dp_Determiner.Receive_Descriptor_File_Reader(Des_Reader);
+
+         Dp_Determiner.Receive_Git_Data_Processor(Data_Processor);
 
          std::string source_file_path = this->Compiler_Data_Pointer->at(i).source_file_path;
 
@@ -333,8 +343,8 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
 
          Target_Builder.Receive_Simple_Dependency_Data(data_ptr);
 
-         Target_Builder.Build_MakeFile(source_file_path);
 
+         Target_Builder.Build_MakeFile();
          
          mt.lock();
 

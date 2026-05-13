@@ -87,6 +87,14 @@ void CMAKE_Target_List_Data_Processor::Process_Target_List_Data(){
          const std::vector<std::string> * dep_headers_dirs = &(target_dt.DATA_PTR->dependent_headers_dir);
 
          std::vector<cmake_build::target_dependency_data> vec_data;
+
+         std::string target_sys_dir = target_dt.DATA_PTR->src_sys_dir;
+
+         std::string target_git_record_dir = target_dt.DATA_PTR->src_git_record_dir;
+
+         std::string target_file_name_with_file_extention = target_dt.DATA_PTR->source_file_name;
+
+         std::string target_file_path = target_dt.DATA_PTR->source_file_path;
         
          for(size_t k=0;k<dep_headers->size();k++){
 
@@ -102,6 +110,14 @@ void CMAKE_Target_List_Data_Processor::Process_Target_List_Data(){
 
                  target_dep.target_name = target_dt.target_name;
 
+                 target_dep.target_sys_dir = target_sys_dir;
+
+                 target_dep.target_file_path = target_file_path;
+
+                 target_dep.target_git_record_dir = target_git_record_dir;
+
+                 target_dep.target_name_with_file_extention = target_file_name_with_file_extention;
+
                  target_dep.dep_data = COM_PTR;
 
                  target_dep.dep_name = dep_headers->at(k);
@@ -111,6 +127,14 @@ void CMAKE_Target_List_Data_Processor::Process_Target_List_Data(){
              else{
 
                  target_dep.target_name = target_dt.target_name;
+
+                 target_dep.target_sys_dir = target_sys_dir;
+
+                 target_dep.target_file_path = target_file_path;
+
+                 target_dep.target_git_record_dir = target_git_record_dir;
+
+                 target_dep.target_name_with_file_extention = target_file_name_with_file_extention;
 
                  target_dep.dep_data = nullptr;
 
@@ -200,6 +224,12 @@ void CMAKE_Target_List_Data_Processor::Print_Processed_Data(){
 
              std::cout << "\n Target Name:" << Dep_Data_Ptr->at(k).target_name;
 
+             std::cout << "\n Target Name with file extention:" << Dep_Data_Ptr->at(k).target_name_with_file_extention;
+
+             std::cout << "\n Target Sys Directory:" << Dep_Data_Ptr->at(k).target_sys_dir;
+
+             std::cout << "\n Target Git RECORD Directory:" << Dep_Data_Ptr->at(k).target_git_record_dir;
+
              std::cout << "\n Dependent Header Name:"      << Dep_Data_Ptr->at(k).dep_name;
 
              std::cout << "\n Dependent Header Directory:" << Dep_Data_Ptr->at(k).dep_hdr_dir;
@@ -214,4 +244,6 @@ void CMAKE_Target_List_Data_Processor::Print_Processed_Data(){
 
          std::cout << "\n\n";
      }
+
+     //exit(0);
 }

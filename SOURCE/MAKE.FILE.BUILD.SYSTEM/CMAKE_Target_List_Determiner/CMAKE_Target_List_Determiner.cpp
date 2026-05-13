@@ -72,6 +72,8 @@ void CMAKE_Target_List_Determiner::Determine_Target_Lists(){
 
      first_target.target_name = this->Compiler_Data_Pointer->at(0).source_file_name_witout_ext;
 
+     //first_target.target_name_with_ext = this->Compiler_Data_Pointer->at(0).source_file_name;
+
      first_target.data_index = target_index;
 
      first_target.DATA_PTR = &(this->Compiler_Data_Pointer->at(0));
@@ -87,6 +89,8 @@ void CMAKE_Target_List_Determiner::Determine_Target_Lists(){
             target_index++;
 
             next_target.target_name = this->Compiler_Data_Pointer->at(i).source_file_name_witout_ext;
+
+            //next_target.target_name_with_ext = this->Compiler_Data_Pointer->at(i).source_file_name;
 
             next_target.data_index = target_index;
 

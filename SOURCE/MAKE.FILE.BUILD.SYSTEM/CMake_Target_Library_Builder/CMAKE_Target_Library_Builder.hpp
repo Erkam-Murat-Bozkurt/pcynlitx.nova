@@ -17,6 +17,8 @@
 #include <map>
 #include <unordered_map>
 #include <iterator>
+#include "CMAKE_Target_List_Data_Processor.hpp"
+#include "CMAKE_Target_List_Determiner.hpp"
 #include "MakeFile_Path_Determiner.hpp"
 #include "MakeFile_Data_Collector.hpp"
 #include "Source_File_Dependency_Determiner.hpp"
@@ -29,12 +31,23 @@
 #include "DirectoryOperations.h"
 #include "IntToCharTranslater.h"
 
+//using namespace::cmake_build;
+
 class CMAKE_Target_Library_Builder
 {
 public:
+
  CMAKE_Target_Library_Builder();
+
  virtual ~CMAKE_Target_Library_Builder();
- void Build_MakeFile(std::string file_name);
+
+ void Receive_Target_Dependency_Data(const std::vector<cmake_build::target_dependency_data> * dt_ptr) {
+
+     this->target_dependency_data_ptr = dt_ptr;
+ }
+
+ void Build_MakeFile();
+
  void Add_Target_Path_To_Directory_List();
  void Construct_SubDirectory_List_File();
  void Receive_Compiler_Data_Pointer(const std::vector<Compiler_Data> * ptr);
@@ -47,6 +60,7 @@ public:
  void Clear_Object_Memory();
 private:
  Compiler_Data * Find_Compiler_Data_From_Source_File_Path(std::string name);
+ std::string Extract_Git_Record_Path(std::string path);
  void Find_Construction_Directory(std::string & upper, std::string dir);
  void Convert_CMAKE_Format(std::string & str);
  void Clear_String_Vector(std::vector<std::string> & str); 
@@ -56,6 +70,7 @@ private:
  bool Check_String_Existance(std::vector<std::string> & list, std::string str);
  void Find_Upper_Directory(std::string & upper_dir, std::string dir);
  std::string Search_For_New_Upper_Directory(std::vector<std::string> & dir_list,std::string dir);
+ const std::vector<cmake_build::target_dependency_data> * target_dependency_data_ptr;
  const Simple_Source_File_Dependency * dep_data_ptr;
  MakeFile_Path_Determiner Path_Determiner;
  const Descriptor_File_Reader * Des_Reader;

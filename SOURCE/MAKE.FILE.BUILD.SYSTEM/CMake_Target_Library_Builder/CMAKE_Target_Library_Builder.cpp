@@ -110,12 +110,14 @@ Compiler_Data * CMAKE_Target_Library_Builder::Find_Compiler_Data_From_Source_Fil
 }
 
 
-void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
+void CMAKE_Target_Library_Builder::Build_MakeFile(){
 
      this->Memory_Delete_Condition = false;
 
+     const cmake_build::target_dependency_data target_data = this->target_dependency_data_ptr->at(0);
 
-     std::string file_dir = this->dep_data_ptr->dir;
+
+     std::string file_dir = target_data.target_sys_dir;
 
 
      std::string CMake_File_Path = file_dir;
@@ -127,14 +129,12 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      if(this->opr_sis == 'l'){
 
-        CMake_File_Path.push_back('\\');
+        CMake_File_Path.push_back('/');
      }
 
-     std::string file_name = this->dep_data_ptr->cmake_target_name  + ".cmake";
-
+     std::string file_name =  target_data.target_name  + ".cmake";
 
      CMake_File_Path = CMake_File_Path +  file_name;
-
 
      this->FileManager.SetFilePath(CMake_File_Path);
 
@@ -145,15 +145,19 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile("add_library(");
 
-     this->FileManager.WriteToFile(this->dep_data_ptr->cmake_target_name);          
+     this->FileManager.WriteToFile(target_data.target_name);          
 
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("  OBJECT ");
+     this->FileManager.WriteToFile(" ");
 
-     std::string src_file_path = this->dep_data_ptr->source_file_path;
+     std::string target_git_dir = target_data.target_git_record_dir;
+
+     std::string target_name = target_data.target_name_with_file_extention;
+
+     std::string src_file_path = " ${CMAKE_SOURCE_DIR}/" + target_git_dir + "/" + target_name;
 
      this->Convert_CMAKE_Format(src_file_path);
 
@@ -162,21 +166,98 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      std::vector<std::string> dependent_header_paths;
 
+     std::vector<std::string> dependent_header_dirs;
 
-     for(size_t i=0;i<this->dep_data_ptr->Dependent_Header_Paths.size();i++){
-      
-         std::string dep_header_path = this->dep_data_ptr->Dependent_Header_Paths.at(i);
+     std::vector<std::string> dependent_source_paths;
 
-         this->Convert_CMAKE_Format(dep_header_path);
 
-         if(!this->Check_String_Existance(dependent_header_paths,dep_header_path)){
+     for(size_t i=1;i<this->target_dependency_data_ptr->size();i++){
 
-            dependent_header_paths.push_back(dep_header_path);
+         const cmake_build::target_dependency_data target_loop_data  
+          
+               = this->target_dependency_data_ptr->at(i);
+
+         std::string src_file = target_loop_data.dep_data->source_file_name;
+
+         std::string src_git_dr = target_loop_data.dep_data->src_git_record_dir;
+
+         std::string target_git_src_path = "${CMAKE_SOURCE_DIR}/" + src_git_dr + 
+         
+                     "/" + src_file;
+
+         this->Convert_CMAKE_Format(target_git_src_path);
+
+         if(!this->Check_String_Existance(dependent_source_paths,target_git_src_path)){
+
+            dependent_source_paths.push_back(target_git_src_path);
+         }
+
+
+         const std::vector<std::string> * dep_hdr_ptr = &target_data.dep_data->dependent_headers;
+
+         const std::vector<std::string> * dep_hdr_dir_ptr = &target_data.dep_data->dependent_headers_dir;
+
+         const std::vector<std::string> * upper_dep_hdr_dir_ptr = &target_data.dep_data->upper_directories;
+
+
+         for(size_t k=0;k<dep_hdr_ptr->size();k++){
+
+             std::string hdr_dir = dep_hdr_dir_ptr->at(k);
+
+             std::string hdr_file_name = dep_hdr_ptr->at(k);
+
+             std::string upper_dep_hdr_dir = upper_dep_hdr_dir_ptr->at(k);
+
+
+
+
+             std::string git_hdr_dir = "${CMAKE_SOURCE_DIR}/" + this->Extract_Git_Record_Path(hdr_dir);
+
+             std::string git_upper_hdr_dir = "${CMAKE_SOURCE_DIR}/" + this->Extract_Git_Record_Path(upper_dep_hdr_dir);
+
+             std::string hdr_path = git_hdr_dir + "/" + hdr_file_name;
+
+
+
+             this->Convert_CMAKE_Format(hdr_path);
+
+             if(!this->Check_String_Existance(dependent_header_paths,hdr_path)){
+
+                 dependent_header_paths.push_back(hdr_path);
+             }
+
+             this->Convert_CMAKE_Format(git_hdr_dir);
+
+             if(!this->Check_String_Existance(dependent_header_dirs,git_hdr_dir)){
+
+                 dependent_header_dirs.push_back(git_hdr_dir);
+             }
+
+             this->Convert_CMAKE_Format(git_upper_hdr_dir);
+
+             if(!this->Check_String_Existance(dependent_header_dirs,git_upper_hdr_dir)){
+
+                 dependent_header_dirs.push_back(git_upper_hdr_dir);
+             }
          }
      }
 
+     dependent_source_paths.shrink_to_fit();
+
      dependent_header_paths.shrink_to_fit();
 
+     dependent_header_dirs.shrink_to_fit();
+
+
+
+     for(size_t i=0;i<dependent_source_paths.size();i++){
+
+         this->FileManager.WriteToFile("\n");
+
+         this->FileManager.WriteToFile("  ");
+
+         this->FileManager.WriteToFile(dependent_source_paths.at(i));      
+     }
 
 
      for(size_t i=0;i<dependent_header_paths.size();i++){
@@ -192,9 +273,9 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile(")");
 
+     this->Clear_String_Vector(dependent_source_paths);
+
      this->Clear_String_Vector(dependent_header_paths);
-
-
 
      this->FileManager.WriteToFile("\n");
 
@@ -205,53 +286,18 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
      
      this->FileManager.WriteToFile("target_include_directories(");
 
-     this->FileManager.WriteToFile(this->dep_data_ptr->cmake_target_name);     
+     this->FileManager.WriteToFile(target_data.target_name);          
 
      this->FileManager.WriteToFile(" PUBLIC ");
-     
+
      this->FileManager.WriteToFile("\n");
 
-
-     std::vector<std::string> dependent_header_dirs;
-
-     for(size_t i=0;i<this->dep_data_ptr->Dependent_Header_Directories.size();i++){
-
-         std::string dep_header_dir = this->dep_data_ptr->Dependent_Header_Directories.at(i);
-      
-         if(!this->Check_String_Existance(dependent_header_dirs,dep_header_dir)){
-
-            dependent_header_dirs.push_back(dep_header_dir);
-         }
-     }
-
      for(size_t i=0;i<dependent_header_dirs.size();i++){
 
-         std::string dep_header_dir = dependent_header_dirs.at(i);
-      
-         std::string upper_dir = this->Search_For_New_Upper_Directory(dependent_header_dirs,dep_header_dir);
+         this->FileManager.WriteToFile("\n");
 
-         if(!this->Check_String_Existance(dependent_header_dirs,dep_header_dir)){
+         this->FileManager.WriteToFile("  ");
 
-            dependent_header_dirs.push_back(upper_dir);
-         }
-     }
-
-     
-    dependent_header_dirs.shrink_to_fit();
-
-     for(size_t i=0;i<dependent_header_dirs.size();i++){
-
-         this->Convert_CMAKE_Format(dependent_header_dirs.at(i));
-     }
-
-
-     dependent_header_dirs.shrink_to_fit();
-
-
-     for(size_t i=0;i<dependent_header_dirs.size();i++){
-
-         this->FileManager.WriteToFile("\n\t");
-      
          this->FileManager.WriteToFile(dependent_header_dirs.at(i));      
      }
 
@@ -272,7 +318,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
         this->FileManager.WriteToFile("target_link_directories(");
 
-        this->FileManager.WriteToFile(this->dep_data_ptr->cmake_target_name);          
+        this->FileManager.WriteToFile(target_data.target_name);          
 
         this->FileManager.WriteToFile(" PUBLIC ");
 
@@ -317,11 +363,11 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
         this->FileManager.WriteToFile("target_link_libraries(");
 
-        this->FileManager.WriteToFile(this->dep_data_ptr->cmake_target_name);          
+        this->FileManager.WriteToFile(target_data.target_name);          
 
         this->FileManager.WriteToFile(" PUBLIC ");
 
-        this->FileManager.WriteToFile("\n\n    ");
+        this->FileManager.WriteToFile("\n\n\t");
 
         int lib_counter = 0;
 
@@ -345,7 +391,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile("target_compile_options(");
 
-     this->FileManager.WriteToFile(this->dep_data_ptr->cmake_target_name);          
+     this->FileManager.WriteToFile(target_data.target_name);          
 
      this->FileManager.WriteToFile(" PUBLIC ");
 
@@ -366,7 +412,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile("target_link_options(");
 
-     this->FileManager.WriteToFile(this->dep_data_ptr->cmake_target_name);          
+     this->FileManager.WriteToFile(target_data.target_name);          
 
      this->FileManager.WriteToFile(" PUBLIC ");
 
@@ -603,6 +649,26 @@ std::string CMAKE_Target_Library_Builder::Search_For_New_Upper_Directory(std::ve
       return upper_directory;
 }
 
+
+std::string CMAKE_Target_Library_Builder::Extract_Git_Record_Path(std::string path){
+
+            std::string repo_dir = this->Des_Reader->Get_Repo_Directory_Location();
+
+            repo_dir.shrink_to_fit();
+
+            std::string git_path;
+
+            for(size_t i=repo_dir.size()+1;i<path.size();i++){
+                 
+                git_path.push_back(path.at(i));
+            }
+
+            git_path.shrink_to_fit();
+
+            this->Convert_CMAKE_Format(git_path);
+
+            return git_path;
+}
 
 
 void CMAKE_Target_Library_Builder::Find_Upper_Directory(std::string & upper_dir, std::string dir){

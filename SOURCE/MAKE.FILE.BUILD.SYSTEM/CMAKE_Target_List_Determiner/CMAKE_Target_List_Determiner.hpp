@@ -19,8 +19,6 @@
 #include <thread>
 #include <mutex>
 #include "Build_System_Meta_Data_Collector.hpp"
-#include "CMAKE_Main_File_Writer.hpp"
-#include "CMAKE_Target_Library_Builder.hpp"
 #include "Make_File_Cleaner.hpp"
 #include "MakeFile_Data_Collector.hpp"
 #include "MakeFile_Directory_Constructor.hpp"
@@ -39,7 +37,10 @@ namespace cmake_build {
 
      struct target_data
      {
-           std::string target_name;
+           std::string target_name; // The target file name without file extention 
+
+           //std::string target_name_with_ext; // The target file name with file extention such as ".cpp"
+
            int data_index; // this is the index for Compiler_Data vector
 
            const Compiler_Data * DATA_PTR; // this is the pointer for Compiler_Data holding 
