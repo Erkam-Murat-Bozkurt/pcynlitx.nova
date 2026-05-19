@@ -68,11 +68,9 @@ void CMAKE_Target_List_Determiner::Determine_Target_Lists(){
 
      int target_index = 0;
 
-     cmake_build::target_data first_target;
+     cmake::target_list_dtr first_target;
 
      first_target.target_name = this->Compiler_Data_Pointer->at(0).source_file_name_witout_ext;
-
-     //first_target.target_name_with_ext = this->Compiler_Data_Pointer->at(0).source_file_name;
 
      first_target.data_index = target_index;
 
@@ -82,15 +80,13 @@ void CMAKE_Target_List_Determiner::Determine_Target_Lists(){
 
      for(size_t i=1;i<this->Compiler_Data_Pointer->size();i++){
 
-         cmake_build::target_data next_target;
+         cmake::target_list_dtr next_target;
 
          if(!this->Control_Dependency_For_Any_Previous_Target(i)){
 
             target_index++;
 
             next_target.target_name = this->Compiler_Data_Pointer->at(i).source_file_name_witout_ext;
-
-            //next_target.target_name_with_ext = this->Compiler_Data_Pointer->at(i).source_file_name;
 
             next_target.data_index = target_index;
 
@@ -124,7 +120,7 @@ bool CMAKE_Target_List_Determiner::Control_Dependency_For_Any_Previous_Target(in
 
      for(size_t i=0;i<this->target_list.size();i++){
 
-         cmake_build::target_data control_target = this->target_list.at(i);
+         cmake::target_list_dtr control_target = this->target_list.at(i);
 
          const std::vector<std::string> * headers =  &(control_target.DATA_PTR->dependent_headers);
 

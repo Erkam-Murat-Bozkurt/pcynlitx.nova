@@ -94,29 +94,26 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
 
      this->Target_List_Determiner.Determine_Target_Lists();
 
-     const std::vector<cmake_build::target_data> * DATA_PTR 
+     const std::vector<cmake::target_list_dtr> * LIST_DTR_PTR 
      
-           = this->Target_List_Determiner. Get_CMAKE_Target_List();
+           = this->Target_List_Determiner.Get_CMAKE_Target_List();
 
-     for(size_t i=0;i<DATA_PTR->size();i++){
 
-         std::cout << "\n Target[" << i << "]:" << DATA_PTR->at(i).target_name;
-     }
+     const Descriptor_File_Reader * Des_Reader = 
+     
+          this->Meta_Data_Collector.Get_Descriptor_File_Reader();
 
-     this->Target_List_Data_Processor.Receive_Target_List_Data(DATA_PTR);
+     this->Target_List_Data_Processor.Receive_Descriptor_File(Des_Reader);
+
+     this->Target_List_Data_Processor.Receive_Target_List_Data(LIST_DTR_PTR);
 
      this->Target_List_Data_Processor.Receive_Compiler_Dependency_Data(this->Compiler_Data_Pointer);
 
      this->Target_List_Data_Processor.Process_Target_List_Data();
 
-     //this->Target_List_Data_Processor.Print_Processed_Data();
-
      this->Perform_MakeFile_Construction();
 
 }
-
-
-
 
 
 void CMAKE_System_Constructor::Write_Main_CMakeLists_File(std::string project_name,
@@ -232,7 +229,7 @@ void CMAKE_System_Constructor::Construct_For_Small_Data_Set(size_t target_number
 
 void CMAKE_System_Constructor::Perform_MakeFile_Construction(){
 
-      const std::vector<std::vector<cmake_build::target_dependency_data>> *  target_dep_ptr =
+     const std::vector<cmake::target_data> *  target_dep_ptr =
       
       this->Target_List_Data_Processor.Get_Target_List_Elements_Dependency_Data();
 
@@ -313,17 +310,26 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
  
      Git_Data_Processor * Data_Processor = this->Meta_Data_Collector.Get_Git_Data_Processor();
      
+     
+     const std::vector<cmake::target_data> * target_data_ptr =
+
+           this->Target_List_Data_Processor.Get_Target_List_Elements_Dependency_Data();
+    
+     
+     std::cout << "\n target_data_ptr->size():" << target_data_ptr->size();
+
+     std::cout << "\n start:" << start;
+
+     std::cout << "\n end:" << end;
+
 
      for(size_t i=start;i<end;i++){
 
-
          CMAKE_Target_Library_Builder Target_Builder;
 
-         const std::vector<cmake_build::target_dependency_data> * dep_data_ptr = 
+         //const cmake::target_data  * dep_data_ptr = &(target_data_ptr->at(i));
             
-            &this->Target_List_Data_Processor.Get_Target_List_Elements_Dependency_Data()->at(i);
-
-         Target_Builder.Receive_Target_Dependency_Data(dep_data_ptr);
+         Target_Builder.Receive_Target_Dependency_Data(target_data_ptr);
 
          Target_Builder.Receive_Operating_System(this->opr_sis);
 
@@ -335,16 +341,19 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
 
          Dp_Determiner.Receive_Git_Data_Processor(Data_Processor);
 
+
          std::string source_file_path = this->Compiler_Data_Pointer->at(i).source_file_path;
 
          Dp_Determiner.Simple_Dependency_Determination_For_Single_Source_File(source_file_path);
+
 
          const Simple_Source_File_Dependency * data_ptr = Dp_Determiner.Get_Simple_File_Dependencies();
 
          Target_Builder.Receive_Simple_Dependency_Data(data_ptr);
 
-
          Target_Builder.Build_MakeFile();
+
+
          
          mt.lock();
 
@@ -358,7 +367,10 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
          Target_Builder.Clear_Dynamic_Memory();
 
          Dp_Determiner.Clear_Dynamic_Memory();
+
+         std::cout << "\n The end of the loop..";
      }
+
 }
 
 

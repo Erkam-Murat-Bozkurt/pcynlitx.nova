@@ -41,7 +41,7 @@ public:
 
  virtual ~CMAKE_Target_Library_Builder();
 
- void Receive_Target_Dependency_Data(const std::vector<cmake_build::target_dependency_data> * dt_ptr) {
+ void Receive_Target_Dependency_Data(const std::vector<cmake::target_data> * dt_ptr) {
 
      this->target_dependency_data_ptr = dt_ptr;
  }
@@ -70,7 +70,7 @@ private:
  bool Check_String_Existance(std::vector<std::string> & list, std::string str);
  void Find_Upper_Directory(std::string & upper_dir, std::string dir);
  std::string Search_For_New_Upper_Directory(std::vector<std::string> & dir_list,std::string dir);
- const std::vector<cmake_build::target_dependency_data> * target_dependency_data_ptr;
+ const std::vector<cmake::target_data> * target_dependency_data_ptr;
  const Simple_Source_File_Dependency * dep_data_ptr;
  MakeFile_Path_Determiner Path_Determiner;
  const Descriptor_File_Reader * Des_Reader;

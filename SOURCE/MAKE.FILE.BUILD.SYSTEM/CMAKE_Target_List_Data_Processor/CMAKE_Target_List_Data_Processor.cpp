@@ -58,11 +58,11 @@ void CMAKE_Target_List_Data_Processor::Clear_Dynamic_Memory(){
 
              for(size_t i=0;i<this->Target_List_Dependeny_Data.size();i++){
 
-                 if(!this->Target_List_Dependeny_Data.at(i).empty()){
+                 if(!this->Target_List_Dependeny_Data.at(i).dep_dt.empty()){
 
-                     this->Target_List_Dependeny_Data.at(i).clear();
+                     this->Target_List_Dependeny_Data.at(i).dep_dt.clear();
 
-                     this->Target_List_Dependeny_Data.at(i).shrink_to_fit();
+                     this->Target_List_Dependeny_Data.at(i).dep_dt.shrink_to_fit();
                  }
              }
 
@@ -74,88 +74,283 @@ void CMAKE_Target_List_Data_Processor::Clear_Dynamic_Memory(){
 }
 
 
+
+
 void CMAKE_Target_List_Data_Processor::Process_Target_List_Data(){
       
      this->Construct_Compiler_Data_Map();
 
      for(size_t i=0;i<this->Target_List_Data_Ptr->size();i++){
 
-         cmake_build::target_data target_dt = this->Target_List_Data_Ptr->at(i);
+         this->Process_Target_List_Data(i);
+     }
+}
 
-         const std::vector<std::string> * dep_headers = &(target_dt.DATA_PTR->dependent_headers);
-         
-         const std::vector<std::string> * dep_headers_dirs = &(target_dt.DATA_PTR->dependent_headers_dir);
+void CMAKE_Target_List_Data_Processor::Process_Target_List_Data(int i){
 
-         std::vector<cmake_build::target_dependency_data> vec_data;
+     cmake::target_list_dtr target_dt = this->Target_List_Data_Ptr->at(i);
 
-         std::string target_sys_dir = target_dt.DATA_PTR->src_sys_dir;
+     cmake::target_data cmake_target;
 
-         std::string target_git_record_dir = target_dt.DATA_PTR->src_git_record_dir;
+     std::unordered_map<std::string,cmake::target_dependency_dt> TARGET_DEPENDENCY_REPETITION_CONTROL_MAP;
 
-         std::string target_file_name_with_file_extention = target_dt.DATA_PTR->source_file_name;
+     this->Process_Target(target_dt,cmake_target,TARGET_DEPENDENCY_REPETITION_CONTROL_MAP);
 
-         std::string target_file_path = target_dt.DATA_PTR->source_file_path;
-        
-         for(size_t k=0;k<dep_headers->size();k++){
+     if(!TARGET_DEPENDENCY_REPETITION_CONTROL_MAP.empty()){
 
-             cmake_build::target_dependency_data target_dep;
-
-             std::string file_name_without_ext;
-
-             this->Find_File_Name_Without_Extension(dep_headers->at(k),file_name_without_ext);
-
-             const Compiler_Data * COM_PTR = Find_Compiler_Data_From_File_Name(file_name_without_ext);
-
-             if(COM_PTR != nullptr){
-
-                 target_dep.target_name = target_dt.target_name;
-
-                 target_dep.target_sys_dir = target_sys_dir;
-
-                 target_dep.target_file_path = target_file_path;
-
-                 target_dep.target_git_record_dir = target_git_record_dir;
-
-                 target_dep.target_name_with_file_extention = target_file_name_with_file_extention;
-
-                 target_dep.dep_data = COM_PTR;
-
-                 target_dep.dep_name = dep_headers->at(k);
-
-                 target_dep.dep_hdr_dir = dep_headers_dirs->at(k);
-             }
-             else{
-
-                 target_dep.target_name = target_dt.target_name;
-
-                 target_dep.target_sys_dir = target_sys_dir;
-
-                 target_dep.target_file_path = target_file_path;
-
-                 target_dep.target_git_record_dir = target_git_record_dir;
-
-                 target_dep.target_name_with_file_extention = target_file_name_with_file_extention;
-
-                 target_dep.dep_data = nullptr;
-
-                 target_dep.dep_name = dep_headers->at(k);
-
-                 target_dep.dep_hdr_dir = dep_headers_dirs->at(k);
-             }
-
-             vec_data.push_back(target_dep);
-
-             vec_data.shrink_to_fit();
-         }
-
-         this->Target_List_Dependeny_Data.push_back(vec_data);
-
-         vec_data.clear();
-
-         vec_data.shrink_to_fit();
+         TARGET_DEPENDENCY_REPETITION_CONTROL_MAP.clear();
      }
 
+     this->Determine_Target_Dependent_Directories(cmake_target);
+
+     this->Target_List_Dependeny_Data.push_back(cmake_target);
+
      this->Target_List_Dependeny_Data.shrink_to_fit();
+}
+
+void CMAKE_Target_List_Data_Processor::Determine_Target_Dependent_Directories(cmake::target_data & cmake_target){
+
+     std::unordered_map<std::string,std::string> DEPENDENT_HEADER_DIRECTORY;
+
+     std::unordered_map<std::string,std::string> DEPENDENT_SOURCE_DIRECTORY;
+
+     size_t dependency_size = cmake_target.dep_dt.size();
+
+     for(size_t i=0;i<dependency_size;i++){
+
+         if(cmake_target.dep_dt.at(i).is_header_file){
+
+            std::string hdr_path = cmake_target.dep_dt.at(i).dep_file_path;
+
+            std::string hdr_git_record_dir = cmake_target.dep_dt.at(i).dep_file_git_record_dir;
+
+            if(!DEPENDENT_HEADER_DIRECTORY.empty()){
+
+               if(DEPENDENT_HEADER_DIRECTORY.find(hdr_path)==DEPENDENT_HEADER_DIRECTORY.end()){
+
+                  DEPENDENT_HEADER_DIRECTORY.insert(std::make_pair(hdr_path,hdr_git_record_dir));
+
+                  cmake_target.dependent_header_dirs.push_back(hdr_git_record_dir);
+
+                  cmake_target.dependent_header_dirs.shrink_to_fit();
+               }
+            }
+            else{
+
+                  DEPENDENT_HEADER_DIRECTORY.insert(std::make_pair(hdr_path,hdr_git_record_dir));
+
+                  cmake_target.dependent_header_dirs.push_back(hdr_git_record_dir);
+
+                  cmake_target.dependent_header_dirs.shrink_to_fit();
+            }
+         }
+         else{
+
+               std::string src_path = cmake_target.dep_dt.at(i).dep_file_path;
+
+               std::string src_git_record_dir = cmake_target.dep_dt.at(i).dep_file_git_record_dir;
+
+               if(!DEPENDENT_SOURCE_DIRECTORY.empty()){
+
+               if(DEPENDENT_SOURCE_DIRECTORY.find(src_path)==DEPENDENT_SOURCE_DIRECTORY.end()){
+
+                  DEPENDENT_SOURCE_DIRECTORY.insert(std::make_pair(src_path,src_path));
+
+                  cmake_target.dependent_source_dirs.push_back(src_git_record_dir);
+
+                  cmake_target.dependent_source_dirs.shrink_to_fit();
+               }
+            }
+            else{
+
+                  DEPENDENT_SOURCE_DIRECTORY.insert(std::make_pair(src_path,src_git_record_dir));
+
+                  cmake_target.dependent_source_dirs.push_back(src_git_record_dir);
+
+                  cmake_target.dependent_source_dirs.shrink_to_fit();
+            }
+         }
+     }     
+
+     if(!DEPENDENT_HEADER_DIRECTORY.empty()){
+
+         DEPENDENT_HEADER_DIRECTORY.clear();
+     }
+
+     if(!DEPENDENT_SOURCE_DIRECTORY.empty()){
+
+         DEPENDENT_SOURCE_DIRECTORY.clear();
+     }
+}
+
+void CMAKE_Target_List_Data_Processor::Process_Target(cmake::target_list_dtr & target_dt, 
+    
+     cmake::target_data & target, std::unordered_map<std::string,cmake::target_dependency_dt> & REPETITION_CONTROL_MAP){
+
+     target.target_sys_dir = target_dt.DATA_PTR->src_sys_dir;
+
+     target.target_git_record_dir = target_dt.DATA_PTR->src_git_record_dir;
+
+     target.target_name_with_file_extention = target_dt.DATA_PTR->source_file_name;
+
+     target.target_name = target_dt.DATA_PTR->source_file_name_witout_ext;
+
+     target.target_file_path = target_dt.DATA_PTR->source_file_path;
+
+     this->Process_Target_Depenendecies(target_dt.DATA_PTR,target.dep_dt,REPETITION_CONTROL_MAP);
+}
+
+
+void CMAKE_Target_List_Data_Processor::Process_Target_Depenendecies(const Compiler_Data * DATA_PTR, 
+    
+     std::vector<cmake::target_dependency_dt> & target_dep,
+     
+     std::unordered_map<std::string,cmake::target_dependency_dt> & REPETITION_CONTROL_MAP){
+     
+
+     const std::vector<std::string> * dep_headers      = &(DATA_PTR->dependent_headers);
+         
+     const std::vector<std::string> * dep_headers_dirs = &(DATA_PTR->dependent_headers_dir);
+
+
+     for(size_t k=0;k<dep_headers->size();k++){
+
+         cmake::target_dependency_dt hdr_dependency_dt;
+
+         this->Set_Target_Dependency_Data_For_Header(hdr_dependency_dt,dep_headers->at(k),dep_headers_dirs->at(k));
+
+         std::string hdr_path = hdr_dependency_dt.dep_file_path;
+
+         if(!REPETITION_CONTROL_MAP.empty()){
+
+            if(REPETITION_CONTROL_MAP.find(hdr_path)==REPETITION_CONTROL_MAP.end()){
+
+               REPETITION_CONTROL_MAP.insert(std::make_pair(hdr_path,hdr_dependency_dt));
+
+               target_dep.push_back(hdr_dependency_dt);
+
+               target_dep.shrink_to_fit();
+            }
+         }
+         else{
+
+             REPETITION_CONTROL_MAP.insert(std::make_pair(hdr_path,hdr_dependency_dt));
+
+             target_dep.push_back(hdr_dependency_dt);
+
+             target_dep.shrink_to_fit();
+         }
+
+         // The controlling stage: Control whether the header file has a source file ".cpp" 
+
+         // If there is a corresponding source file, its dependencies must be also researched.
+
+         std::string file_name_without_ext;
+
+         this->Find_File_Name_Without_Extension(dep_headers->at(k),file_name_without_ext);
+
+         const Compiler_Data * COM_PTR = Find_Compiler_Data_From_File_Name(file_name_without_ext);
+
+         if(COM_PTR != nullptr){
+
+            std::string src_path = COM_PTR->source_file_path;
+
+            if(!REPETITION_CONTROL_MAP.empty()){
+
+                if(REPETITION_CONTROL_MAP.find(src_path)==REPETITION_CONTROL_MAP.end()){
+
+                   cmake::target_dependency_dt source_file_dependency_dt;
+
+                   this->Set_Target_Dependency_Data_For_Source(source_file_dependency_dt,COM_PTR);
+
+                   REPETITION_CONTROL_MAP.insert(std::make_pair(src_path,source_file_dependency_dt));
+
+                   target_dep.push_back(source_file_dependency_dt);
+
+                   target_dep.shrink_to_fit();
+
+                   this->Process_Target_Depenendecies(COM_PTR,target_dep,REPETITION_CONTROL_MAP);
+                }
+            }
+            else{
+
+                   cmake::target_dependency_dt source_file_dependency_dt;
+
+                   this->Set_Target_Dependency_Data_For_Source(source_file_dependency_dt,COM_PTR);
+
+                   REPETITION_CONTROL_MAP.insert(std::make_pair(src_path,source_file_dependency_dt));
+
+                   target_dep.push_back(source_file_dependency_dt);
+
+                   target_dep.shrink_to_fit();
+
+                   this->Process_Target_Depenendecies(COM_PTR,target_dep,REPETITION_CONTROL_MAP);
+            }
+        }
+        else{
+
+           cmake::target_dependency_dt header_file_dependency_dt;
+
+           this->Set_Target_Dependency_Data_For_Header(header_file_dependency_dt,
+            
+                 dep_headers->at(k),dep_headers_dirs->at(k));
+
+           std::string hdr_path = header_file_dependency_dt.dep_file_path;
+
+           REPETITION_CONTROL_MAP.insert(std::make_pair(hdr_path,header_file_dependency_dt));
+
+           target_dep.push_back(header_file_dependency_dt);
+
+           target_dep.shrink_to_fit();
+        }
+    }
+}
+
+
+void CMAKE_Target_List_Data_Processor::Set_Target_Dependency_Data_For_Header(cmake::target_dependency_dt & target_dep,
+
+     std::string header_name, std::string header_dir){
+
+     std::string file_name_without_ext;
+
+     this->Find_File_Name_Without_Extension(header_name,file_name_without_ext);
+
+     target_dep.dep_file_name = file_name_without_ext;
+
+     target_dep.dep_file_name_with_file_extention = header_name; // The file name with file extention such as ".hpp"
+
+     target_dep.dep_file_sys_dir = header_dir;
+
+     target_dep.dep_file_path = header_dir + "/" + header_name;
+
+     target_dep.dep_file_git_record_dir = this->Extract_Git_Record_Path(header_dir); 
+     
+     target_dep.is_source_file = false;
+
+     target_dep.is_header_file = true;
+}
+
+
+
+void CMAKE_Target_List_Data_Processor::Set_Target_Dependency_Data_For_Source(cmake::target_dependency_dt & target_dep,
+
+     const Compiler_Data * COM_PTR){
+
+     target_dep.dep_file_name  =  COM_PTR->source_file_name_witout_ext;
+
+     target_dep.dep_file_git_record_dir = COM_PTR->src_git_record_dir;
+
+     target_dep.dep_file_path = COM_PTR->source_file_path;
+
+     target_dep.dep_file_git_record_dir = COM_PTR->src_git_record_dir;
+
+     target_dep.dep_file_sys_dir = COM_PTR->src_sys_dir;
+
+     target_dep.dep_file_name_with_file_extention =  COM_PTR->source_file_name;
+
+     target_dep.is_source_file = true;
+
+     target_dep.is_header_file = false;
 }
 
 
@@ -206,38 +401,45 @@ void CMAKE_Target_List_Data_Processor::Find_File_Name_Without_Extension(std::str
 }
 
 
+
+std::string CMAKE_Target_List_Data_Processor::Extract_Git_Record_Path(std::string path){
+
+            std::string repo_dir = this->Des_Reader->Get_Repo_Directory_Location();
+
+            repo_dir.shrink_to_fit();
+
+            std::string git_path;
+
+            for(size_t i=repo_dir.size()+1;i<path.size();i++){
+                 
+                git_path.push_back(path.at(i));
+            }
+
+            git_path.shrink_to_fit();
+
+            this->Convert_CMAKE_Format(git_path);
+
+            return git_path;
+}
+
+
 void CMAKE_Target_List_Data_Processor::Print_Processed_Data(){
 
      for(size_t i=0;i<this->Target_List_Dependeny_Data.size();i++){
         
-         std::vector<cmake_build::target_dependency_data> * Dep_Data_Ptr = 
+         std::vector<cmake::target_data> * Dep_Data_Ptr = 
 
-         &this->Target_List_Dependeny_Data.at(i);
+         &this->Target_List_Dependeny_Data;
 
          std::cout << "\n\n";
 
-         std::cout << "\n TARGET NAME:" << Dep_Data_Ptr->at(0).target_name;
+         std::cout << "\n TARGET NAME:" << Dep_Data_Ptr->at(i).target_name;
 
          std::cout << "\n ----------------------------------------------------------------------";
 
-         for(size_t k=0;k<Dep_Data_Ptr->size();k++){
+         for(size_t k=0;k<Dep_Data_Ptr->at(i).dep_dt.size();k++){
 
-             std::cout << "\n Target Name:" << Dep_Data_Ptr->at(k).target_name;
-
-             std::cout << "\n Target Name with file extention:" << Dep_Data_Ptr->at(k).target_name_with_file_extention;
-
-             std::cout << "\n Target Sys Directory:" << Dep_Data_Ptr->at(k).target_sys_dir;
-
-             std::cout << "\n Target Git RECORD Directory:" << Dep_Data_Ptr->at(k).target_git_record_dir;
-
-             std::cout << "\n Dependent Header Name:"      << Dep_Data_Ptr->at(k).dep_name;
-
-             std::cout << "\n Dependent Header Directory:" << Dep_Data_Ptr->at(k).dep_hdr_dir;
-
-             if(Dep_Data_Ptr->at(k).dep_data!=nullptr){
-
-                std::cout << "\n Name:" << Dep_Data_Ptr->at(k).dep_data->source_file_name_witout_ext;
-             }
+             std::cout << "\n Target Name:" << Dep_Data_Ptr->at(i).dep_dt.at(k).dep_file_name;
 
              std::cout << "\n\n";
          }

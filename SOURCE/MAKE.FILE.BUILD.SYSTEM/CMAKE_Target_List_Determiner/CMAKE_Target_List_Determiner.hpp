@@ -33,18 +33,18 @@
 #include "IntToCharTranslater.h"
 
 
-namespace cmake_build {
+namespace cmake {
 
-     struct target_data
+     struct target_list_dtr // This is the data structure which is used in target determination and the target list construction ..
      {
-           std::string target_name; // The target file name without file extention 
+            std::string target_name; // The target file name without file extention 
 
-           //std::string target_name_with_ext; // The target file name with file extention such as ".cpp"
+            //std::string target_name_with_ext; // The target file name with file extention such as ".cpp"
 
-           int data_index; // this is the index for Compiler_Data vector
+            int data_index; // this is the index for Compiler_Data vector
 
-           const Compiler_Data * DATA_PTR; // this is the pointer for Compiler_Data holding 
-                                     // related target dependency information
+            const Compiler_Data * DATA_PTR; // this is the pointer for Compiler_Data holding 
+                                            // related target dependency information
      };
 };
 
@@ -69,7 +69,7 @@ public:
 
  bool Control_Dependency_For_Any_Previous_Target(int index);
 
- const std::vector<cmake_build::target_data> * Get_CMAKE_Target_List() const {
+ const std::vector<cmake::target_list_dtr> * Get_CMAKE_Target_List() const {
 
        return &this->target_list;
  }
@@ -83,7 +83,7 @@ protected:
       std::string & file_name_with_ext);
 
  const std::vector<Compiler_Data> * Compiler_Data_Pointer;
- std::vector<cmake_build::target_data> target_list;
+ std::vector<cmake::target_list_dtr> target_list;
  Custom_System_Interface * SysInt;
  bool Memory_Delete_Condition;
  char build_type;
