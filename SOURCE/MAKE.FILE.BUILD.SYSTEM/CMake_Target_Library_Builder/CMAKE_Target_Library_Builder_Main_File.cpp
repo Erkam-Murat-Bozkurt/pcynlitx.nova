@@ -109,9 +109,9 @@ int main(int argc, char ** argv){
 
     CMK_TARGET_Lib_Builder.Build_MakeFile(0);
 
-    CMK_TARGET_Lib_Builder.Add_Target_Path_To_Directory_List();
+    CMK_TARGET_Lib_Builder.Add_Target_Path_To_Directory_List(0);
 
-    CMK_TARGET_Lib_Builder.Construct_SubDirectory_List_File();
+    CMK_TARGET_Lib_Builder.Construct_SubDirectory_List_File(0);
        
     CMK_TARGET_Lib_Builder.Clear_Object_Memory();
 

@@ -237,6 +237,11 @@ void CMAKE_System_Constructor::Perform_MakeFile_Construction(){
 
      size_t target_number = target_dep_ptr->size();
 
+     for(size_t i=0;i<target_number;i++){
+
+         std::cout << "\n target name [" << i << "]" << target_dep_ptr->at(i).target_name;
+     }
+
      if(target_number > 50){
 
         this->Construct_For_Large_Data_Set(target_number);        
@@ -315,19 +320,10 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
 
            this->Target_List_Data_Processor.Get_Target_List_Elements_Dependency_Data();
     
-     
-     std::cout << "\n target_data_ptr->size():" << target_data_ptr->size();
-
-     std::cout << "\n start:" << start;
-
-     std::cout << "\n end:" << end;
-
 
      for(size_t i=start;i<end;i++){
 
          CMAKE_Target_Library_Builder Target_Builder;
-
-         //const cmake::target_data  * dep_data_ptr = &(target_data_ptr->at(i));
             
          Target_Builder.Receive_Target_Dependency_Data(target_data_ptr);
 
@@ -357,20 +353,17 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
          
          mt.lock();
 
-         Target_Builder.Add_Target_Path_To_Directory_List();
+         Target_Builder.Add_Target_Path_To_Directory_List(i);
 
-         Target_Builder.Construct_SubDirectory_List_File();
+         Target_Builder.Construct_SubDirectory_List_File(i);
 
          mt.unlock();
-
-
+         
+         
          Target_Builder.Clear_Dynamic_Memory();
 
          Dp_Determiner.Clear_Dynamic_Memory();
-
-         std::cout << "\n The end of the loop..";
      }
-
 }
 
 

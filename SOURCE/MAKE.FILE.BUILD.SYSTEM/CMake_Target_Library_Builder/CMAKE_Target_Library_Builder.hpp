@@ -48,40 +48,72 @@ public:
 
  void Build_MakeFile(int target_list_index);
 
- void Add_Target_Path_To_Directory_List();
- void Construct_SubDirectory_List_File();
+ void Add_Target_Path_To_Directory_List(int index);
+
+ void Construct_SubDirectory_List_File(int index);
+
  void Receive_Compiler_Data_Pointer(const std::vector<Compiler_Data> * ptr);
+
  void Receive_Simple_Dependency_Data(const Simple_Source_File_Dependency * data);
+
  void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr);
+
  void Receive_Operating_System(char opr_sis);
+
  void Receive_DataMap(std::unordered_map<std::string, Compiler_Data> * ptr);
+
  std::string Get_Construction_Dir();
+
  void Clear_Dynamic_Memory();
+
  void Clear_Object_Memory();
 private:
  Compiler_Data * Find_Compiler_Data_From_Source_File_Path(std::string name);
+
  std::string Extract_Git_Record_Path(std::string path);
+
  void Find_Construction_Directory(std::string & upper, std::string dir);
+
  void Convert_CMAKE_Format(std::string & str);
+
  void Clear_String_Vector(std::vector<std::string> & str); 
+
  void Clear_String_Memory(std::string & pointer);
+
  void CMAKE_Sub_Directory_File_Path_Determination(std::string & path);
+
  void CMAKE_SubDir_Determination(std::string & sub_dir_path);
+
  bool Check_String_Existance(std::vector<std::string> & list, std::string str);
+
  void Find_Upper_Directory(std::string & upper_dir, std::string dir);
+
  std::string Search_For_New_Upper_Directory(std::vector<std::string> & dir_list,std::string dir);
+
  const std::vector<cmake::target_data> * target_dependency_data_ptr;
+
  const Simple_Source_File_Dependency * dep_data_ptr;
+
  MakeFile_Path_Determiner Path_Determiner;
+
  const Descriptor_File_Reader * Des_Reader;
+
  StringOperator StrOpr;
+
  Cpp_FileOperations FileManager;
+
  IntToCharTranslater Translater;
+
  std::unordered_map<std::string, Compiler_Data> * DataMap_Pointer;
+
  const std::vector<Compiler_Data> * Comp_Data_Ptr;
+
  Compiler_Data * Data_Ptr;
+
  char opr_sis;
+
  bool Include_Line_Condition;
+ 
  bool Memory_Delete_Condition;
 };
 
