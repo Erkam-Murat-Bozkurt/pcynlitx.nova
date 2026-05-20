@@ -69,24 +69,51 @@ int main(int argc, char ** argv){
          DataMap.insert(std::make_pair(source_file_path,Compiler_Data_Pointer->at(i)));
      }
 
+  
+     CMAKE_Target_List_Determiner Target_List_Determiner('n');
+ 
+     CMAKE_Target_List_Data_Processor Target_List_Data_Processor('n');
 
-    CMAKE_Target_Library_Builder CMK_TARGET_LST_Builder;
+     //Meta_Data_Collector.Collect_Meta_Data();
 
-    CMK_TARGET_LST_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
+     //this->Compiler_Data_Pointer = this->Meta_Data_Collector.Get_Compiler_Data();
 
-    CMK_TARGET_LST_Builder.Receive_Compiler_Data_Pointer(Compiler_Data_Pointer);
+     Target_List_Determiner.Receive_Compiler_Dependency_Data(Compiler_Data_Pointer);
 
-    CMK_TARGET_LST_Builder.Receive_Operating_System('w');
+     Target_List_Determiner.Determine_Target_Lists();
+
+     const std::vector<cmake::target_list_dtr> * LIST_DTR_PTR 
+     
+           = Target_List_Determiner.Get_CMAKE_Target_List();
+
+
+
+     Target_List_Data_Processor.Receive_Descriptor_File(&Des_Reader);
+
+     Target_List_Data_Processor.Receive_Target_List_Data(LIST_DTR_PTR);
+
+     Target_List_Data_Processor.Receive_Compiler_Dependency_Data(Compiler_Data_Pointer);
+
+     Target_List_Data_Processor.Process_Target_List_Data();
+
+
+    CMAKE_Target_Library_Builder CMK_TARGET_Lib_Builder;
+
+    CMK_TARGET_Lib_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
+
+    CMK_TARGET_Lib_Builder.Receive_Compiler_Data_Pointer(Compiler_Data_Pointer);
+
+    CMK_TARGET_Lib_Builder.Receive_Operating_System('w');
     
-    CMK_TARGET_LST_Builder.Receive_DataMap(&DataMap);
+    CMK_TARGET_Lib_Builder.Receive_DataMap(&DataMap);
 
-    CMK_TARGET_LST_Builder.Build_MakeFile();
+    CMK_TARGET_Lib_Builder.Build_MakeFile(0);
 
-    CMK_TARGET_LST_Builder.Add_Target_Path_To_Directory_List();
+    CMK_TARGET_Lib_Builder.Add_Target_Path_To_Directory_List();
 
-    CMK_TARGET_LST_Builder.Construct_SubDirectory_List_File();
+    CMK_TARGET_Lib_Builder.Construct_SubDirectory_List_File();
        
-    CMK_TARGET_LST_Builder.Clear_Object_Memory();
+    CMK_TARGET_Lib_Builder.Clear_Object_Memory();
 
     return 0;
 }

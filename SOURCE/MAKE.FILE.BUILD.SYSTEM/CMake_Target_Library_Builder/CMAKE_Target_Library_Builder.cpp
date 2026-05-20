@@ -112,11 +112,11 @@ Compiler_Data * CMAKE_Target_Library_Builder::Find_Compiler_Data_From_Source_Fil
 }
 
 
-void CMAKE_Target_Library_Builder::Build_MakeFile(){
+void CMAKE_Target_Library_Builder::Build_MakeFile(int index){
 
      this->Memory_Delete_Condition = false;
 
-     const cmake::target_data target_data = this->target_dependency_data_ptr->at(0);
+     const cmake::target_data target_data = this->target_dependency_data_ptr->at(index);
 
 
      std::string file_dir = target_data.target_sys_dir;
@@ -139,7 +139,6 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(){
      CMake_File_Path = CMake_File_Path +  file_name;
 
      std::cout << "\n CMake_File_Path:" << CMake_File_Path;
-     std::cin.get();
 
 
      this->FileManager.SetFilePath(CMake_File_Path);
@@ -163,7 +162,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(){
 
      std::string target_name = target_data.target_name_with_file_extention;
 
-     std::string src_file_path = " ${CMAKE_SOURCE_DIR}/" + target_git_dir + "/" + target_name;
+     std::string src_file_path = "${CMAKE_SOURCE_DIR}/" + target_git_dir + "/" + target_name;
 
 
      this->Convert_CMAKE_Format(src_file_path);
@@ -171,6 +170,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(){
 
      this->FileManager.WriteToFile(src_file_path);          
      
+     /*
      std::cout << "\n TARGET DEPENDECY INFORMATIONS:";
      std::cout << "\n\n";
 
@@ -216,11 +216,15 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(){
 
      exit(0);
 
-     for(size_t i=0;i<this->target_dependency_data_ptr->size();i++){
+     */
 
-         const cmake::target_data target_data  
+     //for(size_t i=0;i<this->target_dependency_data_ptr->size();i++){
+
+       //  const cmake::target_data target_data  
           
-               = this->target_dependency_data_ptr->at(i);
+         //      = this->target_dependency_data_ptr->at(i);
+
+         /*
 
                std::string target_file_name      = target_data.target_name_with_file_extention;
 
@@ -236,11 +240,13 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(){
 
                this->FileManager.WriteToFile(target_git_src_path);
 
+         */
+
                if(!target_data.dep_dt.empty()){
 
                    for(size_t k=0;k<target_data.dep_dt.size();k++){
 
-                       std::string dependent_file_name   = target_data.dep_dt.at(k).dep_file_name;
+                       std::string dependent_file_name   = target_data.dep_dt.at(k).dep_file_name_with_file_extention;
 
                        std::string dependent_file_git_dr = target_data.dep_dt.at(k).dep_file_git_record_dir;
 
@@ -255,7 +261,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(){
                        this->FileManager.WriteToFile(dependent_file_git_src_path);
                    }
                }
-     }
+     //}
 
 
 
@@ -280,7 +286,7 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(){
 
          this->FileManager.WriteToFile("\n");
 
-         this->FileManager.WriteToFile("  ");
+         this->FileManager.WriteToFile("  ${CMAKE_SOURCE_DIR}/");
 
          this->FileManager.WriteToFile(target_data.dependent_header_dirs.at(i));      
      }
@@ -412,6 +418,8 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(){
      this->FileManager.WriteToFile(")");
 
      this->FileManager.FileClose();
+
+     exit(0);
 
 }
 

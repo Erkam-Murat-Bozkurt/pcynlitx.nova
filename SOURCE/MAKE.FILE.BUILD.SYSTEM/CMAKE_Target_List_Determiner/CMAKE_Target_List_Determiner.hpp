@@ -67,8 +67,6 @@ public:
 
  void Determine_Target_Lists();
 
- bool Control_Dependency_For_Any_Previous_Target(int index);
-
  const std::vector<cmake::target_list_dtr> * Get_CMAKE_Target_List() const {
 
        return &this->target_list;
@@ -77,6 +75,8 @@ public:
  void Clear_Dynamic_Memory();
 
 protected:
+
+ bool Control_Dependency_For_Any_Previous_Target(int index);
 
  void Find_File_Name_Without_Extension(std::string hdr_name, 
 

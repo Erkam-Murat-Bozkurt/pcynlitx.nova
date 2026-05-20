@@ -351,7 +351,7 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
 
          Target_Builder.Receive_Simple_Dependency_Data(data_ptr);
 
-         Target_Builder.Build_MakeFile();
+         Target_Builder.Build_MakeFile(i);
 
 
          

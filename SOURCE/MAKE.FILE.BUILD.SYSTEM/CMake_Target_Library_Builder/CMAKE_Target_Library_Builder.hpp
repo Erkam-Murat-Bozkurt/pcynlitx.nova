@@ -46,7 +46,7 @@ public:
      this->target_dependency_data_ptr = dt_ptr;
  }
 
- void Build_MakeFile();
+ void Build_MakeFile(int target_list_index);
 
  void Add_Target_Path_To_Directory_List();
  void Construct_SubDirectory_List_File();
