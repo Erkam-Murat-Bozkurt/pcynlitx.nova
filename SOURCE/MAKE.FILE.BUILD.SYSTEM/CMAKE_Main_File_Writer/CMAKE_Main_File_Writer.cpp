@@ -59,6 +59,7 @@ void CMAKE_Main_File_Writer::Receive_Operating_System(char opr_sis){
 
 }
 
+
 void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
      this->Memory_Delete_Condition = false;
@@ -251,7 +252,8 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
      this->FileManager.WriteToFile("\n include(directories.cmake)");
 
-
+     
+     /*
      this->Compiler_Data_Pointer = this->Dep_Determiner->Get_Compiler_Data_Address();
 
      std::vector<std::string> project_target_list;
@@ -270,8 +272,11 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
          }
      }
 
+
      project_target_list.shrink_to_fit();
 
+     */
+     
      this->FileManager.WriteToFile("\n\n");
 
      this->FileManager.WriteToFile(" add_library(");
@@ -280,13 +285,18 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
      this->FileManager.WriteToFile("_lib ");
 
-     for(size_t i=0;i<project_target_list.size();i++){
+     std::cout << "\n this->target_dependency_data_ptr->size():" << this->target_dependency_data_ptr->size();
+
+
+     for(size_t i=0;i<this->target_dependency_data_ptr->size();i++){
 
          this->FileManager.WriteToFile("\n\t");
 
-         this->FileManager.WriteToFile(project_target_list.at(i));
-     }
+         std::cout << "\n Target name in main cfile writer:" << this->target_dependency_data_ptr->at(i).target_name;
 
+         this->FileManager.WriteToFile(this->target_dependency_data_ptr->at(i).target_name);
+     }
+     
      this->FileManager.WriteToFile("\n\n");
 
      this->FileManager.WriteToFile(")");

@@ -90,8 +90,6 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
 
      this->Target_List_Determiner.Receive_Compiler_Dependency_Data(this->Compiler_Data_Pointer);
 
-     this->Write_Main_CMakeLists_File(project_name,version_num);
-
      this->Target_List_Determiner.Determine_Target_Lists();
 
      const std::vector<cmake::target_list_dtr> * LIST_DTR_PTR 
@@ -113,6 +111,8 @@ void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::s
 
      this->Perform_MakeFile_Construction();
 
+     this->Write_Main_CMakeLists_File(project_name,version_num);
+
 }
 
 
@@ -122,12 +122,17 @@ void CMAKE_System_Constructor::Write_Main_CMakeLists_File(std::string project_na
 
      const Descriptor_File_Reader * Des_Reader = 
      
-          this->Meta_Data_Collector.Get_Descriptor_File_Reader();
+           this->Meta_Data_Collector.Get_Descriptor_File_Reader();
   
      const Source_File_Dependency_Determiner * Dep_Determiner = 
      
-          this->Meta_Data_Collector.Get_Source_File_Dependency_Determiner();
+           this->Meta_Data_Collector.Get_Source_File_Dependency_Determiner();
 
+     const std::vector<cmake::target_data> *  target_data_ptr = 
+     
+           this->Target_List_Data_Processor.Get_Target_List_Elements_Dependency_Data();
+
+     this->CMK_MF_Builder.Receive_Target_Dependency_Data(target_data_ptr);
 
      this->CMK_MF_Builder.Receive_Project_Titles(project_name,version_num);
 
@@ -331,22 +336,6 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
 
          Target_Builder.Receive_Descriptor_File_Reader(Des_Reader);
 
-         Source_File_Dependency_Determiner Dp_Determiner(this->Des_Path,this->opr_sis);
-
-         Dp_Determiner.Receive_Descriptor_File_Reader(Des_Reader);
-
-         Dp_Determiner.Receive_Git_Data_Processor(Data_Processor);
-
-
-         std::string source_file_path = this->Compiler_Data_Pointer->at(i).source_file_path;
-
-         Dp_Determiner.Simple_Dependency_Determination_For_Single_Source_File(source_file_path);
-
-
-         const Simple_Source_File_Dependency * data_ptr = Dp_Determiner.Get_Simple_File_Dependencies();
-
-         Target_Builder.Receive_Simple_Dependency_Data(data_ptr);
-
          Target_Builder.Build_MakeFile(i);
 
 
@@ -361,8 +350,6 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
          
          
          Target_Builder.Clear_Dynamic_Memory();
-
-         Dp_Determiner.Clear_Dynamic_Memory();
      }
 }
 

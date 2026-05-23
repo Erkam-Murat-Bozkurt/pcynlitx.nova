@@ -16,8 +16,10 @@
 #include <thread>
 #include <mutex>
 #include "CMAKE_System_Constructor.hpp"
-#include "CMAKE_Executable_Target_Constructor.hpp"
 #include "CMAKE_Main_File_Writer.hpp"
+#include "CMAKE_Executable_Target_Constructor.hpp"
+#include "CMAKE_Target_List_Data_Processor.hpp"
+#include "CMAKE_Target_List_Determiner.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "CMAKE_Target_Library_Builder.hpp"
 #include "Make_File_Cleaner.hpp"

@@ -19,6 +19,9 @@
 #include <map>
 #include <unordered_map>
 #include <iterator>
+#include <vector>
+#include "CMAKE_Target_List_Data_Processor.hpp"
+#include "CMAKE_Target_List_Determiner.hpp"
 #include "MakeFile_Path_Determiner.hpp"
 #include "MakeFile_Data_Collector.hpp"
 #include "Source_File_Dependency_Determiner.hpp"
@@ -33,7 +36,6 @@
 #include "IntToCharTranslater.h"
 
 
-
 class CMAKE_Main_File_Writer
 {
 public:
@@ -42,6 +44,10 @@ public:
 
  virtual ~CMAKE_Main_File_Writer();
 
+ void Receive_Target_Dependency_Data(const std::vector<cmake::target_data> * dt_ptr)
+ {
+      this->target_dependency_data_ptr = dt_ptr;
+ }
 
  void Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
 
@@ -79,6 +85,8 @@ private:
  const Descriptor_File_Reader * Des_Reader;
 
  const Source_File_Dependency_Determiner * Dep_Determiner;
+
+ const std::vector<cmake::target_data> * target_dependency_data_ptr;
 
  Cpp_FileOperations FileManager;
 

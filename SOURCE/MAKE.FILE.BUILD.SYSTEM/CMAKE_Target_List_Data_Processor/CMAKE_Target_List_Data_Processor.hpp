@@ -22,7 +22,6 @@
 #include <vector>
 #include "CMAKE_Target_List_Determiner.hpp"
 #include "Build_System_Meta_Data_Collector.hpp"
-#include "CMAKE_Main_File_Writer.hpp"
 #include "Make_File_Cleaner.hpp"
 #include "MakeFile_Data_Collector.hpp"
 #include "MakeFile_Directory_Constructor.hpp"
@@ -54,6 +53,10 @@ namespace cmake {
 
             bool is_header_file;
      };
+};
+
+
+namespace cmake {
 
      struct target_data 
      {
@@ -71,9 +74,10 @@ namespace cmake {
 
             std::vector<std::string> dependent_source_dirs;
 
-            std::vector<target_dependency_dt> dep_dt;
+            std::vector<cmake::target_dependency_dt> dep_dt;
      };
 };
+
 
 class CMAKE_Target_List_Data_Processor
 {

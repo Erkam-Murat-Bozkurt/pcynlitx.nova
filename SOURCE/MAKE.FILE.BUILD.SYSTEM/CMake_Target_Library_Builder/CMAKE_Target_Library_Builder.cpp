@@ -49,66 +49,8 @@ void CMAKE_Target_Library_Builder::Clear_Dynamic_Memory(){
 
          this->StrOpr.Clear_Dynamic_Memory();
 
-         this->Path_Determiner.Clear_Dynamic_Memory();
-
          this->target_dependency_data_ptr = nullptr;
      }
-}
-
-
-void CMAKE_Target_Library_Builder::Receive_Operating_System(char opr_sis){
-
-     this->opr_sis = opr_sis;
-
-     this->Path_Determiner.Receive_Operating_System(opr_sis);
-}
-
-
-void CMAKE_Target_Library_Builder::Receive_Descriptor_File_Reader(const Descriptor_File_Reader * ptr){
-
-     this->Des_Reader = ptr;
-
-     this->Path_Determiner.Receive_Descriptor_File_Reader(ptr);
-}
-
-void CMAKE_Target_Library_Builder::Receive_Compiler_Data_Pointer(const std::vector<Compiler_Data> * ptr)
-{
-     this->Comp_Data_Ptr = ptr;
-
-     this->Path_Determiner.Receive_Compiler_Data_Pointer(ptr);
-}
-
-
-void CMAKE_Target_Library_Builder::Receive_DataMap(std::unordered_map<std::string, Compiler_Data> * ptr){
-
-     this->DataMap_Pointer = ptr;
-
-     this->Path_Determiner.Receive_DataMap(ptr);
-}
-
-
-void CMAKE_Target_Library_Builder::Receive_Simple_Dependency_Data(const Simple_Source_File_Dependency * data_ptr){
-
-     this->dep_data_ptr = data_ptr;
-}
-
-
-Compiler_Data * CMAKE_Target_Library_Builder::Find_Compiler_Data_From_Source_File_Path(std::string path)
-{
-    try {        
-
-         return  &this->DataMap_Pointer->at(path);
-    }
-    catch (const std::out_of_range & oor) {
-        
-         std::cerr << "\n Out of Range error: " << oor.what() << '\n';
-
-         std::cout << "\n the file located on path " 
-         
-         << path << " can not find on Make_File_Builder object!.\n";
-
-         exit(EXIT_FAILURE);
-    }     
 }
 
 
@@ -340,31 +282,6 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(int index){
      this->FileManager.FileClose();
 }
 
-
-void CMAKE_Target_Library_Builder::Find_Construction_Directory(std::string & dir, std::string file_path){
-
-     size_t dir_size = file_path.size();
-
-     size_t end_point = dir_size;
-
-     for(size_t i=dir_size;i>0;i--){
-
-         if((file_path[i]=='/') || (file_path[i]=='\\')){
-
-            end_point = i;
-
-            break;
-         }
-     }
-
-     for(size_t i=0;i<end_point;i++){
-
-         dir.push_back(file_path[i]);
-     }
-
-     dir.shrink_to_fit();
-}
-
 void CMAKE_Target_Library_Builder::CMAKE_Sub_Directory_File_Path_Determination(std::string & path){
 
      std::string warehouse_location = this->Des_Reader->Get_Repo_Directory_Location();
@@ -387,41 +304,22 @@ void CMAKE_Target_Library_Builder::CMAKE_Sub_Directory_File_Path_Determination(s
 }
 
 
-void CMAKE_Target_Library_Builder::CMAKE_SubDir_Determination(std::string & sub_dir_path){
-
-     std::string git_dir = this->dep_data_ptr->dir;
-
-     if(this->opr_sis == 'w'){
-
-          for(size_t i=0;i<git_dir.size();i++){
-
-               if(git_dir[i]=='\\'){
-
-                    git_dir[i] = '/';
-               }
-          }
-     }     
-     
-     sub_dir_path = git_dir;
-}
-
-
- void CMAKE_Target_Library_Builder::Add_Target_Path_To_Directory_List(int target_index){ // Mutual exclusion is required
+void CMAKE_Target_Library_Builder::Add_Target_Path_To_Directory_List(int target_index){ // Mutual exclusion is required
        
-      const cmake::target_data target_data = this->target_dependency_data_ptr->at(target_index);
+     const cmake::target_data target_data = this->target_dependency_data_ptr->at(target_index);
 
-      std::string directory_list_file_path, cmake_sub_dir;
+     std::string directory_list_file_path, cmake_sub_dir;
 
-      cmake_sub_dir =  "${CMAKE_SOURCE_DIR}/" + target_data.target_git_record_dir;
+     cmake_sub_dir =  "${CMAKE_SOURCE_DIR}/" + target_data.target_git_record_dir;
 
-      this->Convert_CMAKE_Format(cmake_sub_dir);
+     this->Convert_CMAKE_Format(cmake_sub_dir);
 
-      this->CMAKE_Sub_Directory_File_Path_Determination(directory_list_file_path);
+     this->CMAKE_Sub_Directory_File_Path_Determination(directory_list_file_path);
 
-      std::string sub_directory_command = "add_subdirectory(" + cmake_sub_dir + ")";
+     std::string sub_directory_command = "add_subdirectory(" + cmake_sub_dir + ")";
 
 
-      if(!this->FileManager.Is_Path_Exist(directory_list_file_path)){
+     if(!this->FileManager.Is_Path_Exist(directory_list_file_path)){
         
          this->FileManager.SetFilePath(directory_list_file_path);
 
@@ -455,8 +353,9 @@ void CMAKE_Target_Library_Builder::CMAKE_SubDir_Determination(std::string & sub_
              this->FileManager.FileClose();
           }
      }
- }
+}
 
+ 
 void CMAKE_Target_Library_Builder::Construct_SubDirectory_List_File(int index){
 
      const cmake::target_data target_data = this->target_dependency_data_ptr->at(index);
@@ -518,95 +417,6 @@ void CMAKE_Target_Library_Builder::Construct_SubDirectory_List_File(int index){
 
            this->FileManager.FileClose();
      }
-}
-
-std::string CMAKE_Target_Library_Builder::Get_Construction_Dir(){
-
-     std::string Make_File_Path = this->Path_Determiner.Get_MakeFile_Path();
-
-     std::string dir;
-
-     this->Find_Construction_Directory(dir,Make_File_Path);
-
-     return dir;
-}
-
-
-
-
-std::string CMAKE_Target_Library_Builder::Search_For_New_Upper_Directory(std::vector<std::string> & dir_list,
-
-     std::string dir){
-     
-     std::string upper_directory;
-
-     this->Find_Upper_Directory(upper_directory,dir);
-        
-     bool is_exist = this->Check_String_Existance(dir_list,upper_directory);
-
-     std::string repo_dir = this->Des_Reader->Get_Repo_Directory_Location();
-
-     if(!is_exist){
-
-         size_t root_dir_size = repo_dir.size();
-
-         size_t next_dir_size = upper_directory.size();
-
-         if(next_dir_size > root_dir_size){
-
-            dir_list.push_back(upper_directory);
-         }
-
-         dir_list.shrink_to_fit();
-      }
-
-      return upper_directory;
-}
-
-
-std::string CMAKE_Target_Library_Builder::Extract_Git_Record_Path(std::string path){
-
-            std::string repo_dir = this->Des_Reader->Get_Repo_Directory_Location();
-
-            repo_dir.shrink_to_fit();
-
-            std::string git_path;
-
-            for(size_t i=repo_dir.size()+1;i<path.size();i++){
-                 
-                git_path.push_back(path.at(i));
-            }
-
-            git_path.shrink_to_fit();
-
-            this->Convert_CMAKE_Format(git_path);
-
-            return git_path;
-}
-
-
-void CMAKE_Target_Library_Builder::Find_Upper_Directory(std::string & upper_dir, std::string dir){
-
-     size_t dir_size = dir.length();
-
-     size_t end_point = 0;
-
-     for(size_t i=dir_size;i>0;i--){
-
-         if((dir[i]=='\\') || (dir[i]=='/')){
-
-             end_point = i;
-
-             break;
-         }
-     }
-
-     for(size_t i=0;i<end_point;i++){
-
-         upper_dir.push_back(dir[i]);
-     }
-
-     upper_dir.shrink_to_fit();
 }
 
 

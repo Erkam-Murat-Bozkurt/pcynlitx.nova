@@ -17,11 +17,11 @@
 #include <stdlib.h>     //for using the function sleep
 #include <thread>
 #include <mutex>
-#include "Build_System_Meta_Data_Collector.hpp"
-#include "CMAKE_Main_File_Writer.hpp"
+#include "CMAKE_Target_Library_Builder.hpp"
 #include "CMAKE_Target_List_Data_Processor.hpp"
 #include "CMAKE_Target_List_Determiner.hpp"
-#include "CMAKE_Target_Library_Builder.hpp"
+#include "CMAKE_Main_File_Writer.hpp"
+#include "Build_System_Meta_Data_Collector.hpp"
 #include "Make_File_Cleaner.hpp"
 #include "MakeFile_Data_Collector.hpp"
 #include "MakeFile_Directory_Constructor.hpp"

@@ -74,10 +74,6 @@ int main(int argc, char ** argv){
  
      CMAKE_Target_List_Data_Processor Target_List_Data_Processor('n');
 
-     //Meta_Data_Collector.Collect_Meta_Data();
-
-     //this->Compiler_Data_Pointer = this->Meta_Data_Collector.Get_Compiler_Data();
-
      Target_List_Determiner.Receive_Compiler_Dependency_Data(Compiler_Data_Pointer);
 
      Target_List_Determiner.Determine_Target_Lists();
@@ -101,12 +97,8 @@ int main(int argc, char ** argv){
 
     CMK_TARGET_Lib_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
 
-    CMK_TARGET_Lib_Builder.Receive_Compiler_Data_Pointer(Compiler_Data_Pointer);
-
     CMK_TARGET_Lib_Builder.Receive_Operating_System('w');
     
-    CMK_TARGET_Lib_Builder.Receive_DataMap(&DataMap);
-
     CMK_TARGET_Lib_Builder.Build_MakeFile(0);
 
     CMK_TARGET_Lib_Builder.Add_Target_Path_To_Directory_List(0);
