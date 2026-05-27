@@ -156,6 +156,21 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(int index){
          this->FileManager.WriteToFile(target_data.dependent_header_dirs.at(i));      
      }
 
+
+     const std::vector<std::string> & Inc_Dirs = this->Des_Reader->Get_Include_Directories();
+
+     for(size_t i=0;i<Inc_Dirs.size();i++){
+
+         this->FileManager.WriteToFile("\n  ");
+
+         std::string inc_dir = Inc_Dirs.at(i) ;
+         
+         this->Convert_CMAKE_Format(inc_dir);
+
+         this->FileManager.WriteToFile(inc_dir);
+     }
+
+
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile(")");

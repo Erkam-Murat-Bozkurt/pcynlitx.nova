@@ -197,6 +197,13 @@ void CMAKE_Target_List_Data_Processor::Process_Target(cmake::target_list_dtr & t
 
      target.target_file_path = target_dt.DATA_PTR->source_file_path;
 
+     cmake::target_dependency_dt source_file_dependency_dt;
+
+     this->Set_Target_Dependency_Data_For_Source(source_file_dependency_dt,target_dt.DATA_PTR);
+
+
+     REPETITION_CONTROL_MAP.insert(std::make_pair(target.target_file_path,source_file_dependency_dt));
+        
      this->Process_Target_Depenendecies(target_dt.DATA_PTR,target.dep_dt,REPETITION_CONTROL_MAP);
 }
 
@@ -297,11 +304,14 @@ void CMAKE_Target_List_Data_Processor::Process_Target_Depenendecies(const Compil
 
            std::string hdr_path = header_file_dependency_dt.dep_file_path;
 
-           REPETITION_CONTROL_MAP.insert(std::make_pair(hdr_path,header_file_dependency_dt));
+           if(REPETITION_CONTROL_MAP.find(hdr_path)==REPETITION_CONTROL_MAP.end()){
 
-           target_dep.push_back(header_file_dependency_dt);
+              REPETITION_CONTROL_MAP.insert(std::make_pair(hdr_path,header_file_dependency_dt));
 
-           target_dep.shrink_to_fit();
+              target_dep.push_back(header_file_dependency_dt);
+
+              target_dep.shrink_to_fit();
+           }
         }
     }
 }
