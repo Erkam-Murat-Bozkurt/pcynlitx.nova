@@ -41,6 +41,8 @@ CMAKE_System_Constructor::CMAKE_System_Constructor(char * DesPath, char opr_sis,
      this->Des_Path = DesPath;
      
      this->build_type = build_type;
+
+     this->long_path_status = false;
 }
 
 
@@ -244,7 +246,7 @@ void CMAKE_System_Constructor::Perform_MakeFile_Construction(){
 
      for(size_t i=0;i<target_number;i++){
 
-         std::cout << "\n target name [" << i << "]" << target_dep_ptr->at(i).target_name;
+         std::cout << "\nTarget [" << i << "]: " << target_dep_ptr->at(i).target_name;
      }
 
      if(target_number > 50){
@@ -328,7 +330,7 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
 
      for(size_t i=start;i<end;i++){
 
-         CMAKE_Target_Library_Builder Target_Builder;
+         CMAKE_Target_Library_Builder Target_Builder(this->build_type);
             
          Target_Builder.Receive_Target_Dependency_Data(target_data_ptr);
 
@@ -336,10 +338,16 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
 
          Target_Builder.Receive_Descriptor_File_Reader(Des_Reader);
 
+         Target_Builder.Receive_System_Interface(this->SysInt);
+
          Target_Builder.Build_MakeFile(i);
 
+         if(!this->long_path_status){
 
-         
+             this->long_path_status = Target_Builder.Get_Long_Path_Status();
+         }
+
+                  
          mt.lock();
 
          Target_Builder.Add_Target_Path_To_Directory_List(i);
@@ -350,6 +358,11 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
          
          
          Target_Builder.Clear_Dynamic_Memory();
+     }
+
+     if(this->long_path_status){
+
+         this->Print_Long_Path_Warning();
      }
 }
 
@@ -394,6 +407,45 @@ void CMAKE_System_Constructor::Construct_Path(std::string * pointer, std::string
 }
 
 
+void CMAKE_System_Constructor::Print_Long_Path_Warning(){
+
+     std::string message = "\n\nWARNING!\n";
+
+     message += "\nThe path size of the some files existing";
+     
+     message += "\non the project repository is too long.";
+
+     message += "\nThis can lead a problem on build system construction";
+
+     message += "\nbecause of the operating systems maximum path ";
+
+     message += "\nsize restrictions.";
+
+
+     message.shrink_to_fit();
+
+
+     char cstring_message [2*message.size()];
+
+     for(size_t i=0;i<2*message.size();i++){
+
+         cstring_message[i] = '\0';
+     }
+
+     for(size_t i=0;i<message.size();i++){
+
+         cstring_message[i] = message[i];
+     }
+
+     if(this->build_type == 'g'){
+
+        this->SysInt->WriteTo_NamedPipe_FromChild(cstring_message);
+     }
+     else{
+
+          std::cout << message;
+     }
+ }
 
 
 

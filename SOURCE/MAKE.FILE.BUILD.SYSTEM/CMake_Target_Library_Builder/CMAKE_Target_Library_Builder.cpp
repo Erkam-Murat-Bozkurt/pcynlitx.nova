@@ -24,9 +24,13 @@
 
 #include "CMAKE_Target_Library_Builder.hpp"
 
-CMAKE_Target_Library_Builder::CMAKE_Target_Library_Builder()
+CMAKE_Target_Library_Builder::CMAKE_Target_Library_Builder(char build_type)
 {
    this->Memory_Delete_Condition = false;
+
+   this->long_path_status = false;
+
+   this->build_type = build_type;
 }
 
 
@@ -80,6 +84,8 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(int index){
 
      CMake_File_Path = CMake_File_Path +  file_name;
 
+     this->Control_File_Path_Length(CMake_File_Path);
+
 
      this->FileManager.SetFilePath(CMake_File_Path);
 
@@ -113,6 +119,8 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(int index){
      if(!target_data.dep_dt.empty()){
 
         for(size_t k=0;k<target_data.dep_dt.size();k++){
+
+            this->Control_File_Path_Length(target_data.dep_dt.at(k).dep_file_path);
 
             std::string dependent_file_name   = target_data.dep_dt.at(k).dep_file_name_with_file_extention;
 
@@ -482,6 +490,17 @@ bool CMAKE_Target_Library_Builder::Check_String_Existance(std::vector<std::strin
 
      return is_exist;
 }
+
+
+void CMAKE_Target_Library_Builder::Control_File_Path_Length(std::string path_){
+
+     path_.shrink_to_fit();
+     
+     if(path_.size()>=160){
+
+        this->long_path_status = true;
+     }
+ }
 
 
 

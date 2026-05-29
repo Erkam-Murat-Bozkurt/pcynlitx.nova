@@ -93,11 +93,13 @@ int main(int argc, char ** argv){
      Target_List_Data_Processor.Process_Target_List_Data();
 
 
-    CMAKE_Target_Library_Builder CMK_TARGET_Lib_Builder;
+    CMAKE_Target_Library_Builder CMK_TARGET_Lib_Builder('n');
 
     CMK_TARGET_Lib_Builder.Receive_Descriptor_File_Reader(&Des_Reader);
 
     CMK_TARGET_Lib_Builder.Receive_Operating_System('w');
+
+    CMK_TARGET_Lib_Builder.Receive_System_Interface(nullptr);
     
     CMK_TARGET_Lib_Builder.Build_MakeFile(0);
 

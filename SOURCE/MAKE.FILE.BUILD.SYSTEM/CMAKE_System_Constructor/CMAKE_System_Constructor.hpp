@@ -54,6 +54,7 @@ protected:
  void Construct_For_Large_Data_Set(size_t data_size);
  void Construct_For_Middle_Data_Set(size_t data_size);
  void Construct_For_Small_Data_Set(size_t data_size);
+ void Print_Long_Path_Warning();
  Build_System_Meta_Data_Collector Meta_Data_Collector;
  CMAKE_Main_File_Writer CMK_MF_Builder;
  CMAKE_Target_List_Determiner Target_List_Determiner;
@@ -70,6 +71,7 @@ protected:
  std::string DesPATH;
  char opr_sis;
  char build_type;
+ bool long_path_status;
  bool Memory_Delete_Condition;
 };
 

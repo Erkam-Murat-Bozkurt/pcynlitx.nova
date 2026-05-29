@@ -30,12 +30,13 @@
 #include "Cpp_FileOperations.h"
 #include "DirectoryOperations.h"
 #include "IntToCharTranslater.h"
+#include "Custom_System_Interface.h"
 
 class CMAKE_Target_Library_Builder
 {
 public:
 
- CMAKE_Target_Library_Builder();
+ CMAKE_Target_Library_Builder(char build_type);
 
  virtual ~CMAKE_Target_Library_Builder();
 
@@ -44,7 +45,11 @@ public:
      this->target_dependency_data_ptr = dt_ptr;
  }
 
- 
+ void Receive_System_Interface(Custom_System_Interface * sysInt){
+      
+      this->SysInt = sysInt;
+ }
+
  void Receive_Operating_System(char opr_sis){
 
      this->opr_sis = opr_sis;
@@ -55,6 +60,10 @@ public:
      this->Des_Reader = ptr;
  }
 
+ bool Get_Long_Path_Status() const {
+
+      return this->long_path_status;
+ }
 
  void Build_MakeFile(int target_list_index);
 
@@ -82,6 +91,11 @@ private:
 
  bool Check_String_Existance(std::vector<std::string> & list, std::string str);
 
+ void Control_File_Path_Length(std::string path_);
+
+
+ Custom_System_Interface * SysInt;
+
  const std::vector<cmake::target_data> * target_dependency_data_ptr;
 
  const Descriptor_File_Reader * Des_Reader;
@@ -94,9 +108,13 @@ private:
 
  char opr_sis;
 
+ char build_type;
+
  bool Include_Line_Condition;
  
  bool Memory_Delete_Condition;
+
+ bool long_path_status;
 };
 
 #endif /* CMAKE_TARGET_LIBRARY_BUILDER_HPP */
