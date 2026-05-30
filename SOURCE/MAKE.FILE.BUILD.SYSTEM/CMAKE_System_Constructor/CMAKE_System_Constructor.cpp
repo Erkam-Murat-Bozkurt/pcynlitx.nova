@@ -419,7 +419,7 @@ void CMAKE_System_Constructor::Print_Long_Path_Warning(){
 
      message += "\nbecause of the operating systems maximum path ";
 
-     message += "\nsize restrictions.";
+     message += "\nsize restrictions.\n\n";
 
 
      message.shrink_to_fit();

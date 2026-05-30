@@ -82,6 +82,8 @@ protected:
 
       std::string & file_name_with_ext);
 
+ void Target_List_Repetition_Check();
+
  const std::vector<Compiler_Data> * Compiler_Data_Pointer;
  std::vector<cmake::target_list_dtr> target_list;
  Custom_System_Interface * SysInt;

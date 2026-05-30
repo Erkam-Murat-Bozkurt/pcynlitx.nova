@@ -99,6 +99,11 @@ void CMAKE_Target_List_Determiner::Determine_Target_Lists(){
      this->target_list.shrink_to_fit();
 
 
+     this->Target_List_Repetition_Check(); // The next targets may include the previous targets as dependency
+
+
+     this->target_list.shrink_to_fit();
+
      char process_result [] = "\nThe CMAKE Targets determined..\n";
 
      std::cout << "\n";
@@ -143,6 +148,41 @@ bool CMAKE_Target_List_Determiner::Control_Dependency_For_Any_Previous_Target(in
 }
 
 
+
+void CMAKE_Target_List_Determiner::Target_List_Repetition_Check(){
+
+     for(size_t i=0;i<this->target_list.size();i++){
+
+         cmake::target_list_dtr control_target = this->target_list.at(i);
+
+         const std::vector<std::string> * headers =  &(control_target.DATA_PTR->dependent_headers);
+
+         for(size_t k=0;k<headers->size();k++){
+
+             std::string file_name_with_ext;
+            
+             this->Find_File_Name_Without_Extension(headers->at(k),file_name_with_ext);
+
+             if(file_name_with_ext !=  control_target.target_name){
+
+                for(size_t j = 0; j<this->target_list.size();j++){
+
+                    cmake::target_list_dtr current_target = this->target_list.at(j);
+                
+                    if(current_target.target_name != control_target.target_name){
+
+                       if(current_target.target_name == file_name_with_ext){
+
+                          this->target_list.erase(this->target_list.begin()+j);
+ 
+                          this->target_list.shrink_to_fit();
+                        }                
+                    }
+                }
+             }
+         }
+     }
+}
 
 
 void CMAKE_Target_List_Determiner::Find_File_Name_Without_Extension(std::string hdr_name, 
