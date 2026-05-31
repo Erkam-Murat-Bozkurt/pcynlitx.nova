@@ -251,31 +251,6 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
      this->FileManager.WriteToFile("\n\n");
 
      this->FileManager.WriteToFile("\n include(directories.cmake)");
-
-     
-     /*
-     this->Compiler_Data_Pointer = this->Dep_Determiner->Get_Compiler_Data_Address();
-
-     std::vector<std::string> project_target_list;
-
-     std::string space_string = " ";
-
-     for(size_t i=0;i<this->Compiler_Data_Pointer->size();i++){
-
-         std::string target_name = "$<TARGET_OBJECTS:" +
-         
-         this->Compiler_Data_Pointer->at(i).cmake_target_name + ">";
-
-         if(!this->Check_String_Existance(project_target_list,target_name)){
-
-            project_target_list.push_back(target_name);
-         }
-     }
-
-
-     project_target_list.shrink_to_fit();
-
-     */
      
      this->FileManager.WriteToFile("\n\n");
 

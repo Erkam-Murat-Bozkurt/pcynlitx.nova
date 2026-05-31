@@ -104,8 +104,6 @@ private:
 
  Cpp_FileOperations FileManager;
 
- IntToCharTranslater Translater;
-
  char opr_sis;
 
  char build_type;

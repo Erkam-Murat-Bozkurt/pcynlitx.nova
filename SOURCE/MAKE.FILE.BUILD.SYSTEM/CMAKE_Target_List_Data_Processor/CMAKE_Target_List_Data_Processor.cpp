@@ -64,6 +64,20 @@ void CMAKE_Target_List_Data_Processor::Clear_Dynamic_Memory(){
 
                      this->Target_List_Dependeny_Data.at(i).dep_dt.shrink_to_fit();
                  }
+
+                 if(!this->Target_List_Dependeny_Data.at(i).dependent_header_dirs.empty()){
+
+                     this->Target_List_Dependeny_Data.at(i).dependent_header_dirs.clear();
+
+                     this->Target_List_Dependeny_Data.at(i).dependent_header_dirs.shrink_to_fit();
+                 }
+
+                 if(!this->Target_List_Dependeny_Data.at(i).dependent_source_dirs.empty()){
+
+                     this->Target_List_Dependeny_Data.at(i).dependent_source_dirs.clear();
+
+                     this->Target_List_Dependeny_Data.at(i).dependent_source_dirs.shrink_to_fit();
+                 }
              }
 
              this->Target_List_Dependeny_Data.clear();

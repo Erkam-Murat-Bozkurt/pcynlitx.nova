@@ -53,6 +53,8 @@ void CMAKE_Target_Library_Builder::Clear_Dynamic_Memory(){
 
          this->StrOpr.Clear_Dynamic_Memory();
 
+         this->FileManager.Clear_Dynamic_Memory();
+
          this->target_dependency_data_ptr = nullptr;
      }
 }

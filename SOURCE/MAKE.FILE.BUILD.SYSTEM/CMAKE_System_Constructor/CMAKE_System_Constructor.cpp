@@ -244,11 +244,6 @@ void CMAKE_System_Constructor::Perform_MakeFile_Construction(){
 
      size_t target_number = target_dep_ptr->size();
 
-     for(size_t i=0;i<target_number;i++){
-
-         std::cout << "\nTarget [" << i << "]: " << target_dep_ptr->at(i).target_name;
-     }
-
      if(target_number > 50){
 
         this->Construct_For_Large_Data_Set(target_number);        
