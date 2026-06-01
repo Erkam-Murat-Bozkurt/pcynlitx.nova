@@ -26,13 +26,9 @@
 
 CMAKE_System_Constructor::CMAKE_System_Constructor(char * DesPath, char opr_sis, char build_type) :
 
-     Meta_Data_Collector(DesPath,opr_sis,build_type), 
+     Target_List_Data_Structure_Constructor(DesPath,opr_sis,build_type), 
 
-     CMK_MF_Builder(opr_sis), 
-
-     Target_List_Determiner(build_type),
-
-     Target_List_Data_Processor(build_type)
+     CMK_MF_Builder(opr_sis) 
 {
      this->Memory_Delete_Condition = false;
 
@@ -67,9 +63,7 @@ void CMAKE_System_Constructor::Clear_Dynamic_Memory(){
 
          this->Clear_String_Memory(this->Repo_Dir);
 
-         this->Target_List_Determiner.Clear_Dynamic_Memory();
-
-         this->Target_List_Data_Processor.Clear_Dynamic_Memory();
+         this->Target_List_Data_Structure_Constructor.Clear_Dynamic_Memory();
      }
 }
 
@@ -78,43 +72,17 @@ void CMAKE_System_Constructor::Receive_System_Interface(Custom_System_Interface 
 
      this->SysInt = sysInt;
 
-     this->Meta_Data_Collector.Receive_System_Interface(sysInt);
-
-     this->Target_List_Determiner.Receive_System_Interface(sysInt);
+     this->Target_List_Data_Structure_Constructor.Receive_System_Interface(sysInt);
 }
 
 
 void CMAKE_System_Constructor::Build_Make_Files(std::string project_name, std::string version_num)
 {
-     this->Meta_Data_Collector.Collect_Meta_Data();
-
-     this->Compiler_Data_Pointer = this->Meta_Data_Collector.Get_Compiler_Data();
-
-     this->Target_List_Determiner.Receive_Compiler_Dependency_Data(this->Compiler_Data_Pointer);
-
-     this->Target_List_Determiner.Determine_Target_Lists();
-
-     const std::vector<cmake::target_list_dtr> * LIST_DTR_PTR 
-     
-           = this->Target_List_Determiner.Get_CMAKE_Target_List();
-
-
-     const Descriptor_File_Reader * Des_Reader = 
-     
-          this->Meta_Data_Collector.Get_Descriptor_File_Reader();
-
-     this->Target_List_Data_Processor.Receive_Descriptor_File(Des_Reader);
-
-     this->Target_List_Data_Processor.Receive_Target_List_Data(LIST_DTR_PTR);
-
-     this->Target_List_Data_Processor.Receive_Compiler_Dependency_Data(this->Compiler_Data_Pointer);
-
-     this->Target_List_Data_Processor.Process_Target_List_Data();
+     this->Target_List_Data_Structure_Constructor.Construct_Target_List_Data_Structure();
 
      this->Perform_MakeFile_Construction();
 
      this->Write_Main_CMakeLists_File(project_name,version_num);
-
 }
 
 
@@ -124,15 +92,15 @@ void CMAKE_System_Constructor::Write_Main_CMakeLists_File(std::string project_na
 
      const Descriptor_File_Reader * Des_Reader = 
      
-           this->Meta_Data_Collector.Get_Descriptor_File_Reader();
+           this->Target_List_Data_Structure_Constructor.Get_Descriptor_File_Reader();
   
      const Source_File_Dependency_Determiner * Dep_Determiner = 
      
-           this->Meta_Data_Collector.Get_Source_File_Dependency_Determiner();
+           this->Target_List_Data_Structure_Constructor.Get_Source_File_Dependency_Determiner();
 
      const std::vector<cmake::target_data> *  target_data_ptr = 
      
-           this->Target_List_Data_Processor.Get_Target_List_Elements_Dependency_Data();
+           this->Target_List_Data_Structure_Constructor.Get_Target_List_Elements_Dependency_Data();
 
      this->CMK_MF_Builder.Receive_Target_Dependency_Data(target_data_ptr);
 
@@ -238,7 +206,7 @@ void CMAKE_System_Constructor::Perform_MakeFile_Construction(){
 
      const std::vector<cmake::target_data> *  target_dep_ptr =
       
-      this->Target_List_Data_Processor.Get_Target_List_Elements_Dependency_Data();
+      this->Target_List_Data_Structure_Constructor.Get_Target_List_Elements_Dependency_Data();
 
 
 
@@ -313,14 +281,18 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
      mt.unlock();
 
 
-     const Descriptor_File_Reader * Des_Reader = this->Meta_Data_Collector.Get_Descriptor_File_Reader();
+     const Descriptor_File_Reader * Des_Reader 
+     
+          = this->Target_List_Data_Structure_Constructor.Get_Descriptor_File_Reader();
  
-     Git_Data_Processor * Data_Processor = this->Meta_Data_Collector.Get_Git_Data_Processor();
+     Git_Data_Processor * Data_Processor    
+     
+          = this->Target_List_Data_Structure_Constructor.Get_Git_Data_Processor();
      
      
      const std::vector<cmake::target_data> * target_data_ptr =
 
-           this->Target_List_Data_Processor.Get_Target_List_Elements_Dependency_Data();
+           this->Target_List_Data_Structure_Constructor.Get_Target_List_Elements_Dependency_Data();
     
 
      for(size_t i=start;i<end;i++){

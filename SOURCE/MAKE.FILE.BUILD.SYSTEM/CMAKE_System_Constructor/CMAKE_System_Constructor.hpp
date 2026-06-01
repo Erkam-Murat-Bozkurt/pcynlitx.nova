@@ -18,6 +18,7 @@
 #include <thread>
 #include <mutex>
 #include "CMAKE_Target_Library_Builder.hpp"
+#include "CMAKE_Target_List_Data_Structure_Constructor.hpp"
 #include "CMAKE_Target_List_Data_Processor.hpp"
 #include "CMAKE_Target_List_Determiner.hpp"
 #include "CMAKE_Main_File_Writer.hpp"
@@ -55,10 +56,11 @@ protected:
  void Construct_For_Middle_Data_Set(size_t data_size);
  void Construct_For_Small_Data_Set(size_t data_size);
  void Print_Long_Path_Warning();
- Build_System_Meta_Data_Collector Meta_Data_Collector;
+ CMAKE_Target_List_Data_Structure_Constructor Target_List_Data_Structure_Constructor;
+ //Build_System_Meta_Data_Collector Meta_Data_Collector;
  CMAKE_Main_File_Writer CMK_MF_Builder;
- CMAKE_Target_List_Determiner Target_List_Determiner;
- CMAKE_Target_List_Data_Processor Target_List_Data_Processor;
+ //CMAKE_Target_List_Determiner Target_List_Determiner;
+ //CMAKE_Target_List_Data_Processor Target_List_Data_Processor;
  const std::vector<Compiler_Data> * Compiler_Data_Pointer;
  Custom_System_Interface * SysInt;
  char * Des_Path;
