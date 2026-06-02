@@ -333,7 +333,7 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
      }
 }
 
-
+/*
 void CMAKE_System_Constructor::Construct_Path(std::string * pointer, std::string string, 
 
      std::string warehouse_path){
@@ -372,7 +372,7 @@ void CMAKE_System_Constructor::Construct_Path(std::string * pointer, std::string
          pointer->push_back(string[i]);
      }
 }
-
+*/
 
 void CMAKE_System_Constructor::Print_Long_Path_Warning(){
 

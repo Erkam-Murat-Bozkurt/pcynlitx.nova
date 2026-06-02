@@ -40,40 +40,68 @@ class CMAKE_System_Constructor
 {
 public:
  CMAKE_System_Constructor(char * DesPath, char opr_sis, char build_type);
+
  virtual ~CMAKE_System_Constructor();
+
  void Build_Make_Files(std::string project_name, std::string version_num); 
+
  void Receive_System_Interface(Custom_System_Interface * sysInt);
+
  void Clear_Dynamic_Memory();
+
 protected:
  void Write_MakeFiles(int start, int end);
+
  void Write_Main_CMakeLists_File(std::string project_name, std::string version_num);
+
  void Clear_Vector_Memory(std::vector<std::string> & vec);
+
  void Clear_String_Memory(std::string & str);
+
  void Construct_Path(std::string * ptr, std::string str, std::string wrd);
+
  void Perform_MakeFile_Construction();
+
  size_t Split_Range(size_t range_size, size_t partition, size_t & remaining_job);
+
  void Construct_For_Large_Data_Set(size_t data_size);
+
  void Construct_For_Middle_Data_Set(size_t data_size);
+
  void Construct_For_Small_Data_Set(size_t data_size);
+
  void Print_Long_Path_Warning();
+
  CMAKE_Target_List_Data_Structure_Constructor Target_List_Data_Structure_Constructor;
- //Build_System_Meta_Data_Collector Meta_Data_Collector;
+
  CMAKE_Main_File_Writer CMK_MF_Builder;
- //CMAKE_Target_List_Determiner Target_List_Determiner;
- //CMAKE_Target_List_Data_Processor Target_List_Data_Processor;
+
  const std::vector<Compiler_Data> * Compiler_Data_Pointer;
+
  Custom_System_Interface * SysInt;
+
  char * Des_Path;
+
  std::vector<std::thread> threadPool;
+
  std::mutex mtx;
+
  std::string Warehouse_Path;
+
  std::string Repo_Dir;
+
  std::string repo_head_dir;
+
  std::string repo_obj_dir;
+
  std::string DesPATH;
+
  char opr_sis;
+
  char build_type;
+
  bool long_path_status;
+ 
  bool Memory_Delete_Condition;
 };
 
