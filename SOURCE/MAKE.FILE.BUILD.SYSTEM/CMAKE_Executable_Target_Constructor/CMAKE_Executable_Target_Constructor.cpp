@@ -173,9 +173,6 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      */
 
-     std::string git_record_path = file_path;
-
-     this->Extract_Git_Record_Path(git_record_path);
 
      //std::string CMake_File_Path = git_record_path;
 
@@ -438,24 +435,19 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      this->FileManager.FileClose();
 
-     /*
-     std::cout << "\n File closed ..";
-     std::cin.get();
-     */
+
 
      std::string directory_list_file_path;
 
      this->CMAKE_Sub_Directory_File_Path_Determination(directory_list_file_path); // This is used in order to determine  cmake directory list file path (directories.make)
 
+     std::string git_record_dir = this->Extract_Git_Record_Path(file_path);
 
-     std::string sub_directory_command = "add_subdirectory(" + make_file_construction_directory + ")";
 
 
-     /*
-     std::cout << "\n sub_directory_command:" << sub_directory_command;
+     std::string add_sub_directory_command = "add_subdirectory(${CMAKE_SOURCE_DIR}/" + git_record_dir + ")";
 
-     std::cout << "\n directory_list_file_path:" << directory_list_file_path;
-     */
+     this->Convert_CMAKE_Format(add_sub_directory_command);
 
      if(!this->FileManager.Is_Path_Exist(directory_list_file_path)){
         
@@ -465,7 +457,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
  
         this->FileManager.WriteToFile("\n\n");
 
-        this->FileManager.WriteToFile(sub_directory_command);
+        this->FileManager.WriteToFile(add_sub_directory_command);
 
         this->FileManager.FileClose();
 
@@ -475,7 +467,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
           this->StrOpr.SetFilePath(directory_list_file_path);
 
-          bool _exist_status = this->StrOpr.Is_String_Exist_On_File(sub_directory_command);
+          bool _exist_status = this->StrOpr.Is_String_Exist_On_File(add_sub_directory_command);
 
           this->StrOpr.Clear_Dynamic_Memory();
 
@@ -487,7 +479,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
  
              this->FileManager.WriteToFile("\n\n");
 
-             this->FileManager.WriteToFile(sub_directory_command);
+             this->FileManager.WriteToFile(add_sub_directory_command);
 
              this->FileManager.FileClose();
           }
@@ -510,14 +502,11 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
      
      CMAKE_List_File_Path = CMAKE_List_File_Path + "CMakeLists.txt";
 
-     //std::cout << "\n CMAKE_List_File_Path:" << CMAKE_List_File_Path;
-
-
      if(this->FileManager.Is_Path_Exist(CMAKE_List_File_Path)){
           
         this->StrOpr.SetFilePath(CMAKE_List_File_Path);
 
-        bool inc_word_exist_status = this->StrOpr.Is_String_Exist_On_File(include_command);;
+        bool inc_word_exist_status = this->StrOpr.Is_String_Exist_On_File(include_command);
 
         this->StrOpr.Clear_Dynamic_Memory();
 
@@ -603,18 +592,21 @@ std::string CMAKE_Executable_Target_Constructor::Extract_Git_Record_Path(std::st
 
             repo_dir.shrink_to_fit();
 
-            std::string git_path;
+            std::string git_record_path, git_record_dir;
 
             for(size_t i=repo_dir.size()+1;i<path.size();i++){
                  
-                git_path.push_back(path.at(i));
+                git_record_path.push_back(path.at(i));
             }
 
-            git_path.shrink_to_fit();
+            git_record_path.shrink_to_fit();
 
-            this->Convert_CMAKE_Format(git_path);
 
-            return git_path;
+            this->Convert_CMAKE_Format(git_record_path);
+
+            this->Find_Construction_Directory(git_record_dir,git_record_path);
+
+            return git_record_dir;
 }
 
 
