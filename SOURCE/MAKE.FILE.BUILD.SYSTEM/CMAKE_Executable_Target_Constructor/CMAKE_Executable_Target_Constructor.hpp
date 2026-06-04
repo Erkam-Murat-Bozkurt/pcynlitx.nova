@@ -72,13 +72,17 @@ private:
 
  std::string Extract_Git_Record_Path(std::string path);
 
+ void Find_File_Name_Without_Extension(std::string hdr_name, 
+
+     std::string & file_name_with_ext);
+
+ void Construct_Target_Library_Dependencies_for_Executable();
+
+ std::vector<std::string> target_library_dependencies;
+
  CMAKE_Target_List_Data_Structure_Constructor Target_List_Data_Structure_Constructor;
 
- //Descriptor_File_Reader Des_Reader;
-
- //Git_Data_Processor Data_Processor;
-
- //Source_File_Dependency_Determiner Dep_Determiner;
+ Source_File_Dependency_Determiner Dep_Determiner;
 
  Custom_System_Interface * SysInt;
 
@@ -87,8 +91,6 @@ private:
  Cpp_FileOperations FileManager;
 
  std::vector<Compiler_Data> * Comp_Data_Ptr;
-
- const Simple_Source_File_Dependency * dep_ptr;
 
  Compiler_Data * Data_Ptr;
 
