@@ -69,6 +69,15 @@ void CMAKE_Executable_Target_Constructor::Clear_Dynamic_Memory(){
          this->Memory_Delete_Condition = true;
 
          this->StrOpr.Clear_Dynamic_Memory();
+
+         for(size_t i=0;i<this->target_library_dependencies.size();i++){
+
+             this->target_library_dependencies.at(i).clear();
+
+             this->target_library_dependencies.at(i).shrink_to_fit();
+         }
+
+         this->target_library_dependencies.clear();
      }
 }
 

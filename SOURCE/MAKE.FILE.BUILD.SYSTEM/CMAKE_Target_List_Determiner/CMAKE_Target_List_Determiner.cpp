@@ -103,17 +103,6 @@ void CMAKE_Target_List_Determiner::Determine_Target_Lists(){
 
 
      this->target_list.shrink_to_fit();
-
-     char process_result [] = "\nThe CMAKE Targets determined..\n";
-
-     std::cout << "\n";
-     std::cout << process_result;
-     std::cout << "\n";
-
-     if(this->build_type == 'g'){
-
-       this->SysInt->WriteTo_NamedPipe_FromChild(process_result);
-     }
 }
 
 

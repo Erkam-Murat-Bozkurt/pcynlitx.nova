@@ -57,6 +57,8 @@ void CMAKE_Target_List_Data_Structure_Constructor::Clear_Dynamic_Memory(){
          this->Target_List_Determiner.Clear_Dynamic_Memory();
 
          this->Target_List_Data_Processor.Clear_Dynamic_Memory();
+
+         this->Meta_Data_Collector.Clear_Dynamic_Memory();
      }
 }
 

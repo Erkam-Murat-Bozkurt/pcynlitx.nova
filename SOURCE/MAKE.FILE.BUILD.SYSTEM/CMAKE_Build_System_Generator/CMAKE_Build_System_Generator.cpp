@@ -53,10 +53,6 @@ void CMAKE_Build_System_Generator::Clear_Dynamic_Memory(){
 
          this->CMAKE_SysCon.Clear_Dynamic_Memory();
 
-         this->CMAKE_SysCon.Clear_Dynamic_Memory();
-
-         this->Executable_Target_Constructor.Clear_Dynamic_Memory();
-
          this->Executable_Target_Constructor.Clear_Dynamic_Memory();
      }
 }
@@ -96,7 +92,7 @@ void CMAKE_Build_System_Generator::Construct_Exe_Build_System(std::string target
 
      this->Executable_Target_Constructor.Build_MakeFile(target_main_file_path,exe_name);
      
-     char build_system_geration [] = "\n CMAKE Target Generated..\n\n";
+     char build_system_geration [] = "\nCMAKE Target Generated..\n\n";
 
      std::cout << build_system_geration;
 

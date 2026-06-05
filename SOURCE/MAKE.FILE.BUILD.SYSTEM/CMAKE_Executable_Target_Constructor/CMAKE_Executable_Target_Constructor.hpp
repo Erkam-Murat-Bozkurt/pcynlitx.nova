@@ -66,8 +66,6 @@ private:
 
       std::vector<std::string> & sort_dir_path); 
 
- void Determine_Project_Library_Name();
-
  void Extract_Repo_Directory_Name(std::string & name, std::string root_dir);
 
  std::string Extract_Git_Record_Path(std::string path);
@@ -92,11 +90,7 @@ private:
 
  std::vector<Compiler_Data> * Comp_Data_Ptr;
 
- Compiler_Data * Data_Ptr;
-
  std::string DesPATH;
-
- std::string project_library_name;
 
  char build_type;
 
