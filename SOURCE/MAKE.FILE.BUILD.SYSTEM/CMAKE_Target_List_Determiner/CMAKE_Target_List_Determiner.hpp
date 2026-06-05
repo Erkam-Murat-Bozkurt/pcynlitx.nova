@@ -85,9 +85,13 @@ protected:
  void Target_List_Repetition_Check();
 
  const std::vector<Compiler_Data> * Compiler_Data_Pointer;
+
  std::vector<cmake::target_list_dtr> target_list;
+
  Custom_System_Interface * SysInt;
+
  bool Memory_Delete_Condition;
+ 
  char build_type;
 };
 

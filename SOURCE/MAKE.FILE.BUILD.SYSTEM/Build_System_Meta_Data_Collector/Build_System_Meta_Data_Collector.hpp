@@ -82,19 +82,33 @@ protected:
  void Perform_Data_Map_Construction();
  
  const std::vector<Compiler_Data> * Compiler_Data_Pointer;
+
  Descriptor_File_Reader Des_Reader;
+
  Git_Data_Processor Data_Processor;
+
  Source_File_Dependency_Determiner Dep_Determiner;
+
  Custom_System_Interface * SysInt;
+
  char * Des_Path;
+
  std::unordered_map<std::string, Compiler_Data> DataMap;
+
  std::string Warehouse_Path;
+
  std::string Repo_Dir;
+
  std::string repo_head_dir;
+
  std::string repo_obj_dir;
+
  std::string DesPATH;
+
  char opr_sis;
+
  char build_type;
+ 
  bool Memory_Delete_Condition;
 };
 

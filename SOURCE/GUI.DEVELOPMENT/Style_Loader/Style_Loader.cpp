@@ -75,7 +75,7 @@ void Style_Loader::Set_Lexer_Style(wxFont Default_Font, wxStyledTextCtrl * text_
 
      text_ctrl->StyleSetForeground(wxSTC_C_DEFAULT,wxColour(41, 128, 185));
 
-     text_ctrl->StyleSetForeground(wxSTC_C_REGEX,wxColour(90,90,90));
+     text_ctrl->StyleSetForeground(wxSTC_C_REGEX,wxColour(25,25,25));
 
      text_ctrl->StyleSetForeground(wxSTC_C_HASHQUOTEDSTRING,wxColour(25,25,25));
 

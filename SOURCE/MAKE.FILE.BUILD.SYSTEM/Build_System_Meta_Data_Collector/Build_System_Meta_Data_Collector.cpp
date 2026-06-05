@@ -80,6 +80,12 @@ void Build_System_Meta_Data_Collector::Clear_Dynamic_Memory(){
          this->Clear_String_Memory(this->Repo_Dir);
 
          this->DataMap.clear();
+
+         this->Dep_Determiner.Clear_Dynamic_Memory();
+
+         this->Data_Processor.Clear_Dynamic_Memory();
+
+         this->Des_Reader.Clear_Dynamic_Memory();
      }
 }
 
@@ -155,20 +161,6 @@ void Build_System_Meta_Data_Collector::Perform_Data_Map_Construction(){
 
          this->DataMap.insert(std::make_pair(source_file_path,this->Compiler_Data_Pointer->at(i)));
      }
-}
-
-void Build_System_Meta_Data_Collector::Clear_Vector_Memory(std::vector<std::string> & vec){
-
-    vec.shrink_to_fit();
-
-    for(size_t i=0;i<vec.size();i++){
-
-        this->Clear_String_Memory(vec.at(i));
-    }
-
-    vec.shrink_to_fit();
-
-    vec.clear();
 }
 
 void Build_System_Meta_Data_Collector::Clear_String_Memory(std::string & str)

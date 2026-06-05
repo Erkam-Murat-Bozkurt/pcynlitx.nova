@@ -33,8 +33,6 @@ CMAKE_System_Constructor::CMAKE_System_Constructor(char * DesPath, char opr_sis,
      this->Memory_Delete_Condition = false;
 
      this->opr_sis = opr_sis;
-
-     this->Des_Path = DesPath;
      
      this->build_type = build_type;
 
@@ -57,13 +55,9 @@ void CMAKE_System_Constructor::Clear_Dynamic_Memory(){
 
          this->Memory_Delete_Condition = true;
 
-         this->Clear_String_Memory(this->repo_obj_dir);
-
-         this->Clear_String_Memory(this->Warehouse_Path);
-
-         this->Clear_String_Memory(this->Repo_Dir);
-
          this->Target_List_Data_Structure_Constructor.Clear_Dynamic_Memory();
+
+         this->CMK_MF_Builder.Clear_Dynamic_Memory();
      }
 }
 
@@ -333,46 +327,6 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
      }
 }
 
-/*
-void CMAKE_System_Constructor::Construct_Path(std::string * pointer, std::string string, 
-
-     std::string warehouse_path){
-
-     int index = 0;
-
-     size_t warehouse_path_size = warehouse_path.length();
-
-     for(size_t i=0;i<warehouse_path_size;i++){
-
-         pointer->push_back(warehouse_path[i]);
-     }
-
-     if(this->opr_sis == 'w'){
-      
-        if(pointer->back() != '\\'){
-         
-           pointer->push_back('\\');         
-        }      
-     }
-     else{
-      
-          if(this->opr_sis == 'l'){
-           
-            if(pointer->back() != '/'){
-         
-               pointer->push_back('/');         
-            }      
-         }      
-     }
-
-     size_t string_size = string.length();
-
-     for(size_t i=0;i<string_size;i++){
-
-         pointer->push_back(string[i]);
-     }
-}
-*/
 
 void CMAKE_System_Constructor::Print_Long_Path_Warning(){
 

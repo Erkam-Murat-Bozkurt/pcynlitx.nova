@@ -80,21 +80,9 @@ protected:
 
  Custom_System_Interface * SysInt;
 
- char * Des_Path;
-
  std::vector<std::thread> threadPool;
 
  std::mutex mtx;
-
- std::string Warehouse_Path;
-
- std::string Repo_Dir;
-
- std::string repo_head_dir;
-
- std::string repo_obj_dir;
-
- std::string DesPATH;
 
  char opr_sis;
 

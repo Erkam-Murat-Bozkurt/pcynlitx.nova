@@ -39,19 +39,33 @@ class CMAKE_Build_System_Generator
 {
 public:
  CMAKE_Build_System_Generator(char * DesPath, char opr_sis, char build_type);
+
  virtual ~CMAKE_Build_System_Generator();
+
  void Receive_System_Interface(Custom_System_Interface * sysInt);
+
  void Construct_Build_System(std::string project_name, std::string version_num);
+
  void Construct_Exe_Build_System(std::string target_main_file_path, std::string exe_name);
+
  void Clear_Dynamic_Memory();
+
 protected:
+
  CMAKE_System_Constructor CMAKE_SysCon;
+
  CMAKE_Executable_Target_Constructor Executable_Target_Constructor;
+
  Custom_System_Interface * SysInt;
+
  std::string DesPATH;
+
  char opr_sis;
+
  char build_type;
+
  bool Memory_Delete_Condition;
+ 
 };
 
 #endif /* CMAKE_BUILD_SYSTEM_GENERATOR_HPP */

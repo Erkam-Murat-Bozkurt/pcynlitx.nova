@@ -78,6 +78,12 @@ void CMAKE_Executable_Target_Constructor::Clear_Dynamic_Memory(){
          }
 
          this->target_library_dependencies.clear();
+
+         this->Dep_Determiner.Clear_Dynamic_Memory();
+
+         this->FileManager.Clear_Dynamic_Memory();
+
+         this->Target_List_Data_Structure_Constructor.Clear_Dynamic_Memory();
      }
 }
 
