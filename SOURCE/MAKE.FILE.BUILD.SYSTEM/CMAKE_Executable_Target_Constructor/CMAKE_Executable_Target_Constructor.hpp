@@ -76,6 +76,8 @@ private:
 
  void Construct_Target_Library_Dependencies_for_Executable();
 
+ void CONTROL_CLASS_SOURCE_FILE_STATUS(std::string src_path);
+
  std::vector<std::string> target_library_dependencies;
 
  CMAKE_Target_List_Data_Structure_Constructor Target_List_Data_Structure_Constructor;

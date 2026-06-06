@@ -153,7 +153,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      this->Construct_Target_Library_Dependencies_for_Executable();
 
-
+     this->CONTROL_CLASS_SOURCE_FILE_STATUS(file_path);
      
      this->FileManager.SetFilePath(CMake_File_Path);
 
@@ -349,10 +349,7 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
            this->FileManager.WriteToFile("\n");
 
            this->FileManager.FileClose();
-     }
-
-
-
+     }     
 }
 
 void CMAKE_Executable_Target_Constructor::Construct_Target_Library_Dependencies_for_Executable()
@@ -381,6 +378,27 @@ void CMAKE_Executable_Target_Constructor::Construct_Target_Library_Dependencies_
      }
 }
 
+// IF A TARGET IS A CLASS SOURCE FILE, THIS MEMBER FUNCTION OBTAINS 
+// THE STATUS AND ADD RELATED TARGET TO THE LIST
+
+void CMAKE_Executable_Target_Constructor::CONTROL_CLASS_SOURCE_FILE_STATUS(std::string src_path){
+
+     const std::vector<cmake::target_data> * target_data_ptr =
+
+           this->Target_List_Data_Structure_Constructor.Get_Target_List_Elements_Dependency_Data();
+
+     this->StrOpr.SetFilePath(src_path);
+
+     for(size_t j=0;j<target_data_ptr->size();j++){
+
+        std::string member_function_str = target_data_ptr->at(j).target_name + "::";
+
+         if(this->StrOpr.Is_String_Exist_On_File(member_function_str))
+         {
+            this->target_library_dependencies.push_back(target_data_ptr->at(j).target_name);
+         }
+     }     
+}
 
 
 void CMAKE_Executable_Target_Constructor::Find_Construction_Directory(std::string & dir, std::string file_path){
