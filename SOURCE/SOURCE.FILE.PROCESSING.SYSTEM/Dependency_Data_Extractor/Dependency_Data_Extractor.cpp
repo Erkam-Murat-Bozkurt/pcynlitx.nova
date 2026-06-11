@@ -97,8 +97,6 @@ void Dependency_Data_Extractor::Recursive_Source_File_Dependency_Determination(s
      Head.search_complated = false;
 
      this->Search_Dependencies(Head);
-
-     int header_num = 0;
     
      for(size_t i=0;i<this->Dependent_Headers.size();i++){
 
@@ -211,7 +209,7 @@ int Dependency_Data_Extractor::Search_Dependencies(Search_Data & Src_Data)
            }
        }   
 
-       for(int j=0;j<this->Dependent_Headers.size();j++){
+       for(size_t j=0;j<this->Dependent_Headers.size();j++){
 
           Search_Data SData = this->Dependent_Headers.at(j);
 

@@ -240,7 +240,7 @@ void Executable_MakeFile_ComConstructor::Construct_Header_File_List(){
 
      size_t list_size = Data.dependent_headers.size();
 
-     for(int i=0;i<list_size;i++){
+     for(size_t i=0;i<list_size;i++){
 
          std::string header_name = Data.dependent_headers.at(i);
 
@@ -282,9 +282,7 @@ void Executable_MakeFile_ComConstructor::Construct_Object_File_List(){
 
      size_t list_size = this->Comp_Data_ptr->size();
 
-     size_t counter = 0;
-
-     for(int i=0;i<list_size;i++){
+     for(size_t i=0;i<list_size;i++){
 
          std::string Object_File_Name = this->Comp_Data_ptr->at(i).object_file_name;
 
@@ -302,10 +300,6 @@ void Executable_MakeFile_ComConstructor::Dependency_Determination_Command_Constr
 {
      this->Clear_String_Memory(&this->Dependency_Determination_Command);
 
-     const std::vector<std::string> & compiler_options = this->Des_Reader->Get_Compiler_Options();
-
-     const std::vector<std::string> & linker_options   = this->Des_Reader->Get_Linker_Options();
-
      char Include_Character [] = "-I";
 
      char Link_Character [] = "-L";
@@ -314,7 +308,6 @@ void Executable_MakeFile_ComConstructor::Dependency_Determination_Command_Constr
 
      char Space_Character [] = {' ','\0'};
 
-     char Headers_Location [] ="$(PROJECT_HEADERS_LOCATION)";
 
      char Objects_Location [] ="$(PROJECT_OBJECTS_LOCATION)";
 
@@ -329,7 +322,6 @@ void Executable_MakeFile_ComConstructor::Dependency_Determination_Command_Constr
 
      char tab [] = "\t";
 
-     int index_counter = 0;
 
 
 
@@ -437,7 +429,6 @@ void Executable_MakeFile_ComConstructor::Dependency_Determination_Command_Constr
 
      char makro_end [] = ")";
 
-     int  sizer = 0;
 
      for(int i=0;i<included_dir_num;i++){
 
@@ -507,13 +498,10 @@ void Executable_MakeFile_ComConstructor::Dependency_Determination_Command_Constr
 
      int  library_dir_num = this->Des_Reader->Get_Library_Directory_Number();
 
-     sizer = 0;
 
      for(int i=0;i<library_dir_num;i++){
 
          std::string library_dir = this->Des_Reader->Get_Library_Directory(i);
-
-         char * dir_index = this->Translater.Translate(i);
 
          this->Place_Information(&this->Dependency_Determination_Command,Link_Character);
 
@@ -530,9 +518,7 @@ void Executable_MakeFile_ComConstructor::Dependency_Determination_Command_Constr
 
 
 
-
      std::string go_to_new_line = "\\\n\t";
-
 
      this->Place_Information(&this->Dependency_Determination_Command,Source_Location);
 
@@ -610,13 +596,7 @@ void Executable_MakeFile_ComConstructor::Determine_Compiler_System_Command_For_S
 
      char Link_Character [] = "-L";
 
-     char include_word [] = "-include";
-
      char Space_Character [] = {' ','\0'};
-
-     char Headers_Location [] = "$(PROJECT_HEADERS_LOCATION)";
-
-     char Objects_Location [] = "$(PROJECT_OBJECTS_LOCATION)";
 
      char Library_Location [] = "$(PROJECT_LIBRARY_LOCATION)";
 
@@ -789,13 +769,7 @@ void Executable_MakeFile_ComConstructor::Determine_Dependency_Determination_Comm
 
      char Link_Character [] = "-L";
 
-     char include_word [] = "-include";
-
      char Space_Character [] = {' ','\0'};
-
-     char Headers_Location [] = "$(PROJECT_HEADERS_LOCATION)";
-
-     char Objects_Location [] = "$(PROJECT_OBJECTS_LOCATION)";
 
      char Library_Location [] = "$(PROJECT_LIBRARY_LOCATION)";
 
@@ -808,7 +782,6 @@ void Executable_MakeFile_ComConstructor::Determine_Dependency_Determination_Comm
 
      char tab [] = "\t";
 
-     int index_counter = 0;
 
      
      std::string compiler_input_command = "g++ -Wall -std=c++17 ";
@@ -955,7 +928,7 @@ void Executable_MakeFile_ComConstructor::Construct_Header_File_List_For_Simple_C
 
      size_t list_size = this->Simple_Data_Ptr->Dependent_Header_Names.size();
 
-     for(int i=0;i<list_size;i++){
+     for(size_t i=0;i<list_size;i++){
 
          std::string header_name = this->Simple_Data_Ptr->Dependent_Header_Names.at(i);
 

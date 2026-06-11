@@ -158,8 +158,6 @@ void Record_Number_Determiner::Determine_Warehouse_Location_Record_Number(){
 
      int end_line   = this->Data_Collector->Get_Warehouse_Location_Record_Area(1);
 
-     int record_num = 0;
-
      for(int i=start_line+1;i<end_line-1;i++){
 
          std::string line = this->Data_Collector->Get_Descriptor_File_Line_With_Spaces(i);
@@ -194,8 +192,6 @@ void Record_Number_Determiner::Determine_Include_Directories_Record_Number(){
      int start_line = this->Data_Collector->Get_Include_Directories_Record_Area(0);
 
      int end_line   = this->Data_Collector->Get_Include_Directories_Record_Area(1);
-
-     int record_num = 0;
 
      for(int i=start_line+1;i<end_line-1;i++){
 
@@ -279,8 +275,6 @@ void Record_Number_Determiner::Determine_Compiler_Options_Record_Number(){
 
      int end_line   = this->Data_Collector->Get_Compiler_Options_Record_Area(1);
 
-     int record_num = 0;
-
      for(int i=start_line+1;i<end_line-1;i++){
 
          std::string line = this->Data_Collector->Get_Descriptor_File_Line_With_Spaces(i);
@@ -319,8 +313,6 @@ void Record_Number_Determiner::Determine_Build_System_Type_Record_Number(){
 
      int end_line   = this->Data_Collector->Get_Build_System_Type_Record_Area(1);
 
-     int record_num = 0;
-
      for(int i=start_line+1;i<end_line-1;i++){
 
          std::string line = this->Data_Collector->Get_Descriptor_File_Line(i);
@@ -337,8 +329,6 @@ void Record_Number_Determiner::Determine_Project_Name_Record_Number(){
      int start_line = this->Data_Collector->Get_Project_Name_Record_Area(0);
 
      int end_line   = this->Data_Collector->Get_Project_Name_Record_Area(1);
-
-     int record_num = 0;
 
      for(int i=start_line+1;i<end_line-1;i++){
 

@@ -55,12 +55,12 @@ protected:
  void Construct_New_Directory_For_Build_Files();
  void Script_Name_Determination(std::string & name, char * src_file_name);
  void Script_Path_Determination(std::string & path, char * src_file_name);
+ Descriptor_File_Reader Des_Reader;
  Git_Data_Processor Git_Data_Proc;
+ Source_File_Dependency_Determiner  Dep_Determiner;
  Executable_MakeFile_ComConstructor ComConstructor;
  Executable_MakeFile_Script_Builder Script_Builder;
- Source_File_Dependency_Determiner  Dep_Determiner;
  Project_Script_Writer Project_Rebuild_Script_Writer;
- Descriptor_File_Reader Des_Reader;
  DirectoryOperations DirectoryManager;
  Cpp_FileOperations FileManager;
  IntToCharTranslater Translater;

@@ -146,3 +146,25 @@ target_link_directories(src_dat_col PUBLIC
 target_link_libraries(src_dat_col PUBLIC proj_bld_tools
 
                     git_data_processing_system des_reader basic_tools)
+
+target_compile_options(src_dat_col PUBLIC 
+
+    -std=c++17
+
+    -Wall
+
+    -Bstatic
+
+    -g
+
+    -O0
+
+    -mthreads
+
+    -D__WXMSW__
+
+    -D_UNICODE
+
+    -DWIN32
+
+)

@@ -313,6 +313,32 @@ target_link_libraries(make_fbld_sys PUBLIC proj_bld_tools
                     git_data_processing_system des_reader basic_tools)
 
 
+
+target_compile_options(make_fbld_sys PUBLIC 
+
+    -std=c++17
+
+    -Wall
+
+    -Bstatic
+
+    -g
+
+    -O0
+
+    -mthreads
+
+    -D__WXMSW__
+
+    -D_UNICODE
+
+    -DWIN32
+
+)
+
+
+
+                    
 add_subdirectory(CMAKE_System_Constructor)
 
 add_subdirectory(CMAKE_Build_System_Generator)

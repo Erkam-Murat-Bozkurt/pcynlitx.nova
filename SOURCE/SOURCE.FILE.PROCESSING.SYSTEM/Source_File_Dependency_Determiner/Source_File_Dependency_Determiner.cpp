@@ -28,9 +28,11 @@ Source_File_Dependency_Determiner::Source_File_Dependency_Determiner(char * des_
 
     char opr_sis) :
 
-    Code_Rd(opr_sis), Com_Data_Extractor(opr_sis), DepSelector(opr_sis), 
+    Code_Rd(opr_sis), DepSelector(opr_sis), DepSelector_For_Single_File(opr_sis), 
     
-    DepSelector_For_Single_File(opr_sis), Simple_Dep_Extractor(opr_sis)
+    Com_Data_Extractor(opr_sis), 
+    
+    Simple_Dep_Extractor(opr_sis)
 {
     this->SysInt = nullptr;
 
@@ -243,7 +245,7 @@ void Source_File_Dependency_Determiner::Collect_Dependency_Information(){
 
 void Source_File_Dependency_Determiner::Construct_Dependency_Map(){
 
-     for(int i=0;i< this->Compiler_Data_Ptr->size();i++){
+     for(size_t i=0;i< this->Compiler_Data_Ptr->size();i++){
 
          std::string path = this->Compiler_Data_Ptr->at(i).source_file_path;
 
@@ -269,13 +271,13 @@ void Source_File_Dependency_Determiner::Re_Arrange_Priorities(){
 
      if(comp_data_size>20){
 
-       int division = comp_data_size/thread_number;
+       size_t division = comp_data_size/thread_number;
 
-       int remaining_job = comp_data_size- (thread_number*division);
+       size_t remaining_job = comp_data_size - (thread_number*division);
 
-       int str=0, end=0;
+       size_t str=0, end=0;
 
-       for(int i=0;i<thread_number;i++){
+       for(size_t i=0;i<thread_number;i++){
 
            if(i==0){
 
@@ -306,7 +308,7 @@ void Source_File_Dependency_Determiner::Re_Arrange_Priorities(){
            this->threadPool.push_back(std::thread(&Source_File_Dependency_Determiner::Control_Priorities,this,str,end));   
        }
     
-       for(int i=0;i<this->threadPool.size();i++){
+       for(size_t i=0;i<this->threadPool.size();i++){
      
           this->threadPool[i].join();
        }
@@ -484,7 +486,7 @@ bool Source_File_Dependency_Determiner::Is_Header_File(std::string path){
 
 void Source_File_Dependency_Determiner::Print_Compiler_Orders(){
 
-     for(int i=0;i< this->Compiler_Data_Ptr->size();i++){
+     for(size_t i=0;i< this->Compiler_Data_Ptr->size();i++){
 
          std::cout << "\n\n";
 

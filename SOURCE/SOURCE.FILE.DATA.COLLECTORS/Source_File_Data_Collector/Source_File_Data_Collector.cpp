@@ -567,9 +567,6 @@ void Source_File_Data_Collector::Receive_Include_File_Name(std::string * pointer
         }
      }
 
-     
-     int index = 0;
-
      for(size_t i=start_point;i<end_point;i++){
 
          pointer->push_back(string[i]) ;
@@ -699,8 +696,6 @@ void Source_File_Data_Collector::Determine_Git_Record_Source_File_Directory(std:
      std::string git_record_system_path){
 
      size_t path_size = git_record_system_path.length();
-
-     size_t dir_size = path_size;
 
      size_t end_point = 0;
 
@@ -838,8 +833,6 @@ void Source_File_Data_Collector::Determine_Source_File_Name_With_Ext(std::string
 
 void Source_File_Data_Collector::Delete_Spaces_on_String(std::string * str)
 {
-      size_t string_size = str->length();
-
       bool search_cond = true;
 
       do{

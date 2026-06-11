@@ -71,9 +71,6 @@ void Script_Data_Collector::Determine_Source_File_Compilation_Information(Script
      ptr->warehouse_path = this->warehouse_path;
 
 
-     int record_index = 0;
-
-
      std::string git_record_dir = this->Cmp_Data_Ptr->src_git_record_dir;
 
      this->Place_String(&ptr->source_file_git_record_dir,git_record_dir);
@@ -164,10 +161,6 @@ void Script_Data_Collector::Determine_Source_File_Compilation_Information_For_Si
 
      ptr->warehouse_path = this->warehouse_path;
 
-     int record_index = 0;
-
-
-      
 
      std::string git_record_dir = this->Simple_Data_Ptr->src_git_record_dir;
 

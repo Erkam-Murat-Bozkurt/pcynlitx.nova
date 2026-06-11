@@ -26,11 +26,9 @@
 
 Build_Tools_Initializer::Build_Tools_Initializer(char * DesPATH, char opr_sis, char build_type) : 
 
- Rep_Init(DesPATH,opr_sis),   Dep_Determiner(DesPATH,opr_sis) , 
+ Git_Data_Proc(opr_sis), Des_Reader(opr_sis), Rep_Init(DesPATH,opr_sis), Dep_Determiner(DesPATH,opr_sis) , 
 
- Mk_Builder(DesPATH,opr_sis), Script_Writer(opr_sis), 
- 
- Git_Data_Proc(opr_sis), Des_Reader(opr_sis)
+ Mk_Builder(DesPATH,opr_sis), Script_Writer(opr_sis)
 {    
     this->Memory_Delete_Condition = false;
 

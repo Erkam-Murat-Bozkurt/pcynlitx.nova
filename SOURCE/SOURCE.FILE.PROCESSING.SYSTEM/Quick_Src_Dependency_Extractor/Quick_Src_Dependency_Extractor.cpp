@@ -244,8 +244,6 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
 void Quick_Src_Dependency_Extractor::Extract_Directory_Short_Paths(std::string sys_dir, 
 
      std::vector<std::string> & sort_dir_path){
-
-     size_t dir_size = sys_dir.length();
      
      std::string repo_dir = this->Des_Reader->Get_Repo_Directory_Location();
 

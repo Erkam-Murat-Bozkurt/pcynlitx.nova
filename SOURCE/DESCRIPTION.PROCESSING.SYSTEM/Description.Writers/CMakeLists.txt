@@ -59,3 +59,27 @@ target_link_directories(des_writer PUBLIC
 
 
 target_link_libraries(des_writer PUBLIC basic_tools des_reader)
+
+
+
+target_compile_options(des_writer PUBLIC 
+
+    -std=c++17
+
+    -Wall
+
+    -Bstatic
+
+    -g
+
+    -O0
+
+    -mthreads
+
+    -D__WXMSW__
+
+    -D_UNICODE
+
+    -DWIN32
+
+)

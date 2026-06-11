@@ -231,3 +231,26 @@ target_link_directories(proj_bld_tools PUBLIC
 target_link_libraries(proj_bld_tools PUBLIC script_writers make_fbld_sys 
 
                      git_data_processing_system src_dat_col des_reader basic_tools)
+
+target_compile_options(proj_bld_tools PUBLIC 
+
+    -std=c++17
+
+    -Wall
+
+    -Bstatic
+
+    -g
+
+    -O0
+
+    -mthreads
+
+    -D__WXMSW__
+
+    -D_UNICODE
+
+    -DWIN32
+
+)
+

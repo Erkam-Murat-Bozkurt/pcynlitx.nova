@@ -177,10 +177,6 @@ void Executable_MakeFile_Information_Collector::Determine_Include_Directory_List
     
      char Include_Character [] = "-I";
 
-     char Link_Character [] = "-L";
-
-     char include_word [] = "-include";
-
      char Space_Character [] = {' ','\0'};
 
 
@@ -189,11 +185,6 @@ void Executable_MakeFile_Information_Collector::Determine_Include_Directory_List
      char new_line [] = "\n";
 
      char tab [] = "\t";
-
-     int index_counter = 0;
-
-     int  included_dir_num = this->Des_Reader->Get_Include_Directory_Number();
-
 
 
      std::vector<std::string> dir_buffer;
@@ -235,10 +226,6 @@ void Executable_MakeFile_Information_Collector::Determine_Include_Directory_List
     
      char Include_Character [] = "-I";
 
-     char Link_Character [] = "-L";
-
-     char include_word [] = "-include";
-
      char Space_Character [] = {' ','\0'};
 
 
@@ -247,11 +234,6 @@ void Executable_MakeFile_Information_Collector::Determine_Include_Directory_List
      char new_line [] = "\n";
 
      char tab [] = "\t";
-
-     int index_counter = 0;
-
-     int  included_dir_num = this->Des_Reader->Get_Include_Directory_Number();
-
 
 
      std::vector<std::string> dir_buffer;
@@ -326,8 +308,6 @@ void Executable_MakeFile_Information_Collector::Determine_Source_File_Directory_
      for(size_t i=0;i<src_dir.size();i++){
 
          std::string source_file_dir = src_dir.at(i);
-
-         char * dir_index = this->Translater.Translate(static_cast<int>(i));
 
          this->Place_Information(&src_dir_list_for_com,Link_Character);
 
@@ -716,7 +696,7 @@ void Executable_MakeFile_Information_Collector::Determine_Src_File_Dir(std::stri
 
      size_t dir_size = path_size;
 
-     for(int i=path_size;i>0;i--){
+     for(size_t i=path_size;i>0;i--){
 
          if(this->opr_sis == 'w'){
 
@@ -743,7 +723,7 @@ void Executable_MakeFile_Information_Collector::Determine_Src_File_Dir(std::stri
          }
      }
 
-     for(int i=0;i<dir_size;i++){
+     for(size_t i=0;i<dir_size;i++){
 
          src_dir.push_back(file_path[i]);
      }

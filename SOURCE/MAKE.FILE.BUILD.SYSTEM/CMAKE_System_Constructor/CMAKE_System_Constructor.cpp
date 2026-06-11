@@ -127,7 +127,7 @@ void CMAKE_System_Constructor::Construct_For_Large_Data_Set(size_t target_number
      size_t range = this->Split_Range(target_number,thread_num,remaining_job);
 
 
-     for(int i=0;i<thread_num;i++){
+     for(size_t i=0;i<thread_num;i++){
 
          if(i==0){
 
@@ -279,17 +279,13 @@ void CMAKE_System_Constructor::Write_MakeFiles(int start, int end){
      
           = this->Target_List_Data_Structure_Constructor.Get_Descriptor_File_Reader();
  
-     Git_Data_Processor * Data_Processor    
-     
-          = this->Target_List_Data_Structure_Constructor.Get_Git_Data_Processor();
-     
      
      const std::vector<cmake::target_data> * target_data_ptr =
 
            this->Target_List_Data_Structure_Constructor.Get_Target_List_Elements_Dependency_Data();
     
 
-     for(size_t i=start;i<end;i++){
+     for(int i=start;i<end;i++){
 
          CMAKE_Target_Library_Builder Target_Builder(this->build_type);
             

@@ -103,8 +103,8 @@ protected:
  void Clear_Include_File_Data(Include_File_Data * pointer);
  void Clear_String_Memory(std::string * pointer);
  const Git_Data_Processor * Git_Data_Proc;
- StringOperator StringManager;
  Cpp_FileOperations FileManager;
+ StringOperator StringManager;
  char operating_sis;
  bool syntax_error;
  bool isStringsEqual;

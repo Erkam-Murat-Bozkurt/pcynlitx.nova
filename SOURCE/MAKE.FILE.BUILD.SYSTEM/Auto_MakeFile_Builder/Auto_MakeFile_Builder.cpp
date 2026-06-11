@@ -124,7 +124,7 @@ void Auto_MakeFile_Builder::Construct_For_Large_Data_Set(size_t data_size){
      size_t range = this->Split_Range(data_size,thread_num,remaining_job);
 
 
-     for(int i=0;i<thread_num;i++){
+     for(size_t i=0;i<thread_num;i++){
 
          if(i==0){
 
@@ -271,7 +271,7 @@ void Auto_MakeFile_Builder::Write_MakeFiles(int start, int end){
 
      Mk_Builder.Receive_Descriptor_File_Reader(this->Des_Reader);
 
-     for(size_t i=start;i<end;i++){
+     for(int i=start;i<end;i++){
 
          std::string source_file_path = this->Compiler_Data_Pointer->at(i).source_file_path;
          
@@ -297,8 +297,6 @@ void Auto_MakeFile_Builder::Determine_Project_Directories(){
 void Auto_MakeFile_Builder::Construct_Path(std::string * pointer, std::string string, 
 
      std::string warehouse_path){
-
-     int index = 0;
 
      size_t warehouse_path_size = warehouse_path.length();
 

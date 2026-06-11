@@ -156,11 +156,11 @@ void Source_File_Compiler_Data_Extractor::Construct_Compiler_Data_List(){
 
      size_t collected_data_size = this->Compiler_Data_Vectors.size();
 
-     for(int i=0;i<collected_data_size;i++){
+     for(size_t i=0;i<collected_data_size;i++){
         
          size_t d_size = this->Compiler_Data_Vectors[i].size();
 
-         for(int k=0;k<d_size;k++){
+         for(size_t k=0;k<d_size;k++){
               
              this->compiler_data.push_back(this->Compiler_Data_Vectors[i].at(k));
          }
@@ -194,7 +194,7 @@ void Source_File_Compiler_Data_Extractor::Search_For_Large_Data_Set(size_t data_
 
      size_t range =this->Split_Range(data_size,thread_num,remaining_job);
 
-     for(int i=0;i<thread_num;i++){
+     for(size_t i=0;i<thread_num;i++){
 
          if(i==0){
 
@@ -290,7 +290,7 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int start, int e
     
      std::vector<Compiler_Data> Com_Dt;
 
-     for(std::size_t i=start;i<end;i++){
+     for(int i=start;i<end;i++){
 
          const std::vector<Source_File_Dependency> * src_ptr = &this->dep_data_ptr->at(i);
 
@@ -477,8 +477,6 @@ bool Source_File_Compiler_Data_Extractor::Is_There_File_Name_Similarity(std::str
 void Source_File_Compiler_Data_Extractor::Extract_Directory_Short_Path(std::string sys_dir, 
 
      std::vector<std::string> & sort_dir_path){
-
-     size_t dir_size = sys_dir.length();
      
      std::string repo_dir = this->Des_Reader->Get_Repo_Directory_Location();
 

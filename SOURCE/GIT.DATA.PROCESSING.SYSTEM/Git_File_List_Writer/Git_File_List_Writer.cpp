@@ -334,7 +334,7 @@ void Git_File_List_Writer::Execute_System_Call(char * cmd){
           &pi )           // Pointer to PROCESS_INFORMATION structure
        )
      {
-          printf( "CreateProcess failed (%d).\n", GetLastError() );
+          printf( "CreateProcess failed (%ld).\n", GetLastError() );
           exit(EXIT_FAILURE);
      }
 

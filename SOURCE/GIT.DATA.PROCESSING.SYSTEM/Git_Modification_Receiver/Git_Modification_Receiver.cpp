@@ -252,8 +252,6 @@ void Git_Modification_Receiver::Read_Modification_File()
 
      this->FileManager.FileOpen(Rf);
 
-     int index = 0;
-
      do {
 
           std::string str = this->FileManager.ReadLine();
@@ -280,7 +278,7 @@ void Git_Modification_Receiver::Read_Modification_File()
      this->FileManager.Clear_Dynamic_Memory();
 
 
-     if(this->opr_sis = 'w'){
+     if(this->opr_sis == 'w'){
 
         this->Convert_Windows_Paths();
      }
@@ -401,8 +399,6 @@ void Git_Modification_Receiver::Convert_Windows_Paths(){
 
 
 void Git_Modification_Receiver::Delete_Spaces_on_String(std::string & str){
-
-     size_t string_size = str.length();
 
      bool search_cond = true;
 
@@ -559,10 +555,6 @@ void Git_Modification_Receiver::Determine_Git_Record_File_System_Path(std::strin
      size_t repo_dir_size = this->Repo_Dir.length();
 
      size_t path_size = file_path.length();
-
-     size_t sys_path_size = repo_dir_size + path_size;
-
-     int index=0;
 
      for(size_t i=0;i<repo_dir_size;i++){
 
@@ -784,8 +776,6 @@ bool Git_Modification_Receiver::CompareString(std::string firstString, std::stri
 
 
 void Git_Modification_Receiver::Delete_Spaces_on_String(std::string * str){
-
-    size_t string_size = str->length();
 
     bool search_cond = true;
 

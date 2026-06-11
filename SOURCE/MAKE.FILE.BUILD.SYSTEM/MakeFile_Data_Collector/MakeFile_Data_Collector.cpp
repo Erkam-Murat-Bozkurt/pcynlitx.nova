@@ -195,7 +195,7 @@ void MakeFile_Data_Collector::Find_Object_File_Name(){
 
      // The source file name witout extantion
 
-     for(int i=0;i<Source_File_Name_Size;i++){
+     for(size_t i=0;i<Source_File_Name_Size;i++){
 
          this->Object_File_Name.push_back( this->Source_File_Name[i]);
      }
@@ -246,8 +246,6 @@ void MakeFile_Data_Collector::Specifiy_Compiler_Command_For_Dependency_Determina
 
      std::string Source_Location  ="$(SOURCE_LOCATION)";
 
-     char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
-
      std::string Space_Character = " ";
 
      std::string go_to_new_line = "\\\n\t";
@@ -280,8 +278,6 @@ void MakeFile_Data_Collector::Specifiy_Compiler_Command_For_Dependency_Determina
      char include_dir_symbol [] = "$(EXTERNAL_INCLUDE_DIR_";
 
      char makro_end [] = ")";
-
-     int  sizer = 0;
 
      for(int i=0;i<included_dir_num;i++){
 
@@ -464,17 +460,6 @@ void MakeFile_Data_Collector::Determine_Include_Directive(std::string * directiv
 
 
 void MakeFile_Data_Collector::Determine_Dependency_Code_Line(){
-
-     char double_quotes [] = " : ";
-
-     size_t Object_File_Name_Size = this->Object_File_Name.length();
-
-     size_t Header_File_Name_Size = this->Source_File_Name_With_Ext.length();
-
-     size_t Source_File_Name_Size = this->Source_File_Name_With_Ext.length();
-
-
-     int  sizer = 0;
 
      std::string Space_Character = " ";
 

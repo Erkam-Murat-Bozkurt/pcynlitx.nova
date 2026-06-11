@@ -449,8 +449,6 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
      char include_symbol [] = "EXTERNAL_INCLUDE_DIR_";
 
-     char underscore [] = "_";
-
      this->FileManager.WriteToFile("\n");
 
      for(int i=0;i<included_dir_num;i++){
@@ -526,18 +524,11 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
          }
      }
 
-
-
-
-     char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
-
-
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");
 
 
-     size_t compiler_data_size = this->Com_Data_ptr->size();
      
      size_t dep_header_size = this->Com_Data_ptr->at(0).dependent_headers.size();
 
@@ -562,8 +553,6 @@ void Executable_MakeFile_Builder::Write_MakeFile(char * Exe_Name){
 
 
      char NextLine [] = " \\";
-
-     char object_add [] = ".o";
 
 
 
@@ -942,13 +931,12 @@ void Executable_MakeFile_Builder::Write_Paths_File_For_Simple_Construction(){
      }
 
      this->FileManager.WriteToFile("\n");
+
      this->FileManager.WriteToFile("\n");
 
      int included_dir_num = this->Des_Reader.Get_Include_Directory_Number();
 
      char include_symbol [] = "EXTERNAL_INCLUDE_DIR_";
-
-     char underscore [] = "_";
 
      this->FileManager.WriteToFile("\n");
 
@@ -996,11 +984,6 @@ void Executable_MakeFile_Builder::Write_Paths_File_For_Simple_Construction(){
      }
 
      this->FileManager.WriteToFile("\n");
-
-
-
-     char * Current_Directory = this->DirectoryManager.GetCurrentlyWorkingDirectory();
-
 
      this->FileManager.WriteToFile("\n");
 

@@ -1077,7 +1077,7 @@ void MainFrame::Single_File_Script_Construction_Executer(wxString FilePath,
 
             wxString label = wxT(" BUILD SYSTEM CONSTRUCTION FOR A SOURCE FILE");
 
-            wxString start_text = wxT("\n\n EXECUTABLE MAKEFILE CONSTRUCTION STARTED");
+            wxString start_text = wxT("\n\n EXECUTABLE MAKEFILE CONSTRUCTION STARTED\n");
 
             this->Start_Construction_Process(label,open_dir,start_text);
          }

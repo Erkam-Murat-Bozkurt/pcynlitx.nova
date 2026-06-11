@@ -450,8 +450,6 @@ void Header_File_Determiner::Determine_Header_File_System_Path(std::string repo_
 
      size_t git_record_size = git_record_path.length();
 
-     size_t path_size = repo_dir_size + git_record_size;
-
 
      for(size_t i=0;i<repo_dir_size;i++){
 
@@ -520,10 +518,6 @@ void Header_File_Determiner::Determine_Git_Record_File_System_Path(std::string *
      size_t repo_dir_size = this->Repo_Dir.length();
 
      size_t path_size = file_path.length();
-
-     size_t sys_path_size = repo_dir_size + path_size;
-
-     int index=0;
 
      for(size_t i=0;i<repo_dir_size;i++){
 
@@ -596,8 +590,6 @@ bool Header_File_Determiner::CompareString(std::string firstString, std::string 
 }
 
 void Header_File_Determiner::Delete_Spaces_on_String(std::string * str){
-
-    size_t string_size = str->length();
 
     bool search_cond = true;
 

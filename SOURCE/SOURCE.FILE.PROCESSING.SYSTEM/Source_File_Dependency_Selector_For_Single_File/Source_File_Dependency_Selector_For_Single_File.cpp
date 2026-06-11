@@ -150,10 +150,10 @@ void Source_File_Dependency_Selector_For_Single_File::Search_For_Large_Data_Set(
 
      size_t remaining_job = 0;
 
-     size_t range =this->Split_Range(data_size,thread_num,remaining_job);
+     size_t range = this->Split_Range(data_size,thread_num,remaining_job);
 
 
-     for(int i=0;i<thread_num;i++){
+     for(size_t i=0;i<thread_num;i++){
 
          if(i==0){
 
@@ -245,7 +245,7 @@ void Source_File_Dependency_Selector_For_Single_File::Arrange_Dependency_Data(in
      mt.unlock();
 
 
-     for(size_t i=start;i<end;i++){
+     for(int i=start;i<end;i++){
      
          std::string path =this->Source_File_Data_Ptr->at(i).system_path;
 

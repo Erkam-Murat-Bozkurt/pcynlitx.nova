@@ -887,20 +887,6 @@ void GUI_Descriptor_File_Reader::Determine_File_Name_Without_Ext(std::string pat
           }
      }
 
-     size_t file_name_size = 0;
-
-     if(file_extention_start_point <= dir_size){
-
-        file_name_size = file_path_size - dir_size;
-
-        // It is the case in which the file does not have extenton
-     }
-
-     if(file_extention_start_point > dir_size){
-
-        file_name_size = file_extention_start_point - dir_size;
-     }
-
 
      size_t name_start_point = 0;
 

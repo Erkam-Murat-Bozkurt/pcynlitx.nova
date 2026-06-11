@@ -90,7 +90,6 @@ void Source_File_Processor::Determine_Source_File_Name(std::string path){
 
      size_t dir_size = file_path_size;
 
-
      for(size_t i=file_path_size;i>0;i--){
 
         if((path[i] == '/') || (path[i] == '\\')){
@@ -102,10 +101,6 @@ void Source_File_Processor::Determine_Source_File_Name(std::string path){
             dir_size--;
         }
      }
-
-     size_t file_name_size = file_path_size - dir_size;
-
-     int index = 0;
 
      for(size_t i=dir_size+1;i<file_path_size;i++){
 
@@ -170,20 +165,6 @@ void Source_File_Processor::Determine_File_Name_Without_Ext(std::string path)
           }
      }
 
-     size_t file_name_size = 0;
-
-     if(file_extention_start_point <= dir_size){
-
-        file_name_size = file_path_size - dir_size;
-
-        // It is the case in which the file does not have extenton
-     }
-
-     if(file_extention_start_point > dir_size){
-
-        file_name_size = file_extention_start_point - dir_size;
-     }
-
 
      size_t name_start_point = 0;
 
@@ -223,8 +204,6 @@ void Source_File_Processor::Determine_Class_Function_Pattern(std::string file_na
 
 void Source_File_Processor::Delete_Spaces_on_String(std::string * str)
 {
-     size_t string_size = str->length();
-
      bool search_cond = true;
 
      do{

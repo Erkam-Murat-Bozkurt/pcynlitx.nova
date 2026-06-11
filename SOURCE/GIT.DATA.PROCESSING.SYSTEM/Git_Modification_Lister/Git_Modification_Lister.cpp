@@ -201,6 +201,7 @@ void Git_Modification_Lister::Determine_Git_Listing_Command()
      }
 
      git_command.clear();
+
      git_command.shrink_to_fit();
 }
 
@@ -245,7 +246,7 @@ void Git_Modification_Lister::Execute_System_Call(char * cmd){
           &pi )           // Pointer to PROCESS_INFORMATION structure
        )
      {
-          printf( "CreateProcess failed (%d).\n", GetLastError() );
+          printf( "CreateProcess failed (%ld).\n", GetLastError() );
           exit(EXIT_FAILURE);
      }
 

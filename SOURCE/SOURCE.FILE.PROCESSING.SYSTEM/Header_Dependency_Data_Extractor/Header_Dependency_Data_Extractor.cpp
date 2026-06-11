@@ -138,9 +138,6 @@ void Header_Dependency_Data_Extractor::Search_For_Large_Data_Set(size_t data_siz
 
      size_t thread_div = thread_number/10;
 
-     size_t thread_div_2 = thread_number - thread_div;
-
-
      int str=0, end=0;
 
      int first_division  = 9*data_size/10;
@@ -159,7 +156,7 @@ void Header_Dependency_Data_Extractor::Search_For_Large_Data_Set(size_t data_siz
      int second_range_ = this->Split_Range(second_division,remaining_thread_num,second_range_remaining_job);
 
 
-     for(int i=0;i<thread_number;i++){
+     for(size_t i=0;i<thread_number;i++){
             
          if(i==0){
 
@@ -205,7 +202,7 @@ void Header_Dependency_Data_Extractor::Search_For_Large_Data_Set(size_t data_siz
         this->threadPool.push_back(std::thread(&Header_Dependency_Data_Extractor::Extract_Dependency_Search_Data,this,str,end));
      }
     
-     for(int i=0;i<thread_number;i++){
+     for(size_t i=0;i<thread_number;i++){
      
         this->threadPool[i].join();
      }
@@ -291,7 +288,7 @@ int Header_Dependency_Data_Extractor::Split_Range(int range_size, int partition,
 
 void Header_Dependency_Data_Extractor::Extract_Dependency_Search_Data(int start, int end){
 
-     for(size_t i=start;i<end;i++){
+     for(int i=start;i<end;i++){
      
          std::string path = this->Header_Files.at(i).Header_File;
 

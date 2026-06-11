@@ -157,7 +157,7 @@ void Source_File_Dependency_Selector::Search_For_Large_Data_Set(size_t data_size
      size_t range =this->Split_Range(data_size,thread_num,remaining_job);
 
 
-     for(int i=0;i<thread_num;i++){
+     for(size_t i=0;i<thread_num;i++){
 
          if(i==0){
 
@@ -195,13 +195,13 @@ void Source_File_Dependency_Selector::Search_For_Large_Data_Set(size_t data_size
 
 void Source_File_Dependency_Selector::Search_For_Middle_Data_Set(size_t data_size){
 
-     int division = data_size/16;
+     size_t division = data_size/16;
 
-     for(int i=0;i<16;i++){
+     for(size_t i=0;i<16;i++){
 
-         int str  = i*division;
+         size_t str  = i*division;
 
-         int end  = (i+1)*division;
+         size_t end  = (i+1)*division;
 
          if(i==15){
 
@@ -211,7 +211,7 @@ void Source_File_Dependency_Selector::Search_For_Middle_Data_Set(size_t data_siz
          this->threadPool.push_back(std::thread(&Source_File_Dependency_Selector::Arrange_Dependency_Data,this,str,end));
      }
     
-     for(int i=0;i<16;i++){
+     for(size_t i=0;i<16;i++){
      
          this->threadPool[i].join();
      }
@@ -269,7 +269,7 @@ void Source_File_Dependency_Selector::Arrange_Dependency_Data(int start, int end
 
      mt.unlock();
 
-     for(size_t i=start;i<end;i++){
+     for(int i=start;i<end;i++){
 
          std::vector<Source_File_Dependency> Dep_List;
 

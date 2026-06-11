@@ -245,8 +245,6 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(int index){
 
         this->FileManager.WriteToFile("\n\n\t");
 
-        int lib_counter = 0;
-
         for(size_t i=0;i<Libs.size();i++){
 
             std::string libs = Libs.at(i);

@@ -1067,8 +1067,6 @@ void Executable_MakeFile_Script_Builder::Determine_Compiler_Output_Path(std::str
 
      std::string compiler_output_location_add = "_Compiler_Output.txt";
      
-     int index = 0;
-
      size_t warehouse_path_size = this->warehouse_path.length();
 
      for(size_t i=0;i<warehouse_path_size;i++){

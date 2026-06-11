@@ -124,8 +124,6 @@ void Git_Data_Processor::Receive_Descriptor_File_Path(std::string DesPath){
 
       for(size_t i=0;i<this->Directory_Tree.size();i++)
       {
-          bool is_upper_directort_exist = false;
-
           int reputation = Cr_Opr.DetermineCharacterRepitation(this->Directory_Tree.at(i),dir_char);
 
           if(reputation>0){

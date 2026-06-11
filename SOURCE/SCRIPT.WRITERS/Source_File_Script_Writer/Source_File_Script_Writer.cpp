@@ -470,8 +470,6 @@ void Source_File_Script_Writer::Determine_Script_Path(char opr_sis){
 
      size_t dir_size = git_record_dir.length();
 
-     int index = 0;
-
      for(size_t i=0;i<dir_size;i++){
 
          this->script_path.push_back(git_record_dir[i]);         
@@ -697,8 +695,6 @@ void Source_File_Script_Writer::Determine_Compiler_Output_Path(std::string class
 
      std::string compiler_output_location_add = "_Compiler_Output.txt";
      
-     int index = 0;
-
      size_t warehouse_path_size = this->warehouse_path.length();
 
      for(size_t i=0;i<warehouse_path_size;i++){

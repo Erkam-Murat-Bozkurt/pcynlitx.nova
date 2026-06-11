@@ -118,3 +118,25 @@ target_link_directories(git_data_processing_system PUBLIC
 
 
 target_link_libraries(git_data_processing_system PUBLIC src_dat_col des_reader basic_tools)
+
+target_compile_options(git_data_processing_system PUBLIC 
+
+    -std=c++17
+
+    -Wall
+
+    -Bstatic
+
+    -g
+
+    -O0
+
+    -mthreads
+
+    -D__WXMSW__
+
+    -D_UNICODE
+
+    -DWIN32
+
+)

@@ -85,9 +85,9 @@ protected:
 
  Descriptor_File_Reader Des_Reader;
 
- Git_Data_Processor Data_Processor;
-
  Source_File_Dependency_Determiner Dep_Determiner;
+
+ Git_Data_Processor Data_Processor;
 
  Custom_System_Interface * SysInt;
 

@@ -93,8 +93,8 @@ protected:
  Source_File_Dependency_Selector DepSelector;
  Source_File_Dependency_Selector_For_Single_File DepSelector_For_Single_File;
  Source_File_Compiler_Data_Extractor Com_Data_Extractor;
- Source_File_Processor Src_Processor;
  Quick_Src_Dependency_Extractor Simple_Dep_Extractor;
+ Source_File_Processor Src_Processor;
  std::string Warehouse_Objetcs_Dir;
  std::string Warehouse_Path;
  std::vector<Compiler_Data> * Compiler_Data_Ptr;

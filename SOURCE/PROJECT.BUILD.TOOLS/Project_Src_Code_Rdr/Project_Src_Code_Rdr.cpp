@@ -59,7 +59,7 @@ void Project_Src_Code_Rdr::Receive_File_Paths(){
   
      size_t file_number = this->Git_Data_Proc->Get_Git_File_Index_Size();
 
-     for(int i=0;i<file_number;i++){
+     for(size_t i=0;i<file_number;i++){
 
          std::string file_sys_path = this->Git_Data_Proc->Get_File_System_Path(i);
 
@@ -130,7 +130,7 @@ void Project_Src_Code_Rdr::Read_For_Large_Data_Set(size_t repo_size){
      size_t range =this->Split_Range(repo_size,thread_num,remaining_job);
 
 
-     for(int i=0;i<thread_num;i++){
+     for(size_t i=0;i<thread_num;i++){
 
          if(i==0){
 
@@ -170,15 +170,15 @@ void Project_Src_Code_Rdr::Read_For_Large_Data_Set(size_t repo_size){
 
 void Project_Src_Code_Rdr::Read_For_Middle_Data_Set(size_t repo_size){
 
-     int thread_number = 16;
+     size_t thread_number = 16;
      
-     int division = repo_size/thread_number;
+     size_t division = repo_size/thread_number;
         
-     for(int i=0;i<thread_number;i++){
+     for(size_t i=0;i<thread_number;i++){
 
-         int str  = i*division;
+         size_t str  = i*division;
 
-         int end  = (i+1)*division;
+         size_t end  = (i+1)*division;
 
          if(i==(thread_number-1)){
 
@@ -188,7 +188,7 @@ void Project_Src_Code_Rdr::Read_For_Middle_Data_Set(size_t repo_size){
          this->threadPool.push_back(std::thread(&Project_Src_Code_Rdr::Read_Source_Code,this,str,end));
      }
     
-     for(int i=0;i<thread_number;i++){
+     for(size_t i=0;i<thread_number;i++){
      
          this->threadPool[i].join();
      }
@@ -590,8 +590,6 @@ void Project_Src_Code_Rdr::Extract_Directory_File_Name_Combination(std::string i
 
 void Project_Src_Code_Rdr::Delete_Spaces_on_String(std::string * str){
 
-    size_t string_size = str->length();
-
     bool search_cond = true;
 
     do{
@@ -632,10 +630,6 @@ void Project_Src_Code_Rdr::Determine_File_Name(std::string path, std::string & f
             dir_size--;
         }
      }
-
-     size_t file_name_size = file_path_size - dir_size;
-
-     int index = 0;
 
      for(size_t i=dir_size+1;i<file_path_size;i++){
 
@@ -723,10 +717,6 @@ void Project_Src_Code_Rdr::Determine_File_Combined_Name(std::string path, std::s
         }
      }
 
-     size_t file_name_size = file_path_size - upper_dir_size;
-
-     int index = 0;
-
      for(size_t i=upper_dir_size+1;i<file_path_size;i++){
 
          file_name.push_back(path[i]);
@@ -783,10 +773,6 @@ void Project_Src_Code_Rdr::Determine_File_Combined_Name_For_Config_File(std::str
              file_name_end--;
           }
      }
-
-     size_t file_name_size = file_path_size - upper_dir_size;
-
-     int index = 0;
 
      for(size_t i=upper_dir_size+1;i<file_name_end;i++){
 

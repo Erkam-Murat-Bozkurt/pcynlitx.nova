@@ -93,3 +93,25 @@ target_link_directories(des_reader PUBLIC
 
 
 target_link_libraries(des_reader PUBLIC basic_tools)
+
+target_compile_options(des_reader PUBLIC 
+
+    -std=c++17
+
+    -Wall
+
+    -Bstatic
+
+    -g
+
+    -O0
+
+    -mthreads
+
+    -D__WXMSW__
+
+    -D_UNICODE
+
+    -DWIN32
+
+)

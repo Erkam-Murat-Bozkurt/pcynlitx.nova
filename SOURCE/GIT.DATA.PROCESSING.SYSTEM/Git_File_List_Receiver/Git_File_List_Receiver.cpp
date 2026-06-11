@@ -153,8 +153,6 @@ void Git_File_List_Receiver::Read_Repo_List_File()
 
      this->FileManager.FileOpen(Rf);
 
-     int index = 0;
-
      do {
 
           std::string file_line = this->FileManager.ReadLine();
@@ -401,8 +399,6 @@ void Git_File_List_Receiver::Determine_Git_Record_Paths(){
 
 
 void Git_File_List_Receiver::Delete_Spaces_on_String(std::string * str){
-
-    size_t string_size = str->length();
 
     bool search_cond = true;
 

@@ -65,7 +65,7 @@ void Source_File_Information_Collector::Receive_Source_Code_Reader(const Project
 void Source_File_Information_Collector::Determine_Source_File_List()
 {
       
-     for(int i=0;i<this->Code_Rdr->Get_Project_Files_Number();i++)
+     for(size_t i=0;i<this->Code_Rdr->Get_Project_Files_Number();i++)
      {
          std::string path = this->Code_Rdr->Get_File_Path(i);
       

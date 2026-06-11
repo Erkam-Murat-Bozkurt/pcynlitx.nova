@@ -120,13 +120,13 @@ void Dependency_Data_Processor::Search_For_Large_Data_Set(size_t data_size){
      }
 
 
-     int division = data_size/thread_number;
+     size_t division = data_size/thread_number;
 
-     int remaining_job = data_size - (division*thread_number);
+     size_t remaining_job = data_size - (division*thread_number);
 
-     int str=0, end=0;
+     size_t str=0, end=0;
 
-     for(int i=0;i<thread_number;i++){
+     for(size_t i=0;i<thread_number;i++){
 
          if(i==0){
 
@@ -155,7 +155,7 @@ void Dependency_Data_Processor::Search_For_Large_Data_Set(size_t data_size){
          this->threadPool.push_back(std::thread(Dependency_Data_Processor::Extract_Dependency_Search_Data,this,str,end));   
      }
     
-     for(int i=0;i<threadPool.size();i++){
+     for(size_t i=0;i<threadPool.size();i++){
      
          this->threadPool[i].join();
      }
@@ -172,13 +172,13 @@ void Dependency_Data_Processor::Search_For_Large_Data_Set(size_t data_size){
 
 void Dependency_Data_Processor::Search_For_Middle_Data_Set(size_t data_size){
 
-     int division = data_size/16;
+     size_t division = data_size/16;
 
-     for(int i=0;i<16;i++){
+     for(size_t i=0;i<16;i++){
 
-         int str  = i*division;
+         size_t str  = i*division;
 
-         int end  = (i+1)*division;
+         size_t end  = (i+1)*division;
 
          if(i==15){
 
@@ -188,7 +188,7 @@ void Dependency_Data_Processor::Search_For_Middle_Data_Set(size_t data_size){
          this->threadPool.push_back(std::thread(Dependency_Data_Processor::Extract_Dependency_Search_Data,this,str,end));
      }
     
-     for(int i=0;i<16;i++){
+     for(size_t i=0;i<16;i++){
      
          this->threadPool[i].join();
      }
@@ -216,7 +216,7 @@ void Dependency_Data_Processor::Search_For_Small_Data_Set(size_t data_size){
 
 void Dependency_Data_Processor::Extract_Dependency_Search_Data(int start, int end){
 
-     for(size_t i=start;i<end;i++){
+     for(int i=start;i<end;i++){
      
          std::string path =this->Source_File_Data_Ptr->at(i).system_path;
 
@@ -287,13 +287,13 @@ void Dependency_Data_Processor::ReOrdering_For_Large_Data_Set(size_t data_size){
         thread_number = 64;
      }
 
-     int division = search_data_size/thread_number;
+     size_t division = search_data_size/thread_number;
 
-     int remaining_job = search_data_size - (division*thread_number);
+     size_t remaining_job = search_data_size - (division*thread_number);
 
-     int str=0, end=0;
+     size_t str=0, end=0;
 
-     for(int i=0;i<thread_number;i++){
+     for(size_t i=0;i<thread_number;i++){
 
          if(i==0){
 
@@ -324,7 +324,7 @@ void Dependency_Data_Processor::ReOrdering_For_Large_Data_Set(size_t data_size){
         this->threadPool.push_back(std::thread(Dependency_Data_Processor::Re_Order_Dependency_Data,this,str,end));   
      }
     
-     for(int i=0;i<this->threadPool.size();i++){
+     for(size_t i=0;i<this->threadPool.size();i++){
      
          this->threadPool[i].join();
      }
@@ -336,13 +336,13 @@ void Dependency_Data_Processor::ReOrdering_For_Large_Data_Set(size_t data_size){
 
 void Dependency_Data_Processor::ReOrdering_For_Middle_Data_Set(size_t data_size){
 
-     int division = data_size/16;
+     size_t division = data_size/16;
 
-     for(int i=0;i<16;i++){
+     for(size_t i=0;i<16;i++){
 
-         int str  = i*division;
+         size_t str  = i*division;
 
-         int end  = (i+1)*division;
+         size_t end  = (i+1)*division;
 
          if(i==15){
 
@@ -352,7 +352,7 @@ void Dependency_Data_Processor::ReOrdering_For_Middle_Data_Set(size_t data_size)
          this->threadPool.push_back(std::thread(Dependency_Data_Processor::Re_Order_Dependency_Data,this,str,end));
      }
     
-     for(int i=0;i<16;i++){
+     for(size_t i=0;i<16;i++){
      
          this->threadPool[i].join();
      }
@@ -378,7 +378,7 @@ void Dependency_Data_Processor::ReOrdering_For_Small_Data_Set(size_t data_size){
 
 void Dependency_Data_Processor::Re_Order_Dependency_Data(int str, int end){
 
-     for(size_t i=str;i<end;i++){
+     for(int i=str;i<end;i++){
 
          this->ReOrder_Stack_Data(&this->Dependency_Search_Data.at(i));
      }

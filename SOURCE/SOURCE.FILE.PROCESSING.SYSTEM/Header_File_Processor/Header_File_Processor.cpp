@@ -48,8 +48,11 @@ void Header_File_Processor::Clear_Object_Memory(){
 void Header_File_Processor::Clear_Dynamic_Memory(){
 
      this->Clear_String_Memory(&this->Header_File_Directory);
+
      this->Clear_String_Memory(&this->Header_File_Name);
+
      this->Clear_String_Memory(&this->Header_File_Name_With_Extention);
+     
      this->Clear_String_Memory(&this->Header_File_System_Path);
 
      this->StringManager.Clear_Dynamic_Memory();
@@ -75,7 +78,7 @@ bool Header_File_Processor::Is_this_file_included_on_anywhere(std::string file_p
 
      this->Is_this_file_included_on_somewhere = false;
 
-     for(int i=0;i<repo_size;i++){
+     for(size_t i=0;i<repo_size;i++){
 
          const std::vector<std::string> * Include_Declerations = this->Code_Rdr->Get_Include_Declerations(i);
 

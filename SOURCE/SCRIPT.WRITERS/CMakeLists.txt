@@ -243,3 +243,25 @@ target_link_directories(script_writers PUBLIC
 target_link_libraries(script_writers PUBLIC
 
                 src_proc_sys src_dat_col proj_bld_tools git_data_processing_system des_reader basic_tools)
+
+target_compile_options(script_writers PUBLIC 
+
+    -std=c++17
+
+    -Wall
+
+    -Bstatic
+
+    -g
+
+    -O0
+
+    -mthreads
+
+    -D__WXMSW__
+
+    -D_UNICODE
+
+    -DWIN32
+
+)

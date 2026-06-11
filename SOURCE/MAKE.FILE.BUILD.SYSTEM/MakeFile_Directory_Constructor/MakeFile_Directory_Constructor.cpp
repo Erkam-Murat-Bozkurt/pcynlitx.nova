@@ -94,10 +94,7 @@ void MakeFile_Directory_Constructor::Collect_Directory_Info(){
 
      this->MakeFile_Directories.shrink_to_fit();
 
-
-
-     size_t mk_dir_list_size = this->MakeFile_Directories.size();
-
+     
      for(size_t i=0;i<this->MakeFile_Directories.size();i++){
 
          std::string dir = this->MakeFile_Directories.at(i);
@@ -187,13 +184,13 @@ void MakeFile_Directory_Constructor::Construct_MakeFile_Directories(){
 
 void MakeFile_Directory_Constructor::ReOrder_Directories(){
      
-     for(int i=0;i< this->Dir_Data.size();i++){
+     for(size_t i=0;i< this->Dir_Data.size();i++){
 
-         for(int j=i;j< this->Dir_Data.size();j++){
+         for(size_t j=i;j< this->Dir_Data.size();j++){
 
-             int size_i = this->Dir_Data.at(i).dir_size;
+             size_t size_i = this->Dir_Data.at(i).dir_size;
 
-             int size_j = this->Dir_Data.at(j).dir_size;
+             size_t size_j = this->Dir_Data.at(j).dir_size;
 
              MakeFile_Directory_Data temp;
 
@@ -262,7 +259,7 @@ void MakeFile_Directory_Constructor::Determine_MakeFiles_Root_Directory(){
 
      if(this->opr_sis == 'w'){
 
-        if(!this->make_files_root_directory.back() != '\\'){
+        if(!(this->make_files_root_directory.back() != '\\')){
 
             this->make_files_root_directory.push_back('\\');
         }
@@ -271,7 +268,7 @@ void MakeFile_Directory_Constructor::Determine_MakeFiles_Root_Directory(){
 
      if(this->opr_sis == 'l'){
 
-        if(!this->make_files_root_directory.back() != '/'){
+        if(!(this->make_files_root_directory.back() != '/')){
 
             this->make_files_root_directory.push_back('/');
         }
@@ -289,7 +286,7 @@ void MakeFile_Directory_Constructor::Determine_MakeFiles_Root_Directory(){
 
      if(this->opr_sis == 'w'){
 
-        if(!this->make_files_root_directory.back() != '\\'){
+        if(!(this->make_files_root_directory.back() != '\\')){
 
             this->make_files_root_directory.push_back('\\');
         }
@@ -298,7 +295,7 @@ void MakeFile_Directory_Constructor::Determine_MakeFiles_Root_Directory(){
 
      if(this->opr_sis == 'l'){
 
-        if(!this->make_files_root_directory.back() != '/'){
+        if(!(this->make_files_root_directory.back() != '/')){
 
             this->make_files_root_directory.push_back('/');
         }
@@ -316,7 +313,7 @@ void MakeFile_Directory_Constructor::Determine_MakeFiles_Root_Directory(){
 
      if(this->opr_sis == 'w'){
 
-        if(!this->make_files_root_directory.back() != '\\'){
+        if(!(this->make_files_root_directory.back() != '\\')){
 
             this->make_files_root_directory.push_back('\\');
         }
@@ -325,7 +322,7 @@ void MakeFile_Directory_Constructor::Determine_MakeFiles_Root_Directory(){
 
      if(this->opr_sis == 'l'){
 
-        if(!this->make_files_root_directory.back() != '/'){
+        if(!(this->make_files_root_directory.back() != '/')){
 
             this->make_files_root_directory.push_back('/');
         }

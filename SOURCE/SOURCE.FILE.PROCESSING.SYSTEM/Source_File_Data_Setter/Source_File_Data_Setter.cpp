@@ -129,21 +129,6 @@ void Source_File_Data_Setter::Determine_File_Name_Without_Ext(std::string path, 
           }
      }
 
-     size_t file_name_size = 0;
-
-     if(file_extention_start_point <= dir_size){
-
-        file_name_size = file_path_size - dir_size;
-
-        // It is the case in which the file does not have extenton
-     }
-
-     if(file_extention_start_point > dir_size){
-
-        file_name_size = file_extention_start_point - dir_size;
-     }
-
-
      size_t name_start_point = 0;
 
      if(dir_size != 0){
@@ -164,8 +149,6 @@ void Source_File_Data_Setter::Determine_Git_Record_Source_File_Directory(std::st
     {
 
      size_t path_size = git_record_system_path.length();
-
-     size_t dir_size = path_size;
 
      size_t end_point = 0;
 

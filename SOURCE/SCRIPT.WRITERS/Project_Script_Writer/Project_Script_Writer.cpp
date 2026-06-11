@@ -793,8 +793,6 @@ void Project_Script_Writer::Construct_Path(std::string & path,
 
      std::string string, std::string warehouse_path){
 
-     int index = 0;
-
      size_t warehouse_path_size = warehouse_path.length();
 
      for(size_t i=0;i<warehouse_path_size;i++){

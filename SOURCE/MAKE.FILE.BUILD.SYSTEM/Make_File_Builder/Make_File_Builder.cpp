@@ -160,8 +160,6 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
 
      char include_symbol [] = "EXTERNAL_INCLUDE_DIR_";
 
-     char underscore [] = "_";
-
      this->FileManager.WriteToFile("\n");
 
      for(int i=0;i<included_dir_num;i++){

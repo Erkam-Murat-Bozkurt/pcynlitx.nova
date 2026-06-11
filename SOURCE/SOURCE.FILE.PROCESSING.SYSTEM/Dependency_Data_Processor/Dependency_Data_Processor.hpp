@@ -77,9 +77,9 @@ protected:
  void Search_For_Large_Data_Set(size_t data_size);
  void Search_For_Middle_Data_Set(size_t data_size);
  void Search_For_Small_Data_Set(size_t data_size);
+ Source_File_Information_Collector Info_Collector; 
  Header_Dependency_Data_Extractor Hdr_Dep_Extractor;
  Dependency_Data_Stack_Container Stack_Container;
- Source_File_Information_Collector Info_Collector; 
  Project_Src_Code_Rdr * Code_Rdr;
  std::vector<std::thread> threadPool;
  std::vector<Source_File_Data> * Source_File_Data_Ptr;

@@ -133,8 +133,6 @@ char * Repo_Dir_Determiner::Extract_Folder_Name(char * dir_name){
          }
      }
 
-     size_t folder_name_size = dir_name_size - folder_start;
-
      int index = 0;
 
      for(size_t i=folder_start;i<dir_name_size;i++){
