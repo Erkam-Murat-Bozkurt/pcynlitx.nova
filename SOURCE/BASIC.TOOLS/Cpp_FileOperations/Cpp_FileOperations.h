@@ -58,6 +58,14 @@ public:
  std::string ReadLine();
  void Read_File(char * path);
  void Read_File(std::string path);
+ 
+ char * ReadLine_as_Cstring(){
+
+      std::string line = this->ReadLine();
+
+      return this->Convert_Std_String_To_CString(line);
+ };
+
  void Record_File(char * path); // It reads whole of file in therms of cstring
  void Record_File(std::string target_path);
  bool Is_Path_Exist(std::string path);

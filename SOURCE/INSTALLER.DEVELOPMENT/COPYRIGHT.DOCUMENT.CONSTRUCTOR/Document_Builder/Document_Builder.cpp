@@ -127,8 +127,6 @@ void Document_Builder::Read_File(){
 
      this->FileManager.FileOpen(Rf);
 
-     int index = 0;
-
      do {
 
           std::string str_line = this->FileManager.ReadLine() + "\n";

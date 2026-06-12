@@ -173,7 +173,7 @@ void ClassSyntaxControl::CheckStartBrace(){
                       break;
                    }
 
-                   if(this->FileManager.Control_End_of_File()){
+                   if(this->FileManager.Control_Stop_Condition()){
 
                       this->ClassSyntaxErrorStatus = true;
 
@@ -250,7 +250,7 @@ void ClassSyntaxControl::DetermineClassWordLine(){
               line_index++;
          }
 
-     }while(!this->FileManager.Control_End_of_File());
+     }while(!this->FileManager.Control_Stop_Condition());
 
      if(!class_specifier_exist){
 
@@ -482,7 +482,7 @@ void ClassSyntaxControl::CheckEndBrace(){
                     break;
                 }
 
-                if(this->FileManager.Control_End_of_File()){
+                if(this->FileManager.Control_Stop_Condition()){
 
                     this->ClassSyntaxErrorStatus = true;
 
@@ -626,7 +626,7 @@ bool ClassSyntaxControl::Control_Str_Word_Existance(char * string){
           return this->is_string_exist;
        }
 
-      }while(!this->FileManager.Control_End_of_File());
+      }while(!this->FileManager.Control_Stop_Condition());
 
       this->FileManager.FileClose();
 

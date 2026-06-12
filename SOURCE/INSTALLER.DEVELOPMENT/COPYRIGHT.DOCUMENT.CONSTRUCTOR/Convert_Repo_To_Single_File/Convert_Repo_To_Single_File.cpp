@@ -167,7 +167,7 @@ void Convert_Repo_To_Single_File::Construct_Source_File(){
 
         this->Read_File();
 
-        for(int i=0;i<this->File_List_Content.size()-1;i++){
+        for(size_t i=0;i<this->File_List_Content.size()-1;i++){
 
             this->Doc_Builder.Receive_File_Path(this->File_List_Content[i]);
 

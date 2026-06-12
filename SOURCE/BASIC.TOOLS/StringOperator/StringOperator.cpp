@@ -287,7 +287,7 @@ bool StringOperator::Is_String_Exist_On_File(std::string search_word){
 
      this->Cpp_File_Manager.FileOpen(Rf);
 
-     int search_line = 0, start_point = 0;
+     int start_point = 0;
 
      this->CharacterOperations.ForwardFilePointer(&this->Cpp_File_Manager,start_point);
 

@@ -26,7 +26,6 @@
 #include "Git_Data_Processor.hpp"
 #include "Descriptor_File_Reader.hpp"
 #include "Empty_Descriptor_File_Builder.hpp"
-#include "DataRecorder.h"
 #include "Library_Updater.h"
 
 class Kernel

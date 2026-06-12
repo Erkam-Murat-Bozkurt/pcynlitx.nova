@@ -43,8 +43,6 @@ int main(int argc, char ** argv){
 
     Data_Processor.Determine_Git_Repo_Info();
 
-    size_t index_size = Data_Processor.Get_Git_File_Index_Size();
-
 
     Source_File_Dependency_Determiner Dep_Determiner(argv[1],'w');
 

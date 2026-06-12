@@ -26,13 +26,6 @@
 #include "Gui_Shell_Script_Executer.hpp"
 
 
-/*
-BEGIN_EVENT_TABLE(Gui_Shell_Script_Executer,wxFrame)
-    EVT_BUTTON(ID_CLOSE_PROCESS_OUTPUT_WINDOW,Gui_Shell_Script_Executer::CloseWindow)
-END_EVENT_TABLE()
-*/
-
-
 Gui_Shell_Script_Executer::Gui_Shell_Script_Executer(wxFrame * parent, wxWindowID id, const wxString & title, 
 
    const wxPoint &pos, const wxSize &size, 
@@ -85,9 +78,9 @@ Gui_Shell_Script_Executer::Gui_Shell_Script_Executer(wxFrame * parent, wxWindowI
 
      this->Process_Output->Receive_System_Interface(&this->SysInt);
 
-     this->Process_Output->Directory_List_Show_Cond(false);
+     //this->Process_Output->Directory_List_Show_Cond(false);
 
-     this->Process_Output->Receive_Process_End_Status(&this->script_end_status);
+     //this->Process_Output->Receive_Process_End_Status(&this->script_end_status);
 
      this->Process_Output->Construct_Output(20);
 

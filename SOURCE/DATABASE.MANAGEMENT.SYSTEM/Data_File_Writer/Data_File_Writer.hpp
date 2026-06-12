@@ -28,7 +28,7 @@ protected:
  void WriteNewLines(int line_number);
  Cpp_FileOperations FileManager;
  char * file_path;
- Script_Data Data_Ptr;
+ Script_Data Data;
  bool Memory_Delete_Condition;
 };
 

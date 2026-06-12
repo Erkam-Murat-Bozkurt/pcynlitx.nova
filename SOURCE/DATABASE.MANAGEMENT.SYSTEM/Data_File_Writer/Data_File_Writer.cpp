@@ -59,7 +59,7 @@ void Data_File_Writer::Clear_Dynamic_Memory(){
 
 void Data_File_Writer::Receive_Source_File_Data(Script_Data * data){
 
-     this->Data_Ptr = data;
+     this->Data = *data;
 }
 
 void Data_File_Writer::Build_Data_File(char * path){
@@ -76,7 +76,7 @@ void Data_File_Writer::Build_Data_File(char * path){
 
      this->FileManager.WriteToFile("DATA FILE FOR SOURCE FILE: ");
 
-     this->FileManager.WriteToFile(this->Data_Ptr->source_file_name);
+     this->FileManager.WriteToFile(this->Data.source_file_name);
 
      this->WriteNewLines(new_lines);
 
@@ -228,6 +228,8 @@ void Data_File_Writer::Receive_File_Path(char * path){
 
      this->Memory_Delete_Condition = false;
 
+     size_t path_size = strlen(path);
+
      this->file_path = new char [5*path_size];
 
      int index = 0;
@@ -243,7 +245,11 @@ void Data_File_Writer::Receive_File_Path(char * path){
 
      index++;
 
-     for(size_t i=0;i<name_size;i++){
+     std::string Descriptor_File_Name = "pcynlitx.project.txt";
+
+     Descriptor_File_Name.shrink_to_fit();
+
+     for(size_t i=0;i<Descriptor_File_Name.size();i++){
 
         this->file_path[index] = Descriptor_File_Name[i];
 
