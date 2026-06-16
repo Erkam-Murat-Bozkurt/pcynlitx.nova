@@ -984,7 +984,7 @@ const std::vector<std::string> & Descriptor_File_Reader::Get_Compiler_Paths()con
 
 std::string Descriptor_File_Reader::Get_Library_Directory(int i) const {
 
-        return this->Library_Directories[i];
+        return this->Library_Directories.at(i);
 }
 
 std::string Descriptor_File_Reader::Get_Library_File(int i) const {

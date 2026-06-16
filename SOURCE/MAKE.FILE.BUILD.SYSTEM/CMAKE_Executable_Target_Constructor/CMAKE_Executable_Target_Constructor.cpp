@@ -189,6 +189,37 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
      this->FileManager.WriteToFile("\n\n");
 
 
+     this->FileManager.WriteToFile("target_include_directories(");
+
+     this->FileManager.WriteToFile(exe_name);          
+
+     this->FileManager.WriteToFile(" PUBLIC");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n\t");
+
+     const std::vector<std::string> & inc_dirs = Des_Reader->Get_Include_Directories();
+
+     for(size_t i=0;i<inc_dirs.size();i++){
+
+         std::string inc_dr = inc_dirs.at(i);
+
+         this->Convert_CMAKE_Format(inc_dr);
+
+         this->FileManager.WriteToFile(inc_dr);
+
+         this->FileManager.WriteToFile("\n\t");
+     }
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile(")");
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\n");
+
      this->FileManager.WriteToFile("target_link_libraries(");
 
      this->FileManager.WriteToFile(exe_name);          
@@ -206,6 +237,24 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
          this->FileManager.WriteToFile("\t");
          
          this->FileManager.WriteToFile(this->target_library_dependencies.at(i));
+     }
+
+     this->FileManager.WriteToFile("\n");
+
+     this->FileManager.WriteToFile("\t");
+
+     const std::vector<std::string> & Libs =  Des_Reader->Get_Library_Files();
+
+
+     for(size_t i=0;i<Libs.size();i++){
+
+         std::string libs = Libs.at(i);
+
+         this->Convert_CMAKE_Format(libs);
+
+         this->FileManager.WriteToFile(libs);
+
+         this->FileManager.WriteToFile("\n\t");
      }
 
      this->FileManager.WriteToFile("\n");

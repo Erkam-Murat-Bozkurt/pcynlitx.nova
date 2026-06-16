@@ -109,5 +109,6 @@ target_compile_options(Pcynlitx PUBLIC -std=c++17 -Wall -Bstatic
 
        -g -O0 -mthreads -D__WXMSW__ -D_UNICODE -DWIN32 )
 
+       
 target_link_options(Pcynlitx PUBLIC -static -mwindows)
 

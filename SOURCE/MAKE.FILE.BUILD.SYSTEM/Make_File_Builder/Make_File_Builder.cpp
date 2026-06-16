@@ -108,9 +108,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
 
      this->Data_Ptr = this->Find_Compiler_Data_From_Source_File_Path(file_path);
 
-     
      std::string Make_File_Path = this->Path_Determiner.Get_MakeFile_Path();
-
 
      this->FileManager.SetFilePath(Make_File_Path);
 
@@ -216,12 +214,9 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
      char NextLine [] = " \\";
 
 
-
-
      this->Write_Header_VPaths();
 
      this->Write_Upper_Directory_VPaths();
-
 
      char PathSpecifier [] = "VPATH = ";
 
@@ -250,12 +245,9 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
 
      this->FileManager.WriteToFile(Ident);
 
-
-
      this->Write_Header_VPaths_Alias();
 
      this->Write_Upper_Dir_VPaths_Alias();
-
 
 
      for(int i=0;i<included_dir_num;i++){
@@ -280,9 +272,7 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
      }
 
 
-
-     int lib_dir_num = this->Des_Reader->Get_Include_Directory_Number();
-
+     int lib_dir_num = this->Des_Reader->Get_Library_Directory_Number();
 
      for(int i=0;i<lib_dir_num;i++){
 
@@ -304,7 +294,6 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
 
          this->FileManager.WriteToFile(Ident);
      }
-
 
 
      this->FileManager.WriteToFile("\n");
@@ -329,7 +318,6 @@ void Make_File_Builder::Build_MakeFile(std::string file_path){
 
 
      std::string Construction_Code_Line  = this->Path_Determiner.Get_Construction_Code_Line();
-
 
 
      this->FileManager.WriteToFile("\n\n");
