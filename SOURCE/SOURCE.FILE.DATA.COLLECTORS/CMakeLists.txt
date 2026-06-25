@@ -151,6 +151,8 @@ target_compile_options(src_dat_col PUBLIC
 
     -std=c++17
 
+    -fno-omit-frame-pointer
+
     -Wall
 
     -Bstatic
@@ -165,6 +167,12 @@ target_compile_options(src_dat_col PUBLIC
 
     -D_UNICODE
 
-    -DWIN32
+    -DWIN32    
+
+)
+
+target_link_options(src_dat_col PUBLIC
+
+    -static-libgcc -static-libstdc++ -gdwarf-2 
 
 )

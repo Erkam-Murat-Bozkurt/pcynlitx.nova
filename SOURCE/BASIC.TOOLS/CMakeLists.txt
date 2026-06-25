@@ -61,3 +61,18 @@ target_link_directories(basic_tools PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/StringOperator
 
 )
+
+target_compile_options(basic_tools PUBLIC 
+
+    -std=c++17
+
+    -fno-omit-frame-pointer
+
+    -Wall
+
+    -Bstatic
+
+    -g
+
+    -O0
+)

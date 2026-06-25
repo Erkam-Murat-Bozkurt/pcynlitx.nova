@@ -119,11 +119,18 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
         this->FileManager.WriteToFile("\")");
      }
 
-  
+
+     std::string cpp_standard =  this->Des_Reader->Get_Standard();
+
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("\n set(CMAKE_CXX_STANDARD 11)");
+     this->FileManager.WriteToFile("\n set(CMAKE_CXX_STANDARD ");
+     
+
+     this->FileManager.WriteToFile(cpp_standard);
+     
+     this->FileManager.WriteToFile(")");
 
      this->FileManager.WriteToFile("\n");
 
@@ -135,7 +142,7 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
      this->FileManager.WriteToFile("\n");
 
-     this->FileManager.WriteToFile("\n cmake_minimum_required(VERSION 3.10)");
+     this->FileManager.WriteToFile("\n cmake_minimum_required(VERSION 4.1.2)");
 
      this->FileManager.WriteToFile("\n");
 
@@ -252,6 +259,8 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
      this->FileManager.WriteToFile("\n include(directories.cmake)");
      
+     /*
+
      this->FileManager.WriteToFile("\n\n");
 
      this->FileManager.WriteToFile(" add_library(");
@@ -280,6 +289,8 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
      this->FileManager.WriteToFile("\n\n");
 
      this->FileManager.WriteToFile(")");
+
+     */
 
      this->FileManager.WriteToFile("\n\n");
 

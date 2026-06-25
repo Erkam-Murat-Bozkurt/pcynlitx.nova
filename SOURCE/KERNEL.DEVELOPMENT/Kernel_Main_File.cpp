@@ -4,7 +4,6 @@
 #include <iostream>
 #include <cstring>
 #include "Kernel.hpp"
-#include "Source_File_Dependency_Determiner.hpp"
 #include "Custom_System_Interface.h"
 
 
@@ -147,8 +146,9 @@ int main(int argc, char ** argv){
 
         Kernel Build_System(argv[1],'w','n');
 
-
         Build_System.Receive_Build_Type('n');
+
+        Build_System.Receive_System_Interface(&System_Interface);
 
         Build_System.Setup_Build_Tools();
 
@@ -260,8 +260,6 @@ int main(int argc, char ** argv){
        System_Interface.Close_Child_Handles_For_Named_Pipe_Connection();
 
     }
-
-
 
     return 0;
 }

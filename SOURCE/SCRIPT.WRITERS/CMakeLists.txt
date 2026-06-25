@@ -252,6 +252,8 @@ target_compile_options(script_writers PUBLIC
 
     -Bstatic
 
+    -fno-omit-frame-pointer
+
     -g
 
     -O0

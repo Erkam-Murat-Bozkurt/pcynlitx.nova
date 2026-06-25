@@ -242,7 +242,35 @@ target_link_directories(src_proc_sys PUBLIC
     ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
 )
 
+target_compile_options(src_proc_sys PUBLIC 
+
+    -std=c++17
+
+    -fno-omit-frame-pointer
+
+    -Wall
+
+    -Bstatic
+
+    -g
+
+    -O0
+
+    -mthreads
+
+    -D__WXMSW__
+
+    -D_UNICODE
+
+    -DWIN32    
+
+)
+
+
 
 target_link_libraries(src_proc_sys PUBLIC src_dat_col proj_bld_tools
 
                         git_data_processing_system des_reader basic_tools)
+
+
+                        

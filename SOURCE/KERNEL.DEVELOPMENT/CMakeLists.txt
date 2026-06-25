@@ -309,23 +309,22 @@ target_link_libraries(kernel PUBLIC proj_bld_tools exec_make_bld script_writers 
 
 target_compile_options(kernel PUBLIC 
 
+    -g
+
+    -O0
+
     -std=c++17
+
+    -fno-omit-frame-pointer
 
     -Wall
 
     -Bstatic
 
-    -g
-
-    -O0
-
-    -mthreads
-
-    -D__WXMSW__
-
-    -D_UNICODE
-
-    -DWIN32
 
 )
 
+target_link_options(src_dat_col PUBLIC
+
+    -static-libgcc -static-libstdc++ -gdwarf-2 
+)

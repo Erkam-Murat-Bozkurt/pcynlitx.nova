@@ -311,6 +311,8 @@ target_compile_options(BuildSystem_GUI PUBLIC -std=c++17 -Wall -g -fexceptions
 
        -static-libgcc -static-libstdc++ 
 
+       -fno-omit-frame-pointer
+
        -g -O0 -mthreads -D__WXMSW__ -D_UNICODE -DWIN32 )
 
 

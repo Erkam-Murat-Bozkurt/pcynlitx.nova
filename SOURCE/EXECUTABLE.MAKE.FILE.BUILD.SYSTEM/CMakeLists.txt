@@ -275,6 +275,8 @@ target_compile_options(exec_make_bld PUBLIC
 
     -Wall
 
+    -fno-omit-frame-pointer
+
     -Bstatic
 
     -g

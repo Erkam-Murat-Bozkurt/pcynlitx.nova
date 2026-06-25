@@ -232,3 +232,20 @@ target_link_libraries(cmake_target_lib_constructor_lib PUBLIC
                       
                       des_reader basic_tools
 )
+
+
+target_compile_options(cmake_target_lib_constructor_lib PUBLIC
+
+    -std=c++17
+
+    -fno-omit-frame-pointer
+
+    -Wall
+
+    -Bstatic
+
+    -g
+
+    -O0
+
+)

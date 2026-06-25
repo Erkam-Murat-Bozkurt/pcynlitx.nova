@@ -98,6 +98,8 @@ target_compile_options(des_reader PUBLIC
 
     -std=c++17
 
+    -fno-omit-frame-pointer
+
     -Wall
 
     -Bstatic
@@ -115,3 +117,4 @@ target_compile_options(des_reader PUBLIC
     -DWIN32
 
 )
+

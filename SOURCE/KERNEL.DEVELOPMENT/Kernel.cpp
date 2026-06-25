@@ -88,6 +88,8 @@ void Kernel::Receive_System_Interface(Custom_System_Interface * Int){
      this->Dep_Determiner.Receive_System_Interface(Int);
 
      this->CMAKE_Builder.Receive_System_Interface(Int);
+
+     this->Bld_Init.Receive_System_Interface(Int);
 }
 
 
@@ -143,4 +145,6 @@ void Kernel::Clear_Dynamic_Memory(){
      this->Bld_Init.Clear_Dynamic_Memory();
 
      this->Exe_Bld.Clear_Dynamic_Memory();
+
+     this->CMAKE_Builder.Clear_Dynamic_Memory();
 }

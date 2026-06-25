@@ -261,6 +261,33 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      this->FileManager.WriteToFile(")");
 
+
+
+     this->FileManager.WriteToFile("\n\n ");
+
+     this->FileManager.WriteToFile("target_compile_options(");
+
+     this->FileManager.WriteToFile(exe_name);          
+
+     this->FileManager.WriteToFile(" PUBLIC ");
+
+     const std::vector<std::string> & compiler_options = Des_Reader->Get_Compiler_Options();
+
+     for(size_t i=0;i<compiler_options.size();i++){
+
+         this->FileManager.WriteToFile("\n\n    ");
+
+         this->FileManager.WriteToFile(compiler_options.at(i));         
+     }
+
+     this->FileManager.WriteToFile("\n\n    ");
+
+     this->FileManager.WriteToFile(")");
+
+     this->FileManager.WriteToFile("\n\n ");
+
+
+
      this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n");

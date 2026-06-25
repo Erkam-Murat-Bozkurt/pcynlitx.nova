@@ -125,6 +125,8 @@ target_compile_options(git_data_processing_system PUBLIC
 
     -Wall
 
+    -fno-omit-frame-pointer
+
     -Bstatic
 
     -g
@@ -140,3 +142,4 @@ target_compile_options(git_data_processing_system PUBLIC
     -DWIN32
 
 )
+
