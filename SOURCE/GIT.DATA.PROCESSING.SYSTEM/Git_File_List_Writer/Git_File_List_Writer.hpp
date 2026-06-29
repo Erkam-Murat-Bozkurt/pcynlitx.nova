@@ -27,7 +27,6 @@ public:
  void Clear_Dynamic_Memory();
 protected:
  void Initialize_Mermbers();
- void Execute_System_Call(char * cmd);
  void List_Files_in_Repo();
  void Control_Std_Error_Status();
  void Determine_Git_File_List_Path();

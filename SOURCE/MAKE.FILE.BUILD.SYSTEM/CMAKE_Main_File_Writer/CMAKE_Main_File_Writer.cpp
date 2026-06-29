@@ -259,39 +259,6 @@ void CMAKE_Main_File_Writer::Build_Main_CMAKE_File(){
 
      this->FileManager.WriteToFile("\n include(directories.cmake)");
      
-     /*
-
-     this->FileManager.WriteToFile("\n\n");
-
-     this->FileManager.WriteToFile(" add_library(");
-
-     this->FileManager.WriteToFile(project_name);
-
-     this->FileManager.WriteToFile("_lib INTERFACE)");
-
-     this->FileManager.WriteToFile("\n\n");
-
-     this->FileManager.WriteToFile(" target_link_libraries(");
-
-     this->FileManager.WriteToFile(project_name);
-
-     this->FileManager.WriteToFile("_lib INTERFACE");
-
-     this->FileManager.WriteToFile("\n");
-
-     for(size_t i=0;i<this->target_dependency_data_ptr->size();i++){
-
-         this->FileManager.WriteToFile("\n\t");
-
-         this->FileManager.WriteToFile(this->target_dependency_data_ptr->at(i).target_name);
-     }
-     
-     this->FileManager.WriteToFile("\n\n");
-
-     this->FileManager.WriteToFile(")");
-
-     */
-
      this->FileManager.WriteToFile("\n\n");
 
      this->FileManager.FileClose();

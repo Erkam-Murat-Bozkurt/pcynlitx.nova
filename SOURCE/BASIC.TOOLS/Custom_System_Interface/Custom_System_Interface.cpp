@@ -124,7 +124,7 @@ void Custom_System_Interface::CreateProcessWith_NamedPipe_From_Parent(char * arg
  
      ZeroMemory( &siStartInfo, sizeof(STARTUPINFO) );
      this->siStartInfo.cb = sizeof(STARTUPINFO); 
-     this->siStartInfo.dwFlags |= STARTF_USESTDHANDLES;
+     this->siStartInfo.dwFlags |= STARTF_USESTDHANDLES | CREATE_NO_WINDOW;
  
      // Create the child process. 
 
