@@ -21,6 +21,10 @@ add_executable(Pcynlitx_Kernel
 
         ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/KERNEL.DEVELOPMENT/Kernel_Main_File.cpp)
 
+
+# -mwindows linking option for Mingw64 makes application as a GUI process and suspends the terminal output.
+#  If you want to see the terminal output, "-mwindows" linking option must not be set.
+
 add_executable(CMAKE_Build
 
         ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/MAKE.FILE.BUILD.SYSTEM/CMAKE_Build_System_Generator/CMAKE_Build_System_Generator_Main_File.cpp)

@@ -282,26 +282,6 @@ void CMAKE_Target_Library_Builder::Build_MakeFile(int index){
 
      this->FileManager.WriteToFile("\n\n ");
 
-
-     this->FileManager.WriteToFile("target_link_options(");
-
-     this->FileManager.WriteToFile(target_data.target_name);          
-
-     this->FileManager.WriteToFile(" PUBLIC ");
-
-     const std::vector<std::string> & link_ops = this->Des_Reader->Get_Linker_Options();
-
-     for(size_t i=0;i<link_ops.size();i++){
-
-         this->FileManager.WriteToFile("\n\n    ");
-
-         this->FileManager.WriteToFile(link_ops.at(i));         
-     }
-
-     this->FileManager.WriteToFile("\n\n    ");
-
-     this->FileManager.WriteToFile(")");
-
      this->FileManager.FileClose();
 }
 

@@ -324,6 +324,9 @@ target_compile_options(kernel PUBLIC
 
 )
 
+# -mwindows linking option for Mingw64 makes application as a GUI process and suspends the terminal output.
+#  If you want to see the terminal output, "-mwindows" linking option must not be set on the executable link options.
+
 target_link_options(src_dat_col PUBLIC
 
     -static-libgcc -static-libstdc++ -gdwarf-2 

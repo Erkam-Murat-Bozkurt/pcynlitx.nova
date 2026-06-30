@@ -112,3 +112,6 @@ target_compile_options(Pcynlitx PUBLIC -std=c++17 -Wall -Bstatic
        
 target_link_options(Pcynlitx PUBLIC -static -mwindows)
 
+# -mwindows linking option for Mingw64 makes application as a GUI process and suspends the terminal output.
+#  If you want to see the terminal output, "-mwindows" linking option must not be set on the executable link options.
+# Therefore for the target Pcynlitx, it must be set.

@@ -53,6 +53,9 @@ target_link_libraries(Auto_MakeFile_Builder PUBLIC make_fbld_sys proj_bld_tools
                    git_data_processing_system des_reader basic_tools)
 
 
+# -mwindows linking option for Mingw64 makes application as a GUI process and suspends the terminal output.
+#  If you want to see the terminal output, "-mwindows" linking option must not be set on the executable link options.
+
 target_link_libraries(Pcynlitx_Kernel PUBLIC kernel proj_bld_tools exec_make_bld script_writers make_fbld_sys 
 
                    src_proc_sys git_data_processing_system src_dat_col des_reader basic_tools)
