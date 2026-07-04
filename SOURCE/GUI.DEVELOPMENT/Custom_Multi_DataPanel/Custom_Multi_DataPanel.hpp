@@ -80,7 +80,8 @@ enum
   ID_CLEAR_LINKER_OPTIONS = 138,
   ID_SELECT_COMPILER_PATH = 139,
   ID_CLEAR_COMPILER_SELECTIONS = 140,
-  ID_REMOVE_COMPILER_PATH = 141
+  ID_REMOVE_COMPILER_PATH = 141,
+  ID_INSERT_FOR_RC_FILE = 142
 };
 
 
@@ -114,7 +115,21 @@ public:
 
     void Construct_Description_Panel();
 
+    bool Get_Resource_File_Set_Condition() const {
+
+         return this->resource_file_set_condition;
+    }
+
+    wxString Get_Resource_File_Path() const {
+
+        return this->Resource_File_Path;
+    }
+
 protected:
+
+    wxString Resource_File_Path;
+
+    bool resource_file_set_condition;
 
     void DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect& rect);
 
@@ -127,6 +142,8 @@ protected:
     void Construct_NewData_Panels();
 
     void Insert_Data_For_Path(wxCommandEvent & event);
+
+    void Insert_Data_For_Rc_File_Path(wxCommandEvent & event);
 
     void Save_MakeFile_Data(wxCommandEvent & event);
 
@@ -299,6 +316,8 @@ protected:
 
     wxDataViewListCtrl * listctrl_for_name;
 
+    wxDataViewListCtrl * listctrl_for_rc_file;
+
 
     wxDataViewListCtrl * listctrl_git_repo_path;
 
@@ -433,12 +452,21 @@ protected:
 
     wxButton * InsertButton_for_name;
 
+    wxButton * InsertButton_for_rc_file;
+
     wxButton * Start_Button;
 
     wxBoxSizer * vbox_path;
+
     wxBoxSizer * hbox_path;
 
+    wxBoxSizer * vbox_rc_file_path;
+
+    wxBoxSizer * hbox_rc_file_path;
+
+
     wxBoxSizer * vbox_name;
+
     wxBoxSizer * hbox_name;
 
     DECLARE_EVENT_TABLE()

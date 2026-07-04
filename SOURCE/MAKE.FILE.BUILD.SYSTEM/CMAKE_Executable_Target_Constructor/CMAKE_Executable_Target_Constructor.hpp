@@ -42,7 +42,7 @@ public:
 
  virtual ~CMAKE_Executable_Target_Constructor();
 
- void Build_MakeFile(std::string file_path, std::string exe_name);
+ void Build_MakeFile(std::string file_path, std::string exe_name, std::string rsc_file_path="");
 
  void Receive_System_Interface(Custom_System_Interface * sysInt);
 

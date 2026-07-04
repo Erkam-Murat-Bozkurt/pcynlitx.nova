@@ -181,7 +181,15 @@ int main(int argc, char ** argv){
 
         std::cout << "\n\e[0;32mTHE MAKEFILE CONSTRUCTION STARTED\e[0m\n";
 
-        Build_System.Build_MakeFile(argv[3],argv[4],*argv[5]);
+        if(argc > 6){
+
+            Build_System.Build_MakeFile(argv[3],argv[4],*argv[5],argv[6],argv[7]);
+        }
+        else{
+
+            Build_System.Build_MakeFile(argv[3],argv[4],*argv[5]);
+        }
+
 
         Build_System.Clear_Dynamic_Memory();
 
@@ -214,7 +222,14 @@ int main(int argc, char ** argv){
 
         Build_System.Receive_System_Interface(&System_Interface);
 
-        Build_System.Build_MakeFile(argv[3],argv[4],*argv[5]);
+        if(argc > 6){
+
+            Build_System.Build_MakeFile(argv[3],argv[4],*argv[5],argv[6],argv[7]);
+        }
+        else{
+
+            Build_System.Build_MakeFile(argv[3],argv[4],*argv[5]);
+        }
 
         Build_System.Clear_Dynamic_Memory();
 

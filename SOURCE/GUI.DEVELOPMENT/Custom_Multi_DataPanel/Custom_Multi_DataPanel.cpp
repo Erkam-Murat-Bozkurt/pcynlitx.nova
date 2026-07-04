@@ -30,6 +30,8 @@ BEGIN_EVENT_TABLE(Custom_Multi_DataPanel,wxDialog )
 
     EVT_BUTTON(ID_INSERT_ITEM_FOR_PATH,Custom_Multi_DataPanel::Insert_Data_For_Path)
 
+    EVT_BUTTON(ID_INSERT_FOR_RC_FILE,Custom_Multi_DataPanel::Insert_Data_For_Rc_File_Path)
+
     EVT_BUTTON(ID_INSERT_ITEM_FOR_NAME,Custom_Multi_DataPanel::Insert_Data_For_Name)
 
     EVT_BUTTON(ID_SAVE_MAKE_FILE_DATA,Custom_Multi_DataPanel::Save_MakeFile_Data)
@@ -163,6 +165,8 @@ Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, 
      this->Data_Recorder.parent = this;
 
      this->Data_Save_Status = false;
+
+     this->resource_file_set_condition = false;
 }
 
 
@@ -1105,6 +1109,8 @@ void Custom_Multi_DataPanel::Clear_List_All_Ctrl_Contents(){
      this->listctrl_version_number->DeleteAllItems();
 
      this->listctrl_compiler_path->DeleteAllItems();
+
+     this->listctrl_for_rc_file->DeleteAllItems();
 }
 
 
@@ -1112,6 +1118,8 @@ void Custom_Multi_DataPanel::Clear_List_All_Ctrl_Contents(){
 void Custom_Multi_DataPanel::Create_Exe_Script_Panel(){
 
      this->Data_Save_Status = false;
+
+     this->resource_file_set_condition = false;
 
      this->Construct_NewData_Panels();
 
@@ -1121,6 +1129,8 @@ void Custom_Multi_DataPanel::Create_Exe_Script_Panel(){
      this->Frame_Sizer->Add(this->vbox_path,1, wxEXPAND | wxALL | wxTOP,10);
 
      this->Frame_Sizer->Add(this->vbox_name,1, wxEXPAND | wxALL | wxBOTTOM,10);
+
+     this->Frame_Sizer->Add(this->vbox_rc_file_path,1, wxEXPAND | wxALL | wxBOTTOM,10);
 
      this->Frame_Sizer->Add(this->Start_Button,0, wxEXPAND | wxALL | wxBOTTOM,10);
 
@@ -1144,15 +1154,11 @@ void Custom_Multi_DataPanel::Create_Exe_Script_Panel(){
 
 void Custom_Multi_DataPanel::Construct_NewData_Panels(){
           
-     this->listctrl_for_path  = new wxDataViewListCtrl(this, wxID_ANY,wxDefaultPosition,wxSize(700,200));
+     this->listctrl_for_path  = new wxDataViewListCtrl(this, wxID_ANY,wxDefaultPosition,wxSize(700,150));
 
      this->listctrl_for_path->AppendTextColumn(wxT("THE SOURCE FILE PATH"));
 
      this->InsertButton_for_path = new wxButton(this,ID_INSERT_ITEM_FOR_PATH,wxT("INSERT"),wxDefaultPosition, wxSize(80, 50));
-
-
-     this->Start_Button = new wxButton(this,ID_SAVE_MAKE_FILE_DATA,wxT("START"),wxDefaultPosition, wxSize(150, 60));
-
 
      this->vbox_path = new wxBoxSizer(wxVERTICAL);
 
@@ -1161,7 +1167,6 @@ void Custom_Multi_DataPanel::Construct_NewData_Panels(){
      this->hbox_path->Add(this->InsertButton_for_path,0, wxALL,10);
 
      this->hbox_path->Layout();
-
 
      this->vbox_path->Add(this->listctrl_for_path,1, wxEXPAND | wxALL,10);
 
@@ -1172,13 +1177,11 @@ void Custom_Multi_DataPanel::Construct_NewData_Panels(){
 
 
 
-     this->listctrl_for_name = new wxDataViewListCtrl(this, wxID_ANY,wxDefaultPosition,wxSize(700,200));
+     this->listctrl_for_name = new wxDataViewListCtrl(this, wxID_ANY,wxDefaultPosition,wxSize(700,150));
 
      this->listctrl_for_name->AppendTextColumn(wxT("THE NAME OF THE EXECUTABLE FILE TO BE COMPILED"));
 
-
      this->InsertButton_for_name = new wxButton(this,ID_INSERT_ITEM_FOR_NAME,wxT("INSERT"),wxDefaultPosition, wxSize(80, 50));
-
 
      this->vbox_name  = new wxBoxSizer(wxVERTICAL);
 
@@ -1186,16 +1189,37 @@ void Custom_Multi_DataPanel::Construct_NewData_Panels(){
 
      this->hbox_name->Add(this->InsertButton_for_name,0, wxALL,10);
 
-
-
      this->hbox_name->Layout();
-
 
      this->vbox_name->Add(this->listctrl_for_name,1, wxEXPAND | wxALL,10);
 
      this->vbox_name->Add(this->hbox_name,0,wxALIGN_RIGHT | wxFIXED_MINSIZE | wxALL,0);
 
      this->vbox_name->Layout();
+
+
+     this->listctrl_for_rc_file = new wxDataViewListCtrl(this, wxID_ANY,wxDefaultPosition,wxSize(700,150));
+
+     this->listctrl_for_rc_file->AppendTextColumn(wxT("IF EXIST, THE RESOURCE FILE FOR EXECUTABLE (RC FILE)"));
+
+     this->InsertButton_for_rc_file = new wxButton(this,ID_INSERT_FOR_RC_FILE,wxT("INSERT"),wxDefaultPosition, wxSize(80, 50));
+
+     this->vbox_rc_file_path  = new wxBoxSizer(wxVERTICAL);
+
+     this->hbox_rc_file_path  = new wxBoxSizer(wxHORIZONTAL);
+
+     this->hbox_rc_file_path->Add(this->InsertButton_for_rc_file,0, wxALL,10);
+
+     this->hbox_rc_file_path->Layout();
+
+     this->vbox_rc_file_path->Add(this->listctrl_for_rc_file,1, wxEXPAND | wxALL,10);
+
+     this->vbox_rc_file_path->Add(this->hbox_rc_file_path,0,wxALIGN_RIGHT | wxFIXED_MINSIZE | wxALL,0);
+
+     this->vbox_rc_file_path->Layout();
+
+     this->Start_Button = new wxButton(this,ID_SAVE_MAKE_FILE_DATA,wxT("START"),wxDefaultPosition, wxSize(150, 60));
+
 }
 
 
@@ -1433,6 +1457,10 @@ void Custom_Multi_DataPanel::Insert_Data_For_Path(wxCommandEvent & event){
 
         if(openFileDialog->ShowModal() == wxID_OK){
 
+           this->FilePath.clear();
+
+           this->FilePath.shrink_to_fit();
+
            this->FilePath = openFileDialog->GetPath();
         }
 
@@ -1446,6 +1474,40 @@ void Custom_Multi_DataPanel::Insert_Data_For_Path(wxCommandEvent & event){
         }
 
         this->AppendDataItem(this->listctrl_for_path,this->FilePath);
+     }
+}
+
+void Custom_Multi_DataPanel::Insert_Data_For_Rc_File_Path(wxCommandEvent & event){
+
+     if(event.GetId() == ID_INSERT_FOR_RC_FILE ){
+
+        event.Skip(true);
+
+        wxFileDialog * openFileDialog = new wxFileDialog(this);
+
+        openFileDialog->CentreOnParent(wxBOTH);
+
+        if(openFileDialog->ShowModal() == wxID_OK){
+
+           this->Resource_File_Path.clear();
+
+           this->Resource_File_Path.shrink_to_fit();
+
+           this->Resource_File_Path = openFileDialog->GetPath();
+        }
+
+        delete openFileDialog;
+
+        int row_num = this->listctrl_for_rc_file->GetItemCount();
+
+        for(int i=0;i<row_num;i++){
+
+            this->listctrl_for_rc_file->DeleteItem(i);
+        }
+
+        this->AppendDataItem(this->listctrl_for_rc_file,this->Resource_File_Path);
+
+        this->resource_file_set_condition = true;
      }
 }
 

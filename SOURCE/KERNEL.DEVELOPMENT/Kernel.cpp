@@ -121,11 +121,31 @@ void Kernel::Setup_Build_Tools(){
 
 void Kernel::Build_MakeFile(char * src_path, 
 
-     char * Exe_Name, char strategy){
+     char * Exe_Name, char strategy, char * resource_file_opt, char * resource_file_path){
 
      if(strategy=='c'){
 
-        this->CMAKE_Builder.Construct_Exe_Build_System(src_path,Exe_Name);
+        std::string exe_name_std_str = this->Convert_CStr_To_Std_Str(Exe_Name);
+
+        std::string src_path_std_str = this->Convert_CStr_To_Std_Str(src_path);
+
+        std::string rsc_opt="",rsc_path="";
+
+        if(resource_file_opt!= nullptr){
+
+            rsc_opt  = this->Convert_CStr_To_Std_Str(resource_file_opt);
+
+            rsc_path = this->Convert_CStr_To_Std_Str(resource_file_path);
+
+            if(rsc_opt == "-rc_file"){
+
+               this->CMAKE_Builder.Construct_Exe_Build_System(src_path_std_str,exe_name_std_str,rsc_path); 
+            }
+        }
+        else{
+
+            this->CMAKE_Builder.Construct_Exe_Build_System(src_path_std_str,exe_name_std_str);
+        }
      }
      else{
 

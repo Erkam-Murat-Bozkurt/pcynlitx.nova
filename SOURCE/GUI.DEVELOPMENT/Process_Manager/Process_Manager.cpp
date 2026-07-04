@@ -514,7 +514,11 @@ void Process_Manager::Exec_Cmd_For_Single_Src_File(std::string src_path, std::st
 
      char option [] = " -if_for_gui";
 
+     char resource_option [] = " -rc_file ";
+
      char space = ' ';
+
+     size_t resource_file_path = this->rc_file_path.size();
 
      size_t builder_path_size  = this->Builder_Path.size();
 
@@ -528,14 +532,14 @@ void Process_Manager::Exec_Cmd_For_Single_Src_File(std::string src_path, std::st
 
      size_t cmd_str_size  = builder_path_size + des_path_size 
      
-                          + option_size + src_path_size + name_size;
+                          + option_size + src_path_size + name_size + resource_file_path;
 
 
      // Command initialization
 
      this->Clear_String_Memory(this->procCmd);
 
-     size_t cmd_size = 2*cmd_str_size;
+     size_t cmd_size = 5*cmd_str_size;
 
      this->procCmd = new char[cmd_size];
 
@@ -603,6 +607,23 @@ void Process_Manager::Exec_Cmd_For_Single_Src_File(std::string src_path, std::st
      this->procCmd[index] = strategy;
 
      index++;
+
+     if(resource_file_path>0){
+
+        for(size_t i=0;i<strlen(resource_option);i++){
+
+            this->procCmd[index] = resource_option[i];
+
+            index++;
+        }
+
+        for(size_t i=0;i<this->rc_file_path.size();i++){
+
+            this->procCmd[index] = this->rc_file_path.c_str()[i];
+
+            index++;
+        }
+     }
 
      this->procCmd[index] = '\0';
 }

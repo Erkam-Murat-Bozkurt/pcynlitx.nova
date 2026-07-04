@@ -46,7 +46,7 @@ public:
 
  void Construct_Build_System(std::string project_name, std::string version_num);
 
- void Construct_Exe_Build_System(std::string target_main_file_path, std::string exe_name);
+ void Construct_Exe_Build_System(std::string target_main_file_path, std::string exe_name, std::string rsc_path="");
 
  void Clear_Dynamic_Memory();
 

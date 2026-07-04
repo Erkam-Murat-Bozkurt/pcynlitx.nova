@@ -42,8 +42,15 @@ public:
    
    long style=wxDEFAULT_FRAME_STYLE | wxSTAY_ON_TOP);
 
-
   virtual ~Process_Manager();
+
+  void Receive_Resource_File_Path(std::string rc_file_path){
+
+       this->rc_file_path = rc_file_path;
+
+       this->rc_file_path.shrink_to_fit();
+  }
+
   void Fork_Process_With_Named_Pipe_Connection(char * cmd);
   void AppendText_To_TextCtrl(wxString text);
   void Fork_Process_With_Std_Out_Redirection(char * cmd);
@@ -70,7 +77,9 @@ public:
   char * Get_Process_Command();
   bool is_pipe_open;
 private:
+
   void CloseWindow(wxCommandEvent & event);
+
   void OnSize(wxSizeEvent & event);
 
   Custom_System_Interface SysInt;
@@ -118,6 +127,9 @@ private:
   wxString Builder_Path;
   std::condition_variable cv;
   std::mutex mtx;
+
+  std::string rc_file_path;
+
   char * procCmd;
   int  Process_Exit_Status;
   bool error_stream_status;

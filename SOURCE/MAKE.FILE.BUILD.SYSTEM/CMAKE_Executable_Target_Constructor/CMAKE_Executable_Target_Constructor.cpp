@@ -97,7 +97,9 @@ void CMAKE_Executable_Target_Constructor::Receive_System_Interface(Custom_System
 }
 
 
-void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, std::string exe_name){
+void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, std::string exe_name, 
+    
+     std::string rsc_file_path){
 
      this->Memory_Delete_Condition = false;
 
@@ -177,12 +179,22 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
      this->Convert_CMAKE_Format(src_file_path);
 
-
      this->FileManager.WriteToFile(src_file_path);        
+
+     this->FileManager.WriteToFile("\n");
 
      this->FileManager.WriteToFile("\n\t");  
 
-     this->FileManager.WriteToFile("\n");
+     if(rsc_file_path != ""){
+
+        this->Convert_CMAKE_Format(rsc_file_path);
+
+        this->FileManager.WriteToFile(rsc_file_path);        
+
+        this->FileManager.WriteToFile("\n\t");  
+
+        this->FileManager.WriteToFile("\n");
+     }
 
      this->FileManager.WriteToFile(")");
 

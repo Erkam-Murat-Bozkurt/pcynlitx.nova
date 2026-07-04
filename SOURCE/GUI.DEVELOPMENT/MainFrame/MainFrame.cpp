@@ -1021,6 +1021,12 @@ void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
                    }
               }
 
+              if(this->Multi_DataPanel->Get_Resource_File_Set_Condition()){
+
+                 this->Process_Ptr->Receive_Resource_File_Path(this->Multi_DataPanel->Get_Resource_File_Path().ToStdString());               
+              }
+
+
               this->Single_File_Script_Construction_Executer(this->Multi_DataPanel->FilePath,
            
               this->Multi_DataPanel->ExeFileName,strategy);
@@ -1191,7 +1197,7 @@ void MainFrame::Start_Construction_Process(wxString label,
              this->Print_Invalid_Descriptor_File_Message(message);
           }
           else{
-            
+                                    
                 this->Process_Output = new Custom_ProcessOutput(this,wxID_ANY,label);
 
                 this->Process_Output->SetSize(this->FromDIP(wxSize(750,600)));
@@ -1210,12 +1216,15 @@ void MainFrame::Start_Construction_Process(wxString label,
 
                 this->Process_Output->cmd = this->Process_Ptr->Get_Process_Command();
 
+               
                 this->read_process_output = std::thread(&this->Process_Output->ReadProcessOutput,
      
                                  this->Process_Output,start_text,wxString("\n [+] Build system construction complated \n"));
 
                 this->read_process_output.detach();
+                
           }
+                
      }
 }
 
