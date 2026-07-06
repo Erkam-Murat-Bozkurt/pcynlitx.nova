@@ -518,7 +518,7 @@ void Process_Manager::Exec_Cmd_For_Single_Src_File(std::string src_path, std::st
 
      char space = ' ';
 
-     size_t resource_file_path = this->rc_file_path.size();
+     size_t resource_file_path = this->rc_file_paths.size();
 
      size_t builder_path_size  = this->Builder_Path.size();
 
@@ -617,9 +617,9 @@ void Process_Manager::Exec_Cmd_For_Single_Src_File(std::string src_path, std::st
             index++;
         }
 
-        for(size_t i=0;i<this->rc_file_path.size();i++){
+        for(size_t i=0;i<this->rc_file_paths.size();i++){
 
-            this->procCmd[index] = this->rc_file_path.c_str()[i];
+            this->procCmd[index] = this->rc_file_paths.c_str()[i];
 
             index++;
         }

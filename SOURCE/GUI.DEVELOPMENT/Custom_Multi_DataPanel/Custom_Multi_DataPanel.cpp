@@ -1487,27 +1487,24 @@ void Custom_Multi_DataPanel::Insert_Data_For_Rc_File_Path(wxCommandEvent & event
 
         openFileDialog->CentreOnParent(wxBOTH);
 
+        wxString rsc_file;
+
         if(openFileDialog->ShowModal() == wxID_OK){
 
-           this->Resource_File_Path.clear();
-
-           this->Resource_File_Path.shrink_to_fit();
-
-           this->Resource_File_Path = openFileDialog->GetPath();
+           rsc_file = openFileDialog->GetPath();
         }
 
         delete openFileDialog;
 
-        int row_num = this->listctrl_for_rc_file->GetItemCount();
-
-        for(int i=0;i<row_num;i++){
-
-            this->listctrl_for_rc_file->DeleteItem(i);
-        }
-
-        this->AppendDataItem(this->listctrl_for_rc_file,this->Resource_File_Path);
+        this->AppendDataItem(this->listctrl_for_rc_file,rsc_file);
 
         this->resource_file_set_condition = true;
+
+        this->Resource_File_Paths += rsc_file;
+
+        this->Resource_File_Paths += wxString(";");
+
+        this->Resource_File_Paths.shrink_to_fit();
      }
 }
 

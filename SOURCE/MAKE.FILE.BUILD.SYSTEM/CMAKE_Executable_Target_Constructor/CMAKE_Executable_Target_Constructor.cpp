@@ -189,7 +189,14 @@ void CMAKE_Executable_Target_Constructor::Build_MakeFile(std::string file_path, 
 
         this->Convert_CMAKE_Format(rsc_file_path);
 
-        this->FileManager.WriteToFile(rsc_file_path);        
+        this->Extract_Resource_File_List(rsc_file_path);
+
+        for(size_t i=0;i<rc_file_list.size();i++){
+
+            this->FileManager.WriteToFile(rc_file_list.at(i));  
+            
+            this->FileManager.WriteToFile("\n\t");  
+        }
 
         this->FileManager.WriteToFile("\n\t");  
 

@@ -1023,7 +1023,7 @@ void MainFrame::Advance_Single_File_Script_Construction(wxCommandEvent & event){
 
               if(this->Multi_DataPanel->Get_Resource_File_Set_Condition()){
 
-                 this->Process_Ptr->Receive_Resource_File_Path(this->Multi_DataPanel->Get_Resource_File_Path().ToStdString());               
+                 this->Process_Ptr->Receive_Resource_File_Paths(this->Multi_DataPanel->Get_Resource_File_Paths().ToStdString());               
               }
 
 

@@ -78,6 +78,40 @@ private:
 
  void CONTROL_CLASS_SOURCE_FILE_STATUS(std::string src_path);
 
+ void Extract_Resource_File_List(std::string rc_file_paths){
+
+      for(size_t index=0;index<rc_file_paths.size();index++){
+
+          do{
+
+             std::string rc_file;
+
+             for(size_t i=index;i<rc_file_paths.size();i++){
+
+                 if(rc_file_paths.at(i) == ';'){
+              
+                    rc_file_list.push_back(rc_file);
+             
+                    index++;
+
+                    break;   
+                 }
+                 else{
+
+                    rc_file.push_back(rc_file_paths.at(i));
+
+                    index++;
+                 }
+            }
+
+          }while(index<rc_file_paths.size());
+      }
+
+      rc_file_list.shrink_to_fit();
+ }
+
+ std::vector<std::string> rc_file_list;
+
  std::vector<std::string> target_library_dependencies;
 
  CMAKE_Target_List_Data_Structure_Constructor Target_List_Data_Structure_Constructor;

@@ -120,14 +120,14 @@ public:
          return this->resource_file_set_condition;
     }
 
-    wxString Get_Resource_File_Path() const {
+    wxString Get_Resource_File_Paths() const {
 
-        return this->Resource_File_Path;
+        return this->Resource_File_Paths;
     }
 
 protected:
 
-    wxString Resource_File_Path;
+    wxString Resource_File_Paths;
 
     bool resource_file_set_condition;
 

@@ -44,11 +44,11 @@ public:
 
   virtual ~Process_Manager();
 
-  void Receive_Resource_File_Path(std::string rc_file_path){
+  void Receive_Resource_File_Paths(std::string rc_file_paths){
 
-       this->rc_file_path = rc_file_path;
+       this->rc_file_paths = rc_file_paths;
 
-       this->rc_file_path.shrink_to_fit();
+       this->rc_file_paths.shrink_to_fit();
   }
 
   void Fork_Process_With_Named_Pipe_Connection(char * cmd);
@@ -128,7 +128,7 @@ private:
   std::condition_variable cv;
   std::mutex mtx;
 
-  std::string rc_file_path;
+  std::string rc_file_paths;
 
   char * procCmd;
   int  Process_Exit_Status;
