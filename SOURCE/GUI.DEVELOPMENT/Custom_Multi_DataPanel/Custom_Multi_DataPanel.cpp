@@ -151,7 +151,6 @@ Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, 
 
      this->SetTitle(wxT("PCYNLITX BUILD SYSTEM DESCRIPTION PANEL"));
 
-
      this->save_bmp 
   
       = this->Rsc_Loader.CreateBitmapFromPngResource(wxString("SAVE_SUCCESS_ICON"));
@@ -167,12 +166,42 @@ Custom_Multi_DataPanel::Custom_Multi_DataPanel(wxFrame * parent, wxWindowID id, 
      this->Data_Save_Status = false;
 
      this->resource_file_set_condition = false;
+
+     this->listctrl_for_path = nullptr;
+
+     this->listctrl_for_name = nullptr;
+
+     this->listctrl_for_rc_file = nullptr;
+
+     this->listctrl_git_repo_path = nullptr;
+
+     this->listctrl_warehouse_location  = nullptr;
+
+     this->listctrl_for_header_dir  = nullptr;
+
+     this->listctrl_src_file_location  = nullptr;
+
+     this->listctrl_library_dir  = nullptr;
+
+     this->listctrl_library_name  = nullptr;
+
+     this->listctrl_standard  = nullptr;
+
+     this->listctrl_linker_options  = nullptr;
+
+     this->listctrl_compiler_options = nullptr;
+
+     this->listctrl_build_system_type = nullptr;
+
+     this->listctrl_project_name = nullptr;
+
+     this->listctrl_version_number = nullptr;
+
+     this->listctrl_compiler_path = nullptr;
 }
 
 
-Custom_Multi_DataPanel::~Custom_Multi_DataPanel(){
-
-}
+Custom_Multi_DataPanel::~Custom_Multi_DataPanel(){ }
 
 void Custom_Multi_DataPanel::DrawBackground(wxDC & dc, wxWindow *  wnd, const wxRect& rect)
 {
@@ -283,8 +312,6 @@ void Custom_Multi_DataPanel::Construct_Description_Panel(){
 
          this->Buton_Sizers[i] = nullptr;
      }
-
-
 
      this->scroll_win = new wxScrolledWindow(this,wxID_ANY,wxDefaultPosition,wxSize(1000,-1));
 
@@ -1084,33 +1111,35 @@ void Custom_Multi_DataPanel::Clear_Panel_Descriptions(wxCommandEvent & event){
 
 void Custom_Multi_DataPanel::Clear_List_All_Ctrl_Contents(){
 
-     this->listctrl_git_repo_path->DeleteAllItems();
+     this->Clear_wxDataViewListCtrl(this->listctrl_git_repo_path);
 
-     this->listctrl_warehouse_location->DeleteAllItems();
-     
-     this->listctrl_for_header_dir->DeleteAllItems();
+     this->Clear_wxDataViewListCtrl(this->listctrl_warehouse_location);
 
-     this->listctrl_src_file_location->DeleteAllItems();
+     this->Clear_wxDataViewListCtrl(this->listctrl_for_header_dir);
 
-     this->listctrl_library_dir->DeleteAllItems();
-        
-     this->listctrl_library_name->DeleteAllItems();
+     this->Clear_wxDataViewListCtrl(this->listctrl_for_header_dir);
 
-     this->listctrl_standard->DeleteAllItems();
+     this->Clear_wxDataViewListCtrl(this->listctrl_src_file_location);
 
-     this->listctrl_compiler_options->DeleteAllItems();
+     this->Clear_wxDataViewListCtrl(this->listctrl_library_dir);
 
-     this->listctrl_linker_options->DeleteAllItems();
+     this->Clear_wxDataViewListCtrl(this->listctrl_library_name);
 
-     this->listctrl_build_system_type->DeleteAllItems();
+     this->Clear_wxDataViewListCtrl(this->listctrl_standard);
 
-     this->listctrl_project_name->DeleteAllItems();
+     this->Clear_wxDataViewListCtrl(this->listctrl_compiler_options);
 
-     this->listctrl_version_number->DeleteAllItems();
+     this->Clear_wxDataViewListCtrl(this->listctrl_linker_options);
 
-     this->listctrl_compiler_path->DeleteAllItems();
+     this->Clear_wxDataViewListCtrl(this->listctrl_build_system_type);
 
-     this->listctrl_for_rc_file->DeleteAllItems();
+     this->Clear_wxDataViewListCtrl(this->listctrl_project_name);
+
+     this->Clear_wxDataViewListCtrl(this->listctrl_version_number);
+
+     this->Clear_wxDataViewListCtrl(this->listctrl_compiler_path);
+
+     this->Clear_wxDataViewListCtrl(this->listctrl_for_rc_file);
 }
 
 
@@ -1196,7 +1225,6 @@ void Custom_Multi_DataPanel::Construct_NewData_Panels(){
      this->vbox_name->Add(this->hbox_name,0,wxALIGN_RIGHT | wxFIXED_MINSIZE | wxALL,0);
 
      this->vbox_name->Layout();
-
 
      this->listctrl_for_rc_file = new wxDataViewListCtrl(this, wxID_ANY,wxDefaultPosition,wxSize(700,150));
 

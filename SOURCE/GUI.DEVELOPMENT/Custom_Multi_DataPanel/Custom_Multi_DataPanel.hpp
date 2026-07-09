@@ -95,8 +95,11 @@ public:
 
         const wxPoint &pos=wxDefaultPosition, const wxSize &size=wxSize(1000,820), 
    
-        long style= wxCAPTION | wxMAXIMIZE_BOX | wxCLOSE_BOX | wxRESIZE_BORDER | wxSTAY_ON_TOP, char opr_sis='w');
+        long style= wxCAPTION | wxMAXIMIZE_BOX | wxCLOSE_BOX 
+        
+        | wxRESIZE_BORDER | wxSTAY_ON_TOP, char opr_sis='w');
 
+        
     virtual ~Custom_Multi_DataPanel();
 
     void Receive_Descriptor_File_Path(wxString path);
@@ -284,6 +287,7 @@ protected:
 
     wxBoxSizer * Scrolled_Win_Sizer;
 
+
     int Panel_Number;
 
     wxScrolledWindow * scroll_win;
@@ -301,23 +305,16 @@ protected:
 
     wxBoxSizer ** List_Ctrl_Sizers;
 
-    wxPanel ** Data_Panels;
-
-
-    wxItemAttr * attr;
-
-
-
-    wxBoxSizer * DataPanel_Top_Sizer;
-
     wxBoxSizer * topSizer;
+
+
+    wxPanel ** Data_Panels;
 
     wxDataViewListCtrl * listctrl_for_path;
 
     wxDataViewListCtrl * listctrl_for_name;
 
     wxDataViewListCtrl * listctrl_for_rc_file;
-
 
     wxDataViewListCtrl * listctrl_git_repo_path;
 
@@ -346,6 +343,19 @@ protected:
     wxDataViewListCtrl * listctrl_compiler_path;
 
 
+    void Clear_wxDataViewListCtrl(wxDataViewListCtrl * ctrl){
+
+         if(ctrl != nullptr){
+
+            if(ctrl->GetItemCount()>0){
+
+               ctrl->DeleteAllItems();
+            } 
+         }
+    }
+
+
+    // INSERT BUTTONS
 
 
     wxButton * InsertButton_for_git_repo_path;
@@ -374,9 +384,8 @@ protected:
 
     wxButton * InsertButton_for_compiler_paths;
 
-
-
-
+    
+    // SAVE BUTTONS
 
     wxButton * Save_Button_for_git_repo_path;
 
