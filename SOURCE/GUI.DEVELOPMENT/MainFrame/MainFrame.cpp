@@ -59,9 +59,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   int y_extend = frame_rec. GetHeight()/2;
 
-  this->SetSize(this->FromDIP(wxSize(x_extend,y_extend)));
+  this->SetSize(wxSize(x_extend,y_extend));
 
-  this->SetMinSize(this->FromDIP(wxSize(x_extend,y_extend)));
+  this->SetMinSize(wxSize(x_extend,y_extend));
 
 
 
@@ -152,9 +152,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
 
   
-  this->Custom_Main_Panel->SetSize(this->Custom_Main_Panel->FromDIP(centre_size));
-
-  this->Custom_Main_Panel->SetMinSize(this->Custom_Main_Panel->FromDIP(centre_size));
+  this->Custom_Main_Panel->SetMinSize(centre_size);
 
   this->Custom_Main_Panel->Fit();
 
@@ -162,7 +160,7 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
   this->Custom_Main_Panel->Interface_Manager_Ptr = &this->Interface_Manager;
 
-  this->Custom_Main_Panel->Set_Pane_Properties(this->Custom_Main_Panel->FromDIP(centre_size));
+  this->Custom_Main_Panel->Set_Pane_Properties(centre_size);
 
   this->Interface_Manager.Update();
 
@@ -182,9 +180,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
                        *(this->Default_Font),nbook_size,theme_clr);
 
-  this->Book_Manager->SetSize(this->Book_Manager->FromDIP(nbook_size));
+  this->Book_Manager->SetSize(nbook_size);
 
-  this->Book_Manager->SetMinSize(this->Book_Manager->FromDIP(nbook_size));
+  this->Book_Manager->SetMinSize(nbook_size);
 
   this->Book_Manager->SetAutoLayout(true);
 
@@ -232,9 +230,9 @@ MainFrame::MainFrame(wxColour theme_clr) : wxFrame((wxFrame * )NULL,-1,"PCYNLITX
 
                             *(this->Default_Font),this->Book_Manager->GetTabCtrlHeight()+1,theme_clr);
 
-  this->Dir_List_Manager->SetSize(this->Dir_List_Manager->FromDIP(dir_list_size));
+  this->Dir_List_Manager->SetSize(dir_list_size);
 
-  this->Dir_List_Manager->SetMinSize(this->Dir_List_Manager->FromDIP(dir_list_size));
+  this->Dir_List_Manager->SetMinSize(dir_list_size);
 
   this->Dir_List_Manager->Notebook_Ptr = this->Book_Manager;
 
