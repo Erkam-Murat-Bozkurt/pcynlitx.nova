@@ -50,7 +50,7 @@ public:
       
      const wxPoint &position=wxDefaultPosition,
   
-     const wxSize &size=wxDefaultSize, long style=wxAUI_TB_DEFAULT_STYLE) 
+     const wxSize &size=wxDefaultSize, long style=wxAUI_TB_DEFAULT_STYLE | wxAUI_TB_PLAIN_BACKGROUND) 
      
      : wxAuiToolBar(parent,id,position,size,style)
 
