@@ -274,11 +274,15 @@ Custom_Tree_View_Panel::Custom_Tree_View_Panel(wxFrame * frame,
 
      int text_y = position.y +  this->FromDIP(21);
 
+     int text_x_size = this->FromDIP(250);
+
+     int text_y_size = this->FromDIP(50);
+
      this->start_text   = new wxStaticText(this->Bottom_Window ,
      
                     wxID_ANY,wxT("PCYNLITX MENU"),wxPoint(text_x,text_y),
                     
-                    this->start_text->FromDIP(wxSize(250,50)));
+                    wxSize(text_x_size,text_y_size));
 
 
 

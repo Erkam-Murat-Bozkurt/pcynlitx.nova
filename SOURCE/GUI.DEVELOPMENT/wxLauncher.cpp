@@ -70,9 +70,6 @@ bool wxLauncher::OnInit(){
 
      wxInitAllImageHandlers();
 
-     wxImage::AddHandler(new wxPNGHandler);
-
-
      wxColour theme_colour(62,180,137);
 
 
@@ -98,9 +95,13 @@ bool wxLauncher::OnInit(){
 
          this->Frame->Centre(wxBOTH);
 
-         this->Frame->SetSize(this->Frame->FromDIP(wxSize(1100,750)));
+         int frame_x_size = this->Frame->FromDIP(1100);
 
-         this->Frame->SetMinSize(this->Frame->FromDIP(wxSize(1050,750)));
+         int frame_y_size = this->Frame->FromDIP(750);
+
+         this->Frame->SetSize(wxSize(frame_x_size,frame_y_size));
+
+         this->Frame->SetMinSize(wxSize(frame_x_size,frame_y_size));
 
 
          return true;
