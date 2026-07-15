@@ -50,7 +50,6 @@
 #include "Custom_DataPanel.hpp"
 #include "Custom_TabArt.h"
 #include "Process_Manager.hpp"
-#include "Custom_wxThread.hpp"
 #include "Custom_ProcessOutput.hpp"
 #include "ToolBar_Initializer.h"
 #include "Project_File_Selection_Dialog.h"
@@ -88,8 +87,10 @@ public:
   void Open_PopUp_Menu(wxCommandEvent & event);
 
   private:
+  
   void BIND_TREE_VIEW_EVENTS();
   void UNBIND_TREE_VIEW_EVENTS();
+
   void Print_Message(wxString message);
   void OpenSettings(wxCommandEvent & event);
   void Open_Empty_Project_File(wxCommandEvent & event);
@@ -152,26 +153,35 @@ public:
   void Clear_Workspace(wxCommandEvent & event);
   wxString GetUserHomeDirectory();
 
-  Custom_System_Interface SysInt;
-  Workspace_Data_Holder Wrk_Data_Holder;
   std::thread fork_process;
   std::thread read_process_output;
   std::thread * print_file_dependency;
   std::thread * print_to_tree_ctrl;
   std::thread * project_file_selector;
-  Menu_Bar_Options * Menu;
-  Custom_Multi_DataPanel * Multi_DataPanel;
+
   bool is_custom_panel_constructed;
   bool Memory_Delete_Condition;
   bool is_project_file_selected;
   bool Child_Process_End_Status;
   bool Child_Process_Started_to_Execution;
-  Process_Manager * Process_Ptr;
-  Custom_wxThread * Thread_Ptr;
+  bool is_descriptor_file_open;
+  bool invalid_descriptor_file_status;
+  bool lack_of_description_status;
+  bool is_bold_style_selected;
+
+  std::string Executable_File_Script_Construction_Point;
+
+
+
   wxString Descriptor_File_Path;
   wxString Warehouse_Location;
   wxString Construction_Point;
-  std::string Executable_File_Script_Construction_Point;
+
+  Menu_Bar_Options * Menu;
+  Custom_Multi_DataPanel * Multi_DataPanel;
+  Workspace_Data_Holder Wrk_Data_Holder;
+  Process_Manager * Process_Ptr;
+
   wxAuiDockArt * Dock_Art_Pointer;
   wxAuiManager Interface_Manager;
   Project_Descriptions_Printer * Descriptions_Printer;
@@ -186,10 +196,7 @@ public:
   Dependency_Tree_Printer * depPrinter;
   Custom_Progress_Dialog * Progress_Dialog;
   Resource_Loader Rsc_Loader;
-  bool is_descriptor_file_open;
-  bool invalid_descriptor_file_status;
-  bool lack_of_description_status;
-  bool is_bold_style_selected;
+
 
   wxFont * Default_Font;
   wxBitmap * exclamation_mark_bmp;

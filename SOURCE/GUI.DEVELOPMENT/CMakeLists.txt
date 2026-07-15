@@ -29,9 +29,6 @@ add_library(BuildSystem_GUI
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxPanel/Custom_wxPanel.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxPanel/Custom_wxPanel.h
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxThread/Custom_wxThread.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxThread/Custom_wxThread.hpp
-
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxTreeCtrl/Custom_wxTreeCtrl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxTreeCtrl/Custom_wxTreeCtrl.h
 
@@ -118,8 +115,6 @@ target_include_directories(BuildSystem_GUI PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_Window
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_ProcessOutput
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxThread
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxTreeCtrl
 
@@ -215,8 +210,6 @@ target_link_directories(BuildSystem_GUI PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxPanel
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_ProcessOutput
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxThread
 
     ${CMAKE_CURRENT_SOURCE_DIR}/Custom_wxTreeCtrl
 
