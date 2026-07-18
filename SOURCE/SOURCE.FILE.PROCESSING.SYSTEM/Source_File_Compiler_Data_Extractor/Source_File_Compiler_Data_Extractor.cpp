@@ -318,14 +318,6 @@ void Source_File_Compiler_Data_Extractor::Process_Compiler_Data(int start, int e
 
             this->Extract_Directory_Short_Path(src_ptr->at(0).src_git_record_dir,dir_sort_path);
 
-
-            size_t range_counter=0;
-
-            for(size_t k=0;k<dir_sort_path.size();k++){
-
-                range_counter++;
-            }
-
             std::string target_name;
 
             for(auto it=dir_sort_path.rbegin();it!=dir_sort_path.rend();it++){

@@ -1,46 +1,47 @@
 
 # ${NOVA_SRC_DIR} is defeined on the upper directory CMakeLists.txt file as  ${CMAKE_SOURCE_DIR}/SOURCE
 
-add_library(cmake_target_lib_constructor_lib 
 
+add_library(cmake_exe_target_constructor_lib 
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/CMake_Target_Library_Builder/CMAKE_Target_Library_Builder.cpp
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor.cpp
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/CMake_Target_Library_Builder/CMAKE_Target_Library_Builder.hpp
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor.hpp
 
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Data_Structure_Constructor/CMAKE_Target_List_Data_Structure_Constructor.cpp
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Path_Determiner/MakeFile_Path_Determiner.cpp
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Data_Structure_Constructor/CMAKE_Target_List_Data_Structure_Constructor.hpp
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Path_Determiner/MakeFile_Path_Determiner.hpp
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Data_Processor/CMAKE_Target_List_Data_Processor.cpp
 
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Data_Processor/CMAKE_Target_List_Data_Processor.hpp
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Directory_Constructor/MakeFile_Directory_Constructor.cpp
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Determiner/CMAKE_Target_List_Determiner.cpp
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Directory_Constructor/MakeFile_Directory_Constructor.hpp
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Determiner/CMAKE_Target_List_Determiner.hpp
 
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/Build_System_Meta_Data_Collector/Build_System_Meta_Data_Collector.hpp
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector/MakeFile_Data_Collector.cpp
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/Build_System_Meta_Data_Collector/Build_System_Meta_Data_Collector.cpp
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector/MakeFile_Data_Collector.hpp
 )
 
 
 
 
 
-target_include_directories(cmake_target_lib_constructor_lib PUBLIC
+target_include_directories(cmake_exe_target_constructor_lib PUBLIC
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/CMake_Target_Library_Builder    
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor
+    
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Data_Structure_Constructor
 
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Data_Processor
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Path_Determiner
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Determiner
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Directory_Constructor
-
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector
-
-
-
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/Build_System_Meta_Data_Collector
+    
     ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Build_Tools_Initializer
 
     ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Directory_Enumerator
@@ -121,23 +122,21 @@ target_include_directories(cmake_target_lib_constructor_lib PUBLIC
     ${NOVA_SRC_DIR}/BASIC.TOOLS/StringOperator
 )
 
-target_link_directories(cmake_target_lib_constructor_lib PUBLIC 
+target_link_directories(cmake_exe_target_constructor_lib PUBLIC 
 
-   
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/CMake_Target_Library_Builder  
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor
 
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Data_Structure_Constructor
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Path_Determiner
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Data_Processor
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Directory_Constructor
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Determiner
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector
-
-
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/Build_System_Meta_Data_Collector
 
     ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Build_Tools_Initializer
 
-    ${NOVA_SRC_DIR}PROJECT.BUILD.TOOLS/Directory_Enumerator
+    ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Directory_Enumerator
 
     ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Directory_Tree_Size_Determiner
 
@@ -215,37 +214,8 @@ target_link_directories(cmake_target_lib_constructor_lib PUBLIC
 
 )
 
-add_dependencies(cmake_target_lib_constructor_lib
-
-                 proj_bld_tools 
-
-                 git_data_processing_system 
-                      
-                 des_reader basic_tools
-)
-
-target_link_libraries(cmake_target_lib_constructor_lib PUBLIC 
-
-                      proj_bld_tools 
-
-                      git_data_processing_system 
-                      
-                      des_reader basic_tools
-)
 
 
-target_compile_options(cmake_target_lib_constructor_lib PUBLIC
+target_link_libraries(cmake_exe_target_constructor_lib PUBLIC proj_bld_tools 
 
-    -std=c++17
-
-    -fno-omit-frame-pointer
-
-    -Wall
-
-    -Bstatic
-
-    -g
-
-    -O0
-
-)
+                      git_data_processing_system des_reader basic_tools)

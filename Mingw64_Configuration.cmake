@@ -18,10 +18,14 @@ string(REPLACE "\n" "" USER_PROFILE_PATH "${USER_PROFILE_PATH}")
 
 string(REPLACE "/" "\\" USER_PROFILE_PATH "${USER_PROFILE_PATH}")
 
+message("CMAKE_BINARY_DIR : ${CMAKE_BINARY_DIR}")
 
-file(DOWNLOAD  https://github.com/brechtsanders/winlibs_mingw/releases/download/15.2.0posix-13.0.0-msvcrt-r3/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64msvcrt-13.0.0-r3.zip ${CMAKE_SOURCE_DIR}/BUILD/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64msvcrt-13.0.0-r3.zip SHOW_PROGRESS)
+message("CMAKE_SOURCE_DIR : ${CMAKE_SOURCE_DIR}")
 
-set(COMPILER_ZIP_PATH ${CMAKE_SOURCE_DIR}/BUILD/winlibs-x86_64-posix-seh-gcc-15.2.0-mingw-w64msvcrt-13.0.0-r3.zip)
+file(DOWNLOAD https://github.com/niXman/mingw-builds-binaries/releases/download/16.1.0-rt_v14-rev1/x86_64-16.1.0-release-mcf-seh-ucrt-rt_v14-rev1.7z "${CMAKE_SOURCE_DIR}/BUILD/Mingw64.7z" SHOW_PROGRESS)
+
+
+set(COMPILER_ZIP_PATH ${CMAKE_SOURCE_DIR}/BUILD/Mingw64.7z)
 
 set(MINGW64_SOURCE_PATH ${CMAKE_SOURCE_DIR}/BUILD)
 

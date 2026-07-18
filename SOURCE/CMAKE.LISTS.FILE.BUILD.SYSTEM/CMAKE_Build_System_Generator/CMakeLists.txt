@@ -1,42 +1,48 @@
 
+
 # ${NOVA_SRC_DIR} is defeined on the upper directory CMakeLists.txt file as  ${CMAKE_SOURCE_DIR}/SOURCE
 
+add_library(cmake_build_system_constructor_lib 
 
-add_library(cmake_exe_target_constructor_lib 
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Build_System_Generator/CMAKE_Build_System_Generator.cpp
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor.cpp
-
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor.hpp
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Build_System_Generator/CMAKE_Build_System_Generator.hpp
 
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Path_Determiner/MakeFile_Path_Determiner.cpp
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_System_Constructor/CMAKE_System_Constructor.cpp
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Path_Determiner/MakeFile_Path_Determiner.hpp
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_System_Constructor/CMAKE_System_Constructor.hpp
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Directory_Constructor/MakeFile_Directory_Constructor.cpp
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Directory_Constructor/MakeFile_Directory_Constructor.hpp
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Main_File_Writer/CMAKE_Main_File_Writer.cpp
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector/MakeFile_Data_Collector.cpp
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Main_File_Writer/CMAKE_Main_File_Writer.hpp
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector/MakeFile_Data_Collector.hpp
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMake_Target_Library_Builder/CMAKE_Target_Library_Builder.cpp
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMake_Target_Library_Builder/CMAKE_Target_Library_Builder.hpp
+
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor.cpp
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor.hpp
+
 )
 
 
 
+target_include_directories(cmake_build_system_constructor_lib PUBLIC
 
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Build_System_Generator
 
-target_include_directories(cmake_exe_target_constructor_lib PUBLIC
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_System_Constructor
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Main_File_Writer
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Path_Determiner
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMake_Target_Library_Builder    
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Directory_Constructor
-
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector
-
-
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor
 
 
     ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Build_Tools_Initializer
@@ -119,15 +125,25 @@ target_include_directories(cmake_exe_target_constructor_lib PUBLIC
     ${NOVA_SRC_DIR}/BASIC.TOOLS/StringOperator
 )
 
-target_link_directories(cmake_exe_target_constructor_lib PUBLIC 
+target_link_directories(cmake_build_system_constructor_lib PUBLIC 
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor
+   
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMake_Target_Library_Builder    
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Path_Determiner
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Build_System_Generator
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Directory_Constructor
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_System_Constructor
 
-    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Main_File_Writer
+    
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor
+
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/MakeFile_Path_Determiner
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/MakeFile_Directory_Constructor
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/MakeFile_Data_Collector
 
 
 
@@ -172,7 +188,7 @@ target_link_directories(cmake_exe_target_constructor_lib PUBLIC
 
     ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Dependency_Selector_For_Single_File
 
-    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Dependency_Selector
+    ${NOVA_SRC_DIR}/SOURCE/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Dependency_Selector
 
     ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Dependency_Data_Extractor
 
@@ -212,7 +228,33 @@ target_link_directories(cmake_exe_target_constructor_lib PUBLIC
 )
 
 
+add_dependencies(cmake_build_system_constructor_lib
 
-target_link_libraries(cmake_exe_target_constructor_lib PUBLIC proj_bld_tools 
+                 cmake_system_constructor_lib
 
-                      git_data_processing_system des_reader basic_tools)
+                 cmake_exe_target_constructor_lib
+                 
+                 cmake_main_file_writer_lib
+
+                 cmake_target_lib_constructor_lib
+
+                 proj_bld_tools 
+
+                 git_data_processing_system 
+                      
+                 des_reader basic_tools
+)
+
+target_link_libraries(cmake_build_system_constructor_lib PUBLIC 
+
+                    cmake_system_constructor_lib 
+                    
+                    cmake_main_file_writer_lib 
+
+                    cmake_exe_target_constructor_lib
+
+                    cmake_target_lib_constructor_lib
+
+                    proj_bld_tools 
+
+                    git_data_processing_system des_reader basic_tools)

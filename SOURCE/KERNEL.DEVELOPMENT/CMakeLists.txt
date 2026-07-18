@@ -1,159 +1,171 @@
 
 
+set(NOVA_SRC_DIR "${CMAKE_SOURCE_DIR}/SOURCE")
 
 
 add_library(kernel 
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Kernel_Main_File.cpp
+    ${NOVA_SRC_DIR}/KERNEL.DEVELOPMENT/Kernel_Main_File.cpp
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Kernel.cpp
+    ${NOVA_SRC_DIR}/KERNEL.DEVELOPMENT/Kernel.cpp
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Kernel.hpp
+    ${NOVA_SRC_DIR}/KERNEL.DEVELOPMENT/Kernel.hpp
 )
 
 
 target_include_directories(kernel PUBLIC
 
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/KERNEL.DEVELOPMENT
+    ${NOVA_SRC_DIR}/KERNEL.DEVELOPMENT
 
-    ${CMAKE_SOURCE_DIR}/Build_Tools_Initializer
+    ${NOVA_SRC_DIR}/Build_Tools_Initializer
 
-    ${CMAKE_SOURCE_DIR}/Directory_Enumerator
+    ${NOVA_SRC_DIR}/Directory_Enumerator
 
-    ${CMAKE_SOURCE_DIR}/Directory_Tree_Size_Determiner
-
-
-    ${CMAKE_SOURCE_DIR}/Library_Name_Extractor
-
-    ${CMAKE_SOURCE_DIR}/Library_Updater
-
-    ${CMAKE_SOURCE_DIR}/Project_Src_Code_Rdr
-
-    ${CMAKE_SOURCE_DIR}/Repo_Dir_Determiner
-
-    ${CMAKE_SOURCE_DIR}/Repo_Warehouse_Initializer
+    ${NOVA_SRC_DIR}/Directory_Tree_Size_Determiner
 
 
-    ${CMAKE_SOURCE_DIR}/Executable_MakeFile_Builder
+    ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Library_Name_Extractor
+
+    ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Library_Updater
+
+    ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Project_Src_Code_Rdr
+
+    ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Repo_Dir_Determiner
+
+    ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Repo_Warehouse_Initializer
+
+
+
+
+    ${NOVA_SRC_DIR}/EXECUTABLE.MAKE.FILE.BUILD.SYSTEM/Executable_MakeFile_Builder
     
-    ${CMAKE_SOURCE_DIR}/Executable_MakeFile_ComConstructor
+    ${NOVA_SRC_DIR}/EXECUTABLE.MAKE.FILE.BUILD.SYSTEM/Executable_MakeFile_ComConstructor
     
-    ${CMAKE_SOURCE_DIR}/Executable_MakeFile_Script_Builder
+    ${NOVA_SRC_DIR}/EXECUTABLE.MAKE.FILE.BUILD.SYSTEM/Executable_MakeFile_Script_Builder
 
     
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
+    ${NOVA_SRC_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Reader
+    ${NOVA_SRC_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Reader
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
-
-
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Writers/Empty.Descriptor.File.Builder
-
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Writers/DataRecorder
+    ${NOVA_SRC_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
 
 
+    ${NOVA_SRC_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Writers/Empty.Descriptor.File.Builder
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Header_File_Processor
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Compiler_Data_Extractor
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Dependency_Determiner
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Dependency_Selector_For_Single_File
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Dependency_Selector
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Dependency_Data_Extractor
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Information_Collector_For_Single_File
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Data_Setter
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Information_Collector
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Processor
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Quick_Src_Dependency_Extractor
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Dependency_Data_Stack_Container
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Header_Dependency_Data_Extractor
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Dependency_Data_Processor
+    ${NOVA_SRC_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Writers/DataRecorder
 
 
 
-    ${CMAKE_SOURCE_DIR}/SCRIPT.WRITERS/Include_Dependency_Counter
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Header_File_Processor
 
-    ${CMAKE_SOURCE_DIR}/SCRIPT.WRITERS/Project_Script_Writer
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Compiler_Data_Extractor
 
-    ${CMAKE_SOURCE_DIR}/SCRIPT.WRITERS/Script_Data_Collector
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Dependency_Determiner
 
-    ${CMAKE_SOURCE_DIR}/SCRIPT.WRITERS/Script_Data_Processor
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Dependency_Selector_For_Single_File
 
-    ${CMAKE_SOURCE_DIR}/SCRIPT.WRITERS/Source_File_Script_Writer
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Dependency_Selector
 
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Dependency_Data_Extractor
 
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Information_Collector_For_Single_File
 
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Data_Processor
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Data_Setter
 
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Receiver
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Information_Collector
 
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Writer
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Processor
 
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Ignoring_Files_Lister
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Quick_Src_Dependency_Extractor
 
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Lister
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Dependency_Data_Stack_Container
 
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Receiver
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Header_Dependency_Data_Extractor
 
-
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.DATA.COLLECTORS/Header_File_Determiner
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.DATA.COLLECTORS/Source_File_Data_Collector
-
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.DATA.COLLECTORS/Source_File_Determiner
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Dependency_Data_Processor
 
 
-    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Auto_MakeFile_Builder    
 
-    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Make_File_Builder    
+    ${NOVA_SRC_DIR}/SCRIPT.WRITERS/Include_Dependency_Counter
 
-    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Make_File_Cleaner    
+    ${NOVA_SRC_DIR}/SCRIPT.WRITERS/Project_Script_Writer
 
-    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector    
+    ${NOVA_SRC_DIR}/SCRIPT.WRITERS/Script_Data_Collector
 
-    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Directory_Constructor 
+    ${NOVA_SRC_DIR}/SCRIPT.WRITERS/Script_Data_Processor
 
-    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Path_Determiner    
-
-
-    ${CMAKE_SOURCE_DIR}/CMAKE_Build_System_Generator
-
-    ${CMAKE_SOURCE_DIR}/CMAKE_System_Constructor
-
-    ${CMAKE_SOURCE_DIR}/CMAKE_Main_File_Writer
-
-    ${CMAKE_SOURCE_DIR}/CMake_Target_Library_Builder    
-
-    ${CMAKE_SOURCE_DIR}/CMAKE_Executable_Target_Constructor
+    ${NOVA_SRC_DIR}/SCRIPT.WRITERS/Source_File_Script_Writer
 
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Cpp_FileOperations
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+    ${NOVA_SRC_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Data_Processor
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/DirectoryOperations
+    ${NOVA_SRC_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Receiver
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/IntToCharTranslater
+    ${NOVA_SRC_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Writer
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
+    ${NOVA_SRC_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Ignoring_Files_Lister
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+    ${NOVA_SRC_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Lister
+
+    ${NOVA_SRC_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Receiver
+
+
+
+    ${NOVA_SRC_DIR}/SOURCE.FILE.DATA.COLLECTORS/Header_File_Determiner
+
+    ${NOVA_SRC_DIR}/SOURCE.FILE.DATA.COLLECTORS/Source_File_Data_Collector
+
+    ${NOVA_SRC_DIR}/SOURCE.FILE.DATA.COLLECTORS/Source_File_Determiner
+
+
+    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/Auto_MakeFile_Builder    
+
+    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/Make_File_Builder    
+
+    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/Make_File_Cleaner    
+
+    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector    
+
+    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Directory_Constructor 
+
+    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Path_Determiner    
+
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Build_System_Generator
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_System_Constructor
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Main_File_Writer
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMake_Target_Library_Builder    
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Data_Processor
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Determiner
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/Build_System_Meta_Data_Collector
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Data_Structure_Constructor
+
+
+
+    ${NOVA_SRC_DIR}/BASIC.TOOLS/Cpp_FileOperations
+
+    ${NOVA_SRC_DIR}/BASIC.TOOLS/Custom_System_Interface
+
+    ${NOVA_SRC_DIR}/BASIC.TOOLS/DirectoryOperations
+
+    ${NOVA_SRC_DIR}/BASIC.TOOLS/IntToCharTranslater
+
+    ${NOVA_SRC_DIR}/BASIC.TOOLS/StringOperator
+
+    ${NOVA_SRC_DIR}/BASIC.TOOLS/Custom_System_Interface
 
 )
 
@@ -161,143 +173,151 @@ target_include_directories(kernel PUBLIC
 target_link_directories(kernel PUBLIC 
 
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/KERNEL.DEVELOPMENT
+    ${NOVA_SRC_DIR}/KERNEL.DEVELOPMENT
 
 
-    ${CMAKE_SOURCE_DIR}/Executable_MakeFile_Builder
+    ${NOVA_SRC_DIR}/EXECUTABLE.MAKE.FILE.BUILD.SYSTEM/Executable_MakeFile_Builder
     
-    ${CMAKE_SOURCE_DIR}/Executable_MakeFile_ComConstructor
+    ${NOVA_SRC_DIR}/EXECUTABLE.MAKE.FILE.BUILD.SYSTEM/Executable_MakeFile_ComConstructor
 
-    ${CMAKE_SOURCE_DIR}/Executable_MakeFile_Script_Builder
-
-
-    ${CMAKE_SOURCE_DIR}/SCRIPT.WRITERS/Include_Dependency_Counter
-
-    ${CMAKE_SOURCE_DIR}/SCRIPT.WRITERS/Project_Script_Writer
-
-    ${CMAKE_SOURCE_DIR}/SCRIPT.WRITERS/Script_Data_Collector
-
-    ${CMAKE_SOURCE_DIR}/SCRIPT.WRITERS/Script_Data_Processor
-
-    ${CMAKE_SOURCE_DIR}/SCRIPT.WRITERS/Source_File_Script_Writer
+    ${NOVA_SRC_DIR}/EXECUTABLE.MAKE.FILE.BUILD.SYSTEM/Executable_MakeFile_Script_Builder
 
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.DATA.COLLECTORS/Header_File_Determiner
+    ${NOVA_SRC_DIR}/SCRIPT.WRITERS/Include_Dependency_Counter
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.DATA.COLLECTORS/Source_File_Data_Collector
+    ${NOVA_SRC_DIR}/SCRIPT.WRITERS/Project_Script_Writer
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.DATA.COLLECTORS/Source_File_Determiner
+    ${NOVA_SRC_DIR}/SCRIPT.WRITERS/Script_Data_Collector
 
+    ${NOVA_SRC_DIR}/SCRIPT.WRITERS/Script_Data_Processor
 
-    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Auto_MakeFile_Builder    
-
-    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Make_File_Builder    
-
-    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/Make_File_Cleaner    
-
-    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Path_Determiner    
-
-    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector    
-
-    ${CMAKE_SOURCE_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Directory_Constructor 
+    ${NOVA_SRC_DIR}/SCRIPT.WRITERS/Source_File_Script_Writer
 
 
-    ${CMAKE_SOURCE_DIR}/CMAKE_Build_System_Generator
+    ${NOVA_SRC_DIR}/SOURCE.FILE.DATA.COLLECTORS/Header_File_Determiner
 
-    ${CMAKE_SOURCE_DIR}/CMAKE_System_Constructor
+    ${NOVA_SRC_DIR}/SOURCE.FILE.DATA.COLLECTORS/Source_File_Data_Collector
 
-    ${CMAKE_SOURCE_DIR}/CMAKE_Main_File_Writer
+    ${NOVA_SRC_DIR}/SOURCE.FILE.DATA.COLLECTORS/Source_File_Determiner
 
-    ${CMAKE_SOURCE_DIR}/CMake_Target_Library_Builder    
+
+    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/Auto_MakeFile_Builder    
+
+    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/Make_File_Builder    
+
+    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/Make_File_Cleaner    
+
+    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Path_Determiner    
+
+    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Data_Collector    
+
+    ${NOVA_SRC_DIR}/MAKE.FILE.BUILD.SYSTEM/MakeFile_Directory_Constructor 
+
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Build_System_Generator
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_System_Constructor
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Main_File_Writer
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMake_Target_Library_Builder    
     
-    ${CMAKE_SOURCE_DIR}/CMAKE_Executable_Target_Constructor
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Data_Processor
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Determiner
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/Build_System_Meta_Data_Collector
+
+    ${NOVA_SRC_DIR}/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Target_List_Data_Structure_Constructor
 
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Header_File_Processor
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Header_File_Processor
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Compiler_Data_Extractor
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Compiler_Data_Extractor
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Dependency_Determiner
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Dependency_Determiner
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Dependency_Selector_For_Single_File
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Dependency_Selector_For_Single_File
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Dependency_Selector
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Dependency_Selector
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Dependency_Data_Extractor
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Dependency_Data_Extractor
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Information_Collector_For_Single_File
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Information_Collector_For_Single_File
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Data_Setter
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Data_Setter
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Information_Collector
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Information_Collector
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Processor
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Source_File_Processor
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Quick_Src_Dependency_Extractor
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Quick_Src_Dependency_Extractor
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Dependency_Data_Stack_Container
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Dependency_Data_Stack_Container
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Header_Dependency_Data_Extractor
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Header_Dependency_Data_Extractor
 
-    ${CMAKE_SOURCE_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Dependency_Data_Processor
-
-
-
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Data_Processor
-
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Receiver
-
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Writer
-
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Ignoring_Files_Lister
-
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Lister
-
-    ${CMAKE_SOURCE_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Receiver
+    ${NOVA_SRC_DIR}/SOURCE.FILE.PROCESSING.SYSTEM/Dependency_Data_Processor
 
 
 
+    ${NOVA_SRC_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Data_Processor
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Build_Tools_Initializer
+    ${NOVA_SRC_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Receiver
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Directory_Enumerator
+    ${NOVA_SRC_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_File_List_Writer
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Directory_Tree_Size_Determiner
+    ${NOVA_SRC_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Ignoring_Files_Lister
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Library_Name_Extractor
+    ${NOVA_SRC_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Lister
 
-    ${CMAKE_CURRENT_SOURCE_DIR}/Library_Updater
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Project_Src_Code_Rdr
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Repo_Dir_Determiner
-
-    ${CMAKE_CURRENT_SOURCE_DIR}/Repo_Warehouse_Initializer
+    ${NOVA_SRC_DIR}/GIT.DATA.PROCESSING.SYSTEM/Git_Modification_Receiver
 
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
-
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Reader
-
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
 
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Writers/Empty.Descriptor.File.Builder
+    ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Build_Tools_Initializer
 
-    ${CMAKE_SOURCE_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Writers/DataRecorder
+    ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Directory_Enumerator
+
+    ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Directory_Tree_Size_Determiner
+
+    ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Library_Name_Extractor
+
+    ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Library_Updater
+
+    ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Project_Src_Code_Rdr
+
+    ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Repo_Dir_Determiner
+
+    ${NOVA_SRC_DIR}/PROJECT.BUILD.TOOLS/Repo_Warehouse_Initializer
+
+
+    ${NOVA_SRC_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Data.Collector
+
+    ${NOVA_SRC_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Reader
+
+    ${NOVA_SRC_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Readers/Descriptor.File.Syntax.Controller
+
+
+    ${NOVA_SRC_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Writers/Empty.Descriptor.File.Builder
+
+    ${NOVA_SRC_DIR}/DESCRIPTION.PROCESSING.SYSTEM/Description.Writers/DataRecorder
 
     
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Cpp_FileOperations
+    ${NOVA_SRC_DIR}/BASIC.TOOLS/Cpp_FileOperations
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+    ${NOVA_SRC_DIR}/BASIC.TOOLS/Custom_System_Interface
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/DirectoryOperations
+    ${NOVA_SRC_DIR}/BASIC.TOOLS/DirectoryOperations
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/IntToCharTranslater
+    ${NOVA_SRC_DIR}/BASIC.TOOLS/IntToCharTranslater
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/StringOperator
+    ${NOVA_SRC_DIR}/BASIC.TOOLS/StringOperator
 
-    ${CMAKE_SOURCE_DIR}/BASIC.TOOLS/Custom_System_Interface
+    ${NOVA_SRC_DIR}/BASIC.TOOLS/Custom_System_Interface
 
 )
 

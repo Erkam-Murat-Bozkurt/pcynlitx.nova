@@ -289,15 +289,31 @@ target_link_options(BuildSystem_GUI PUBLIC -Wl,--subsystem,windows -mwindows )
 
 target_link_libraries(BuildSystem_GUI PUBLIC des_reader pthread 
 
-                     wxmsw33ud_xrc
-
-                     wxbase33ud wxmsw33ud_core
-                      
-                     wxmsw33ud_aui
-                
-                     wxmsw33ud_stc wxscintillad  wxmsw33ud_xrc wxmsw33ud_richtext
-
-                     gcc stdc++)
+    	wxzlib
+    	wxregex
+    	wxbase
+    	webpencode
+    	webpdecode
+    	sharpyuv
+    	webpdsp
+    	webputils
+	    webp
+	    webpdemux
+	    wxpng
+	    wxjpeg
+	    wxtiff
+	    wxcore
+	    wxaui
+	    wxnet
+	    wxstc
+	    wxrichtext
+	    wxwebview
+	    wxgl 
+	    wxmedia
+	    wxribbon
+        gcc 
+        stdc++
+)
 
 
 target_compile_options(BuildSystem_GUI PUBLIC -std=c++17 -Wall -g -fexceptions 

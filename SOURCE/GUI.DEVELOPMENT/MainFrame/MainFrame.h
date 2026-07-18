@@ -5,7 +5,6 @@
 #include <wx/wx.h>
 #include <wx\frame.h>
 #include <wx\panel.h>
-#include <wx\thread.h>
 #include <wx\aui\framemanager.h>
 #include <wx\aui\aui.h>
 #include <wx\aui\auibar.h>

@@ -160,14 +160,6 @@ void Quick_Src_Dependency_Extractor::Set_Dependency_Data(std::string src_file_pa
 
      this->Extract_Directory_Short_Paths(src_git_record_dir,dir_sort_path);
 
-        
-     size_t range_counter=0;
-
-     for(size_t k=0;k<dir_sort_path.size();k++){
-
-        range_counter++;
-     }
-
      std::string target_name;
 
      for(auto it=dir_sort_path.rbegin();it<dir_sort_path.rend();it++){

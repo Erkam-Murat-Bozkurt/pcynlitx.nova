@@ -27,11 +27,11 @@ add_executable(Pcynlitx_Kernel
 
 add_executable(CMAKE_Build
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/MAKE.FILE.BUILD.SYSTEM/CMAKE_Build_System_Generator/CMAKE_Build_System_Generator_Main_File.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Build_System_Generator/CMAKE_Build_System_Generator_Main_File.cpp)
 
 add_executable(CMAKE_Build_Executable
 
-        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/MAKE.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor_Main_File.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/SOURCE/CMAKE.LISTS.FILE.BUILD.SYSTEM/CMAKE_Executable_Target_Constructor/CMAKE_Executable_Target_Constructor_Main_File.cpp)
 
 add_executable(Pcynlitx WIN32
 

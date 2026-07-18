@@ -22,8 +22,6 @@
 #include <vector>
 #include "CMAKE_Target_List_Data_Processor.hpp"
 #include "CMAKE_Target_List_Determiner.hpp"
-#include "MakeFile_Path_Determiner.hpp"
-#include "MakeFile_Data_Collector.hpp"
 #include "Source_File_Dependency_Determiner.hpp"
 #include "Source_File_Dependency_Selector.hpp"
 #include "Source_File_Information_Collector.hpp"

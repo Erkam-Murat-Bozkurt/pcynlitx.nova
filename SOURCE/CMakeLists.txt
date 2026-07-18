@@ -21,3 +21,5 @@ add_subdirectory(EXECUTABLE.MAKE.FILE.BUILD.SYSTEM)
 add_subdirectory(KERNEL.DEVELOPMENT)
 
 add_subdirectory(GUI.DEVELOPMENT)
+
+add_subdirectory(CMAKE.LISTS.FILE.BUILD.SYSTEM)

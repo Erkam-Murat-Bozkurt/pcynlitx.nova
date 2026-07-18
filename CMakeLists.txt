@@ -11,7 +11,7 @@ set(wxBUILD_SHARED OFF)
 set(wxBUILD_MONOLITHIC OFF)
 set(wxBUILD_PRECOMP ON)
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 execute_process(COMMAND cmd /c echo %USERPROFILE%
@@ -56,7 +56,7 @@ include(FetchContent)
 FetchContent_Declare(
    wxWidgets
    GIT_REPOSITORY https://github.com/wxWidgets/wxWidgets.git
-   GIT_TAG v3.3.1
+   GIT_TAG v3.3.3
    GIT_PROGRESS TRUE
 )
 
